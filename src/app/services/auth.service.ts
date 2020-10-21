@@ -20,14 +20,14 @@ export class AuthService {
 
   public getSession(): AuthData {
     if (this.isAuthenticated()) {
-      return JSON.parse(localStorage.getItem('session_' + environment.appName))
+      return JSON.parse(localStorage.getItem('session_' + environment.appName));
     } else {
       return {} as AuthData;
     }
   }
 
   public getMenu(): any {
-    const sess = JSON.parse(localStorage.getItem('session'))
+    const sess = JSON.parse(localStorage.getItem('session_' + environment.appName));
     if (sess) {
       return sess.userData.menu;
     } else {
