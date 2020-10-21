@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
       try {
         const payload = {
           login: this.form.get('username').value,
-          password: Md5.hashStr(this.form.get('password').value),
+          password: this.authService.arrayBufferToBase64(this.authService.toUTF8Array(this.form.get('password').value)),
         };
         this.loading = true;
         this.http.post(environment.ssoEndpoint + 'usuarios/login', payload,
