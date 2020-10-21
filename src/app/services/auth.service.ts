@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
+import * as sha1 from 'js-sha1';
 // Auth Data poner todos los datos extras
 export interface AuthData {
   token: string;
@@ -44,7 +45,11 @@ export class AuthService {
     return session ? true : false;
   }
 
-  public toUTF8Array(str: string): any[] {
+  public hashPassword(password: string): string {
+    return this.arrayBufferToBase64(sha1.array(this.toUTF8Array(password)));
+  }
+
+  private toUTF8Array(str: string): any[] {
     const utf8 = [];
     for (let i = 0; i < str.length; i++) {
       const charcode = str.charCodeAt(i);
@@ -66,7 +71,7 @@ export class AuthService {
     return utf8;
   }
 
-  public arrayBufferToBase64(buffer: any): string {
+  private arrayBufferToBase64(buffer: any): string {
     let binary = '';
     const bytes = new Uint8Array(buffer);
     const len = bytes.byteLength;
