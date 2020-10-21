@@ -18,6 +18,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { LoginComponent } from './components/login/login.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { LoginFirmaComponent } from './components/login-firma/login-firma.component';
+import { MainComponent } from './components/main/main.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { LoginFirmaComponent } from './components/login-firma/login-firma.compon
     FooterComponent,
     LoginComponent,
     MenuComponent,
-    LoginFirmaComponent
+    LoginFirmaComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
