@@ -1,6 +1,21 @@
+.cdmx-header{
+  max-width: 550px;
+  min-height: 60px;
+  padding: 25px 0;
+  margin: 2em auto;
+  margin-bottom: -2px;
+  text-align: center;
+  color: white;
+  font-size: 40px;
+  font-weight: 500;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  box-shadow: 0 1px 1px 1px #f2f2f2;
+}
 mat-card {
   max-width: 550px;
   margin: 2em auto;
+  margin-top: 0;
   text-align: center;
 }
 

@@ -1,7 +1,7 @@
 <app-header [sidenav]="drawer"></app-header>
 <div class="content-dashboard">
     <mat-drawer-container class="app-container" autosize>
-        <mat-drawer #drawer class="sidenav" mode="side" [opened]="isAuth">
+        <mat-drawer #drawer class="sidenav" [mode]="closed ? 'side' : 'over'" [opened]="isAuth && closed">
             <app-menu></app-menu>
         </mat-drawer>
         <div class="sidenav-content">

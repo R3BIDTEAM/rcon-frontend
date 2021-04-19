@@ -23,7 +23,6 @@ export class HeaderComponent implements OnInit {
 
   cerrarSession(): void{
     this.auth.closeSession();
-    window.location.assign('/');
   }
 
 }

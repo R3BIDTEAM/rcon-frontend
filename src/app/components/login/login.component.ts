@@ -18,6 +18,12 @@ export class LoginComponent implements OnInit {
   private formSubmitAttempt: boolean;
   public passVisibility = false;
   loading = false;
+  errMsj = '';
+  linkRemeber = environment.ssoRemember;
+  public soloLetras = { L: { pattern: new RegExp('[A-Za-zñÑáéíóúÁÉÍÓÚ ]') } };
+  public soloLetrasNoSpace = {
+    L: { pattern: new RegExp('[A-Za-z0-9ñÑáéíóúÁÉÍÓÚ]') },
+  };
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -34,10 +40,17 @@ export class LoginComponent implements OnInit {
   };
 
   ngOnInit(): void {
+    if(this.authService.isAuthenticated){
+      this.router.navigate(['main/bandeja-entrada']);
+    }
     this.form = this.fb.group({
       username: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', [Validators.required,Validators.minLength(6)]]
     });
+
+  }
+  get password(): string {
+    return this.form.get('password').value;
   }
 
   onSubmit(): void {
@@ -58,15 +71,11 @@ export class LoginComponent implements OnInit {
                 token: res.token,
                 userData: res
               });
-              window.location.assign('/dashboard');
+              this.router.navigate(['main/bandeja-entrada']);
             },
             (error) => {
               this.loading = false;
-              this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                duration: 10000,
-                horizontalPosition: 'end',
-                verticalPosition: 'top'
-              });
+              this.errMsj = error.error.mensaje;
             });
       } catch (err) {
         this.loginInvalid = true;

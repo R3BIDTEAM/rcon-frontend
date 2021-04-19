@@ -6,8 +6,7 @@ import { MainComponent } from '@comp/main/main.component';
 import { GuardService } from '@serv/guard.service';
 
 const routes: Routes = [
- // { path: '', component: LoginComponent },
-  { path: '', component: LoginFirmaComponent },
+  { path: '', component: LoginComponent },
   {
     path: 'main', component: MainComponent, canActivate: [GuardService],
     children: [

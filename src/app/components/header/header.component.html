@@ -10,13 +10,18 @@
     <img src="assets/img/logo_dependencia.png" height="60" alt="Secretaría de Administración y Finanzas">
   </a>
   <span class="spacer"></span>
-  <div *ngIf="isAuth">
-      <ngx-avatar [name]="session.userData.nombre" [matMenuTriggerFor]="menu"></ngx-avatar>
+  <span class="d-none d-sm-none d-md-block" *ngIf="session.userData" style="font-size: medium; margin-right: 20px;">{{session.userData.nombre}} {{session.userData.primer_apellido}} {{session.userData.segundo_apellido}}</span>
+  <div *ngIf="isAuth" style="cursor: pointer;">
+    
+    <ngx-avatar [src]="session.userData.perfil_img" *ngIf="session.userData.perfil_img" [matMenuTriggerFor]="menu"></ngx-avatar>
+    <ngx-avatar [name]="session.userData.nombre.charAt(0)" *ngIf="!session.userData.perfil_img" [matMenuTriggerFor]="menu"></ngx-avatar>
     <mat-menu #menu="matMenu">
+      
       <button mat-menu-item (click)="cerrarSession()">
         <mat-icon>power_settings_new</mat-icon>
         <span>Cerrar Sesión</span>
       </button>
     </mat-menu>
+  
   </div>
 </mat-toolbar>
