@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit {
                 token: res.token,
                 userData: res
               });
-              this.router.navigate(['main/bandeja-entrada']);
+              this.router.navigate(['main']);
             },
             (error) => {
               this.loading = false;
