@@ -26,6 +26,7 @@
     "bootstrap": "^4.6.0",
     "js-sha1": "^0.6.0",
     "ngx-avatar": "^4.0.0",
+    "ngx-mask": "^11.1.5",
     "node-forge": "^0.10.0",
     "rxjs": "~6.6.3",
     "ts-md5": "^1.2.7",

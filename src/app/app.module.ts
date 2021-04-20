@@ -6,7 +6,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AvatarModule } from 'ngx-avatar';
 import { registerLocaleData } from '@angular/common';
 import localeEsMx from '@angular/common/locales/es-MX';
+import { BnNgIdleService } from 'bn-ng-idle';
 registerLocaleData(localeEsMx, 'es-Mx');
+import { NgxMaskModule, IConfig } from 'ngx-mask';
 
 import { AppRoutingModule } from './app-routing.module';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
@@ -41,9 +43,11 @@ import { MainComponent } from './components/main/main.component';
     ReactiveFormsModule,
     AvatarModule,
     NgxMatFileInputModule,
+    NgxMaskModule.forRoot(),
   ],
   providers: [
-    { provide: LOCALE_ID, useValue: 'es-Mx' }
+    { provide: LOCALE_ID, useValue: 'es-Mx' },
+    BnNgIdleService
   ],
   bootstrap: [AppComponent]
 })
