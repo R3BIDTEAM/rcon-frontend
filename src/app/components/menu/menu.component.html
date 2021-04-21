@@ -1,5 +1,5 @@
 <mat-selection-list #men [multiple]="false">
-    <mat-list-option *ngFor="let menu of menus" [routerLink]="menu.ruta">
+    <mat-list-option *ngFor="let menu of menus" [routerLink]="'/main/' + menu.ruta">
         <mat-icon matListIcon>{{menu.icono}}</mat-icon>
         {{menu.nombre}}
     </mat-list-option>

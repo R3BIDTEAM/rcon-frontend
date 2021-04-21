@@ -21,6 +21,8 @@ import { LoginComponent } from './components/login/login.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { LoginFirmaComponent } from './components/login-firma/login-firma.component';
 import { MainComponent } from './components/main/main.component';
+import { PeritosComponent } from './components/peritos/peritos.component';
+import { SociedadComponent } from './components/sociedad/sociedad.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { MainComponent } from './components/main/main.component';
     LoginComponent,
     MenuComponent,
     LoginFirmaComponent,
-    MainComponent
+    MainComponent,
+    PeritosComponent,
+    SociedadComponent
   ],
   imports: [
     BrowserModule,

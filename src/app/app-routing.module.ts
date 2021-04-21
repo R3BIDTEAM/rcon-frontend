@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginFirmaComponent } from '@comp/login-firma/login-firma.component';
 import { LoginComponent } from '@comp/login/login.component';
 import { MainComponent } from '@comp/main/main.component';
+import { PeritosComponent } from '@comp/peritos/peritos.component';
+import { SociedadComponent } from '@comp/sociedad/sociedad.component';
 import { GuardService } from '@serv/guard.service';
 
 const routes: Routes = [
@@ -10,7 +12,8 @@ const routes: Routes = [
   {
     path: 'main', component: MainComponent, canActivate: [GuardService],
     children: [
-       // { path: '', component: , canActivate: [GuardService] }
+      { path: 'peritos', component: PeritosComponent, canActivate: [GuardService] },
+      { path: 'sociedad', component: SociedadComponent, canActivate: [GuardService] }
     ]
   },
   { path: '**', redirectTo: '', pathMatch: 'full' },
