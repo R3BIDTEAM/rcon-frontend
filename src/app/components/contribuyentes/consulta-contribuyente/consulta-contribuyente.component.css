@@ -1,0 +1,23 @@
+.input-filter {
+    width: 240px;
+    margin-right: 20px;
+}
+
+.input-cta-catastral {
+    width: 110px;
+    margin-right: 20px;
+}
+
+.input-filter-long {
+    width: 500px;
+}
+
+.mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+}
+
+.mat-card-header .mat-card-title {
+    color: #43A047;
+    font-size: 20px;
+    margin: 5% 0 5% 0;
+}

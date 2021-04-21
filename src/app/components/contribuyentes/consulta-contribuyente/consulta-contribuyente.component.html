@@ -1,1 +1,61 @@
-<p>consulta-contribuyente works!</p>
+<mat-card>
+
+    <div style="padding: 30px; text-align: center;" *ngIf="false">
+        <mat-spinner style="margin:0 auto;"></mat-spinner>
+        <p>Cargando...</p>
+    </div>
+    
+    <ng-container *ngIf="true">
+        <form [formGroup]="cuentaFormGroup">
+            <mat-card-header>
+                <mat-card-title></mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="row">
+                    <div class="col-2">
+                        <mat-form-field class="input-cta-catastral">
+                            <mat-label>Región</mat-label>
+                            <input matInput #region formControlName="region" minlength="3" maxlength="3" (keypress)="keyPressAlphaNumeric($event)" (keyup)="focusNextInput($event, manzana)">
+                            <mat-error *ngIf="cuentaFormGroup.controls.region.errors?.required">Requerido</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-2">
+                        <mat-form-field class="input-cta-catastral">
+                            <mat-label>Manzana</mat-label>
+                            <input matInput #manzana formControlName="manzana" minlength="3" maxlength="3" (keypress)="keyPressAlphaNumeric($event)" (keyup)="focusNextInput($event, lote)">
+                            <mat-error *ngIf="cuentaFormGroup.controls.manzana.errors?.required">Requerido</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-2">
+                        <mat-form-field class="input-cta-catastral">
+                            <mat-label>Lote</mat-label>
+                            <input matInput #lote formControlName="lote" minlength="2" maxlength="2" (keypress)="keyPressAlphaNumeric($event)" (keyup)="focusNextInput($event, unidad)">
+                            <mat-error *ngIf="cuentaFormGroup.controls.lote.errors?.required">Requerido</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-2">
+                        <mat-form-field class="input-cta-catastral">
+                            <mat-label>Unidad Privativa</mat-label>
+                            <input matInput #unidad formControlName="unidad" minlength="3" maxlength="3" (keypress)="keyPressAlphaNumeric($event)">
+                            <mat-error *ngIf="cuentaFormGroup.controls.unidad.errors?.required">Requerido</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </mat-card-content>
+        </form>
+        <div class="row">
+            <div class="col-2">
+            </div>
+            <div class="col">
+                <div class="d-flex flex-row-reverse">
+                    <button mat-icon-button color="primary" aria-label="Buscar" matTooltip="Buscar" [disabled]="cuentaFormGroup.invalid" (click)="getData(true)">
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="col-6">
+            </div>
+        </div>
+    </ng-container>
+
+</mat-card>
