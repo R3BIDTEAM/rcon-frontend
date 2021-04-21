@@ -26,6 +26,10 @@ import { SociedadComponent } from './components/sociedad/sociedad.component';
 import { AltaContribuyenteComponent } from './components/contribuyentes/alta-contribuyente/alta-contribuyente.component';
 import { ConsultaContribuyenteComponent } from './components/contribuyentes/consulta-contribuyente/consulta-contribuyente.component';
 import { EdicionContribuyenteComponent } from './components/contribuyentes/edicion-contribuyente/edicion-contribuyente.component';
+import { NotariosComponent } from './components/notarios/notarios.component';
+import { AltaNotarioComponent } from './components/notarios/alta-notario/alta-notario.component';
+import { ConsultaNotarioComponent } from './components/notarios/consulta-notario/consulta-notario.component';
+import { EdicionNotarioComponent } from './components/notarios/edicion-notario/edicion-notario.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +46,10 @@ import { EdicionContribuyenteComponent } from './components/contribuyentes/edici
     AltaContribuyenteComponent,
     ConsultaContribuyenteComponent,
     EdicionContribuyenteComponent,
+    NotariosComponent,
+    AltaNotarioComponent,
+    ConsultaNotarioComponent,
+    EdicionNotarioComponent,
   ],
   imports: [
     BrowserModule,

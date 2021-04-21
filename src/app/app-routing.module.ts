@@ -6,6 +6,9 @@ import { MainComponent } from '@comp/main/main.component';
 import { AltaContribuyenteComponent } from '@comp/contribuyentes/alta-contribuyente/alta-contribuyente.component';
 import { ConsultaContribuyenteComponent } from '@comp/contribuyentes/consulta-contribuyente/consulta-contribuyente.component';
 import { EdicionContribuyenteComponent } from '@comp/contribuyentes/edicion-contribuyente/edicion-contribuyente.component';
+import { AltaNotarioComponent } from '@comp/notarios/alta-notario/alta-notario.component';
+import { ConsultaNotarioComponent } from '@comp/notarios/consulta-notario/consulta-notario.component';
+import { EdicionNotarioComponent } from '@comp/notarios/edicion-notario/edicion-notario.component';
 import { PeritosComponent } from '@comp/peritos/peritos.component';
 import { SociedadComponent } from '@comp/sociedad/sociedad.component';
 import { GuardService } from '@serv/guard.service';
@@ -18,6 +21,9 @@ const routes: Routes = [
       { path: 'alta-contribuyente', component: AltaContribuyenteComponent, canActivate: [GuardService] },
       { path: 'consulta-contribuyente', component: ConsultaContribuyenteComponent, canActivate: [GuardService] },
       { path: 'edicion-contribuyente', component: EdicionContribuyenteComponent, canActivate: [GuardService] },
+      { path: 'alta-notario', component: AltaNotarioComponent, canActivate: [GuardService] },
+      { path: 'consulta-notario', component: ConsultaNotarioComponent, canActivate: [GuardService] },
+      { path: 'edicion-notario', component: EdicionNotarioComponent, canActivate: [GuardService] },
       { path: 'peritos', component: PeritosComponent, canActivate: [GuardService] },
       { path: 'sociedad', component: SociedadComponent, canActivate: [GuardService] }
     ]

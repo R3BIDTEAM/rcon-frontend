@@ -9,6 +9,11 @@
                 <a mat-list-item *ngFor="let opcion of contribuyentes" [routerLink]="opcion.ruta"><mat-icon>{{opcion.icono}}</mat-icon> {{opcion.nombre}} </a>
             </mat-nav-list>
         </ng-container>
+        <ng-container *ngIf="menu.ruta === '/notarios'">
+            <mat-nav-list style="margin-left: 45px;">
+                <a mat-list-item *ngFor="let opcion of notarios" [routerLink]="opcion.ruta"><mat-icon>{{opcion.icono}}</mat-icon> {{opcion.nombre}} </a>
+            </mat-nav-list>
+        </ng-container>
     </ng-container>
 </mat-selection-list>
 

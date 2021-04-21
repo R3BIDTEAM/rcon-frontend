@@ -19,6 +19,12 @@ export class MenuComponent implements OnInit {
     { nombre: 'Edición de contribuyente', ruta: '/main/edicion-contribuyente', icono: 'edit' },
   ];
 
+  notarios: any[] = [
+    { nombre: 'Alta de notario', ruta: '/main/alta-notario', icono: 'add' },
+    { nombre: 'Consulta de notario', ruta: '/main/consulta-notario', icono: 'search' },
+    { nombre: 'Edición de notario', ruta: '/main/edicion-notario', icono: 'edit' },
+  ];
+
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
