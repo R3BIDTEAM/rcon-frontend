@@ -10,3 +10,9 @@ $cdmx-app-warn:    mat-palette($mat-red);
 $cdmx-app-theme: mat-light-theme($cdmx-app-primary, $cdmx-app-accent, $cdmx-app-warn);
 
 @include angular-material-theme($cdmx-app-theme);
+
+.titulo-cdmx{color: #00A447; text-align: center;}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    top: 0.8em!important;
+}
