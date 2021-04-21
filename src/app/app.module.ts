@@ -23,6 +23,9 @@ import { LoginFirmaComponent } from './components/login-firma/login-firma.compon
 import { MainComponent } from './components/main/main.component';
 import { PeritosComponent } from './components/peritos/peritos.component';
 import { SociedadComponent } from './components/sociedad/sociedad.component';
+import { AltaContribuyenteComponent } from './components/contribuyentes/alta-contribuyente/alta-contribuyente.component';
+import { ConsultaContribuyenteComponent } from './components/contribuyentes/consulta-contribuyente/consulta-contribuyente.component';
+import { EdicionContribuyenteComponent } from './components/contribuyentes/edicion-contribuyente/edicion-contribuyente.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,10 @@ import { SociedadComponent } from './components/sociedad/sociedad.component';
     LoginFirmaComponent,
     MainComponent,
     PeritosComponent,
-    SociedadComponent
+    SociedadComponent,
+    AltaContribuyenteComponent,
+    ConsultaContribuyenteComponent,
+    EdicionContribuyenteComponent,
   ],
   imports: [
     BrowserModule,

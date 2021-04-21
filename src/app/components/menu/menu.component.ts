@@ -13,6 +13,12 @@ export class MenuComponent implements OnInit {
     { nombre: 'Dashboard', ruta: '/dashboard', icono: 'dashboard' },
   ];
 
+  contribuyentes: any[] = [
+    { nombre: 'Alta de contribuyente', ruta: '/main/alta-contribuyente', icono: 'add' },
+    { nombre: 'Consulta de contribuyente', ruta: '/main/consulta-contribuyente', icono: 'search' },
+    { nombre: 'Edición de contribuyente', ruta: '/main/edicion-contribuyente', icono: 'edit' },
+  ];
+
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {

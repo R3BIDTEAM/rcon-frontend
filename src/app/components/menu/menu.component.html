@@ -1,6 +1,17 @@
 <mat-selection-list #men [multiple]="false">
-    <mat-list-option *ngFor="let menu of menus" [routerLink]="'/main/' + menu.ruta">
-        <mat-icon matListIcon>{{menu.icono}}</mat-icon>
-        {{menu.nombre}}
-    </mat-list-option>
+    <ng-container *ngFor="let menu of menus">
+        <mat-list-option [routerLink]="'/main/' + menu.ruta">
+            <mat-icon matListIcon>{{menu.icono}}</mat-icon>
+            {{menu.nombre}}
+        </mat-list-option>
+        <ng-container *ngIf="menu.ruta === '/contribuyentes'">
+            <mat-nav-list style="margin-left: 45px;">
+                <a mat-list-item *ngFor="let opcion of contribuyentes" [routerLink]="opcion.ruta"><mat-icon>{{opcion.icono}}</mat-icon> {{opcion.nombre}} </a>
+            </mat-nav-list>
+        </ng-container>
+    </ng-container>
 </mat-selection-list>
+
+
+
+
