@@ -65,10 +65,10 @@ export class ConsultaContribuyenteComponent implements OnInit {
     this.contribuyente = {} as DataContribuyente;
 
     this.cuentaFormGroup = this._formBuilder.group({
-      region: [null, Validators.required],
-      manzana: [null, Validators.required],
-      lote: [null, Validators.required],
-      unidad: [null, Validators.required],
+      region: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
+      manzana: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
+      lote: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(2)]],
+      unidad: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
     });
 
     this.contribuyenteFormGroup = this._formBuilder.group({

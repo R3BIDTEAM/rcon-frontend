@@ -17,6 +17,8 @@
                             <mat-label>Región</mat-label>
                             <input matInput #region formControlName="region" minlength="3" maxlength="3" (keypress)="keyPressAlphaNumeric($event)" (keyup)="focusNextInput($event, manzana)">
                             <mat-error *ngIf="cuentaFormGroup.controls.region.errors?.required">Requerido</mat-error>
+                            <mat-error *ngIf="cuentaFormGroup.controls.region.errors?.minlength">El valor debe de tener 3 alfanúmericos</mat-error>
+                            <mat-error *ngIf="cuentaFormGroup.controls.region.errors?.maxlength">El valor debe de tener 3 alfanúmericos</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="col-2">
@@ -24,6 +26,8 @@
                             <mat-label>Manzana</mat-label>
                             <input matInput #manzana formControlName="manzana" minlength="3" maxlength="3" (keypress)="keyPressAlphaNumeric($event)" (keyup)="focusNextInput($event, lote)">
                             <mat-error *ngIf="cuentaFormGroup.controls.manzana.errors?.required">Requerido</mat-error>
+                            <mat-error *ngIf="cuentaFormGroup.controls.manzana.errors?.minlength">El valor debe de tener 3 alfanúmericos</mat-error>
+                            <mat-error *ngIf="cuentaFormGroup.controls.manzana.errors?.maxlength">El valor debe de tener 3 alfanúmericos</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="col-2">
@@ -31,6 +35,8 @@
                             <mat-label>Lote</mat-label>
                             <input matInput #lote formControlName="lote" minlength="2" maxlength="2" (keypress)="keyPressAlphaNumeric($event)" (keyup)="focusNextInput($event, unidad)">
                             <mat-error *ngIf="cuentaFormGroup.controls.lote.errors?.required">Requerido</mat-error>
+                            <mat-error *ngIf="cuentaFormGroup.controls.lote.errors?.minlength">El valor debe de tener 2 alfanúmericos</mat-error>
+                            <mat-error *ngIf="cuentaFormGroup.controls.lote.errors?.maxlength">El valor debe de tener 2 alfanúmericos</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="col-2">
@@ -38,6 +44,8 @@
                             <mat-label>Unidad Privativa</mat-label>
                             <input matInput #unidad formControlName="unidad" minlength="3" maxlength="3" (keypress)="keyPressAlphaNumeric($event)">
                             <mat-error *ngIf="cuentaFormGroup.controls.unidad.errors?.required">Requerido</mat-error>
+                            <mat-error *ngIf="cuentaFormGroup.controls.unidad.errors?.minlength">El valor debe de tener 3 alfanúmericos</mat-error>
+                            <mat-error *ngIf="cuentaFormGroup.controls.unidad.errors?.maxlength">El valor debe de tener 3 alfanúmericos</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
