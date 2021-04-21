@@ -42,7 +42,7 @@ export class ConsultaContribuyenteComponent implements OnInit {
   contribuyente: DataContribuyente = {} as DataContribuyente;
   cuentaFormGroup: FormGroup;
   contribuyenteFormGroup: FormGroup;
-  tipoBusqueda = '';
+  tipoBusqueda;
   busqueda = false;
   queryParamFiltros;
   @ViewChild('paginator') paginator: MatPaginator;
@@ -83,10 +83,6 @@ export class ConsultaContribuyenteComponent implements OnInit {
     });
   }
 
-  getData(isSearch): void {
-    console.log(isSearch);
-  }
-
   keyPressAlphaNumeric(event) {
     var inp = String.fromCharCode(event.keyCode);
     if (/[a-zA-Z0-9]/.test(inp)) {
@@ -103,4 +99,7 @@ export class ConsultaContribuyenteComponent implements OnInit {
     }
   }
 
+  getData(isSearch): void {
+    console.log(isSearch);
+  }
 }
