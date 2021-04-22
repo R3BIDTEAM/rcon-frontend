@@ -114,6 +114,13 @@ export class ConsultaContribuyenteComponent implements OnInit {
     }
   }
 
+  clearInputsContribuyente(): void {
+    this.contribuyenteFormGroup.controls['nombre'].setValue(null);
+    this.contribuyenteFormGroup.controls['rfc'].setValue(null);
+    this.contribuyenteFormGroup.markAsUntouched();
+    this.contribuyenteFormGroup.updateValueAndValidity();
+  }
+
   getData(isSearch): void {
     console.log(isSearch);
   }

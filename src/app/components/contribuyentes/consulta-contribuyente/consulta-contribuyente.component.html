@@ -66,7 +66,7 @@
                         </div>
                         <mat-form-field class="col-4">
                             <mat-label>Tipo de persona:</mat-label>
-                            <mat-select formControlName="tipo_persona">
+                            <mat-select formControlName="tipo_persona" (selectionChange)="clearInputsContribuyente()">
                                 <mat-option value="M">Moral</mat-option>
                                 <mat-option value="F">Fisica</mat-option>
                             </mat-select>
