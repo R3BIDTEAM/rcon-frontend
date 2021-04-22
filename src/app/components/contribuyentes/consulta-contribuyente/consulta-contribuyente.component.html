@@ -77,7 +77,7 @@
                     <ng-container *ngIf="contribuyenteFormGroup.controls.tipo_persona.value == 'M'">
                         <div class="row">
                             <mat-form-field class="col-6">
-                                <mat-label>Nombre / Razón social:</mat-label>
+                                <mat-label>Razón social:</mat-label>
                                 <input matInput formControlName="nombre">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                             </mat-form-field>
@@ -101,7 +101,7 @@
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.amaterno.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                             <mat-form-field class="col-4">
-                                <mat-label>Nombre / Razón social:</mat-label>
+                                <mat-label>Nombre:</mat-label>
                                 <input matInput formControlName="nombre">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                             </mat-form-field>
