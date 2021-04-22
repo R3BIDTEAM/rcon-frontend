@@ -1,6 +1,6 @@
 <mat-selection-list #men [multiple]="false">
     <ng-container *ngFor="let menu of menus">
-        <mat-list-option [routerLink]="'/main/' + menu.ruta">
+        <mat-list-option [routerLink]="'/main'">
             <mat-icon matListIcon>{{menu.icono}}</mat-icon>
             {{menu.nombre}}
         </mat-list-option>
