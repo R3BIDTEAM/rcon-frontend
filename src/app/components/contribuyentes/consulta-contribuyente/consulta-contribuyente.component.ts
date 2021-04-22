@@ -8,24 +8,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 
-export interface DataCuenta {
-  region: string;
-  manzana: string;
-  lote: string;
-  unidad: string;
-}
-export interface DataContribuyente {
-  tipo_persona: string;
-  apaterno: string;
-  amaterno: string;
-  nombre: string;
-  rfc: string;
-  curp: string;
-  ine: string;
-  iddocumentoidentificativo: number;
-  documentoidentificativo: string;
-}
-
 @Component({
   selector: 'app-consulta-contribuyente',
   templateUrl: './consulta-contribuyente.component.html',
@@ -39,8 +21,6 @@ export class ConsultaContribuyenteComponent implements OnInit {
   dataSource = [];
   displayedColumns: string[] = ['nombre', 'datos_identificativos', 'actions'];
   httpOptions;
-  cuenta: DataCuenta = {} as DataCuenta;
-  contribuyente: DataContribuyente = {} as DataContribuyente;
   cuentaFormGroup: FormGroup;
   contribuyenteFormGroup: FormGroup;
   tipoBusqueda;
@@ -63,8 +43,6 @@ export class ConsultaContribuyenteComponent implements OnInit {
         Authorization: this.auth.getSession().token
       })
     };
-    this.cuenta = {} as DataCuenta;
-    this.contribuyente = {} as DataContribuyente;
 
     this.cuentaFormGroup = this._formBuilder.group({
       region: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
