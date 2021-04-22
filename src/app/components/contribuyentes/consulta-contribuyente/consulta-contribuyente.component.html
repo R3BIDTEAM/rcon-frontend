@@ -78,12 +78,12 @@
                         <div class="row">
                             <mat-form-field class="col-6">
                                 <mat-label>Razón social:</mat-label>
-                                <input matInput formControlName="nombre">
+                                <input matInput formControlName="nombre" (keyup)="clearInputsIdentNoIdent(false)">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                             <mat-form-field class="col-6">
                                 <mat-label>RFC:</mat-label>
-                                <input matInput formControlName="rfc">
+                                <input matInput formControlName="rfc" (keyup)="clearInputsIdentNoIdent(true)">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
@@ -92,41 +92,41 @@
                         <div class="row">
                             <mat-form-field class="col-4">
                                 <mat-label>Apellido paterno:</mat-label>
-                                <input matInput formControlName="apaterno">
+                                <input matInput formControlName="apaterno" (keyup)="clearInputsIdentNoIdent(false)">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.apaterno.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                             <mat-form-field class="col-4">
                                 <mat-label>Apellido materno:</mat-label>
-                                <input matInput formControlName="amaterno">
+                                <input matInput formControlName="amaterno" (keyup)="clearInputsIdentNoIdent(false)">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.amaterno.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                             <mat-form-field class="col-4">
                                 <mat-label>Nombre:</mat-label>
-                                <input matInput formControlName="nombre">
+                                <input matInput formControlName="nombre" (keyup)="clearInputsIdentNoIdent(false)">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
                             <mat-form-field class="col-4">
                                 <mat-label>RFC:</mat-label>
-                                <input matInput formControlName="rfc">
+                                <input matInput formControlName="rfc" (keyup)="clearInputsIdentNoIdent(true)">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                             <mat-form-field class="col-4">
                                 <mat-label>CURP:</mat-label>
-                                <input matInput formControlName="curp">
+                                <input matInput formControlName="curp" (keyup)="clearInputsIdentNoIdent(true)">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.curp.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                             <mat-form-field class="col-4">
                                 <mat-label>Clave INE:</mat-label>
-                                <input matInput formControlName="ine">
+                                <input matInput formControlName="ine" (keyup)="clearInputsIdentNoIdent(true)">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.ine.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
                             <mat-form-field class="col-4">
                                 <mat-label>Otro documento identificativo:</mat-label>
-                                <mat-select formControlName="iddocumentoidentificativo">
+                                <mat-select formControlName="iddocumentoidentificativo" (selectionChange)="clearInputsIdentNoIdent(true)">
                                     <mat-option value="">Seleccione un rol ...</mat-option>
                                     <mat-option value="1">Test</mat-option>
                                 </mat-select>
@@ -134,7 +134,7 @@
                             </mat-form-field>
                             <mat-form-field class="col-4">
                                 <mat-label></mat-label>
-                                <input matInput placeholder="" formControlName="documentoidentificativo">
+                                <input matInput placeholder="" formControlName="documentoidentificativo" (keyup)="clearInputsIdentNoIdent(true)">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.documentoidentificativo.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>

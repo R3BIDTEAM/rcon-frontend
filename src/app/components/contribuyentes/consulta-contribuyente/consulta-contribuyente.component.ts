@@ -44,6 +44,7 @@ export class ConsultaContribuyenteComponent implements OnInit {
   cuentaFormGroup: FormGroup;
   contribuyenteFormGroup: FormGroup;
   tipoBusqueda;
+  isIdentificativo: boolean;
   busqueda = false;
   queryParamFiltros;
   @ViewChild('paginator') paginator: MatPaginator;
@@ -119,6 +120,26 @@ export class ConsultaContribuyenteComponent implements OnInit {
     this.contribuyenteFormGroup.controls['rfc'].setValue(null);
     this.contribuyenteFormGroup.markAsUntouched();
     this.contribuyenteFormGroup.updateValueAndValidity();
+  }
+
+  clearInputsIdentNoIdent(isIdentificativo): void {
+    this.isIdentificativo = isIdentificativo;
+
+    if(isIdentificativo){
+      this.contribuyenteFormGroup.controls['nombre'].setValue(null);
+      if(this.contribuyenteFormGroup.value.tipo_persona == 'F'){
+        this.contribuyenteFormGroup.controls['apaterno'].setValue(null);
+        this.contribuyenteFormGroup.controls['amaterno'].setValue(null);
+      }
+    } else {
+      this.contribuyenteFormGroup.controls['rfc'].setValue(null);
+      if(this.contribuyenteFormGroup.value.tipo_persona == 'F'){
+        this.contribuyenteFormGroup.controls['curp'].setValue(null);
+        this.contribuyenteFormGroup.controls['ine'].setValue(null);
+        this.contribuyenteFormGroup.controls['iddocumentoidentificativo'].setValue('');
+        this.contribuyenteFormGroup.controls['documentoidentificativo'].setValue(null);
+      }
+    }
   }
 
   getData(isSearch): void {
