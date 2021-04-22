@@ -78,7 +78,7 @@ export class ConsultaContribuyenteComponent implements OnInit {
       rfc: [null, Validators.required],
       curp: [null, Validators.required],
       ine: [null, Validators.required],
-      iddocumentoidentificativo: [null, Validators.required],
+      iddocumentoidentificativo: ['', Validators.required],
       documentoidentificativo: [null, Validators.required],
     });
   }
