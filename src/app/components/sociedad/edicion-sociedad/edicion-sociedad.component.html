@@ -1,6 +1,6 @@
 <mat-card>
     <mat-card-header>
-        <mat-card-title>Búsqueda de peritos</mat-card-title>
+        <mat-card-title>Edición de peritos</mat-card-title>
     </mat-card-header>
     <mat-card-content>
             <!-- Búsqueda por nombre -->
@@ -70,7 +70,91 @@
             </div>
         </div>
 
-    
+        <div class="row">
+            <div class="col-1 text-center">
+            </div>
+            <div class="col-2">
+                <h4 class="cdmx-color-sf">Razón Social:</h4>
+            </div>
+            <div class="col-9">
+                <mat-form-field>
+                    <mat-label>Razón Social</mat-label>
+                    <input matInput [required]="true">
+                    <mat-error></mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-1 text-center">
+            </div>
+            <div class="col-2">
+                <h4 class="cdmx-color-sf">RFC:</h4>
+            </div>
+            <div class="col-9">
+                <mat-form-field>
+                    <mat-label>RFC</mat-label>
+                    <input matInput [required]="true">
+                    <mat-error></mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-1 text-center">
+            </div>
+            <div class="col-2">
+                <h4 class="cdmx-color-sf">Registro:</h4>
+            </div>
+            <div class="col-9">
+                <mat-form-field>
+                    <mat-label>Registro</mat-label>
+                    <input matInput [required]="true">
+                    <mat-error></mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-1 text-center">
+            </div>
+            <div class="col-2">
+                <h4 class="cdmx-color-sf">Registro:</h4>
+            </div>
+            <div class="col-9">
+                <mat-form-field>
+                    <mat-label>Registro</mat-label>
+                    <input matInput [required]="true">
+                    <mat-error></mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-1 text-center">
+            </div>
+            <div class="col-2">
+                <h4 class="cdmx-color-sf">Fecha Inicio:</h4>
+            </div>
+            <div class="col">
+                <mat-form-field class="input-rango-fechas">
+                    <mat-label>Fecha Inicio</mat-label>
+                    <input matInput readonly [matDatepicker]="pickini">
+                    <mat-datepicker-toggle matSuffix [for]="pickini"></mat-datepicker-toggle>
+                    <mat-datepicker #pickini></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-1 text-center">
+            </div>
+            <div class="col-2">
+                <h4 class="cdmx-color-sf">Fecha Fin:</h4>
+            </div>
+            <div class="col">
+                <mat-form-field class="input-rango-fechas">
+                    <mat-label>Fecha Fin</mat-label>
+                    <input matInput readonly [matDatepicker]="pickfin">
+                    <mat-datepicker-toggle matSuffix [for]="pickfin"></mat-datepicker-toggle>
+                    <mat-datepicker #pickfin></mat-datepicker>
+                    <mat-error></mat-error>
+                </mat-form-field>
+            </div>
+        </div>
         <br>
         <!-- <ng-container *ngIf="busqueda">
             <div style="padding: 30px; text-align: center;" *ngIf="loading">
