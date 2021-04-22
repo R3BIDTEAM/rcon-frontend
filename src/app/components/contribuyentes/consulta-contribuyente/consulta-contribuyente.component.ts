@@ -15,6 +15,7 @@ export interface DataCuenta {
   unidad: string;
 }
 export interface DataContribuyente {
+  tipo_persona: string;
   apaterno: string;
   amaterno: string;
   nombre: string;
@@ -72,14 +73,28 @@ export class ConsultaContribuyenteComponent implements OnInit {
     });
 
     this.contribuyenteFormGroup = this._formBuilder.group({
-      apaterno: [null, Validators.required],
-      amaterno: [null, Validators.required],
+      tipo_persona: ['M', Validators.required],
       nombre: [null, Validators.required],
       rfc: [null, Validators.required],
-      curp: [null, Validators.required],
-      ine: [null, Validators.required],
-      iddocumentoidentificativo: ['', Validators.required],
-      documentoidentificativo: [null, Validators.required],
+    });
+
+    this.contribuyenteFormGroup.controls.tipo_persona.valueChanges.subscribe(tipo_persona => {
+      if(tipo_persona == 'F') {
+        this.contribuyenteFormGroup.addControl('apaterno', new FormControl(null, Validators.required));
+        this.contribuyenteFormGroup.addControl('amaterno', new FormControl(null, Validators.required));
+        this.contribuyenteFormGroup.addControl('curp', new FormControl(null, Validators.required));
+        this.contribuyenteFormGroup.addControl('ine', new FormControl(null, Validators.required));
+        this.contribuyenteFormGroup.addControl('iddocumentoidentificativo', new FormControl('', Validators.required));
+        this.contribuyenteFormGroup.addControl('documentoidentificativo', new FormControl(null, Validators.required));
+      } else {
+        this.contribuyenteFormGroup.removeControl('apaterno');
+        this.contribuyenteFormGroup.removeControl('amaterno');
+        this.contribuyenteFormGroup.removeControl('curp');
+        this.contribuyenteFormGroup.removeControl('ine');
+        this.contribuyenteFormGroup.removeControl('iddocumentoidentificativo');
+        this.contribuyenteFormGroup.removeControl('documentoidentificativo');
+      }
+      this.contribuyenteFormGroup.updateValueAndValidity();
     });
   }
 

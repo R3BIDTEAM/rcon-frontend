@@ -62,54 +62,83 @@
             <ng-container *ngIf="tipoBusqueda == 'contribuyente'">
                 <form [formGroup]="contribuyenteFormGroup">
                     <div class="row">
+                        <div class="col-4">
+                        </div>
                         <mat-form-field class="col-4">
-                            <mat-label>Apellido paterno:</mat-label>
-                            <input matInput formControlName="apaterno">
-                            <mat-error *ngIf="contribuyenteFormGroup.controls.apaterno.errors?.required">Requerido</mat-error>
-                        </mat-form-field>
-                        <mat-form-field class="col-4">
-                            <mat-label>Apellido materno:</mat-label>
-                            <input matInput formControlName="amaterno">
-                            <mat-error *ngIf="contribuyenteFormGroup.controls.amaterno.errors?.required">Requerido</mat-error>
-                        </mat-form-field>
-                        <mat-form-field class="col-4">
-                            <mat-label>Nombre / Razón social:</mat-label>
-                            <input matInput formControlName="nombre">
-                            <mat-error *ngIf="contribuyenteFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
-                        </mat-form-field>
-                    </div>
-                    <div class="row">
-                        <mat-form-field class="col-4">
-                            <mat-label>RFC:</mat-label>
-                            <input matInput formControlName="rfc">
-                            <mat-error *ngIf="contribuyenteFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
-                        </mat-form-field>
-                        <mat-form-field class="col-4">
-                            <mat-label>CURP:</mat-label>
-                            <input matInput formControlName="curp">
-                            <mat-error *ngIf="contribuyenteFormGroup.controls.curp.errors?.required">Requerido</mat-error>
-                        </mat-form-field>
-                        <mat-form-field class="col-4">
-                            <mat-label>Clave INE:</mat-label>
-                            <input matInput formControlName="ine">
-                            <mat-error *ngIf="contribuyenteFormGroup.controls.ine.errors?.required">Requerido</mat-error>
-                        </mat-form-field>
-                    </div>
-                    <div class="row">
-                        <mat-form-field class="col-4">
-                            <mat-label>Otro documento identificativo:</mat-label>
-                            <mat-select formControlName="iddocumentoidentificativo">
-                                <mat-option value="">Seleccione un rol ...</mat-option>
-                                <mat-option value="1">Test</mat-option>
+                            <mat-label>Tipo de persona:</mat-label>
+                            <mat-select formControlName="tipo_persona">
+                                <mat-option value="M">Moral</mat-option>
+                                <mat-option value="F">Fisica</mat-option>
                             </mat-select>
-                            <mat-error *ngIf="contribuyenteFormGroup.controls.iddocumentoidentificativo.errors?.required">Requerido</mat-error>
                         </mat-form-field>
-                        <mat-form-field class="col-4">
-                            <mat-label></mat-label>
-                            <input matInput placeholder="" formControlName="documentoidentificativo">
-                            <mat-error *ngIf="contribuyenteFormGroup.controls.documentoidentificativo.errors?.required">Requerido</mat-error>
-                        </mat-form-field>
+                        <div class="col-4">
+                        </div>
                     </div>
+                    <ng-container *ngIf="contribuyenteFormGroup.controls.tipo_persona.value == 'M'">
+                        <div class="row">
+                            <mat-form-field class="col-6">
+                                <mat-label>Nombre / Razón social:</mat-label>
+                                <input matInput formControlName="nombre">
+                                <mat-error *ngIf="contribuyenteFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="col-6">
+                                <mat-label>RFC:</mat-label>
+                                <input matInput formControlName="rfc">
+                                <mat-error *ngIf="contribuyenteFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="contribuyenteFormGroup.controls.tipo_persona.value == 'F'">
+                        <div class="row">
+                            <mat-form-field class="col-4">
+                                <mat-label>Apellido paterno:</mat-label>
+                                <input matInput formControlName="apaterno">
+                                <mat-error *ngIf="contribuyenteFormGroup.controls.apaterno.errors?.required">Requerido</mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="col-4">
+                                <mat-label>Apellido materno:</mat-label>
+                                <input matInput formControlName="amaterno">
+                                <mat-error *ngIf="contribuyenteFormGroup.controls.amaterno.errors?.required">Requerido</mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="col-4">
+                                <mat-label>Nombre / Razón social:</mat-label>
+                                <input matInput formControlName="nombre">
+                                <mat-error *ngIf="contribuyenteFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="row">
+                            <mat-form-field class="col-4">
+                                <mat-label>RFC:</mat-label>
+                                <input matInput formControlName="rfc">
+                                <mat-error *ngIf="contribuyenteFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="col-4">
+                                <mat-label>CURP:</mat-label>
+                                <input matInput formControlName="curp">
+                                <mat-error *ngIf="contribuyenteFormGroup.controls.curp.errors?.required">Requerido</mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="col-4">
+                                <mat-label>Clave INE:</mat-label>
+                                <input matInput formControlName="ine">
+                                <mat-error *ngIf="contribuyenteFormGroup.controls.ine.errors?.required">Requerido</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="row">
+                            <mat-form-field class="col-4">
+                                <mat-label>Otro documento identificativo:</mat-label>
+                                <mat-select formControlName="iddocumentoidentificativo">
+                                    <mat-option value="">Seleccione un rol ...</mat-option>
+                                    <mat-option value="1">Test</mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="contribuyenteFormGroup.controls.iddocumentoidentificativo.errors?.required">Requerido</mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="col-4">
+                                <mat-label></mat-label>
+                                <input matInput placeholder="" formControlName="documentoidentificativo">
+                                <mat-error *ngIf="contribuyenteFormGroup.controls.documentoidentificativo.errors?.required">Requerido</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </ng-container>
                 </form>
             </ng-container>
             <div class="row">
