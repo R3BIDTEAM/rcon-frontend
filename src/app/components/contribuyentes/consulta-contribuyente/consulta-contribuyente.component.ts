@@ -27,6 +27,7 @@ export class ConsultaContribuyenteComponent implements OnInit {
   isIdentificativo: boolean;
   busqueda = false;
   queryParamFiltros;
+  endpointBusqueda;
   @ViewChild('paginator') paginator: MatPaginator;
 
   constructor(
@@ -120,7 +121,46 @@ export class ConsultaContribuyenteComponent implements OnInit {
     }
   }
 
-  getData(isSearch): void {
-    console.log(isSearch);
+  getData(isSearch): void { 
+    this.loadingResponse = true;
+    this.busqueda = true;
+
+    if(isSearch){
+      this.pagina = 1;
+      this.queryParamFiltros = '';
+      this.endpointBusqueda = '';
+      if(this.tipoBusqueda == 'cuenta'){
+        this.endpointBusqueda = this.endpoint;
+      } else {
+        if(this.contribuyenteFormGroup.value.tipo_persona == 'M'){
+          if(this.isIdentificativo){
+            this.endpointBusqueda = this.endpoint + 'registro/getMoralIdentificativos';
+            this.queryParamFiltros = '&rfc=' + this.contribuyenteFormGroup.value.rfc;
+          } else {
+            this.endpointBusqueda = this.endpoint + 'registro/getPersonaMoral';
+            this.queryParamFiltros = '&razonSocial=' + this.contribuyenteFormGroup.value.nombre + '&filtroApellidoPaterno=0';
+          }
+        } else {
+          if(this.isIdentificativo){
+            this.endpointBusqueda = this.endpoint + 'registro/getIdentificativos';
+            this.queryParamFiltros = '&curp=' + this.contribuyenteFormGroup.value.curp + 
+                                     '&rfc=' + this.contribuyenteFormGroup.value.rfc +
+                                     '&claveife=' + this.contribuyenteFormGroup.value.ine +
+                                     '&iddocidentif=' + this.contribuyenteFormGroup.value.iddocumentoidentificativo +
+                                     '&valdocidentif=' + this.contribuyenteFormGroup.value.documentoidentificativo +
+                                     '&coincidenTodos=false';              
+          } else {
+            this.endpointBusqueda = this.endpoint + 'registro/getContribuyente';
+            this.queryParamFiltros = '&nombre=' + this.contribuyenteFormGroup.value.nombre + '&filtroNombre=0' + 
+                                     '&apellidoPaterno=' + this.contribuyenteFormGroup.value.apaterno + '&filtroApellidoPaterno=0' +
+                                     '&apellidoMaterno=' + this.contribuyenteFormGroup.value.amaterno + '&filtroApellidoMaterno=0';
+          }
+  
+        }
+      }
+    }
+
+    console.log(this.endpointBusqueda);
+    console.log(this.queryParamFiltros);
   }
 }
