@@ -75,18 +75,18 @@ export class ConsultaContribuyenteComponent implements OnInit {
 
     this.contribuyenteFormGroup = this._formBuilder.group({
       tipo_persona: ['M', Validators.required],
-      nombre: [null, Validators.required],
-      rfc: [null, Validators.required],
+      nombre: [null],
+      rfc: [null],
     });
 
     this.contribuyenteFormGroup.controls.tipo_persona.valueChanges.subscribe(tipo_persona => {
       if(tipo_persona == 'F') {
-        this.contribuyenteFormGroup.addControl('apaterno', new FormControl(null, Validators.required));
-        this.contribuyenteFormGroup.addControl('amaterno', new FormControl(null, Validators.required));
-        this.contribuyenteFormGroup.addControl('curp', new FormControl(null, Validators.required));
-        this.contribuyenteFormGroup.addControl('ine', new FormControl(null, Validators.required));
-        this.contribuyenteFormGroup.addControl('iddocumentoidentificativo', new FormControl('', Validators.required));
-        this.contribuyenteFormGroup.addControl('documentoidentificativo', new FormControl(null, Validators.required));
+        this.contribuyenteFormGroup.addControl('apaterno', new FormControl(null));
+        this.contribuyenteFormGroup.addControl('amaterno', new FormControl(null));
+        this.contribuyenteFormGroup.addControl('curp', new FormControl(null));
+        this.contribuyenteFormGroup.addControl('ine', new FormControl(null));
+        this.contribuyenteFormGroup.addControl('iddocumentoidentificativo', new FormControl(''));
+        this.contribuyenteFormGroup.addControl('documentoidentificativo', new FormControl(null));
       } else {
         this.contribuyenteFormGroup.removeControl('apaterno');
         this.contribuyenteFormGroup.removeControl('amaterno');
