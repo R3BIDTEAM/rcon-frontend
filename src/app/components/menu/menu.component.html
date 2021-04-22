@@ -2,7 +2,7 @@
     <ng-container *ngFor="let menu of menus">
         <mat-list-option [routerLink]="'/main/' + menu.ruta">
             <mat-icon matListIcon>{{menu.icono}}</mat-icon>
-            {{menu.ruta}}
+            {{menu.nombre}}
         </mat-list-option>
         <ng-container *ngIf="menu.ruta === '/contribuyentes'">
             <mat-nav-list style="margin-left: 45px;">
