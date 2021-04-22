@@ -2,7 +2,7 @@
     <ng-container *ngFor="let menu of menus">
         <mat-list-option [routerLink]="'/main/' + menu.ruta">
             <mat-icon matListIcon>{{menu.icono}}</mat-icon>
-            {{menu.nombre}}
+            {{menu.ruta}}
         </mat-list-option>
         <ng-container *ngIf="menu.ruta === '/contribuyentes'">
             <mat-nav-list style="margin-left: 45px;">
@@ -12,6 +12,16 @@
         <ng-container *ngIf="menu.ruta === '/notarios'">
             <mat-nav-list style="margin-left: 45px;">
                 <a mat-list-item *ngFor="let opcion of notarios" [routerLink]="opcion.ruta"><mat-icon>{{opcion.icono}}</mat-icon> {{opcion.nombre}} </a>
+            </mat-nav-list>
+        </ng-container>
+        <ng-container *ngIf="menu.ruta === '/peritos'">
+            <mat-nav-list style="margin-left: 45px;">
+                <a mat-list-item *ngFor="let opcion of peritos" [routerLink]="opcion.ruta"><mat-icon>{{opcion.icono}}</mat-icon> {{opcion.nombre}} </a>
+            </mat-nav-list>
+        </ng-container>
+        <ng-container *ngIf="menu.ruta === '/sociedad'">
+            <mat-nav-list style="margin-left: 45px;">
+                <a mat-list-item *ngFor="let opcion of sociedad" [routerLink]="opcion.ruta"><mat-icon>{{opcion.icono}}</mat-icon> {{opcion.nombre}} </a>
             </mat-nav-list>
         </ng-container>
     </ng-container>

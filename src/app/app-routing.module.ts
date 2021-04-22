@@ -9,9 +9,13 @@ import { EdicionContribuyenteComponent } from '@comp/contribuyentes/edicion-cont
 import { AltaNotarioComponent } from '@comp/notarios/alta-notario/alta-notario.component';
 import { ConsultaNotarioComponent } from '@comp/notarios/consulta-notario/consulta-notario.component';
 import { EdicionNotarioComponent } from '@comp/notarios/edicion-notario/edicion-notario.component';
-import { PeritosComponent } from '@comp/peritos/peritos.component';
-import { SociedadComponent } from '@comp/sociedad/sociedad.component';
 import { GuardService } from '@serv/guard.service';
+import { AltaPeritosComponent } from '@comp/peritos/alta-peritos/alta-peritos.component';
+import { ConsultaPeritosComponent } from '@comp/peritos/consulta-peritos/consulta-peritos.component';
+import { EdicionPeritosComponent } from '@comp/peritos/edicion-peritos/edicion-peritos.component';
+import { AltaSociedadComponent } from '@comp/sociedad/alta-sociedad/alta-sociedad.component';
+import { ConsultaSociedadComponent } from '@comp/sociedad/consulta-sociedad/consulta-sociedad.component';
+import { EdicionSociedadComponent } from '@comp/sociedad/edicion-sociedad/edicion-sociedad.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -24,8 +28,12 @@ const routes: Routes = [
       { path: 'alta-notario', component: AltaNotarioComponent, canActivate: [GuardService] },
       { path: 'consulta-notario', component: ConsultaNotarioComponent, canActivate: [GuardService] },
       { path: 'edicion-notario', component: EdicionNotarioComponent, canActivate: [GuardService] },
-      { path: 'peritos', component: PeritosComponent, canActivate: [GuardService] },
-      { path: 'sociedad', component: SociedadComponent, canActivate: [GuardService] }
+      { path: 'alta-peritos', component: AltaPeritosComponent, canActivate: [GuardService] },
+      { path: 'consulta-peritos', component: ConsultaPeritosComponent, canActivate: [GuardService] },
+      { path: 'edicion-peritos', component: EdicionPeritosComponent, canActivate: [GuardService] },
+      { path: 'alta-sociedad', component: AltaSociedadComponent, canActivate: [GuardService] },
+      { path: 'consulta-sociedad', component: ConsultaSociedadComponent, canActivate: [GuardService] },
+      { path: 'edicion-sociedad', component: EdicionSociedadComponent, canActivate: [GuardService] }
     ]
   },
   { path: '**', redirectTo: '', pathMatch: 'full' },

@@ -21,8 +21,6 @@ import { LoginComponent } from './components/login/login.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { LoginFirmaComponent } from './components/login-firma/login-firma.component';
 import { MainComponent } from './components/main/main.component';
-import { PeritosComponent } from './components/peritos/peritos.component';
-import { SociedadComponent } from './components/sociedad/sociedad.component';
 import { AltaContribuyenteComponent } from './components/contribuyentes/alta-contribuyente/alta-contribuyente.component';
 import { ConsultaContribuyenteComponent } from './components/contribuyentes/consulta-contribuyente/consulta-contribuyente.component';
 import { EdicionContribuyenteComponent } from './components/contribuyentes/edicion-contribuyente/edicion-contribuyente.component';
@@ -30,6 +28,12 @@ import { NotariosComponent } from './components/notarios/notarios.component';
 import { AltaNotarioComponent } from './components/notarios/alta-notario/alta-notario.component';
 import { ConsultaNotarioComponent } from './components/notarios/consulta-notario/consulta-notario.component';
 import { EdicionNotarioComponent } from './components/notarios/edicion-notario/edicion-notario.component';
+import { AltaPeritosComponent } from './components/peritos/alta-peritos/alta-peritos.component';
+import { ConsultaPeritosComponent } from './components/peritos/consulta-peritos/consulta-peritos.component';
+import { EdicionPeritosComponent } from './components/peritos/edicion-peritos/edicion-peritos.component';
+import { AltaSociedadComponent } from './components/sociedad/alta-sociedad/alta-sociedad.component';
+import { ConsultaSociedadComponent } from './components/sociedad/consulta-sociedad/consulta-sociedad.component';
+import { EdicionSociedadComponent } from './components/sociedad/edicion-sociedad/edicion-sociedad.component';
 
 @NgModule({
   declarations: [
@@ -41,8 +45,6 @@ import { EdicionNotarioComponent } from './components/notarios/edicion-notario/e
     MenuComponent,
     LoginFirmaComponent,
     MainComponent,
-    PeritosComponent,
-    SociedadComponent,
     AltaContribuyenteComponent,
     ConsultaContribuyenteComponent,
     EdicionContribuyenteComponent,
@@ -50,6 +52,12 @@ import { EdicionNotarioComponent } from './components/notarios/edicion-notario/e
     AltaNotarioComponent,
     ConsultaNotarioComponent,
     EdicionNotarioComponent,
+    AltaPeritosComponent,
+    ConsultaPeritosComponent,
+    EdicionPeritosComponent,
+    AltaSociedadComponent,
+    ConsultaSociedadComponent,
+    EdicionSociedadComponent,
   ],
   imports: [
     BrowserModule,
