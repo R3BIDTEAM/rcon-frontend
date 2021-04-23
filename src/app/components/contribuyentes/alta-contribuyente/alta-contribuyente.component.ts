@@ -122,10 +122,107 @@ export class AltaContribuyenteComponent implements OnInit {
   templateUrl: 'app-dialog-domicilio.html',
   styleUrls: ['./alta-contribuyente.component.css']
 })
-export class DialogDomicilio {  
+export class DialogDomicilio {
+  endpointCatalogos = environment.endpoint;
+  loadingTiposDireccion = false;
+  loadingEstados = false;
+  loadingAlcaldias = false;
+  loadingTiposAsentamiento = false;
+  loadingTiposVia = false;
+  loadingTiposLocalidad = false;
+  httpOptions;
+  tiposDireccion;
+  estados;
+  alcaldias;
+  tiposAsentamiento;
+  tiposVia;
+  tiposLocalidad;
+  domicilioFormGroup: FormGroup;
+  dataDomicilio: DataDomicilio = {} as DataDomicilio;
+
   constructor(
+    private http: HttpClient,
+    private _formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<DialogDomicilio>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
       dialogRef.disableClose = true;
     }
+  
+  getDataTiposDireccion(): void {
+    this.loadingTiposDireccion = true;
+    this.http.get(this.endpointCatalogos, this.httpOptions).subscribe(
+      (res: any) => {
+        this.loadingTiposDireccion = false;
+        this.tiposDireccion = res;
+      },
+      (error) => {
+        this.loadingTiposDireccion = false;
+      }
+    );
+  }
+
+  getDataEstados(): void {
+    this.loadingEstados = true;
+    this.http.get(this.endpointCatalogos, this.httpOptions).subscribe(
+      (res: any) => {
+        this.loadingEstados = false;
+        this.estados = res;
+      },
+      (error) => {
+        this.loadingEstados = false;
+      }
+    );
+  }
+
+  getDataAlcaldias(): void {
+    this.loadingAlcaldias = true;
+    this.http.get(this.endpointCatalogos, this.httpOptions).subscribe(
+      (res: any) => {
+        this.loadingAlcaldias = false;
+        this.alcaldias = res;
+      },
+      (error) => {
+        this.loadingAlcaldias = false;
+      }
+    );
+  }
+
+  getDataTiposAsentamiento(): void {
+    this.loadingTiposAsentamiento = true;
+    this.http.get(this.endpointCatalogos, this.httpOptions).subscribe(
+      (res: any) => {
+        this.loadingTiposAsentamiento = false;
+        this.tiposAsentamiento = res;
+      },
+      (error) => {
+        this.loadingTiposAsentamiento = false;
+      }
+    );
+  }
+
+  getDataTiposVia(): void {
+    this.loadingTiposVia = true;
+    this.http.get(this.endpointCatalogos, this.httpOptions).subscribe(
+      (res: any) => {
+        this.loadingTiposVia = false;
+        this.tiposVia = res;
+      },
+      (error) => {
+        this.loadingTiposVia = false;
+      }
+    );
+  }
+
+  getDataTiposLocalidad(): void {
+    this.loadingTiposLocalidad = true;
+    this.http.get(this.endpointCatalogos, this.httpOptions).subscribe(
+      (res: any) => {
+        this.loadingTiposLocalidad = false;
+        this.tiposLocalidad = res;
+      },
+      (error) => {
+        this.loadingTiposLocalidad = false;
+      }
+    );
+  }
 }
