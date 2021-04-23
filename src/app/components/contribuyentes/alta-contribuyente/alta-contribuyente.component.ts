@@ -9,6 +9,32 @@ import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@ang
 import { MatPaginator } from '@angular/material/paginator';
 import * as moment from 'moment';
 
+export interface DataDomicilio {
+  idtipodireccion: number;
+  tipodireccion: string;
+  idestado: number;
+  estado: string;
+  idalcaldia: number;
+  alcaldia: string;
+  idtipoasentamiento: number;
+  asentamiento: string;
+  idtipovia: number;
+  via: string;
+  idlocalidad: number;
+  localidad: string;
+  cp: string;
+  nexterior: string;
+  entrecalle1: string;
+  entrecalle2: string;
+  andador: string;
+  edificio: string;
+  seccion: string;
+  entrada: string;
+  ninterior: string;
+  telefono: string;
+  adicional: string;
+}
+
 @Component({
   selector: 'app-alta-contribuyente',
   templateUrl: './alta-contribuyente.component.html',
@@ -21,6 +47,7 @@ export class AltaContribuyenteComponent implements OnInit {
   tipoPersona = 'F';
   fisicaFormGroup: FormGroup;
   moralFormGroup: FormGroup;
+  dataDomicilios: DataDomicilio[] = [];
   
   constructor(
     private http: HttpClient,
@@ -73,6 +100,10 @@ export class AltaContribuyenteComponent implements OnInit {
 
   getHistorialDatosGenerales(): void {
     console.log("hola");
+  }
+
+  addDomicilio(): void {
+    console.log("asdasdasdasd");
   }
 
 }
