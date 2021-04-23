@@ -1,0 +1,36 @@
+<mat-card>
+
+    <div style="padding: 30px; text-align: center;" *ngIf="false">
+        <mat-spinner style="margin:0 auto;"></mat-spinner>
+        <p>Cargando...</p>
+    </div>
+    
+    <ng-container *ngIf="true">
+
+        <div class="borde">
+            <mat-card-header>
+                <mat-card-title>Datos Generales</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="row">
+                    <mat-form-field class="col-4">
+                        <mat-label>Tipo de persona:</mat-label>
+                        <mat-select [(ngModel)]="tipoPersona">
+                            <mat-option value="F">Fisica</mat-option>
+                            <mat-option value="M">Moral</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <br>
+                <ng-container *ngIf="tipoPersona == 'F'">
+                    Fisica
+                </ng-container>
+                <ng-container *ngIf="tipoPersona == 'M'">
+                    Moral
+                </ng-container>
+            </mat-card-content>
+        </div>
+
+    </ng-container>
+
+</mat-card>

@@ -7,23 +7,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
-
-export interface DataCuenta {
-  region: string;
-  manzana: string;
-  lote: string;
-  unidad: string;
-}
-export interface DataContribuyente {
-  apaterno: string;
-  amaterno: string;
-  nombre: string;
-  rfc: string;
-  curp: string;
-  ine: string;
-  iddocumentoidentificativo: number;
-  documentoidentificativo: string;
-}
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-alta-contribuyente',
@@ -32,24 +16,15 @@ export interface DataContribuyente {
 })
 export class AltaContribuyenteComponent implements OnInit {
   endpoint = environment.endpoint;
-  pagina = 1;
-  total = 0;
-  loadingResponse = false;
-  dataSource = [];
-  displayedColumns: string[] = ['nombre', 'datos_identificativos', 'actions'];
+  loading = false;
   httpOptions;
-  cuenta: DataCuenta = {} as DataCuenta;
-  contribuyente: DataContribuyente = {} as DataContribuyente;
-  cuentaFormGroup: FormGroup;
-  contribuyenteFormGroup: FormGroup;
-  tipoBusqueda = '';
-  busqueda = false;
-  queryParamFiltros;
-  @ViewChild('paginator') paginator: MatPaginator;
+  tipoPersona = 'F';
+  fisicaFormGroup: FormGroup;
+  moralFormGroup: FormGroup;
   
   constructor(
-    private auth: AuthService,
     private http: HttpClient,
+    private auth: AuthService,
     private _formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
   ) { }
@@ -61,46 +36,31 @@ export class AltaContribuyenteComponent implements OnInit {
         Authorization: this.auth.getSession().token
       })
     };
-    this.cuenta = {} as DataCuenta;
-    this.contribuyente = {} as DataContribuyente;
-
-    this.cuentaFormGroup = this._formBuilder.group({
-      region: [null, Validators.required],
-      manzana: [null, Validators.required],
-      lote: [null, Validators.required],
-      unidad: [null, Validators.required],
+    
+    this.fisicaFormGroup = this._formBuilder.group({
+      nombre: [null, [Validators.required]],
+      apaterno: [null, [Validators.required]],
+      amaterno: [null, []],
+      rfc: [null, [Validators.required]],
+      curp: [null, [Validators.required]],
+      ine: [null, []],
+      idDocIdent: ['', []],
+      docIdent: [null, []],
+      fechaNacimiento: [null, []],
+      fechaDefuncion: [null, []],
+      celular: [null, []],
+      email: [null, []],
     });
 
-    this.contribuyenteFormGroup = this._formBuilder.group({
-      apaterno: [null, Validators.required],
-      amaterno: [null, Validators.required],
-      nombre: [null, Validators.required],
-      rfc: [null, Validators.required],
-      curp: [null, Validators.required],
-      ine: [null, Validators.required],
-      iddocumentoidentificativo: [null, Validators.required],
-      documentoidentificativo: [null, Validators.required],
+    this.moralFormGroup = this._formBuilder.group({
+      nombre: [null, [Validators.required]],
+      rfc: [null, [Validators.required]],
+      actPreponderante: [null, []],
+      idTipoPersonaMoral: ['', []],
+      fechaInicioOperacion: [null, []],
+      idMotivo: ['', []],
+      fechaCambio: [null, []],
     });
-  }
-
-  getData(isSearch): void {
-    console.log(isSearch);
-  }
-
-  keyPressAlphaNumeric(event) {
-    var inp = String.fromCharCode(event.keyCode);
-    if (/[a-zA-Z0-9]/.test(inp)) {
-      return true;
-    } else {
-      event.preventDefault();
-      return false;
-    }
-  }
-
-  focusNextInput(event, input) {
-    if(event.srcElement.value.length === event.srcElement.maxLength){
-      input.focus();
-    }
   }
 
 }
