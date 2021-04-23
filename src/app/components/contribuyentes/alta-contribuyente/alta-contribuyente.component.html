@@ -46,13 +46,13 @@
                         <div class="row">
                             <mat-form-field class="col-5">
                                 <mat-label>RFC:</mat-label>
-                                <input matInput formControlName="rfc">
-                                <mat-error *ngIf="fisicaFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
+                                <input matInput formControlName="rfc" (keyup)="changeRequired('curp', 'rfc')">
+                                <mat-error *ngIf="fisicaFormGroup.controls.rfc.errors?.required">Se han de llenar algunos de los campos de RFC o CURP</mat-error>
                             </mat-form-field>
                             <mat-form-field class="col-5">
                                 <mat-label>CURP:</mat-label>
-                                <input matInput formControlName="curp">
-                                <mat-error *ngIf="fisicaFormGroup.controls.curp.errors?.required">Requerido</mat-error>
+                                <input matInput formControlName="curp" (keyup)="changeRequired('rfc', 'curp')">
+                                <mat-error *ngIf="fisicaFormGroup.controls.curp.errors?.required">Se han de llenar algunos de los campos de RFC o CURP</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">

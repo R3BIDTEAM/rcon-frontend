@@ -63,4 +63,12 @@ export class AltaContribuyenteComponent implements OnInit {
     });
   }
 
+  changeRequired(remove, add): void {
+    this.fisicaFormGroup.controls[remove].setValue(null);
+    this.fisicaFormGroup.controls[remove].clearValidators();
+    this.fisicaFormGroup.controls[add].setValidators(Validators.required);
+    this.fisicaFormGroup.markAsUntouched();
+    this.fisicaFormGroup.updateValueAndValidity();
+  }
+
 }
