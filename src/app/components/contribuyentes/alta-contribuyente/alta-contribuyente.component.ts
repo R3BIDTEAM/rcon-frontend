@@ -54,6 +54,7 @@ export class AltaContribuyenteComponent implements OnInit {
     private auth: AuthService,
     private _formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -103,7 +104,28 @@ export class AltaContribuyenteComponent implements OnInit {
   }
 
   addDomicilio(): void {
-    console.log("asdasdasdasd");
+    const dialogRef = this.dialog.open(DialogDomicilio, {
+      width: '700px',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        console.log(result);
+      }
+    });
   }
 
+}
+
+
+@Component({
+  selector: 'app-dialog-domicilio',
+  templateUrl: 'app-dialog-domicilio.html',
+  styleUrls: ['./alta-contribuyente.component.css']
+})
+export class DialogDomicilio {  
+  constructor(
+    public dialogRef: MatDialogRef<DialogDomicilio>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+      dialogRef.disableClose = true;
+    }
 }
