@@ -71,4 +71,8 @@ export class AltaContribuyenteComponent implements OnInit {
     this.fisicaFormGroup.updateValueAndValidity();
   }
 
+  getHistorialDatosGenerales(): void {
+    console.log("hola");
+  }
+
 }
