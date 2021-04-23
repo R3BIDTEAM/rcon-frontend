@@ -1,0 +1,148 @@
+<h1 mat-dialog-title>Búsqueda de personas</h1>
+<div mat-dialog-content>
+    <form #formDialog="ngForm">
+        <ng-container>
+            <div class="row">
+                <div class="col-1 text-center">
+                </div>
+                <div class="col-4 text-center">
+                    <h4 class="cdmx-color-sf">Apellido Paterno / Razón social:</h4>
+                </div>
+                <div class="col-3">
+                    <mat-form-field class="input-no-notario">
+                        <mat-label>Apellido Paterno</mat-label>
+                        <input matInput [required]="true">
+                        <mat-error></mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1 text-center">
+                </div>
+                <div class="col-2">
+                    <h4 class="cdmx-color-sf">Apellido Materno:</h4>
+                </div>
+                <div class="col-3">
+                    <mat-form-field class="input-no-notario">
+                        <mat-label>Apellido Materno</mat-label>
+                        <input matInput [required]="true">
+                        <mat-error></mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-1 text-center">
+                </div>
+                <div class="col-2">
+                    <h4 class="cdmx-color-sf">Nombre:</h4>
+                </div>
+                <div class="col-3">
+                    <mat-form-field class="input-no-notario">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput [required]="true">
+                        <mat-error></mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1 text-center">
+                </div>
+                <div class="col-2">
+                    <h4 class="cdmx-color-sf">RFC:</h4>
+                </div>
+                <div class="col-3">
+                    <mat-form-field class="input-no-notario">
+                        <mat-label>RFC</mat-label>
+                        <input matInput [required]="true">
+                        <mat-error></mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-1 text-center">
+                </div>
+                <div class="col-2">
+                    <h4 class="cdmx-color-sf">CURP:</h4>
+                </div>
+                <div class="col-3">
+                    <mat-form-field class="input-no-notario">
+                        <mat-label>CURP</mat-label>
+                        <input matInput [required]="true">
+                        <mat-error></mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1 text-center">
+                </div>
+                <div class="col-2">
+                    <h4 class="cdmx-color-sf">INE:</h4>
+                </div>
+                <div class="col-3">
+                    <mat-form-field class="input-no-notario">
+                        <mat-label>INE</mat-label>
+                        <input matInput [required]="true">
+                        <mat-error></mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-3">
+                    <mat-form-field class="input-no-notario">
+                        <mat-select placeholder="Identificación"> 
+                            <mat-option value="1">Cédula profecional</mat-option>
+                            <mat-option value="2">Pasaporte</mat-option>
+                            <mat-option value="3">Licencia de conducir</mat-option>
+                            <mat-option value="4">Número de seguro social</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-2">
+                    <mat-form-field class="input-no-notario">
+                        <mat-label></mat-label>
+                        <input matInput [required]="true">
+                        <mat-error></mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </ng-container>
+        <div class="row">
+            <div class="col" align="end">
+            </div>
+            <div class="col" align="end">
+                <button mat-icon-button color="primary" aria-label="Buscar" matTooltip="Buscar" (click)="getDataNotario()">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </div>
+        </div>
+    </form>
+
+    
+    <!-- <div style="padding: 30px; text-align: center;" *ngIf="loading">
+        <mat-spinner style="margin:0 auto;"></mat-spinner>
+        <p>Cargando...</p>
+    </div>
+    <div class="alert alert-info" *ngIf="dataSource.length == 0 && !loading && busqueda">
+        No se encontraron datos.
+    </div>
+    <table mat-table [dataSource]="dataSource" *ngIf="dataSource.length > 0 && !loading && busqueda">
+        <ng-container matColumnDef="no_notario">
+            <th mat-header-cell *matHeaderCellDef> N° </th>
+            <td mat-cell *matCellDef="let element"> {{(element.numnotario)}} </td>
+        </ng-container>
+        <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+            <td mat-cell *matCellDef="let element"> {{ (element.apellidopaterno) ? element.apellidopaterno : '' }} {{ (element.apellidomaterno) ? element.apellidomaterno : '' }} {{element.nombre}} </td>
+        </ng-container>
+        <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
+            <td mat-cell *matCellDef="let element">
+                <mat-radio-group [(ngModel)]="notarioIsai">
+                    <mat-radio-button [value]="element" (change)="NotariosSelect(element)"></mat-radio-button>
+                </mat-radio-group>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [length]="total" [pageSize]="5" [pageSizeOptions]="[5]" (page)="paginado($event)">
+    </mat-paginator> -->
+</div>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cerrar</button>
+    <button mat-flat-button color="primary">Aceptar</button>
+</mat-dialog-actions>

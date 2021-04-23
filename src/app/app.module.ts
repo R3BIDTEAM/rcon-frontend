@@ -27,10 +27,10 @@ import { EdicionContribuyenteComponent } from './components/contribuyentes/edici
 import { AltaNotarioComponent } from './components/notarios/alta-notario/alta-notario.component';
 import { ConsultaNotarioComponent } from './components/notarios/consulta-notario/consulta-notario.component';
 import { EdicionNotarioComponent } from './components/notarios/edicion-notario/edicion-notario.component';
-import { AltaPeritosComponent } from './components/peritos/alta-peritos/alta-peritos.component';
+import { AltaPeritosComponent, DialogPerito } from './components/peritos/alta-peritos/alta-peritos.component';
 import { ConsultaPeritosComponent } from './components/peritos/consulta-peritos/consulta-peritos.component';
 import { EdicionPeritosComponent } from './components/peritos/edicion-peritos/edicion-peritos.component';
-import { AltaSociedadComponent } from './components/sociedad/alta-sociedad/alta-sociedad.component';
+import { AltaSociedadComponent, DialogSociedad } from './components/sociedad/alta-sociedad/alta-sociedad.component';
 import { ConsultaSociedadComponent } from './components/sociedad/consulta-sociedad/consulta-sociedad.component';
 import { EdicionSociedadComponent } from './components/sociedad/edicion-sociedad/edicion-sociedad.component';
 
@@ -56,6 +56,8 @@ import { EdicionSociedadComponent } from './components/sociedad/edicion-sociedad
     AltaSociedadComponent,
     ConsultaSociedadComponent,
     EdicionSociedadComponent,
+    DialogPerito,
+    DialogSociedad
   ],
   imports: [
     BrowserModule,
@@ -68,6 +70,10 @@ import { EdicionSociedadComponent } from './components/sociedad/edicion-sociedad
     AvatarModule,
     NgxMatFileInputModule,
     NgxMaskModule.forRoot(),
+  ],
+  entryComponents: [
+    DialogPerito,
+    DialogSociedad
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'es-Mx' },
