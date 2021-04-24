@@ -20,7 +20,7 @@ export interface DataDomicilio {
   asentamiento: string;
   idtipovia: number;
   via: string;
-  idlocalidad: number;
+  idtipolocalidad: number;
   localidad: string;
   cp: string;
   nexterior: string;
@@ -146,6 +146,28 @@ export class DialogDomicilio {
     public dialogRef: MatDialogRef<DialogDomicilio>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
       dialogRef.disableClose = true;
+      
+      this.domicilioFormGroup = this._formBuilder.group({
+        idtipodireccion: ['', Validators.required],
+        idestado: ['', Validators.required],
+        idalcaldia: ['', Validators.required],
+        idtipoasentamiento: ['', Validators.required],
+        asentamiento: [null, Validators.required],
+        idtipovia: ['', Validators.required],
+        via: [null, Validators.required],
+        idtipolocalidad: ['', Validators.required],
+        cp: [null],
+        nexterior: [null, Validators.required],
+        entrecalle1: [null],
+        entrecalle2: [null],
+        andador: [null],
+        edificio: [null],
+        seccion: [null],
+        entrada: [null],
+        ninterior: [null],
+        telefono: [null],
+        adicional: [null],
+      });
     }
   
   getDataTiposDireccion(): void {
