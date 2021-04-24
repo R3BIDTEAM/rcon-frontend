@@ -115,18 +115,18 @@
     <!-- <div style="padding: 30px; text-align: center;" *ngIf="loading">
         <mat-spinner style="margin:0 auto;"></mat-spinner>
         <p>Cargando...</p>
-    </div>
+    </div> 
     <div class="alert alert-info" *ngIf="dataSource.length == 0 && !loading && busqueda">
         No se encontraron datos.
     </div>
     <table mat-table [dataSource]="dataSource" *ngIf="dataSource.length > 0 && !loading && busqueda">
-        <ng-container matColumnDef="no_notario">
-            <th mat-header-cell *matHeaderCellDef> N° </th>
-            <td mat-cell *matCellDef="let element"> {{(element.numnotario)}} </td>
-        </ng-container>
         <ng-container matColumnDef="nombre">
             <th mat-header-cell *matHeaderCellDef> Nombre </th>
-            <td mat-cell *matCellDef="let element"> {{ (element.apellidopaterno) ? element.apellidopaterno : '' }} {{ (element.apellidomaterno) ? element.apellidomaterno : '' }} {{element.nombre}} </td>
+            <td mat-cell *matCellDef="let element"> </td>
+        </ng-container>
+        <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef> Datos Identificativos </th>
+            <td mat-cell *matCellDef="let element"> </td>
         </ng-container>
         <ng-container matColumnDef="select">
             <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
