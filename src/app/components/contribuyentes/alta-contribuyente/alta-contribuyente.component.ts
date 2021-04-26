@@ -109,8 +109,9 @@ export class AltaContribuyenteComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result){
-        console.log(result);
+        this.dataDomicilios.push(result);
       }
+      console.log(this.dataDomicilios);
     });
   }
 
@@ -246,5 +247,29 @@ export class DialogDomicilio {
         this.loadingTiposLocalidad = false;
       }
     );
+  }
+
+  getDataDomicilio(): DataDomicilio {
+    this.dataDomicilio.idtipodireccion = this.domicilioFormGroup.value.idtipodireccion;
+    this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
+    this.dataDomicilio.idalcaldia = this.domicilioFormGroup.value.idalcaldia;
+    this.dataDomicilio.idtipoasentamiento = this.domicilioFormGroup.value.idtipoasentamiento;
+    this.dataDomicilio.asentamiento = (this.domicilioFormGroup.value.asentamiento) ? this.domicilioFormGroup.value.asentamiento : null;
+    this.dataDomicilio.idtipovia = this.domicilioFormGroup.value.idtipovia;
+    this.dataDomicilio.via = (this.domicilioFormGroup.value.via) ? this.domicilioFormGroup.value.via : null;
+    this.dataDomicilio.idtipolocalidad = this.domicilioFormGroup.value.idtipolocalidad;
+    this.dataDomicilio.cp = (this.domicilioFormGroup.value.cp) ? this.domicilioFormGroup.value.cp : null;
+    this.dataDomicilio.nexterior = (this.domicilioFormGroup.value.nexterior) ? this.domicilioFormGroup.value.nexterior : null;
+    this.dataDomicilio.entrecalle1 = (this.domicilioFormGroup.value.entrecalle1) ? this.domicilioFormGroup.value.entrecalle1 : null;
+    this.dataDomicilio.entrecalle2 = (this.domicilioFormGroup.value.entrecalle2) ? this.domicilioFormGroup.value.entrecalle2 : null;
+    this.dataDomicilio.andador = (this.domicilioFormGroup.value.andador) ? this.domicilioFormGroup.value.andador : null;
+    this.dataDomicilio.edificio = (this.domicilioFormGroup.value.edificio) ? this.domicilioFormGroup.value.edificio : null;
+    this.dataDomicilio.seccion = (this.domicilioFormGroup.value.seccion) ? this.domicilioFormGroup.value.seccion : null;
+    this.dataDomicilio.entrada = (this.domicilioFormGroup.value.entrada) ? this.domicilioFormGroup.value.entrada : null;
+    this.dataDomicilio.ninterior = (this.domicilioFormGroup.value.ninterior) ? this.domicilioFormGroup.value.ninterior : null;
+    this.dataDomicilio.telefono = (this.domicilioFormGroup.value.telefono) ? this.domicilioFormGroup.value.telefono : null;
+    this.dataDomicilio.adicional = (this.domicilioFormGroup.value.adicional) ? this.domicilioFormGroup.value.adicional : null;
+    
+    return this.dataDomicilio;
   }
 }
