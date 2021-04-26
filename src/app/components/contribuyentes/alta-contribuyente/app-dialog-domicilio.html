@@ -37,6 +37,28 @@
                 </mat-form-field>
             </div>
             <div class="row">
+                <mat-form-field class="col-3">
+                    <mat-label>Municipio:</mat-label>
+                    <input matInput>
+                </mat-form-field>
+                <mat-form-field class="col-7">
+                    <mat-label></mat-label>
+                    <input matInput formControlName="municipio">
+                    <mat-error *ngIf="domicilioFormGroup.controls.municipio.errors?.required">Requerido</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="col-3">
+                    <mat-label>Ciudad:</mat-label>
+                    <input matInput>
+                </mat-form-field>
+                <mat-form-field class="col-7">
+                    <mat-label></mat-label>
+                    <input matInput formControlName="ciudad">
+                    <mat-error *ngIf="domicilioFormGroup.controls.ciudad.errors?.required">Requerido</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="row">
                 <mat-form-field class="col-6">
                     <mat-label>Tipo Asent.:</mat-label>
                     <mat-select formControlName="idtipoasentamiento">
