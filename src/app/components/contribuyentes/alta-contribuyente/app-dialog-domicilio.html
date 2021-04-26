@@ -24,10 +24,11 @@
                     <mat-select formControlName="idestado">
                         <mat-option value="">Seleccione ...</mat-option>
                         <mat-option value="1">Test</mat-option>
+                        <mat-option value="2">CDMX</mat-option>
                     </mat-select>
                     <mat-error *ngIf="domicilioFormGroup.controls.idestado.errors?.required">Requerido</mat-error>
                 </mat-form-field>
-                <mat-form-field class="col-6">
+                <mat-form-field class="col-6" *ngIf="domicilioFormGroup.controls.idestado.value == 2">
                     <mat-label>Alcaldía:</mat-label>
                     <mat-select formControlName="idalcaldia">
                         <mat-option value="">Seleccione ...</mat-option>
@@ -36,27 +37,29 @@
                     <mat-error *ngIf="domicilioFormGroup.controls.idalcaldia.errors?.required">Requerido</mat-error>
                 </mat-form-field>
             </div>
-            <div class="row">
-                <mat-form-field class="col-3">
-                    <mat-label>Municipio:</mat-label>
-                    <input matInput>
-                </mat-form-field>
-                <mat-form-field class="col-7">
-                    <mat-label></mat-label>
-                    <input matInput formControlName="municipio">
-                    <mat-error *ngIf="domicilioFormGroup.controls.municipio.errors?.required">Requerido</mat-error>
-                </mat-form-field>
-            </div>
-            <div class="row">
-                <mat-form-field class="col-3">
-                    <mat-label>Ciudad:</mat-label>
-                    <input matInput>
-                </mat-form-field>
-                <mat-form-field class="col-7">
-                    <mat-label></mat-label>
-                    <input matInput formControlName="ciudad">
-                    <mat-error *ngIf="domicilioFormGroup.controls.ciudad.errors?.required">Requerido</mat-error>
-                </mat-form-field>
+            <div *ngIf="domicilioFormGroup.controls.idestado.value != 2">
+                <div class="row">
+                    <mat-form-field class="col-3">
+                        <mat-label>Municipio:</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+                    <mat-form-field class="col-7">
+                        <mat-label></mat-label>
+                        <input matInput formControlName="municipio">
+                        <mat-error *ngIf="domicilioFormGroup.controls.municipio.errors?.required">Requerido</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field class="col-3">
+                        <mat-label>Ciudad:</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+                    <mat-form-field class="col-7">
+                        <mat-label></mat-label>
+                        <input matInput formControlName="ciudad">
+                        <mat-error *ngIf="domicilioFormGroup.controls.ciudad.errors?.required">Requerido</mat-error>
+                    </mat-form-field>
+                </div>
             </div>
             <div class="row">
                 <mat-form-field class="col-6">

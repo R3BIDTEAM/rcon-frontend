@@ -157,7 +157,6 @@ export class DialogDomicilio {
       this.domicilioFormGroup = this._formBuilder.group({
         idtipodireccion: ['', Validators.required],
         idestado: ['', Validators.required],
-        idalcaldia: ['', Validators.required],
         municipio: [null, Validators.required],
         ciudad: [null, Validators.required],
         idtipoasentamiento: ['', Validators.required],
@@ -176,6 +175,19 @@ export class DialogDomicilio {
         ninterior: [null],
         telefono: [null],
         adicional: [null],
+      });
+
+      this.domicilioFormGroup.controls.idestado.valueChanges.subscribe(idestado => {
+        if(idestado == 2) {
+          this.domicilioFormGroup.removeControl('municipio');
+          this.domicilioFormGroup.removeControl('ciudad');
+          this.domicilioFormGroup.addControl('idalcaldia', new FormControl('', Validators.required));
+        } else {
+          this.domicilioFormGroup.removeControl('idalcaldia');
+          this.domicilioFormGroup.addControl('municipio', new FormControl(null, Validators.required));
+          this.domicilioFormGroup.addControl('ciudad', new FormControl(null, Validators.required));
+        }
+        this.domicilioFormGroup.updateValueAndValidity();
       });
 
       if(data){
@@ -264,9 +276,6 @@ export class DialogDomicilio {
   getDataDomicilio(): DataDomicilio {
     this.dataDomicilio.idtipodireccion = this.domicilioFormGroup.value.idtipodireccion;
     this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
-    this.dataDomicilio.idalcaldia = this.domicilioFormGroup.value.idalcaldia;
-    this.dataDomicilio.municipio = (this.domicilioFormGroup.value.municipio) ? this.domicilioFormGroup.value.municipio : null;
-    this.dataDomicilio.ciudad = (this.domicilioFormGroup.value.ciudad) ? this.domicilioFormGroup.value.ciudad : null;
     this.dataDomicilio.idtipoasentamiento = this.domicilioFormGroup.value.idtipoasentamiento;
     this.dataDomicilio.asentamiento = (this.domicilioFormGroup.value.asentamiento) ? this.domicilioFormGroup.value.asentamiento : null;
     this.dataDomicilio.idtipovia = this.domicilioFormGroup.value.idtipovia;
@@ -284,15 +293,19 @@ export class DialogDomicilio {
     this.dataDomicilio.telefono = (this.domicilioFormGroup.value.telefono) ? this.domicilioFormGroup.value.telefono : null;
     this.dataDomicilio.adicional = (this.domicilioFormGroup.value.adicional) ? this.domicilioFormGroup.value.adicional : null;
     
+    if(this.domicilioFormGroup.value.idestado == 2){
+      this.dataDomicilio.idalcaldia = this.domicilioFormGroup.value.idalcaldia;
+    } else {
+      this.dataDomicilio.municipio = (this.domicilioFormGroup.value.municipio) ? this.domicilioFormGroup.value.municipio : null;
+      this.dataDomicilio.ciudad = (this.domicilioFormGroup.value.ciudad) ? this.domicilioFormGroup.value.ciudad : null;
+    }
+
     return this.dataDomicilio;
   }
 
   setDataDomicilio(dataDomicilio): void {
     this.domicilioFormGroup.controls['idtipodireccion'].setValue(dataDomicilio.idtipodireccion);
     this.domicilioFormGroup.controls['idestado'].setValue(dataDomicilio.idestado);
-    this.domicilioFormGroup.controls['idalcaldia'].setValue(dataDomicilio.idalcaldia);
-    this.domicilioFormGroup.controls['municipio'].setValue(dataDomicilio.municipio);
-    this.domicilioFormGroup.controls['ciudad'].setValue(dataDomicilio.ciudad);
     this.domicilioFormGroup.controls['idtipoasentamiento'].setValue(dataDomicilio.idtipoasentamiento);
     this.domicilioFormGroup.controls['asentamiento'].setValue(dataDomicilio.asentamiento);
     this.domicilioFormGroup.controls['idtipovia'].setValue(dataDomicilio.idtipovia);
@@ -309,5 +322,12 @@ export class DialogDomicilio {
     this.domicilioFormGroup.controls['ninterior'].setValue(dataDomicilio.ninterior);
     this.domicilioFormGroup.controls['telefono'].setValue(dataDomicilio.telefono);
     this.domicilioFormGroup.controls['adicional'].setValue(dataDomicilio.adicional);
+
+    if(dataDomicilio.idestado == 2){
+      this.domicilioFormGroup.controls['idalcaldia'].setValue(dataDomicilio.idalcaldia);
+    } else {
+      this.domicilioFormGroup.controls['municipio'].setValue(dataDomicilio.municipio);
+      this.domicilioFormGroup.controls['ciudad'].setValue(dataDomicilio.ciudad);
+    }
   }
 }
