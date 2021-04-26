@@ -103,15 +103,19 @@ export class AltaContribuyenteComponent implements OnInit {
     console.log("hola");
   }
 
-  addDomicilio(): void {
+  addDomicilio(i = -1, dataDomicilio = null): void {
     const dialogRef = this.dialog.open(DialogDomicilio, {
       width: '700px',
+      data: dataDomicilio,
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result){
-        this.dataDomicilios.push(result);
+        if(i != -1){
+          this.dataDomicilios[i] = result;
+        }else{
+          this.dataDomicilios.push(result);
+        }
       }
-      console.log(this.dataDomicilios);
     });
   }
 
@@ -169,6 +173,10 @@ export class DialogDomicilio {
         telefono: [null],
         adicional: [null],
       });
+
+      if(data){
+        this.setDataDomicilio(data);
+      }
     }
   
   getDataTiposDireccion(): void {
@@ -271,5 +279,27 @@ export class DialogDomicilio {
     this.dataDomicilio.adicional = (this.domicilioFormGroup.value.adicional) ? this.domicilioFormGroup.value.adicional : null;
     
     return this.dataDomicilio;
+  }
+
+  setDataDomicilio(dataDomicilio): void {
+    this.domicilioFormGroup.controls['idtipodireccion'].setValue(dataDomicilio.idtipodireccion);
+    this.domicilioFormGroup.controls['idestado'].setValue(dataDomicilio.idestado);
+    this.domicilioFormGroup.controls['idalcaldia'].setValue(dataDomicilio.idalcaldia);
+    this.domicilioFormGroup.controls['idtipoasentamiento'].setValue(dataDomicilio.idtipoasentamiento);
+    this.domicilioFormGroup.controls['asentamiento'].setValue(dataDomicilio.asentamiento);
+    this.domicilioFormGroup.controls['idtipovia'].setValue(dataDomicilio.idtipovia);
+    this.domicilioFormGroup.controls['via'].setValue(dataDomicilio.via);
+    this.domicilioFormGroup.controls['idtipolocalidad'].setValue(dataDomicilio.idtipolocalidad);
+    this.domicilioFormGroup.controls['cp'].setValue(dataDomicilio.cp);
+    this.domicilioFormGroup.controls['nexterior'].setValue(dataDomicilio.nexterior);
+    this.domicilioFormGroup.controls['entrecalle1'].setValue(dataDomicilio.entrecalle1);
+    this.domicilioFormGroup.controls['entrecalle2'].setValue(dataDomicilio.entrecalle2);
+    this.domicilioFormGroup.controls['andador'].setValue(dataDomicilio.andador);
+    this.domicilioFormGroup.controls['edificio'].setValue(dataDomicilio.edificio);
+    this.domicilioFormGroup.controls['seccion'].setValue(dataDomicilio.seccion);
+    this.domicilioFormGroup.controls['entrada'].setValue(dataDomicilio.entrada);
+    this.domicilioFormGroup.controls['ninterior'].setValue(dataDomicilio.ninterior);
+    this.domicilioFormGroup.controls['telefono'].setValue(dataDomicilio.telefono);
+    this.domicilioFormGroup.controls['adicional'].setValue(dataDomicilio.adicional);
   }
 }

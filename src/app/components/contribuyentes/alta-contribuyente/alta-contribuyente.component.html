@@ -184,7 +184,7 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <div *ngIf="true; else domicilios">
+                        <div *ngIf="dataDomicilios.length == 0; else domicilios">
                             No hay datos que mostrar ...
                         </div>
                         <ng-template #domicilios>
@@ -198,10 +198,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                    <tr *ngFor="let domicilio of dataDomicilios; let i = index;">
+                                        <td>{{domicilio.idtipodireccion}}</td>
+                                        <td>{{domicilio.idestado}}</td>
+                                        <td>
+                                            <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar" (click)="addDomicilio(i, domicilio)">
+                                                <mat-icon>edit</mat-icon>
+                                            </button>
+                                        </td>
                                         <td></td>
                                     </tr>
                                 </tbody>
