@@ -47,7 +47,7 @@ export class DialogPerito {
     total = 0;
     loading = false;
     dataSource = [];
-    displayedColumns: string[] = ['no_notario', 'nombre', 'select'];
+    displayedColumns: string[] = ['nombre', 'datos', 'select'];
     httpOptions;
     busqueda;
     tipo = '';

@@ -51,7 +51,7 @@ export class DialogSociedad {
     total = 0;
     loading = false;
     dataSource = [];
-    displayedColumns: string[] = ['no_notario', 'nombre', 'select'];
+    displayedColumns: string[] = ['nombre', 'rfc', 'select'];
     httpOptions;
     busqueda;
     tipo = '';
