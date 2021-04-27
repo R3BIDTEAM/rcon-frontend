@@ -5,30 +5,22 @@
             <div class="row">
                 <div class="col-1 text-center">
                 </div>
-                <div class="col-2 text-center">
-                    <h4 class="cdmx-color-sf">Razón social:</h4>
-                </div>
-                <div class="col-3">
-                    <mat-form-field class="input-no-notario">
+                    <mat-form-field class="col-4">
                         <mat-label>Razón social</mat-label>
                         <input matInput [required]="true">
                         <mat-error></mat-error>
                     </mat-form-field>
+                <div class="col-1">
                 </div>
-                <div class="col-2">
-                    <h4 class="cdmx-color-sf">RFC:</h4>
-                </div>
-                <div class="col-3">
-                    <mat-form-field class="input-no-notario">
+                    <mat-form-field class="col-4">
                         <mat-label>RFC</mat-label>
                         <input matInput [required]="true">
                         <mat-error></mat-error>
                     </mat-form-field>
-                </div>
             </div>
         </ng-container>
         <div class="row">
-            <div class="col" align="end">
+            <div class="col-5 text-center">
             </div>
             <div class="col" align="end">
                 <button mat-icon-button color="primary" aria-label="Buscar" matTooltip="Buscar" (click)="getDataNotario()">

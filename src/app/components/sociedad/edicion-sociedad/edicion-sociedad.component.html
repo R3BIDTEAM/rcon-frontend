@@ -1,135 +1,122 @@
 <mat-card>
-    <mat-card-header>
-        <mat-card-title>Búsqueda de sociedad (Edición)</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-            <!-- Búsqueda por nombre -->
+    <div class="borde">
+        <mat-card-header>
+            <mat-card-title>Búsqueda de sociedad (Edición)</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+                <!-- Búsqueda por nombre -->
+                <div class="row">
+                    <div class="col-1 text-center">
+                    </div>
+                        <mat-form-field class="col-4">
+                            <mat-label>Razón Social</mat-label>
+                            <input matInput [required]="true">
+                            <mat-error></mat-error>
+                        </mat-form-field>
+                </div>
+                
+                <!-- Fin de nombre -->
+
+                <!-- Búsqueda por RFC CRUP -->
+                <div class="row">
+                    <div class="col-1 text-center">
+                    </div>
+                        <mat-form-field class="col-4">
+                            <mat-label>RFC</mat-label>
+                            <input matInput [required]="true">
+                            <mat-error></mat-error>
+                        </mat-form-field>
+                    <div class="col-1 text-center">
+                    </div>
+                        <mat-form-field class="col-4">
+                            <mat-label>Registro</mat-label>
+                            <input matInput [required]="true">
+                            <mat-error></mat-error>
+                        </mat-form-field>
+                </div>
+                <!-- Fin de RFC CRUP -->
+
             <div class="row">
-                <div class="col-1 text-center">
-                </div>
                 <div class="col-2">
-                    <h4 class="cdmx-color-sf">Razón Social:</h4>
-                </div>
-                <div class="col-9">
-                    <mat-form-field>
-                        <mat-label>Razón Social</mat-label>
-                        <input matInput [required]="true">
-                        <mat-error></mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-            
-            <!-- Fin de nombre -->
 
-            <!-- Búsqueda por RFC CRUP -->
-            <div class="row">
-                <div class="col-1 text-center">
                 </div>
-                <div class="col-2">
-                    <h4 class="cdmx-color-sf">RFC:</h4>
-                </div>
-                <div class="col-3">
-                    <mat-form-field class="input-no-notario">
-                        <mat-label>RFC</mat-label>
-                        <input matInput [required]="true">
-                        <mat-error></mat-error>
-                    </mat-form-field>
-                </div>
-                <div class="col-1 text-center">
-                </div>
-                <div class="col-2">
-                    <h4 class="cdmx-color-sf">Registro:</h4>
-                </div>
-                <div class="col-3">
-                    <mat-form-field class="input-no-notario">
-                        <mat-label>Registro</mat-label>
-                        <input matInput [required]="true">
-                        <mat-error></mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-            <!-- Fin de RFC CRUP -->
-
-        <div class="row">
-            <div class="col-2">
-
-            </div>
-            <div class="col">
-                <div class="d-flex flex-row-reverse">
-                    
-                    <button mat-icon-button color="primary" aria-label="Limpiar Filtros" matTooltip="Limpiar Filtros" (click)="clean()">
-                        <mat-icon>clear</mat-icon>
-                    </button>
-                    <!-- <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getData()" [disabled]="!search"> -->
-                    <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar">
-                        <mat-icon>search</mat-icon>
-                    </button>
-                </div>
-            </div>
-            <div class="col-6">
-            </div>
-        </div>
-
-    
-        <br>
-        <!-- <ng-container *ngIf="busqueda">
-            <div style="padding: 30px; text-align: center;" *ngIf="loading">
-                <mat-spinner style="margin:0 auto;"></mat-spinner>
-                <p>Cargando...</p>
-            </div>
-            <div class="alert alert-info" *ngIf="dataSource.length == 0 && !loading">
-                No hay avalúos para el filtro seleccionado
-            </div>
-            <table mat-table [dataSource]="dataSource" *ngIf="!loading && dataSource.length > 0">
-                <ng-container matColumnDef="num">
-                    <th mat-header-cell *matHeaderCellDef> Nº </th>
-                    <td mat-cell *matCellDef="let element"> {{element.numpresentacion}} </td>
-                </ng-container>
-                <ng-container matColumnDef="tipo">
-                    <th mat-header-cell *matHeaderCellDef> Tipo </th>
-                    <td mat-cell *matCellDef="let element">{{element.tipo}}</td>
-                </ng-container>
-                <ng-container matColumnDef="estado">
-                    <th mat-header-cell *matHeaderCellDef> Estado </th>
-                    <td mat-cell *matCellDef="let element"> {{element.estado}} </td>
-                </ng-container>
-                <ng-container matColumnDef="notario">
-                    <th mat-header-cell *matHeaderCellDef> Notario </th>
-                    <td mat-cell *matCellDef="let element"> {{element.numeronotariobe}} </td>
-                </ng-container>
-                <ng-container matColumnDef="porcentaje">
-                    <th mat-header-cell *matHeaderCellDef> % </th>
-                    <td mat-cell *matCellDef="let element"> {{element.porcactototal*100}}% </td>
-                </ng-container>
-                <ng-container matColumnDef="f_pres">
-                    <th mat-header-cell *matHeaderCellDef> F. Pres. </th>
-                    <td mat-cell *matCellDef="let element"> {{element.fechapresentacion | date: 'dd/MM/yyyy' }} </td>
-                </ng-container>
-                <ng-container matColumnDef="flc">
-                    <th mat-header-cell *matHeaderCellDef> F.L.C. </th>
-                    <td mat-cell *matCellDef="let element"> {{element.fechalineacaptura | date: 'dd/MM/yyyy' }} </td>
-                </ng-container>
-                <ng-container matColumnDef="f_pago">
-                    <th mat-header-cell *matHeaderCellDef> F. Pago </th>
-                    <td mat-cell *matCellDef="let element"> {{element.fechapago | date: 'dd/MM/yyyy' }} </td>
-                </ng-container>
-                <ng-container matColumnDef="siscor">
-                    <th mat-header-cell *matHeaderCellDef> Siscor </th>
-                    <td mat-cell *matCellDef="let element"><mat-checkbox class="example-margin" [disabled]="true" [checked]="isSiscor(element)"></mat-checkbox></td>
-                </ng-container>
-                <ng-container matColumnDef="select">
-                    <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
-                    <td mat-cell *matCellDef="let element">
-                        <button mat-stroked-button color="primary" aria-label="Declaraciones" matTooltip="Declaraciones" [routerLink]="['/main/detalle-avaluo-sf', element.iddeclaracion]">
-                            Ver
+                <div class="col">
+                    <div class="d-flex flex-row-reverse">
+                        
+                        <button mat-icon-button color="primary" aria-label="Limpiar Filtros" matTooltip="Limpiar Filtros" (click)="clean()">
+                            <mat-icon>clear</mat-icon>
                         </button>
-                    </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-            <mat-paginator #paginator [length]="total" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado($event)">
-            </mat-paginator>
-        </ng-container> -->
-    </mat-card-content>
+                        <!-- <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getData()" [disabled]="!search"> -->
+                        <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar">
+                            <mat-icon>search</mat-icon>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-6">
+                </div>
+            </div>
+
+        
+            <br>
+            <!-- <ng-container *ngIf="busqueda">
+                <div style="padding: 30px; text-align: center;" *ngIf="loading">
+                    <mat-spinner style="margin:0 auto;"></mat-spinner>
+                    <p>Cargando...</p>
+                </div>
+                <div class="alert alert-info" *ngIf="dataSource.length == 0 && !loading">
+                    No hay avalúos para el filtro seleccionado
+                </div>
+                <table mat-table [dataSource]="dataSource" *ngIf="!loading && dataSource.length > 0">
+                    <ng-container matColumnDef="num">
+                        <th mat-header-cell *matHeaderCellDef> Nº </th>
+                        <td mat-cell *matCellDef="let element"> {{element.numpresentacion}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="tipo">
+                        <th mat-header-cell *matHeaderCellDef> Tipo </th>
+                        <td mat-cell *matCellDef="let element">{{element.tipo}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="estado">
+                        <th mat-header-cell *matHeaderCellDef> Estado </th>
+                        <td mat-cell *matCellDef="let element"> {{element.estado}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="notario">
+                        <th mat-header-cell *matHeaderCellDef> Notario </th>
+                        <td mat-cell *matCellDef="let element"> {{element.numeronotariobe}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="porcentaje">
+                        <th mat-header-cell *matHeaderCellDef> % </th>
+                        <td mat-cell *matCellDef="let element"> {{element.porcactototal*100}}% </td>
+                    </ng-container>
+                    <ng-container matColumnDef="f_pres">
+                        <th mat-header-cell *matHeaderCellDef> F. Pres. </th>
+                        <td mat-cell *matCellDef="let element"> {{element.fechapresentacion | date: 'dd/MM/yyyy' }} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="flc">
+                        <th mat-header-cell *matHeaderCellDef> F.L.C. </th>
+                        <td mat-cell *matCellDef="let element"> {{element.fechalineacaptura | date: 'dd/MM/yyyy' }} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="f_pago">
+                        <th mat-header-cell *matHeaderCellDef> F. Pago </th>
+                        <td mat-cell *matCellDef="let element"> {{element.fechapago | date: 'dd/MM/yyyy' }} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="siscor">
+                        <th mat-header-cell *matHeaderCellDef> Siscor </th>
+                        <td mat-cell *matCellDef="let element"><mat-checkbox class="example-margin" [disabled]="true" [checked]="isSiscor(element)"></mat-checkbox></td>
+                    </ng-container>
+                    <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
+                        <td mat-cell *matCellDef="let element">
+                            <button mat-stroked-button color="primary" aria-label="Declaraciones" matTooltip="Declaraciones" [routerLink]="['/main/detalle-avaluo-sf', element.iddeclaracion]">
+                                Ver
+                            </button>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <mat-paginator #paginator [length]="total" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado($event)">
+                </mat-paginator>
+            </ng-container> -->
+        </mat-card-content>
+    </div>
 </mat-card>

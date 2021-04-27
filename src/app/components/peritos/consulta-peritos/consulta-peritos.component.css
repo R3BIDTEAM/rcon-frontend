@@ -1,0 +1,33 @@
+.little-button {
+    min-width: 10px !important;
+    line-height: 0px;
+    padding: 0 0;
+}
+
+.mat-card-header .mat-card-title {
+    color: #43A047;
+    font-size: 20px;
+    margin: 5% 0 5% 0;
+}
+
+.borde {
+    border: 2px solid rgb(155, 154, 154);
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+  
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+  
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
