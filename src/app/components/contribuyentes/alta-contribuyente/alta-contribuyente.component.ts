@@ -36,6 +36,60 @@ export interface DataDomicilio {
   telefono: string;
   adicional: string;
 }
+export interface DataRepresentante {
+  tipoPersona: string;
+  nombre: string;
+  apaterno: string;
+  amaterno: string;
+  rfc: string;
+  curp: string;
+  ine: string;
+  idDocIdent: number;
+  docIdent: string;
+  fechaNacimiento: Date;
+  fechaDefuncion: Date;
+  celular: string;
+  email: string;
+  actPreponderante: string;
+  idTipoPersonaMoral: number;
+  fechaInicioOperacion: Date;
+  idMotivo: number;
+  fechaCambio: Date;
+}
+export interface DataRepresentado {
+  tipoPersona: string;
+  nombre: string;
+  apaterno: string;
+  amaterno: string;
+  rfc: string;
+  curp: string;
+  ine: string;
+  idDocIdent: number;
+  docIdent: string;
+  fechaNacimiento: Date;
+  fechaDefuncion: Date;
+  celular: string;
+  email: string;
+  actPreponderante: string;
+  idTipoPersonaMoral: number;
+  fechaInicioOperacion: Date;
+  idMotivo: number;
+  fechaCambio: Date;
+}
+export interface DataRepresentacion {
+  codtipodocumento: number;
+  nombreTipoDocumento: string;
+  codtipodocumentojuridico: number;
+  nombreTipoDocumentoJuridico: string;
+  fecha: Date;
+  descripcion: string;
+  lugar: string;
+  archivos: Array<DataArchivo>;
+}
+export interface DataArchivo {
+  nombre: string;
+  base64: string;
+}
 
 @Component({
   selector: 'app-alta-contribuyente',
