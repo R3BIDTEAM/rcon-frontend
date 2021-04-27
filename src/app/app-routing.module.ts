@@ -16,6 +16,7 @@ import { EdicionPeritosComponent } from '@comp/peritos/edicion-peritos/edicion-p
 import { AltaSociedadComponent } from '@comp/sociedad/alta-sociedad/alta-sociedad.component';
 import { ConsultaSociedadComponent } from '@comp/sociedad/consulta-sociedad/consulta-sociedad.component';
 import { EdicionSociedadComponent } from '@comp/sociedad/edicion-sociedad/edicion-sociedad.component';
+import { VerPeritosComponent } from '@comp/peritos/ver-peritos/ver-peritos.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -33,7 +34,8 @@ const routes: Routes = [
       { path: 'edicion-peritos', component: EdicionPeritosComponent, canActivate: [GuardService] },
       { path: 'alta-sociedad', component: AltaSociedadComponent, canActivate: [GuardService] },
       { path: 'consulta-sociedad', component: ConsultaSociedadComponent, canActivate: [GuardService] },
-      { path: 'edicion-sociedad', component: EdicionSociedadComponent, canActivate: [GuardService] }
+      { path: 'edicion-sociedad', component: EdicionSociedadComponent, canActivate: [GuardService] },
+      { path: 'ver-peritos', component: VerPeritosComponent, canActivate: [GuardService] }
     ]
   },
   { path: '**', redirectTo: '', pathMatch: 'full' },

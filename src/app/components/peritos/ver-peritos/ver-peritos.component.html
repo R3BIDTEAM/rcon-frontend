@@ -1,0 +1,173 @@
+<mat-card>
+    <div class="borde">
+        <mat-card-header>
+            <mat-card-title>Datos Perito</mat-card-title>
+        </mat-card-header>
+        <mat-card-header>
+            <mat-card-title>Datos de persona física</mat-card-title>
+            <button mat-icon-button color="primary" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente">
+                <mat-icon>clear</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente">
+                <mat-icon>create</mat-icon>
+            </button>
+        </mat-card-header>
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="row">
+                    <div class="col-md-4">
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Apellido Paterno</mat-label>
+                            <input matInput placeholder="Placeholder">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Apellido Materno</mat-label>
+                            <input matInput placeholder="Placeholder">
+                        </mat-form-field>
+                    </div> 
+                    <div class="col-md-4">
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Nombre</mat-label>
+                            <input matInput placeholder="Placeholder">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>RFC*</mat-label>
+                            <input matInput placeholder="Placeholder">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>CURP*</mat-label>
+                            <input matInput placeholder="Placeholder">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>INE</mat-label>
+                            <input matInput placeholder="Placeholder">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Seleccione</mat-label>
+                            <mat-select>
+                                <mat-option value="1">Cédula profecional</mat-option>
+                                <mat-option value="2">Pasaporte</mat-option>
+                                <mat-option value="3">Licencia de conducir</mat-option>
+                                <mat-option value="4">Número de seguro social</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <!-- <mat-label>INE</mat-label> -->
+                            <input matInput placeholder="Placeholder">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Fecha Nacimiento</mat-label>
+                            <input matInput [matDatepicker]="picker">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Fecha Defunción</mat-label>
+                            <input matInput [matDatepicker]="picker">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+        
+                <div class="row">
+                    <div class="col-md-4">
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Celular</mat-label>
+                            <input matInput placeholder="Placeholder">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>E-Mail</mat-label>
+                            <input matInput placeholder="Placeholder">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <mat-card-header>
+                    <mat-card-title>Datos especifícos del perito</mat-card-title>
+                    <button mat-icon-button color="primary" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente">
+                        <mat-icon>add_box</mat-icon>
+                    </button>
+                    <button mat-icon-button color="primary" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </mat-card-header>
+                <div class="row">
+                    <div class="col-md-5">
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Registro*</mat-label>
+                            <input matInput placeholder="Placeholder">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-5">
+                            <mat-checkbox formControlName="active">Independiente</mat-checkbox>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Fecha Alta</mat-label>
+                            <input matInput [matDatepicker]="picker">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field appearance="fill" style="width: 100%;">
+                            <mat-label>Fecha Baja</mat-label>
+                            <input matInput [matDatepicker]="picker">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <h3>Sociedades Asociadas</h3>
+            
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 offset-md-8">
+                <div class="d-flex flex-row-reverse">
+                    <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar">
+                        Guardar
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="d-flex flex-row-reverse">
+                    <button mat-stroked-button class="boton-n-representacion" color="warn" aria-label="Cancelar">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-card>
