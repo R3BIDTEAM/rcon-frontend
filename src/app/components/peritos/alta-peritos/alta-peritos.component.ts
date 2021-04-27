@@ -5,6 +5,8 @@ import { environment } from '@env/environment';
 import { AuthService } from '@serv/auth.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
+import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
+import {MatCheckboxModule} from '@angular/material/checkbox'; 
 
 @Component({
     selector: 'app-alta-peritos',
@@ -13,15 +15,35 @@ import { MatPaginator } from '@angular/material/paginator';
 })
 export class AltaPeritosComponent implements OnInit {
 
+    peritoFormGroup: FormGroup;
+
     constructor(
         private http: HttpClient,
         private snackBar: MatSnackBar,
         private auth: AuthService,
+        private _formBuilder: FormBuilder,
         public dialog: MatDialog,
     ) {
     }
 
     ngOnInit(): void {
+        this.peritoFormGroup = this._formBuilder.group({
+            nombre: [null, [Validators.required]],
+            apaterno: [null, [Validators.required]],
+            amaterno: [null, []],
+            rfc: [null, [Validators.required]],
+            curp: [null, [Validators.required]],
+            ine: [null, []],
+            idDocIdent: ['', []],
+            docIdent: [null, []],
+            fechaNacimiento: [null, []],
+            fechaDefuncion: [null, []],
+            celular: [null, []],
+            email: [null, []],
+            registro: [null, []],
+            fechaInicio: [null, []],
+            fechaFin: [null, []],
+          });
     }
 
     openDialogPerito(): void {

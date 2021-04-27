@@ -33,6 +33,7 @@ import { EdicionPeritosComponent } from './components/peritos/edicion-peritos/ed
 import { AltaSociedadComponent, DialogSociedad } from './components/sociedad/alta-sociedad/alta-sociedad.component';
 import { ConsultaSociedadComponent } from './components/sociedad/consulta-sociedad/consulta-sociedad.component';
 import { EdicionSociedadComponent } from './components/sociedad/edicion-sociedad/edicion-sociedad.component';
+import { VerPeritosComponent } from './components/peritos/ver-peritos/ver-peritos.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { EdicionSociedadComponent } from './components/sociedad/edicion-sociedad
     EdicionSociedadComponent,
     DialogPerito,
     DialogSociedad,
-    DialogDomicilio
+    DialogDomicilio,
+    VerPeritosComponent
   ],
   imports: [
     BrowserModule,

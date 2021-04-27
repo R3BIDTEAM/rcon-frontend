@@ -7,6 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConsultaPeritosComponent implements OnInit {
 
+    displayedColumns: string[] = ['registro','nombre', 'datos', 'select'];
+    pagina = 1;
+    total = 0;
+    pagesize = 15;
+
     constructor() { }
 
     ngOnInit(): void {
@@ -15,5 +20,9 @@ export class ConsultaPeritosComponent implements OnInit {
     clean(): void{
         // this.busqueda = false;
         // this.resetPaginator();
+    }
+
+    paginado(evt): void{
+        this.pagina = evt.pageIndex + 1;
     }
 }
