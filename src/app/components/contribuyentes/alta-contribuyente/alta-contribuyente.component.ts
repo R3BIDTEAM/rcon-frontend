@@ -121,6 +121,10 @@ export class AltaContribuyenteComponent implements OnInit {
     });
   }
 
+  viewHistorial(i, domicilio): void {
+    console.log(i + " " + domicilio);
+  }
+
 }
 
 
