@@ -55,8 +55,9 @@ export interface DataRepresentacion {
   fechaInicioOperacion: Date;
   idMotivo: number;
   fechaCambio: Date;
+  documentoRepresentacion: DataDocumentoRepresentacion;
 }
-export interface DataArchivoRepresentacion {
+export interface DataDocumentoRepresentacion {
   codtipodocumento: number;
   nombreTipoDocumento: string;
   codtipodocumentojuridico: number;
@@ -64,11 +65,7 @@ export interface DataArchivoRepresentacion {
   fecha: Date;
   descripcion: string;
   lugar: string;
-  archivos: Array<DataArchivo>;
-}
-export interface DataArchivo {
-  nombre: string;
-  base64: string;
+  archivos: Array<{nombre: string, base64: string}>;
 }
 
 @Component({
