@@ -392,9 +392,16 @@ export class DialogDomicilio {
   styleUrls: ['./alta-contribuyente.component.css']
 })
 export class DialogRepresentacion {
+  endpoint = environment.endpoint;
+  loading = false;
+  httpOptions;
+  representacionFormGroup: FormGroup;
+  dataRepresentacion: DataRepresentacion = {} as DataRepresentacion;
+
   constructor(
     public dialogRef: MatDialogRef<DialogRepresentacion>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
       dialogRef.disableClose = true;
+      this.dataRepresentacion.documentoRepresentacion = {} as DataDocumentoRepresentacion;
     }
 }
