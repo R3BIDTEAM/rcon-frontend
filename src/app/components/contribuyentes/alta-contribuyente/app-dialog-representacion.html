@@ -92,6 +92,21 @@
                         <input matInput formControlName="email">
                     </mat-form-field>
                 </div>
+                <div class="row">
+                    <mat-form-field class="col-12">
+                        <mat-label>Texto de representación:</mat-label>
+                        <textarea matInput formControlName="texto" rows="5"></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field class="col-6">
+                        <mat-label>Fecha Caducidad:</mat-label>
+                        <input matInput readonly formControlName="fechaCaducidad" [matDatepicker]="pickfechaCaducidad">
+                        <mat-datepicker-toggle matSuffix [for]="pickfechaCaducidad"></mat-datepicker-toggle>
+                        <mat-datepicker #pickfechaCaducidad></mat-datepicker>
+                    </mat-form-field>
+                    <div class="col-6"></div>
+                </div>
             </form>
         </ng-container>
         <ng-container *ngIf="tipoPersona == 'M'">
@@ -143,6 +158,21 @@
                         <mat-datepicker-toggle matSuffix [for]="pickfechaCambio"></mat-datepicker-toggle>
                         <mat-datepicker #pickfechaCambio></mat-datepicker>
                     </mat-form-field>                            
+                </div>
+                <div class="row">
+                    <mat-form-field class="col-12">
+                        <mat-label>Texto de representación:</mat-label>
+                        <textarea matInput formControlName="texto" rows="5"></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field class="col-6">
+                        <mat-label>Fecha Caducidad:</mat-label>
+                        <input matInput readonly formControlName="fechaCaducidad" [matDatepicker]="pickfechaCaducidad">
+                        <mat-datepicker-toggle matSuffix [for]="pickfechaCaducidad"></mat-datepicker-toggle>
+                        <mat-datepicker #pickfechaCaducidad></mat-datepicker>
+                    </mat-form-field>
+                    <div class="col-6"></div>
                 </div>
             </form>
         </ng-container>

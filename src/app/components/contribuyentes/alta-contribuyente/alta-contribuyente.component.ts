@@ -55,6 +55,8 @@ export interface DataRepresentacion {
   fechaInicioOperacion: Date;
   idMotivo: number;
   fechaCambio: Date;
+  texto: string;
+  fechaCaducidad: Date;
   documentoRepresentacion: DataDocumentoRepresentacion;
 }
 export interface DataDocumentoRepresentacion {
@@ -425,6 +427,8 @@ export class DialogRepresentacion {
         fechaDefuncion: [null, []],
         celular: [null, []],
         email: [null, []],
+        texto: [null, []],
+        fechaCaducidad: [null, []],
       });
   
       this.moralFormGroup = this._formBuilder.group({
@@ -435,6 +439,8 @@ export class DialogRepresentacion {
         fechaInicioOperacion: [null, []],
         idMotivo: ['', []],
         fechaCambio: [null, []],
+        texto: [null, []],
+        fechaCaducidad: [null, []],
       });
 
       if(data){
@@ -465,6 +471,8 @@ export class DialogRepresentacion {
       this.dataRepresentacion.fechaDefuncion = (this.fisicaFormGroup.value.fechaDefuncion) ? this.fisicaFormGroup.value.fechaDefuncion : null;
       this.dataRepresentacion.celular = (this.fisicaFormGroup.value.celular) ? this.fisicaFormGroup.value.celular : null;
       this.dataRepresentacion.email = (this.fisicaFormGroup.value.email) ? this.fisicaFormGroup.value.email : null;
+      this.dataRepresentacion.texto = (this.fisicaFormGroup.value.texto) ? this.fisicaFormGroup.value.texto : null;
+      this.dataRepresentacion.fechaCaducidad = (this.fisicaFormGroup.value.fechaCaducidad) ? this.fisicaFormGroup.value.fechaCaducidad : null;
     } else {
       this.dataRepresentacion.nombre = (this.moralFormGroup.value.nombre) ? this.moralFormGroup.value.nombre : null;
       this.dataRepresentacion.rfc = (this.moralFormGroup.value.rfc) ? this.moralFormGroup.value.rfc : null;
@@ -473,6 +481,8 @@ export class DialogRepresentacion {
       this.dataRepresentacion.fechaInicioOperacion = (this.moralFormGroup.value.fechaInicioOperacion) ? this.moralFormGroup.value.fechaInicioOperacion : null;
       this.dataRepresentacion.idMotivo = this.moralFormGroup.value.idMotivo;
       this.dataRepresentacion.fechaCambio = (this.moralFormGroup.value.fechaCambio) ? this.moralFormGroup.value.fechaCambio : null;
+      this.dataRepresentacion.texto = (this.moralFormGroup.value.texto) ? this.moralFormGroup.value.texto : null;
+      this.dataRepresentacion.fechaCaducidad = (this.moralFormGroup.value.fechaCaducidad) ? this.moralFormGroup.value.fechaCaducidad : null;
     }
 
     return this.dataRepresentacion;
@@ -493,6 +503,8 @@ export class DialogRepresentacion {
       this.fisicaFormGroup.controls['fechaDefuncion'].setValue(dataRepresentacion.fechaDefuncion);
       this.fisicaFormGroup.controls['celular'].setValue(dataRepresentacion.celular);
       this.fisicaFormGroup.controls['email'].setValue(dataRepresentacion.email);
+      this.fisicaFormGroup.controls['texto'].setValue(dataRepresentacion.texto);
+      this.fisicaFormGroup.controls['fechaCaducidad'].setValue(dataRepresentacion.fechaCaducidad);
     } else {
       this.moralFormGroup.controls['nombre'].setValue(dataRepresentacion.nombre);
       this.moralFormGroup.controls['rfc'].setValue(dataRepresentacion.rfc);
@@ -501,6 +513,8 @@ export class DialogRepresentacion {
       this.moralFormGroup.controls['fechaInicioOperacion'].setValue(dataRepresentacion.fechaInicioOperacion);
       this.moralFormGroup.controls['idMotivo'].setValue(dataRepresentacion.idMotivo);
       this.moralFormGroup.controls['fechaCambio'].setValue(dataRepresentacion.fechaCambio);
+      this.moralFormGroup.controls['texto'].setValue(dataRepresentacion.texto);
+      this.moralFormGroup.controls['fechaCaducidad'].setValue(dataRepresentacion.fechaCaducidad);
     }
   }
 }

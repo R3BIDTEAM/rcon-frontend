@@ -261,8 +261,8 @@
                                 <tbody>
                                     <tr *ngFor="let representante of dataRepresentantes; let i = index;">
                                         <td>{{representante.nombre}}</td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{representante.texto}}</td>
+                                        <td>{{representante.fechaCaducidad | date:'dd/MM/YYYY'}}</td>
                                         <td>
                                             <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar" (click)="addRepresentante(i, representante)">
                                                 <mat-icon>edit</mat-icon>
