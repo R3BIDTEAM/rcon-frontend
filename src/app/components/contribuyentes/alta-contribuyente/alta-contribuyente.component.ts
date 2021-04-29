@@ -395,13 +395,54 @@ export class DialogRepresentacion {
   endpoint = environment.endpoint;
   loading = false;
   httpOptions;
-  representacionFormGroup: FormGroup;
+  tipoPersona = 'F';
+  fisicaFormGroup: FormGroup;
+  moralFormGroup: FormGroup;
   dataRepresentacion: DataRepresentacion = {} as DataRepresentacion;
 
   constructor(
+    private http: HttpClient,
+    private _formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<DialogRepresentacion>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
       dialogRef.disableClose = true;
       this.dataRepresentacion.documentoRepresentacion = {} as DataDocumentoRepresentacion;
+
+      this.fisicaFormGroup = this._formBuilder.group({
+        nombre: [null, [Validators.required]],
+        apaterno: [null, [Validators.required]],
+        amaterno: [null, []],
+        rfc: [null, [Validators.required]],
+        curp: [null, [Validators.required]],
+        ine: [null, []],
+        idDocIdent: ['', []],
+        docIdent: [null, []],
+        fechaNacimiento: [null, []],
+        fechaDefuncion: [null, []],
+        celular: [null, []],
+        email: [null, []],
+      });
+  
+      this.moralFormGroup = this._formBuilder.group({
+        nombre: [null, [Validators.required]],
+        rfc: [null, [Validators.required]],
+        actPreponderante: [null, []],
+        idTipoPersonaMoral: ['', []],
+        fechaInicioOperacion: [null, []],
+        idMotivo: ['', []],
+        fechaCambio: [null, []],
+      });
     }
+    
+  changeRequired(remove, add): void {
+    this.fisicaFormGroup.controls[remove].setValue(null);
+    this.fisicaFormGroup.controls[remove].clearValidators();
+    this.fisicaFormGroup.controls[add].setValidators(Validators.required);
+    this.fisicaFormGroup.markAsUntouched();
+    this.fisicaFormGroup.updateValueAndValidity();
+  }
+
+  getDataRepresentacion(): void {
+    console.log("asdasd");
+  }
 }
