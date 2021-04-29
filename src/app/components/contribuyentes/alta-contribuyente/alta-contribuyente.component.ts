@@ -538,6 +538,15 @@ export class DialogRepresentacion {
   styleUrls: ['./alta-contribuyente.component.css']
 })
 export class DialogDocumento {
+  endpointCatalogos = environment.endpoint;
+  loadingTiposDocumentoDigital = false;
+  loadingTiposDocumentoJuridico = false;
+  httpOptions;
+  tiposDocumentoDigital;
+  tiposDocumentoJuridico;
+  documentoFormGroup: FormGroup;
+  dataDocumento: DataDocumentoRepresentacion = {} as DataDocumentoRepresentacion;
+  
   constructor(
     private http: HttpClient,
     private _formBuilder: FormBuilder,
@@ -545,4 +554,30 @@ export class DialogDocumento {
     @Inject(MAT_DIALOG_DATA) public data: any) {
       dialogRef.disableClose = true;
     }
+
+  getDataTiposDocumentoDigital(): void {
+    this.loadingTiposDocumentoDigital = true;
+    this.http.get(this.endpointCatalogos, this.httpOptions).subscribe(
+      (res: any) => {
+        this.loadingTiposDocumentoDigital = false;
+        this.tiposDocumentoDigital = res;
+      },
+      (error) => {
+        this.loadingTiposDocumentoDigital = false;
+      }
+    );
+  }
+
+  getDataTiposDocumentoJuridico(): void {
+    this.loadingTiposDocumentoJuridico = true;
+    this.http.get(this.endpointCatalogos, this.httpOptions).subscribe(
+      (res: any) => {
+        this.loadingTiposDocumentoJuridico = false;
+        this.tiposDocumentoJuridico = res;
+      },
+      (error) => {
+        this.loadingTiposDocumentoJuridico = false;
+      }
+    );
+  }
 }
