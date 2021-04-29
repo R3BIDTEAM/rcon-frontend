@@ -179,7 +179,7 @@
         <div class="row">
             <div class="col">
                 <h4 class="cdmx-color-accent">Documento representación
-                    <button mat-flat-button type="button" [disabled]="false" color="primary" aria-label="Agregar" matTooltip="Agregar" class="little-button" (click)="addDocumento()">
+                    <button mat-flat-button type="button" [disabled]="dataRepresentacion.documentoRepresentacion != null && dataRepresentacion.documentoRepresentacion != undefined" color="primary" aria-label="Agregar" matTooltip="Agregar" class="little-button" (click)="addDocumento()">
                         <mat-icon>add</mat-icon>
                     </button>
                 </h4>
@@ -187,11 +187,25 @@
         </div>
         <div class="row">
             <div class="col">
-                <div *ngIf="dataRepresentacion.documentoRepresentacion == null; else documentos">
+                <div *ngIf="dataRepresentacion.documentoRepresentacion === null || dataRepresentacion.documentoRepresentacion === undefined; else documentos">
                     No hay documentos registrados.
                 </div>
                 <ng-template #documentos>
-                    
+                    <mat-list>
+                        <div mat-subheader>{{dataRepresentacion.documentoRepresentacion.codtipodocumento}} - Fecha: {{dataRepresentacion.documentoRepresentacion.fecha | date: 'dd/MM/yyyy'}}
+                            <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar" (click)="removeDocumento()">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                        <mat-list-item *ngFor="let archivo of dataRepresentacion.documentoRepresentacion.archivos">
+                            <mat-icon mat-list-icon>description</mat-icon>
+                            <div mat-line>{{archivo.nombre}}</div>
+                        </mat-list-item>
+                        <br>
+                    </mat-list>
                 </ng-template>
             </div>
         </div>

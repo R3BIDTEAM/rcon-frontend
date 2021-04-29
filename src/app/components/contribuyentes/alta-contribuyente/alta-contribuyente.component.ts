@@ -463,10 +463,14 @@ export class DialogRepresentacion {
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result){
-        console.log(result);
+        this.dataRepresentacion.documentoRepresentacion = result;
       }
     });
   }
+
+  removeDocumento(){
+		this.dataRepresentacion.documentoRepresentacion = undefined;
+	}
 
   getDataRepresentacion(): DataRepresentacion {
     this.dataRepresentacion.tipoPersona = this.tipoPersona;
@@ -627,8 +631,14 @@ export class DialogDocumento {
     }
   }
 
-  getDataDocumento(): DataDocumentoRepresentacion {
+  getDataDocumento(): void {
+    this.dataDocumento.codtipodocumento = this.tiposDocumentoFormGroup.value.codtipodocumento;
+    this.dataDocumento.codtipodocumentojuridico = this.tiposDocumentoFormGroup.value.codtipodocumentojuridico;
+    this.dataDocumento.fecha = (this.infoDocumentoFormGroup.value.fecha) ? this.infoDocumentoFormGroup.value.fecha : null;
+    this.dataDocumento.descripcion = (this.infoDocumentoFormGroup.value.descripcion) ? this.infoDocumentoFormGroup.value.descripcion : null;
+    this.dataDocumento.lugar = (this.infoDocumentoFormGroup.value.lugar) ? this.infoDocumentoFormGroup.value.lugar : null;
+    this.dataDocumento.archivos = this.archivosDocumentoFormGroup.value.archivos;
+
     this.canSend = true;
-    return this.dataDocumento;
   }
 }
