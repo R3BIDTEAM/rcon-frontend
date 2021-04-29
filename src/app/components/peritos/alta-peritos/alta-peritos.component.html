@@ -15,6 +15,8 @@
             <form [formGroup]="peritoFormGroup">
                 <!-- Búsqueda por nombre -->
                 <div class="row">
+                    <div class="col-1 text-center">
+                    </div>
                     <mat-form-field class="col-10">
                         <mat-label>Nombre:</mat-label>
                         <input matInput formControlName="nombre">
@@ -22,6 +24,8 @@
                     </mat-form-field>
                 </div>
                 <div class="row">
+                    <div class="col-1 text-center">
+                    </div>
                     <mat-form-field class="col-5">
                         <mat-label>Apellido Paterno:</mat-label>
                         <input matInput formControlName="apaterno">
@@ -33,6 +37,8 @@
                     </mat-form-field>
                 </div>
                 <div class="row">
+                    <div class="col-1 text-center">
+                    </div>
                     <mat-form-field class="col-5">
                         <mat-label>RFC:</mat-label>
                         <input matInput formControlName="rfc">
@@ -45,12 +51,16 @@
                     </mat-form-field>
                 </div>
                 <div class="row">
+                    <div class="col-1 text-center">
+                    </div>
                     <mat-form-field class="col-5">
                         <mat-label>Clave INE:</mat-label>
                         <input matInput formControlName="ine">
                     </mat-form-field>
                 </div>
                 <div class="row">
+                    <div class="col-1 text-center">
+                    </div>
                     <mat-form-field class="col-5">
                         <mat-label>Identificación</mat-label>
                         <mat-select formControlName="idDocIdent" >
@@ -66,6 +76,8 @@
                     </mat-form-field>
                 </div>
                 <div class="row">
+                    <div class="col-1 text-center">
+                    </div>
                     <mat-form-field class="col-5">
                         <mat-label>Fecha Nacimiento:</mat-label>
                         <input matInput readonly formControlName="fechaNacimiento" [matDatepicker]="pickfechaNacimiento">
@@ -80,6 +92,8 @@
                     </mat-form-field>
                 </div>
                 <div class="row">
+                    <div class="col-1 text-center">
+                    </div>
                     <mat-form-field class="col-5">
                         <mat-label>Celular:</mat-label>
                         <input matInput formControlName="celular">
@@ -95,15 +109,19 @@
                     <mat-card-title>Datos especificos del perito</mat-card-title>
                 </mat-card-header>
                 <div class="row">
+                    <div class="col-1 text-center">
+                    </div>
                     <mat-form-field class="col-5">
                         <mat-label>Registro:</mat-label>
                         <input matInput formControlName="registro">
                     </mat-form-field>
                     <!-- <mat-form-field class="col-5"> -->
-                        <mat-checkbox formControlName="active">Independiente</mat-checkbox>
+                        <mat-checkbox>Independiente</mat-checkbox>
                     <!-- </mat-form-field> -->
                 </div>
                 <div class="row">
+                    <div class="col-1 text-center">
+                    </div>
                     <mat-form-field class="col-5">
                         <mat-label>Fecha Inicio:</mat-label>
                         <input matInput readonly formControlName="fechaInicio" [matDatepicker]="pickfechaInicio">
@@ -118,6 +136,8 @@
                     </mat-form-field>
                 </div>
                 <div class="row">
+                    <div class="col-1 text-center">
+                    </div>
                     <mat-form-field class="col-5">
                         <mat-label>Login:</mat-label>
                         <input matInput formControlName="login">

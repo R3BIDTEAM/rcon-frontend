@@ -43,6 +43,7 @@ export class AltaPeritosComponent implements OnInit {
             registro: [null, []],
             fechaInicio: [null, []],
             fechaFin: [null, []],
+            login: [null, []]
           });
     }
 
@@ -73,6 +74,16 @@ export class DialogPerito {
     httpOptions;
     busqueda;
     tipo = '';
+    appaterno;
+    apmaterno
+    nombre;
+    rfc;
+    curp;
+    ine;
+    registro;
+    identificacion;
+    idedato;
+    search = false;
 
     constructor(
             private http: HttpClient,
@@ -120,4 +131,17 @@ export class DialogPerito {
     NotariosSelect(element) {
     }
 
+    validateSearch(){
+        this.search = (
+                this.appaterno ||
+                this.apmaterno ||
+                this.nombre ||
+                this.rfc ||
+                this.curp ||
+                this.ine ||
+                this.registro ||
+                this.identificacion ||
+                this.idedato
+            ) ? true : false;
+    }
 }

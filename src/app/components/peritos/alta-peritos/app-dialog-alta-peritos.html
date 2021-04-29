@@ -1,14 +1,13 @@
 <h1 mat-dialog-title>Búsqueda de personas</h1>
 <div mat-dialog-content>
-    <form #formDialog="ngForm">
         <ng-container>
             <div class="row">
                 <div class="col-1 text-center">
                 </div>
                 <div class="col-6">
-                    <mat-form-field class="input-no-notario">
+                    <mat-form-field>
                         <mat-label>Apellido Paterno / Razón social</mat-label>
-                        <input matInput [required]="true">
+                        <input matInput [(ngModel)]="appaterno" [required]="true" (ngModelChange)="validateSearch()">
                         <mat-error></mat-error>
                     </mat-form-field>
                 </div>
@@ -17,18 +16,18 @@
                 <div class="col-1 text-center">
                 </div>
                 <div class="col-3">
-                    <mat-form-field class="input-no-notario">
+                    <mat-form-field>
                         <mat-label>Apellido Materno</mat-label>
-                        <input matInput [required]="true">
+                            <input matInput [(ngModel)]="apmaterno" [required]="true" (ngModelChange)="validateSearch()">
                         <mat-error></mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-1 text-center">
                 </div>
                 <div class="col-3">
-                    <mat-form-field class="input-no-notario">
+                    <mat-form-field>
                         <mat-label>Nombre</mat-label>
-                        <input matInput [required]="true">
+                            <input matInput [(ngModel)]="nombre" [required]="true" (ngModelChange)="validateSearch()">
                         <mat-error></mat-error>
                     </mat-form-field>
                 </div>
@@ -37,18 +36,18 @@
                 <div class="col-1 text-center">
                 </div>
                 <div class="col-3">
-                    <mat-form-field class="input-no-notario">
+                    <mat-form-field>
                         <mat-label>RFC</mat-label>
-                        <input matInput [required]="true">
+                        <input matInput [(ngModel)]="rfc" [required]="true" (ngModelChange)="validateSearch()">
                         <mat-error></mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-1 text-center">
                 </div>
                 <div class="col-3">
-                    <mat-form-field class="input-no-notario">
+                    <mat-form-field>
                         <mat-label>CURP</mat-label>
-                        <input matInput [required]="true">
+                        <input matInput [(ngModel)]="curp" [required]="true" (ngModelChange)="validateSearch()">
                         <mat-error></mat-error>
                     </mat-form-field>
                 </div>
@@ -57,15 +56,15 @@
                 <div class="col-1 text-center">
                 </div>
                 <div class="col-3">
-                    <mat-form-field class="input-no-notario">
+                    <mat-form-field>
                         <mat-label>INE</mat-label>
-                        <input matInput [required]="true">
+                        <input matInput [(ngModel)]="ine" [required]="true" (ngModelChange)="validateSearch()">
                         <mat-error></mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-3">
-                    <mat-form-field class="input-no-notario">
-                        <mat-select placeholder="Identificación"> 
+                    <mat-form-field>
+                        <mat-select [(ngModel)]="identificacion" [required]="true" (ngModelChange)="validateSearch()">
                             <mat-option value="1">Cédula profecional</mat-option>
                             <mat-option value="2">Pasaporte</mat-option>
                             <mat-option value="3">Licencia de conducir</mat-option>
@@ -74,10 +73,9 @@
                     </mat-form-field>
                 </div>
                 <div class="col-2">
-                    <mat-form-field class="input-no-notario">
+                    <mat-form-field>
                         <mat-label></mat-label>
-                        <input matInput [required]="true">
-                        <mat-error></mat-error>
+                        <input matInput [(ngModel)]="idedato" [required]="true" (ngModelChange)="validateSearch()">
                     </mat-form-field>
                 </div>
             </div>
@@ -86,12 +84,12 @@
             <div class="col" align="end">
             </div>
             <div class="col" align="end">
-                <button mat-icon-button color="primary" aria-label="Buscar" matTooltip="Buscar" (click)="getDataNotario()">
+                <button mat-icon-button color="primary" aria-label="Buscar" matTooltip="Buscar" (click)="getDataNotario()" [disabled]="!search">
                     <mat-icon>search</mat-icon>
                 </button>
             </div>
         </div>
-    </form>
+    
 
     
     <!-- <div style="padding: 30px; text-align: center;" *ngIf="loading">
