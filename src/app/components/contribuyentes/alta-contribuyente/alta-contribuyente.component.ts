@@ -81,6 +81,8 @@ export class AltaContribuyenteComponent implements OnInit {
   fisicaFormGroup: FormGroup;
   moralFormGroup: FormGroup;
   dataDomicilios: DataDomicilio[] = [];
+  dataRepresentantes: DataRepresentacion[] = [];
+  dataRepresentados: DataRepresentacion[] = [];
   
   constructor(
     private http: HttpClient,
@@ -154,6 +156,22 @@ export class AltaContribuyenteComponent implements OnInit {
 
   viewHistorial(i, domicilio): void {
     console.log(i + " " + domicilio);
+  }
+
+  addRepresentante(i = -1, dataRepresentante = null): void {
+    const dialogRef = this.dialog.open(DialogRepresentacion, {
+      width: '700px',
+      data: dataRepresentante,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        if(i != -1){
+          this.dataRepresentantes[i] = result;
+        }else{
+          this.dataRepresentantes.push(result);
+        }
+      }
+    });
   }
 
 }
@@ -365,4 +383,18 @@ export class DialogDomicilio {
       this.domicilioFormGroup.controls['ciudad'].setValue(dataDomicilio.ciudad);
     }
   }
+}
+
+
+@Component({
+  selector: 'app-dialog-representacion',
+  templateUrl: 'app-dialog-representacion.html',
+  styleUrls: ['./alta-contribuyente.component.css']
+})
+export class DialogRepresentacion {
+  constructor(
+    public dialogRef: MatDialogRef<DialogRepresentacion>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+      dialogRef.disableClose = true;
+    }
 }

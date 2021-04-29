@@ -230,7 +230,53 @@
             <mat-card-header>
                 <mat-card-title>Datos de representación</mat-card-title>
             </mat-card-header>
-            <mat-card-content>           
+            <mat-card-content>
+                <br>
+                <div class="row">
+                    <div class="col-4">
+                        <h3>Representantes
+                            <button mat-flat-button type="button" color="primary" aria-label="Agregar" matTooltip="Agregar" class="little-button" (click)="addRepresentante()">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </h3>
+                    </div>
+                    <div class="col-4"></div>
+                    <div class="col-4"></div>                    
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div *ngIf="dataRepresentantes.length == 0; else representantes">
+                            No hay datos que mostrar ...
+                        </div>
+                        <ng-template #representantes>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Representante</th>
+                                        <th>Texto Representación</th>
+                                        <th>Caducidad</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let representante of dataRepresentantes; let i = index;">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar" (click)="addRepresentante(i, representante)">
+                                                <mat-icon>edit</mat-icon>
+                                            </button>
+                                            <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar" (click)="removeRepresentante(i)">
+                                                <mat-icon>delete</mat-icon>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </ng-template>                    
+                    </div>
+                </div>           
             </mat-card-content>
         </div>
 
