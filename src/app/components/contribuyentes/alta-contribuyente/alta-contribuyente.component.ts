@@ -174,6 +174,10 @@ export class AltaContribuyenteComponent implements OnInit {
     });
   }
 
+  removeRepresentante(i){
+		this.dataRepresentantes.splice(i, 1);
+	}
+
 }
 
 
