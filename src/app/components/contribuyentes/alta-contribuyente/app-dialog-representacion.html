@@ -176,6 +176,25 @@
                 </div>
             </form>
         </ng-container>
+        <div class="row">
+            <div class="col">
+                <h4 class="cdmx-color-accent">Documento representación
+                    <button mat-flat-button type="button" [disabled]="false" color="primary" aria-label="Agregar" matTooltip="Agregar" class="little-button">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div *ngIf="dataRepresentacion.documentoRepresentacion == null; else documentos">
+                    No hay documentos registrados.
+                </div>
+                <ng-template #documentos>
+                    
+                </ng-template>
+            </div>
+        </div>
     </ng-container>
 
 </div>
