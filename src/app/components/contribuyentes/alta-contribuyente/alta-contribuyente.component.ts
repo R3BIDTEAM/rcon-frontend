@@ -412,7 +412,6 @@ export class DialogRepresentacion {
     public dialogRef: MatDialogRef<DialogRepresentacion>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
       dialogRef.disableClose = true;
-      this.dataRepresentacion.documentoRepresentacion = {} as DataDocumentoRepresentacion;
 
       this.fisicaFormGroup = this._formBuilder.group({
         nombre: [null, [Validators.required]],
