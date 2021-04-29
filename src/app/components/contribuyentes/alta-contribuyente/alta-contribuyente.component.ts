@@ -544,8 +544,11 @@ export class DialogDocumento {
   httpOptions;
   tiposDocumentoDigital;
   tiposDocumentoJuridico;
-  documentoFormGroup: FormGroup;
+  tiposDocumentoFormGroup: FormGroup;
+  infoDocumentoFormGroup: FormGroup;
+  archivosDocumentoFormGroup: FormGroup;
   dataDocumento: DataDocumentoRepresentacion = {} as DataDocumentoRepresentacion;
+  canSend = false;
   
   constructor(
     private http: HttpClient,
@@ -553,6 +556,21 @@ export class DialogDocumento {
     public dialogRef: MatDialogRef<DialogDocumento>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
       dialogRef.disableClose = true;
+
+      this.tiposDocumentoFormGroup = this._formBuilder.group({
+        codtipodocumento: ['', [Validators.required]],
+        codtipodocumentojuridico: ['', [Validators.required]]
+      });
+
+      this.infoDocumentoFormGroup = this._formBuilder.group({
+        fecha: [null, [Validators.required]],
+        descripcion: [null, []],
+        lugar: [null, [Validators.required]]
+      });
+
+      this.archivosDocumentoFormGroup = this._formBuilder.group({
+        archivos: this._formBuilder.array([])
+      });
     }
 
   getDataTiposDocumentoDigital(): void {
@@ -579,5 +597,38 @@ export class DialogDocumento {
         this.loadingTiposDocumentoJuridico = false;
       }
     );
+  }
+
+  createItem(data): FormGroup {
+    return this._formBuilder.group(data);
+  }
+
+  removeItem(i) {
+		this.archivos.removeAt(i);
+	}
+
+  get archivos(): FormArray {
+    return this.archivosDocumentoFormGroup.get('archivos') as FormArray;
+  };
+
+  getArchivos(event) {
+    let files = event.target.files;
+    if(files){
+      for(let file of files){
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          this.archivos.push(this.createItem({
+            nombre: file.name,
+            base64: reader.result
+          }));
+        };
+      }
+    }
+  }
+
+  getDataDocumento(): DataDocumentoRepresentacion {
+    this.canSend = true;
+    return this.dataDocumento;
   }
 }
