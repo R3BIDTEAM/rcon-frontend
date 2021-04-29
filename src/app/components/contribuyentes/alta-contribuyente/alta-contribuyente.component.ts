@@ -432,6 +432,10 @@ export class DialogRepresentacion {
         idMotivo: ['', []],
         fechaCambio: [null, []],
       });
+
+      if(data){
+        this.setDataRepresentacion(data);
+      }
     }
     
   changeRequired(remove, add): void {
@@ -468,5 +472,31 @@ export class DialogRepresentacion {
     }
 
     return this.dataRepresentacion;
+  }
+
+  setDataRepresentacion(dataRepresentacion): void {
+    this.tipoPersona = dataRepresentacion.tipoPersona;
+    if(this.tipoPersona == 'F'){
+      this.fisicaFormGroup.controls['nombre'].setValue(dataRepresentacion.nombre);
+      this.fisicaFormGroup.controls['apaterno'].setValue(dataRepresentacion.apaterno);
+      this.fisicaFormGroup.controls['amaterno'].setValue(dataRepresentacion.amaterno);
+      this.fisicaFormGroup.controls['rfc'].setValue(dataRepresentacion.rfc);
+      this.fisicaFormGroup.controls['curp'].setValue(dataRepresentacion.curp);
+      this.fisicaFormGroup.controls['ine'].setValue(dataRepresentacion.ine);
+      this.fisicaFormGroup.controls['idDocIdent'].setValue(dataRepresentacion.idDocIdent);
+      this.fisicaFormGroup.controls['docIdent'].setValue(dataRepresentacion.docIdent);
+      this.fisicaFormGroup.controls['fechaNacimiento'].setValue(dataRepresentacion.fechaNacimiento);
+      this.fisicaFormGroup.controls['fechaDefuncion'].setValue(dataRepresentacion.fechaDefuncion);
+      this.fisicaFormGroup.controls['celular'].setValue(dataRepresentacion.celular);
+      this.fisicaFormGroup.controls['email'].setValue(dataRepresentacion.email);
+    } else {
+      this.moralFormGroup.controls['nombre'].setValue(dataRepresentacion.nombre);
+      this.moralFormGroup.controls['rfc'].setValue(dataRepresentacion.rfc);
+      this.moralFormGroup.controls['actPreponderante'].setValue(dataRepresentacion.actPreponderante);
+      this.moralFormGroup.controls['idTipoPersonaMoral'].setValue(dataRepresentacion.idTipoPersonaMoral);
+      this.moralFormGroup.controls['fechaInicioOperacion'].setValue(dataRepresentacion.fechaInicioOperacion);
+      this.moralFormGroup.controls['idMotivo'].setValue(dataRepresentacion.idMotivo);
+      this.moralFormGroup.controls['fechaCambio'].setValue(dataRepresentacion.fechaCambio);
+    }
   }
 }
