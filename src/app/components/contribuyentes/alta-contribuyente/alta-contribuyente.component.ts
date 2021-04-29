@@ -409,6 +409,7 @@ export class DialogRepresentacion {
   constructor(
     private http: HttpClient,
     private _formBuilder: FormBuilder,
+    public dialog: MatDialog,
     public dialogRef: MatDialogRef<DialogRepresentacion>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
       dialogRef.disableClose = true;
@@ -453,6 +454,18 @@ export class DialogRepresentacion {
     this.fisicaFormGroup.controls[add].setValidators(Validators.required);
     this.fisicaFormGroup.markAsUntouched();
     this.fisicaFormGroup.updateValueAndValidity();
+  }
+
+  addDocumento(dataDocumento = null): void {
+    const dialogRef = this.dialog.open(DialogDocumento, {
+      width: '700px',
+      data: dataDocumento,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        console.log(result);
+      }
+    });
   }
 
   getDataRepresentacion(): DataRepresentacion {
@@ -516,4 +529,20 @@ export class DialogRepresentacion {
       this.moralFormGroup.controls['fechaCaducidad'].setValue(dataRepresentacion.fechaCaducidad);
     }
   }
+}
+
+
+@Component({
+  selector: 'app-dialog-documento',
+  templateUrl: 'app-dialog-documento.html',
+  styleUrls: ['./alta-contribuyente.component.css']
+})
+export class DialogDocumento {
+  constructor(
+    private http: HttpClient,
+    private _formBuilder: FormBuilder,
+    public dialogRef: MatDialogRef<DialogDocumento>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+      dialogRef.disableClose = true;
+    }
 }
