@@ -193,7 +193,7 @@
                 <ng-template #documentos>
                     <mat-list>
                         <div mat-subheader>{{dataRepresentacion.documentoRepresentacion.codtipodocumento}} - Fecha: {{dataRepresentacion.documentoRepresentacion.fecha | date: 'dd/MM/yyyy'}}
-                            <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar">
+                            <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar" (click)="addDocumento(dataRepresentacion.documentoRepresentacion)">
                                 <mat-icon>edit</mat-icon>
                             </button>
                             <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar" (click)="removeDocumento()">

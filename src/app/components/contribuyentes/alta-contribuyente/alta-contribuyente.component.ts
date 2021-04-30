@@ -575,6 +575,10 @@ export class DialogDocumento {
       this.archivosDocumentoFormGroup = this._formBuilder.group({
         archivos: this._formBuilder.array([])
       });
+
+      if(data){
+        this.setDataDocumento(data);
+      }
     }
 
   getDataTiposDocumentoDigital(): void {
@@ -640,5 +644,22 @@ export class DialogDocumento {
     this.dataDocumento.archivos = this.archivosDocumentoFormGroup.value.archivos;
 
     this.canSend = true;
+  }
+
+  setDataDocumento(dataDocumento): void {
+    this.tiposDocumentoFormGroup.controls['codtipodocumento'].setValue(dataDocumento.codtipodocumento);
+    this.tiposDocumentoFormGroup.controls['codtipodocumentojuridico'].setValue(dataDocumento.codtipodocumentojuridico);
+    this.infoDocumentoFormGroup.controls['fecha'].setValue(dataDocumento.fecha);
+    this.infoDocumentoFormGroup.controls['descripcion'].setValue(dataDocumento.descripcion);
+    this.infoDocumentoFormGroup.controls['lugar'].setValue(dataDocumento.lugar);
+
+    if(dataDocumento.archivos){
+      for(let archivo of dataDocumento.archivos){
+        this.archivos.push(this.createItem({
+          nombre: archivo.nombre,
+          base64: archivo.base64
+        }));
+      }
+    }
   }
 }
