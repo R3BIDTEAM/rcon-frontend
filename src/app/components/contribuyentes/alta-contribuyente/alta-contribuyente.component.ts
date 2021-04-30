@@ -532,6 +532,8 @@ export class DialogRepresentacion {
       this.moralFormGroup.controls['texto'].setValue(dataRepresentacion.texto);
       this.moralFormGroup.controls['fechaCaducidad'].setValue(dataRepresentacion.fechaCaducidad);
     }
+
+    this.dataRepresentacion.documentoRepresentacion = dataRepresentacion.documentoRepresentacion;
   }
 }
 
