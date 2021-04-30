@@ -213,6 +213,6 @@
 
 </div>
 <mat-dialog-actions align="end">
-    <button mat-flat-button color="primary" [disabled]="false" [mat-dialog-close]="getDataRepresentacion()">Aceptar</button>
+    <button mat-flat-button color="primary" [disabled]="(tipoPersona == 'F' ? fisicaFormGroup.invalid : moralFormGroup.invalid)" [mat-dialog-close]="getDataRepresentacion()">Aceptar</button>
     <button mat-button mat-dialog-close>Cerrar</button>
 </mat-dialog-actions>
