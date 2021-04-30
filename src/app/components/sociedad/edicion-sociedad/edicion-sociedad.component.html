@@ -10,7 +10,7 @@
                     </div>
                         <mat-form-field class="col-4">
                             <mat-label>Razón Social</mat-label>
-                            <input matInput [required]="true">
+                            <input matInput [(ngModel)]="razonSocial" [required]="true" (ngModelChange)="validateSearch()">
                             <mat-error></mat-error>
                         </mat-form-field>
                 </div>
@@ -23,14 +23,14 @@
                     </div>
                         <mat-form-field class="col-4">
                             <mat-label>RFC</mat-label>
-                            <input matInput [required]="true">
+                            <input matInput [(ngModel)]="rfc" [required]="true" (ngModelChange)="validateSearch()">
                             <mat-error></mat-error>
                         </mat-form-field>
                     <div class="col-1 text-center">
                     </div>
                         <mat-form-field class="col-4">
                             <mat-label>Registro</mat-label>
-                            <input matInput [required]="true">
+                            <input matInput [(ngModel)]="registro" [required]="true" (ngModelChange)="validateSearch()">
                             <mat-error></mat-error>
                         </mat-form-field>
                 </div>
@@ -47,7 +47,7 @@
                             <mat-icon>clear</mat-icon>
                         </button>
                         <!-- <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getData()" [disabled]="!search"> -->
-                        <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar">
+                        <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" [disabled]="!search">
                             <mat-icon>search</mat-icon>
                         </button>
                     </div>
