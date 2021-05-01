@@ -74,17 +74,18 @@ export class EdicionPeritosComponent implements OnInit {
     getPerito(){
         const perito = {
             nombrePerito: 'GUILLERMINA',
-            filtroNombre: '0'
+            filtroNombre: '',
+            
         }
         this.loading = true;
         console.log(this.endpoint);
-        this.http.post(this.endpoint,perito , this.httpOptions)
+        this.http.post(this.endpoint, perito, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
                     this.dataSource = res;
-                    this.total = res.length;
-                    console.log(res);
+                    this.total = 500;
+                    console.log(res.length);
                 },
                 (error) => {
                     this.loading = false;
