@@ -37,6 +37,29 @@
             <mat-step [stepControl]="infoDocumentoFormGroup">
                 <form [formGroup]="infoDocumentoFormGroup">
                     <ng-template matStepLabel>{{dataDocumento.nombreTipoDocumentoJuridico}}</ng-template>
+                    <ng-container *ngIf="tiposDocumentoFormGroup.value.codtipodocumentojuridico == 1">
+                        <mat-form-field class="col-6">
+                            <mat-label>Número:</mat-label>
+                            <input matInput readonly formControlName="noNotario">
+                            <mat-error *ngIf="infoDocumentoFormGroup.controls.noNotario.errors?.required">Requerido</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col-6">
+                            <mat-label>Estado:</mat-label>
+                            <input matInput readonly formControlName="ciudadNotario">
+                            <mat-error *ngIf="infoDocumentoFormGroup.controls.ciudadNotario.errors?.required">Requerido</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col-12">
+                            <mat-label>Nombre:</mat-label>
+                            <input matInput readonly formControlName="nombreNotario">
+                            <mat-error *ngIf="infoDocumentoFormGroup.controls.nombreNotario.errors?.required">Requerido</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col-6">
+                            <mat-label>N° Escritura:</mat-label>
+                            <input matInput formControlName="num_escritura">
+                            <mat-error *ngIf="infoDocumentoFormGroup.controls.num_escritura.errors?.required">Requerido</mat-error>
+                        </mat-form-field>
+                        <div class="col-6"></div>
+                    </ng-container>
                     <mat-form-field class="col-6">
                         <mat-label>Fecha:</mat-label>
                         <input matInput readonly formControlName="fecha" [matDatepicker]="pickfecha">

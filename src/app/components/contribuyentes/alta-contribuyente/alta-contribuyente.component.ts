@@ -64,6 +64,11 @@ export interface DataDocumentoRepresentacion {
   nombreTipoDocumento: string;
   codtipodocumentojuridico: number;
   nombreTipoDocumentoJuridico: string;
+  idnotario: number;
+  noNotario: string;
+  ciudadNotario: string;
+  nombreNotario: string;
+  num_escritura: string;
   fecha: Date;
   descripcion: string;
   lugar: string;
@@ -578,6 +583,21 @@ export class DialogDocumento {
         archivos: this._formBuilder.array([])
       });
 
+      this.tiposDocumentoFormGroup.controls.codtipodocumentojuridico.valueChanges.subscribe(codtipodocumentojuridico => {
+        if(codtipodocumentojuridico == 1) {
+          this.infoDocumentoFormGroup.addControl('noNotario', new FormControl(null, Validators.required));
+          this.infoDocumentoFormGroup.addControl('ciudadNotario', new FormControl(null, Validators.required));
+          this.infoDocumentoFormGroup.addControl('nombreNotario', new FormControl(null, Validators.required));
+          this.infoDocumentoFormGroup.addControl('num_escritura', new FormControl(null, Validators.required));
+        } else {
+          this.infoDocumentoFormGroup.removeControl('noNotario');
+          this.infoDocumentoFormGroup.removeControl('ciudadNotario');
+          this.infoDocumentoFormGroup.removeControl('nombreNotario');
+          this.infoDocumentoFormGroup.removeControl('num_escritura');
+        }
+        this.infoDocumentoFormGroup.updateValueAndValidity();
+      });
+
       if(data){
         this.setDataDocumento(data);
       }
@@ -644,6 +664,12 @@ export class DialogDocumento {
   getDataDocumento(): void {
     this.dataDocumento.codtipodocumento = this.tiposDocumentoFormGroup.value.codtipodocumento;
     this.dataDocumento.codtipodocumentojuridico = this.tiposDocumentoFormGroup.value.codtipodocumentojuridico;
+    if(this.tiposDocumentoFormGroup.value.codtipodocumentojuridico == 1){
+      this.dataDocumento.noNotario = (this.infoDocumentoFormGroup.value.noNotario) ? this.infoDocumentoFormGroup.value.noNotario : null;
+      this.dataDocumento.ciudadNotario = (this.infoDocumentoFormGroup.value.ciudadNotario) ? this.infoDocumentoFormGroup.value.ciudadNotario : null;
+      this.dataDocumento.nombreNotario = (this.infoDocumentoFormGroup.value.nombreNotario) ? this.infoDocumentoFormGroup.value.nombreNotario : null;
+      this.dataDocumento.num_escritura = (this.infoDocumentoFormGroup.value.num_escritura) ? this.infoDocumentoFormGroup.value.num_escritura : null;
+    }
     this.dataDocumento.fecha = (this.infoDocumentoFormGroup.value.fecha) ? this.infoDocumentoFormGroup.value.fecha : null;
     this.dataDocumento.descripcion = (this.infoDocumentoFormGroup.value.descripcion) ? this.infoDocumentoFormGroup.value.descripcion : null;
     this.dataDocumento.lugar = (this.infoDocumentoFormGroup.value.lugar) ? this.infoDocumentoFormGroup.value.lugar : null;
@@ -655,6 +681,12 @@ export class DialogDocumento {
   setDataDocumento(dataDocumento): void {
     this.tiposDocumentoFormGroup.controls['codtipodocumento'].setValue(dataDocumento.codtipodocumento);
     this.tiposDocumentoFormGroup.controls['codtipodocumentojuridico'].setValue(dataDocumento.codtipodocumentojuridico);
+    if(dataDocumento.codtipodocumentojuridico == 1){
+      this.infoDocumentoFormGroup.controls['noNotario'].setValue(dataDocumento.noNotario);
+      this.infoDocumentoFormGroup.controls['ciudadNotario'].setValue(dataDocumento.ciudadNotario);
+      this.infoDocumentoFormGroup.controls['nombreNotario'].setValue(dataDocumento.nombreNotario);
+      this.infoDocumentoFormGroup.controls['num_escritura'].setValue(dataDocumento.num_escritura);
+    }
     this.dataDocumento.nombreTipoDocumentoJuridico = dataDocumento.nombreTipoDocumentoJuridico;
     this.infoDocumentoFormGroup.controls['fecha'].setValue(dataDocumento.fecha);
     this.infoDocumentoFormGroup.controls['descripcion'].setValue(dataDocumento.descripcion);
