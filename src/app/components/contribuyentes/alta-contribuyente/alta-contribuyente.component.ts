@@ -609,6 +609,10 @@ export class DialogDocumento {
     );
   }
 
+  getTipoDocJuridico(event): void {
+    this.dataDocumento.nombreTipoDocumentoJuridico = event.source.triggerValue;
+  }
+
   createItem(data): FormGroup {
     return this._formBuilder.group(data);
   }
@@ -651,6 +655,7 @@ export class DialogDocumento {
   setDataDocumento(dataDocumento): void {
     this.tiposDocumentoFormGroup.controls['codtipodocumento'].setValue(dataDocumento.codtipodocumento);
     this.tiposDocumentoFormGroup.controls['codtipodocumentojuridico'].setValue(dataDocumento.codtipodocumentojuridico);
+    this.dataDocumento.nombreTipoDocumentoJuridico = dataDocumento.nombreTipoDocumentoJuridico;
     this.infoDocumentoFormGroup.controls['fecha'].setValue(dataDocumento.fecha);
     this.infoDocumentoFormGroup.controls['descripcion'].setValue(dataDocumento.descripcion);
     this.infoDocumentoFormGroup.controls['lugar'].setValue(dataDocumento.lugar);

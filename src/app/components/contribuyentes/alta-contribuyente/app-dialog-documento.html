@@ -21,9 +21,10 @@
                     </mat-form-field>
                     <mat-form-field class="col-6">
                         <mat-label>Tipo Documento Jurídico:</mat-label>
-                        <mat-select formControlName="codtipodocumentojuridico">
+                        <mat-select formControlName="codtipodocumentojuridico" (selectionChange)="getTipoDocJuridico($event)">
                             <mat-option value="">Seleccione ...</mat-option>
-                            <mat-option value="1">Test</mat-option>
+                            <mat-option value="1">Poder Notarial</mat-option>
+                            <mat-option value="2">Carta Poder</mat-option>
                         </mat-select>
                         <mat-error *ngIf="tiposDocumentoFormGroup.controls.codtipodocumentojuridico.errors?.required">Requerido</mat-error>
                     </mat-form-field>
@@ -35,7 +36,7 @@
 
             <mat-step [stepControl]="infoDocumentoFormGroup">
                 <form [formGroup]="infoDocumentoFormGroup">
-                    <ng-template matStepLabel></ng-template>
+                    <ng-template matStepLabel>{{dataDocumento.nombreTipoDocumentoJuridico}}</ng-template>
                     <mat-form-field class="col-6">
                         <mat-label>Fecha:</mat-label>
                         <input matInput readonly formControlName="fecha" [matDatepicker]="pickfecha">
