@@ -633,6 +633,10 @@ export class DialogDocumento {
     this.dataDocumento.nombreTipoDocumentoJuridico = event.source.triggerValue;
   }
 
+  addNotario(): void {
+    console.log("notario");
+  }
+
   createItem(data): FormGroup {
     return this._formBuilder.group(data);
   }
