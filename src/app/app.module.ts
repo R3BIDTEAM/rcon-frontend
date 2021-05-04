@@ -21,7 +21,7 @@ import { LoginComponent } from './components/login/login.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { LoginFirmaComponent } from './components/login-firma/login-firma.component';
 import { MainComponent } from './components/main/main.component';
-import { AltaContribuyenteComponent, DialogDomicilio, DialogRepresentacion, DialogDocumento } from './components/contribuyentes/alta-contribuyente/alta-contribuyente.component';
+import { AltaContribuyenteComponent, DialogDomicilio, DialogRepresentacion, DialogDocumento, DialogNotario } from './components/contribuyentes/alta-contribuyente/alta-contribuyente.component';
 import { ConsultaContribuyenteComponent } from './components/contribuyentes/consulta-contribuyente/consulta-contribuyente.component';
 import { EdicionContribuyenteComponent } from './components/contribuyentes/edicion-contribuyente/edicion-contribuyente.component';
 import { AltaNotarioComponent } from './components/notarios/alta-notario/alta-notario.component';
@@ -62,7 +62,8 @@ import { VerPeritosComponent } from './components/peritos/ver-peritos/ver-perito
     DialogDomicilio,
     VerPeritosComponent,
     DialogRepresentacion,
-    DialogDocumento
+    DialogDocumento,
+    DialogNotario
   ],
   imports: [
     BrowserModule,

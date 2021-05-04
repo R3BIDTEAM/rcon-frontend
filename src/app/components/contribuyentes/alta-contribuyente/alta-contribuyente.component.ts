@@ -564,6 +564,7 @@ export class DialogDocumento {
   constructor(
     private http: HttpClient,
     private _formBuilder: FormBuilder,
+    public dialog: MatDialog,
     public dialogRef: MatDialogRef<DialogDocumento>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
       dialogRef.disableClose = true;
@@ -634,7 +635,14 @@ export class DialogDocumento {
   }
 
   addNotario(): void {
-    console.log("notario");
+    const dialogRef = this.dialog.open(DialogNotario, {
+      width: '700px',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        console.log(result);
+      }
+    });
   }
 
   createItem(data): FormGroup {
@@ -705,4 +713,18 @@ export class DialogDocumento {
       }
     }
   }
+}
+
+
+@Component({
+  selector: 'app-dialog-notario',
+  templateUrl: 'app-dialog-notario.html',
+  styleUrls: ['./alta-contribuyente.component.css']
+})
+export class DialogNotario {
+  constructor(
+    public dialogRef: MatDialogRef<DialogNotario>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+      dialogRef.disableClose = true;
+    }
 }
