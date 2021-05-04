@@ -90,7 +90,7 @@
             </ng-container>
             <ng-container matColumnDef="datos_identificativos">
                 <th mat-header-cell *matHeaderCellDef> Datos Identificativos </th>
-                <td mat-cell *matCellDef="let element"> {{(element.RFC) ? ('RFC: ' element.RFC) : ''}} {{(element.CURP) ? ('CURP: ' element.CURP) : ''}} {{(element.CLAVEIFE) ? ('INE: ' element.CLAVEIFE) : ''}} </td>
+                <td mat-cell *matCellDef="let element"> {{(element.RFC) ? ( element.RFC) : ''}} {{(element.CURP) ? ( element.CURP) : ''}} {{(element.CLAVEIFE) ? (element.CLAVEIFE) : ''}} </td>
             </ng-container>
             <ng-container matColumnDef="select">
                 <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
