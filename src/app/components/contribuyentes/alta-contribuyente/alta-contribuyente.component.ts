@@ -717,14 +717,17 @@ export class DialogDocumento {
 
 
 export interface Filtros {
-  numero: string;
+  numnotario: string;
   estado: number;
   rfc: string;
   curp: string;
-  ine: string;
+  claveife: string;
   nombre: string;
-  apaterno: string;
+  filtroNombre: number;
+  apellidoPaterno: string;
+  filtroApellidoPaterno: number;
   amaterno: string;
+  filtroApellidoMaterno: number;
 }
 export interface Notario {
   id: number;
@@ -750,7 +753,6 @@ export class DialogNotario {
   tipoBusqueda = 'DatosIdentificativos';
   optionNotario;
   isBusqueda;
-  queryParamFiltros;
   @ViewChild('paginator') paginator: MatPaginator;
 
   constructor(
