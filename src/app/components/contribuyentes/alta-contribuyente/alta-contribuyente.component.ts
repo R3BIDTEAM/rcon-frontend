@@ -755,7 +755,6 @@ export class DialogNotario {
   tipoBusqueda = 'DatosIdentificativos';
   optionNotario;
   isBusqueda;
-  @ViewChild('paginator') paginator: MatPaginator;
 
   constructor(
     private auth: AuthService,
@@ -772,7 +771,7 @@ export class DialogNotario {
       };
     }
 
-  getDataNotarios(isSearch): void {
+  getDataNotarios(): void {
     this.loading = true;
     this.isBusqueda = true;
     
@@ -785,6 +784,7 @@ export class DialogNotario {
       },
       (error) => {
         this.loading = false;
+        this.dataSource = [];
       });
   }
 
@@ -798,22 +798,18 @@ export class DialogNotario {
   }
     
   clean(event): void {
-    this.optionNotario = undefined;
-    this.isBusqueda = false;
+    this.pagina = 1;
+    this.total = 0;
+    this.dataNotarios = [];
     this.filtros = {} as Filtros;
     this.notario = {} as Notario;
+    this.optionNotario = undefined;
+    this.isBusqueda = false;
     if(event.value == 'DatosPersonales'){
       this.filtros.filtroNombre = 0;
       this.filtros.filtroApellidoPaterno = 0;
       this.filtros.filtroApellidoMaterno = 0;
     }
-    this.resetPaginator();
-  }
-
-  resetPaginator(): void {
-    this.pagina = 1;
-    this.total = 0;
-    this.paginator.pageIndex = 0;
   }
 
   notarioSelected(element) {
