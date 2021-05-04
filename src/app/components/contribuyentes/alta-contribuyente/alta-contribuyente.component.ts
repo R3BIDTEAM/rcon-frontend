@@ -756,6 +756,7 @@ export class DialogNotario {
   optionNotario;
   isBusqueda;
   queryParamFiltros;
+  @ViewChild('paginator') paginator: MatPaginator;
 
   constructor(
     private auth: AuthService,
@@ -775,9 +776,10 @@ export class DialogNotario {
   getDataNotarios(): void {
     this.loading = true;
     this.isBusqueda = true;
+    this.optionNotario = undefined;
     this.pagina = 1;
     this.queryParamFiltros = '';
-
+    
     if(this.filtros.numnotario){
       this.queryParamFiltros = this.queryParamFiltros + '&numnotario=' + this.filtros.numnotario;
     }
@@ -809,6 +811,7 @@ export class DialogNotario {
         this.dataNotarios = res;
         this.dataSource = this.paginate(this.dataNotarios, this.pageSize, this.pagina);
         this.total = this.dataNotarios.length;
+        this.paginator.pageIndex = 0;
       },
       (error) => {
         this.loading = false;
@@ -836,6 +839,9 @@ export class DialogNotario {
   }
 
   notarioSelected(element) {
-    console.log(element);
+    this.notario.id = element.IDPERSONA;
+    this.notario.numero = element.NUMNOTARIO;
+    this.notario.ciudad = element.ESTADO;
+    this.notario.nombre = element.NOMBRE + ' ' + element.APELLIDOPATERNO + ' ' + element.APELLIDOMATERNO;
   }
 }
