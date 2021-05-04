@@ -716,12 +716,42 @@ export class DialogDocumento {
 }
 
 
+export interface Filtros {
+  numero: string;
+  estado: number;
+  rfc: string;
+  curp: string;
+  ine: string;
+  nombre: string;
+  apaterno: string;
+  amaterno: string;
+}
+export interface Notario {
+  id: number;
+  numero: string;
+  ciudad: string;
+  nombre: string;
+}
 @Component({
   selector: 'app-dialog-notario',
   templateUrl: 'app-dialog-notario.html',
   styleUrls: ['./alta-contribuyente.component.css']
 })
 export class DialogNotario {
+  endpoint = environment.endpoint;
+  pagina = 1;
+  total = 0;
+  loading = false;
+  dataSource = [];
+  displayedColumns: string[] = [];
+  httpOptions;
+  filtros: Filtros = {} as Filtros;
+  notario: Notario = {} as Notario;
+  tipoBusqueda;
+  isBusqueda;
+  queryParamFiltros;
+  @ViewChild('paginator') paginator: MatPaginator;
+
   constructor(
     public dialogRef: MatDialogRef<DialogNotario>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
