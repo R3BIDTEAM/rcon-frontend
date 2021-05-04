@@ -4,7 +4,7 @@
         <div class="row">
             <mat-form-field class="col-6">
                 <mat-label>Búsqueda por:</mat-label>
-                <mat-select [(value)]="tipoBusqueda" (selectionChange)="clean()">
+                <mat-select [(value)]="tipoBusqueda" (selectionChange)="clean($event)">
                     <mat-option value="DatosIdentificativos">Datos Identificativos</mat-option>
                     <mat-option value="DatosPersonales">Datos Personales</mat-option>
                 </mat-select>

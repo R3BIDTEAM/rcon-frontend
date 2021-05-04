@@ -762,14 +762,19 @@ export class DialogNotario {
     }
 
   getDataNotarios(isSearch): void {
-    console.log(isSearch);
+    console.log(this.filtros);
   }
     
-  clean(): void {
+  clean(event): void {
     this.optionNotario = undefined;
     this.isBusqueda = false;
     this.filtros = {} as Filtros;
     this.notario = {} as Notario;
+    if(event.value == 'DatosPersonales'){
+      this.filtros.filtroNombre = 0;
+      this.filtros.filtroApellidoPaterno = 0;
+      this.filtros.filtroApellidoMaterno = 0;
+    }
     this.resetPaginator();
   }
 
