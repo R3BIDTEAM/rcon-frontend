@@ -755,6 +755,7 @@ export class DialogNotario {
   tipoBusqueda = 'DatosIdentificativos';
   optionNotario;
   isBusqueda;
+  queryParamFiltros;
 
   constructor(
     private auth: AuthService,
@@ -774,6 +775,8 @@ export class DialogNotario {
   getDataNotarios(): void {
     this.loading = true;
     this.isBusqueda = true;
+    this.pagina = 1;
+    this.queryParamFiltros = '';
     
     this.http.post(this.endpoint + this.tipoBusqueda, this.filtros, this.httpOptions).subscribe(
       (res: any) => {
@@ -797,7 +800,7 @@ export class DialogNotario {
     return array.slice((page_number - 1) * page_size, page_number * page_size);
   }
     
-  clean(event): void {
+  clean(): void {
     this.pagina = 1;
     this.total = 0;
     this.dataNotarios = [];
@@ -805,11 +808,6 @@ export class DialogNotario {
     this.notario = {} as Notario;
     this.optionNotario = undefined;
     this.isBusqueda = false;
-    if(event.value == 'DatosPersonales'){
-      this.filtros.filtroNombre = 0;
-      this.filtros.filtroApellidoPaterno = 0;
-      this.filtros.filtroApellidoMaterno = 0;
-    }
   }
 
   notarioSelected(element) {
