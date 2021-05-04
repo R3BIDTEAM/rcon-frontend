@@ -187,7 +187,7 @@ export class AltaContribuyenteComponent implements OnInit {
 
 }
 
-
+///////////////DOMICILIO////////////////
 @Component({
   selector: 'app-dialog-domicilio',
   templateUrl: 'app-dialog-domicilio.html',
@@ -396,7 +396,7 @@ export class DialogDomicilio {
   }
 }
 
-
+///////////////REPRESENTACION////////////////
 @Component({
   selector: 'app-dialog-representacion',
   templateUrl: 'app-dialog-representacion.html',
@@ -542,7 +542,7 @@ export class DialogRepresentacion {
   }
 }
 
-
+///////////////DOCUMENTO REPRESENTACION////////////////
 @Component({
   selector: 'app-dialog-documento',
   templateUrl: 'app-dialog-documento.html',
@@ -719,7 +719,7 @@ export class DialogDocumento {
   }
 }
 
-
+///////////////NOTARIO////////////////
 export interface Filtros {
   numnotario: string;
   estado: number;
