@@ -747,7 +747,8 @@ export class DialogNotario {
   httpOptions;
   filtros: Filtros = {} as Filtros;
   notario: Notario = {} as Notario;
-  tipoBusqueda;
+  tipoBusqueda = 'DatosIdentificativos';
+  notarioSelected;
   isBusqueda;
   queryParamFiltros;
   @ViewChild('paginator') paginator: MatPaginator;
@@ -757,4 +758,22 @@ export class DialogNotario {
     @Inject(MAT_DIALOG_DATA) public data: any) {
       dialogRef.disableClose = true;
     }
+
+  getDataNotarios(isSearch): void {
+    console.log(isSearch);
+  }
+    
+  clean(): void {
+    this.notarioSelected = undefined;
+    this.isBusqueda = false;
+    this.filtros = {} as Filtros;
+    this.notario = {} as Notario;
+    this.resetPaginator();
+  }
+
+  resetPaginator(): void {
+    this.pagina = 1;
+    this.total = 0;
+    this.paginator.pageIndex = 0;
+  }
 }

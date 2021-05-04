@@ -1,0 +1,76 @@
+<h1 mat-dialog-title>Buscador Notarios</h1>
+<div mat-dialog-content>
+    <form #formDialog="ngForm">
+        <div class="row">
+            <mat-form-field class="col-6">
+                <mat-label>Búsqueda por:</mat-label>
+                <mat-select [(value)]="tipoBusqueda" (selectionChange)="clean()">
+                    <mat-option value="DatosIdentificativos">Datos Identificativos</mat-option>
+                    <mat-option value="DatosPersonales">Datos Personales</mat-option>
+                </mat-select>
+            </mat-form-field>     
+        </div>
+        <ng-container *ngIf="tipoBusqueda == 'DatosIdentificativos'">
+            <div class="row">
+                <mat-form-field class="col-6">
+                    <mat-label>Número:</mat-label>
+                    <input matInput [(ngModel)]="filtros.numero" name="numero">
+                </mat-form-field>
+                <mat-form-field class="col-6">
+                    <mat-label>Estado:</mat-label>
+                    <mat-select [(value)]="filtros.estado">
+                        <mat-option value="">Seleccione un Estado ...</mat-option>
+                        <mat-option value="1">Test</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="col-6">
+                    <mat-label>RFC:</mat-label>
+                    <input matInput [(ngModel)]="filtros.rfc" name="rfc">
+                </mat-form-field>
+                <mat-form-field class="col-6">
+                    <mat-label>CURP:</mat-label>
+                    <input matInput [(ngModel)]="filtros.curp" name="curp">
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="col-6">
+                    <mat-label>INE:</mat-label>
+                    <input matInput [(ngModel)]="filtros.ine" name="ine">
+                </mat-form-field>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="tipoBusqueda == 'DatosPersonales'">
+            <div class="row">
+                <mat-form-field class="col-6">
+                    <mat-label>Nombre:</mat-label>
+                    <input matInput [(ngModel)]="filtros.nombre" name="nombre">
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="col-6">
+                    <mat-label>Apellido Paterno:</mat-label>
+                    <input matInput [(ngModel)]="filtros.apaterno" name="apaterno">
+                </mat-form-field>
+                <mat-form-field class="col-6">
+                    <mat-label>Apellido Materno:</mat-label>
+                    <input matInput [(ngModel)]="filtros.amaterno" name="amaterno">
+                </mat-form-field>
+            </div>
+        </ng-container>
+        <br>
+        <div class="row">
+            <div class="col-6">
+                <h3 class="cdmx-color-accent">Resultado</h3>
+            </div>
+            <div class="col-6" align="end">
+                <button mat-icon-button color="primary" aria-label="Buscar" matTooltip="Buscar" (click)="getDataNotarios(true)">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+<mat-dialog-actions align="end">
+</mat-dialog-actions>
