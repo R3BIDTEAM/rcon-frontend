@@ -726,7 +726,7 @@ export interface Filtros {
   filtroNombre: number;
   apellidoPaterno: string;
   filtroApellidoPaterno: number;
-  amaterno: string;
+  apellidoMaterno: string;
   filtroApellidoMaterno: number;
 }
 export interface Notario {
@@ -777,8 +777,33 @@ export class DialogNotario {
     this.isBusqueda = true;
     this.pagina = 1;
     this.queryParamFiltros = '';
+
+    if(this.filtros.numnotario){
+      this.queryParamFiltros = this.queryParamFiltros + '&numnotario=' + this.filtros.numnotario;
+    }
+    if(this.filtros.estado){
+      this.queryParamFiltros = this.queryParamFiltros + '&estado=' + this.filtros.estado;
+    }
+    if(this.filtros.rfc){
+      this.queryParamFiltros = this.queryParamFiltros + '&rfc=' + this.filtros.rfc;
+    }
+    if(this.filtros.curp){
+      this.queryParamFiltros = this.queryParamFiltros + '&curp=' + this.filtros.curp;
+    }
+    if(this.filtros.claveife){
+      this.queryParamFiltros = this.queryParamFiltros + '&claveife=' + this.filtros.claveife;
+    }
+    if(this.filtros.nombre){
+      this.queryParamFiltros = this.queryParamFiltros + '&nombre=' + this.filtros.nombre + '&filtroNombre=0';
+    }
+    if(this.filtros.apellidoPaterno){
+      this.queryParamFiltros = this.queryParamFiltros + '&apellidoPaterno=' + this.filtros.apellidoPaterno + '&filtroApellidoPaterno=0';
+    }
+    if(this.filtros.apellidoMaterno){
+      this.queryParamFiltros = this.queryParamFiltros + '&apellidoMaterno=' + this.filtros.apellidoMaterno + '&filtroApellidoMaterno=0';
+    }
     
-    this.http.post(this.endpoint + this.tipoBusqueda, this.filtros, this.httpOptions).subscribe(
+    this.http.post(this.endpoint + this.tipoBusqueda + '?' + this.queryParamFiltros, '', this.httpOptions).subscribe(
       (res: any) => {
         this.loading = false;
         this.dataNotarios = res;
