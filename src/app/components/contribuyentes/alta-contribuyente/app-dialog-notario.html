@@ -71,6 +71,41 @@
             </div>
         </div>
     </form>
+    <ng-container *ngIf="isBusqueda">
+        <div style="padding: 30px; text-align: center;" *ngIf="loading">
+            <mat-spinner style="margin:0 auto;"></mat-spinner>
+            <p>Cargando...</p>
+        </div>
+        <div class="alert alert-info" *ngIf="dataSource.length == 0 && !loading">
+            No se encontraron datos.
+        </div>
+        <table mat-table [dataSource]="dataSource" *ngIf="dataSource.length > 0 && !loading">
+            <ng-container matColumnDef="numero">
+                <th mat-header-cell *matHeaderCellDef> Número </th>
+                <td mat-cell *matCellDef="let element"> {{(element.NUMNOTARIO)}} </td>
+            </ng-container>
+            <ng-container matColumnDef="datos_personales">
+                <th mat-header-cell *matHeaderCellDef> Datos Personales </th>
+                <td mat-cell *matCellDef="let element"> {{element.NOMBRE}} {{(element.APELLIDOPATERNO) ? element.APELLIDOPATERNO : ''}} {{(element.APELLIDOMATERNO) ? element.APELLIDOMATERNO : ''}} </td>
+            </ng-container>
+            <ng-container matColumnDef="datos_identificativos">
+                <th mat-header-cell *matHeaderCellDef> Datos Identificativos </th>
+                <td mat-cell *matCellDef="let element"> {{(element.RFC) ? ('RFC: ' element.RFC) : ''}} {{(element.CURP) ? ('CURP: ' element.CURP) : ''}} {{(element.CLAVEIFE) ? ('INE: ' element.CLAVEIFE) : ''}} </td>
+            </ng-container>
+            <ng-container matColumnDef="select">
+                <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-radio-group [(ngModel)]="optionNotario">
+                        <mat-radio-button [value]="element" (change)="notarioSelected(element)"></mat-radio-button>
+                    </mat-radio-group>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator #paginator [length]="total" [pageSize]="5" [pageSizeOptions]="[5]" (page)="paginado($event)">
+        </mat-paginator>
+    </ng-container>
 </div>
 <mat-dialog-actions align="end">
 </mat-dialog-actions>

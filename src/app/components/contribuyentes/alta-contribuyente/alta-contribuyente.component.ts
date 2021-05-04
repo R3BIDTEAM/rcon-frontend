@@ -743,12 +743,12 @@ export class DialogNotario {
   total = 0;
   loading = false;
   dataSource = [];
-  displayedColumns: string[] = [];
+  displayedColumns: string[] = ['numero', 'datos_personales', 'datos_identificativos', 'select'];
   httpOptions;
   filtros: Filtros = {} as Filtros;
   notario: Notario = {} as Notario;
   tipoBusqueda = 'DatosIdentificativos';
-  notarioSelected;
+  optionNotario;
   isBusqueda;
   queryParamFiltros;
   @ViewChild('paginator') paginator: MatPaginator;
@@ -764,7 +764,7 @@ export class DialogNotario {
   }
     
   clean(): void {
-    this.notarioSelected = undefined;
+    this.optionNotario = undefined;
     this.isBusqueda = false;
     this.filtros = {} as Filtros;
     this.notario = {} as Notario;
@@ -775,5 +775,9 @@ export class DialogNotario {
     this.pagina = 1;
     this.total = 0;
     this.paginator.pageIndex = 0;
+  }
+
+  notarioSelected(element) {
+    console.log(element);
   }
 }
