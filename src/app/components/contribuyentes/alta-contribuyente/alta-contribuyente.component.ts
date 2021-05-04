@@ -741,11 +741,13 @@ export interface Notario {
   styleUrls: ['./alta-contribuyente.component.css']
 })
 export class DialogNotario {
-  endpoint = environment.endpoint;
+  endpoint = environment.endpoint + 'registro/getNotariosBy';
+  pageSize = 15;
   pagina = 1;
   total = 0;
   loading = false;
   dataSource = [];
+  dataNotarios = [];
   displayedColumns: string[] = ['numero', 'datos_personales', 'datos_identificativos', 'select'];
   httpOptions;
   filtros: Filtros = {} as Filtros;
@@ -756,13 +758,43 @@ export class DialogNotario {
   @ViewChild('paginator') paginator: MatPaginator;
 
   constructor(
+    private auth: AuthService,
+    private http: HttpClient,
     public dialogRef: MatDialogRef<DialogNotario>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
       dialogRef.disableClose = true;
+
+      this.httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: this.auth.getSession().token
+        })
+      };
     }
 
   getDataNotarios(isSearch): void {
-    console.log(this.filtros);
+    this.loading = true;
+    this.isBusqueda = true;
+    
+    this.http.post(this.endpoint + this.tipoBusqueda, this.filtros, this.httpOptions).subscribe(
+      (res: any) => {
+        this.loading = false;
+        this.dataNotarios = res;
+        this.dataSource = this.paginate(this.dataNotarios, this.pageSize, this.pagina);
+        this.total = this.dataNotarios.length;
+      },
+      (error) => {
+        this.loading = false;
+      });
+  }
+
+  paginado(evt): void{
+    this.pagina = evt.pageIndex + 1;
+    this.dataSource = this.paginate(this.dataNotarios, this.pageSize, this.pagina);
+  }
+
+  paginate(array, page_size, page_number) {
+    return array.slice((page_number - 1) * page_size, page_number * page_size);
   }
     
   clean(event): void {
