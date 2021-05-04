@@ -640,7 +640,10 @@ export class DialogDocumento {
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result){
-        console.log(result);
+        this.dataDocumento.idnotario = result.id;
+        this.infoDocumentoFormGroup.controls['noNotario'].setValue(result.numero);
+        this.infoDocumentoFormGroup.controls['ciudadNotario'].setValue(result.ciudad);
+        this.infoDocumentoFormGroup.controls['nombreNotario'].setValue(result.nombre);
       }
     });
   }
@@ -694,6 +697,7 @@ export class DialogDocumento {
     this.tiposDocumentoFormGroup.controls['codtipodocumento'].setValue(dataDocumento.codtipodocumento);
     this.tiposDocumentoFormGroup.controls['codtipodocumentojuridico'].setValue(dataDocumento.codtipodocumentojuridico);
     if(dataDocumento.codtipodocumentojuridico == 1){
+      this.dataDocumento.idnotario = dataDocumento.idnotario;
       this.infoDocumentoFormGroup.controls['noNotario'].setValue(dataDocumento.noNotario);
       this.infoDocumentoFormGroup.controls['ciudadNotario'].setValue(dataDocumento.ciudadNotario);
       this.infoDocumentoFormGroup.controls['nombreNotario'].setValue(dataDocumento.nombreNotario);
