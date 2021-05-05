@@ -862,6 +862,28 @@ export class DialogNotario {
 }
 
 ///////////////PERSONA////////////////
+export interface Filtros {
+  apaterno: string;
+  amaterno: string;
+  nombre: string;
+  rfc: string;
+  curp: string;
+  ine: string;
+  idDocIdent: number;
+  docIdent: string;
+}
+export interface Persona {
+  tipoPersona: string;
+  nombre: string;
+  apaterno: string;
+  amaterno: string;
+  rfc: string;
+  curp: string;
+  ine: string;
+  idDocIdent: number;
+  docIdent: string;
+  actPreponderante: string;
+}
 @Component({
   selector: 'app-dialog-persona',
   templateUrl: 'app-dialog-persona.html',
