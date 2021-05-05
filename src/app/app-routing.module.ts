@@ -35,7 +35,7 @@ const routes: Routes = [
       { path: 'alta-sociedad', component: AltaSociedadComponent, canActivate: [GuardService] },
       { path: 'consulta-sociedad', component: ConsultaSociedadComponent, canActivate: [GuardService] },
       { path: 'edicion-sociedad', component: EdicionSociedadComponent, canActivate: [GuardService] },
-      { path: 'ver-peritos', component: VerPeritosComponent, canActivate: [GuardService] }
+      { path: 'ver-peritos/:idperito', component: VerPeritosComponent, canActivate: [GuardService] }
     ]
   },
   { path: '**', redirectTo: '', pathMatch: 'full' },

@@ -11,13 +11,14 @@ import { AuthService } from '@serv/auth.service';
     styleUrls: ['./edicion-peritos.component.css']
 })
 export class EdicionPeritosComponent implements OnInit {
-    endpoint = environment.endpoint + 'registro/getContribuyente';
+    endpoint = environment.endpoint + 'registro/getPeritosByDatosIdentificativos';
     displayedColumns: string[] = ['registro','nombre', 'datos', 'select'];
     pagina = 1;
     total = 0;
-    pagesize = 15;
+    pageSize = 15;
     loading = false;
     dataSource = [];
+    dataPaginate;
     httpOptions;
     nombrePerito;
     filtroNombre;
@@ -31,6 +32,7 @@ export class EdicionPeritosComponent implements OnInit {
     registro;
     identificacion;
     idedato;
+    query;
     @ViewChild('paginator') paginator: MatPaginator;
 
     constructor(
@@ -53,10 +55,6 @@ export class EdicionPeritosComponent implements OnInit {
         // this.resetPaginator();
     }
 
-    paginado(evt): void{
-        this.pagina = evt.pageIndex + 1;
-    }
-
     validateSearch(){
         this.search = (
                 this.appaterno ||
@@ -73,19 +71,25 @@ export class EdicionPeritosComponent implements OnInit {
 
     getPerito(){
         const perito = {
-            nombrePerito: 'GUILLERMINA',
-            filtroNombre: '',
-            
+            rfc: 'CAGL790217374',
+            curp: '',
+            claveife: '',
+            idOtroDocumento: '',
+            valorOtroDocumento: '',
+            registro: ''
         }
+        this.query = 'rfc=CAGL790217374&curp&claveife&idOtroDocumento&valorOtroDocumento&registro'; 
         this.loading = true;
         console.log(this.endpoint);
-        this.http.post(this.endpoint, perito, this.httpOptions)
+        this.http.post(this.endpoint + '?' + this.query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
                     this.dataSource = res;
-                    this.total = 500;
-                    console.log(res.length);
+                    this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                    this.total = this.dataPaginate.length; 
+                    this.paginator.pageIndex = 0;
+                    console.log(res);
                 },
                 (error) => {
                     this.loading = false;
@@ -96,5 +100,14 @@ export class EdicionPeritosComponent implements OnInit {
                     });
                 }
             );
+    }
+
+    paginado(evt): void{
+        this.pagina = evt.pageIndex + 1;
+        this.dataSource = this.paginate(this.dataSource, this.pageSize, this.pagina);
+    }
+    
+    paginate(array, page_size, page_number) {
+        return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
 }

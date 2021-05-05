@@ -80,17 +80,17 @@
                     <div class="col-md-4">
                         <mat-form-field appearance="fill" style="width: 100%;">
                             <mat-label>Fecha Nacimiento</mat-label>
-                            <input matInput [matDatepicker]="picker">
-                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
+                            <input matInput [matDatepicker]="fechaNacimiento">
+                            <mat-datepicker-toggle matSuffix [for]="fechaNacimiento"></mat-datepicker-toggle>
+                            <mat-datepicker #fechaNacimiento></mat-datepicker>
                         </mat-form-field>
                     </div>
                     <div class="col-md-4">
                         <mat-form-field appearance="fill" style="width: 100%;">
                             <mat-label>Fecha Defunción</mat-label>
-                            <input matInput [matDatepicker]="picker">
-                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
+                            <input matInput [matDatepicker]="fechaDefuncion">
+                            <mat-datepicker-toggle matSuffix [for]="fechaDefuncion"></mat-datepicker-toggle>
+                            <mat-datepicker #fechaDefuncion></mat-datepicker>
                         </mat-form-field>
                     </div>
                 </div>
@@ -127,24 +127,24 @@
                         </mat-form-field>
                     </div>
                     <div class="col-md-5">
-                            <mat-checkbox formControlName="active">Independiente</mat-checkbox>
+                            <mat-checkbox>Independiente</mat-checkbox>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-5">
                         <mat-form-field appearance="fill" style="width: 100%;">
                             <mat-label>Fecha Alta</mat-label>
-                            <input matInput [matDatepicker]="picker">
-                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
+                            <input matInput [matDatepicker]="fechaAlta">
+                            <mat-datepicker-toggle matSuffix [for]="fechaAlta"></mat-datepicker-toggle>
+                            <mat-datepicker #fechaAlta></mat-datepicker>
                         </mat-form-field>
                     </div>
                     <div class="col-md-5">
                         <mat-form-field appearance="fill" style="width: 100%;">
                             <mat-label>Fecha Baja</mat-label>
-                            <input matInput [matDatepicker]="picker">
-                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
+                            <input matInput [matDatepicker]="fechaBaja">
+                            <mat-datepicker-toggle matSuffix [for]="fechaBaja"></mat-datepicker-toggle>
+                            <mat-datepicker #fechaBaja></mat-datepicker>
                         </mat-form-field>
                     </div>
                 </div>

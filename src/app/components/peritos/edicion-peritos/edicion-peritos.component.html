@@ -122,20 +122,20 @@
                 <table mat-table [dataSource]="dataSource" *ngIf="!loading && dataSource.length > 0">
                     <ng-container matColumnDef="registro">
                         <th mat-header-cell *matHeaderCellDef> Registro </th>
-                        <td mat-cell *matCellDef="let element">{{element.CODTIPOPERSONA}}</td>
+                        <td mat-cell *matCellDef="let element"> {{element.registro}}</td>
                     </ng-container>
                     <ng-container matColumnDef="nombre">
                         <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                        <td mat-cell *matCellDef="let element">{{ element.NOMBRE }} {{ element.APELLIDOPATERNO }} {{ element.APELLIDOMATERNO }}</td>
+                        <td mat-cell *matCellDef="let element"> {{ element.nombre }} {{ element.apellidopaterno }} {{ element.apellidomaterno }}</td>
                     </ng-container>
                     <ng-container matColumnDef="datos">
                         <th mat-header-cell *matHeaderCellDef> Datos Identificativos </th>
-                        <td mat-cell *matCellDef="let element"></td>
+                        <td mat-cell *matCellDef="let element"> RFC: {{ element.idperito }}</td>
                     </ng-container>
                     <ng-container matColumnDef="select">
                         <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
                         <td mat-cell *matCellDef="let element">
-                            <button mat-stroked-button color="primary" aria-label="Declaraciones" matTooltip="Declaraciones" [routerLink]="['/main/ver-peritos']">
+                            <button mat-stroked-button color="primary" aria-label="Ver Perito" matTooltip="Ver Perito" [routerLink]="['/main/ver-peritos', element.idperito]">
                                 Ver
                             </button>
                         </td>
