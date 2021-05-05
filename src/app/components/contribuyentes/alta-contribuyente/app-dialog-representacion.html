@@ -15,6 +15,11 @@
                     <mat-option value="M">Moral</mat-option>
                 </mat-select>
             </mat-form-field>
+            <div class="col-6">
+                <button mat-flat-button type="button" color="primary" aria-label="Buscar Persona" matTooltip="Buscar Persona" class="little-button" (click)="addPersona()">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </div>
         </div>
         <br>
         <ng-container *ngIf="tipoPersona == 'F'">

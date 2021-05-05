@@ -461,6 +461,10 @@ export class DialogRepresentacion {
     this.fisicaFormGroup.updateValueAndValidity();
   }
 
+  addPersona(): void {
+    console.log(this.tipoPersona);
+  }
+
   addDocumento(dataDocumento = null): void {
     const dialogRef = this.dialog.open(DialogDocumento, {
       width: '700px',
