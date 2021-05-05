@@ -462,7 +462,14 @@ export class DialogRepresentacion {
   }
 
   addPersona(): void {
-    console.log(this.tipoPersona);
+    const dialogRef = this.dialog.open(DialogPersona, {
+      width: '700px',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        console.log(result);
+      }
+    });
   }
 
   addDocumento(dataDocumento = null): void {
@@ -546,7 +553,7 @@ export class DialogRepresentacion {
   }
 }
 
-///////////////DOCUMENTO REPRESENTACION////////////////
+///////////////DOCUMENTO////////////////
 @Component({
   selector: 'app-dialog-documento',
   templateUrl: 'app-dialog-documento.html',
@@ -852,4 +859,18 @@ export class DialogNotario {
     this.notario.ciudad = element.ESTADO;
     this.notario.nombre = element.NOMBRE + ' ' + element.APELLIDOPATERNO + ' ' + element.APELLIDOMATERNO;
   }
+}
+
+///////////////PERSONA////////////////
+@Component({
+  selector: 'app-dialog-persona',
+  templateUrl: 'app-dialog-persona.html',
+  styleUrls: ['./alta-contribuyente.component.css']
+})
+export class DialogPersona {
+  constructor(
+    public dialogRef: MatDialogRef<DialogNotario>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+      dialogRef.disableClose = true;
+    }
 }
