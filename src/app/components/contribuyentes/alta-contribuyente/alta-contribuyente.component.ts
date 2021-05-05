@@ -890,6 +890,23 @@ export interface Persona {
   styleUrls: ['./alta-contribuyente.component.css']
 })
 export class DialogPersona {
+  endpoint = environment.endpoint;
+  pageSize = 15;
+  pagina = 1;
+  total = 0;
+  loading = false;
+  dataSource = [];
+  dataPersonas = [];
+  displayedColumns: string[] = ['nombre', 'datos_identificativos', 'select'];
+  httpOptions;
+  filtros: Filtros = {} as Filtros;
+  persona: Persona = {} as Persona;
+  tipoBusqueda = 'F';
+  optionPersona;
+  isBusqueda;
+  queryParamFiltros;
+  @ViewChild('paginator') paginator: MatPaginator;
+
   constructor(
     public dialogRef: MatDialogRef<DialogNotario>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
