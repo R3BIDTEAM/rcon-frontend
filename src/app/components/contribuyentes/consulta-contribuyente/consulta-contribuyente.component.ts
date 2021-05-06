@@ -14,12 +14,14 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrls: ['./consulta-contribuyente.component.css']
 })
 export class ConsultaContribuyenteComponent implements OnInit {
-  endpoint = environment.endpoint;
+  endpoint = environment.endpoint + 'registro/';
+  pageSize = 15;
   pagina = 1;
   total = 0;
   loadingResponse = false;
   dataSource = [];
-  displayedColumns: string[] = ['nombre', 'datos_identificativos', 'actions'];
+  data = [];
+  displayedColumns: string[] = ['nombre', 'datos_identificativos'];
   httpOptions;
   cuentaFormGroup: FormGroup;
   contribuyenteFormGroup: FormGroup;
@@ -121,46 +123,74 @@ export class ConsultaContribuyenteComponent implements OnInit {
     }
   }
 
-  getData(isSearch): void { 
+  getData(): void { 
     this.loadingResponse = true;
     this.busqueda = true;
-
-    if(isSearch){
-      this.pagina = 1;
-      this.queryParamFiltros = '';
-      this.endpointBusqueda = '';
-      if(this.tipoBusqueda == 'cuenta'){
-        this.endpointBusqueda = this.endpoint;
-      } else {
-        if(this.contribuyenteFormGroup.value.tipo_persona == 'M'){
-          if(this.isIdentificativo){
-            this.endpointBusqueda = this.endpoint + 'registro/getMoralIdentificativos';
-            this.queryParamFiltros = '&rfc=' + this.contribuyenteFormGroup.value.rfc;
-          } else {
-            this.endpointBusqueda = this.endpoint + 'registro/getPersonaMoral';
-            this.queryParamFiltros = '&razonSocial=' + this.contribuyenteFormGroup.value.nombre + '&filtroApellidoPaterno=0';
-          }
+    this.pagina = 1;
+    this.queryParamFiltros = '';
+    this.endpointBusqueda = '';
+    
+    if(this.tipoBusqueda == 'cuenta'){
+      this.endpointBusqueda = this.endpoint;
+    } else {
+      if(this.contribuyenteFormGroup.value.tipo_persona == 'M'){
+        if(this.isIdentificativo){
+          this.endpointBusqueda = this.endpoint + 'getMoralIdentificativos';
+          if(this.contribuyenteFormGroup.value.rfc)
+            this.queryParamFiltros = this.queryParamFiltros + '&rfc=' + this.contribuyenteFormGroup.value.rfc;
         } else {
-          if(this.isIdentificativo){
-            this.endpointBusqueda = this.endpoint + 'registro/getIdentificativos';
-            this.queryParamFiltros = '&curp=' + this.contribuyenteFormGroup.value.curp + 
-                                     '&rfc=' + this.contribuyenteFormGroup.value.rfc +
-                                     '&claveife=' + this.contribuyenteFormGroup.value.ine +
-                                     '&iddocidentif=' + this.contribuyenteFormGroup.value.iddocumentoidentificativo +
-                                     '&valdocidentif=' + this.contribuyenteFormGroup.value.documentoidentificativo +
-                                     '&coincidenTodos=false';              
-          } else {
-            this.endpointBusqueda = this.endpoint + 'registro/getContribuyente';
-            this.queryParamFiltros = '&nombre=' + this.contribuyenteFormGroup.value.nombre + '&filtroNombre=0' + 
-                                     '&apellidoPaterno=' + this.contribuyenteFormGroup.value.apaterno + '&filtroApellidoPaterno=0' +
-                                     '&apellidoMaterno=' + this.contribuyenteFormGroup.value.amaterno + '&filtroApellidoMaterno=0';
-          }
-  
+          this.endpointBusqueda = this.endpoint + 'getPersonaMoral';
+          if(this.contribuyenteFormGroup.value.nombre)
+            this.queryParamFiltros = this.queryParamFiltros + '&razonSocial=' + this.contribuyenteFormGroup.value.nombre + '&filtroApellidoPaterno=0';
+        }
+      } else {
+        if(this.isIdentificativo){
+          this.endpointBusqueda = this.endpoint + 'getIdentificativos';
+          if(this.contribuyenteFormGroup.value.curp)
+            this.queryParamFiltros = this.queryParamFiltros + '&curp=' + this.contribuyenteFormGroup.value.curp;
+          if(this.contribuyenteFormGroup.value.rfc)
+            this.queryParamFiltros = this.queryParamFiltros + '&rfc=' + this.contribuyenteFormGroup.value.rfc;
+          if(this.contribuyenteFormGroup.value.ine)
+            this.queryParamFiltros = this.queryParamFiltros + '&claveife=' + this.contribuyenteFormGroup.value.ine;
+          if(this.contribuyenteFormGroup.value.iddocumentoidentificativo != '')
+            this.queryParamFiltros = this.queryParamFiltros + '&iddocidentif=' + this.contribuyenteFormGroup.value.iddocumentoidentificativo;
+          if(this.contribuyenteFormGroup.value.documentoidentificativo)
+            this.queryParamFiltros = this.queryParamFiltros + '&valdocidentif=' + this.contribuyenteFormGroup.value.documentoidentificativo;
+
+          this.queryParamFiltros = this.queryParamFiltros + '&coincidenTodos=false';        
+        } else {
+          this.endpointBusqueda = this.endpoint + 'getContribuyente';
+          if(this.contribuyenteFormGroup.value.nombre)
+            this.queryParamFiltros = this.queryParamFiltros + '&nombre=' + this.contribuyenteFormGroup.value.nombre + '&filtroNombre=0';
+          if(this.contribuyenteFormGroup.value.apaterno)
+            this.queryParamFiltros = this.queryParamFiltros + '&apellidoPaterno=' + this.contribuyenteFormGroup.value.apaterno + '&filtroApellidoPaterno=0';
+          if(this.contribuyenteFormGroup.value.amaterno)
+            this.queryParamFiltros = this.queryParamFiltros + '&apellidoMaterno=' + this.contribuyenteFormGroup.value.amaterno + '&filtroApellidoMaterno=0';
         }
       }
     }
 
-    console.log(this.endpointBusqueda);
-    console.log(this.queryParamFiltros);
+    this.http.post(this.endpointBusqueda + '?' + this.queryParamFiltros, '', this.httpOptions).subscribe(
+      (res: any) => {
+        this.loadingResponse = false;
+        this.data = res;
+        this.dataSource = this.paginate(this.data, this.pageSize, this.pagina);
+        this.total = this.data.length;
+        this.paginator.pageIndex = 0;
+      },
+      (error) => {
+        this.loadingResponse = false;
+        this.dataSource = [];
+      }
+    );
+  }
+
+  paginado(evt): void{
+    this.pagina = evt.pageIndex + 1;
+    this.dataSource = this.paginate(this.data, this.pageSize, this.pagina);
+  }
+
+  paginate(array, page_size, page_number) {
+    return array.slice((page_number - 1) * page_size, page_number * page_size);
   }
 }
