@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatPaginator } from '@angular/material/paginator';
 import { environment } from '@env/environment'
 import { AuthService } from '@serv/auth.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-edicion-peritos',
@@ -39,6 +40,7 @@ export class EdicionPeritosComponent implements OnInit {
         private http: HttpClient,
         private snackBar: MatSnackBar,
         private auth: AuthService,
+        private route: ActivatedRoute
     ) { }
 
     ngOnInit(): void {
