@@ -12,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
     styleUrls: ['./edicion-peritos.component.css']
 })
 export class EdicionPeritosComponent implements OnInit {
-    endpoint = environment.endpoint + 'registro/getPeritosByDatosIdentificativos';
+    endpoint = environment.endpoint + 'registro/';
     displayedColumns: string[] = ['registro','nombre', 'datos', 'select'];
     pagina = 1;
     total = 0;
@@ -33,7 +33,6 @@ export class EdicionPeritosComponent implements OnInit {
     registro;
     identificacion;
     idedato;
-    query;
     @ViewChild('paginator') paginator: MatPaginator;
 
     constructor(
@@ -72,18 +71,57 @@ export class EdicionPeritosComponent implements OnInit {
     }
 
     getPerito(){
-        const perito = {
+        let query = '';
+        let busquedaDatos = '';
+        if(
+            this.appaterno ||
+            this.apmaterno ||
+            this.nombre
+        ){
+            busquedaDatos = busquedaDatos + 'getPeritosByDatosPersonales';
+        }else{
+            busquedaDatos = busquedaDatos + 'getPeritosByDatosIdentificativos';
+        }
+
+        if(this.appaterno){
+            query = query + 'appaterno=' + this.appaterno + '&filtroApellidoPaterno=0';
+        }
+        if(this.apmaterno){
+            query = query + 'apmaterno=' + this.apmaterno + '&filtroApellidoMaterno=0';
+        }
+        if(this.nombre){
+            query = query + 'nombre=' + this.nombre + '&filtroNombre=0';
+        }
+        if(this.rfc){
+            query = query + 'rfc=' + this.rfc;
+        }
+        if(this.curp){
+            query = query + 'curp=' + this.curp;
+        }
+        if(this.ine){
+            query = query + 'ine=' + this.ine;
+        }
+        if(this.registro){
+            query = query + 'registro=' + this.registro;
+        }
+        if(this.identificacion){
+            query = query + 'identificacion=' + this.identificacion;
+        }
+        if(this.idedato){
+            query = query + 'idedato=' + this.idedato;
+        }
+        /* const perito = {
             rfc: 'CAGL790217374',
-            curp: '',
+            curp: 'CAGL790217HDFBNS02',
             claveife: '',
             idOtroDocumento: '',
             valorOtroDocumento: '',
             registro: ''
-        }
-        this.query = 'rfc=CAGL790217374&curp&claveife&idOtroDocumento&valorOtroDocumento&registro'; 
+        } */
+        //this.query = 'rfc=CAGL790217374&curp&claveife&idOtroDocumento&valorOtroDocumento&registro'; 
         this.loading = true;
         console.log(this.endpoint);
-        this.http.post(this.endpoint + '?' + this.query, '', this.httpOptions)
+        this.http.post(this.endpoint + busquedaDatos + '?' + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
