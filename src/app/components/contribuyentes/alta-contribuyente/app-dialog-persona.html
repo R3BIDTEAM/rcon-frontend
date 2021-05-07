@@ -4,7 +4,7 @@
         <div class="row">
             <mat-form-field class="col-6">
                 <mat-label>Tipo de persona:</mat-label>
-                <mat-select [(value)]="tipoPersona">
+                <mat-select [(value)]="tipoPersona" (selectionChange)="clean()">
                     <mat-option value="F">Fisica</mat-option>
                     <mat-option value="M">Moral</mat-option>
                 </mat-select>
@@ -14,31 +14,31 @@
             <div class="row">
                 <mat-form-field class="col-6">
                     <mat-label>Apellido Paterno:</mat-label>
-                    <input matInput [(ngModel)]="filtros.apaterno" name="apaterno">
+                    <input matInput [(ngModel)]="filtros.apaterno" name="apaterno" (keyup)="clearInputsIdentNoIdent(false)">
                 </mat-form-field>
                 <mat-form-field class="col-6">
                     <mat-label>Apellido Materno:</mat-label>
-                    <input matInput [(ngModel)]="filtros.amaterno" name="amaterno">
+                    <input matInput [(ngModel)]="filtros.amaterno" name="amaterno" (keyup)="clearInputsIdentNoIdent(false)">
                 </mat-form-field>
             </div>
             <div class="row">
                 <mat-form-field class="col-12">
                     <mat-label>Nombre:</mat-label>
-                    <input matInput [(ngModel)]="filtros.nombre" name="nombre">
+                    <input matInput [(ngModel)]="filtros.nombre" name="nombre" (keyup)="clearInputsIdentNoIdent(false)">
                 </mat-form-field>
             </div>
             <div class="row">
                 <mat-form-field class="col-4">
                     <mat-label>RFC:</mat-label>
-                    <input matInput [(ngModel)]="filtros.rfc" name="rfc">
+                    <input matInput [(ngModel)]="filtros.rfc" name="rfc" (keyup)="clearInputsIdentNoIdent(true)">
                 </mat-form-field>
                 <mat-form-field class="col-4">
                     <mat-label>CURP:</mat-label>
-                    <input matInput [(ngModel)]="filtros.curp" name="curp">
+                    <input matInput [(ngModel)]="filtros.curp" name="curp" (keyup)="clearInputsIdentNoIdent(true)">
                 </mat-form-field>
                 <mat-form-field class="col-4">
                     <mat-label>INE:</mat-label>
-                    <input matInput [(ngModel)]="filtros.ine" name="ine">
+                    <input matInput [(ngModel)]="filtros.ine" name="ine" (keyup)="clearInputsIdentNoIdent(true)">
                 </mat-form-field>
             </div>
             <div class="row">
@@ -51,7 +51,7 @@
                 </mat-form-field>
                 <mat-form-field class="col-8">
                     <mat-label></mat-label>
-                    <input matInput [(ngModel)]="filtros.docIdent" name="docIdent">
+                    <input matInput [(ngModel)]="filtros.docIdent" name="docIdent" (keyup)="clearInputsIdentNoIdent(true)">
                 </mat-form-field>
             </div>
         </ng-container>
@@ -59,11 +59,11 @@
             <div class="row">
                 <mat-form-field class="col-8">
                     <mat-label>Razón social:</mat-label>
-                    <input matInput [(ngModel)]="filtros.nombre" name="nombre">
+                    <input matInput [(ngModel)]="filtros.nombre" name="nombre" (keyup)="clearInputsIdentNoIdent(false)">
                 </mat-form-field>
                 <mat-form-field class="col-4">
                     <mat-label>RFC:</mat-label>
-                    <input matInput [(ngModel)]="filtros.rfc" name="rfc">
+                    <input matInput [(ngModel)]="filtros.rfc" name="rfc" (keyup)="clearInputsIdentNoIdent(true)">
                 </mat-form-field>
             </div>
         </ng-container>

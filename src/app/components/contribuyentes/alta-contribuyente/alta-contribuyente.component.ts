@@ -902,6 +902,7 @@ export class DialogPersona {
   filtros: Filtros = {} as Filtros;
   persona: Persona = {} as Persona;
   tipoPersona = 'F';
+  isIdentificativo;
   optionPersona;
   isBusqueda;
   queryParamFiltros;
@@ -921,4 +922,18 @@ export class DialogPersona {
         })
       };
     }
+
+  clearInputsIdentNoIdent(isIdentificativo): void {
+    this.isIdentificativo = isIdentificativo;
+  }
+
+  clean(): void {
+    this.pagina = 1;
+    this.total = 0;
+    this.dataPersonas = [];
+    this.filtros = {} as Filtros;
+    this.persona = {} as Persona;
+    this.optionPersona = undefined;
+    this.isBusqueda = false;
+  }
 }
