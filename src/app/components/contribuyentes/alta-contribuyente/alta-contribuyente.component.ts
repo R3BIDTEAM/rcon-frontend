@@ -869,7 +869,7 @@ export interface Filtros {
   rfc: string;
   curp: string;
   ine: string;
-  idDocIdent: number;
+  idDocIdent: string;
   docIdent: string;
 }
 export interface Persona {
@@ -890,7 +890,7 @@ export interface Persona {
   styleUrls: ['./alta-contribuyente.component.css']
 })
 export class DialogPersona {
-  endpoint = environment.endpoint;
+  endpoint = environment.endpoint + 'registro/';
   pageSize = 15;
   pagina = 1;
   total = 0;
@@ -906,6 +906,7 @@ export class DialogPersona {
   optionPersona;
   isBusqueda;
   queryParamFiltros;
+  endpointBusqueda;
   @ViewChild('paginator') paginator: MatPaginator;
 
   constructor(
@@ -925,6 +926,60 @@ export class DialogPersona {
 
   clearInputsIdentNoIdent(isIdentificativo): void {
     this.isIdentificativo = isIdentificativo;
+  }
+
+  getDataPersonas(): void {
+    this.loading = true;
+    this.isBusqueda = true;
+    this.optionPersona = undefined;
+    this.pagina = 1;
+    this.queryParamFiltros = '';
+    this.endpointBusqueda = '';
+    
+    if(this.tipoPersona == 'M'){
+      if(this.isIdentificativo){
+        this.endpointBusqueda = this.endpoint + 'getMoralIdentificativos';
+        if(this.filtros.rfc)
+          this.queryParamFiltros = this.queryParamFiltros + '&rfc=' + this.filtros.rfc;
+      } else {
+        this.endpointBusqueda = this.endpoint + 'getPersonaMoral';
+        if(this.filtros.nombre)
+          this.queryParamFiltros = this.queryParamFiltros + '&razonSocial=' + this.filtros.nombre + '&filtroApellidoPaterno=0';
+      }
+    } else {
+      if(this.isIdentificativo){
+        this.endpointBusqueda = this.endpoint + 'getIdentificativos';
+        if(this.filtros.curp)
+          this.queryParamFiltros = this.queryParamFiltros + '&curp=' + this.filtros.curp;
+        if(this.filtros.rfc)
+          this.queryParamFiltros = this.queryParamFiltros + '&rfc=' + this.filtros.rfc;
+        if(this.filtros.ine)
+          this.queryParamFiltros = this.queryParamFiltros + '&claveife=' + this.filtros.ine;
+        if(this.filtros.idDocIdent != '')
+          this.queryParamFiltros = this.queryParamFiltros + '&iddocidentif=' + this.filtros.idDocIdent;
+        if(this.filtros.docIdent)
+          this.queryParamFiltros = this.queryParamFiltros + '&valdocidentif=' + this.filtros.docIdent;
+
+        this.queryParamFiltros = this.queryParamFiltros + '&coincidenTodos=false';        
+      } else {
+        this.endpointBusqueda = this.endpoint + 'getContribuyente';
+        if(this.filtros.nombre)
+          this.queryParamFiltros = this.queryParamFiltros + '&nombre=' + this.filtros.nombre + '&filtroNombre=0';
+        if(this.filtros.apaterno)
+          this.queryParamFiltros = this.queryParamFiltros + '&apellidoPaterno=' + this.filtros.apaterno + '&filtroApellidoPaterno=0';
+        if(this.filtros.amaterno)
+          this.queryParamFiltros = this.queryParamFiltros + '&apellidoMaterno=' + this.filtros.amaterno + '&filtroApellidoMaterno=0';
+      }
+    }
+  }
+
+  paginado(evt): void{
+    this.pagina = evt.pageIndex + 1;
+    this.dataSource = this.paginate(this.dataPersonas, this.pageSize, this.pagina);
+  }
+
+  paginate(array, page_size, page_number) {
+    return array.slice((page_number - 1) * page_size, page_number * page_size);
   }
 
   clean(): void {
