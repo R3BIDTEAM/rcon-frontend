@@ -955,7 +955,7 @@ export class DialogPersona {
           this.queryParamFiltros = this.queryParamFiltros + '&rfc=' + this.filtros.rfc;
         if(this.filtros.ine)
           this.queryParamFiltros = this.queryParamFiltros + '&claveife=' + this.filtros.ine;
-        if(this.filtros.idDocIdent != '')
+        if(this.filtros.idDocIdent)
           this.queryParamFiltros = this.queryParamFiltros + '&iddocidentif=' + this.filtros.idDocIdent;
         if(this.filtros.docIdent)
           this.queryParamFiltros = this.queryParamFiltros + '&valdocidentif=' + this.filtros.docIdent;
