@@ -901,7 +901,7 @@ export class DialogPersona {
   httpOptions;
   filtros: Filtros = {} as Filtros;
   persona: Persona = {} as Persona;
-  tipoBusqueda = 'F';
+  tipoPersona = 'F';
   optionPersona;
   isBusqueda;
   queryParamFiltros;
