@@ -971,6 +971,20 @@ export class DialogPersona {
           this.queryParamFiltros = this.queryParamFiltros + '&apellidoMaterno=' + this.filtros.amaterno + '&filtroApellidoMaterno=0';
       }
     }
+
+    this.http.post(this.endpointBusqueda + '?' + this.queryParamFiltros, '', this.httpOptions).subscribe(
+      (res: any) => {
+        this.loading = false;
+        this.dataPersonas = res;
+        this.dataSource = this.paginate(this.dataPersonas, this.pageSize, this.pagina);
+        this.total = this.dataPersonas.length;
+        this.paginator.pageIndex = 0;
+      },
+      (error) => {
+        this.loading = false;
+        this.dataSource = [];
+      }
+    );
   }
 
   paginado(evt): void{
@@ -990,5 +1004,9 @@ export class DialogPersona {
     this.persona = {} as Persona;
     this.optionPersona = undefined;
     this.isBusqueda = false;
+  }
+
+  personaSelected(element) {
+    console.log(element);
   }
 }
