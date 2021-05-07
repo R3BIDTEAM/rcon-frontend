@@ -908,8 +908,17 @@ export class DialogPersona {
   @ViewChild('paginator') paginator: MatPaginator;
 
   constructor(
+    private auth: AuthService,
+    private http: HttpClient,
     public dialogRef: MatDialogRef<DialogNotario>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
       dialogRef.disableClose = true;
+
+      this.httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: this.auth.getSession().token
+        })
+      };
     }
 }

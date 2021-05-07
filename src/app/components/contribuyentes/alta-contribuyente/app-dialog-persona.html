@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>Buscador de Personas</h1>
+<div mat-dialog-content>
+    <form #formDialog="ngForm">
+        <div class="row">
+            <mat-form-field class="col-6">
+                <mat-label>Tipo de persona:</mat-label>
+                <mat-select [(value)]="tipoBusqueda">
+                    <mat-option value="F">Fisica</mat-option>
+                    <mat-option value="M">Moral</mat-option>
+                </mat-select>
+            </mat-form-field>     
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-6">
+                <h3 class="cdmx-color-accent">Resultado</h3>
+            </div>
+            <div class="col-6" align="end">
+                <button mat-icon-button color="primary" aria-label="Buscar" matTooltip="Buscar">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cerrar</button>
+    <button mat-flat-button color="primary" [disabled]="!optionPersona" [mat-dialog-close]="persona">Aceptar</button>
+</mat-dialog-actions>
