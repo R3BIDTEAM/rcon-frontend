@@ -14,171 +14,164 @@
         </mat-card-header>
         <div class="row">
             <div class="col-md-8 offset-md-2">
-                <div class="row">
-                    <div class="col-md-4">
-                        <mat-form-field appearance="outline" style="width: 100%;">
-                            <mat-label>Apellido Paterno</mat-label>
-                            <input matInput placeholder="Placeholder" [(ngModel)]="this.datoPeritos.apepaterno">
-                        </mat-form-field>
+                <ng-container *ngIf="!loading">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <mat-form-field appearance="outline" style="width: 100%;">
+                                <mat-label>Apellido Paterno</mat-label>
+                                <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.apepaterno">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field appearance="outline" style="width: 100%;">
+                                <mat-label>Apellido Materno</mat-label>
+                                <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.apematerno">
+                            </mat-form-field>
+                        </div> 
+                        <div class="col-md-4">
+                            <mat-form-field appearance="outline" style="width: 100%;">
+                                <mat-label>Nombre</mat-label>
+                                <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.nombre">
+                            </mat-form-field>
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <mat-form-field appearance="outline" style="width: 100%;">
-                            <mat-label>Apellido Materno</mat-label>
-                            <input matInput placeholder="Placeholder" [(ngModel)]="this.datoPeritos.apematerno">
-                        </mat-form-field>
-                    </div> 
-                    <div class="col-md-4">
-                        <mat-form-field appearance="outline" style="width: 100%;">
-                            <mat-label>Nombre</mat-label>
-                            <input matInput placeholder="Placeholder" [(ngModel)]="this.datoPeritos.nombre">
-                        </mat-form-field>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <mat-form-field appearance="outline" style="width: 100%;">
-                            <mat-label>RFC*</mat-label>
-                            <input matInput placeholder="Placeholder" [(ngModel)]="this.datoPeritos.rfc">
-                        </mat-form-field>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <mat-form-field appearance="outline" style="width: 100%;">
+                                <mat-label>RFC*</mat-label>
+                                <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.rfc">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field appearance="outline" style="width: 100%;">
+                                <mat-label>CURP*</mat-label>
+                                <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.curp">
+                            </mat-form-field>
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <mat-form-field appearance="outline" style="width: 100%;">
-                            <mat-label>CURP*</mat-label>
-                            <input matInput placeholder="Placeholder" [(ngModel)]="this.datoPeritos.curp">
-                        </mat-form-field>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <mat-form-field appearance="outline" style="width: 100%;">
-                            <mat-label>INE</mat-label>
-                            <input matInput placeholder="Placeholder" [(ngModel)]="this.datoPeritos.ine">
-                        </mat-form-field>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <mat-form-field appearance="outline" style="width: 100%;">
+                                <mat-label>INE</mat-label>
+                                <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.ine">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field appearance="fill" style="width: 100%;">
+                                <mat-label>Seleccione</mat-label>
+                                <mat-select>
+                                    <mat-option value="1">Cédula profecional</mat-option>
+                                    <mat-option value="2">Pasaporte</mat-option>
+                                    <mat-option value="3">Licencia de conducir</mat-option>
+                                    <mat-option value="4">Número de seguro social</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field appearance="outline" style="width: 100%;">
+                                <!-- <mat-label>INE</mat-label> -->
+                                <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.identificacion">
+                            </mat-form-field>
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <mat-form-field appearance="fill" style="width: 100%;">
-                            <mat-label>Seleccione</mat-label>
-                            <mat-select>
-                                <mat-option value="1">Cédula profecional</mat-option>
-                                <mat-option value="2">Pasaporte</mat-option>
-                                <mat-option value="3">Licencia de conducir</mat-option>
-                                <mat-option value="4">Número de seguro social</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-4">
-                        <mat-form-field appearance="outline" style="width: 100%;">
-                            <!-- <mat-label>INE</mat-label> -->
-                            <input matInput placeholder="Placeholder" [(ngModel)]="this.datoPeritos.identificacion">
-                        </mat-form-field>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <mat-form-field appearance="fill" style="width: 100%;">
-                            <mat-label>Fecha Nacimiento</mat-label>
-                            <input matInput [matDatepicker]="fechaNacimiento" [(ngModel)]="this.datoPeritos.fecha_naci">
-                            <mat-datepicker-toggle matSuffix [for]="fechaNacimiento"></mat-datepicker-toggle>
-                            <mat-datepicker #fechaNacimiento></mat-datepicker>
-                        </mat-form-field>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <mat-form-field appearance="fill" style="width: 100%;">
+                                <mat-label>Fecha Nacimiento</mat-label>
+                                <input matInput [matDatepicker]="fechaNacimiento" [(ngModel)]="datoPeritos.fecha_naci">
+                                <mat-datepicker-toggle matSuffix [for]="fechaNacimiento"></mat-datepicker-toggle>
+                                <mat-datepicker #fechaNacimiento></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field appearance="fill" style="width: 100%;">
+                                <mat-label>Fecha Defunción</mat-label>
+                                <input matInput [matDatepicker]="fechaDefuncion" [(ngModel)]="datoPeritos.fecha_def">
+                                <mat-datepicker-toggle matSuffix [for]="fechaDefuncion"></mat-datepicker-toggle>
+                                <mat-datepicker #fechaDefuncion></mat-datepicker>
+                            </mat-form-field>
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <mat-form-field appearance="fill" style="width: 100%;">
-                            <mat-label>Fecha Defunción</mat-label>
-                            <input matInput [matDatepicker]="fechaDefuncion" [(ngModel)]="this.datoPeritos.fecha_def">
-                            <mat-datepicker-toggle matSuffix [for]="fechaDefuncion"></mat-datepicker-toggle>
-                            <mat-datepicker #fechaDefuncion></mat-datepicker>
-                        </mat-form-field>
+            
+                    <div class="row">
+                        <div class="col-md-4">
+                            <mat-form-field appearance="outline" style="width: 100%;">
+                                <mat-label>Celular</mat-label>
+                                <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.celular">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field appearance="outline" style="width: 100%;">
+                                <mat-label>E-Mail</mat-label>
+                                <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.email">
+                            </mat-form-field>
+                        </div>
                     </div>
-                </div>
-        
-                <div class="row">
-                    <div class="col-md-4">
-                        <mat-form-field appearance="outline" style="width: 100%;">
-                            <mat-label>Celular</mat-label>
-                            <input matInput placeholder="Placeholder" [(ngModel)]="this.datoPeritos.celular">
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-4">
-                        <mat-form-field appearance="outline" style="width: 100%;">
-                            <mat-label>E-Mail</mat-label>
-                            <input matInput placeholder="Placeholder" [(ngModel)]="this.datoPeritos.email">
-                        </mat-form-field>
-                    </div>
-                </div>
 
-                <mat-card-header>
-                    <mat-card-title>Datos especifícos del perito</mat-card-title>
-                    <button mat-icon-button color="primary" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente">
-                        <mat-icon>add_box</mat-icon>
-                    </button>
-                    <button mat-icon-button color="primary" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente">
-                        <mat-icon>delete</mat-icon>
-                    </button>
-                </mat-card-header>
-                <div class="row">
-                    <div class="col-md-5">
-                        <mat-form-field appearance="outline" style="width: 100%;">
-                            <mat-label>Registro*</mat-label>
-                            <input matInput placeholder="Placeholder" [(ngModel)]="this.datoPeritos.email">
-                        </mat-form-field>
+                    <mat-card-header>
+                        <mat-card-title>Datos especifícos del perito</mat-card-title>
+                        <button mat-icon-button color="primary" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente">
+                            <mat-icon>add_box</mat-icon>
+                        </button>
+                        <button mat-icon-button color="primary" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </mat-card-header>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <mat-form-field appearance="outline" style="width: 100%;">
+                                <mat-label>Registro*</mat-label>
+                                <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.email">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-5">
+                                <mat-checkbox>Independiente</mat-checkbox>
+                        </div>
                     </div>
-                    <div class="col-md-5">
-                            <mat-checkbox>Independiente</mat-checkbox>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <mat-form-field appearance="fill" style="width: 100%;">
+                                <mat-label>Fecha Alta</mat-label>
+                                <input matInput [matDatepicker]="fechaAlta" [(ngModel)]="datoPeritos.fecha_alta">
+                                <mat-datepicker-toggle matSuffix [for]="fechaAlta"></mat-datepicker-toggle>
+                                <mat-datepicker #fechaAlta></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-5">
+                            <mat-form-field appearance="fill" style="width: 100%;">
+                                <mat-label>Fecha Baja</mat-label>
+                                <input matInput [matDatepicker]="fechaBaja" [(ngModel)]="datoPeritos.fecha_baja">
+                                <mat-datepicker-toggle matSuffix [for]="fechaBaja"></mat-datepicker-toggle>
+                                <mat-datepicker #fechaBaja></mat-datepicker>
+                            </mat-form-field>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-5">
-                        <mat-form-field appearance="fill" style="width: 100%;">
-                            <mat-label>Fecha Alta</mat-label>
-                            <input matInput [matDatepicker]="fechaAlta" [(ngModel)]="this.datoPeritos.fecha_alta">
-                            <mat-datepicker-toggle matSuffix [for]="fechaAlta"></mat-datepicker-toggle>
-                            <mat-datepicker #fechaAlta></mat-datepicker>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-5">
-                        <mat-form-field appearance="fill" style="width: 100%;">
-                            <mat-label>Fecha Baja</mat-label>
-                            <input matInput [matDatepicker]="fechaBaja" [(ngModel)]="this.datoPeritos.fecha_baja">
-                            <mat-datepicker-toggle matSuffix [for]="fechaBaja"></mat-datepicker-toggle>
-                            <mat-datepicker #fechaBaja></mat-datepicker>
-                        </mat-form-field>
-                    </div>
-                </div>
-
+                </ng-container>
                 <h3>Sociedades Asociadas</h3>
                 <ng-container>
                     <div style="padding: 30px; text-align: center;" *ngIf="loading">
                         <mat-spinner style="margin:0 auto;"></mat-spinner>
                         <p>Cargando...</p>
                     </div>
-                    <div class="alert alert-info" *ngIf="!loading">
+                    <div class="alert alert-info" *ngIf="!loading && dataSource.length == 0">
                         No hay avalúos para el filtro seleccionado
                     </div> 
                     <!-- <table mat-table [dataSource]="dataSource" *ngIf="!loading && dataSource.length > 0"> -->
-                    <table mat-table [dataSource]="dataSource" *ngIf="!loading">
+                    <table mat-table [dataSource]="dataSource" *ngIf="!loading && dataSource.length > 0">
+                        <ng-container matColumnDef="nombre">
+                            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                            <td mat-cell *matCellDef="let element"> {{ element.razonsocial }}</td>
+                        </ng-container>
                         <ng-container matColumnDef="registro">
                             <th mat-header-cell *matHeaderCellDef> Registro </th>
                             <td mat-cell *matCellDef="let element"> {{element.registro}}</td>
                         </ng-container>
-                        <ng-container matColumnDef="nombre">
-                            <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                            <td mat-cell *matCellDef="let element"> {{ element.nombre }} {{ element.apellidopaterno }} {{ element.apellidomaterno }}</td>
-                        </ng-container>
-                        <ng-container matColumnDef="datos">
-                            <th mat-header-cell *matHeaderCellDef> Datos Identificativos </th>
-                            <td mat-cell *matCellDef="let element"> RFC: {{ element.idperito }}</td>
-                        </ng-container>
-                        <ng-container matColumnDef="select">
-                            <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
-                            <td mat-cell *matCellDef="let element">
-                                <button mat-stroked-button color="primary" aria-label="Ver Perito" matTooltip="Ver Perito" [routerLink]="['/main/ver-peritos', element.idperito]">
-                                    Ver
-                                </button>
-                            </td>
+                        <ng-container matColumnDef="rfc">
+                            <th mat-header-cell *matHeaderCellDef> RFC </th>
+                            <td mat-cell *matCellDef="let element"> {{ element.rfc }}</td>
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

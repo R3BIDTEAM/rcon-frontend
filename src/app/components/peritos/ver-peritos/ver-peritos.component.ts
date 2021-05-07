@@ -32,7 +32,7 @@ export interface DatosPeritos {
 export class VerPeritosComponent implements OnInit {
 
     endpoint = environment.endpoint + 'registro/getPerito';
-    displayedColumns: string[] = ['registro','nombre', 'datos', 'select'];
+    displayedColumns: string[] = ['nombre','registro', 'rfc'];
     pagina = 1;
     total = 0;
     pageSize = 15;
@@ -75,13 +75,12 @@ export class VerPeritosComponent implements OnInit {
                 (res: any) => {
                     this.loading = false;
                     this.dataPeritoResultado = res.dsPeritos[0];
-                    this.dataSource = [];
-                    //this.dataSource = res.dsPeritos[0].Sociedades;
-                    // this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-                    // this.total = this.dataPaginate.length; 
-                    // this.paginator.pageIndex = 0;
+                    this.dataSource = res.dsPeritos[0].Sociedades;
+                    this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                    this.total = this.dataPaginate.length; 
+                    this.paginator.pageIndex = 0;
                     console.log("AQUI ENTRO EL RES");
-                    console.log(this.dataPaginate);
+                    console.log(this.dataSource);
                     this.datoDelPerito();
                 },
                 (error) => {
@@ -109,8 +108,8 @@ export class VerPeritosComponent implements OnInit {
         this.datoPeritos.email = this.dataPeritoResultado.EMAIL;
         this.datoPeritos.registro = this.dataPeritoResultado.REGISTRO;
         this.datoPeritos.independiente = this.dataPeritoResultado.INDEPENDIENTE;
-        this.datoPeritos.fecha_alta = this.dataPeritoResultado.FECHAALTA;
-        this.datoPeritos.fecha_baja = this.dataPeritoResultado.FECHABAJA;        
+        this.datoPeritos.fecha_alta = new Date(this.dataPeritoResultado.FECHAALTA);
+        this.datoPeritos.fecha_baja = this.dataPeritoResultado.FECHABAJA;
     }
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
