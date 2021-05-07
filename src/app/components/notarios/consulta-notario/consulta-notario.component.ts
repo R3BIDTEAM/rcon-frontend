@@ -62,11 +62,16 @@ export class ConsultaNotarioComponent implements OnInit {
     this.loading = true;
     this.isBusqueda = true;
 
+    const notario = {
+      apellidoPaterno: 'MARTINEZ',
+      filtroApellidoPaterno: '0'
+    }
+
     if(isSearch){
       this.queryParamFiltros = '';
     
         if(this.filtros.apellido_paterno){
-          this.queryParamFiltros = this.queryParamFiltros + '?apellidoPaterno=' + this.filtros.apellido_paterno + '&filtroApellidoPaterno=0'; 
+          this.queryParamFiltros = this.queryParamFiltros + 'apellidoPaterno=' + this.filtros.apellido_paterno + '&filtroApellidoPaterno=0'; 
         }
 
         // if(this.filtros.sujeto){
@@ -82,7 +87,8 @@ export class ConsultaNotarioComponent implements OnInit {
     }
     
     // this.http.get(this.endpoint + '?page=' + this.pagina + this.queryParamFiltros,
-    this.http.post(this.endpoint, this.queryParamFiltros, this.httpOptions)
+    // this.http.post(this.endpoint, notario, this.httpOptions)
+    this.http.post(this.endpoint + '?' + this.queryParamFiltros, '', this.httpOptions)
       .subscribe(
         (res: any) => {
           (isSearch) ? this.resetPaginator() : false;
@@ -92,7 +98,8 @@ export class ConsultaNotarioComponent implements OnInit {
           if(res.length == 0){
             this.dataSource = [];
           }else{
-            this.dataSource = res.data;
+            this.dataSource = res;
+            // this.dataSource = res.data;
             this.total = res.total;
           }
         },
