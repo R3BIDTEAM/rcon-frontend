@@ -12,6 +12,7 @@ $cdmx-app-theme: mat-light-theme($cdmx-app-primary, $cdmx-app-accent, $cdmx-app-
 @include angular-material-theme($cdmx-app-theme);
 
 .titulo-cdmx{color: #00A447; text-align: center;}
+.verde-cdmx{color: #00A447;}
 
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
     top: 0.8em!important;
