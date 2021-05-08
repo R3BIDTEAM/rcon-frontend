@@ -19,7 +19,7 @@ export interface DatosPeritos {
     celular: string;
     email: string;
     registro: string;
-    independiente: string;
+    independiente: boolean;
     fecha_alta: Date;
     fecha_baja: Date;
 }
@@ -107,9 +107,14 @@ export class VerPeritosComponent implements OnInit {
         this.datoPeritos.celular = this.dataPeritoResultado.CELULAR;
         this.datoPeritos.email = this.dataPeritoResultado.EMAIL;
         this.datoPeritos.registro = this.dataPeritoResultado.REGISTRO;
-        this.datoPeritos.independiente = this.dataPeritoResultado.INDEPENDIENTE;
         this.datoPeritos.fecha_alta = new Date(this.dataPeritoResultado.FECHAALTA);
-        this.datoPeritos.fecha_baja = this.dataPeritoResultado.FECHABAJA;
+        this.datoPeritos.fecha_baja = new Date(this.dataPeritoResultado.FECHABAJA);
+        
+        if(this.dataPeritoResultado.INDEPENDIENTE === 'S'){
+            this.datoPeritos.independiente = true;
+        }else{
+            this.datoPeritos.independiente = false;
+        }
     }
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;

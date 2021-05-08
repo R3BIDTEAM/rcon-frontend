@@ -100,7 +100,6 @@
                         <button mat-icon-button color="primary" aria-label="Limpiar Filtros" matTooltip="Limpiar Filtros" (click)="clean()">
                             <mat-icon>clear</mat-icon>
                         </button>
-                        <!-- <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getData()" [disabled]="!search"> -->
                         <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getPerito()" [disabled]="!search">
                             <mat-icon>search</mat-icon>
                         </button>
@@ -113,34 +112,38 @@
         
             <br>
             <ng-container>
-                <!-- <div style="padding: 30px; text-align: center;" *ngIf="loading">
+                <div style="padding: 30px; text-align: center;" *ngIf="loading">
                     <mat-spinner style="margin:0 auto;"></mat-spinner>
                     <p>Cargando...</p>
                 </div>
                 <div class="alert alert-info" *ngIf="dataSource.length == 0 && !loading">
-                    No hay avalúos para el filtro seleccionado
-                </div>  -->
+                    No hay Peritos para el filtro seleccionado
+                </div> 
                 <table mat-table [dataSource]="dataSource" *ngIf="!loading && dataSource.length > 0">
                     <ng-container matColumnDef="registro">
                         <th mat-header-cell *matHeaderCellDef> Registro </th>
-                        <td mat-cell *matCellDef="let element"></td>
+                        <td mat-cell *matCellDef="let element"> {{(element.registro) ?  element.registro : element.REGISTRO}}</td>
                     </ng-container>
                     <ng-container matColumnDef="nombre">
                         <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                        <td mat-cell *matCellDef="let element"></td>
+                        <td mat-cell *matCellDef="let element"> 
+                            {{ (element.nombre) ? element.nombre : element.NOMBRE}}
+                            {{ (element.apellidopaterno) ? element.apellidopaterno : element.APELLIDOPATERNO }}
+                            {{ (element.apellidomaterno) ? element.apellidomaterno : element.APELLIDOMATERNO }}
+                        </td>
                     </ng-container>
                     <ng-container matColumnDef="datos">
                         <th mat-header-cell *matHeaderCellDef> Datos Identificativos </th>
-                        <td mat-cell *matCellDef="let element"></td>
+                        <td mat-cell *matCellDef="let element"> 
+                            RFC: {{ (element.rfc) ? element.rfc : element.RFC }}<br>
+                            CURP: {{ (element.curp) ? element.curp : element.CURP }} <br>
+                            INE: {{ (element.ife) ? element.ife : element.IFE }}
+                        </td>
                     </ng-container>
                     <ng-container matColumnDef="select">
-                        <th mat-header-cell *matHeaderCellDef> Seleccionar 
-                            <button mat-stroked-button color="primary" aria-label="Declaraciones" matTooltip="Declaraciones" [routerLink]="['/main/ver-peritos']">
-                                Ver
-                            </button>
-                        </th>
+                        <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
                         <td mat-cell *matCellDef="let element">
-                            <button mat-stroked-button color="primary" aria-label="Declaraciones" matTooltip="Declaraciones" [routerLink]="['/main/peritos/ver-perito']">
+                            <button mat-stroked-button color="primary" aria-label="Ver Perito" matTooltip="Ver Perito" [routerLink]="['/main/ver-peritos', (element.idperito) ? element.idperito : element.IDPERITO]">
                                 Ver
                             </button>
                         </td>

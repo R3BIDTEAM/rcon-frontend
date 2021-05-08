@@ -117,25 +117,33 @@
                     <p>Cargando...</p>
                 </div>
                 <div class="alert alert-info" *ngIf="dataSource.length == 0 && !loading">
-                    No hay avalúos para el filtro seleccionado
+                    No hay Peritos para el filtro seleccionado
                 </div> 
                 <table mat-table [dataSource]="dataSource" *ngIf="!loading && dataSource.length > 0">
                     <ng-container matColumnDef="registro">
                         <th mat-header-cell *matHeaderCellDef> Registro </th>
-                        <td mat-cell *matCellDef="let element"> {{element.registro}}</td>
+                        <td mat-cell *matCellDef="let element"> {{(element.registro) ?  element.registro : element.REGISTRO}}</td>
                     </ng-container>
                     <ng-container matColumnDef="nombre">
                         <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                        <td mat-cell *matCellDef="let element"> {{ element.nombre }} {{ element.apellidopaterno }} {{ element.apellidomaterno }}</td>
+                        <td mat-cell *matCellDef="let element"> 
+                            {{ (element.nombre) ? element.nombre : element.NOMBRE}}
+                            {{ (element.apellidopaterno) ? element.apellidopaterno : element.APELLIDOPATERNO }}
+                            {{ (element.apellidomaterno) ? element.apellidomaterno : element.APELLIDOMATERNO }}
+                        </td>
                     </ng-container>
                     <ng-container matColumnDef="datos">
                         <th mat-header-cell *matHeaderCellDef> Datos Identificativos </th>
-                        <td mat-cell *matCellDef="let element"> RFC: {{ element.rfc }}<br> CURP: {{ element.curp }} <br> INE: {{ element.ife }}</td>
+                        <td mat-cell *matCellDef="let element"> 
+                            RFC: {{ (element.rfc) ? element.rfc : element.RFC }}<br>
+                            CURP: {{ (element.curp) ? element.curp : element.CURP }} <br>
+                            INE: {{ (element.ife) ? element.ife : element.IFE }}
+                        </td>
                     </ng-container>
                     <ng-container matColumnDef="select">
                         <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
                         <td mat-cell *matCellDef="let element">
-                            <button mat-stroked-button color="primary" aria-label="Ver Perito" matTooltip="Ver Perito" [routerLink]="['/main/ver-peritos', element.idperito]">
+                            <button mat-stroked-button color="primary" aria-label="Ver Perito" matTooltip="Ver Perito" [routerLink]="['/main/ver-peritos', (element.idperito) ? element.idperito : element.IDPERITO]">
                                 Ver
                             </button>
                         </td>

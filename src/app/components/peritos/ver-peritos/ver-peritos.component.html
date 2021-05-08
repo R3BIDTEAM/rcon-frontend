@@ -124,11 +124,11 @@
                         <div class="col-md-5">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>Registro*</mat-label>
-                                <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.email">
+                                <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.registro">
                             </mat-form-field>
                         </div>
                         <div class="col-md-5">
-                                <mat-checkbox>Independiente</mat-checkbox>
+                                <mat-checkbox [disabled]="true" [checked]="datoPeritos.independiente">Independiente</mat-checkbox>
                         </div>
                     </div>
                     <div class="row">

@@ -34,6 +34,7 @@ import { AltaSociedadComponent, DialogSociedad } from './components/sociedad/alt
 import { ConsultaSociedadComponent } from './components/sociedad/consulta-sociedad/consulta-sociedad.component';
 import { EdicionSociedadComponent } from './components/sociedad/edicion-sociedad/edicion-sociedad.component';
 import { VerPeritosComponent } from './components/peritos/ver-peritos/ver-peritos.component';
+import { VerSociedadComponent } from './components/sociedad/ver-sociedad/ver-sociedad.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { VerPeritosComponent } from './components/peritos/ver-peritos/ver-perito
     DialogRepresentacion,
     DialogDocumento,
     DialogNotario,
-    DialogPersona
+    DialogPersona,
+    VerSociedadComponent
   ],
   imports: [
     BrowserModule,

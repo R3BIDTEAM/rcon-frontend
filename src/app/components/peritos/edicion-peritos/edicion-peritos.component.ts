@@ -52,8 +52,11 @@ export class EdicionPeritosComponent implements OnInit {
     }
 
     clean(): void{
-        // this.busqueda = false;
-        // this.resetPaginator();
+        this.pagina = 1;
+        this.total = 0;
+        this.dataSource = [];
+        this.loading = false;
+        this.dataPaginate;
     }
 
     validateSearch(){
@@ -84,10 +87,10 @@ export class EdicionPeritosComponent implements OnInit {
         }
 
         if(this.appaterno){
-            query = query + 'appaterno=' + this.appaterno + '&filtroApellidoPaterno=0';
+            query = query + 'apellidoPaterno=' + this.appaterno + '&filtroApellidoPaterno=0';
         }
         if(this.apmaterno){
-            query = query + 'apmaterno=' + this.apmaterno + '&filtroApellidoMaterno=0';
+            query = query + 'apellidoMaterno=' + this.apmaterno + '&filtroApellidoMaterno=0';
         }
         if(this.nombre){
             query = query + 'nombre=' + this.nombre + '&filtroNombre=0';

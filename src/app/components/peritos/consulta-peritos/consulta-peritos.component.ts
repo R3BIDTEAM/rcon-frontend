@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatPaginator } from '@angular/material/paginator';
 import { environment } from '@env/environment'
 import { AuthService } from '@serv/auth.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-consulta-peritos',
@@ -11,13 +12,14 @@ import { AuthService } from '@serv/auth.service';
     styleUrls: ['./consulta-peritos.component.css']
 })
 export class ConsultaPeritosComponent implements OnInit {
-    endpoint = environment.endpoint + 'registro/getContribuyente';
+    endpoint = environment.endpoint + 'registro/';
     displayedColumns: string[] = ['registro','nombre', 'datos', 'select'];
     pagina = 1;
     total = 0;
-    pagesize = 15;
+    pageSize = 15;
     loading = false;
     dataSource = [];
+    dataPaginate;
     httpOptions;
     nombrePerito;
     filtroNombre;
@@ -37,6 +39,7 @@ export class ConsultaPeritosComponent implements OnInit {
         private http: HttpClient,
         private snackBar: MatSnackBar,
         private auth: AuthService,
+        private route: ActivatedRoute
     ) { }
 
     ngOnInit(): void {
@@ -49,13 +52,11 @@ export class ConsultaPeritosComponent implements OnInit {
     }
 
     clean(): void{
-        // this.busqueda = false;
-        // this.resetPaginator();
-        console.log(this.endpoint);
-    }
-
-    paginado(evt): void{
-        this.pagina = evt.pageIndex + 1;
+        this.pagina = 1;
+        this.total = 0;
+        this.dataSource = [];
+        this.loading = false;
+        this.dataPaginate;
     }
 
     validateSearch(){
@@ -73,19 +74,65 @@ export class ConsultaPeritosComponent implements OnInit {
     }
 
     getPerito(){
-        const perito = {
-            nombrePerito: 'GUILLERMINA',
-            filtroNombre: '0'
+        let query = '';
+        let busquedaDatos = '';
+        if(
+            this.appaterno ||
+            this.apmaterno ||
+            this.nombre
+        ){
+            busquedaDatos = busquedaDatos + 'getPeritosByDatosPersonales';
+        }else{
+            busquedaDatos = busquedaDatos + 'getPeritosByDatosIdentificativos';
         }
+
+        if(this.appaterno){
+            query = query + 'apellidoPaterno=' + this.appaterno + '&filtroApellidoPaterno=0';
+        }
+        if(this.apmaterno){
+            query = query + 'apellidoMaterno=' + this.apmaterno + '&filtroApellidoMaterno=0';
+        }
+        if(this.nombre){
+            query = query + 'nombre=' + this.nombre + '&filtroNombre=0';
+        }
+        if(this.rfc){
+            query = query + 'rfc=' + this.rfc;
+        }
+        if(this.curp){
+            query = query + 'curp=' + this.curp;
+        }
+        if(this.ine){
+            query = query + 'ine=' + this.ine;
+        }
+        if(this.registro){
+            query = query + 'registro=' + this.registro;
+        }
+        if(this.identificacion){
+            query = query + 'identificacion=' + this.identificacion;
+        }
+        if(this.idedato){
+            query = query + 'idedato=' + this.idedato;
+        }
+        /* const perito = {
+            rfc: 'CAGL790217374',
+            curp: 'CAGL790217HDFBNS02',
+            claveife: '',
+            idOtroDocumento: '',
+            valorOtroDocumento: '',
+            registro: ''
+        } */
+        //this.query = 'rfc=CAGL790217374&curp&claveife&idOtroDocumento&valorOtroDocumento&registro'; 
         this.loading = true;
-        console.log(this.endpoint);
-        this.http.post(this.endpoint,perito , this.httpOptions)
+        console.log(this.endpoint + busquedaDatos + '?' + query);
+        this.http.post(this.endpoint + busquedaDatos + '?' + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
                     this.dataSource = res;
-                    this.total = res.length;
-                    console.log(res);
+                    this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                    this.total = this.dataPaginate.length; 
+                    this.paginator.pageIndex = 0;
+                    console.log(this.dataSource);
                 },
                 (error) => {
                     this.loading = false;
@@ -97,4 +144,14 @@ export class ConsultaPeritosComponent implements OnInit {
                 }
             );
     }
+
+    paginado(evt): void{
+        this.pagina = evt.pageIndex + 1;
+        this.dataSource = this.paginate(this.dataSource, this.pageSize, this.pagina);
+    }
+    
+    paginate(array, page_size, page_number) {
+        return array.slice((page_number - 1) * page_size, page_number * page_size);
+    }
+
 }
