@@ -874,6 +874,7 @@ export interface Filtros {
 }
 export interface Persona {
   tipoPersona: string;
+  id: string;
   nombre: string;
   apaterno: string;
   amaterno: string;
@@ -882,7 +883,6 @@ export interface Persona {
   ine: string;
   idDocIdent: number;
   docIdent: string;
-  actPreponderante: string;
 }
 @Component({
   selector: 'app-dialog-persona',
@@ -1007,6 +1007,15 @@ export class DialogPersona {
   }
 
   personaSelected(element) {
-    console.log(element);
+    this.persona.tipoPersona = this.tipoPersona;
+    this.persona.id = element.IDPERSONA;
+    this.persona.nombre = element.NOMBRE;
+    this.persona.apaterno = element.APELLIDOPATERNO;
+    this.persona.amaterno = element.APELLIDOMATERNO;
+    this.persona.rfc = element.RFC;
+    this.persona.curp = element.CURP;
+    this.persona.ine = element.CLAVEIFE;
+    this.persona.idDocIdent = element.IDDOCIDENTIF;
+    this.persona.docIdent = element.VALDOCIDENTIF;
   }
 }
