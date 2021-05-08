@@ -467,7 +467,21 @@ export class DialogRepresentacion {
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result){
-        console.log(result);
+        this.tipoPersona = result.tipoPersona;
+
+        if(this.tipoPersona == 'F') {
+          this.fisicaFormGroup.controls['nombre'].setValue(result.nombre);
+          this.fisicaFormGroup.controls['apaterno'].setValue(result.apaterno);
+          this.fisicaFormGroup.controls['amaterno'].setValue(result.amaterno);
+          this.fisicaFormGroup.controls['rfc'].setValue(result.rfc);
+          this.fisicaFormGroup.controls['curp'].setValue(result.curp);
+          this.fisicaFormGroup.controls['ine'].setValue(result.ine);
+          this.fisicaFormGroup.controls['idDocIdent'].setValue(result.idDocIdent);
+          this.fisicaFormGroup.controls['docIdent'].setValue(result.docIdent);
+        } else {
+          this.moralFormGroup.controls['nombre'].setValue(result.apaterno);
+          this.moralFormGroup.controls['rfc'].setValue(result.rfc);
+        }
       }
     });
   }
@@ -912,7 +926,7 @@ export class DialogPersona {
   constructor(
     private auth: AuthService,
     private http: HttpClient,
-    public dialogRef: MatDialogRef<DialogNotario>,
+    public dialogRef: MatDialogRef<DialogPersona>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
       dialogRef.disableClose = true;
 
