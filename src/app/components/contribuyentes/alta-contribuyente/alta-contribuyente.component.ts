@@ -10,7 +10,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import * as moment from 'moment';
 
 export interface DataDomicilio {
-  idtipodireccion: number;
+  //idtipodireccion: number;
   tipodireccion: string;
   idestado: number;
   estado: string;
@@ -219,7 +219,7 @@ export class DialogDomicilio {
       dialogRef.disableClose = true;
       
       this.domicilioFormGroup = this._formBuilder.group({
-        idtipodireccion: ['', Validators.required],
+        //idtipodireccion: ['', Validators.required],
         idestado: ['', Validators.required],
         municipio: [null, Validators.required],
         ciudad: [null, Validators.required],
@@ -338,7 +338,7 @@ export class DialogDomicilio {
   }
 
   getDataDomicilio(): DataDomicilio {
-    this.dataDomicilio.idtipodireccion = this.domicilioFormGroup.value.idtipodireccion;
+    //this.dataDomicilio.idtipodireccion = this.domicilioFormGroup.value.idtipodireccion;
     this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
     this.dataDomicilio.idtipoasentamiento = this.domicilioFormGroup.value.idtipoasentamiento;
     this.dataDomicilio.asentamiento = (this.domicilioFormGroup.value.asentamiento) ? this.domicilioFormGroup.value.asentamiento : null;
@@ -368,7 +368,7 @@ export class DialogDomicilio {
   }
 
   setDataDomicilio(dataDomicilio): void {
-    this.domicilioFormGroup.controls['idtipodireccion'].setValue(dataDomicilio.idtipodireccion);
+    //this.domicilioFormGroup.controls['idtipodireccion'].setValue(dataDomicilio.idtipodireccion);
     this.domicilioFormGroup.controls['idestado'].setValue(dataDomicilio.idestado);
     this.domicilioFormGroup.controls['idtipoasentamiento'].setValue(dataDomicilio.idtipoasentamiento);
     this.domicilioFormGroup.controls['asentamiento'].setValue(dataDomicilio.asentamiento);
