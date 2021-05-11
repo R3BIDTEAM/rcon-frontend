@@ -138,7 +138,7 @@ export class ConsultaNotarioComponent implements OnInit {
 
       sessionStorage.filtrosInfEspecifica = JSON.stringify(this.filtros);
       // sessionStorage.filtroSelectedInfEspecifica = this.filtroSelected;
-    }
+    } 
     
     // this.http.get(this.endpoint + '?page=' + this.pagina + this.queryParamFiltros,
     // this.http.post(this.endpoint, notario, this.httpOptions)
