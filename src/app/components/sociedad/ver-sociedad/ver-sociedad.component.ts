@@ -22,6 +22,7 @@ export interface DatosSociedad {
 export class VerSociedadComponent implements OnInit {
 
     endpoint = environment.endpoint + 'registro/getSociedadValuacion';
+    endpointTable = environment.endpoint + 'registro/getPeritoBySociedad';
     displayedColumns: string[] = ['nombre','registro', 'rfc'];
     pagina = 1;
     total = 0;
@@ -63,14 +64,34 @@ export class VerSociedadComponent implements OnInit {
         this.http.post(this.endpoint + '?' + this.query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
-                    this.loading = false;
+                    //this.loading = false;
                     this.dataSocedadResultado = res[0];
-                    // this.dataSource = res.dsPeritos[0].Sociedades;
-                    // this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-                    // this.total = this.dataPaginate.length; 
-                    // this.paginator.pageIndex = 0;
                     console.log("AQUI ENTRO EL RES");
                     console.log(this.dataSocedadResultado);
+                    this.getPeritosSociedad();
+                },
+                (error) => {
+                    this.loading = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
+
+    getPeritosSociedad(){
+        this.http.post(this.endpointTable + '?' + 'idSociedad=' + this.idSociedad + '&idPerito', '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loading = false;
+                    this.dataSource = res;
+                    this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                    this.total = this.dataPaginate.length; 
+                    this.paginator.pageIndex = 0;
+                    console.log("OTRO RES");
+                    console.log(this.total);
                     this.datosDeLaSociedad();
                 },
                 (error) => {
@@ -92,12 +113,12 @@ export class VerSociedadComponent implements OnInit {
         this.datosSociedad.fecha_baja = new Date(this.dataSocedadResultado.FECHABAJA);
     }
     paginado(evt): void{
-        // this.pagina = evt.pageIndex + 1;
-        // this.dataSource = this.paginate(this.dataSource, this.pageSize, this.pagina);
+        this.pagina = evt.pageIndex + 1;
+        this.dataSource = this.paginate(this.dataSource, this.pageSize, this.pagina);
     }
     
     paginate(array, page_size, page_number) {
-        // return array.slice((page_number - 1) * page_size, page_number * page_size);
+        return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
 
 }
