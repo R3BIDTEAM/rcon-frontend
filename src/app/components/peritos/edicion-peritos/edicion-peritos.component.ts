@@ -33,6 +33,7 @@ export class EdicionPeritosComponent implements OnInit {
     registro;
     identificacion;
     idedato;
+    isIdentificativo;
     @ViewChild('paginator') paginator: MatPaginator;
 
     constructor(
@@ -49,6 +50,22 @@ export class EdicionPeritosComponent implements OnInit {
               Authorization: this.auth.getSession().token
             })
         };
+    }
+
+    clearInputsIdentNoIdent(isIdentificativo): void {
+        this.isIdentificativo = isIdentificativo;
+        if(this.isIdentificativo){
+            this.appaterno = null;
+            this.apmaterno = null;
+            this.nombre = null;            
+        }else{
+            this.rfc = null;
+            this.curp = null;
+            this.ine = null;
+            this.registro = null;
+            this.identificacion = null;
+            this.idedato = null;
+        }
     }
 
     clean(): void{

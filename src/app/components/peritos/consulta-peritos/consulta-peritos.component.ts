@@ -33,6 +33,7 @@ export class ConsultaPeritosComponent implements OnInit {
     registro;
     identificacion;
     idedato;
+    isIdentificativo;
     @ViewChild('paginator') paginator: MatPaginator;
 
     constructor(
@@ -49,6 +50,22 @@ export class ConsultaPeritosComponent implements OnInit {
               Authorization: this.auth.getSession().token
             })
         };
+    }
+
+    clearInputsIdentNoIdent(isIdentificativo): void {
+        this.isIdentificativo = isIdentificativo;
+        if(this.isIdentificativo){
+            this.appaterno = null;
+            this.apmaterno = null;
+            this.nombre = null;            
+        }else{
+            this.rfc = null;
+            this.curp = null;
+            this.ine = null;
+            this.registro = null;
+            this.identificacion = null;
+            this.idedato = null;
+        }
     }
 
     clean(): void{
@@ -73,17 +90,14 @@ export class ConsultaPeritosComponent implements OnInit {
             ) ? true : false;
     }
 
+    
     getPerito(){
         let query = '';
         let busquedaDatos = '';
-        if(
-            this.appaterno ||
-            this.apmaterno ||
-            this.nombre
-        ){
-            busquedaDatos = busquedaDatos + 'getPeritosByDatosPersonales';
-        }else{
+        if( this.isIdentificativo ){
             busquedaDatos = busquedaDatos + 'getPeritosByDatosIdentificativos';
+        }else{
+            busquedaDatos = busquedaDatos + 'getPeritosByDatosPersonales';
         }
 
         if(this.appaterno){
