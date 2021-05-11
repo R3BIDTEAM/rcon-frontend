@@ -6,7 +6,7 @@ import { AuthService } from '@serv/auth.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
-import * as moment from 'moment';
+import * as moment from 'moment'; 
 
 export interface DatosGenerales {
   no_notario: string;

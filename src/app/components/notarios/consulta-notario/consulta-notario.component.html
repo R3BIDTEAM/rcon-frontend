@@ -6,19 +6,19 @@
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>Apellido Paterno</mat-label>
-                    <input matInput #apellido_paterno [(ngModel)]="filtros.apellido_paterno" placeholder="Placeholder">
+                    <input matInput #apellido_paterno [(ngModel)]="filtros.apellido_paterno" placeholder="Placeholder" (keyup)="clearInputsIdentNoIdent(false)">
                 </mat-form-field>
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>Apellido Materno</mat-label>
-                    <input matInput #apellido_materno [(ngModel)]="filtros.apellido_materno" placeholder="Placeholder">
+                    <input matInput #apellido_materno [(ngModel)]="filtros.apellido_materno" placeholder="Placeholder" (keyup)="clearInputsIdentNoIdent(false)">
                 </mat-form-field>
             </div> 
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>Nombre</mat-label>
-                    <input matInput #nombre [(ngModel)]="filtros.nombre" placeholder="Placeholder">
+                    <input matInput #nombre [(ngModel)]="filtros.nombre" placeholder="Placeholder" (keyup)="clearInputsIdentNoIdent(false)">
                 </mat-form-field>
             </div>
         </div>
@@ -27,13 +27,13 @@
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>RFC*</mat-label>
-                    <input matInput #rfc [(ngModel)]="filtros.rfc" placeholder="Placeholder">
+                    <input matInput #rfc [(ngModel)]="filtros.rfc" placeholder="Placeholder" (keyup)="clearInputsIdentNoIdent(true)">
                 </mat-form-field>
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>CURP*</mat-label>
-                    <input matInput #curp [(ngModel)]="filtros.curp" placeholder="Placeholder">
+                    <input matInput #curp [(ngModel)]="filtros.curp" placeholder="Placeholder" (keyup)="clearInputsIdentNoIdent(true)">
                 </mat-form-field>
             </div>
         </div>
@@ -42,13 +42,13 @@
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>INE</mat-label>
-                    <input matInput #ine [(ngModel)]="filtros.ine" placeholder="Placeholder">
+                    <input matInput #ine [(ngModel)]="filtros.ine" placeholder="Placeholder" (keyup)="clearInputsIdentNoIdent(true)">
                 </mat-form-field>
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Seleccione</mat-label>
-                    <mat-select #otro_documento [(ngModel)]="filtros.otro_documento">
+                    <mat-select #otro_documento [(ngModel)]="filtros.otro_documento" (keyup)="clearInputsIdentNoIdent(true)">
                       <mat-option>Ninguna</mat-option>
                       <mat-option value="option1">Cartilla Militar</mat-option>
                       <mat-option value="option2">Pasaporte</mat-option>
@@ -59,22 +59,22 @@
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <!-- <mat-label>INE</mat-label> -->
-                    <input matInput #numero_documento [(ngModel)]="filtros.numero_documento" placeholder="Placeholder">
+                    <input matInput #numero_documento [(ngModel)]="filtros.numero_documento" placeholder="Placeholder" (keyup)="clearInputsIdentNoIdent(true)">
                 </mat-form-field>
             </div>
-        </div>
+        </div> 
 
         <div class="row">
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>No. Notario</mat-label>
-                    <input matInput #no_notario [(ngModel)]="filtros.no_notario" placeholder="Placeholder">
+                    <input matInput #no_notario [(ngModel)]="filtros.no_notario" placeholder="Placeholder" (keyup)="clearInputsIdentNoIdent(true)">
                 </mat-form-field>
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Estado</mat-label>
-                    <mat-select #estado [(ngModel)]="filtros.estado">
+                    <mat-select #estado [(ngModel)]="filtros.estado" (keyup)="clearInputsIdentNoIdent(true)">
                       <mat-option>Ninguna</mat-option>
                       <mat-option value="option1">Ciudad de Méxio</mat-option>
                       <mat-option value="option2">Estado de México</mat-option>

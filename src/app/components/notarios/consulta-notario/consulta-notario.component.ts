@@ -27,7 +27,7 @@ export interface Filtros {
   styleUrls: ['./consulta-notario.component.css']
 })
 export class ConsultaNotarioComponent implements OnInit {
-  endpoint = environment.endpoint + 'registro/getNotariosByDatosPersonales';
+  endpoint = environment.endpoint + 'registro/';
   pagina = 1; 
   total = 0;
   loading = false;
@@ -35,9 +35,11 @@ export class ConsultaNotarioComponent implements OnInit {
   displayedColumns: string[] = ['estado','no_notario','nombre','rfc','curp'];
   httpOptions;
   filtros: Filtros = {} as Filtros;
+  isIdentificativo: boolean;
   canSearch = false;
   isBusqueda;
   queryParamFiltros;
+  endpointBusqueda;
   @ViewChild('paginator') paginator: MatPaginator;
 
   constructor(
@@ -58,9 +60,41 @@ export class ConsultaNotarioComponent implements OnInit {
   }
 
 
+  clearInputsIdentNoIdent(isIdentificativo): void {
+    this.isIdentificativo = isIdentificativo;
+
+    if(isIdentificativo){
+      // this.contribuyenteFormGroup.controls['nombre'].setValue(null);
+      // if(this.contribuyenteFormGroup.value.tipo_persona == 'F'){
+      //   this.contribuyenteFormGroup.controls['apaterno'].setValue(null);
+      //   this.contribuyenteFormGroup.controls['amaterno'].setValue(null);
+      // }
+      this.filtros.apellido_paterno = null;
+      this.filtros.apellido_materno = null;
+      this.filtros.nombre = null;
+    } else {
+      // this.contribuyenteFormGroup.controls['rfc'].setValue(null);
+      // if(this.contribuyenteFormGroup.value.tipo_persona == 'F'){
+      //   this.contribuyenteFormGroup.controls['curp'].setValue(null);
+      //   this.contribuyenteFormGroup.controls['ine'].setValue(null);
+      //   this.contribuyenteFormGroup.controls['iddocumentoidentificativo'].setValue('');
+      //   this.contribuyenteFormGroup.controls['documentoidentificativo'].setValue(null);
+      // }
+      this.filtros.rfc = null;
+      this.filtros.curp = null;
+      this.filtros.ine = null;
+      this.filtros.otro_documento = null;
+      this.filtros.numero_documento = null;
+      this.filtros.no_notario = null;
+      this.filtros.estado = null;
+    }
+  }
+
+
   getData(isSearch): void {
     this.loading = true;
     this.isBusqueda = true;
+    this.endpointBusqueda = '';
 
     const notario = {
       apellidoPaterno: 'MARTINEZ',
@@ -69,10 +103,30 @@ export class ConsultaNotarioComponent implements OnInit {
 
     if(isSearch){
       this.queryParamFiltros = '';
+
+      if(this.isIdentificativo){
     
+          this.endpointBusqueda = this.endpoint + 'getNotariosByDatosIdentificativos';
+
+          if(this.filtros.rfc){
+            this.queryParamFiltros = this.queryParamFiltros + 'rfc=' + this.filtros.rfc + '&filtroApellidoPaterno=0'; 
+          }
+
+      }else{
+
+        this.endpointBusqueda = this.endpoint + 'getNotariosByDatosPersonales';
+
         if(this.filtros.apellido_paterno){
           this.queryParamFiltros = this.queryParamFiltros + 'apellidoPaterno=' + this.filtros.apellido_paterno + '&filtroApellidoPaterno=0'; 
         }
+        if(this.filtros.apellido_materno){
+          this.queryParamFiltros = this.queryParamFiltros + 'apellidoMaterno=' + this.filtros.apellido_materno + '&filtroApellidoMaterno=0'; 
+        }
+        if(this.filtros.nombre){
+          this.queryParamFiltros = this.queryParamFiltros + 'nombre=' + this.filtros.nombre + '&filtroNombre=0'; 
+        }
+
+      }
 
         // if(this.filtros.sujeto){
         //   this.queryParamFiltros = this.queryParamFiltros + '&sujeto=' + this.filtros.sujeto; 
@@ -84,11 +138,11 @@ export class ConsultaNotarioComponent implements OnInit {
 
       sessionStorage.filtrosInfEspecifica = JSON.stringify(this.filtros);
       // sessionStorage.filtroSelectedInfEspecifica = this.filtroSelected;
-    }
+    } 
     
     // this.http.get(this.endpoint + '?page=' + this.pagina + this.queryParamFiltros,
     // this.http.post(this.endpoint, notario, this.httpOptions)
-    this.http.post(this.endpoint + '?' + this.queryParamFiltros, '', this.httpOptions)
+    this.http.post(this.endpointBusqueda + '?' + this.queryParamFiltros, '', this.httpOptions)
       .subscribe(
         (res: any) => {
           (isSearch) ? this.resetPaginator() : false;
