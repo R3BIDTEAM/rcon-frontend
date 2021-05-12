@@ -11,18 +11,21 @@ import { AuthService } from '@serv/auth.service';
     styleUrls: ['./edicion-sociedad.component.css']
 })
 export class EdicionSociedadComponent implements OnInit {
-    endpoint = environment.endpoint + 'registro/getContribuyente';
-    displayedColumns: string[] = ['registro','nombre', 'datos', 'select'];
+    endpoint = environment.endpoint + 'registro/';
+    displayedColumns: string[] = ['razon','registro', 'rfc', 'select'];
     pagina = 1;
     total = 0;
-    pagesize = 15;
+    pageSize = 15;
     loading = false;
     dataSource = [];
+    dataPaginate;
     httpOptions;
     razonSocial;
     rfc;
     registro;
     search;
+    isIdentificativo;
+    @ViewChild('paginator') paginator: MatPaginator;
 
     constructor(
         private http: HttpClient,
@@ -40,12 +43,12 @@ export class EdicionSociedadComponent implements OnInit {
     }
 
     clean(): void{
-        // this.busqueda = false;
-        // this.resetPaginator();
-    }
-
-    paginado(evt): void{
-        this.pagina = evt.pageIndex + 1;
+        this.loading = false;
+        this.pagina = 1;
+        this.total = 0;
+        this.pageSize = 15;
+        this.dataSource = [];
+        this.dataPaginate;
     }
 
     validateSearch(){
@@ -54,5 +57,68 @@ export class EdicionSociedadComponent implements OnInit {
             this.rfc ||
             this.registro
         ) ? true : false;
+    }
+
+    clearInputsIdentNoIdent(isIdentificativo): void {
+        this.isIdentificativo = isIdentificativo;
+        if(this.isIdentificativo){
+            this.razonSocial = null;
+        }else{
+            this.rfc = null;
+            this.registro = null;
+        }
+    }
+
+    getSociedad(){
+        let query = '';
+        let busquedaDatos = '';
+        if( this.razonSocial ){
+            busquedaDatos = busquedaDatos + 'getSocValuacionByDatosPersonales';
+        }else{
+            busquedaDatos = busquedaDatos + 'getSocValuacionByDatosIdentificativos';
+        }
+
+        if( this.razonSocial ){
+            query = query + '&razonSocial=' + this.razonSocial + '&filtroRazon=1';
+        }
+        if(this.rfc){
+            query = query + '&rfc=' + this.rfc;
+        }
+        if(this.registro){
+            query = query + '&registro=' + this.registro;
+        }
+
+        query = query.substr(1);
+
+        this.loading = true;
+        console.log(this.endpoint);
+        this.http.post(this.endpoint + busquedaDatos + '?' + query, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loading = false;
+                    this.dataSource = res;
+                    this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                    this.total = this.dataPaginate.length; 
+                    this.paginator.pageIndex = 0;
+                    console.log(res);
+                },
+                (error) => {
+                    this.loading = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
+
+    paginado(evt): void{
+        this.pagina = evt.pageIndex + 1;
+        this.dataSource = this.paginate(this.dataSource, this.pageSize, this.pagina);
+    }
+    
+    paginate(array, page_size, page_number) {
+        return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
 }

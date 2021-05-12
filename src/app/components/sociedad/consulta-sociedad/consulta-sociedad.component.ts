@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { environment } from '@env/environment'
 import { AuthService } from '@serv/auth.service';
 import { ActivatedRoute } from '@angular/router';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
     selector: 'app-consulta-sociedad',
@@ -25,6 +26,7 @@ export class ConsultaSociedadComponent implements OnInit {
     rfc;
     registro;
     search;
+    isIdentificativo;
     @ViewChild('paginator') paginator: MatPaginator;
 
     constructor(
@@ -60,6 +62,16 @@ export class ConsultaSociedadComponent implements OnInit {
         ) ? true : false;
     }
 
+    clearInputsIdentNoIdent(isIdentificativo): void {
+        this.isIdentificativo = isIdentificativo;
+        if(this.isIdentificativo){
+            this.razonSocial = null;
+        }else{
+            this.rfc = null;
+            this.registro = null;
+        }
+    }
+
     getSociedad(){
         let query = '';
         let busquedaDatos = '';
@@ -70,14 +82,16 @@ export class ConsultaSociedadComponent implements OnInit {
         }
 
         if( this.razonSocial ){
-            query = query + 'razonSocial=' + this.razonSocial + '&filtroRazon=1';
+            query = query + '&razonSocial=' + this.razonSocial + '&filtroRazon=1';
         }
         if(this.rfc){
-            query = query + 'rfc=' + this.rfc;
+            query = query + '&rfc=' + this.rfc;
         }
         if(this.registro){
-            query = query + 'registro=' + this.registro;
+            query = query + '&registro=' + this.registro;
         }
+
+        query = query.substr(1);
 
         this.loading = true;
         console.log(this.endpoint);

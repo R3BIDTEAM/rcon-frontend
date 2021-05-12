@@ -77,7 +77,7 @@
                     </div>
                     <mat-form-field class="col-5">
                         <mat-label>Identificación</mat-label>
-                        <mat-select [(ngModel)]="identificacion" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)">
+                        <mat-select [(ngModel)]="identificacion" [required]="true" (ngModelChange)="validateSearch();clearInputsIdentNoIdent(true)">
                             <mat-option value="1">Cédula profecional</mat-option>
                             <mat-option value="2">Pasaporte</mat-option>
                             <mat-option value="3">Licencia de conducir</mat-option>

@@ -94,38 +94,30 @@ export class ConsultaPeritosComponent implements OnInit {
     getPerito(){
         let query = '';
         let busquedaDatos = '';
-        if( this.isIdentificativo ){
-            busquedaDatos = busquedaDatos + 'getPeritosByDatosIdentificativos';
-        }else{
-            busquedaDatos = busquedaDatos + 'getPeritosByDatosPersonales';
-        }
 
+        if(this.nombre){
+            query = query + '&nombre=' + this.nombre + '&filtroNombre=0';
+        }
         if(this.appaterno){
-            query = query + 'apellidoPaterno=' + this.appaterno + '&filtroApellidoPaterno=0';
+            query = query + '&apellidoPaterno=' + this.appaterno + '&filtroApellidoPaterno=0';
         }
         if(this.apmaterno){
-            query = query + 'apellidoMaterno=' + this.apmaterno + '&filtroApellidoMaterno=0';
-        }
-        if(this.nombre){
-            query = query + 'nombre=' + this.nombre + '&filtroNombre=0';
+            query = query + '&apellidoMaterno=' + this.apmaterno + '&filtroApellidoMaterno=0';
         }
         if(this.rfc){
-            query = query + 'rfc=' + this.rfc;
+            query = query + '&rfc=' + this.rfc;
         }
         if(this.curp){
-            query = query + 'curp=' + this.curp;
+            query = query + '&curp=' + this.curp;
         }
         if(this.ine){
-            query = query + 'ine=' + this.ine;
+            query = query + '&ine=' + this.ine;
         }
         if(this.registro){
-            query = query + 'registro=' + this.registro;
+            query = query + '&registro=' + this.registro;
         }
-        if(this.identificacion){
-            query = query + 'identificacion=' + this.identificacion;
-        }
-        if(this.idedato){
-            query = query + 'idedato=' + this.idedato;
+        if(this.identificacion && this.idedato){
+            query = query + '&idOtroDocumento=' + this.identificacion + '&valorOtroDocumento=' + this.idedato;
         }
         /* const perito = {
             rfc: 'CAGL790217374',
@@ -135,6 +127,14 @@ export class ConsultaPeritosComponent implements OnInit {
             valorOtroDocumento: '',
             registro: ''
         } */
+        if( this.isIdentificativo ){
+            busquedaDatos = busquedaDatos + 'getPeritosByDatosIdentificativos';
+        }else{
+            busquedaDatos = busquedaDatos + 'getPeritosByDatosPersonales';
+        }
+
+        query = query.substr(1);
+
         //this.query = 'rfc=CAGL790217374&curp&claveife&idOtroDocumento&valorOtroDocumento&registro'; 
         this.loading = true;
         console.log(this.endpoint + busquedaDatos + '?' + query);
