@@ -13,7 +13,6 @@ export interface DatosPeritos {
     rfc: string;
     curp: string;
     ine: string;
-    idIden: number;
     identificacion: string;
     fecha_naci: Date;
     fecha_def: Date;
@@ -26,11 +25,11 @@ export interface DatosPeritos {
 }
 
 @Component({
-    selector: 'app-ver-peritos',
-    templateUrl: './ver-peritos.component.html',
-    styleUrls: ['./ver-peritos.component.css']
+    selector: 'app-editar-peritos',
+    templateUrl: './editar-peritos.component.html',
+    styleUrls: ['./editar-peritos.component.css']
 })
-export class VerPeritosComponent implements OnInit {
+export class EditarPeritosComponent implements OnInit {
 
     endpoint = environment.endpoint + 'registro/getPerito';
     displayedColumns: string[] = ['nombre','registro', 'rfc'];
@@ -65,6 +64,20 @@ export class VerPeritosComponent implements OnInit {
         this.idPerito = this.route.snapshot.paramMap.get('idperito');
         console.log(this.idPerito);
         this.getPeritoDatos();
+    }
+
+    cleanPerito(){
+        this.datoPeritos.apepaterno = null;
+        this.datoPeritos.apematerno = null;
+        this.datoPeritos.nombre  = null;
+        this.datoPeritos.rfc = null;
+        this.datoPeritos.curp = null;
+        this.datoPeritos.ine = null;
+        this.datoPeritos.identificacion = null;
+        this.datoPeritos.fecha_naci = null;
+        this.datoPeritos.fecha_def = null;
+        this.datoPeritos.celular = null;
+        this.datoPeritos.email = null;
     }
 
     getPeritoDatos(){
@@ -102,7 +115,6 @@ export class VerPeritosComponent implements OnInit {
         this.datoPeritos.rfc = this.dataPeritoResultado.RFC;
         this.datoPeritos.curp = this.dataPeritoResultado.CURP;
         this.datoPeritos.ine = this.dataPeritoResultado.CLAVEIFE;
-        this.datoPeritos.idIden = 2;
         this.datoPeritos.identificacion = this.dataPeritoResultado.DESCDOCIDENTIF;
         this.datoPeritos.fecha_naci = this.dataPeritoResultado.FECHANACIMIENTO;
         this.datoPeritos.fecha_def = this.dataPeritoResultado.FECHADEFUNCION;
@@ -126,5 +138,5 @@ export class VerPeritosComponent implements OnInit {
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
-  
+
 }

@@ -35,6 +35,8 @@ import { ConsultaSociedadComponent } from './components/sociedad/consulta-socied
 import { EdicionSociedadComponent } from './components/sociedad/edicion-sociedad/edicion-sociedad.component';
 import { VerPeritosComponent } from './components/peritos/ver-peritos/ver-peritos.component';
 import { VerSociedadComponent } from './components/sociedad/ver-sociedad/ver-sociedad.component';
+import { EditarPeritosComponent } from './components/peritos/editar-peritos/editar-peritos.component';
+import { EditarSociedadComponent } from './components/sociedad/editar-sociedad/editar-sociedad.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +68,9 @@ import { VerSociedadComponent } from './components/sociedad/ver-sociedad/ver-soc
     DialogDocumento,
     DialogNotario,
     DialogPersona,
-    VerSociedadComponent
+    VerSociedadComponent,
+    EditarPeritosComponent,
+    EditarSociedadComponent
   ],
   imports: [
     BrowserModule,

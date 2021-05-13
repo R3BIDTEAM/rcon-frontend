@@ -119,7 +119,7 @@
                 <div class="alert alert-info" *ngIf="dataSource.length == 0 && !loading">
                     No hay Peritos para el filtro seleccionado
                 </div> 
-                <table mat-table [dataSource]="dataSource" *ngIf="!loading && dataSource.length > 0">
+                <table mat-table [dataSource]="dataPaginate" *ngIf="!loading && dataSource.length > 0">
                     <ng-container matColumnDef="registro">
                         <th mat-header-cell *matHeaderCellDef> Registro </th>
                         <td mat-cell *matCellDef="let element"> {{(element.registro) ?  element.registro : element.REGISTRO}}</td>
@@ -151,7 +151,7 @@
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
-                <mat-paginator #paginator [length]="total" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado($event)">
+                <mat-paginator #paginator [length]="total" [pageSize]="pageSize" [pageSizeOptions]="[pageSize]" [showFirstLastButtons]="true" (page)="paginado($event)">
                 </mat-paginator>
             </ng-container>
         </mat-card-content>

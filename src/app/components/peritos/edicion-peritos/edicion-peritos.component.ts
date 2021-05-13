@@ -135,7 +135,7 @@ export class EdicionPeritosComponent implements OnInit {
                     this.loading = false;
                     this.dataSource = res;
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-                    this.total = this.dataPaginate.length; 
+                    this.total = this.dataSource.length; 
                     this.paginator.pageIndex = 0;
                     console.log(this.dataSource);
                 },
@@ -152,7 +152,7 @@ export class EdicionPeritosComponent implements OnInit {
 
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
-        this.dataSource = this.paginate(this.dataSource, this.pageSize, this.pagina);
+        this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
     }
     
     paginate(array, page_size, page_number) {
