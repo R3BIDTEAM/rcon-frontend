@@ -11,7 +11,7 @@ import * as moment from 'moment';
 
 export interface DataDomicilio {
   //idtipodireccion: number;
-  tipodireccion: string;
+  //tipodireccion: string;
   idestado: number;
   estado: string;
   idalcaldia: number;
