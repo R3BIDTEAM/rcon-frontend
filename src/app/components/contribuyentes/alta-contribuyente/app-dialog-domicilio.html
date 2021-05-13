@@ -1,12 +1,12 @@
 <h1 mat-dialog-title>Domicilio</h1>
 <div mat-dialog-content>
 
-    <div style="padding: 30px; text-align: center;" *ngIf="false">
+    <div style="padding: 30px; text-align: center;" *ngIf="loadingEstados">
         <mat-spinner style="margin:0 auto;"></mat-spinner>
         <p>Cargando...</p>
     </div>
 
-    <ng-container *ngIf="true">
+    <ng-container *ngIf="!loadingEstados">
         <form [formGroup]="domicilioFormGroup">
             <!--<div class="row">
                 <mat-form-field class="col-6">
@@ -23,12 +23,13 @@
                     <mat-label>Estado:</mat-label>
                     <mat-select formControlName="idestado">
                         <mat-option value="">Seleccione ...</mat-option>
-                        <mat-option value="1">Test</mat-option>
-                        <mat-option value="2">CDMX</mat-option>
+                        <mat-option *ngFor="let estado of estados" [value]="estado.CODESTADO">
+                            {{ estado.ESTADO }}
+                        </mat-option>
                     </mat-select>
                     <mat-error *ngIf="domicilioFormGroup.controls.idestado.errors?.required">Requerido</mat-error>
                 </mat-form-field>
-                <mat-form-field class="col-6" *ngIf="domicilioFormGroup.controls.idestado.value == 2">
+                <mat-form-field class="col-6" *ngIf="domicilioFormGroup.controls.idestado.value == 9">
                     <mat-label>Alcaldía:</mat-label>
                     <mat-select formControlName="idalcaldia">
                         <mat-option value="">Seleccione ...</mat-option>
@@ -37,7 +38,7 @@
                     <mat-error *ngIf="domicilioFormGroup.controls.idalcaldia.errors?.required">Requerido</mat-error>
                 </mat-form-field>
             </div>
-            <div *ngIf="domicilioFormGroup.controls.idestado.value != 2">
+            <div *ngIf="domicilioFormGroup.controls.idestado.value != 9">
                 <div class="row">
                     <mat-form-field class="col-3">
                         <mat-label>Municipio:</mat-label>

@@ -194,7 +194,7 @@ export class AltaContribuyenteComponent implements OnInit {
   styleUrls: ['./alta-contribuyente.component.css']
 })
 export class DialogDomicilio {
-  endpointCatalogos = environment.endpoint;
+  endpointCatalogos = environment.endpoint + 'registro/';
   //loadingTiposDireccion = false;
   loadingEstados = false;
   loadingAlcaldias = false;
@@ -212,11 +212,20 @@ export class DialogDomicilio {
   dataDomicilio: DataDomicilio = {} as DataDomicilio;
 
   constructor(
+    private auth: AuthService,
     private http: HttpClient,
     private _formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<DialogDomicilio>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
       dialogRef.disableClose = true;
+      this.httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: this.auth.getSession().token
+        })
+      };
+
+      this.getDataEstados();
       
       this.domicilioFormGroup = this._formBuilder.group({
         //idtipodireccion: ['', Validators.required],
@@ -242,7 +251,7 @@ export class DialogDomicilio {
       });
 
       this.domicilioFormGroup.controls.idestado.valueChanges.subscribe(idestado => {
-        if(idestado == 2) {
+        if(idestado == 9) {
           this.domicilioFormGroup.removeControl('municipio');
           this.domicilioFormGroup.removeControl('ciudad');
           this.domicilioFormGroup.addControl('idalcaldia', new FormControl('', Validators.required));
@@ -274,7 +283,7 @@ export class DialogDomicilio {
 
   getDataEstados(): void {
     this.loadingEstados = true;
-    this.http.get(this.endpointCatalogos, this.httpOptions).subscribe(
+    this.http.post(this.endpointCatalogos + 'getEstados', '', this.httpOptions).subscribe(
       (res: any) => {
         this.loadingEstados = false;
         this.estados = res;
@@ -357,7 +366,7 @@ export class DialogDomicilio {
     this.dataDomicilio.telefono = (this.domicilioFormGroup.value.telefono) ? this.domicilioFormGroup.value.telefono : null;
     this.dataDomicilio.adicional = (this.domicilioFormGroup.value.adicional) ? this.domicilioFormGroup.value.adicional : null;
     
-    if(this.domicilioFormGroup.value.idestado == 2){
+    if(this.domicilioFormGroup.value.idestado == 9){
       this.dataDomicilio.idalcaldia = this.domicilioFormGroup.value.idalcaldia;
     } else {
       this.dataDomicilio.municipio = (this.domicilioFormGroup.value.municipio) ? this.domicilioFormGroup.value.municipio : null;
@@ -387,7 +396,7 @@ export class DialogDomicilio {
     this.domicilioFormGroup.controls['telefono'].setValue(dataDomicilio.telefono);
     this.domicilioFormGroup.controls['adicional'].setValue(dataDomicilio.adicional);
 
-    if(dataDomicilio.idestado == 2){
+    if(dataDomicilio.idestado == 9){
       this.domicilioFormGroup.controls['idalcaldia'].setValue(dataDomicilio.idalcaldia);
     } else {
       this.domicilioFormGroup.controls['municipio'].setValue(dataDomicilio.municipio);
