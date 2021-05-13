@@ -196,14 +196,14 @@ export class DialogDomicilio {
   endpointCatalogos = environment.endpoint + 'registro/';
   //loadingTiposDireccion = false;
   loadingEstados = false;
-  loadingAlcaldias = false;
+  loadingMunicipios = false;
   loadingTiposAsentamiento = false;
   loadingTiposVia = false;
   loadingTiposLocalidad = false;
   httpOptions;
   tiposDireccion;
   estados;
-  alcaldias;
+  municipios;
   tiposAsentamiento;
   tiposVia;
   tiposLocalidad;
@@ -293,15 +293,15 @@ export class DialogDomicilio {
     );
   }
 
-  getDataAlcaldias(event): void {
-    this.loadingAlcaldias = true;
+  getDataMunicipios(event): void {
+    this.loadingMunicipios = true;
     this.http.post(this.endpointCatalogos + 'getMunicipiosByEstado?codEstado=' + event.value, '', this.httpOptions).subscribe(
       (res: any) => {
-        this.loadingAlcaldias = false;
-        this.alcaldias = res;
+        this.loadingMunicipios = false;
+        this.municipios = res;
       },
       (error) => {
-        this.loadingAlcaldias = false;
+        this.loadingMunicipios = false;
       }
     );
   }
@@ -378,7 +378,7 @@ export class DialogDomicilio {
   setDataDomicilio(dataDomicilio): void {
     //this.domicilioFormGroup.controls['idtipodireccion'].setValue(dataDomicilio.idtipodireccion);
     this.domicilioFormGroup.controls['idestado'].setValue(dataDomicilio.idestado);
-    this.getDataAlcaldias({value: this.domicilioFormGroup.value.idestado});
+    this.getDataMunicipios({value: this.domicilioFormGroup.value.idestado});
     this.domicilioFormGroup.controls['idtipoasentamiento'].setValue(dataDomicilio.idtipoasentamiento);
     this.domicilioFormGroup.controls['asentamiento'].setValue(dataDomicilio.asentamiento);
     this.domicilioFormGroup.controls['idtipovia'].setValue(dataDomicilio.idtipovia);
