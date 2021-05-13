@@ -31,13 +31,13 @@
                 </mat-form-field>
                 <mat-form-field class="col-6" *ngIf="domicilioFormGroup.controls.idestado.value == 9">
                     <mat-label>Alcaldía:</mat-label>
-                    <mat-select formControlName="idalcaldia" [class.spinner]="loadingAlcaldias" [disabled]="loadingAlcaldias">
+                    <mat-select formControlName="idmunicipio" [class.spinner]="loadingAlcaldias" [disabled]="loadingAlcaldias">
                         <mat-option value="">Seleccione ...</mat-option>
                         <mat-option *ngFor="let alcaldia of alcaldias" [value]="alcaldia.CODMUNICIPIO">
                             {{ alcaldia.MUNICIPIO }}
                         </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="domicilioFormGroup.controls.idalcaldia.errors?.required">Requerido</mat-error>
+                    <mat-error *ngIf="domicilioFormGroup.controls.idmunicipio.errors?.required">Requerido</mat-error>
                 </mat-form-field>
             </div>
             <div *ngIf="domicilioFormGroup.controls.idestado.value != 9">
