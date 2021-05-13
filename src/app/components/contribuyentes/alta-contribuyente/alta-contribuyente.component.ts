@@ -195,7 +195,7 @@ export class AltaContribuyenteComponent implements OnInit {
 })
 export class DialogDomicilio {
   endpointCatalogos = environment.endpoint;
-  loadingTiposDireccion = false;
+  //loadingTiposDireccion = false;
   loadingEstados = false;
   loadingAlcaldias = false;
   loadingTiposAsentamiento = false;
@@ -259,7 +259,7 @@ export class DialogDomicilio {
       }
     }
   
-  getDataTiposDireccion(): void {
+  /*getDataTiposDireccion(): void {
     this.loadingTiposDireccion = true;
     this.http.get(this.endpointCatalogos, this.httpOptions).subscribe(
       (res: any) => {
@@ -270,7 +270,7 @@ export class DialogDomicilio {
         this.loadingTiposDireccion = false;
       }
     );
-  }
+  }*/
 
   getDataEstados(): void {
     this.loadingEstados = true;
