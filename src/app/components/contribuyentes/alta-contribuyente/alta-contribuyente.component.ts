@@ -294,9 +294,9 @@ export class DialogDomicilio {
     );
   }
 
-  getDataAlcaldias(): void {
+  getDataAlcaldias(event): void {
     this.loadingAlcaldias = true;
-    this.http.get(this.endpointCatalogos, this.httpOptions).subscribe(
+    this.http.post(this.endpointCatalogos + 'getMunicipiosByEstado?codEstado=' + event.value, '', this.httpOptions).subscribe(
       (res: any) => {
         this.loadingAlcaldias = false;
         this.alcaldias = res;
@@ -379,6 +379,7 @@ export class DialogDomicilio {
   setDataDomicilio(dataDomicilio): void {
     //this.domicilioFormGroup.controls['idtipodireccion'].setValue(dataDomicilio.idtipodireccion);
     this.domicilioFormGroup.controls['idestado'].setValue(dataDomicilio.idestado);
+    this.getDataAlcaldias({value: this.domicilioFormGroup.value.idestado});
     this.domicilioFormGroup.controls['idtipoasentamiento'].setValue(dataDomicilio.idtipoasentamiento);
     this.domicilioFormGroup.controls['asentamiento'].setValue(dataDomicilio.asentamiento);
     this.domicilioFormGroup.controls['idtipovia'].setValue(dataDomicilio.idtipovia);

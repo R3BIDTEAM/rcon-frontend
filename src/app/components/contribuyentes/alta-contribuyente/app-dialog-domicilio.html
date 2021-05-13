@@ -21,7 +21,7 @@
             <div class="row">
                 <mat-form-field class="col-6">
                     <mat-label>Estado:</mat-label>
-                    <mat-select formControlName="idestado">
+                    <mat-select formControlName="idestado" (selectionChange)="getDataAlcaldias($event)">
                         <mat-option value="">Seleccione ...</mat-option>
                         <mat-option *ngFor="let estado of estados" [value]="estado.CODESTADO">
                             {{ estado.ESTADO }}
@@ -31,9 +31,11 @@
                 </mat-form-field>
                 <mat-form-field class="col-6" *ngIf="domicilioFormGroup.controls.idestado.value == 9">
                     <mat-label>Alcaldía:</mat-label>
-                    <mat-select formControlName="idalcaldia">
+                    <mat-select formControlName="idalcaldia" [class.spinner]="loadingAlcaldias" [disabled]="loadingAlcaldias">
                         <mat-option value="">Seleccione ...</mat-option>
-                        <mat-option value="1">Test</mat-option>
+                        <mat-option *ngFor="let alcaldia of alcaldias" [value]="alcaldia.CODMUNICIPIO">
+                            {{ alcaldia.MUNICIPIO }}
+                        </mat-option>
                     </mat-select>
                     <mat-error *ngIf="domicilioFormGroup.controls.idalcaldia.errors?.required">Requerido</mat-error>
                 </mat-form-field>
