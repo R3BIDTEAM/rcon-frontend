@@ -9,16 +9,91 @@ import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@ang
 import { MatPaginator } from '@angular/material/paginator';
 import * as moment from 'moment';
 
+export interface Filtros {
+  no_notario: string;
+  estado: string;
+  nombre: string;
+  apellido_paterno: string;
+  apellido_materno: string;
+  rfc: string;
+  curp: string;
+  ine: string;
+  otro_documento: string;
+  numero_documento: string;
+  fecha_nacimiento: string;
+  fecha_defuncion: string;
+  celular: string;
+  email: string;
+}
+
 @Component({
   selector: 'app-edicion-notario',
   templateUrl: './edicion-notario.component.html',
   styleUrls: ['./edicion-notario.component.css']
 })
+
 export class EdicionNotarioComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private http: HttpClient,
+    private auth: AuthService,
+    private _formBuilder: FormBuilder,
+    private snackBar: MatSnackBar,
+    public dialog: MatDialog,
+  ) { }
 
   ngOnInit(): void {
   }
+
+
+
+
+
+  // searchNotario(i = -1, dataDomicilio = null): void {
+  searchNotario(): void {
+    const dialogRef = this.dialog.open(DialogBuscarNotario, {
+      width: '700px',
+      // data: dataDomicilio,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      // if(result){
+      //   if(i != -1){
+      //     this.dataDomicilios[i] = result;
+      //   }else{
+      //     this.dataDomicilios.push(result);
+      //   }
+      // }
+    });
+  }
+
+
+}
+
+
+
+///////////////BUSCAR NOTARIO////////////////
+@Component({
+  selector: 'app-dialog-buscar-notario',
+  templateUrl: 'app-dialog-buscar-notario.html',
+  styleUrls: ['./edicion-notario.component.css']
+})
+
+export class DialogBuscarNotario {
+  endpointBuscarNotario = environment.endpoint + 'registro/';
+  //loadingTiposDireccion = false;
+  // loadingEstados = false;
+  // loadingMunicipios = false;
+  // loadingTiposAsentamiento = false;
+  // loadingTiposVia = false;
+  // loadingTiposLocalidad = false;
+  // httpOptions;
+  // tiposDireccion;
+  // estados;
+  // municipios;
+  // tiposAsentamiento;
+  // tiposVia;
+  // tiposLocalidad;
+  // domicilioFormGroup: FormGroup;
+  // dataDomicilio: DataDomicilio = {} as DataDomicilio;
 
 }
