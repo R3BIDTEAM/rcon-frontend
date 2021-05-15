@@ -1,9 +1,9 @@
 <mat-card>
+    <mat-card-header>
+        <mat-card-title>Datos Perito</mat-card-title>
+    </mat-card-header>
+    <hr>
     <div class="borde">
-        <mat-card-header>
-            <mat-card-title>Datos Perito</mat-card-title>
-        </mat-card-header>
-        <hr>
         <mat-card-header>
             <mat-card-title>Datos de persona física</mat-card-title>
             <button mat-icon-button color="primary" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente" (click)="cleanPerito()">
@@ -111,74 +111,6 @@
                             </mat-form-field>
                         </div>
                     </div>
-
-                    <mat-card-header>
-                        <mat-card-title>Datos especifícos del perito</mat-card-title>
-                        <button mat-icon-button color="primary" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente">
-                            <mat-icon>add_box</mat-icon>
-                        </button>
-                        <button mat-icon-button color="primary" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente">
-                            <mat-icon>delete</mat-icon>
-                        </button>
-                    </mat-card-header>
-                    <div class="row">
-                        <div class="col-md-5">
-                            <mat-form-field appearance="outline" style="width: 100%;">
-                                <mat-label>Registro*</mat-label>
-                                <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.registro">
-                            </mat-form-field>
-                        </div>
-                        <div class="col-md-5">
-                                <mat-checkbox [disabled]="true" [checked]="datoPeritos.independiente">Independiente</mat-checkbox>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-5">
-                            <mat-form-field appearance="fill" style="width: 100%;">
-                                <mat-label>Fecha Alta</mat-label>
-                                <input matInput [matDatepicker]="fechaAlta" [(ngModel)]="datoPeritos.fecha_alta">
-                                <mat-datepicker-toggle matSuffix [for]="fechaAlta"></mat-datepicker-toggle>
-                                <mat-datepicker #fechaAlta></mat-datepicker>
-                            </mat-form-field>
-                        </div>
-                        <div class="col-md-5">
-                            <mat-form-field appearance="fill" style="width: 100%;">
-                                <mat-label>Fecha Baja</mat-label>
-                                <input matInput [matDatepicker]="fechaBaja" [(ngModel)]="datoPeritos.fecha_baja">
-                                <mat-datepicker-toggle matSuffix [for]="fechaBaja"></mat-datepicker-toggle>
-                                <mat-datepicker #fechaBaja></mat-datepicker>
-                            </mat-form-field>
-                        </div>
-                    </div>
-                </ng-container>
-                <h3>Sociedades Asociadas</h3>
-                <ng-container>
-                    <div style="padding: 30px; text-align: center;" *ngIf="loading">
-                        <mat-spinner style="margin:0 auto;"></mat-spinner>
-                        <p>Cargando...</p>
-                    </div>
-                    <div class="alert alert-info" *ngIf="!loading && dataSource.length == 0">
-                        No hay avalúos para el filtro seleccionado
-                    </div> 
-                    <!-- <table mat-table [dataSource]="dataSource" *ngIf="!loading && dataSource.length > 0"> -->
-                    <table mat-table [dataSource]="dataSource" *ngIf="!loading && dataSource.length > 0">
-                        <ng-container matColumnDef="nombre">
-                            <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                            <td mat-cell *matCellDef="let element"> {{ element.razonsocial }}</td>
-                        </ng-container>
-                        <ng-container matColumnDef="registro">
-                            <th mat-header-cell *matHeaderCellDef> Registro </th>
-                            <td mat-cell *matCellDef="let element"> {{element.registro}}</td>
-                        </ng-container>
-                        <ng-container matColumnDef="rfc">
-                            <th mat-header-cell *matHeaderCellDef> RFC </th>
-                            <td mat-cell *matCellDef="let element"> {{ element.rfc }}</td>
-                        </ng-container>
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                    </table>
-                    <mat-paginator #paginator [length]="total" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado($event)">
-                    </mat-paginator>
                 </ng-container>
             </div>
         </div>
@@ -196,7 +128,397 @@
                         Cancelar
                     </button>
                 </div>
-            </div>
-        </div>
+            </div><br>
+        </div><br>
+    </div>
+    <br>
+    <div class="borde">
+        <mat-card-header>
+            <mat-card-title>Datos de contacto</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <br>
+            <mat-accordion>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Domicilios
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            {{panelOpenState ? 'Cerrar' : 'Ver'}} los datos de los Domicilios
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <div class="row">
+                        <div class="col-md-9 offset-md-1">
+                            <h3>Agregar domicilio
+                                <button mat-flat-button type="button" color="primary" aria-label="Agregar" matTooltip="Agregar" (click)="addDomicilio()">
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9 offset-md-1">
+                            <div>
+                                No hay datos que mostrar ...
+                            </div>
+                            <ng-template #domicilios>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Tipo Dirección</th>
+                                            <th>Dirección</th>
+                                            <th></th>
+                                            <th>Historial</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td>
+                                                <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar">
+                                                    <mat-icon>edit</mat-icon>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button mat-icon-button type="button" color="primary" aria-label="Ver" matTooltip="Ver">
+                                                    <mat-icon>search</mat-icon>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </ng-template>                    
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+            <br><hr><br>
+            <mat-accordion>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Gestión de Domicilios para Recibir Boletas Prediales
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            {{panelOpenState ? 'Cerrar' : 'Ver'}} los datos de los Domicilios
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <div class="row">
+                        <div class="col-md-9 offset-md-1">
+                            <h3>Agregar domicilio
+                                <button mat-flat-button type="button" color="primary" aria-label="Agregar" matTooltip="Agregar" (click)="addDomicilio()">
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9 offset-md-1">
+                            <div>
+                                No hay datos que mostrar ...
+                            </div>
+                            <ng-template #domicilios>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Tipo Dirección</th>
+                                            <th>Dirección</th>
+                                            <th></th>
+                                            <th>Historial</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td>
+                                                <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar">
+                                                    <mat-icon>edit</mat-icon>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button mat-icon-button type="button" color="primary" aria-label="Ver" matTooltip="Ver">
+                                                    <mat-icon>search</mat-icon>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </ng-template>                    
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+            <br><hr><br>
+            <mat-accordion>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                    <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Datos de bienes
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        {{panelOpenState ? 'Cerrar' : 'Ver'}} datos de bienes
+                    </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <div class="row">
+                        <div class="col-2">
+                            <h3>Inmuebles</h3>
+                        </div>                  
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </mat-card-content>
+    </div>
+    <br>
+    <div class="borde">
+        <mat-card-header>
+            <mat-card-title>Datos de representación</mat-card-title>
+        </mat-card-header>
+        <mat-accordion>
+            <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Representantes
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        Ver los datos de los Representantes
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <mat-card-content>
+                    <br>
+                    <div class="row">
+                        <div class="col-4">
+                            <h3>Agregar
+                                <button mat-flat-button type="button" color="primary" aria-label="Agregar" matTooltip="Agregar" class="little-button" (click)="addRepresentante()">
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                            </h3>
+                        </div>
+                        <div class="col-4"></div>
+                        <div class="col-4"></div>                    
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div>
+                                No hay datos que mostrar ...
+                            </div>
+                            <ng-template #representantes>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Representante</th>
+                                            <th>Texto Representación</th>
+                                            <th>Caducidad</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>
+                                                <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar">
+                                                    <mat-icon>edit</mat-icon>
+                                                </button>
+                                                <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar">
+                                                    <mat-icon>delete</mat-icon>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </ng-template>                    
+                        </div>
+                    </div><br><br>
+                </mat-card-content>
+            </mat-expansion-panel>
+        </mat-accordion>
+        <br><hr><br>
+        <mat-accordion>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Representados
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        {{panelOpenState ? 'Cerrar' : 'Ver'}} los datos de los Representados
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <mat-card-content>
+                    <br>
+                    <div class="row">
+                        <div class="col-4">
+                            <h3>Representados
+                                <button mat-flat-button type="button" color="primary" aria-label="Agregar" matTooltip="Agregar" class="little-button" (click)="addRepresentado()">
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                            </h3>
+                        </div>
+                        <div class="col-4"></div>
+                        <div class="col-4"></div>                    
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div>
+                                No hay datos que mostrar ...
+                            </div>
+                            <ng-template #representado>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Representante</th>
+                                            <th>Texto Representación</th>
+                                            <th>Caducidad</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>
+                                                <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar">
+                                                    <mat-icon>edit</mat-icon>
+                                                </button>
+                                                <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar">
+                                                    <mat-icon>delete</mat-icon>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </ng-template>                    
+                        </div>
+                    </div><br><br>
+                </mat-card-content>
+            </mat-expansion-panel>
+        </mat-accordion><br>
+    </div>
+    <br>
+    <div class="borde">
+        <mat-card-header>
+            <mat-card-title>Datos especifícos del perito</mat-card-title>
+        </mat-card-header>
+        <mat-accordion>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Información
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        {{panelOpenState ? 'Cerrar' : 'Ver'}} datos
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <ng-container *ngIf="!loading">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <mat-form-field appearance="outline" style="width: 100%;">
+                                        <mat-label>Registro*</mat-label>
+                                        <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.registro">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-5">
+                                        <mat-checkbox [disabled]="true" [checked]="datoPeritos.independiente">Independiente</mat-checkbox>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <mat-form-field appearance="fill" style="width: 100%;">
+                                        <mat-label>Fecha Alta</mat-label>
+                                        <input matInput [matDatepicker]="fechaAlta" [(ngModel)]="datoPeritos.fecha_alta">
+                                        <mat-datepicker-toggle matSuffix [for]="fechaAlta"></mat-datepicker-toggle>
+                                        <mat-datepicker #fechaAlta></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-5">
+                                    <mat-form-field appearance="fill" style="width: 100%;">
+                                        <mat-label>Fecha Baja</mat-label>
+                                        <input matInput [matDatepicker]="fechaBaja" [(ngModel)]="datoPeritos.fecha_baja">
+                                        <mat-datepicker-toggle matSuffix [for]="fechaBaja"></mat-datepicker-toggle>
+                                        <mat-datepicker #fechaBaja></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+        <br><hr><br>
+        <mat-card-header>
+            <mat-card-title>Sociedades Asociadas</mat-card-title>
+        </mat-card-header>
+        <mat-accordion>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Información
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        {{panelOpenState ? 'Cerrar' : 'Ver'}} datos
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <button mat-icon-button color="primary" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente">
+                            <mat-icon>add_box</mat-icon>
+                        </button>
+                        <button mat-icon-button color="primary" aria-label="Eliminar Datos" matTooltip="Eliminar Datos">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                        <ng-container>
+                            <div style="padding: 30px; text-align: center;" *ngIf="loading">
+                                <mat-spinner style="margin:0 auto;"></mat-spinner>
+                                <p>Cargando...</p>
+                            </div>
+                            <div class="alert alert-info" *ngIf="!loading && dataSource.length == 0">
+                                No hay avalúos para el filtro seleccionado
+                            </div> 
+                            <!-- <table mat-table [dataSource]="dataSource" *ngIf="!loading && dataSource.length > 0"> -->
+                            <table mat-table [dataSource]="dataSource" *ngIf="!loading && dataSource.length > 0">
+                                <ng-container matColumnDef="nombre">
+                                    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                                    <td mat-cell *matCellDef="let element"> {{ element.razonsocial }}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="registro">
+                                    <th mat-header-cell *matHeaderCellDef> Registro </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.registro}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="rfc">
+                                    <th mat-header-cell *matHeaderCellDef> RFC </th>
+                                    <td mat-cell *matCellDef="let element"> {{ element.rfc }}</td>
+                                </ng-container>
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                            <mat-paginator #paginator [length]="total" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado($event)">
+                            </mat-paginator>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2 offset-md-6">
+                        <div class="d-flex flex-row-reverse">
+                            <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar">
+                                Guardar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="d-flex flex-row-reverse">
+                            <button mat-stroked-button class="boton-n-representacion" color="warn" aria-label="Cancelar">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
     </div>
 </mat-card>

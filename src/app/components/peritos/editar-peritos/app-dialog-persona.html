@@ -1,0 +1,123 @@
+<h1 mat-dialog-title>Buscador de Personas</h1>
+<div mat-dialog-content>
+    <form #formDialog="ngForm">
+        <div class="row">
+            <mat-form-field class="col-6">
+                <mat-label>Tipo de persona:</mat-label>
+                <mat-select [(value)]="tipoPersona" (selectionChange)="clean()">
+                    <mat-option value="F">Fisica</mat-option>
+                    <mat-option value="M">Moral</mat-option>
+                </mat-select>
+            </mat-form-field>     
+        </div>
+        <ng-container *ngIf="tipoPersona == 'F'">
+            <div class="row">
+                <mat-form-field class="col-6">
+                    <mat-label>Apellido Paterno:</mat-label>
+                    <input matInput [(ngModel)]="filtros.apaterno" name="apaterno" (keyup)="clearInputsIdentNoIdent(false)">
+                </mat-form-field>
+                <mat-form-field class="col-6">
+                    <mat-label>Apellido Materno:</mat-label>
+                    <input matInput [(ngModel)]="filtros.amaterno" name="amaterno" (keyup)="clearInputsIdentNoIdent(false)">
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="col-12">
+                    <mat-label>Nombre:</mat-label>
+                    <input matInput [(ngModel)]="filtros.nombre" name="nombre" (keyup)="clearInputsIdentNoIdent(false)">
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="col-4">
+                    <mat-label>RFC:</mat-label>
+                    <input matInput [(ngModel)]="filtros.rfc" name="rfc" (keyup)="clearInputsIdentNoIdent(true)">
+                </mat-form-field>
+                <mat-form-field class="col-4">
+                    <mat-label>CURP:</mat-label>
+                    <input matInput [(ngModel)]="filtros.curp" name="curp" (keyup)="clearInputsIdentNoIdent(true)">
+                </mat-form-field>
+                <mat-form-field class="col-4">
+                    <mat-label>INE:</mat-label>
+                    <input matInput [(ngModel)]="filtros.ine" name="ine" (keyup)="clearInputsIdentNoIdent(true)">
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="col-4">
+                    <mat-label></mat-label>
+                    <mat-select [(value)]="filtros.idDocIdent">
+                        <mat-option value=""></mat-option>
+                        <mat-option value="1">Test</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="col-8">
+                    <mat-label></mat-label>
+                    <input matInput [(ngModel)]="filtros.docIdent" name="docIdent" (keyup)="clearInputsIdentNoIdent(true)">
+                </mat-form-field>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="tipoPersona == 'M'">
+            <div class="row">
+                <mat-form-field class="col-8">
+                    <mat-label>Razón social:</mat-label>
+                    <input matInput [(ngModel)]="filtros.nombre" name="nombre" (keyup)="clearInputsIdentNoIdent(false)">
+                </mat-form-field>
+                <mat-form-field class="col-4">
+                    <mat-label>RFC:</mat-label>
+                    <input matInput [(ngModel)]="filtros.rfc" name="rfc" (keyup)="clearInputsIdentNoIdent(true)">
+                </mat-form-field>
+            </div>
+        </ng-container>
+        <br>
+        <div class="row">
+            <div class="col-6">
+                <h3 class="cdmx-color-accent">Resultado</h3>
+            </div>
+            <div class="col-6" align="end">
+                <button mat-icon-button color="primary" aria-label="Buscar" matTooltip="Buscar" (click)="getDataPersonas()">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </div>
+        </div>
+    </form>
+    <ng-container *ngIf="isBusqueda">
+        <div style="padding: 30px; text-align: center;" *ngIf="loading">
+            <mat-spinner style="margin:0 auto;"></mat-spinner>
+            <p>Cargando...</p>
+        </div>
+        <div class="alert alert-info" *ngIf="dataSource.length == 0 && !loading">
+            No se encontraron datos.
+        </div>
+        <table mat-table [dataSource]="dataSource" *ngIf="dataSource.length > 0 && !loading">
+            <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                <td mat-cell *matCellDef="let element"> {{element.APELLIDOPATERNO}} {{element.APELLIDOMATERNO}}, {{element.NOMBRE}}</td>
+            </ng-container>
+            <ng-container matColumnDef="datos_identificativos">
+                <th mat-header-cell *matHeaderCellDef> Datos Identificativos </th>
+                <td mat-cell *matCellDef="let element">
+                    {{(element.RFC) ? ('RFC: ' + element.RFC) : ''}}
+                    <br>
+                    {{(element.CURP) ? ('CURP: ' + element.CURP) : ''}}
+                    <br>
+                    {{(element.CLAVEIFE) ? ('INE: ' + element.CLAVEIFE) : ''}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="select">
+                <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-radio-group [(ngModel)]="optionPersona">
+                        <mat-radio-button [value]="element" (change)="personaSelected(element)"></mat-radio-button>
+                    </mat-radio-group>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator #paginator [length]="total" [pageSize]="pageSize" [pageSizeOptions]="[pageSize]" (page)="paginado($event)">
+        </mat-paginator>
+    </ng-container>
+</div>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cerrar</button>
+    <button mat-flat-button color="primary" [disabled]="!optionPersona" [mat-dialog-close]="persona">Aceptar</button>
+</mat-dialog-actions>

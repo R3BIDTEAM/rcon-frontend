@@ -1,0 +1,128 @@
+<h1 mat-dialog-title>Especificación/Consulta Documento Digital</h1>
+<div mat-dialog-content>
+
+    <div style="padding: 30px; text-align: center;" *ngIf="false">
+        <mat-spinner style="margin:0 auto;"></mat-spinner>
+        <p>Cargando...</p>
+    </div>
+
+    <ng-container *ngIf="true">
+        <mat-vertical-stepper [linear]="true" #stepper>
+            <mat-step [stepControl]="tiposDocumentoFormGroup">
+                <form [formGroup]="tiposDocumentoFormGroup">
+                    <ng-template matStepLabel>Selcción de Documentos</ng-template>
+                    <mat-form-field class="col-6">
+                        <mat-label>Tipo Documento Dígital:</mat-label>
+                        <mat-select formControlName="codtipodocumento">
+                            <mat-option value="">Seleccione ...</mat-option>
+                            <mat-option value="1">Test</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="tiposDocumentoFormGroup.controls.codtipodocumento.errors?.required">Requerido</mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-6">
+                        <mat-label>Tipo Documento Jurídico:</mat-label>
+                        <mat-select formControlName="codtipodocumentojuridico" (selectionChange)="getTipoDocJuridico($event)">
+                            <mat-option value="">Seleccione ...</mat-option>
+                            <mat-option value="1">Poder Notarial</mat-option>
+                            <mat-option value="2">Carta Poder</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="tiposDocumentoFormGroup.controls.codtipodocumentojuridico.errors?.required">Requerido</mat-error>
+                    </mat-form-field>
+                    <div>
+                        <button mat-button matStepperNext>Siguiente</button>
+                    </div>
+                </form>
+            </mat-step>
+
+            <mat-step [stepControl]="infoDocumentoFormGroup">
+                <form [formGroup]="infoDocumentoFormGroup">
+                    <ng-template matStepLabel>{{dataDocumento.nombreTipoDocumentoJuridico}}
+                        <button mat-flat-button type="button" color="primary" [disabled]="tiposDocumentoFormGroup.value.codtipodocumentojuridico != 1" aria-label="Buscar Notario" matTooltip="Buscar Notario" class="little-button" (click)="addNotario()">
+                            <mat-icon>search</mat-icon>
+                        </button>
+                    </ng-template>
+                    <ng-container *ngIf="tiposDocumentoFormGroup.value.codtipodocumentojuridico == 1">
+                        <mat-form-field class="col-6">
+                            <mat-label>Número:</mat-label>
+                            <input matInput readonly formControlName="noNotario">
+                            <mat-error *ngIf="infoDocumentoFormGroup.controls.noNotario.errors?.required">Requerido</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col-6">
+                            <mat-label>Estado:</mat-label>
+                            <input matInput readonly formControlName="ciudadNotario">
+                            <mat-error *ngIf="infoDocumentoFormGroup.controls.ciudadNotario.errors?.required">Requerido</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col-12">
+                            <mat-label>Nombre:</mat-label>
+                            <input matInput readonly formControlName="nombreNotario">
+                            <mat-error *ngIf="infoDocumentoFormGroup.controls.nombreNotario.errors?.required">Requerido</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col-6">
+                            <mat-label>N° Escritura:</mat-label>
+                            <input matInput formControlName="num_escritura">
+                            <mat-error *ngIf="infoDocumentoFormGroup.controls.num_escritura.errors?.required">Requerido</mat-error>
+                        </mat-form-field>
+                        <div class="col-6"></div>
+                    </ng-container>
+                    <mat-form-field class="col-6">
+                        <mat-label>Fecha:</mat-label>
+                        <input matInput readonly formControlName="fecha" [matDatepicker]="pickfecha">
+                        <mat-datepicker-toggle matSuffix [for]="pickfecha"></mat-datepicker-toggle>
+                        <mat-datepicker #pickfecha></mat-datepicker>
+                        <mat-error *ngIf="infoDocumentoFormGroup.controls.fecha.errors?.required">Requerido</mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-6">
+                        <mat-label>Lugar:</mat-label>
+                        <input matInput formControlName="lugar">
+                        <mat-error *ngIf="infoDocumentoFormGroup.controls.lugar.errors?.required">Requerido</mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-12">
+                        <mat-label>Descripción:</mat-label>
+                        <textarea matInput formControlName="descripcion" rows="5"></textarea>
+                    </mat-form-field>
+                    <div>
+                        <button mat-button matStepperPrevious>Regresar</button>
+                        <button mat-button matStepperNext>Siguiente</button>
+                    </div>
+                </form>
+            </mat-step>
+
+            <mat-step [stepControl]="archivosDocumentoFormGroup">
+                <form [formGroup]="archivosDocumentoFormGroup">
+                    <ng-template matStepLabel>Archivo Adjunto</ng-template>
+                    <div class="form-group">
+                        <input type="file" class="form-control" multiple (change)="getArchivos($event)" accept="application/pdf,application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                    </div>
+                    <br>
+                    <div *ngIf="archivos.length">
+                        <div formArrayName="archivos" *ngFor="let archivo of archivos.controls; let i = index;">
+                            <div [formGroupName]="i">
+                                <span>{{i+1}}.- {{archivo.controls.nombre.value}}</span>
+                                <button mat-icon-button color="warn" aria-label="Eliminar" matTooltip="Eliminar" class="little-button" (click)="removeItem(i)">
+                                    <mat-icon>cancel</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button mat-button matStepperPrevious>Regresar</button>
+                        <button mat-button matStepperNext>Siguiente</button>
+                    </div>
+                </form>
+            </mat-step>
+
+            <mat-step>
+                <ng-template matStepLabel>Terminar</ng-template>
+                <div>
+                    <button mat-button matStepperPrevious>Regresar</button>
+                    <button mat-button (click)="getDataDocumento()">Guardar</button>
+                </div>
+            </mat-step>
+        </mat-vertical-stepper>
+    </ng-container>
+
+</div>
+<mat-dialog-actions align="end">
+    <button mat-flat-button color="primary" [disabled]="!canSend" [mat-dialog-close]="dataDocumento">Aceptar</button>
+    <button mat-button mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>
