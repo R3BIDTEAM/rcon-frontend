@@ -93,6 +93,13 @@ export interface DataDocumentoRepresentacion {
     archivos: Array<{nombre: string, base64: string}>;
 }
 
+export interface DataSociedadAsociada{
+    razonSocial: string;
+    registro: string;
+    rfc: string;
+    idsociedad: number;
+}
+
 @Component({
     selector: 'app-editar-peritos',
     templateUrl: './editar-peritos.component.html',
@@ -117,6 +124,7 @@ export class EditarPeritosComponent implements OnInit {
     dataDomicilios: DataDomicilio[] = [];
     dataRepresentantes: DataRepresentacion[] = [];
     dataRepresentados: DataRepresentacion[] = [];
+    dataSociedadAsociada: DataSociedadAsociada[] = [];
     panelOpenState = false;
     @ViewChild('paginator') paginator: MatPaginator;
 
@@ -205,6 +213,7 @@ export class EditarPeritosComponent implements OnInit {
             this.datoPeritos.independiente = false;
         }
     }
+
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
         this.dataSource = this.paginate(this.dataSource, this.pageSize, this.pagina);
@@ -222,9 +231,9 @@ export class EditarPeritosComponent implements OnInit {
         dialogRef.afterClosed().subscribe(result => {
             if(result){
                 if(i != -1){
-                this.dataDomicilios[i] = result;
+                    this.dataDomicilios[i] = result;
                 }else{
-                this.dataDomicilios.push(result);
+                    this.dataDomicilios.push(result);
                 }
             }
         });
@@ -261,6 +270,19 @@ export class EditarPeritosComponent implements OnInit {
             }
         });
     }
+
+    agregaSociedadEditar(){
+        const dialogRef = this.dialog.open(DialogSociedadAsociada, {
+            width: '700px',
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                this.dataSociedadAsociada.push(result);
+                console.log("AQUI EL RESULTADOOOOO");
+                console.log(this.dataSociedadAsociada);
+            }
+        });
+    }
 }
 
 ///////////////DOMICILIO////////////////
@@ -286,7 +308,6 @@ export class DialogDomicilioPerito {
     tiposLocalidad;
     domicilioFormGroup: FormGroup;
     dataDomicilio: DataDomicilio = {} as DataDomicilio;
-  
     constructor(
         private auth: AuthService,
         private http: HttpClient,
@@ -1295,5 +1316,132 @@ export class DialogPersonaPeritos {
         this.persona.ine = element.CLAVEIFE;
         this.persona.idDocIdent = element.IDDOCIDENTIF;
         this.persona.docIdent = element.VALDOCIDENTIF;
+    }
+}
+
+////////// SOCIEDADES ASOCIADAS ////////////////
+@Component({
+    selector: 'app-dialog-sociedadAsociada',
+    templateUrl: 'app-dialog-sociedadAsociada.html',
+    styleUrls: ['./editar-peritos.component.css']
+})
+export class DialogSociedadAsociada {
+    endpoint = environment.endpoint + 'registro/';
+    displayedColumns: string[] = ['razon','registro', 'rfc', 'select'];
+    pagina = 1;
+    total = 0;
+    pageSize = 15;
+    loading = false;
+    dataSource = [];
+    dataPaginate = [];
+    httpOptions;
+    razonSocial;
+    rfc;
+    registro;
+    search;
+    isIdentificativo;
+    optionSociedad;
+    dataSociedadAsociada: DataSociedadAsociada = {} as DataSociedadAsociada;
+    @ViewChild('paginator') paginator: MatPaginator;
+  
+    constructor(
+        private auth: AuthService,
+        private http: HttpClient,
+        public dialogRef: MatDialogRef<DialogSociedadAsociada>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) {
+        dialogRef.disableClose = true;
+  
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                Authorization: this.auth.getSession().token
+            })
+        };
+    }
+
+    clean(): void{
+        this.loading = false;
+        this.pagina = 1;
+        this.total = 0;
+        this.pageSize = 15;
+        this.dataSource = [];
+        this.dataPaginate;
+        this.optionSociedad = undefined;
+    }
+
+    validateSearch(){
+        this.search = (
+            this.razonSocial ||
+            this.rfc ||
+            this.registro
+        ) ? true : false;
+    }
+
+    clearInputsIdentNoIdent(isIdentificativo): void {
+        this.isIdentificativo = isIdentificativo;
+        if(this.isIdentificativo){
+            this.razonSocial = null;
+        }else{
+            this.rfc = null;
+            this.registro = null;
+        }
+    }
+
+    getSociedad(){
+        let query = '';
+        let busquedaDatos = '';
+        if( this.razonSocial ){
+            busquedaDatos = busquedaDatos + 'getSocValuacionByDatosPersonales';
+        }else{
+            busquedaDatos = busquedaDatos + 'getSocValuacionByDatosIdentificativos';
+        }
+
+        if( this.razonSocial ){
+            query = query + '&razonSocial=' + this.razonSocial + '&filtroRazon=1';
+        }
+        if(this.rfc){
+            query = query + '&rfc=' + this.rfc;
+        }
+        if(this.registro){
+            query = query + '&registro=' + this.registro;
+        }
+
+        query = query.substr(1);
+
+        this.loading = true;
+        console.log(this.endpoint);
+        this.http.post(this.endpoint + busquedaDatos + '?' + query, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loading = false;
+                    this.dataSource = res;
+                    this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                    this.total = this.dataSource.length; 
+                    this.paginator.pageIndex = 0;
+                    console.log(res);
+                },
+                (error) => {
+                    this.loading = false;
+                }
+            );
+    }
+
+    paginado(evt): void{
+        this.pagina = evt.pageIndex + 1;
+        this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+    }
+    
+    paginate(array, page_size, page_number) {
+        return array.slice((page_number - 1) * page_size, page_number * page_size);
+    }
+
+    sociedadSelected(element): DataSociedadAsociada {
+        console.log(element);
+        this.dataSociedadAsociada.rfc = element.RFC;
+        this.dataSociedadAsociada.registro = element.REGISTRO;
+        this.dataSociedadAsociada.razonSocial =element.RAZONSOCIAL;
+        console.log(this.dataSociedadAsociada);
+        return;
     }
 }

@@ -466,7 +466,7 @@
                 </mat-expansion-panel-header>
                 <div class="row">
                     <div class="col-md-8 offset-md-2">
-                        <button mat-icon-button color="primary" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente">
+                        <button mat-icon-button color="primary" aria-label="Buscar Sociedad" matTooltip="Buscar Sociedad" (click)="agregaSociedadEditar()">
                             <mat-icon>add_box</mat-icon>
                         </button>
                         <button mat-icon-button color="primary" aria-label="Eliminar Datos" matTooltip="Eliminar Datos">
@@ -480,15 +480,14 @@
                             <div class="alert alert-info" *ngIf="!loading && dataSource.length == 0">
                                 No hay avalúos para el filtro seleccionado
                             </div> 
-                            <!-- <table mat-table [dataSource]="dataSource" *ngIf="!loading && dataSource.length > 0"> -->
-                            <table mat-table [dataSource]="dataSource" *ngIf="!loading && dataSource.length > 0">
+                            <table mat-table [dataSource]="dataSource" *ngIf="!loading && dataSource.length > 0" width="100%">
                                 <ng-container matColumnDef="nombre">
-                                    <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                                    <td mat-cell *matCellDef="let element"> {{ element.razonsocial }}</td>
+                                    <th mat-header-cell *matHeaderCellDef width="50%" > Razón social </th>
+                                    <td mat-cell *matCellDef="let element" width="50%"> {{ element.razonsocial }}</td>
                                 </ng-container>
                                 <ng-container matColumnDef="registro">
-                                    <th mat-header-cell *matHeaderCellDef> Registro </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.registro}}</td>
+                                    <th mat-header-cell *matHeaderCellDef width="30%"> Registro </th>
+                                    <td mat-cell *matCellDef="let element" width="30%"> {{element.registro}}</td>
                                 </ng-container>
                                 <ng-container matColumnDef="rfc">
                                     <th mat-header-cell *matHeaderCellDef> RFC </th>
@@ -497,6 +496,20 @@
                                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                             </table>
+                            <table *ngIf="dataSociedadAsociada.length > 0">
+                                <tr *ngFor="let sociedadAsociada of dataSociedadAsociada; let i = index;">
+                                    <td width="50%">{{sociedadAsociada.razonSocial}}</td>
+                                    <td width="30%">{{sociedadAsociada.registro}}</td>
+                                    <td>{{sociedadAsociada.rfc}}</td>
+                                </tr>
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                            <div *ngIf="dataSociedadAsociada.length > 0">
+                                <div *ngFor="let sociedadAsociada of dataSociedadAsociada">
+                                    {{sociedadAsociada.razonSocial}}
+                                </div>
+                            </div>
                             <mat-paginator #paginator [length]="total" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado($event)">
                             </mat-paginator>
                         </ng-container>
@@ -519,6 +532,6 @@
                     </div>
                 </div>
             </mat-expansion-panel>
-        </mat-accordion>
+        </mat-accordion><br>
     </div>
 </mat-card>
