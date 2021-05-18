@@ -26,6 +26,17 @@ export interface Filtros {
   email: string;
 }
 
+export interface DataNotario {
+  nombre: string;
+  apellido_paterno: string;
+  apellido_materno: string;
+  rfc: string;
+  curp: string;
+  ine: string;
+  otro_documento: string;
+  numero_documento: string;
+}
+
 @Component({
   selector: 'app-edicion-notario',
   templateUrl: './edicion-notario.component.html',
@@ -53,7 +64,7 @@ export class EdicionNotarioComponent implements OnInit {
   searchNotario(): void {
     const dialogRef = this.dialog.open(DialogBuscarNotario, {
       width: '700px',
-      // data: dataDomicilio,
+      // data: dataNotario,
     });
     dialogRef.afterClosed().subscribe(result => {
       // if(result){
@@ -86,7 +97,7 @@ export class DialogBuscarNotario {
   // loadingTiposAsentamiento = false;
   // loadingTiposVia = false;
   // loadingTiposLocalidad = false;
-  // httpOptions;
+  httpOptions;
   // tiposDireccion;
   // estados;
   // municipios;
@@ -94,6 +105,14 @@ export class DialogBuscarNotario {
   // tiposVia;
   // tiposLocalidad;
   // domicilioFormGroup: FormGroup;
-  // dataDomicilio: DataDomicilio = {} as DataDomicilio;
+  dataNotario: DataNotario = {} as DataNotario;
+
+  constructor(
+    private http: HttpClient,
+    private auth: AuthService,
+    private _formBuilder: FormBuilder,
+    private snackBar: MatSnackBar,
+    public dialog: MatDialog,
+  ) { }
 
 }
