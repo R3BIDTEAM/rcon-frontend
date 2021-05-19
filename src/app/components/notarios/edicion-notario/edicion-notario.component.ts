@@ -26,17 +26,6 @@ export interface Filtros {
   email: string;
 }
 
-// export interface DataNotario {
-//   nombre: string;
-//   apellido_paterno: string;
-//   apellido_materno: string;
-//   rfc: string;
-//   curp: string;
-//   ine: string;
-//   otro_documento: string;
-//   numero_documento: string;
-// }
-
 @Component({
   selector: 'app-edicion-notario',
   templateUrl: './edicion-notario.component.html',
@@ -44,6 +33,9 @@ export interface Filtros {
 })
 
 export class EdicionNotarioComponent implements OnInit {
+  endpoint = environment.endpoint + 'registro/';
+  httpOptions;
+  filtros: Filtros = {} as Filtros;
 
   constructor(
     private http: HttpClient,
@@ -54,26 +46,33 @@ export class EdicionNotarioComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: this.auth.getSession().token
+      })  
+    };
   }
 
 
 
 
-
-  // searchNotario(i = -1, dataDomicilio = null): void {
   searchNotario(): void {
     const dialogRef = this.dialog.open(DialogBuscarNotario, {
       width: '700px',
       // data: dataNotario,
     });
     dialogRef.afterClosed().subscribe(result => {
-      // if(result){
-      //   if(i != -1){
-      //     this.dataDomicilios[i] = result;
-      //   }else{
-      //     this.dataDomicilios.push(result);
-      //   }
-      // }
+      this.filtros.no_notario = result.no_notario;
+      this.filtros.estado = result.estado;
+      this.filtros.nombre = result.nombre;
+      this.filtros.apellido_paterno = result.apellido_paterno;
+      this.filtros.apellido_materno = result.apellido_materno;
+      this.filtros.rfc = result.rfc;
+      this.filtros.curp = result.curp;
+      this.filtros.ine = result.ine;
+      this.filtros.celular = result.celular;
+      this.filtros.email = result.email;
     });
   }
 
@@ -84,7 +83,20 @@ export class EdicionNotarioComponent implements OnInit {
 
 ///////////////BUSCAR NOTARIO////////////////
 export interface DataNotarioSeleccionado {
-  registro: string;
+  no_notario: string;
+  estado: string;
+  nombre: string;
+  apellido_paterno: string;
+  apellido_materno: string;
+  rfc: string;
+  curp: string;
+  ine: string;
+  otro_documento: string;
+  numero_documento: string;
+  fecha_nacimiento: string;
+  fecha_defuncion: string;
+  celular: string;
+  email: string;
 }
 
 @Component({
@@ -164,6 +176,7 @@ export class DialogBuscarNotario {
       this.otro_documento = '';
       this.numero_documento = '';
       this.search = false;
+      this.dataNotarioSeleccionado = {} as DataNotarioSeleccionado;
   }
 
   validateSearch(){
@@ -250,7 +263,17 @@ export class DialogBuscarNotario {
   }
 
   RegistroSelect(element) {
-    this.dataNotarioSeleccionado.registro = element.registro;
+    this.dataNotarioSeleccionado.no_notario = element.NUMNOTARIO;
+    this.dataNotarioSeleccionado.estado = element.CODESTADO;
+    this.dataNotarioSeleccionado.nombre = element.NOMBRE;
+    this.dataNotarioSeleccionado.apellido_paterno = element.APELLIDOPATERNO;
+    this.dataNotarioSeleccionado.apellido_materno = element.APELLIDOMATERNO;
+    this.dataNotarioSeleccionado.rfc = element.RFC;
+    this.dataNotarioSeleccionado.curp = element.CURP;
+    this.dataNotarioSeleccionado.ine = element.CLAVEIFE;
+    this.dataNotarioSeleccionado.celular = element.CELULAR;
+    this.dataNotarioSeleccionado.email = element.EMAIL;
+    console.log(this.dataNotarioSeleccionado.email);
   }
 
 }

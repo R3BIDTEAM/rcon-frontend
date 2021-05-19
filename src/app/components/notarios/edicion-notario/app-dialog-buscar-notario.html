@@ -122,14 +122,8 @@
                 <ng-container matColumnDef="seleccionar">
                     <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="width: 10%;"> Seleccionar </th>
                     <td mat-cell *matCellDef="let element" style="text-align: center;">
-                        <!-- <button mat-stroked-button color="primary" aria-label="Ver Perito" matTooltip="Ver Perito" [routerLink]="['/main/ver-peritos', (element.idperito) ? element.idperito : element.IDPERITO]">
-                            Ver
-                        </button> -->
-                        <!-- <mat-radio-group [(ngModel)]="registroNP">
-                            <mat-radio-button [value]="element" (change)="RegistroSelect(element)"></mat-radio-button>
-                        </mat-radio-group> -->
                         <mat-radio-group [(ngModel)]="notarioSeleccionado">
-                            <mat-radio-button [value]="element"></mat-radio-button>
+                            <mat-radio-button [value]="element" (change)="RegistroSelect(element)"></mat-radio-button>
                         </mat-radio-group>
                     </td>
                 </ng-container>
@@ -142,6 +136,5 @@
 
 </mat-card-content>
 <mat-dialog-actions align="end">
-    <!-- <button mat-flat-button color="primary" [disabled]="!canSend" [mat-dialog-close]="dataDocumento">Aceptar</button> -->
     <button mat-flat-button color="primary" [disabled]="!notarioSeleccionado" [mat-dialog-close]="dataNotarioSeleccionado">Aceptar</button>
 </mat-dialog-actions>

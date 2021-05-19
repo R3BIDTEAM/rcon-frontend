@@ -19,9 +19,7 @@
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>No. Notario</mat-label>
-                    <input matInput placeholder="Placeholder">
-                    <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
-                    <!-- <mat-hint>Hint</mat-hint> -->
+                    <input matInput #no_notario [(ngModel)]="filtros.no_notario" placeholder="Placeholder">
                 </mat-form-field>
             </div>
             <div class="col-md-4">
@@ -41,19 +39,19 @@
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>Nombre</mat-label>
-                    <input matInput placeholder="Placeholder">
+                    <input matInput #nombre [(ngModel)]="filtros.nombre" placeholder="Placeholder">
                 </mat-form-field>
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>Apellido Paterno</mat-label>
-                    <input matInput placeholder="Placeholder">
+                    <input matInput #apellido_paterno [(ngModel)]="filtros.apellido_paterno" placeholder="Placeholder">
                 </mat-form-field>
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>Apellido Materno</mat-label>
-                    <input matInput placeholder="Placeholder">
+                    <input matInput #apellido_materno [(ngModel)]="filtros.apellido_materno" placeholder="Placeholder">
                 </mat-form-field>
             </div> 
         </div>
@@ -62,13 +60,13 @@
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>RFC*</mat-label>
-                    <input matInput placeholder="Placeholder">
+                    <input matInput #rfc [(ngModel)]="filtros.rfc" placeholder="Placeholder">
                 </mat-form-field>
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>CURP*</mat-label>
-                    <input matInput placeholder="Placeholder">
+                    <input matInput #curp [(ngModel)]="filtros.curp" placeholder="Placeholder">
                 </mat-form-field>
             </div>
         </div>
@@ -77,7 +75,7 @@
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>INE</mat-label>
-                    <input matInput placeholder="Placeholder">
+                    <input matInput #ine [(ngModel)]="filtros.ine" placeholder="Placeholder">
                 </mat-form-field>
             </div>
             <div class="col-md-4">
@@ -103,17 +101,17 @@
             <div class="col-md-4">
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Fecha Nacimiento</mat-label>
-                    <input matInput [matDatepicker]="picker">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
+                    <input matInput [matDatepicker]="picknacimiento">
+                    <mat-datepicker-toggle matSuffix [for]="picknacimiento"></mat-datepicker-toggle>
+                    <mat-datepicker #picknacimiento></mat-datepicker>
                 </mat-form-field>
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Fecha Defunción</mat-label>
-                    <input matInput [matDatepicker]="picker">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
+                    <input matInput [matDatepicker]="pickdefuncion">
+                    <mat-datepicker-toggle matSuffix [for]="pickdefuncion"></mat-datepicker-toggle>
+                    <mat-datepicker #pickdefuncion></mat-datepicker>
                 </mat-form-field>
             </div>
         </div>
@@ -122,13 +120,13 @@
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>Celular</mat-label>
-                    <input matInput placeholder="Placeholder">
+                    <input matInput #celular [(ngModel)]="filtros.celular" placeholder="Placeholder">
                 </mat-form-field>
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>E-Mail</mat-label>
-                    <input matInput placeholder="Placeholder">
+                    <input matInput #email [(ngModel)]="filtros.email" placeholder="Placeholder">
                 </mat-form-field>
             </div>
         </div>
