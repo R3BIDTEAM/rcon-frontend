@@ -26,16 +26,16 @@ export interface Filtros {
   email: string;
 }
 
-export interface DataNotario {
-  nombre: string;
-  apellido_paterno: string;
-  apellido_materno: string;
-  rfc: string;
-  curp: string;
-  ine: string;
-  otro_documento: string;
-  numero_documento: string;
-}
+// export interface DataNotario {
+//   nombre: string;
+//   apellido_paterno: string;
+//   apellido_materno: string;
+//   rfc: string;
+//   curp: string;
+//   ine: string;
+//   otro_documento: string;
+//   numero_documento: string;
+// }
 
 @Component({
   selector: 'app-edicion-notario',
@@ -90,136 +90,147 @@ export class EdicionNotarioComponent implements OnInit {
 })
 
 export class DialogBuscarNotario {
-  endpointBuscarNotario = environment.endpoint + 'registro/';
-  pagina = 1; 
+  endpoint = environment.endpoint + 'registro/';
+  displayedColumns: string[] = ['nombre','datos_identificativos','seleccionar'];
+  pagina = 1;
   total = 0;
+  pageSize = 5;
   loading = false;
   dataSource = [];
-  displayedColumns: string[] = ['nombre','rfc','curp','seleccionar'];
+  dataPaginate = [];
   httpOptions;
-  dataNotario: DataNotario = {} as DataNotario;
-  isIdentificativo: boolean;
-  canSearch = false;
-  isBusqueda;
-  queryParamFiltros;
-  endpointBusqueda;
+  nombre;
+  apellido_paterno;
+  apellido_materno;
+  rfc;
+  curp;
+  ine;
+  otro_documento;
+  numero_documento;
+  search = false;
+  isIdentificativo;
   @ViewChild('paginator') paginator: MatPaginator;
 
   constructor(
     private http: HttpClient,
     private auth: AuthService,
-    private _formBuilder: FormBuilder,
+    private route: ActivatedRoute,
     private snackBar: MatSnackBar,
     public dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
-    this.isBusqueda = false;
-    this.httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: this.auth.getSession().token
-      })
-    };
+      this.httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            Authorization: this.auth.getSession().token
+          })
+      };
   }
 
   clearInputsIdentNoIdent(isIdentificativo): void {
-    this.isIdentificativo = isIdentificativo;
-
-    if(isIdentificativo){
-      this.dataNotario.apellido_paterno = null;
-      this.dataNotario.apellido_materno = null;
-      this.dataNotario.nombre = null;
-    } else {
-      this.dataNotario.rfc = null;
-      this.dataNotario.curp = null;
-      this.dataNotario.ine = null;
-      this.dataNotario.otro_documento = null;
-      this.dataNotario.numero_documento = null;
-    }
-
-  }
-
-  getData(isSearch): void {
-    this.loading = true;
-    this.isBusqueda = true;
-    this.endpointBusqueda = '';
-
-    const notario = {
-      apellidoPaterno: 'MARTINEZ',
-      filtroApellidoPaterno: '0'
-    }
-
-    if(isSearch){
-      this.queryParamFiltros = '';
-
-      if(this.isIdentificativo){
-    
-          this.endpointBusqueda = this.endpointBuscarNotario + 'getNotariosByDatosIdentificativos';
-
-          if(this.dataNotario.rfc){
-            this.queryParamFiltros = this.queryParamFiltros + 'rfc=' + this.dataNotario.rfc + '&filtroApellidoPaterno=0'; 
-          }
-
-      }else{
-
-        this.endpointBusqueda = this.endpointBuscarNotario + 'getNotariosByDatosPersonales';
-
-        if(this.dataNotario.apellido_paterno){
-          this.queryParamFiltros = this.queryParamFiltros + 'apellidoPaterno=' + this.dataNotario.apellido_paterno + '&filtroApellidoPaterno=0'; 
-        }
-        if(this.dataNotario.apellido_materno){
-          this.queryParamFiltros = this.queryParamFiltros + 'apellidoMaterno=' + this.dataNotario.apellido_materno + '&filtroApellidoMaterno=0'; 
-        }
-        if(this.dataNotario.nombre){
-          this.queryParamFiltros = this.queryParamFiltros + 'nombre=' + this.dataNotario.nombre + '&filtroNombre=0'; 
-        }
-
+      this.isIdentificativo = isIdentificativo;
+      if(isIdentificativo){
+        this.apellido_paterno = null;
+        this.apellido_materno = null;
+        this.nombre = null;
+      } else {
+        this.rfc = null;
+        this.curp = null;
+        this.ine = null;
+        this.otro_documento = null;
+        this.numero_documento = null;
       }
-
-      sessionStorage.filtrosInfEspecifica = JSON.stringify(this.dataNotario);
-      // sessionStorage.filtroSelectedInfEspecifica = this.filtroSelected;
-    } 
-    
-    this.http.post(this.endpointBusqueda + '?' + this.queryParamFiltros, '', this.httpOptions)
-      .subscribe(
-        (res: any) => {
-          (isSearch) ? this.resetPaginator() : false;
-          this.loading = false;
-          
-          console.log(res.length);
-          if(res.length == 0){
-            this.dataSource = [];
-          }else{
-            this.dataSource = res;
-            // this.dataSource = res.data;
-            this.total = res.total;
-          }
-        },
-        (error) => {
-          this.loading = false;
-          this.snackBar.open(error.error.mensaje, 'Cerrar', {
-            duration: 10000,
-            horizontalPosition: 'end',
-            verticalPosition: 'top'
-          });
-        });
-  }
-
-  paginado(evt): void{
-    this.pagina = evt.pageIndex + 1;
-    this.getData(false);
   }
 
   clean(): void{
-    this.isBusqueda = false;
-    this.resetPaginator();
+      this.pagina = 1;
+      this.total = 0;
+      this.dataSource = [];
+      this.loading = false;
+      this.dataPaginate;
   }
 
-  resetPaginator() {
-    this.pagina = 1;
-    this.total = 0;
-    // this.paginator.pageIndex = 0;
+  validateSearch(){
+    this.search = (
+            this.apellido_paterno ||
+            this.apellido_materno ||
+            this.nombre ||
+            this.rfc ||
+            this.curp ||
+            this.ine ||
+            this.otro_documento ||
+            this.numero_documento
+        ) ? true : false;
+  }
+
+  getData(): void {
+      let query = '';
+      let busquedaDatos = '';
+
+      if(this.nombre){
+        query = query + '&nombre=' + this.nombre + '&filtroNombre=0';
+      }
+      if(this.apellido_paterno){
+          query = query + '&apellidoPaterno=' + this.apellido_paterno + '&filtroApellidoPaterno=0';
+      }
+      if(this.apellido_materno){
+          query = query + '&apellidoMaterno=' + this.apellido_materno + '&filtroApellidoMaterno=0';
+      }
+      if(this.rfc){
+          query = query + '&rfc=' + this.rfc;
+      }
+      if(this.curp){
+          query = query + '&curp=' + this.curp;
+      }
+      if(this.ine){
+          query = query + '&ine=' + this.ine;
+      }
+     
+
+      if( this.isIdentificativo ){
+          busquedaDatos = busquedaDatos + 'getNotariosByDatosIdentificativos';
+      }else{
+          busquedaDatos = busquedaDatos + 'getNotariosByDatosPersonales';
+      }
+
+      query = query.substr(1);
+
+      this.loading = true;
+        console.log(this.endpoint + busquedaDatos + '?' + query);
+        this.http.post(this.endpoint + busquedaDatos + '?' + query, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loading = false;
+                    this.dataSource = res;
+                    this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                    this.total = this.dataSource.length; 
+                    this.paginator.pageIndex = 0;
+                    console.log(this.dataSource);
+                },
+                (error) => {
+                    this.loading = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    
+  }
+
+  
+
+  
+
+  paginado(evt): void{
+      this.pagina = evt.pageIndex + 1;
+      this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+  }
+
+  paginate(array, page_size, page_number) {
+      return array.slice((page_number - 1) * page_size, page_number * page_size);
   }
 
 }
