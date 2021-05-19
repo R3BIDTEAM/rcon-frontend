@@ -37,7 +37,7 @@ import { VerPeritosComponent } from './components/peritos/ver-peritos/ver-perito
 import { VerSociedadComponent } from './components/sociedad/ver-sociedad/ver-sociedad.component';
 import { EditarPeritosComponent, DialogDomicilioPerito, DialogDocumentoPerito,
         DialogNotarioPeritos, DialogPersonaPeritos, DialogRepresentacionPeritos,
-        DialogRepresentadoPeritos, DialogSociedadAsociada } from './components/peritos/editar-peritos/editar-peritos.component';
+        DialogRepresentadoPeritos, DialogSociedadAsociada, DataSociedadAsociada, DialogBuscaPerito } from './components/peritos/editar-peritos/editar-peritos.component';
 import { EditarSociedadComponent } from './components/sociedad/editar-sociedad/editar-sociedad.component';
 
 @NgModule({
@@ -80,7 +80,8 @@ import { EditarSociedadComponent } from './components/sociedad/editar-sociedad/e
     DialogPersonaPeritos,
     DialogRepresentacionPeritos,
     DialogRepresentadoPeritos,
-    DialogSociedadAsociada
+    DialogSociedadAsociada,
+    DialogBuscaPerito
   ],
   imports: [
     BrowserModule,

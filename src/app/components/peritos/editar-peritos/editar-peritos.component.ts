@@ -106,7 +106,6 @@ export interface DataSociedadAsociada{
     styleUrls: ['./editar-peritos.component.css']
 })
 export class EditarPeritosComponent implements OnInit {
-
     endpoint = environment.endpoint + 'registro/getPerito';
     displayedColumns: string[] = ['nombre','registro', 'rfc'];
     pagina = 1;
@@ -125,7 +124,17 @@ export class EditarPeritosComponent implements OnInit {
     dataRepresentantes: DataRepresentacion[] = [];
     dataRepresentados: DataRepresentacion[] = [];
     dataSociedadAsociada: DataSociedadAsociada[] = [];
-    panelOpenState = false;
+    panelDomicilio = false;
+    panelDomPredial = false;
+    panelBienes = false;
+    panelRepresentantes = false;
+    panelRepresentados = false;
+    panelEspecifico = false;
+    panelSociedades = false;
+    botonEdit = false;
+    peritoPersonaFormGroup: FormGroup;
+    loadingDatosPerito = false;
+    //floatLabelControl = new FormControl('always');
     @ViewChild('paginator') paginator: MatPaginator;
 
     constructor(
@@ -134,8 +143,35 @@ export class EditarPeritosComponent implements OnInit {
         private snackBar: MatSnackBar,
         public dialog: MatDialog,
         private auth: AuthService,
-        private route: ActivatedRoute
-    ) { }
+        private route: ActivatedRoute,
+        fb: FormBuilder
+    ) {
+        // this.peritoPersonaFormGroup = fb.group({
+        //     floatLabel: this.floatLabelControl,
+        // });
+
+        this.peritoPersonaFormGroup = this._formBuilder.group({
+            apellidopaterno: ['', Validators.required],
+            apellidomaterno: ['', Validators.required],
+            nombre: ['', Validators.required],
+            rfc: ['', Validators.required],
+            curp: ['', Validators.required],
+            ine: ['', Validators.required],
+            identificacion: [null],
+            idedato: [null],
+            fechaNacimiento: [null],
+            fechaDefuncion: [null],
+            celular: [null],
+            email: [null],
+            // idtipoasentamiento: ['', Validators.required],
+            // asentamiento: [null, Validators.required],
+            // idtipovia: ['', Validators.required],
+            // via: [null, Validators.required],
+            // idtipolocalidad: ['', Validators.required],
+            // cp: [null],
+            // nexterior: [null, Validators.required],
+        });
+     }
 
     ngOnInit(): void {
         this.httpOptions = {
@@ -161,16 +197,17 @@ export class EditarPeritosComponent implements OnInit {
         this.datoPeritos.fecha_def = null;
         this.datoPeritos.celular = null;
         this.datoPeritos.email = null;
+        this.botonEdit = true;
     }
 
     getPeritoDatos(){
         this.query = 'obtenerSociedades=1&idPerito=' + this.idPerito; 
-        this.loading = true;
+        this.loadingDatosPerito = true;
         console.log(this.endpoint);
         this.http.post(this.endpoint + '?' + this.query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
-                    this.loading = false;
+                    this.loadingDatosPerito = false;
                     this.dataPeritoResultado = res.dsPeritos[0];
                     this.dataSource = res.dsPeritos[0].Sociedades;
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
@@ -181,7 +218,7 @@ export class EditarPeritosComponent implements OnInit {
                     this.datoDelPerito();
                 },
                 (error) => {
-                    this.loading = false;
+                    this.loadingDatosPerito = false;
                     this.snackBar.open(error.error.mensaje, 'Cerrar', {
                         duration: 10000,
                         horizontalPosition: 'end',
@@ -283,6 +320,177 @@ export class EditarPeritosComponent implements OnInit {
             }
         });
     }
+    
+    buscarPeritoPersona(){
+        const dialogRef = this.dialog.open(DialogBuscaPerito, {
+            width: '700px',
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                this.idPerito = result;
+                console.log("RESULTADO DEL IDPERITO NUEVO");
+                console.log(this.idPerito);
+                this.getPeritoDatos();
+                this.botonEdit = false;
+            }
+        });
+    }
+}
+
+///////////////BUSCAR PERSONA PERITO////////////////
+@Component({
+    selector: 'app-dialog-buscaPerito',
+    templateUrl: 'app-dialog-buscaPerito.html',
+    styleUrls: ['./editar-peritos.component.css']
+})
+export class DialogBuscaPerito {
+    endpoint = environment.endpoint + 'registro/';
+    displayedColumns: string[] = ['nombre', 'datos', 'select'];
+    pagina = 1;
+    total = 0;
+    pageSize = 15;
+    loading = false;
+    dataSource = [];
+    dataPaginate;
+    httpOptions;
+    nombrePerito;
+    filtroNombre;
+    search = false;
+    appaterno;
+    apmaterno
+    nombre;
+    rfc;
+    curp;
+    ine;
+    registro;
+    identificacion;
+    idedato;
+    isIdentificativo;
+    optionPeritoPersona;
+    idperito: number;
+    @ViewChild('paginator') paginator: MatPaginator;
+
+    constructor(
+        private auth: AuthService,
+        private http: HttpClient,
+        private _formBuilder: FormBuilder,
+        public dialogRef: MatDialogRef<DialogDomicilioPerito>,
+        @Inject(MAT_DIALOG_DATA) public data: any){
+            dialogRef.disableClose = true;
+            this.httpOptions = {
+                headers: new HttpHeaders({
+                    'Content-Type': 'application/json',
+                    Authorization: this.auth.getSession().token
+                })
+            };
+        }
+
+    validateSearchBuscaP(){
+        this.search = (
+            this.appaterno ||
+            this.apmaterno ||
+            this.nombre ||
+            this.rfc ||
+            this.curp ||
+            this.ine ||
+            this.registro ||
+            this.identificacion ||
+            this.idedato
+        ) ? true : false;
+    }
+
+    clearInputsIdentNoIdent2(isIdentificativo): void {
+        this.isIdentificativo = isIdentificativo;
+        if(this.isIdentificativo){
+            this.appaterno = null;
+            this.apmaterno = null;
+            this.nombre = null;            
+        }else{
+            this.rfc = null;
+            this.curp = null;
+            this.ine = null;
+            this.registro = null;
+            this.identificacion = null;
+            this.idedato = null;
+        }
+    }
+
+    cleanBusca(): void{
+        this.pagina = 1;
+        this.total = 0;
+        this.dataSource = [];
+        this.loading = false;
+        this.dataPaginate;
+    }
+
+    getPerito2(){
+        let query = '';
+        let busquedaDatos = '';
+
+        if(this.nombre){
+            query = query + '&nombre=' + this.nombre + '&filtroNombre=0';
+        }
+        if(this.appaterno){
+            query = query + '&apellidoPaterno=' + this.appaterno + '&filtroApellidoPaterno=0';
+        }
+        if(this.apmaterno){
+            query = query + '&apellidoMaterno=' + this.apmaterno + '&filtroApellidoMaterno=0';
+        }
+        if(this.rfc){
+            query = query + '&rfc=' + this.rfc;
+        }
+        if(this.curp){
+            query = query + '&curp=' + this.curp;
+        }
+        if(this.ine){
+            query = query + '&ine=' + this.ine;
+        }
+        if(this.registro){
+            query = query + '&registro=' + this.registro;
+        }
+        if(this.identificacion && this.idedato){
+            query = query + '&idOtroDocumento=' + this.identificacion + '&valorOtroDocumento=' + this.idedato;
+        }
+
+        if( this.isIdentificativo ){
+            busquedaDatos = busquedaDatos + 'getPeritosByDatosIdentificativos';
+        }else{
+            busquedaDatos = busquedaDatos + 'getPeritosByDatosPersonales';
+        }
+
+        query = query.substr(1);
+
+        console.log(this.endpoint + busquedaDatos + '?' + query);
+        this.loading = true;
+        this.http.post(this.endpoint + busquedaDatos + '?' + query, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loading = false;
+                    this.dataSource = res;
+                    this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                    this.total = this.dataSource.length; 
+                    this.paginator.pageIndex = 0;
+                    console.log(this.dataSource);
+                },
+                (error) => {
+                    this.loading = false;
+                }
+            );
+    }
+
+    paginado(evt): void{
+        this.pagina = evt.pageIndex + 1;
+        this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+    }
+    
+    paginate(array, page_size, page_number) {
+        return array.slice((page_number - 1) * page_size, page_number * page_size);
+    }
+
+    peritoPersonaSelected(element){
+        console.log(element);
+        this.idperito = element.IDPERITO;
+    }
 }
 
 ///////////////DOMICILIO////////////////
@@ -316,54 +524,54 @@ export class DialogDomicilioPerito {
         @Inject(MAT_DIALOG_DATA) public data: any) {
             dialogRef.disableClose = true;
             this.httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                Authorization: this.auth.getSession().token
-            })
-        };
+                headers: new HttpHeaders({
+                    'Content-Type': 'application/json',
+                    Authorization: this.auth.getSession().token
+                })
+            };
   
-        this.getDataEstados();
-        
-        this.domicilioFormGroup = this._formBuilder.group({
-            //idtipodireccion: ['', Validators.required],
-            idestado: ['', Validators.required],
-            municipio: [null, Validators.required],
-            ciudad: [null, Validators.required],
-            idtipoasentamiento: ['', Validators.required],
-            asentamiento: [null, Validators.required],
-            idtipovia: ['', Validators.required],
-            via: [null, Validators.required],
-            idtipolocalidad: ['', Validators.required],
-            cp: [null],
-            nexterior: [null, Validators.required],
-            entrecalle1: [null],
-            entrecalle2: [null],
-            andador: [null],
-            edificio: [null],
-            seccion: [null],
-            entrada: [null],
-            ninterior: [null],
-            telefono: [null],
-            adicional: [null],
-        });
-  
-        this.domicilioFormGroup.controls.idestado.valueChanges.subscribe(idestado => {
-            if(idestado == 9) {
-                this.domicilioFormGroup.removeControl('municipio');
-                this.domicilioFormGroup.removeControl('ciudad');
-                this.domicilioFormGroup.addControl('idmunicipio', new FormControl('', Validators.required));
-            } else {
-                this.domicilioFormGroup.removeControl('idmunicipio');
-                this.domicilioFormGroup.addControl('municipio', new FormControl(null, Validators.required));
-                this.domicilioFormGroup.addControl('ciudad', new FormControl(null, Validators.required));
+            this.getDataEstados();
+            
+            this.domicilioFormGroup = this._formBuilder.group({
+                //idtipodireccion: ['', Validators.required],
+                idestado: ['', Validators.required],
+                municipio: [null, Validators.required],
+                ciudad: [null, Validators.required],
+                idtipoasentamiento: ['', Validators.required],
+                asentamiento: [null, Validators.required],
+                idtipovia: ['', Validators.required],
+                via: [null, Validators.required],
+                idtipolocalidad: ['', Validators.required],
+                cp: [null],
+                nexterior: [null, Validators.required],
+                entrecalle1: [null],
+                entrecalle2: [null],
+                andador: [null],
+                edificio: [null],
+                seccion: [null],
+                entrada: [null],
+                ninterior: [null],
+                telefono: [null],
+                adicional: [null],
+            });
+    
+            this.domicilioFormGroup.controls.idestado.valueChanges.subscribe(idestado => {
+                if(idestado == 9) {
+                    this.domicilioFormGroup.removeControl('municipio');
+                    this.domicilioFormGroup.removeControl('ciudad');
+                    this.domicilioFormGroup.addControl('idmunicipio', new FormControl('', Validators.required));
+                } else {
+                    this.domicilioFormGroup.removeControl('idmunicipio');
+                    this.domicilioFormGroup.addControl('municipio', new FormControl(null, Validators.required));
+                    this.domicilioFormGroup.addControl('ciudad', new FormControl(null, Validators.required));
+                }
+                this.domicilioFormGroup.updateValueAndValidity();
+            });
+    
+            if(data){
+                this.setDataDomicilio(data);
             }
-            this.domicilioFormGroup.updateValueAndValidity();
-        });
-  
-        if(data){
-            this.setDataDomicilio(data);
         }
-      }
     
     /*getDataTiposDireccion(): void {
         this.loadingTiposDireccion = true;

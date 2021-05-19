@@ -4,35 +4,49 @@
     </mat-card-header>
     <hr>
     <div class="borde">
-        <mat-card-header>
+        <mat-card-header *ngIf="!botonEdit">
             <mat-card-title>Datos de persona física</mat-card-title>
-            <button mat-icon-button color="primary" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente" (click)="cleanPerito()">
+            <button mat-icon-button color="primary" aria-label="Limpiar campos" matTooltip="Limpiar campos" (click)="cleanPerito()">
                 <mat-icon>clear</mat-icon>
             </button>
-            <button mat-icon-button color="primary" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente">
+            <!-- <button mat-icon-button color="primary" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente">
                 <mat-icon>create</mat-icon>
+            </button> -->
+        </mat-card-header>
+        <mat-card-header *ngIf="botonEdit">
+            <mat-card-title>Datos de persona física</mat-card-title>
+            <button mat-icon-button color="primary" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente" (click)="buscarPeritoPersona()">
+                <mat-icon>search</mat-icon>
             </button>
         </mat-card-header>
         <div class="row">
             <div class="col-md-8 offset-md-2">
-                <ng-container *ngIf="!loading">
+                <div style="padding: 30px; text-align: center;" *ngIf="loadingDatosPerito">
+                    <mat-spinner style="margin:0 auto;"></mat-spinner>
+                    <p>Cargando...</p>
+                </div>
+                <ng-container *ngIf="!loadingDatosPerito">
+                    <form [formGroup]="peritoPersonaFormGroup">
                     <div class="row">
                         <div class="col-md-4">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>Apellido Paterno</mat-label>
-                                <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.apepaterno">
+                                <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.apepaterno" formControlName="apellidopaterno">
+                                <mat-error *ngIf="peritoPersonaFormGroup.controls.apellidopaterno.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="col-md-4">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>Apellido Materno</mat-label>
-                                <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.apematerno">
+                                <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.apematerno" formControlName="apellidomaterno">
+                                <mat-error *ngIf="peritoPersonaFormGroup.controls.apellidomaterno.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div> 
                         <div class="col-md-4">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>Nombre</mat-label>
-                                <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.nombre">
+                                <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.nombre" formControlName="nombre">
+                                <mat-error *ngIf="peritoPersonaFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -41,13 +55,15 @@
                         <div class="col-md-4">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>RFC*</mat-label>
-                                <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.rfc">
+                                <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.rfc" formControlName="rfc">
+                                <mat-error *ngIf="peritoPersonaFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="col-md-4">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>CURP*</mat-label>
-                                <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.curp">
+                                <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.curp" formControlName="curp">
+                                <mat-error *ngIf="peritoPersonaFormGroup.controls.curp.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -56,13 +72,14 @@
                         <div class="col-md-4">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>INE</mat-label>
-                                <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.ine">
+                                <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.ine" formControlName="ine">
+                                <mat-error *ngIf="peritoPersonaFormGroup.controls.ine.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="col-md-4">
                             <mat-form-field appearance="fill" style="width: 100%;">
-                                <mat-label>Seleccione</mat-label>
-                                <mat-select>
+                                <mat-label>Identificación</mat-label>
+                                <mat-select formControlName="identificacion">
                                     <mat-option value="1">Cédula profecional</mat-option>
                                     <mat-option value="2">Pasaporte</mat-option>
                                     <mat-option value="3">Licencia de conducir</mat-option>
@@ -73,7 +90,7 @@
                         <div class="col-md-4">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <!-- <mat-label>INE</mat-label> -->
-                                <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.identificacion">
+                                <input matInput placeholder="Dato de la Identificación" [(ngModel)]="datoPeritos.identificacion" formControlName="idedato">
                             </mat-form-field>
                         </div>
                     </div>
@@ -82,7 +99,7 @@
                         <div class="col-md-4">
                             <mat-form-field appearance="fill" style="width: 100%;">
                                 <mat-label>Fecha Nacimiento</mat-label>
-                                <input matInput [matDatepicker]="fechaNacimiento" [(ngModel)]="datoPeritos.fecha_naci">
+                                <input matInput [matDatepicker]="fechaNacimiento" [(ngModel)]="datoPeritos.fecha_naci" formControlName="fechaNacimiento">
                                 <mat-datepicker-toggle matSuffix [for]="fechaNacimiento"></mat-datepicker-toggle>
                                 <mat-datepicker #fechaNacimiento></mat-datepicker>
                             </mat-form-field>
@@ -90,7 +107,7 @@
                         <div class="col-md-4">
                             <mat-form-field appearance="fill" style="width: 100%;">
                                 <mat-label>Fecha Defunción</mat-label>
-                                <input matInput [matDatepicker]="fechaDefuncion" [(ngModel)]="datoPeritos.fecha_def">
+                                <input matInput [matDatepicker]="fechaDefuncion" [(ngModel)]="datoPeritos.fecha_def" formControlName="fechaDefuncion">
                                 <mat-datepicker-toggle matSuffix [for]="fechaDefuncion"></mat-datepicker-toggle>
                                 <mat-datepicker #fechaDefuncion></mat-datepicker>
                             </mat-form-field>
@@ -101,18 +118,20 @@
                         <div class="col-md-4">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>Celular</mat-label>
-                                <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.celular">
+                                <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.celular" formControlName="celular">
                             </mat-form-field>
                         </div>
                         <div class="col-md-4">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>E-Mail</mat-label>
-                                <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.email">
+                                <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.email" formControlName="email">
                             </mat-form-field>
                         </div>
                     </div>
+                    </form>
                 </ng-container>
             </div>
+        
         </div>
         <div class="row">
             <div class="col-md-2 offset-md-8">
@@ -139,13 +158,13 @@
         <mat-card-content>
             <br>
             <mat-accordion>
-                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel (opened)="panelDomicilio = true" (closed)="panelDomicilio = false">
                     <mat-expansion-panel-header>
                         <mat-panel-title>
                             Domicilios
                         </mat-panel-title>
                         <mat-panel-description>
-                            {{panelOpenState ? 'Cerrar' : 'Ver'}} los datos de los Domicilios
+                            {{panelDomicilio ? 'Cerrar' : 'Ver'}} los datos de los Domicilios
                         </mat-panel-description>
                     </mat-expansion-panel-header>
                     <div class="row">
@@ -159,7 +178,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-9 offset-md-1">
-                            <div>
+                            <div *ngIf="dataDomicilios.length == 0; else domicilios">
                                 No hay datos que mostrar ...
                             </div>
                             <ng-template #domicilios>
@@ -173,16 +192,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
+                                        <tr *ngFor="let domicilio of dataDomicilios; let i = index;">
+                                            <td>{{domicilio.idtipodireccion}}</td>
+                                            <td>{{domicilio.idestado}}</td>
                                             <td>
-                                                <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar">
+                                                <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar" (click)="addDomicilio(i, domicilio)">
                                                     <mat-icon>edit</mat-icon>
                                                 </button>
                                             </td>
                                             <td>
-                                                <button mat-icon-button type="button" color="primary" aria-label="Ver" matTooltip="Ver">
+                                                <button mat-icon-button type="button" color="primary" aria-label="Ver" matTooltip="Ver" (click)="viewHistorial(i, domicilio)">
                                                     <mat-icon>search</mat-icon>
                                                 </button>
                                             </td>
@@ -196,13 +215,13 @@
             </mat-accordion>
             <br><hr><br>
             <mat-accordion>
-                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel (opened)="panelDomPredial = true" (closed)="panelDomPredial = false">
                     <mat-expansion-panel-header>
                         <mat-panel-title>
                             Gestión de Domicilios para Recibir Boletas Prediales
                         </mat-panel-title>
                         <mat-panel-description>
-                            {{panelOpenState ? 'Cerrar' : 'Ver'}} los datos de los Domicilios
+                            {{panelDomPredial ? 'Cerrar' : 'Ver'}} los datos de los Domicilios
                         </mat-panel-description>
                     </mat-expansion-panel-header>
                     <div class="row">
@@ -253,13 +272,13 @@
             </mat-accordion>
             <br><hr><br>
             <mat-accordion>
-                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel (opened)="panelBienes = true" (closed)="panelBienes = false">
                     <mat-expansion-panel-header>
                     <mat-panel-title>
                         Datos de bienes
                     </mat-panel-title>
                     <mat-panel-description>
-                        {{panelOpenState ? 'Cerrar' : 'Ver'}} datos de bienes
+                        {{panelBienes ? 'Cerrar' : 'Ver'}} datos de bienes
                     </mat-panel-description>
                     </mat-expansion-panel-header>
                     <div class="row">
@@ -277,13 +296,13 @@
             <mat-card-title>Datos de representación</mat-card-title>
         </mat-card-header>
         <mat-accordion>
-            <mat-expansion-panel hideToggle>
+            <mat-expansion-panel (opened)="panelRepresentantes = true" (closed)="panelRepresentantes = false">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         Representantes
                     </mat-panel-title>
                     <mat-panel-description>
-                        Ver los datos de los Representantes
+                        {{panelRepresentantes ? 'Cerrar' : 'Ver'}} los datos de los Representantes
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <mat-card-content>
@@ -338,13 +357,13 @@
         </mat-accordion>
         <br><hr><br>
         <mat-accordion>
-            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel (opened)="panelRepresentados = true" (closed)="panelRepresentados = false">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         Representados
                     </mat-panel-title>
                     <mat-panel-description>
-                        {{panelOpenState ? 'Cerrar' : 'Ver'}} los datos de los Representados
+                        {{panelRepresentados ? 'Cerrar' : 'Ver'}} los datos de los Representados
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <mat-card-content>
@@ -404,13 +423,13 @@
             <mat-card-title>Datos especifícos del perito</mat-card-title>
         </mat-card-header>
         <mat-accordion>
-            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel (opened)="panelEspecifico = true" (closed)="panelEspecifico = false">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         Información
                     </mat-panel-title>
                     <mat-panel-description>
-                        {{panelOpenState ? 'Cerrar' : 'Ver'}} datos
+                        {{panelEspecifico ? 'Cerrar' : 'Ver'}} datos especifícos
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <div class="row">
@@ -455,13 +474,13 @@
             <mat-card-title>Sociedades Asociadas</mat-card-title>
         </mat-card-header>
         <mat-accordion>
-            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel (opened)="panelSociedades = true" (closed)="panelSociedades = false">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         Información
                     </mat-panel-title>
                     <mat-panel-description>
-                        {{panelOpenState ? 'Cerrar' : 'Ver'}} datos
+                        {{panelSociedades ? 'Cerrar' : 'Ver'}} datos de las Sociedades Asociadas
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <div class="row">
@@ -473,43 +492,38 @@
                             <mat-icon>delete</mat-icon>
                         </button>
                         <ng-container>
-                            <div style="padding: 30px; text-align: center;" *ngIf="loading">
+                            <div style="padding: 30px; text-align: center;" *ngIf="loadingDatosPerito">
                                 <mat-spinner style="margin:0 auto;"></mat-spinner>
                                 <p>Cargando...</p>
                             </div>
-                            <div class="alert alert-info" *ngIf="!loading && dataSource.length == 0">
+                            <div class="alert alert-info" *ngIf="!loadingDatosPerito && dataSource.length == 0">
                                 No hay avalúos para el filtro seleccionado
                             </div> 
-                            <table mat-table [dataSource]="dataSource" *ngIf="!loading && dataSource.length > 0" width="100%">
+                            <table mat-table [dataSource]="dataSource" *ngIf="!loadingDatosPerito && dataSource.length > 0" width="100%">
                                 <ng-container matColumnDef="nombre">
-                                    <th mat-header-cell *matHeaderCellDef width="50%" > Razón social </th>
-                                    <td mat-cell *matCellDef="let element" width="50%"> {{ element.razonsocial }}</td>
+                                    <th mat-header-cell *matHeaderCellDef width="65%" > Razón social </th>
+                                    <td mat-cell *matCellDef="let element" width="65%"> {{ element.razonsocial }}</td>
                                 </ng-container>
                                 <ng-container matColumnDef="registro">
-                                    <th mat-header-cell *matHeaderCellDef width="30%"> Registro </th>
-                                    <td mat-cell *matCellDef="let element" width="30%"> {{element.registro}}</td>
+                                    <th mat-header-cell *matHeaderCellDef> Registro </th>
+                                    <td mat-cell *matCellDef="let element" > {{element.registro}}</td>
                                 </ng-container>
                                 <ng-container matColumnDef="rfc">
-                                    <th mat-header-cell *matHeaderCellDef> RFC </th>
-                                    <td mat-cell *matCellDef="let element"> {{ element.rfc }}</td>
+                                    <th mat-header-cell *matHeaderCellDef width="30%"> RFC </th>
+                                    <td mat-cell *matCellDef="let element" width="30%"> {{ element.rfc }}</td>
                                 </ng-container>
                                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                             </table>
                             <table *ngIf="dataSociedadAsociada.length > 0">
                                 <tr *ngFor="let sociedadAsociada of dataSociedadAsociada; let i = index;">
-                                    <td width="50%">{{sociedadAsociada.razonSocial}}</td>
-                                    <td width="30%">{{sociedadAsociada.registro}}</td>
-                                    <td>{{sociedadAsociada.rfc}}</td>
+                                    <td width="65%">{{sociedadAsociada.razonSocial}}</td>
+                                    <td>{{sociedadAsociada.registro}}</td>
+                                    <td width="30%">{{sociedadAsociada.rfc}}</td>
                                 </tr>
                                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                             </table>
-                            <div *ngIf="dataSociedadAsociada.length > 0">
-                                <div *ngFor="let sociedadAsociada of dataSociedadAsociada">
-                                    {{sociedadAsociada.razonSocial}}
-                                </div>
-                            </div>
                             <mat-paginator #paginator [length]="total" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado($event)">
                             </mat-paginator>
                         </ng-container>
