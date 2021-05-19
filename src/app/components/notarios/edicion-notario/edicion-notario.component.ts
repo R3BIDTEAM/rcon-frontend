@@ -83,6 +83,10 @@ export class EdicionNotarioComponent implements OnInit {
 
 
 ///////////////BUSCAR NOTARIO////////////////
+export interface DataNotarioSeleccionado {
+  registro: string;
+}
+
 @Component({
   selector: 'app-dialog-buscar-notario',
   templateUrl: 'app-dialog-buscar-notario.html',
@@ -109,6 +113,8 @@ export class DialogBuscarNotario {
   numero_documento;
   search = false;
   isIdentificativo;
+  notarioSeleccionado;
+  dataNotarioSeleccionado: DataNotarioSeleccionado = {} as DataNotarioSeleccionado;
   @ViewChild('paginator') paginator: MatPaginator;
 
   constructor(
@@ -149,6 +155,15 @@ export class DialogBuscarNotario {
       this.dataSource = [];
       this.loading = false;
       this.dataPaginate;
+      this.nombre = '';
+      this.apellido_paterno = '';
+      this.apellido_materno = '';
+      this.rfc = '';
+      this.curp = '';
+      this.ine = '';
+      this.otro_documento = '';
+      this.numero_documento = '';
+      this.search = false;
   }
 
   validateSearch(){
@@ -167,6 +182,7 @@ export class DialogBuscarNotario {
   getData(): void {
       let query = '';
       let busquedaDatos = '';
+      this.notarioSeleccionado = false;
 
       if(this.nombre){
         query = query + '&nombre=' + this.nombre + '&filtroNombre=0';
@@ -231,6 +247,10 @@ export class DialogBuscarNotario {
 
   paginate(array, page_size, page_number) {
       return array.slice((page_number - 1) * page_size, page_number * page_size);
+  }
+
+  RegistroSelect(element) {
+    this.dataNotarioSeleccionado.registro = element.registro;
   }
 
 }

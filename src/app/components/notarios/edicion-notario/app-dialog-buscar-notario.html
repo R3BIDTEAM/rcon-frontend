@@ -1,4 +1,8 @@
-<h1>Búsqueda de Notarios</h1>
+<mat-dialog-actions align="end">
+    <button style="border: 0px; background-color: transparent; cursor: pointer;" mat-dialog-close><mat-icon style="color: red;">clear</mat-icon></button>
+</mat-dialog-actions>
+
+<h2 class="verde-cdmx">Búsqueda de Notarios</h2>
 
 <mat-card-content>
 
@@ -70,20 +74,24 @@
     <!-- Fin de Identificativos -->
 
     <div class="row">
-        <div class="col-md-2 offset-md-10">
+        <div class="col-md-2 offset-md-8" style="padding-left: 0px;">
             <div class="d-flex flex-row-reverse">
-                <button mat-icon-button color="primary" aria-label="Limpiar Filtros" matTooltip="Limpiar Filtros" (click)="clean()">
-                    <mat-icon>clear</mat-icon>
+                <button mat-stroked-button color="accent" aria-label="Limpiar Filtros" matTooltip="Limpiar Filtros" (click)="clean()">
+                    Limpiar <mat-icon style="display: inherit; width: 15px;">delete</mat-icon>
                 </button>
-                <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getData()" [disabled]="!search">
-                    <mat-icon>search</mat-icon>
+            </div>
+        </div>
+        <div class="col-md-2" style="padding-left: 0px;">
+            <div class="d-flex flex-row-reverse">
+                <button mat-stroked-button color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getData()" [disabled]="!search">
+                    Buscar <mat-icon style="display: inherit; width: 15px;">search</mat-icon>
                 </button>
             </div>
         </div>
     </div>
 
 
-    <h3>Lista de notarios</h3>
+    <h4 class="verde-cdmx">Lista de notarios</h4>
 
         <!-- Table generado por la búsqueda -->
         <ng-container>
@@ -96,28 +104,33 @@
             </div> 
             <table mat-table [dataSource]="dataPaginate" *ngIf="!loading && dataSource.length > 0">
                 <ng-container matColumnDef="nombre">
-                    <th mat-header-cell *matHeaderCellDef class="verde-cdmx"> Nombre </th>
-                    <td mat-cell *matCellDef="let element"> 
+                    <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="width: 60%;"> Nombre </th>
+                    <td mat-cell *matCellDef="let element" class="contenido-tabla-modal"> 
                         {{ (element.nombre) ? element.nombre : element.NOMBRE}}
                         {{ (element.apellidopaterno) ? element.apellidopaterno : element.APELLIDOPATERNO }}
                         {{ (element.apellidomaterno) ? element.apellidomaterno : element.APELLIDOMATERNO }}
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="datos_identificativos">
-                    <th mat-header-cell *matHeaderCellDef class="verde-cdmx"> Datos Identificativos </th>
-                    <td mat-cell *matCellDef="let element"> 
-                        RFC: {{ (element.rfc) ? element.rfc : element.RFC }}<br>
-                        CURP: {{ (element.curp) ? element.curp : element.CURP }} <br>
-                        INE: {{ (element.ife) ? element.ife : element.IFE }}
+                    <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="width: 30%;"> Datos Identificativos </th>
+                    <td mat-cell *matCellDef="let element" class="contenido-tabla-modal"> 
+                        <b>RFC:</b> {{ (element.rfc) ? element.rfc : element.RFC }}<br>
+                        <b>CURP:</b> {{ (element.curp) ? element.curp : element.CURP }} <br>
+                        <b>INE:</b> {{ (element.ife) ? element.ife : element.IFE }}
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="seleccionar">
-                    <th mat-header-cell *matHeaderCellDef class="verde-cdmx"> Seleccionar </th>
-                    <td mat-cell *matCellDef="let element">
-                        Botón
+                    <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="width: 10%;"> Seleccionar </th>
+                    <td mat-cell *matCellDef="let element" style="text-align: center;">
                         <!-- <button mat-stroked-button color="primary" aria-label="Ver Perito" matTooltip="Ver Perito" [routerLink]="['/main/ver-peritos', (element.idperito) ? element.idperito : element.IDPERITO]">
                             Ver
                         </button> -->
+                        <!-- <mat-radio-group [(ngModel)]="registroNP">
+                            <mat-radio-button [value]="element" (change)="RegistroSelect(element)"></mat-radio-button>
+                        </mat-radio-group> -->
+                        <mat-radio-group [(ngModel)]="notarioSeleccionado">
+                            <mat-radio-button [value]="element"></mat-radio-button>
+                        </mat-radio-group>
                     </td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -128,3 +141,7 @@
         </ng-container>
 
 </mat-card-content>
+<mat-dialog-actions align="end">
+    <!-- <button mat-flat-button color="primary" [disabled]="!canSend" [mat-dialog-close]="dataDocumento">Aceptar</button> -->
+    <button mat-flat-button color="primary" [disabled]="!notarioSeleccionado" [mat-dialog-close]="dataNotarioSeleccionado">Aceptar</button>
+</mat-dialog-actions>
