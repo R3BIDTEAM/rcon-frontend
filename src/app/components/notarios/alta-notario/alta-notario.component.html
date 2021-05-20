@@ -1,22 +1,30 @@
 <div class="row">
     <div class="col-md-8 offset-md-2">
-        <h1 class="titulo-cdmx">Alta Notario</h1>
+        <h1 class="titulo-cdmx">Editar Notario</h1>
 
+        <div class="row" style="margin-bottom: 30px;">
+            <div class="col-md-4">
+                <div class="d-flex initial">
+                    <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" (click)="searchNotario()">
+                        Buscar Notario <mat-icon style="display: inherit; width: 15px;">search</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
 
-        <h3>Datos Generales:</h3>
+        <h3 style="margin: 0 0 15px;">Datos Generales:</h3>
+
 
         <div class="row">
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
-                    <mat-label>No. Notario*</mat-label>
-                    <input matInput placeholder="Placeholder">
-                    <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
-                    <!-- <mat-hint>Hint</mat-hint> -->
+                    <mat-label>No. Notario</mat-label>
+                    <input matInput #no_notario [(ngModel)]="filtros.no_notario" placeholder="Placeholder">
                 </mat-form-field>
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="fill" style="width: 100%;">
-                    <mat-label>Estado*</mat-label>
+                    <mat-label>Estado</mat-label>
                     <mat-select>
                       <mat-option>Ninguna</mat-option>
                       <mat-option value="option1">Ciudad de Méxio</mat-option>
@@ -30,20 +38,20 @@
         <div class="row">
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
-                    <mat-label>Nombre*</mat-label>
-                    <input matInput placeholder="Placeholder">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput #nombre [(ngModel)]="filtros.nombre" placeholder="Placeholder">
                 </mat-form-field>
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
-                    <mat-label>Apellido Paterno*</mat-label>
-                    <input matInput placeholder="Placeholder">
+                    <mat-label>Apellido Paterno</mat-label>
+                    <input matInput #apellido_paterno [(ngModel)]="filtros.apellido_paterno" placeholder="Placeholder">
                 </mat-form-field>
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>Apellido Materno</mat-label>
-                    <input matInput placeholder="Placeholder">
+                    <input matInput #apellido_materno [(ngModel)]="filtros.apellido_materno" placeholder="Placeholder">
                 </mat-form-field>
             </div> 
         </div>
@@ -52,13 +60,13 @@
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>RFC*</mat-label>
-                    <input matInput placeholder="Placeholder">
+                    <input matInput #rfc [(ngModel)]="filtros.rfc" placeholder="Placeholder">
                 </mat-form-field>
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>CURP*</mat-label>
-                    <input matInput placeholder="Placeholder">
+                    <input matInput #curp [(ngModel)]="filtros.curp" placeholder="Placeholder">
                 </mat-form-field>
             </div>
         </div>
@@ -67,7 +75,7 @@
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>INE</mat-label>
-                    <input matInput placeholder="Placeholder">
+                    <input matInput #ine [(ngModel)]="filtros.ine" placeholder="Placeholder">
                 </mat-form-field>
             </div>
             <div class="col-md-4">
@@ -93,17 +101,17 @@
             <div class="col-md-4">
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Fecha Nacimiento</mat-label>
-                    <input matInput [matDatepicker]="picker">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
+                    <input matInput [matDatepicker]="picknacimiento">
+                    <mat-datepicker-toggle matSuffix [for]="picknacimiento"></mat-datepicker-toggle>
+                    <mat-datepicker #picknacimiento></mat-datepicker>
                 </mat-form-field>
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Fecha Defunción</mat-label>
-                    <input matInput [matDatepicker]="picker">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
+                    <input matInput [matDatepicker]="pickdefuncion">
+                    <mat-datepicker-toggle matSuffix [for]="pickdefuncion"></mat-datepicker-toggle>
+                    <mat-datepicker #pickdefuncion></mat-datepicker>
                 </mat-form-field>
             </div>
         </div>
@@ -112,37 +120,53 @@
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>Celular</mat-label>
-                    <input matInput placeholder="Placeholder">
+                    <input matInput #celular [(ngModel)]="filtros.celular" placeholder="Placeholder">
                 </mat-form-field>
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>E-Mail</mat-label>
-                    <input matInput placeholder="Placeholder">
+                    <input matInput #email [(ngModel)]="filtros.email" placeholder="Placeholder">
                 </mat-form-field>
             </div>
         </div>
 
+        <!-- Botón de Actualizar -->
         <div class="row">
-            <div class="col-md-2 offset-md-10">
+            <div class="col-md-4 offset-md-8">
                 <div class="d-flex flex-row-reverse">
                     <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar">
-                        Guardar
+                        Actualizar <mat-icon style="display: inherit; width: 15px;">update</mat-icon>
                     </button>
                 </div>
             </div>
-            <!-- <div class="col-md-2">
-                <div class="d-flex flex-row-reverse">
-                    <button mat-stroked-button class="boton-n-representacion" color="warn" aria-label="Cancelar">
-                        Cancelar
-                    </button>
+        </div>
+
+
+
+        <!-- Sección de Datos de Contacto -->
+        <h3>Datos de contacto:</h3>
+
+        <div class="row" style="margin-bottom: 15px;">
+            <div class="col-md-4">
+                <button mat-stroked-button aria-label="Domicilios" style="background-color: #00A447; color: #FFF!important;">
+                    Domicilios <mat-icon style="display: inherit; width: 15px;">add</mat-icon>
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-info">
+                    No hay datos que mostrar...
                 </div>
-            </div> -->
+            </div>
         </div>
 
 
 
         
+
 
     </div>
 </div>
