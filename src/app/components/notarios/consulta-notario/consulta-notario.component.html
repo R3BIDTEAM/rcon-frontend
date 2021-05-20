@@ -73,12 +73,12 @@
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="fill" style="width: 100%;">
-                    <mat-label>Estado</mat-label>
-                    <mat-select #estado [(ngModel)]="filtros.estado" (keyup)="clearInputsIdentNoIdent(true)">
-                      <mat-option>Ninguna</mat-option>
-                      <mat-option value="option1">Ciudad de Méxio</mat-option>
-                      <mat-option value="option2">Estado de México</mat-option>
-                      <mat-option value="option3">Guerrero</mat-option>
+                    <mat-label>Estado:</mat-label>
+                    <mat-select #estado [(ngModel)]="filtros.estado" (selectionChange)="clearInputsIdentNoIdent(true)">
+                        <mat-option value="">Seleccione ...</mat-option>
+                        <mat-option *ngFor="let estado of estados" [value]="estado.CODESTADO">
+                            {{ estado.ESTADO }}
+                        </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -87,7 +87,7 @@
         <div class="row">
             <div class="col-md-2 offset-md-10">
                 <div class="d-flex flex-row-reverse">
-                    <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getData(true)">
+                    <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getData()">
                         Buscar
                     </button>
                 </div>
@@ -96,48 +96,50 @@
 
 
 
-        <h3>Lista de notarios</h3>
+        <h3 class="verde-cdmx" style="margin-top: 10%;">Lista de notarios</h3>
 
         <!-- Table generado por la búsqueda -->
-        <ng-container *ngIf="isBusqueda">
-
+        <ng-container>
             <div style="padding: 30px; text-align: center;" *ngIf="loading">
                 <mat-spinner style="margin:0 auto;"></mat-spinner>
                 <p>Cargando...</p>
             </div>
-
             <div class="alert alert-info" *ngIf="dataSource.length == 0 && !loading">
-                No hay avalúos para el filtro seleccionado
-            </div>
-
-                <table mat-table [dataSource]="dataSource" *ngIf="!loading && dataSource.length > 0">
-                <!-- <table mat-table [dataSource]="dataSource" *ngIf="!loading"> -->
-                    <ng-container matColumnDef="estado">
-                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="width: 20%;">Estado</th>
-                        <td mat-cell *matCellDef="let element" style="font-size: 12px;">{{element.ESTADO}}</td>
-                    </ng-container>
-                    <ng-container matColumnDef="no_notario">
-                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="width: 20%;">No Notario</th>
-                        <td mat-cell *matCellDef="let element" style="font-size: 12px;">{{element.NUMNOTARIO}}</td>
-                    </ng-container>
-                    <ng-container matColumnDef="nombre">
-                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="width: 20%;">Nombre</th>
-                        <td mat-cell *matCellDef="let element" style="font-size: 12px;">{{element.NOMBRE}} {{element.APELLIDOPATERNO}} {{element.APELLIDOMATERNO}}</td>
-                    </ng-container>
-                    <ng-container matColumnDef="rfc">
-                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="width: 20%;">RFC</th>
-                        <td mat-cell *matCellDef="let element" style="font-size: 12px;">{{element.RFC}}</td>
-                    </ng-container>
-                    <ng-container matColumnDef="curp">
-                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="width: 20%;">CURP</th>
-                        <td mat-cell *matCellDef="let element" style="font-size: 12px;">{{element.CURP}}</td>
-                    </ng-container>
-                
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table>
-                <mat-paginator #paginator [length]="total" [pageSize]="15" [pageSizeOptions]="[15]" (page)="paginado($event)"></mat-paginator>
-
+                No hay Notarios para el filtro seleccionado
+            </div> 
+            <table mat-table [dataSource]="dataPaginate" *ngIf="!loading && dataSource.length > 0">
+                <ng-container matColumnDef="nombre">
+                    <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="width: 50%; font-size: 14px;"> Nombre </th>
+                    <td mat-cell *matCellDef="let element" class="contenido-tabla"> 
+                        {{ (element.nombre) ? element.nombre : element.NOMBRE}}
+                        {{ (element.apellidopaterno) ? element.apellidopaterno : element.APELLIDOPATERNO }}
+                        {{ (element.apellidomaterno) ? element.apellidomaterno : element.APELLIDOMATERNO }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="datos_identificativos">
+                    <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="width: 40%;  font-size: 14px;"> Datos Identificativos </th>
+                    <td mat-cell *matCellDef="let element" class="contenido-tabla"> 
+                        <b>RFC: </b> {{ (element.rfc) ? element.rfc : element.RFC }}<br>
+                        <b>CURP: </b> {{ (element.curp) ? element.curp : element.CURP }} <br>
+                        <b>INE: </b> {{ (element.ife) ? element.ife : element.IFE }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="seleccionar">
+                    <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="width: 10%;  font-size: 14px;"> Seleccionar </th>
+                    <td mat-cell *matCellDef="let element" style="text-align: center;">
+                        <!-- <button mat-stroked-button color="primary" aria-label="Ver Notario" matTooltip="Ver Notario" [routerLink]="['/main/ver-notarios', (element.idnotario) ? element.idnotario : element.IDNOTARIO]">
+                            Ver
+                        </button> -->
+                        <button mat-stroked-button color="primary" aria-label="Ver Notario" matTooltip="Ver Notario">
+                            Ver
+                        </button>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator #paginator [length]="total" [pageSize]="pageSize" [pageSizeOptions]="[pageSize]" [showFirstLastButtons]="true" (page)="paginado($event)">
+            </mat-paginator>
         </ng-container>
     
     </div>

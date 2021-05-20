@@ -21,6 +21,11 @@ export interface Filtros {
   estado: string;
 }
 
+export interface Estados{
+  idestado: number;
+  estado: string;
+}
+
 @Component({
   selector: 'app-consulta-notario',
   templateUrl: './consulta-notario.component.html',
@@ -28,14 +33,18 @@ export interface Filtros {
 })
 export class ConsultaNotarioComponent implements OnInit {
   endpoint = environment.endpoint + 'registro/';
-  pagina = 1; 
+  pagina = 1;
   total = 0;
+  pageSize = 15;
   loading = false;
   dataSource = [];
-  displayedColumns: string[] = ['estado','no_notario','nombre','rfc','curp'];
+  dataPaginate = [];
+  displayedColumns: string[] = ['nombre','datos_identificativos','seleccionar'];
   httpOptions;
   filtros: Filtros = {} as Filtros;
-  isIdentificativo: boolean;
+  estados: Estados = {} as Estados;
+  loadingEstados = false;
+  isIdentificativo;
   canSearch = false;
   isBusqueda;
   queryParamFiltros;
@@ -47,7 +56,10 @@ export class ConsultaNotarioComponent implements OnInit {
     private snackBar: MatSnackBar,
     private auth: AuthService,
     private router: Router,
-  ) { }
+  ) { 
+    
+  }
+
 
   ngOnInit(): void {
     this.isBusqueda = false;
@@ -57,130 +69,118 @@ export class ConsultaNotarioComponent implements OnInit {
         Authorization: this.auth.getSession().token
       })
     };
+    this.getDataEstados();
+  }
+
+
+  getDataEstados(): void {
+    this.loadingEstados = true;
+    this.http.post(this.endpoint + 'getEstados', '', this.httpOptions).subscribe(
+      (res: any) => {
+        this.loadingEstados = false;
+        this.estados = res;
+        console.log(this.estados);
+      },
+      (error) => {
+        this.loadingEstados = false;
+      }
+    );
   }
 
 
   clearInputsIdentNoIdent(isIdentificativo): void {
-    this.isIdentificativo = isIdentificativo;
-
-    if(isIdentificativo){
-      // this.contribuyenteFormGroup.controls['nombre'].setValue(null);
-      // if(this.contribuyenteFormGroup.value.tipo_persona == 'F'){
-      //   this.contribuyenteFormGroup.controls['apaterno'].setValue(null);
-      //   this.contribuyenteFormGroup.controls['amaterno'].setValue(null);
-      // }
-      this.filtros.apellido_paterno = null;
-      this.filtros.apellido_materno = null;
-      this.filtros.nombre = null;
-    } else {
-      // this.contribuyenteFormGroup.controls['rfc'].setValue(null);
-      // if(this.contribuyenteFormGroup.value.tipo_persona == 'F'){
-      //   this.contribuyenteFormGroup.controls['curp'].setValue(null);
-      //   this.contribuyenteFormGroup.controls['ine'].setValue(null);
-      //   this.contribuyenteFormGroup.controls['iddocumentoidentificativo'].setValue('');
-      //   this.contribuyenteFormGroup.controls['documentoidentificativo'].setValue(null);
-      // }
-      this.filtros.rfc = null;
-      this.filtros.curp = null;
-      this.filtros.ine = null;
-      this.filtros.otro_documento = null;
-      this.filtros.numero_documento = null;
-      this.filtros.no_notario = null;
-      this.filtros.estado = null;
-    }
+      this.isIdentificativo = isIdentificativo;
+          if(isIdentificativo){
+            this.filtros.apellido_paterno = null;
+            this.filtros.apellido_materno = null;
+            this.filtros.nombre = null;
+          } else {
+            this.filtros.rfc = null;
+            this.filtros.curp = null;
+            this.filtros.ine = null;
+            this.filtros.otro_documento = null;
+            this.filtros.numero_documento = null;
+            this.filtros.no_notario = null;
+            this.filtros.estado = null;
+          }
   }
 
 
-  getData(isSearch): void {
-    this.loading = true;
-    this.isBusqueda = true;
-    this.endpointBusqueda = '';
+  getData(): void {
+      let query = '';
+      let busquedaDatos = '';
 
-    const notario = {
-      apellidoPaterno: 'MARTINEZ',
-      filtroApellidoPaterno: '0'
-    }
-
-    if(isSearch){
-      this.queryParamFiltros = '';
-
-      if(this.isIdentificativo){
+      if(this.filtros.nombre){
+        query = query + '&nombre=' + this.filtros.nombre + '&filtroNombre=0';
+      }
+      if(this.filtros.apellido_paterno){
+          query = query + '&apellidoPaterno=' + this.filtros.apellido_paterno + '&filtroApellidoPaterno=0';
+      }
+      if(this.filtros.apellido_materno){
+          query = query + '&apellidoMaterno=' + this.filtros.apellido_materno + '&filtroApellidoMaterno=0';
+      }
+      if(this.filtros.rfc){
+          query = query + '&rfc=' + this.filtros.rfc;
+      }
+      if(this.filtros.curp){
+          query = query + '&curp=' + this.filtros.curp;
+      }
+      if(this.filtros.ine){
+          query = query + '&ine=' + this.filtros.ine;
+      }
+      if(this.filtros.otro_documento){
+          query = query + '&iddocidentif=' + this.filtros.otro_documento;
+      }
+      if(this.filtros.numero_documento){
+          query = query + '&valdocidentif=' + this.filtros.numero_documento;
+      }
+      if(this.filtros.no_notario){
+          query = query + '&numnotario=' + this.filtros.no_notario;
+      }
+      if(this.filtros.estado){
+          query = query + '&estado=' + this.filtros.estado;
+      }
     
-          this.endpointBusqueda = this.endpoint + 'getNotariosByDatosIdentificativos';
 
-          if(this.filtros.rfc){
-            this.queryParamFiltros = this.queryParamFiltros + 'rfc=' + this.filtros.rfc + '&filtroApellidoPaterno=0'; 
-          }
-
+      if( this.isIdentificativo ){
+          busquedaDatos = busquedaDatos + 'getNotariosByDatosIdentificativos';
       }else{
-
-        this.endpointBusqueda = this.endpoint + 'getNotariosByDatosPersonales';
-
-        if(this.filtros.apellido_paterno){
-          this.queryParamFiltros = this.queryParamFiltros + 'apellidoPaterno=' + this.filtros.apellido_paterno + '&filtroApellidoPaterno=0'; 
-        }
-        if(this.filtros.apellido_materno){
-          this.queryParamFiltros = this.queryParamFiltros + 'apellidoMaterno=' + this.filtros.apellido_materno + '&filtroApellidoMaterno=0'; 
-        }
-        if(this.filtros.nombre){
-          this.queryParamFiltros = this.queryParamFiltros + 'nombre=' + this.filtros.nombre + '&filtroNombre=0'; 
-        }
-
+          busquedaDatos = busquedaDatos + 'getNotariosByDatosPersonales';
       }
 
-        // if(this.filtros.sujeto){
-        //   this.queryParamFiltros = this.queryParamFiltros + '&sujeto=' + this.filtros.sujeto; 
-        // }
+      query = query.substr(1);
 
-        // if(this.filtros.numExterior && this.filtros.numInterior){
-        //   this.queryParamFiltros = this.queryParamFiltros + '&numExterior=' + this.filtros.numExterior + '&numInterior=' + this.filtros.numInterior; 
-        // }
-
-      sessionStorage.filtrosInfEspecifica = JSON.stringify(this.filtros);
-      // sessionStorage.filtroSelectedInfEspecifica = this.filtroSelected;
-    } 
+      this.loading = true;
+        console.log(this.endpoint + busquedaDatos + '?' + query);
+        this.http.post(this.endpoint + busquedaDatos + '?' + query, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loading = false;
+                    this.dataSource = res;
+                    this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                    this.total = this.dataSource.length; 
+                    this.paginator.pageIndex = 0;
+                    console.log(this.dataSource);
+                },
+                (error) => {
+                    this.loading = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
     
-    // this.http.get(this.endpoint + '?page=' + this.pagina + this.queryParamFiltros,
-    // this.http.post(this.endpoint, notario, this.httpOptions)
-    this.http.post(this.endpointBusqueda + '?' + this.queryParamFiltros, '', this.httpOptions)
-      .subscribe(
-        (res: any) => {
-          (isSearch) ? this.resetPaginator() : false;
-          this.loading = false;
-          
-          console.log(res.length);
-          if(res.length == 0){
-            this.dataSource = [];
-          }else{
-            this.dataSource = res;
-            // this.dataSource = res.data;
-            this.total = res.total;
-          }
-        },
-        (error) => {
-          this.loading = false;
-          this.snackBar.open(error.error.mensaje, 'Cerrar', {
-            duration: 10000,
-            horizontalPosition: 'end',
-            verticalPosition: 'top'
-          });
-        });
   }
 
   paginado(evt): void{
-    this.pagina = evt.pageIndex + 1;
-    this.getData(false);
+      this.pagina = evt.pageIndex + 1;
+      this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
   }
 
-  clean(): void{
-    this.isBusqueda = false;
-    this.resetPaginator();
-  }
-
-  resetPaginator() {
-    this.pagina = 1;
-    this.total = 0;
-    // this.paginator.pageIndex = 0;
+  paginate(array, page_size, page_number) {
+      return array.slice((page_number - 1) * page_size, page_number * page_size);
   }
 
 
