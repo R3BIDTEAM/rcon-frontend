@@ -4,26 +4,26 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '@env/environment';
 import { AuthService } from '@serv/auth.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import * as moment from 'moment';
 
 export interface Filtros {
-  no_notario: string;
-  estado: string;
-  nombre: string;
   apellido_paterno: string;
   apellido_materno: string;
+  nombre: string;
   rfc: string;
   curp: string;
   ine: string;
   otro_documento: string;
   numero_documento: string;
-  fecha_nacimiento: string;
-  fecha_defuncion: string;
-  celular: string;
-  email: string;
+  no_notario: string;
+  estado: string;
+}
+
+export interface Estados{
+  idestado: number;
+  estado: string;
 }
 
 @Component({
@@ -31,191 +31,116 @@ export interface Filtros {
   templateUrl: './edicion-notario.component.html',
   styleUrls: ['./edicion-notario.component.css']
 })
-
 export class EdicionNotarioComponent implements OnInit {
   endpoint = environment.endpoint + 'registro/';
-  httpOptions;
-  filtros: Filtros = {} as Filtros;
-
-  constructor(
-    private http: HttpClient,
-    private auth: AuthService,
-    private _formBuilder: FormBuilder,
-    private snackBar: MatSnackBar,
-    public dialog: MatDialog,
-  ) { }
-
-  ngOnInit(): void {
-    this.httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: this.auth.getSession().token
-      })  
-    };
-  }
-
-
-
-
-  searchNotario(): void {
-    const dialogRef = this.dialog.open(DialogBuscarNotario, {
-      width: '700px',
-      // data: dataNotario,
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      this.filtros.no_notario = result.no_notario;
-      this.filtros.estado = result.estado;
-      this.filtros.nombre = result.nombre;
-      this.filtros.apellido_paterno = result.apellido_paterno;
-      this.filtros.apellido_materno = result.apellido_materno;
-      this.filtros.rfc = result.rfc;
-      this.filtros.curp = result.curp;
-      this.filtros.ine = result.ine;
-      this.filtros.celular = result.celular;
-      this.filtros.email = result.email;
-    });
-  }
-
-
-}
-
-
-
-///////////////BUSCAR NOTARIO////////////////
-export interface DataNotarioSeleccionado {
-  no_notario: string;
-  estado: string;
-  nombre: string;
-  apellido_paterno: string;
-  apellido_materno: string;
-  rfc: string;
-  curp: string;
-  ine: string;
-  otro_documento: string;
-  numero_documento: string;
-  fecha_nacimiento: string;
-  fecha_defuncion: string;
-  celular: string;
-  email: string;
-}
-
-@Component({
-  selector: 'app-dialog-buscar-notario',
-  templateUrl: 'app-dialog-buscar-notario.html',
-  styleUrls: ['./edicion-notario.component.css']
-})
-
-export class DialogBuscarNotario {
-  endpoint = environment.endpoint + 'registro/';
-  displayedColumns: string[] = ['nombre','datos_identificativos','seleccionar'];
   pagina = 1;
   total = 0;
-  pageSize = 5;
+  pageSize = 15;
   loading = false;
   dataSource = [];
   dataPaginate = [];
+  displayedColumns: string[] = ['nombre','datos_identificativos','seleccionar'];
   httpOptions;
-  nombre;
-  apellido_paterno;
-  apellido_materno;
-  rfc;
-  curp;
-  ine;
-  otro_documento;
-  numero_documento;
-  search = false;
+  filtros: Filtros = {} as Filtros;
+  estados: Estados = {} as Estados;
+  loadingEstados = false;
   isIdentificativo;
-  notarioSeleccionado;
-  dataNotarioSeleccionado: DataNotarioSeleccionado = {} as DataNotarioSeleccionado;
+  canSearch = false;
+  isBusqueda;
+  queryParamFiltros;
+  endpointBusqueda;
   @ViewChild('paginator') paginator: MatPaginator;
 
   constructor(
     private http: HttpClient,
-    private auth: AuthService,
-    private route: ActivatedRoute,
     private snackBar: MatSnackBar,
-    public dialog: MatDialog,
-  ) { }
+    private auth: AuthService,
+    private router: Router,
+  ) { 
+    
+  }
+
 
   ngOnInit(): void {
-      this.httpOptions = {
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-            Authorization: this.auth.getSession().token
-          })
-      };
+    this.isBusqueda = false;
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: this.auth.getSession().token
+      })
+    };
+    this.getDataEstados();
   }
+
+
+  getDataEstados(): void {
+    this.loadingEstados = true;
+    this.http.post(this.endpoint + 'getEstados', '', this.httpOptions).subscribe(
+      (res: any) => {
+        this.loadingEstados = false;
+        this.estados = res;
+        console.log(this.estados);
+      },
+      (error) => {
+        this.loadingEstados = false;
+      }
+    );
+  }
+
 
   clearInputsIdentNoIdent(isIdentificativo): void {
       this.isIdentificativo = isIdentificativo;
-      if(isIdentificativo){
-        this.apellido_paterno = null;
-        this.apellido_materno = null;
-        this.nombre = null;
-      } else {
-        this.rfc = null;
-        this.curp = null;
-        this.ine = null;
-        this.otro_documento = null;
-        this.numero_documento = null;
-      }
+          if(isIdentificativo){
+            this.filtros.apellido_paterno = null;
+            this.filtros.apellido_materno = null;
+            this.filtros.nombre = null;
+          } else {
+            this.filtros.rfc = null;
+            this.filtros.curp = null;
+            this.filtros.ine = null;
+            this.filtros.otro_documento = null;
+            this.filtros.numero_documento = null;
+            this.filtros.no_notario = null;
+            this.filtros.estado = null;
+          }
   }
 
-  clean(): void{
-      this.pagina = 1;
-      this.total = 0;
-      this.dataSource = [];
-      this.loading = false;
-      this.dataPaginate;
-      this.nombre = '';
-      this.apellido_paterno = '';
-      this.apellido_materno = '';
-      this.rfc = '';
-      this.curp = '';
-      this.ine = '';
-      this.otro_documento = '';
-      this.numero_documento = '';
-      this.search = false;
-      this.dataNotarioSeleccionado = {} as DataNotarioSeleccionado;
-  }
-
-  validateSearch(){
-    this.search = (
-            this.apellido_paterno ||
-            this.apellido_materno ||
-            this.nombre ||
-            this.rfc ||
-            this.curp ||
-            this.ine ||
-            this.otro_documento ||
-            this.numero_documento
-        ) ? true : false;
-  }
 
   getData(): void {
       let query = '';
       let busquedaDatos = '';
-      this.notarioSeleccionado = false;
 
-      if(this.nombre){
-        query = query + '&nombre=' + this.nombre + '&filtroNombre=0';
+      if(this.filtros.nombre){
+        query = query + '&nombre=' + this.filtros.nombre + '&filtroNombre=0';
       }
-      if(this.apellido_paterno){
-          query = query + '&apellidoPaterno=' + this.apellido_paterno + '&filtroApellidoPaterno=0';
+      if(this.filtros.apellido_paterno){
+          query = query + '&apellidoPaterno=' + this.filtros.apellido_paterno + '&filtroApellidoPaterno=0';
       }
-      if(this.apellido_materno){
-          query = query + '&apellidoMaterno=' + this.apellido_materno + '&filtroApellidoMaterno=0';
+      if(this.filtros.apellido_materno){
+          query = query + '&apellidoMaterno=' + this.filtros.apellido_materno + '&filtroApellidoMaterno=0';
       }
-      if(this.rfc){
-          query = query + '&rfc=' + this.rfc;
+      if(this.filtros.rfc){
+          query = query + '&rfc=' + this.filtros.rfc;
       }
-      if(this.curp){
-          query = query + '&curp=' + this.curp;
+      if(this.filtros.curp){
+          query = query + '&curp=' + this.filtros.curp;
       }
-      if(this.ine){
-          query = query + '&ine=' + this.ine;
+      if(this.filtros.ine){
+          query = query + '&ine=' + this.filtros.ine;
       }
-     
+      if(this.filtros.otro_documento){
+          query = query + '&iddocidentif=' + this.filtros.otro_documento;
+      }
+      if(this.filtros.numero_documento){
+          query = query + '&valdocidentif=' + this.filtros.numero_documento;
+      }
+      if(this.filtros.no_notario){
+          query = query + '&numnotario=' + this.filtros.no_notario;
+      }
+      if(this.filtros.estado){
+          query = query + '&estado=' + this.filtros.estado;
+      }
+    
 
       if( this.isIdentificativo ){
           busquedaDatos = busquedaDatos + 'getNotariosByDatosIdentificativos';
@@ -249,10 +174,6 @@ export class DialogBuscarNotario {
     
   }
 
-  
-
-  
-
   paginado(evt): void{
       this.pagina = evt.pageIndex + 1;
       this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
@@ -262,18 +183,5 @@ export class DialogBuscarNotario {
       return array.slice((page_number - 1) * page_size, page_number * page_size);
   }
 
-  RegistroSelect(element) {
-    this.dataNotarioSeleccionado.no_notario = element.NUMNOTARIO;
-    this.dataNotarioSeleccionado.estado = element.CODESTADO;
-    this.dataNotarioSeleccionado.nombre = element.NOMBRE;
-    this.dataNotarioSeleccionado.apellido_paterno = element.APELLIDOPATERNO;
-    this.dataNotarioSeleccionado.apellido_materno = element.APELLIDOMATERNO;
-    this.dataNotarioSeleccionado.rfc = element.RFC;
-    this.dataNotarioSeleccionado.curp = element.CURP;
-    this.dataNotarioSeleccionado.ine = element.CLAVEIFE;
-    this.dataNotarioSeleccionado.celular = element.CELULAR;
-    this.dataNotarioSeleccionado.email = element.EMAIL;
-    console.log(this.dataNotarioSeleccionado.email);
-  }
 
 }

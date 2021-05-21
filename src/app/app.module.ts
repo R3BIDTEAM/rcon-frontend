@@ -26,7 +26,7 @@ import { ConsultaContribuyenteComponent } from './components/contribuyentes/cons
 import { EdicionContribuyenteComponent } from './components/contribuyentes/edicion-contribuyente/edicion-contribuyente.component';
 import { AltaNotarioComponent, DialogBuscarNotarioAlta } from './components/notarios/alta-notario/alta-notario.component';
 import { ConsultaNotarioComponent } from './components/notarios/consulta-notario/consulta-notario.component';
-import { EdicionNotarioComponent, DialogBuscarNotario } from './components/notarios/edicion-notario/edicion-notario.component';
+import { EdicionNotarioComponent } from './components/notarios/edicion-notario/edicion-notario.component';
 import { AltaPeritosComponent, DialogPerito } from './components/peritos/alta-peritos/alta-peritos.component';
 import { ConsultaPeritosComponent } from './components/peritos/consulta-peritos/consulta-peritos.component';
 import { EdicionPeritosComponent } from './components/peritos/edicion-peritos/edicion-peritos.component';
@@ -72,7 +72,6 @@ import { EditarNotarioComponent } from './components/notarios/editar-notario/edi
     DialogDocumento,
     DialogNotario,
     DialogPersona,
-    DialogBuscarNotario,
     DialogBuscarNotarioAlta,
     VerSociedadComponent,
     EditarPeritosComponent,
