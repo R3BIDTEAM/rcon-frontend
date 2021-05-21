@@ -127,10 +127,7 @@
                 <ng-container matColumnDef="seleccionar">
                     <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="width: 10%;  font-size: 14px;"> Seleccionar </th>
                     <td mat-cell *matCellDef="let element" style="text-align: center;">
-                        <!-- <button mat-stroked-button color="primary" aria-label="Ver Notario" matTooltip="Ver Notario" [routerLink]="['/main/ver-notarios', (element.idnotario) ? element.idnotario : element.IDNOTARIO]">
-                            Ver
-                        </button> -->
-                        <button mat-stroked-button color="primary" aria-label="Ver Notario" matTooltip="Ver Notario">
+                        <button mat-stroked-button color="primary" aria-label="Ver Notario" matTooltip="Ver Notario" [routerLink]="['/main/ver-notario', (element.idnotario) ? element.idnotario : element.IDNOTARIO]">
                             Ver
                         </button>
                     </td>
