@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Domicilio</h1>
+<h1 mat-dialog-title>Búsqueda de sociedades</h1>
 <div mat-dialog-content>
     <mat-card-content>
         <!-- Búsqueda por nombre -->
@@ -60,7 +60,7 @@
             <p>Cargando...</p>
         </div>
         <div class="alert alert-info" *ngIf="dataSource.length == 0 && !loading">
-            No hay avalúos para el filtro seleccionado
+            No hay sociedades para el filtro seleccionado
         </div> 
         <table mat-table [dataSource]="dataPaginate" *ngIf="!loading && dataSource.length > 0">
             <ng-container matColumnDef="razon">

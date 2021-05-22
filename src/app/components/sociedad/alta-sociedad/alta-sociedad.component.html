@@ -17,7 +17,7 @@
                 </div>
                 <mat-form-field class="col-10">
                     <mat-label>Razón Social</mat-label>
-                    <input matInput [required]="true">
+                    <input matInput [required]="true" [(ngModel)]="razonSocial">
                     <mat-error></mat-error>
                 </mat-form-field>
             </div>
@@ -26,7 +26,7 @@
                 </div>
                     <mat-form-field class="col-4">
                         <mat-label>RFC</mat-label>
-                        <input matInput [required]="true">
+                        <input matInput [required]="true" [(ngModel)]="rfc">
                         <mat-error></mat-error>
                     </mat-form-field>
             </div>
@@ -41,7 +41,7 @@
                 </div>
                 <mat-form-field class="col-4">
                     <mat-label>Registro</mat-label>
-                    <input matInput [required]="true">
+                    <input matInput [required]="true" [(ngModel)]="registro">
                     <mat-error></mat-error>
                 </mat-form-field>
             </div>
@@ -51,7 +51,7 @@
                 </div>
                     <mat-form-field class="col-4">
                         <mat-label>Fecha Alta</mat-label>
-                        <input matInput readonly [matDatepicker]="pickini">
+                        <input matInput readonly [matDatepicker]="pickini" [(ngModel)]="fecha_alta">
                         <mat-datepicker-toggle matSuffix [for]="pickini"></mat-datepicker-toggle>
                         <mat-datepicker #pickini></mat-datepicker>
                     </mat-form-field>
@@ -59,7 +59,7 @@
                 </div>
                     <mat-form-field class="col-4">
                         <mat-label>Fecha Baja</mat-label>
-                        <input matInput readonly [matDatepicker]="pickfin">
+                        <input matInput readonly [matDatepicker]="pickfin" [(ngModel)]="fecha_baja">
                         <mat-datepicker-toggle matSuffix [for]="pickfin"></mat-datepicker-toggle>
                         <mat-datepicker #pickfin></mat-datepicker>
                         <mat-error></mat-error>
@@ -71,7 +71,7 @@
                 </div>
                     <mat-form-field class="col-4">
                         <mat-label>E-Mail</mat-label>
-                        <input matInput [required]="true">
+                        <input matInput [required]="true" [(ngModel)]="email">
                         <mat-error></mat-error>
                     </mat-form-field>
             </div>
@@ -81,7 +81,7 @@
                 </div>
                     <mat-form-field class="col-4">
                         <mat-label>Login</mat-label>
-                        <input matInput [required]="true">
+                        <input matInput [required]="true" [(ngModel)]="login">
                         <mat-error></mat-error>
                     </mat-form-field>
             </div>
@@ -90,7 +90,7 @@
             <div class="row">
                 <div class="col-md-2 offset-md-8">
                     <div class="d-flex flex-row-reverse">
-                        <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar">
+                        <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" (click)="guardaSociedad()">
                             Guardar
                         </button>
                     </div>

@@ -1,67 +1,90 @@
 <h1 mat-dialog-title>Búsqueda de personas morales</h1>
 <div mat-dialog-content>
-    <form #formDialog="ngForm">
-        <ng-container>
-            <div class="row">
-                <div class="col-1 text-center">
-                </div>
-                    <mat-form-field class="col-4">
-                        <mat-label>Razón social</mat-label>
-                        <input matInput [required]="true">
-                        <mat-error></mat-error>
-                    </mat-form-field>
-                <div class="col-1">
-                </div>
-                    <mat-form-field class="col-4">
-                        <mat-label>RFC</mat-label>
-                        <input matInput [required]="true">
-                        <mat-error></mat-error>
-                    </mat-form-field>
-            </div>
-        </ng-container>
+    <mat-card-content>
+        <!-- Búsqueda por nombre -->
         <div class="row">
-            <div class="col-5 text-center">
+            <div class="col-1 text-center">
             </div>
-            <div class="col" align="end">
-                <button mat-icon-button color="primary" aria-label="Buscar" matTooltip="Buscar" (click)="getDataNotario()">
-                    <mat-icon>search</mat-icon>
-                </button>
+                <mat-form-field class="col-4">
+                    <mat-label>Razón Social</mat-label>
+                    <input matInput [(ngModel)]="razonSocial" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)">
+                    <mat-error></mat-error>
+                </mat-form-field>
+        </div>
+        
+        <!-- Fin de nombre -->
+
+        <!-- Búsqueda por RFC CRUP -->
+        <div class="row">
+            <div class="col-1 text-center">
+            </div>
+                <mat-form-field class="col-4">
+                    <mat-label>RFC</mat-label>
+                    <input matInput [(ngModel)]="rfc" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)">
+                    <mat-error></mat-error>
+                </mat-form-field>
+        </div>
+        <!-- Fin de RFC -->
+
+        <div class="row">
+            <div class="col-2">
+
+            </div>
+            <div class="col">
+                <div class="d-flex flex-row-reverse">
+                    
+                    <button mat-icon-button color="primary" aria-label="Limpiar Filtros" matTooltip="Limpiar Filtros" (click)="clean()">
+                        <mat-icon>clear</mat-icon>
+                    </button>
+                    <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getSociedad()" [disabled]="!search">
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="col-6">
             </div>
         </div>
-    </form>
 
-    
-    <!-- <div style="padding: 30px; text-align: center;" *ngIf="loading">
-        <mat-spinner style="margin:0 auto;"></mat-spinner>
-        <p>Cargando...</p>
-    </div> 
-    <div class="alert alert-info" *ngIf="dataSource.length == 0 && !loading && busqueda">
-        No se encontraron datos.
-    </div>
-    <table mat-table [dataSource]="dataSource" *ngIf="dataSource.length > 0 && !loading && busqueda">
-        <ng-container matColumnDef="nombre">
-            <th mat-header-cell *matHeaderCellDef> Nombre </th>
-            <td mat-cell *matCellDef="let element"> </td>
+
+        <br>
+        <ng-container>
+            <div style="padding: 30px; text-align: center;" *ngIf="loading">
+                <mat-spinner style="margin:0 auto;"></mat-spinner>
+                <p>Cargando...</p>
+            </div>
+            <div class="alert alert-info" *ngIf="dataSource.length == 0 && !loading">
+                No hay avalúos para el filtro seleccionado
+            </div> 
+            <table mat-table [dataSource]="dataPaginate" *ngIf="!loading && dataSource.length > 0">
+                <ng-container matColumnDef="razon">
+                    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                    <td mat-cell *matCellDef="let element">{{ element.RAZONSOCIAL }}</td>
+                </ng-container>
+                <ng-container matColumnDef="registro">
+                    <th mat-header-cell *matHeaderCellDef> Registro </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.REGISTRO }}</td>
+                </ng-container>
+                <ng-container matColumnDef="rfc">
+                    <th mat-header-cell *matHeaderCellDef> RFC </th>
+                    <td mat-cell *matCellDef="let element">{{ element.RFC }}</td>
+                </ng-container>
+                <ng-container matColumnDef="select">
+                    <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
+                    <td mat-cell *matCellDef="let element">
+                        <mat-radio-group [(ngModel)]="optionPeritoPersona">
+                            <mat-radio-button [value]="element" (change)="sociedadSelected(element)"></mat-radio-button>
+                        </mat-radio-group>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator #paginator [length]="total" [pageSize]="pageSize" [pageSizeOptions]="[pageSize]" [showFirstLastButtons]="true" (page)="paginado($event)">
+            </mat-paginator>
         </ng-container>
-        <ng-container matColumnDef="rfc">
-            <th mat-header-cell *matHeaderCellDef> RFC </th>
-            <td mat-cell *matCellDef="let element"> </td>
-        </ng-container>
-        <ng-container matColumnDef="select">
-            <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
-            <td mat-cell *matCellDef="let element">
-                <mat-radio-group [(ngModel)]="notarioIsai">
-                    <mat-radio-button [value]="element" (change)="NotariosSelect(element)"></mat-radio-button>
-                </mat-radio-group>
-            </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-    <mat-paginator [length]="total" [pageSize]="5" [pageSizeOptions]="[5]" (page)="paginado($event)">
-    </mat-paginator> -->
+    </mat-card-content>
 </div>
 <mat-dialog-actions align="end">
+    <button mat-flat-button color="primary" [mat-dialog-close]="sociedadDialog">Aceptar</button>
     <button mat-button mat-dialog-close>Cerrar</button>
-    <button mat-flat-button color="primary">Aceptar</button>
 </mat-dialog-actions>
