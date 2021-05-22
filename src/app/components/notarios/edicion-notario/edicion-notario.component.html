@@ -127,7 +127,7 @@
                 <ng-container matColumnDef="seleccionar">
                     <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="width: 10%;  font-size: 14px;"> Seleccionar </th>
                     <td mat-cell *matCellDef="let element" style="text-align: center;">
-                        <button mat-stroked-button color="primary" aria-label="Editar Notario" matTooltip="Editar Notario" [routerLink]="['/main/editar-notario', (element.idnotario) ? element.idnotario : element.IDNOTARIO]">
+                        <button mat-stroked-button color="primary" aria-label="Editar Notario" matTooltip="Editar Notario" [routerLink]="['/main/editar-notario', (element.idpersona) ? element.idpersona : element.IDPERSONA]">
                             Editar
                         </button>
                     </td>

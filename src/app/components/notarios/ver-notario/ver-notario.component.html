@@ -1,1 +1,158 @@
-<p>ver-notario works!</p>
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+
+
+        <h3 style="margin: 0 0 15px;" class="verde-cdmx">Datos Generales:</h3>
+
+
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>No. Notario</mat-label>
+                    <input matInput placeholder="Placeholder" [disabled]="true">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>Estado</mat-label>
+                    <mat-select [disabled]="true">
+                      <mat-option>Ninguna</mat-option>
+                      <mat-option value="option1">Ciudad de Méxio</mat-option>
+                      <mat-option value="option2">Estado de México</mat-option>
+                      <mat-option value="option3">Guerrero</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput placeholder="Placeholder" [disabled]="true">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Apellido Paterno</mat-label>
+                    <input matInput placeholder="Placeholder" [disabled]="true">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Apellido Materno</mat-label>
+                    <input matInput placeholder="Placeholder" [disabled]="true">
+                </mat-form-field>
+            </div> 
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>RFC*</mat-label>
+                    <input matInput placeholder="Placeholder" [disabled]="true">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>CURP*</mat-label>
+                    <input matInput placeholder="Placeholder" [disabled]="true">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>INE</mat-label>
+                    <input matInput placeholder="Placeholder" [disabled]="true">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>Seleccione</mat-label>
+                    <mat-select [disabled]="true">
+                      <mat-option>Ninguna</mat-option>
+                      <mat-option value="option1">Cartilla Militar</mat-option>
+                      <mat-option value="option2">Pasaporte</mat-option>
+                      <mat-option value="option3">Cédula Profesional</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <!-- <mat-label>INE</mat-label> -->
+                    <input matInput placeholder="Placeholder" [disabled]="true">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>Fecha Nacimiento</mat-label>
+                    <input matInput [matDatepicker]="picknacimiento" [disabled]="true">
+                    <mat-datepicker-toggle matSuffix [for]="picknacimiento"></mat-datepicker-toggle>
+                    <mat-datepicker #picknacimiento></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="fill" style="width: 100%;">
+                    <mat-label>Fecha Defunción</mat-label>
+                    <input matInput [matDatepicker]="pickdefuncion" [disabled]="true">
+                    <mat-datepicker-toggle matSuffix [for]="pickdefuncion"></mat-datepicker-toggle>
+                    <mat-datepicker #pickdefuncion></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Celular</mat-label>
+                    <input matInput placeholder="Placeholder" [disabled]="true">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>E-Mail</mat-label>
+                    <input matInput placeholder="Placeholder" [disabled]="true">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <!-- Botón de Actualizar -->
+        <!-- <div class="row">
+            <div class="col-md-4 offset-md-8">
+                <div class="d-flex flex-row-reverse">
+                    <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar">
+                        Actualizar <mat-icon style="display: inherit; width: 15px;">update</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div> -->
+
+
+
+        <!-- Sección de Datos de Contacto -->
+        <h3 class="verde-cdmx">Datos de contacto:</h3>
+
+        <div class="row" style="margin-bottom: 15px;">
+            <div class="col-md-4">
+                <button mat-stroked-button aria-label="Domicilios" style="background-color: #00A447; color: #FFF!important;">
+                    Domicilios <mat-icon style="display: inherit; width: 15px;">add</mat-icon>
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-info">
+                    No hay datos que mostrar...
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
