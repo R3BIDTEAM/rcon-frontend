@@ -5,9 +5,16 @@
         <div class="row">
             <div class="col-1 text-center">
             </div>
+            <mat-form-field class="col-4">
+                <mat-label>Razón Social</mat-label>
+                <input matInput [(ngModel)]="razonSocial" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)">
+                <mat-error></mat-error>
+            </mat-form-field>
+            <div class="col-1 text-center">
+            </div>
                 <mat-form-field class="col-4">
-                    <mat-label>Razón Social</mat-label>
-                    <input matInput [(ngModel)]="razonSocial" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)">
+                    <mat-label>RFC</mat-label>
+                    <input matInput [(ngModel)]="rfc" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)">
                     <mat-error></mat-error>
                 </mat-form-field>
         </div>
@@ -16,13 +23,7 @@
 
         <!-- Búsqueda por RFC CRUP -->
         <div class="row">
-            <div class="col-1 text-center">
-            </div>
-                <mat-form-field class="col-4">
-                    <mat-label>RFC</mat-label>
-                    <input matInput [(ngModel)]="rfc" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)">
-                    <mat-error></mat-error>
-                </mat-form-field>
+            
         </div>
         <!-- Fin de RFC -->
 
@@ -58,11 +59,7 @@
             <table mat-table [dataSource]="dataPaginate" *ngIf="!loading && dataSource.length > 0">
                 <ng-container matColumnDef="razon">
                     <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                    <td mat-cell *matCellDef="let element">{{ element.RAZONSOCIAL }}</td>
-                </ng-container>
-                <ng-container matColumnDef="registro">
-                    <th mat-header-cell *matHeaderCellDef> Registro </th>
-                    <td mat-cell *matCellDef="let element"> {{ element.REGISTRO }}</td>
+                    <td mat-cell *matCellDef="let element">{{ element.APELLIDOPATERNO }}</td>
                 </ng-container>
                 <ng-container matColumnDef="rfc">
                     <th mat-header-cell *matHeaderCellDef> RFC </th>

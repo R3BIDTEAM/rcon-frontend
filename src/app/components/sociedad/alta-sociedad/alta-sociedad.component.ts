@@ -126,7 +126,7 @@ export interface SociedadDialog{
 
 export class DialogSociedad {
     endpoint = environment.endpoint + 'registro/';
-    displayedColumns: string[] = ['razon','registro', 'rfc', 'select'];
+    displayedColumns: string[] = ['razon', 'rfc', 'select'];
     pagina = 1;
     total = 0;
     pageSize = 15;
@@ -196,19 +196,16 @@ export class DialogSociedad {
         let query = '';
         let busquedaDatos = '';
         if( this.razonSocial ){
-            busquedaDatos = busquedaDatos + 'getSocValuacionByDatosPersonales';
+            busquedaDatos = busquedaDatos + 'getPersonaMoral';
         }else{
-            busquedaDatos = busquedaDatos + 'getSocValuacionByDatosIdentificativos';
+            busquedaDatos = busquedaDatos + 'getMoralIdentificativos';
         }
 
         if( this.razonSocial ){
-            query = query + '&razonSocial=' + this.razonSocial + '&filtroRazon=1';
+            query = query + '&razonSocial=' + this.razonSocial + '&filtroApellidoPaterno=0';
         }
         if(this.rfc){
             query = query + '&rfc=' + this.rfc;
-        }
-        if(this.registro){
-            query = query + '&registro=' + this.registro;
         }
 
         query = query.substr(1);
@@ -247,7 +244,7 @@ export class DialogSociedad {
 
     sociedadSelected(element){
         console.log(element);
-        this.sociedadDialog.razonSocial = element.RAZONSOCIAL;
+        this.sociedadDialog.razonSocial = element.APELLIDOPATERNO;
         this.sociedadDialog.rfc = element.RFC;
     }
 }
