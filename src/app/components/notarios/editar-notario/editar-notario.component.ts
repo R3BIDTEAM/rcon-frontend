@@ -1,10 +1,13 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { MatPaginator } from '@angular/material/paginator';
-import { environment } from '@env/environment'
-import { AuthService } from '@serv/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '@env/environment';
+import { AuthService } from '@serv/auth.service';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import * as moment from 'moment';
 
 export interface DatosNotario {
   no_notario: string;
@@ -26,6 +29,30 @@ export interface DatosNotario {
 export interface Estados{
   idestado: number;
   estado: string;
+}
+
+export interface DataDomicilios {
+  tipoPersona: string;
+  nombre: string;
+  apaterno: string;
+  amaterno: string;
+  rfc: string;
+  curp: string;
+  ine: string;
+  idDocIdent: number;
+  docIdent: string;
+  fechaNacimiento: Date;
+  fechaDefuncion: Date;
+  celular: string;
+  email: string;
+  actPreponderante: string;
+  idTipoPersonaMoral: number;
+  fechaInicioOperacion: Date;
+  idMotivo: number;
+  fechaCambio: Date;
+  texto: string;
+  fechaCaducidad: Date;
+  // documentoRepresentacion: DataDocumentoRepresentacion;
 }
 
 @Component({
@@ -50,6 +77,7 @@ export class EditarNotarioComponent implements OnInit {
   idNotario;
   datosNotario: DatosNotario = {} as DatosNotario;
   estados: Estados = {} as Estados;
+  dataDomicilios: DataDomicilios[] = [];
   loadingEstados = false;
   @ViewChild('paginator') paginator: MatPaginator;
 
@@ -57,7 +85,8 @@ export class EditarNotarioComponent implements OnInit {
     private http: HttpClient,
     private snackBar: MatSnackBar,
     private auth: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -147,5 +176,46 @@ export class EditarNotarioComponent implements OnInit {
   paginate(array, page_size, page_number) {
       return array.slice((page_number - 1) * page_size, page_number * page_size);
   }
+
+
+  addDomicilio(i = -1, dataDomicilio = null): void {
+    const dialogRef = this.dialog.open(DialogDomiciliosNotario, {
+      width: '700px',
+      data: dataDomicilio,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        if(i != -1){
+          this.dataDomicilios[i] = result;
+        }else{
+          this.dataDomicilios.push(result);
+        }
+      }
+    });
+  }
+
+  removeDomicilio(i){
+		this.dataDomicilios.splice(i, 1);
+	}
+
+
+}
+
+
+/////////////// DOMICILIOS ////////////////
+@Component({
+  selector: 'app-dialog-domicilios-notario',
+  templateUrl: 'app-dialog-domicilios-notario.html',
+  styleUrls: ['./editar-notario.component.css']
+})
+export class DialogDomiciliosNotario {
+  endpoint = environment.endpoint;
+  loading = false;
+  httpOptions;
+  tipoPersona = 'F';
+  fisicaFormGroup: FormGroup;
+  moralFormGroup: FormGroup;
+  // dataRepresentacion: DataRepresentacion = {} as DataRepresentacion;
+
 
 }

@@ -26,29 +26,29 @@ export interface Filtros {
   email: string;
 }
 
-export interface DataDomicilios {
-  tipoPersona: string;
-  nombre: string;
-  apaterno: string;
-  amaterno: string;
-  rfc: string;
-  curp: string;
-  ine: string;
-  idDocIdent: number;
-  docIdent: string;
-  fechaNacimiento: Date;
-  fechaDefuncion: Date;
-  celular: string;
-  email: string;
-  actPreponderante: string;
-  idTipoPersonaMoral: number;
-  fechaInicioOperacion: Date;
-  idMotivo: number;
-  fechaCambio: Date;
-  texto: string;
-  fechaCaducidad: Date;
-  // documentoRepresentacion: DataDocumentoRepresentacion;
-}
+// export interface DataDomicilios {
+//   tipoPersona: string;
+//   nombre: string;
+//   apaterno: string;
+//   amaterno: string;
+//   rfc: string;
+//   curp: string;
+//   ine: string;
+//   idDocIdent: number;
+//   docIdent: string;
+//   fechaNacimiento: Date;
+//   fechaDefuncion: Date;
+//   celular: string;
+//   email: string;
+//   actPreponderante: string;
+//   idTipoPersonaMoral: number;
+//   fechaInicioOperacion: Date;
+//   idMotivo: number;
+//   fechaCambio: Date;
+//   texto: string;
+//   fechaCaducidad: Date;
+//   documentoRepresentacion: DataDocumentoRepresentacion;
+// }
 
 @Component({
   selector: 'app-alta-notario',
@@ -59,7 +59,7 @@ export class AltaNotarioComponent implements OnInit {
   endpoint = environment.endpoint + 'registro/';
   httpOptions;
   filtros: Filtros = {} as Filtros;
-  dataDomicilios: DataDomicilios[] = [];
+  // dataDomicilios: DataDomicilios[] = [];
 
   constructor(
     private http: HttpClient,
@@ -101,25 +101,25 @@ export class AltaNotarioComponent implements OnInit {
   }
 
 
-  addDomicilio(i = -1, dataDomicilio = null): void {
-    const dialogRef = this.dialog.open(DialogDomiciliosNotario, {
-      width: '700px',
-      data: dataDomicilio,
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if(result){
-        if(i != -1){
-          this.dataDomicilios[i] = result;
-        }else{
-          this.dataDomicilios.push(result);
-        }
-      }
-    });
-  }
+  // addDomicilio(i = -1, dataDomicilio = null): void {
+  //   const dialogRef = this.dialog.open(DialogDomiciliosNotario, {
+  //     width: '700px',
+  //     data: dataDomicilio,
+  //   });
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     if(result){
+  //       if(i != -1){
+  //         this.dataDomicilios[i] = result;
+  //       }else{
+  //         this.dataDomicilios.push(result);
+  //       }
+  //     }
+  //   });
+  // }
 
-  removeDomicilio(i){
-		this.dataDomicilios.splice(i, 1);
-	}
+  // removeDomicilio(i){
+	// 	this.dataDomicilios.splice(i, 1);
+	// }
 
 }
 
@@ -323,19 +323,19 @@ export class DialogBuscarNotarioAlta {
 
 
 /////////////// DOMICILIOS ////////////////
-@Component({
-  selector: 'app-dialog-domicilios-notario',
-  templateUrl: 'app-dialog-domicilios-notario.html',
-  styleUrls: ['./alta-notario.component.css']
-})
-export class DialogDomiciliosNotario {
-  endpoint = environment.endpoint;
-  loading = false;
-  httpOptions;
-  tipoPersona = 'F';
-  fisicaFormGroup: FormGroup;
-  moralFormGroup: FormGroup;
-  // dataRepresentacion: DataRepresentacion = {} as DataRepresentacion;
+// @Component({
+//   selector: 'app-dialog-domicilios-notario',
+//   templateUrl: 'app-dialog-domicilios-notario.html',
+//   styleUrls: ['./alta-notario.component.css']
+// })
+// export class DialogDomiciliosNotario {
+//   endpoint = environment.endpoint;
+//   loading = false;
+//   httpOptions;
+//   tipoPersona = 'F';
+//   fisicaFormGroup: FormGroup;
+//   moralFormGroup: FormGroup;
+//   dataRepresentacion: DataRepresentacion = {} as DataRepresentacion;
 
 
-}
+// }
