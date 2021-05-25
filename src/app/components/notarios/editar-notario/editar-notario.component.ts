@@ -7,22 +7,25 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 
 export interface DatosNotario {
-  apepaterno: string;
-  apematerno: string;
+  no_notario: string;
+  estado: string;
   nombre: string;
+  apellido_paterno: string;
+  apellido_materno: string;
   rfc: string;
   curp: string;
   ine: string;
-  idIden: number;
-  identificacion: string;
-  fecha_naci: Date;
-  fecha_def: Date;
+  otro_documento: number;
+  numero_documento: string;
+  fecha_nacimiento: Date;
+  fecha_defuncion: Date;
   celular: string;
   email: string;
-  registro: string;
-  independiente: boolean;
-  fecha_alta: Date;
-  fecha_baja: Date;
+}
+
+export interface Estados{
+  idestado: number;
+  estado: string;
 }
 
 @Component({
@@ -31,7 +34,8 @@ export interface DatosNotario {
   styleUrls: ['./editar-notario.component.css']
 })
 export class EditarNotarioComponent implements OnInit {
-  endpoint = environment.endpoint + 'registro/getNotariosByDatosIdentificativos';
+  endpoint = environment.endpoint + 'registro/getInfoNotario';
+  endpointEstados = environment.endpoint + 'registro/';
   displayedColumns: string[] = ['nombre','registro', 'rfc'];
   pagina = 1;
   total = 0;
@@ -45,6 +49,8 @@ export class EditarNotarioComponent implements OnInit {
   query;
   idNotario;
   datosNotario: DatosNotario = {} as DatosNotario;
+  estados: Estados = {} as Estados;
+  loadingEstados = false;
   @ViewChild('paginator') paginator: MatPaginator;
 
   constructor(
@@ -63,7 +69,83 @@ export class EditarNotarioComponent implements OnInit {
     };
     this.idNotario = this.route.snapshot.paramMap.get('idnotario');
     console.log(this.idNotario);
-    // this.getPeritoDatos();
+    this.getNotarioDatos();
+    this.getDataEstados();
+  }
+
+  getDataEstados(): void {
+    this.loadingEstados = true;
+    this.http.post(this.endpointEstados + 'getEstados', '', this.httpOptions).subscribe(
+      (res: any) => {
+        this.loadingEstados = false;
+        this.estados = res;
+        console.log(this.estados);
+      },
+      (error) => {
+        this.loadingEstados = false;
+      }
+    );
+  }
+
+  getNotarioDatos(){
+      this.query = 'infoExtra=true&idPersona=' + this.idNotario; 
+      this.loading = true;
+      console.log(this.endpoint);
+      this.http.post(this.endpoint + '?' + this.query, '', this.httpOptions)
+          .subscribe(
+              (res: any) => {
+                  this.loading = false;
+                  this.dataNotarioResultado = res.notario;
+                  this.dataSource = res.direcciones;
+                  // this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                  // this.total = this.dataPaginate.length; 
+                  // this.paginator.pageIndex = 0;
+                  console.log("AQUI ENTRO EL RES");
+                  console.log(this.dataNotarioResultado);
+                  this.datoDelPerito();
+              },
+              (error) => {
+                  this.loading = false;
+                  this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                      duration: 10000,
+                      horizontalPosition: 'end',
+                      verticalPosition: 'top'
+                  });
+              }
+          );
+  }
+
+  datoDelPerito(){
+      this.datosNotario.no_notario = this.dataNotarioResultado[0].IDPERSONA;
+      this.datosNotario.estado = this.dataNotarioResultado[0].CODESTADO;
+      this.datosNotario.nombre  = this.dataNotarioResultado[0].NOMBRE;
+      this.datosNotario.apellido_paterno = this.dataNotarioResultado[0].APELLIDOPATERNO;
+      this.datosNotario.apellido_materno = this.dataNotarioResultado[0].APELLIDOMATERNO;
+      this.datosNotario.rfc = this.dataNotarioResultado.RFC;
+      this.datosNotario.curp = this.dataNotarioResultado.CURP;
+      this.datosNotario.ine = this.dataNotarioResultado.CLAVEIFE;
+      this.datosNotario.otro_documento = this.dataNotarioResultado.IDDOCIDENTIF;
+      this.datosNotario.numero_documento = this.dataNotarioResultado.VALDOCIDENTIF;
+      this.datosNotario.fecha_nacimiento = this.dataNotarioResultado.FECHANACIMIENTO;
+      this.datosNotario.fecha_defuncion = this.dataNotarioResultado.FECHADEFUNCION;
+      this.datosNotario.celular = this.dataNotarioResultado.CELULAR;
+      this.datosNotario.email = this.dataNotarioResultado.EMAIL;
+
+      console.log(this.datosNotario.nombre);
+      
+      // if(this.dataNotarioResultado.INDEPENDIENTE === 'S'){
+      //     this.datosNotario.independiente = true;
+      // }else{
+      //     this.datosNotario.independiente = false;
+      // }
+  }
+  paginado(evt): void{
+      this.pagina = evt.pageIndex + 1;
+      this.dataSource = this.paginate(this.dataSource, this.pageSize, this.pagina);
+  }
+
+  paginate(array, page_size, page_number) {
+      return array.slice((page_number - 1) * page_size, page_number * page_size);
   }
 
 }

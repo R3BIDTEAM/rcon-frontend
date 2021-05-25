@@ -9,17 +9,17 @@
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>No. Notario</mat-label>
-                    <input matInput placeholder="Placeholder" [disabled]="true">
+                    <input matInput placeholder="Placeholder" [disabled]="true" [(ngModel)]="datosNotario.no_notario">
                 </mat-form-field>
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="fill" style="width: 100%;">
-                    <mat-label>Estado</mat-label>
-                    <mat-select [disabled]="true">
-                      <mat-option>Ninguna</mat-option>
-                      <mat-option value="option1">Ciudad de Méxio</mat-option>
-                      <mat-option value="option2">Estado de México</mat-option>
-                      <mat-option value="option3">Guerrero</mat-option>
+                    <mat-label>Estado:</mat-label>
+                    <mat-select #estado [disabled]="true" [(ngModel)]="datosNotario.estado">
+                        <mat-option value="">Seleccione ...</mat-option>
+                        <mat-option *ngFor="let estado of estados" [value]="estado.CODESTADO">
+                            {{ estado.ESTADO }}
+                        </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -29,19 +29,19 @@
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>Nombre</mat-label>
-                    <input matInput placeholder="Placeholder" [disabled]="true">
+                    <input matInput placeholder="Placeholder" [disabled]="true" [(ngModel)]="datosNotario.nombre">
                 </mat-form-field>
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>Apellido Paterno</mat-label>
-                    <input matInput placeholder="Placeholder" [disabled]="true">
+                    <input matInput placeholder="Placeholder" [disabled]="true" [(ngModel)]="datosNotario.apellido_paterno">
                 </mat-form-field>
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>Apellido Materno</mat-label>
-                    <input matInput placeholder="Placeholder" [disabled]="true">
+                    <input matInput placeholder="Placeholder" [disabled]="true" [(ngModel)]="datosNotario.apellido_materno">
                 </mat-form-field>
             </div> 
         </div>
@@ -50,13 +50,13 @@
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>RFC*</mat-label>
-                    <input matInput placeholder="Placeholder" [disabled]="true">
+                    <input matInput placeholder="Placeholder" [disabled]="true" [(ngModel)]="datosNotario.rfc">
                 </mat-form-field>
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>CURP*</mat-label>
-                    <input matInput placeholder="Placeholder" [disabled]="true">
+                    <input matInput placeholder="Placeholder" [disabled]="true" [(ngModel)]="datosNotario.curp">
                 </mat-form-field>
             </div>
         </div>
@@ -65,7 +65,7 @@
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>INE</mat-label>
-                    <input matInput placeholder="Placeholder" [disabled]="true">
+                    <input matInput placeholder="Placeholder" [disabled]="true" [(ngModel)]="datosNotario.ine">
                 </mat-form-field>
             </div>
             <div class="col-md-4">
@@ -82,7 +82,7 @@
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <!-- <mat-label>INE</mat-label> -->
-                    <input matInput placeholder="Placeholder" [disabled]="true">
+                    <input matInput placeholder="Placeholder" [disabled]="true" [(ngModel)]="datosNotario.numero_documento">
                 </mat-form-field>
             </div>
         </div>
@@ -91,7 +91,7 @@
             <div class="col-md-4">
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Fecha Nacimiento</mat-label>
-                    <input matInput [matDatepicker]="picknacimiento" [disabled]="true">
+                    <input matInput [matDatepicker]="picknacimiento" [disabled]="true" [(ngModel)]="datosNotario.fecha_nacimiento">
                     <mat-datepicker-toggle matSuffix [for]="picknacimiento"></mat-datepicker-toggle>
                     <mat-datepicker #picknacimiento></mat-datepicker>
                 </mat-form-field>
@@ -99,7 +99,7 @@
             <div class="col-md-4">
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Fecha Defunción</mat-label>
-                    <input matInput [matDatepicker]="pickdefuncion" [disabled]="true">
+                    <input matInput [matDatepicker]="pickdefuncion" [disabled]="true" [(ngModel)]="datosNotario.fecha_defuncion">
                     <mat-datepicker-toggle matSuffix [for]="pickdefuncion"></mat-datepicker-toggle>
                     <mat-datepicker #pickdefuncion></mat-datepicker>
                 </mat-form-field>
@@ -110,13 +110,13 @@
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>Celular</mat-label>
-                    <input matInput placeholder="Placeholder" [disabled]="true">
+                    <input matInput placeholder="Placeholder" [disabled]="true" [(ngModel)]="datosNotario.celular">
                 </mat-form-field>
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>E-Mail</mat-label>
-                    <input matInput placeholder="Placeholder" [disabled]="true">
+                    <input matInput placeholder="Placeholder" [disabled]="true" [(ngModel)]="datosNotario.email">
                 </mat-form-field>
             </div>
         </div>
