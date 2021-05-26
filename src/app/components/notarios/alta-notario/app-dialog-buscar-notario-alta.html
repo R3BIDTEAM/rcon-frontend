@@ -1,6 +1,6 @@
-<!-- <mat-dialog-actions align="end">
+<mat-dialog-actions align="end">
     <button style="border: 0px; background-color: transparent; cursor: pointer;" mat-dialog-close><mat-icon style="color: red;">clear</mat-icon></button>
-</mat-dialog-actions> -->
+</mat-dialog-actions>
 
 <h2 class="verde-cdmx">Búsqueda de Notarios</h2>
 
@@ -55,19 +55,19 @@
     <div class="row">
         <div class="col-md-4">
             <mat-form-field appearance="fill" style="width: 100%;">
-                <mat-label>Seleccione</mat-label>
-                <mat-select [(ngModel)]="otro_documento" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)">
-                  <mat-option>Ninguna</mat-option>
-                  <mat-option value="option1">Cartilla Militar</mat-option>
-                  <mat-option value="option2">Pasaporte</mat-option>
-                  <mat-option value="option3">Cédula Profesional</mat-option>
+                <mat-label>Otro Documento:</mat-label>
+                <mat-select [(ngModel)]="otro_documento">
+                    <mat-option value="">Seleccione...</mat-option>
+                    <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF">
+                        {{ documento.DESCRIPCION }}
+                    </mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
         <div class="col-md-4">
             <mat-form-field appearance="outline" style="width: 100%;">
-                <!-- <mat-label>INE</mat-label> -->
-                <input matInput [(ngModel)]="numero_documento" placeholder="Placeholder" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)">
+                <mat-label>Número Documento</mat-label>
+                <input matInput [(ngModel)]="numero_documento" placeholder="Número documento">
             </mat-form-field>
         </div>
     </div>

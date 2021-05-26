@@ -12,7 +12,7 @@
             </div>
         </div>
 
-        <h3 style="margin: 0 0 15px;">Datos Generales:</h3>
+        <h3 class="verde-cdmx" style="margin: 0 0 15px;">Datos Generales:</h3>
 
 
         <div class="row">
@@ -26,7 +26,7 @@
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Estado:</mat-label>
                     <mat-select #estado [(ngModel)]="filtros.estado">
-                        <mat-option value="">Seleccione ...</mat-option>
+                        <mat-option value="">Seleccione...</mat-option>
                         <mat-option *ngFor="let estado of estados" [value]="estado.CODESTADO">
                             {{ estado.ESTADO }}
                         </mat-option>
@@ -80,19 +80,19 @@
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="fill" style="width: 100%;">
-                    <mat-label>Seleccione</mat-label>
-                    <mat-select>
-                      <mat-option>Ninguna</mat-option>
-                      <mat-option value="option1">Cartilla Militar</mat-option>
-                      <mat-option value="option2">Pasaporte</mat-option>
-                      <mat-option value="option3">Cédula Profesional</mat-option>
+                    <mat-label>Otro Documento:</mat-label>
+                    <mat-select #otro_documento [(ngModel)]="filtros.otro_documento">
+                        <mat-option value="">Seleccione...</mat-option>
+                        <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF">
+                            {{ documento.DESCRIPCION }}
+                        </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
-                    <!-- <mat-label>INE</mat-label> -->
-                    <input matInput placeholder="Placeholder">
+                    <mat-label>Número Documento</mat-label>
+                    <input matInput #numero_documento [(ngModel)]="filtros.numero_documento" placeholder="Número documento">
                 </mat-form-field>
             </div>
         </div>
@@ -131,37 +131,16 @@
             </div>
         </div>
 
-        <!-- Botón de Actualizar -->
-        <div class="row">
-            <div class="col-md-4 offset-md-8">
-                <div class="d-flex flex-row-reverse">
-                    <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" (click)="guardarNotario()">
-                        Guardar <mat-icon style="display: inherit; width: 15px;">save</mat-icon>
-                    </button>
+                <!-- Guardar -->
+                <div class="row">
+                    <div class="col-md-4 offset-md-8">
+                        <div class="d-flex flex-row-reverse">
+                            <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" (click)="guardarNotario()">
+                                Guardar <mat-icon style="display: inherit; width: 15px;">save</mat-icon>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-
-
-
-        <!-- Sección de Datos de Contacto -->
-        <!-- <h3>Datos de contacto:</h3>
-
-        <div class="row" style="margin-bottom: 15px;">
-            <div class="col-md-4">
-                <button mat-stroked-button aria-label="Domicilios" style="background-color: #00A447; color: #FFF!important;" (click)="addDomicilio()">
-                    Domicilios <mat-icon style="display: inherit; width: 15px;">add</mat-icon>
-                </button>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="alert alert-info">
-                    No hay datos que mostrar...
-                </div>
-            </div>
-        </div> -->
 
 
     </div>
