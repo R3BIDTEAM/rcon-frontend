@@ -12,6 +12,9 @@ import * as moment from 'moment';
 export interface DatosNotario {
   no_notario: string;
   estado: string;
+}
+
+export interface DatosGenerales {
   nombre: string;
   apellido_paterno: string;
   apellido_materno: string;
@@ -79,9 +82,11 @@ export class EditarNotarioComponent implements OnInit {
   query;
   idNotario;
   datosNotario: DatosNotario = {} as DatosNotario;
+  datosGenerales: DatosGenerales = {} as DatosGenerales;
   estados: Estados = {} as Estados;
   dataDomicilios: DataDomicilios[] = [];
   loadingEstados = false;
+  loadingDatosNotario = false;
   @ViewChild('paginator') paginator: MatPaginator;
 
   constructor(
@@ -134,7 +139,7 @@ export class EditarNotarioComponent implements OnInit {
                   // this.paginator.pageIndex = 0;
                   console.log("AQUI ENTRO EL RES");
                   console.log(this.dataNotarioResultado);
-                  this.datoDelPerito();
+                  this.datoDelNotario();
               },
               (error) => {
                   this.loading = false;
@@ -147,29 +152,24 @@ export class EditarNotarioComponent implements OnInit {
           );
   }
 
-  datoDelPerito(){
-      this.datosNotario.no_notario = this.dataNotarioResultado[0].IDPERSONA;
+  datoDelNotario(){
+      this.datosNotario.no_notario = this.dataNotarioResultado[0].NUMNOTARIO;
       this.datosNotario.estado = this.dataNotarioResultado[0].CODESTADO;
-      this.datosNotario.nombre  = this.dataNotarioResultado[0].NOMBRE;
-      this.datosNotario.apellido_paterno = this.dataNotarioResultado[0].APELLIDOPATERNO;
-      this.datosNotario.apellido_materno = this.dataNotarioResultado[0].APELLIDOMATERNO;
-      this.datosNotario.rfc = this.dataNotarioResultado[0].RFC;
-      this.datosNotario.curp = this.dataNotarioResultado[0].CURP;
-      this.datosNotario.ine = this.dataNotarioResultado[0].CLAVEIFE;
-      this.datosNotario.otro_documento = this.dataNotarioResultado[0].IDDOCIDENTIF;
-      this.datosNotario.numero_documento = this.dataNotarioResultado[0].VALDOCIDENTIF;
-      this.datosNotario.fecha_nacimiento = new Date(this.dataNotarioResultado.FECHANACIMIENTO);
-      this.datosNotario.fecha_defuncion = new Date(this.dataNotarioResultado.FECHADEFUNCION);
-      this.datosNotario.celular = this.dataNotarioResultado[0].CELULAR;
-      this.datosNotario.email = this.dataNotarioResultado[0].EMAIL;
+      this.datosGenerales.nombre  = this.dataNotarioResultado[0].NOMBRE;
+      this.datosGenerales.apellido_paterno = this.dataNotarioResultado[0].APELLIDOPATERNO;
+      this.datosGenerales.apellido_materno = this.dataNotarioResultado[0].APELLIDOMATERNO;
+      this.datosGenerales.rfc = this.dataNotarioResultado[0].RFC;
+      this.datosGenerales.curp = this.dataNotarioResultado[0].CURP;
+      this.datosGenerales.ine = this.dataNotarioResultado[0].CLAVEIFE;
+      this.datosGenerales.otro_documento = this.dataNotarioResultado[0].IDDOCIDENTIF;
+      this.datosGenerales.numero_documento = this.dataNotarioResultado[0].VALDOCIDENTIF;
+      this.datosGenerales.fecha_nacimiento = new Date(this.dataNotarioResultado[0].FECHANACIMIENTO);
+      this.datosGenerales.fecha_defuncion = new Date(this.dataNotarioResultado[0].FECHADEFUNCION);
+      this.datosGenerales.celular = this.dataNotarioResultado[0].CELULAR;
+      this.datosGenerales.email = this.dataNotarioResultado[0].EMAIL;
 
-      console.log(this.datosNotario.fecha_nacimiento);
+      console.log(this.datosGenerales.fecha_nacimiento);
       
-      // if(this.dataNotarioResultado.INDEPENDIENTE === 'S'){
-      //     this.datosNotario.independiente = true;
-      // }else{
-      //     this.datosNotario.independiente = false;
-      // }
   }
   paginado(evt): void{
       this.pagina = evt.pageIndex + 1;
@@ -178,6 +178,40 @@ export class EditarNotarioComponent implements OnInit {
 
   paginate(array, page_size, page_number) {
       return array.slice((page_number - 1) * page_size, page_number * page_size);
+  }
+
+
+  actualizarDatosNotario(){
+    let query = '';
+
+    query = 'idPersona=' + this.idNotario;
+    query = (this.datosNotario.no_notario) ? query + '&numNotario=' + this.datosNotario.no_notario : query + '&numNotario=';
+    query = (this.datosNotario.estado) ? query + '&codEstado=' + this.datosNotario.estado : query + '&codEstado=';
+
+    this.http.post(this.endpointEstados + 'actualizarNotario?' + query, '', this.httpOptions)
+        .subscribe(
+            (res: any) => {
+                console.log(res);
+                this.loadingDatosNotario = false;
+                this.snackBar.open('Datos de Notario actualizados correctamente', 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+            },
+            (error) => {
+                this.loadingDatosNotario = false;
+                this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+            }
+        );
+  }
+
+  actualizarDatosGenerales(){
+
   }
 
 

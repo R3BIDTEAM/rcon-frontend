@@ -102,7 +102,7 @@ export class VerNotarioComponent implements OnInit {
                   // this.paginator.pageIndex = 0;
                   console.log("AQUI ENTRO EL RES");
                   console.log(this.dataNotarioResultado);
-                  this.datoDelPerito();
+                  this.datoDelNotario();
               },
               (error) => {
                   this.loading = false;
@@ -115,8 +115,8 @@ export class VerNotarioComponent implements OnInit {
           );
   }
 
-  datoDelPerito(){
-      this.datosNotario.no_notario = this.dataNotarioResultado[0].IDPERSONA;
+  datoDelNotario(){
+      this.datosNotario.no_notario = this.dataNotarioResultado[0].NUMNOTARIO;
       this.datosNotario.estado = this.dataNotarioResultado[0].CODESTADO;
       this.datosNotario.nombre  = this.dataNotarioResultado[0].NOMBRE;
       this.datosNotario.apellido_paterno = this.dataNotarioResultado[0].APELLIDOPATERNO;
@@ -126,8 +126,8 @@ export class VerNotarioComponent implements OnInit {
       this.datosNotario.ine = this.dataNotarioResultado[0].CLAVEIFE;
       this.datosNotario.otro_documento = this.dataNotarioResultado[0].IDDOCIDENTIF;
       this.datosNotario.numero_documento = this.dataNotarioResultado[0].VALDOCIDENTIF;
-      this.datosNotario.fecha_nacimiento = new Date(this.dataNotarioResultado.FECHANACIMIENTO);
-      this.datosNotario.fecha_defuncion = new Date(this.dataNotarioResultado.FECHADEFUNCION);
+      this.datosNotario.fecha_nacimiento = new Date(this.dataNotarioResultado[0].FECHANACIMIENTO);
+      this.datosNotario.fecha_defuncion = new Date(this.dataNotarioResultado[0].FECHADEFUNCION);
       this.datosNotario.celular = this.dataNotarioResultado[0].CELULAR;
       this.datosNotario.email = this.dataNotarioResultado[0].EMAIL;
 
