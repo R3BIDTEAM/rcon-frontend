@@ -24,12 +24,12 @@
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="fill" style="width: 100%;">
-                    <mat-label>Estado</mat-label>
-                    <mat-select>
-                      <mat-option>Ninguna</mat-option>
-                      <mat-option value="option1">Ciudad de Méxio</mat-option>
-                      <mat-option value="option2">Estado de México</mat-option>
-                      <mat-option value="option3">Guerrero</mat-option>
+                    <mat-label>Estado:</mat-label>
+                    <mat-select #estado [(ngModel)]="filtros.estado">
+                        <mat-option value="">Seleccione ...</mat-option>
+                        <mat-option *ngFor="let estado of estados" [value]="estado.CODESTADO">
+                            {{ estado.ESTADO }}
+                        </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -101,17 +101,17 @@
             <div class="col-md-4">
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Fecha Nacimiento</mat-label>
-                    <input matInput [matDatepicker]="picknacimiento">
-                    <mat-datepicker-toggle matSuffix [for]="picknacimiento"></mat-datepicker-toggle>
-                    <mat-datepicker #picknacimiento></mat-datepicker>
+                    <input matInput [matDatepicker]="fechaNacimiento" [(ngModel)]="filtros.fecha_nacimiento">
+                    <mat-datepicker-toggle matSuffix [for]="fechaNacimiento"></mat-datepicker-toggle>
+                    <mat-datepicker #fechaNacimiento></mat-datepicker>
                 </mat-form-field>
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Fecha Defunción</mat-label>
-                    <input matInput [matDatepicker]="pickdefuncion">
-                    <mat-datepicker-toggle matSuffix [for]="pickdefuncion"></mat-datepicker-toggle>
-                    <mat-datepicker #pickdefuncion></mat-datepicker>
+                    <input matInput [matDatepicker]="fechaDefuncion" [(ngModel)]="filtros.fecha_defuncion">
+                    <mat-datepicker-toggle matSuffix [for]="fechaDefuncion"></mat-datepicker-toggle>
+                    <mat-datepicker #fechaDefuncion></mat-datepicker>
                 </mat-form-field>
             </div>
         </div>
@@ -135,7 +135,7 @@
         <div class="row">
             <div class="col-md-4 offset-md-8">
                 <div class="d-flex flex-row-reverse">
-                    <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar">
+                    <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" (click)="guardarNotario()">
                         Guardar <mat-icon style="display: inherit; width: 15px;">save</mat-icon>
                     </button>
                 </div>

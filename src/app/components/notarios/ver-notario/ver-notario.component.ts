@@ -121,17 +121,17 @@ export class VerNotarioComponent implements OnInit {
       this.datosNotario.nombre  = this.dataNotarioResultado[0].NOMBRE;
       this.datosNotario.apellido_paterno = this.dataNotarioResultado[0].APELLIDOPATERNO;
       this.datosNotario.apellido_materno = this.dataNotarioResultado[0].APELLIDOMATERNO;
-      this.datosNotario.rfc = this.dataNotarioResultado.RFC;
-      this.datosNotario.curp = this.dataNotarioResultado.CURP;
-      this.datosNotario.ine = this.dataNotarioResultado.CLAVEIFE;
-      this.datosNotario.otro_documento = this.dataNotarioResultado.IDDOCIDENTIF;
-      this.datosNotario.numero_documento = this.dataNotarioResultado.VALDOCIDENTIF;
-      this.datosNotario.fecha_nacimiento = this.dataNotarioResultado.FECHANACIMIENTO;
-      this.datosNotario.fecha_defuncion = this.dataNotarioResultado.FECHADEFUNCION;
-      this.datosNotario.celular = this.dataNotarioResultado.CELULAR;
-      this.datosNotario.email = this.dataNotarioResultado.EMAIL;
+      this.datosNotario.rfc = this.dataNotarioResultado[0].RFC;
+      this.datosNotario.curp = this.dataNotarioResultado[0].CURP;
+      this.datosNotario.ine = this.dataNotarioResultado[0].CLAVEIFE;
+      this.datosNotario.otro_documento = this.dataNotarioResultado[0].IDDOCIDENTIF;
+      this.datosNotario.numero_documento = this.dataNotarioResultado[0].VALDOCIDENTIF;
+      this.datosNotario.fecha_nacimiento = new Date(this.dataNotarioResultado.FECHANACIMIENTO);
+      this.datosNotario.fecha_defuncion = new Date(this.dataNotarioResultado.FECHADEFUNCION);
+      this.datosNotario.celular = this.dataNotarioResultado[0].CELULAR;
+      this.datosNotario.email = this.dataNotarioResultado[0].EMAIL;
 
-      console.log(this.datosNotario.nombre);
+      console.log(this.datosNotario.fecha_nacimiento);
       
       // if(this.dataNotarioResultado.INDEPENDIENTE === 'S'){
       //     this.datosNotario.independiente = true;

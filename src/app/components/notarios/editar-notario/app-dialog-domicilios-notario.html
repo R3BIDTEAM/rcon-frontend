@@ -1,1 +1,206 @@
-<h1>funciona modal</h1>
+<mat-dialog-actions align="end">
+    <button style="border: 0px; background-color: transparent; cursor: pointer;" mat-dialog-close><mat-icon style="color: red;">clear</mat-icon></button>
+</mat-dialog-actions>
+
+<h2 class="verde-cdmx">Domicilio:</h2>
+<div mat-dialog-content>
+
+    <div style="padding: 30px; text-align: center;" *ngIf="loadingEstados">
+        <mat-spinner style="margin:0 auto;"></mat-spinner>
+        <p>Cargando...</p>
+    </div>
+
+    <ng-container *ngIf="!loadingEstados">
+        <form [formGroup]="domicilioFormGroup">
+
+            <!--<div class="row">
+                <mat-form-field class="col-6">
+                    <mat-label>Tipo Dirección:</mat-label>
+                    <mat-select formControlName="idtipodireccion">
+                        <mat-option value="">Seleccione ...</mat-option>
+                        <mat-option value="1">Test</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="domicilioFormGroup.controls.idtipodireccion.errors?.required">Requerido</mat-error>
+                </mat-form-field>
+            </div>-->
+
+            <!-- Estado -->
+            <div class="row">
+                <mat-form-field appearance="outline" class="col-6">
+                    <mat-label>Estado:</mat-label>
+                    <mat-select formControlName="idestado" (selectionChange)="getDataMunicipios($event)">
+                        <mat-option value="">Seleccione ...</mat-option>
+                        <mat-option *ngFor="let estado of estados" [value]="estado.CODESTADO">
+                            {{ estado.ESTADO }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="domicilioFormGroup.controls.idestado.errors?.required">Requerido</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-6" *ngIf="domicilioFormGroup.controls.idestado.value == 9">
+                    <mat-label>Alcaldía:</mat-label>
+                    <mat-select formControlName="idmunicipio" [class.spinner]="loadingMunicipios" [disabled]="loadingMunicipios">
+                        <mat-option value="">Seleccione ...</mat-option>
+                        <mat-option *ngFor="let municipio of municipios" [value]="municipio.CODMUNICIPIO">
+                            {{ municipio.MUNICIPIO }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="domicilioFormGroup.controls.idmunicipio.errors?.required">Requerido</mat-error>
+                </mat-form-field>
+            </div>
+
+            <!-- <div *ngIf="domicilioFormGroup.controls.idestado.value != 9">
+                <div class="row">
+                    <mat-form-field appearance="outline" class="col-3">
+                        <mat-label>Municipio:</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="col-7">
+                        <mat-label></mat-label>
+                        <input matInput formControlName="municipio">
+                        <mat-error *ngIf="domicilioFormGroup.controls.municipio.errors?.required">Requerido</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field appearance="outline" class="col-3">
+                        <mat-label>Ciudad:</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="col-7">
+                        <mat-label></mat-label>
+                        <input matInput formControlName="ciudad">
+                        <mat-error *ngIf="domicilioFormGroup.controls.ciudad.errors?.required">Requerido</mat-error>
+                    </mat-form-field>
+                </div>
+            </div> -->
+
+            <div class="row">
+                <mat-form-field appearance="outline" class="col-3">
+                    <mat-label>Asentamiento:</mat-label>
+                    <input matInput>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-7">
+                    <mat-label></mat-label>
+                    <input matInput formControlName="asentamiento">
+                    <mat-error *ngIf="domicilioFormGroup.controls.asentamiento.errors?.required">Requerido</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <mat-form-field appearance="outline" class="col-6">
+                    <mat-label>Tipo Asent.:</mat-label>
+                    <mat-select formControlName="idtipoasentamiento">
+                        <mat-option value="">Seleccione ...</mat-option>
+                        <mat-option value="1">Test</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="domicilioFormGroup.controls.idtipoasentamiento.errors?.required">Requerido</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-6">
+                    <mat-label>Código Postal:</mat-label>
+                    <input matInput formControlName="cp">
+                </mat-form-field>
+            </div>
+
+
+            <div class="row">
+                <mat-form-field appearance="outline" class="col-6">
+                    <mat-label>Tipo de vía:</mat-label>
+                    <mat-select formControlName="idtipovia">
+                        <mat-option value="">Seleccione ...</mat-option>
+                        <mat-option value="1">Test</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="domicilioFormGroup.controls.idtipovia.errors?.required">Requerido</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <mat-form-field appearance="outline" class="col-3">
+                    <mat-label>Vía:</mat-label>
+                    <input matInput>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-7">
+                    <mat-label></mat-label>
+                    <input matInput formControlName="via">
+                    <mat-error *ngIf="domicilioFormGroup.controls.via.errors?.required">Requerido</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <mat-form-field appearance="outline" class="col-6">
+                    <mat-label>Número Exterior:</mat-label>
+                    <input matInput formControlName="nexterior">
+                    <mat-error *ngIf="domicilioFormGroup.controls.nexterior.errors?.required">Requerido</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-6">
+                    <mat-label>Tipo Localidad:</mat-label>
+                    <mat-select formControlName="idtipolocalidad">
+                        <mat-option value="">Seleccione ...</mat-option>
+                        <mat-option value="1">Test</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="domicilioFormGroup.controls.idtipolocalidad.errors?.required">Requerido</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <mat-form-field appearance="outline" class="col-12">
+                    <mat-label>Entre Calle 1:</mat-label>
+                    <input matInput formControlName="entrecalle1">
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <mat-form-field appearance="outline" class="col-12">
+                    <mat-label>Entre Calle 2:</mat-label>
+                    <input matInput formControlName="entrecalle2">
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <mat-form-field appearance="outline" class="col-6">
+                    <mat-label>Andador:</mat-label>
+                    <input matInput formControlName="andador">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-6">
+                    <mat-label>Edificio:</mat-label>
+                    <input matInput formControlName="edificio">
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <mat-form-field appearance="outline" class="col-6">
+                    <mat-label>Sección:</mat-label>
+                    <input matInput formControlName="seccion">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-6">
+                    <mat-label>Entrada:</mat-label>
+                    <input matInput formControlName="entrada">
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <mat-form-field appearance="outline" class="col-6">
+                    <mat-label>Número Interior:</mat-label>
+                    <input matInput formControlName="ninterior">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-6">
+                    <mat-label>Teléfono:</mat-label>
+                    <input matInput formControlName="telefono">
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <mat-form-field appearance="outline" class="col-12">
+                    <mat-label>Ind. adicionales:</mat-label>
+                    <input matInput formControlName="adicional">
+                </mat-form-field>
+            </div>
+
+        </form>
+    </ng-container>
+
+</div>
+<mat-dialog-actions align="end">
+    <!-- <button mat-flat-button color="primary" [disabled]="domicilioFormGroup.invalid" [mat-dialog-close]="getDataDomicilio()">Aceptar</button> -->
+    <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" [disabled]="true">
+        Guardar <mat-icon style="display: inherit; width: 15px;">save</mat-icon>
+    </button>
+</mat-dialog-actions>

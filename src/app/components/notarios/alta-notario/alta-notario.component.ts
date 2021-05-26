@@ -20,35 +20,17 @@ export interface Filtros {
   ine: string;
   otro_documento: string;
   numero_documento: string;
-  fecha_nacimiento: string;
-  fecha_defuncion: string;
+  fecha_nacimiento: Date;
+  fecha_defuncion: Date;
   celular: string;
   email: string;
 }
 
-// export interface DataDomicilios {
-//   tipoPersona: string;
-//   nombre: string;
-//   apaterno: string;
-//   amaterno: string;
-//   rfc: string;
-//   curp: string;
-//   ine: string;
-//   idDocIdent: number;
-//   docIdent: string;
-//   fechaNacimiento: Date;
-//   fechaDefuncion: Date;
-//   celular: string;
-//   email: string;
-//   actPreponderante: string;
-//   idTipoPersonaMoral: number;
-//   fechaInicioOperacion: Date;
-//   idMotivo: number;
-//   fechaCambio: Date;
-//   texto: string;
-//   fechaCaducidad: Date;
-//   documentoRepresentacion: DataDocumentoRepresentacion;
-// }
+export interface Estados{
+  idestado: number;
+  estado: string;
+}
+
 
 @Component({
   selector: 'app-alta-notario',
@@ -59,7 +41,9 @@ export class AltaNotarioComponent implements OnInit {
   endpoint = environment.endpoint + 'registro/';
   httpOptions;
   filtros: Filtros = {} as Filtros;
-  // dataDomicilios: DataDomicilios[] = [];
+  estados: Estados = {} as Estados;
+  loadingEstados = false;
+  loading = false;
 
   constructor(
     private http: HttpClient,
@@ -76,9 +60,23 @@ export class AltaNotarioComponent implements OnInit {
         Authorization: this.auth.getSession().token
       })  
     };
+    this.getDataEstados();
   }
 
 
+  getDataEstados(): void {
+    this.loadingEstados = true;
+    this.http.post(this.endpoint + 'getEstados', '', this.httpOptions).subscribe(
+      (res: any) => {
+        this.loadingEstados = false;
+        this.estados = res;
+        console.log(this.estados);
+      },
+      (error) => {
+        this.loadingEstados = false;
+      }
+    );
+  }
 
 
   searchNotario(): void {
@@ -101,25 +99,52 @@ export class AltaNotarioComponent implements OnInit {
   }
 
 
-  // addDomicilio(i = -1, dataDomicilio = null): void {
-  //   const dialogRef = this.dialog.open(DialogDomiciliosNotario, {
-  //     width: '700px',
-  //     data: dataDomicilio,
-  //   });
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     if(result){
-  //       if(i != -1){
-  //         this.dataDomicilios[i] = result;
-  //       }else{
-  //         this.dataDomicilios.push(result);
-  //       }
-  //     }
-  //   });
-  // }
+  guardarNotario(){
+    let query = 'idPersona';
+    this.loading = true;
 
-  // removeDomicilio(i){
-	// 	this.dataDomicilios.splice(i, 1);
-	// }
+    //registro/insertarNotario?numNotario=666&codEstado=9&nombre=Omar Donchai&apellidoPaterno=Vidal&apellidoMaterno=Perez&rfc=VIP900629MG5&curp&ife=PLGMJN83062615H500&iddocIdentif=1&valdocIdentif&fechaNacimiento&fechaDefuncion&email=ividal@mail.com&celular&codtiposPersona=F&persona
+
+    query = (this.filtros.no_notario) ? query + '&numNotario=' + this.filtros.no_notario : query + '&numNotario=';
+    query = (this.filtros.estado) ? query + '&codEstado=' + this.filtros.estado : query + '&codEstado=';
+    query = (this.filtros.nombre) ? query + '&nombre=' + this.filtros.nombre : query + '&nombre=';
+    query = (this.filtros.apellido_paterno) ? query + '&apellidoPaterno=' + this.filtros.apellido_paterno : query + '&apellidoPaterno=';
+    query = (this.filtros.apellido_materno) ? query + '&apellidoMaterno=' + this.filtros.apellido_materno : query + '&apellidoMaterno=';
+    query = (this.filtros.rfc) ? query + '&rfc=' + this.filtros.rfc : query + '&rfc=';
+    query = (this.filtros.curp) ? query + '&curp=' + this.filtros.curp : query + '&curp=';
+    query = (this.filtros.ine) ? query + '&ife=' + this.filtros.ine : query + '&ife=';
+    query = (this.filtros.otro_documento) ? query + '&iddocIdentif=' + this.filtros.otro_documento : query + '&iddocIdentif=';
+    query = (this.filtros.numero_documento) ? query + '&valdocIdentif=' + this.filtros.numero_documento : query + '&valdocIdentif=';
+    query = (this.filtros.fecha_nacimiento) ? query + '&fechaNacimiento=' + moment(this.filtros.fecha_nacimiento).format('DD-MM-YYYY') : query + '&fechaNacimiento=';
+    query = (this.filtros.fecha_defuncion) ? query + '&fechaDefuncion=' + moment(this.filtros.fecha_defuncion).format('DD-MM-YYYY') : query + '&fechaDefuncion=';
+    query = (this.filtros.email) ? query + '&email=' + this.filtros.email : query + '&email=';
+    query = (this.filtros.celular) ? query + '&celular=' + this.filtros.celular : query + '&celular=';
+    query = query + '&codtiposPersona=F&persona';
+
+    this.http.post(this.endpoint + 'insertarNotario' + '?' + query, '', this.httpOptions)
+        .subscribe(
+            (res: any) => {
+                this.loading = false;
+                console.log("NOTARIO GUARDADO");
+                console.log(res);
+                this.snackBar.open('guardado correcto', 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+            },
+            (error) => {
+                this.loading = false;
+                this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+            }
+        );
+
+  }
+
 
 }
 
@@ -321,21 +346,3 @@ export class DialogBuscarNotarioAlta {
 
 }
 
-
-/////////////// DOMICILIOS ////////////////
-// @Component({
-//   selector: 'app-dialog-domicilios-notario',
-//   templateUrl: 'app-dialog-domicilios-notario.html',
-//   styleUrls: ['./alta-notario.component.css']
-// })
-// export class DialogDomiciliosNotario {
-//   endpoint = environment.endpoint;
-//   loading = false;
-//   httpOptions;
-//   tipoPersona = 'F';
-//   fisicaFormGroup: FormGroup;
-//   moralFormGroup: FormGroup;
-//   dataRepresentacion: DataRepresentacion = {} as DataRepresentacion;
-
-
-// }
