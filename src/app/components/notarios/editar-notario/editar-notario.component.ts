@@ -87,6 +87,7 @@ export class EditarNotarioComponent implements OnInit {
   dataDomicilios: DataDomicilios[] = [];
   loadingEstados = false;
   loadingDatosNotario = false;
+  loadingDatosGenerales = false;
   @ViewChild('paginator') paginator: MatPaginator;
 
   constructor(
@@ -211,6 +212,44 @@ export class EditarNotarioComponent implements OnInit {
   }
 
   actualizarDatosGenerales(){
+    let query = '';
+
+    query = 'codtipospersona=F';
+    query = (this.datosGenerales.nombre) ? query + '&nombre=' + this.datosGenerales.nombre : query + '&nombre=';
+    query = query + '&activprincip&idtipomoral&idmotivosmoral&fechainicioactiv&fechacambiosituacion&idExpediente';
+    query = (this.datosGenerales.rfc) ? query + '&rfc=' + this.datosGenerales.rfc : query + '&rfc=';
+    query = (this.datosGenerales.apellido_paterno) ? query + '&apellidopaterno=' + this.datosGenerales.apellido_paterno : query + '&apellidopaterno=';
+    query = (this.datosGenerales.apellido_materno) ? query + '&apellidomaterno=' + this.datosGenerales.apellido_materno : query + '&apellidomaterno=';
+    query = (this.datosGenerales.curp) ? query + '&curp=' + this.datosGenerales.curp : query + '&curp=';
+    query = (this.datosGenerales.ine) ? query + '&claveife=' + this.datosGenerales.ine : query + '&claveife=';
+    query = (this.datosGenerales.otro_documento) ? query + '&iddocidentif=' + this.datosGenerales.otro_documento : query + '&iddocidentif=';
+    query = (this.datosGenerales.numero_documento) ? query + '&valdocidentif=' + this.datosGenerales.numero_documento : query + '&valdocidentif=';
+    query = (this.datosGenerales.fecha_nacimiento) ? query + '&fechanacimiento=' + moment(this.datosGenerales.fecha_nacimiento).format('DD-MM-YYYY') : query + '&fechanacimiento=';
+    query = (this.datosGenerales.fecha_defuncion) ? query + '&fechadefuncion=' + moment(this.datosGenerales.fecha_defuncion).format('DD-MM-YYYY') : query + '&fechadefuncion=';
+    query = (this.datosGenerales.celular) ? query + '&celular=' + this.datosGenerales.celular : query + '&celular=';
+    query = (this.datosGenerales.email) ? query + '&email=' + this.datosGenerales.email : query + '&email=';
+    query = query + '&idExpediente&idpersona=' + this.idNotario;
+
+    this.http.post(this.endpointEstados + 'actualizaContribuyente?' + query, '', this.httpOptions)
+        .subscribe(
+            (res: any) => {
+                console.log(res);
+                this.loadingDatosGenerales = false;
+                this.snackBar.open('Datos de Notario actualizados correctamente', 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+            },
+            (error) => {
+                this.loadingDatosNotario = false;
+                this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+            }
+        );  
 
   }
 
