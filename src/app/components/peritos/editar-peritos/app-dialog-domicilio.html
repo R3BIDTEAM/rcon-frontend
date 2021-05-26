@@ -8,16 +8,6 @@
 
     <ng-container *ngIf="!loadingEstados">
         <form [formGroup]="domicilioFormGroup">
-            <!--<div class="row">
-                <mat-form-field class="col-6">
-                    <mat-label>Tipo Dirección:</mat-label>
-                    <mat-select formControlName="idtipodireccion">
-                        <mat-option value="">Seleccione ...</mat-option>
-                        <mat-option value="1">Test</mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="domicilioFormGroup.controls.idtipodireccion.errors?.required">Requerido</mat-error>
-                </mat-form-field>
-            </div>-->
             <div class="row">
                 <mat-form-field class="col-6">
                     <mat-label>Estado:</mat-label>
@@ -33,8 +23,8 @@
                     <mat-label>Alcaldía:</mat-label>
                     <mat-select formControlName="idmunicipio" [class.spinner]="loadingMunicipios" [disabled]="loadingMunicipios">
                         <mat-option value="">Seleccione ...</mat-option>
-                        <mat-option *ngFor="let municipio of municipios" [value]="municipio.CODMUNICIPIO">
-                            {{ municipio.MUNICIPIO }}
+                        <mat-option *ngFor="let municipio of municipios" [value]="(municipio.CODMUNICIPIO) ? municipio.CODMUNICIPIO : municipio.iddelegacion">
+                            {{ (municipio.MUNICIPIO) ? municipio.MUNICIPIO : municipio.nombre }}
                         </mat-option>
                     </mat-select>
                     <mat-error *ngIf="domicilioFormGroup.controls.idmunicipio.errors?.required">Requerido</mat-error>
@@ -44,18 +34,22 @@
                 <div class="row">
                     <mat-form-field class="col-3">
                         <mat-label>Municipio:</mat-label>
-                        <input matInput>
+                        <input matInput formControlName="idmunicipio2">
+                        <mat-error *ngIf="domicilioFormGroup.controls.idmunicipio2.errors?.required">Requerido</mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-7">
                         <mat-label></mat-label>
                         <input matInput formControlName="municipio">
                         <mat-error *ngIf="domicilioFormGroup.controls.municipio.errors?.required">Requerido</mat-error>
                     </mat-form-field>
+                    <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getMunicipios()">
+                        <mat-icon>search</mat-icon>
+                    </button>
                 </div>
                 <div class="row">
                     <mat-form-field class="col-3">
                         <mat-label>Ciudad:</mat-label>
-                        <input matInput>
+                        <input matInput formControlName="idciudad">
                     </mat-form-field>
                     <mat-form-field class="col-7">
                         <mat-label></mat-label>
@@ -83,11 +77,16 @@
             <div class="row">
                 <mat-form-field class="col-6">
                     <mat-label>Tipo Asent.:</mat-label>
-                    <mat-select formControlName="idtipoasentamiento">
+                    <mat-select formControlName="idtipoasentamiento" [class.spinner]="loadingTiposAsentamiento" [disabled]="loadingTiposAsentamiento">
                         <mat-option value="">Seleccione ...</mat-option>
-                        <mat-option value="1">Test</mat-option>
+                        <mat-option *ngFor="let asentamiento of tiposAsentamiento" [value]="asentamiento.codtiposasentamiento">
+                            {{ asentamiento.tipoasentamiento }}
+                        </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="domicilioFormGroup.controls.idtipoasentamiento.errors?.required">Requerido</mat-error>
+                </mat-form-field>
+                <mat-form-field class="col-4">
+                    <mat-label>Código Postal:</mat-label>
+                    <input matInput formControlName="cp">
                 </mat-form-field>
             </div>
             <div class="row">
@@ -97,7 +96,6 @@
                         <mat-option value="">Seleccione ...</mat-option>
                         <mat-option value="1">Test</mat-option>
                     </mat-select>
-                    <mat-error *ngIf="domicilioFormGroup.controls.codtiposvia.errors?.required">Requerido</mat-error>
                 </mat-form-field>
             </div>
             <div class="row">
@@ -119,14 +117,9 @@
                         <mat-option value="">Seleccione ...</mat-option>
                         <mat-option value="1">Test</mat-option>
                     </mat-select>
-                    <mat-error *ngIf="domicilioFormGroup.controls.idtipolocalidad.errors?.required">Requerido</mat-error>
                 </mat-form-field>
             </div>
             <div class="row">
-                <mat-form-field class="col-6">
-                    <mat-label>Código Postal:</mat-label>
-                    <input matInput formControlName="cp">
-                </mat-form-field>
                 <mat-form-field class="col-6">
                     <mat-label>Número Exterior:</mat-label>
                     <input matInput formControlName="nexterior">

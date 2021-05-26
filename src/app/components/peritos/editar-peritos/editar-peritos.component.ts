@@ -29,11 +29,10 @@ export interface DatosPeritos {
 }
 
 export interface DataDomicilio {
-    //idtipodireccion: number;
-    //tipodireccion: string;
     idestado: number;
     estado: string;
     idmunicipio: number;
+    idmunicipio2: number;
     municipio: string;
     idciudad: number;
     ciudad: string;
@@ -642,15 +641,15 @@ export class DialogDomicilioPerito {
                 //idtipodireccion: ['', Validators.required],
                 idestado: ['', Validators.required],
                 municipio: [null, Validators.required],
-                idciudad: [null, Validators.required],
+                idciudad: [null],
                 ciudad: [null, Validators.required],
                 codasentamiento: [null, Validators.required],
-                idtipoasentamiento: ['', Validators.required],
                 asentamiento: [null, Validators.required],
-                codtiposvia: ['', Validators.required],
+                idtipoasentamiento: [null],
+                codtiposvia: [null],
                 idtipovia: ['', Validators.required],
                 via: [null, Validators.required],
-                idtipolocalidad: ['', Validators.required],
+                idtipolocalidad: [null],
                 cp: [null],
                 nexterior: [null, Validators.required],
                 entrecalle1: [null],
@@ -667,12 +666,16 @@ export class DialogDomicilioPerito {
             this.domicilioFormGroup.controls.idestado.valueChanges.subscribe(idestado => {
                 if(idestado == 9) {
                     this.domicilioFormGroup.removeControl('municipio');
+                    this.domicilioFormGroup.removeControl('idciudad');
                     this.domicilioFormGroup.removeControl('ciudad');
                     this.domicilioFormGroup.addControl('idmunicipio', new FormControl('', Validators.required));
+                    this.domicilioFormGroup.removeControl('idmunicipio2');
                 } else {
                     this.domicilioFormGroup.removeControl('idmunicipio');
                     this.domicilioFormGroup.addControl('municipio', new FormControl(null, Validators.required));
+                    this.domicilioFormGroup.addControl('idciudad', new FormControl(null, Validators.required));
                     this.domicilioFormGroup.addControl('ciudad', new FormControl(null, Validators.required));
+                    this.domicilioFormGroup.addControl('idmunicipio2', new FormControl('', Validators.required));
                 }
                 this.domicilioFormGroup.updateValueAndValidity();
             });
@@ -680,6 +683,7 @@ export class DialogDomicilioPerito {
             if(data){
                 this.setDataDomicilio(data);
             }
+            this.getDataTiposAsentamiento();
         }
     
     /*getDataTiposDireccion(): void {
@@ -709,8 +713,12 @@ export class DialogDomicilioPerito {
     }
   
     getDataMunicipios(event): void {
+        console.log(event);
+        let busquedaMunCol = '';
+
+        busquedaMunCol = (event.value == 9) ? 'getDelegaciones' : 'getMunicipiosByEstado?codEstado=' + event.value;
         this.loadingMunicipios = true;
-        this.http.post(this.endpointCatalogos + 'getMunicipiosByEstado?codEstado=' + event.value, '', this.httpOptions).subscribe(
+        this.http.post(this.endpointCatalogos + busquedaMunCol, '', this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingMunicipios = false;
                 this.municipios = res;
@@ -723,10 +731,12 @@ export class DialogDomicilioPerito {
   
     getDataTiposAsentamiento(): void {
         this.loadingTiposAsentamiento = true;
-        this.http.get(this.endpointCatalogos, this.httpOptions).subscribe(
+        this.http.post(this.endpointCatalogos + 'getTiposAsentamiento', '', this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingTiposAsentamiento = false;
                 this.tiposAsentamiento = res;
+                console.log('AQUI EL ASENTAMIENTO SELECT');
+                console.log(this.tiposAsentamiento);
             },
             (error) => {
                 this.loadingTiposAsentamiento = false;
@@ -785,10 +795,13 @@ export class DialogDomicilioPerito {
         if(this.domicilioFormGroup.value.idestado == 9){
             this.dataDomicilio.idmunicipio = this.domicilioFormGroup.value.idmunicipio;
         } else {
+            this.dataDomicilio.idmunicipio2 = this.domicilioFormGroup.value.idmunicipio2;
             this.dataDomicilio.municipio = (this.domicilioFormGroup.value.municipio) ? this.domicilioFormGroup.value.municipio : null;
             this.dataDomicilio.ciudad = (this.domicilioFormGroup.value.ciudad) ? this.domicilioFormGroup.value.ciudad : null;
             this.dataDomicilio.idciudad = (this.domicilioFormGroup.value.idciudad) ? this.domicilioFormGroup.value.idciudad : null;
         }
+        // console.log('AQUEI EL FORM VALID');
+        // console.log(this.domicilioFormGroup);
         //this.guardaDomicilio();
         return this.dataDomicilio;
     }
@@ -876,9 +889,29 @@ export class DialogDomicilioPerito {
         if(dataDomicilio.idestado == 9){
             this.domicilioFormGroup.controls['idmunicipio'].setValue(dataDomicilio.idmunicipio);
         } else {
+            this.domicilioFormGroup.controls['idmunicipio2'].setValue(dataDomicilio.idmunicipio);
             this.domicilioFormGroup.controls['municipio'].setValue(dataDomicilio.municipio);
             this.domicilioFormGroup.controls['ciudad'].setValue(dataDomicilio.ciudad);
         }
+    }
+
+    getMunicipios(){
+        const dialogRef = this.dialog.open(DialogMunicipios, {
+            width: '700px',
+            data: {codEstado : this.dataDomicilio.idestado,
+                    codMunicipio : this.dataDomicilio.idmunicipio,
+                    codCiudad : this.dataDomicilio.idciudad
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+
+                console.log("MUNICIPIOS!!!!!!!");
+                console.log(result);
+                this.domicilioFormGroup.controls['idmunicipio2'].setValue(result.codmunicipio);
+                this.domicilioFormGroup.controls['municipio'].setValue(result.municipio);
+            }
+        });
     }
 
     getAsentamiento(){
@@ -893,12 +926,140 @@ export class DialogDomicilioPerito {
             if(result){
 
                 console.log("ASENTAMIENTO!!!!!!!");
+                console.log(result);
                 this.domicilioFormGroup.controls['codasentamiento'].setValue(result.codasentamiento);
                 this.domicilioFormGroup.controls['asentamiento'].setValue(result.asentamiento);
-                this.domicilioFormGroup.controls['idtipoasentamiento'].setValue(result.idtipoasentamiento);
+                this.domicilioFormGroup.controls['idtipoasentamiento'].setValue(result.codtiposasentamiento);
+                this.domicilioFormGroup.controls['cp'].setValue(result.codigopostal);
             }
         });
-    }    
+    }
+}
+
+///////////////MUNICIPIOS//////////////////
+export interface DataMunicipios{
+    codmunicipio: number;
+    codestado: number;
+    municipio: string;
+}
+@Component({
+    selector: 'app-dialog-municipios',
+    templateUrl: 'app-dialog-municipios.html',
+    styleUrls: ['./editar-peritos.component.css']
+})
+export class DialogMunicipios {
+    endpoint = environment.endpoint + 'registro/';
+    displayedColumns: string[] = ['coloniaAsentamiento', 'select'];
+    pagina = 1;
+    total = 0;
+    pageSize = 15;
+    optionColonia;
+    loadingBuscaMun = false;
+    dataSource = [];
+    dataPaginate;
+    httpOptions;
+    dataMunicipios: DataMunicipios = {} as DataMunicipios;
+    @ViewChild('paginator') paginator: MatPaginator;
+
+    constructor(
+        private auth: AuthService,
+        private http: HttpClient,
+        private _formBuilder: FormBuilder,
+        public dialog: MatDialog,
+        public dialogRef: MatDialogRef<DialogMunicipios>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) {
+        dialogRef.disableClose = true;
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                Authorization: this.auth.getSession().token
+            })
+        };
+        this.obtenerMunicipios();
+        console.log(data);
+    }
+
+    cleanAsentamiento(){
+        this.pagina = 1;
+        this.total = 0;
+        this.dataSource = [];
+        this.loadingBuscaMun = false;
+        this.dataPaginate;
+        this.obtenerMunicipios();
+    }
+
+    obtenerMunicipios(){
+        this.loadingBuscaMun = true;
+        let criterio = '';
+        let query = '';
+
+        if(this.data.codEstado != 9){
+            criterio = criterio + 'getMunicipiosByEstado';
+            query = query + 'codEstado=' + this.data.codEstado;
+        }else{
+            criterio = '';
+            query = '';
+        }
+
+        console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
+        this.loadingBuscaMun = true;
+        this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loadingBuscaMun = false;
+                    this.dataSource = res;
+                    this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                    this.total = this.dataSource.length; 
+                    this.paginator.pageIndex = 0;
+                    console.log(this.dataSource);
+                },
+                (error) => {
+                    this.loadingBuscaMun = false;
+                }
+            );
+    }
+
+    paginado(evt): void{
+        this.pagina = evt.pageIndex + 1;
+        this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+    }
+    
+    paginate(array, page_size, page_number) {
+        return array.slice((page_number - 1) * page_size, page_number * page_size);
+    }
+
+    selectMunicipios(element){
+        console.log(element);
+        this.dataMunicipios.codestado = element.CODESTADO;
+        this.dataMunicipios.codmunicipio = element.CODMUNICIPIO;
+        this.dataMunicipios.municipio = element.MUNICIPIO;
+    }
+
+    obtenerAsentamientoPorNombre(){
+        this.loadingBuscaMun = true;
+        let criterio = 'getAsentamientoByNombre';
+        let query = '';
+        
+        query = (this.data.codEstado) ? query + '&codEstado=' + this.data.codEstado : query + '&codEstado=';
+
+        console.log('MUNICIPIOS!!!'+this.endpoint + '?' + query);
+        this.loadingBuscaMun = true;
+        this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loadingBuscaMun = false;
+                    this.dataSource = res;
+                    this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                    this.total = this.dataSource.length; 
+                    this.paginator.pageIndex = 0;
+                    console.log(this.dataSource);
+                },
+                (error) => {
+                    this.loadingBuscaMun = false;
+                }
+            );
+    }
 }
 
 ///////////////ASENTAMIENTO//////////////////
@@ -915,7 +1076,6 @@ export interface DataAsentamiento{
 })
 export class DialogAsentamiento {
     endpoint = environment.endpoint + 'registro/';
-    criterio;
     displayedColumns: string[] = ['coloniaAsentamiento', 'select'];
     pagina = 1;
     total = 0;
@@ -959,15 +1119,21 @@ export class DialogAsentamiento {
 
     obtenerAsentamiento(){
         this.loading = true;
-        this.criterio = 'getAsentamientoByEstado';
+        let criterio = '';
         let query = '';
-        query = 'codEstado=' + this.data.codEstado + '&codMunicipio=' + this.data.codMunicipio;
 
-        query = (this.data.codCiudad) ? query + '&codCiudad=' + this.data.codCiudad : query + '&codCiudad=';
+        if(this.data.codEstado == 9){
+            criterio = criterio + 'getColAsentByDelegacion';
+            query = query + 'idDelegacion=' + this.data.codMunicipio;
+        }else{
+            criterio = criterio + 'getAsentamientoByEstado';
+            query = 'codEstado=' + this.data.codEstado + '&codMunicipio=' + this.data.codMunicipio;
+            query = (this.data.codCiudad) ? query + '&codCiudad=' + this.data.codCiudad : query + '&codCiudad=';
+        }
 
         console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
         this.loading = true;
-        this.http.post(this.endpoint + this.criterio + '?' + query, '', this.httpOptions)
+        this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
@@ -994,15 +1160,22 @@ export class DialogAsentamiento {
 
     selectAsentamiento(element){
         console.log(element);
-        this.dataAsentamiento.codasentamiento = element.codtiposasentamiento;
-        this.dataAsentamiento.asentamiento = element.asentamiento;
-        this.dataAsentamiento.codigopostal = element.codigopostal;
-        this.dataAsentamiento.codtiposasentamiento = element.codtiposasentamiento;
+        if(element.IDDELEGACION){
+            this.dataAsentamiento.codasentamiento = element.CODIGO;
+            this.dataAsentamiento.asentamiento = element.DESCRIPCION;
+            this.dataAsentamiento.codigopostal = element.CODIGOPOSTAL;
+            this.dataAsentamiento.codtiposasentamiento = element.CODTIPOSASENTAMIENTO;
+        }else{
+            this.dataAsentamiento.codasentamiento = element.codasentamiento;
+            this.dataAsentamiento.asentamiento = element.asentamiento;
+            this.dataAsentamiento.codigopostal = element.codigopostal;
+            this.dataAsentamiento.codtiposasentamiento = element.codtiposasentamiento;
+        }
     }
 
     obtenerAsentamientoPorNombre(){
         this.loading = true;
-        this.criterio = 'getAsentamientoByNombre';
+        let criterio = 'getAsentamientoByNombre';
         let query = '';
         
         query = 'nombre=' + this.buscaAsentamiento + '&codEstado=' + this.data.codEstado + '&codMunicipio=' + this.data.codMunicipio;
@@ -1011,7 +1184,7 @@ export class DialogAsentamiento {
 
         console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
         this.loading = true;
-        this.http.post(this.endpoint + this.criterio + '?' + query, '', this.httpOptions)
+        this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
