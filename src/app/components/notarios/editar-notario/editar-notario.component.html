@@ -86,19 +86,19 @@
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="fill" style="width: 100%;">
-                    <mat-label>Seleccione</mat-label>
-                    <mat-select>
-                      <mat-option>Ninguna</mat-option>
-                      <mat-option value="option1">Cartilla Militar</mat-option>
-                      <mat-option value="option2">Pasaporte</mat-option>
-                      <mat-option value="option3">Cédula Profesional</mat-option>
+                    <mat-label>Otro Documento:</mat-label>
+                    <mat-select #otro_documento [(ngModel)]="datosGenerales.otro_documento">
+                        <mat-option value="">Seleccione...</mat-option>
+                        <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF">
+                            {{ documento.DESCRIPCION }}
+                        </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
-                    <!-- <mat-label>INE</mat-label> -->
-                    <input matInput placeholder="Placeholder" [(ngModel)]="datosGenerales.numero_documento">
+                    <mat-label>Número Documento</mat-label>
+                    <input matInput #numero_documento [(ngModel)]="datosGenerales.numero_documento" placeholder="Número documento">
                 </mat-form-field>
             </div>
         </div>

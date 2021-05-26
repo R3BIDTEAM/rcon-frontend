@@ -26,6 +26,11 @@ export interface Estados{
   estado: string;
 }
 
+export interface DocumentosIdentificativos{
+  id_documento: number;
+  documento: string;
+}
+
 @Component({
   selector: 'app-edicion-notario',
   templateUrl: './edicion-notario.component.html',
@@ -44,6 +49,8 @@ export class EdicionNotarioComponent implements OnInit {
   filtros: Filtros = {} as Filtros;
   estados: Estados = {} as Estados;
   loadingEstados = false;
+  documentos: DocumentosIdentificativos = {} as DocumentosIdentificativos;
+  loadingDocumentosIdentificativos = false;
   isIdentificativo;
   canSearch = false;
   isBusqueda;
@@ -70,6 +77,7 @@ export class EdicionNotarioComponent implements OnInit {
       })
     };
     this.getDataEstados();
+    this.getDataDocumentosIdentificativos();
   }
 
 
@@ -83,6 +91,21 @@ export class EdicionNotarioComponent implements OnInit {
       },
       (error) => {
         this.loadingEstados = false;
+      }
+    );
+  }
+
+  
+  getDataDocumentosIdentificativos(): void{
+    this.loadingDocumentosIdentificativos = true;
+    this.http.post(this.endpoint + 'getCatalogos', '', this.httpOptions).subscribe(
+      (res: any) => {
+        this.loadingDocumentosIdentificativos = false;
+        this.documentos = res.CatDocIdentificativos;
+        console.log(this.documentos);
+      },
+      (error) => {
+        this.loadingDocumentosIdentificativos = false;
       }
     );
   }

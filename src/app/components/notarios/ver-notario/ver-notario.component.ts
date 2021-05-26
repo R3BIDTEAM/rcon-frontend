@@ -28,6 +28,11 @@ export interface Estados{
   estado: string;
 }
 
+export interface DocumentosIdentificativos{
+  id_documento: number;
+  documento: string;
+}
+
 @Component({
   selector: 'app-ver-notario',
   templateUrl: './ver-notario.component.html',
@@ -51,6 +56,8 @@ export class VerNotarioComponent implements OnInit {
   datosNotario: DatosNotario = {} as DatosNotario;
   estados: Estados = {} as Estados;
   loadingEstados = false;
+  documentos: DocumentosIdentificativos = {} as DocumentosIdentificativos;
+  loadingDocumentosIdentificativos = false;
   @ViewChild('paginator') paginator: MatPaginator;
 
   constructor(
@@ -71,6 +78,7 @@ export class VerNotarioComponent implements OnInit {
     console.log(this.idNotario);
     this.getNotarioDatos();
     this.getDataEstados();
+    this.getDataDocumentosIdentificativos();
   }
 
   getDataEstados(): void {
@@ -83,6 +91,20 @@ export class VerNotarioComponent implements OnInit {
       },
       (error) => {
         this.loadingEstados = false;
+      }
+    );
+  }
+
+  getDataDocumentosIdentificativos(): void{
+    this.loadingDocumentosIdentificativos = true;
+    this.http.post(this.endpointEstados + 'getCatalogos', '', this.httpOptions).subscribe(
+      (res: any) => {
+        this.loadingDocumentosIdentificativos = false;
+        this.documentos = res.CatDocIdentificativos;
+        console.log(this.documentos);
+      },
+      (error) => {
+        this.loadingDocumentosIdentificativos = false;
       }
     );
   }

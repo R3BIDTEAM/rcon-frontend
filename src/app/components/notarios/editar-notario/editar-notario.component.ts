@@ -34,9 +34,12 @@ export interface Estados{
   estado: string;
 }
 
+export interface DocumentosIdentificativos{
+    id_documento: number;
+    documento: string;
+}
+
 export interface DataDomicilios {
-  //idtipodireccion: number;
-  //tipodireccion: string;
   idestado: number;
   estado: string;
   idmunicipio: number;
@@ -86,6 +89,8 @@ export class EditarNotarioComponent implements OnInit {
   estados: Estados = {} as Estados;
   dataDomicilios: DataDomicilios[] = [];
   loadingEstados = false;
+  documentos: DocumentosIdentificativos = {} as DocumentosIdentificativos;
+  loadingDocumentosIdentificativos = false;
   loadingDatosNotario = false;
   loadingDatosGenerales = false;
   @ViewChild('paginator') paginator: MatPaginator;
@@ -109,6 +114,7 @@ export class EditarNotarioComponent implements OnInit {
     console.log(this.idNotario);
     this.getNotarioDatos();
     this.getDataEstados();
+    this.getDataDocumentosIdentificativos();
   }
 
   getDataEstados(): void {
@@ -121,6 +127,20 @@ export class EditarNotarioComponent implements OnInit {
       },
       (error) => {
         this.loadingEstados = false;
+      }
+    );
+  }
+
+  getDataDocumentosIdentificativos(): void{
+    this.loadingDocumentosIdentificativos = true;
+    this.http.post(this.endpointEstados + 'getCatalogos', '', this.httpOptions).subscribe(
+      (res: any) => {
+        this.loadingDocumentosIdentificativos = false;
+        this.documentos = res.CatDocIdentificativos;
+        console.log(this.documentos);
+      },
+      (error) => {
+        this.loadingDocumentosIdentificativos = false;
       }
     );
   }

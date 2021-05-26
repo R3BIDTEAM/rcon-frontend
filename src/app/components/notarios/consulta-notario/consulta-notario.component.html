@@ -47,19 +47,19 @@
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="fill" style="width: 100%;">
-                    <mat-label>Seleccione</mat-label>
-                    <mat-select #otro_documento [(ngModel)]="filtros.otro_documento" (keyup)="clearInputsIdentNoIdent(true)">
-                      <mat-option>Ninguna</mat-option>
-                      <mat-option value="option1">Cartilla Militar</mat-option>
-                      <mat-option value="option2">Pasaporte</mat-option>
-                      <mat-option value="option3">Cédula Profesional</mat-option>
+                    <mat-label>Otro Documento:</mat-label>
+                    <mat-select #otro_documento [(ngModel)]="filtros.otro_documento">
+                        <mat-option value="">Seleccione...</mat-option>
+                        <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF">
+                            {{ documento.DESCRIPCION }}
+                        </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
-                    <!-- <mat-label>INE</mat-label> -->
-                    <input matInput #numero_documento [(ngModel)]="filtros.numero_documento" placeholder="Placeholder" (keyup)="clearInputsIdentNoIdent(true)">
+                    <mat-label>Número Documento</mat-label>
+                    <input matInput #numero_documento [(ngModel)]="filtros.numero_documento" placeholder="Número documento">
                 </mat-form-field>
             </div>
         </div> 
@@ -121,7 +121,7 @@
                     <td mat-cell *matCellDef="let element" class="contenido-tabla"> 
                         <b>RFC: </b> {{ (element.rfc) ? element.rfc : element.RFC }}<br>
                         <b>CURP: </b> {{ (element.curp) ? element.curp : element.CURP }} <br>
-                        <b>INE: </b> {{ (element.ife) ? element.ife : element.IFE }}
+                        <b>INE: </b> {{ (element.claveife) ? element.claveife : element.CLAVEIFE }}
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="seleccionar">
