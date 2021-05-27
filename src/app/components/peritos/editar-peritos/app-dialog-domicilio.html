@@ -28,6 +28,7 @@
                         </mat-option>
                     </mat-select>
                     <mat-error *ngIf="domicilioFormGroup.controls.idmunicipio.errors?.required">Requerido</mat-error>
+                    <input matInput formControlName="delegacion">
                 </mat-form-field>
             </div>
             <div *ngIf="domicilioFormGroup.controls.idestado.value != 9">
@@ -56,6 +57,9 @@
                         <input matInput formControlName="ciudad">
                         <mat-error *ngIf="domicilioFormGroup.controls.ciudad.errors?.required">Requerido</mat-error>
                     </mat-form-field>
+                    <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getCiudad()">
+                        <mat-icon>search</mat-icon>
+                    </button>
                 </div>
             </div>
             
@@ -94,7 +98,9 @@
                     <mat-label>Tipo de vía:</mat-label>
                     <mat-select formControlName="codtiposvia">
                         <mat-option value="">Seleccione ...</mat-option>
-                        <mat-option value="1">Test</mat-option>
+                        <mat-option *ngFor="let tipovia of tiposVia" [value]="tipovia.codtiposvia">
+                            {{ tipovia.tipovia }}
+                        </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -109,13 +115,18 @@
                     <input matInput formControlName="via">
                     <mat-error *ngIf="domicilioFormGroup.controls.via.errors?.required">Requerido</mat-error>
                 </mat-form-field>
+                <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getVia()">
+                    <mat-icon>search</mat-icon>
+                </button>
             </div>
             <div class="row">
                 <mat-form-field class="col-6">
                     <mat-label>Tipo Localidad:</mat-label>
                     <mat-select formControlName="idtipolocalidad">
                         <mat-option value="">Seleccione ...</mat-option>
-                        <mat-option value="1">Test</mat-option>
+                        <mat-option *ngFor="let tipolocalidad of tiposLocalidad" [value]="tipolocalidad.codtiposlocalidad">
+                            {{ tipolocalidad.descripcion }}
+                        </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
