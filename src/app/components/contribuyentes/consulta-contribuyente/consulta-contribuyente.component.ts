@@ -21,7 +21,7 @@ export class ConsultaContribuyenteComponent implements OnInit {
   loadingResponse = false;
   dataSource = [];
   data = [];
-  displayedColumns: string[] = ['nombre', 'datos_identificativos'];
+  displayedColumns: string[] = ['nombre', 'datos_identificativos', 'seleccionar'];
   httpOptions;
   cuentaFormGroup: FormGroup;
   contribuyenteFormGroup: FormGroup;
