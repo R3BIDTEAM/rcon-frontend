@@ -23,6 +23,35 @@ export interface DatosNotario {
   email: string;
 }
 
+export interface DireccionesNotario {
+  tipo_via: string;
+  id_via: string;
+  via: string;
+  no_exterior: string;
+  no_interior: string;
+  entre_calle_1: string;
+  entre_calle_2: string;
+  andador: string;
+  edificio: string;
+  seccion: string;
+  entrada: string;
+  tipo_localidad: string;
+  tipo_asentamiento: string;
+  id_colonia: string;
+  asentamiento: string;
+  colonia: string;
+  codigo_postal: string;
+  codigo_ciudad: string;
+  ciudad: string;
+  id_delegacion: string;
+  codigo_municipio: string;
+  delegacion: string;
+  telefono: string;
+  codigo_estado: string;
+  codigo_tipo_direccion: string;
+  indicaciones_adicionales: string;
+}
+
 export interface Estados{
   idestado: number;
   estado: string;
@@ -41,22 +70,24 @@ export interface DocumentosIdentificativos{
 export class VerNotarioComponent implements OnInit {
   endpoint = environment.endpoint + 'registro/getInfoNotario';
   endpointEstados = environment.endpoint + 'registro/';
-  displayedColumns: string[] = ['nombre','registro', 'rfc'];
   pagina = 1;
   total = 0;
-  pageSize = 15;
+  pageSize = 10;
   loading = false;
+  dataSource = [];
+  dataPaginate = [];
+  displayedColumns: string[] = ['direccion','editar'];
   dataNotarioResultado;
-  dataSource;
-  dataPaginate;
+  dataNotarioDireccionesResultado;
   httpOptions;
   search = false;
   query;
   idNotario;
   datosNotario: DatosNotario = {} as DatosNotario;
+  direccionesNotario: DireccionesNotario = {} as DireccionesNotario;
   estados: Estados = {} as Estados;
-  loadingEstados = false;
   documentos: DocumentosIdentificativos = {} as DocumentosIdentificativos;
+  loadingEstados = false;
   loadingDocumentosIdentificativos = false;
   @ViewChild('paginator') paginator: MatPaginator;
 
@@ -77,6 +108,7 @@ export class VerNotarioComponent implements OnInit {
     this.idNotario = this.route.snapshot.paramMap.get('idnotario');
     console.log(this.idNotario);
     this.getNotarioDatos();
+    this.getNotarioDirecciones();
     this.getDataEstados();
     this.getDataDocumentosIdentificativos();
   }
@@ -118,7 +150,7 @@ export class VerNotarioComponent implements OnInit {
               (res: any) => {
                   this.loading = false;
                   this.dataNotarioResultado = res.notario;
-                  this.dataSource = res.direcciones;
+                  // this.dataSource = res.direcciones;
                   // this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                   // this.total = this.dataPaginate.length; 
                   // this.paginator.pageIndex = 0;
@@ -155,15 +187,47 @@ export class VerNotarioComponent implements OnInit {
 
       console.log(this.datosNotario.fecha_nacimiento);
       
-      // if(this.dataNotarioResultado.INDEPENDIENTE === 'S'){
-      //     this.datosNotario.independiente = true;
-      // }else{
-      //     this.datosNotario.independiente = false;
-      // }
   }
+  // paginado(evt): void{
+  //     this.pagina = evt.pageIndex + 1;
+  //     this.dataSource = this.paginate(this.dataSource, this.pageSize, this.pagina);
+  // }
+
+  // paginate(array, page_size, page_number) {
+  //     return array.slice((page_number - 1) * page_size, page_number * page_size);
+  // }
+
+
+  getNotarioDirecciones(){
+      this.query = '&idPersona=' + this.idNotario; 
+      this.loading = true;
+      console.log(this.endpoint);
+      this.http.post(this.endpointEstados + 'getDireccionesContribuyente?' + this.query, '', this.httpOptions)
+          .subscribe(
+              (res: any) => {
+                  this.loading = false;
+                  this.dataNotarioDireccionesResultado = res;
+                  this.dataSource = res;
+                  this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                  this.total = this.dataSource.length; 
+                  this.paginator.pageIndex = 0;
+                  console.log("AQUI ENTRO EL RES");
+                  console.log(this.dataNotarioDireccionesResultado);
+              },
+              (error) => {
+                  this.loading = false;
+                  this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                      duration: 10000,
+                      horizontalPosition: 'end',
+                      verticalPosition: 'top'
+                  });
+              }
+          );
+  }
+
   paginado(evt): void{
       this.pagina = evt.pageIndex + 1;
-      this.dataSource = this.paginate(this.dataSource, this.pageSize, this.pagina);
+      this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
   }
 
   paginate(array, page_size, page_number) {
