@@ -38,6 +38,7 @@ export interface DataDomicilio {
 export interface DataRepresentacion {
   tipoPersona: string;
   nombre: string;
+  nombre_moral: string;
   apaterno: string;
   amaterno: string;
   rfc: string;
@@ -221,10 +222,10 @@ export class AltaContribuyenteComponent implements OnInit {
     query = (this.contribuyente.nombre) ? query + '&nombre=' + this.contribuyente.nombre : query + '&nombre=';
     query = (this.contribuyente.idTipoPersonaMoral) ? query + '&idtipomoral=' + this.contribuyente.idTipoPersonaMoral : query + '&idtipomoral=';
     query = (this.contribuyente.idMotivo) ? query + '&idmotivosmoral=' + this.contribuyente.idMotivo : query + '&idmotivosmoral=';
-    query = (this.contribuyente.fechaInicioOperacion) ? query + '&fechainicioactiv=' + this.contribuyente.fechaInicioOperacion : query + '&fechainicioactiv=';
-    query = (this.contribuyente.fechaCambio) ? query + '&fechacambiosituacion=' + this.contribuyente.fechaCambio : query + '&fechacambiosituacion=';
+    query = (this.contribuyente.fechaInicioOperacion) ? query + '&fechainicioactiv=' + moment(this.contribuyente.fechaInicioOperacion).format('DD-MM-YYYY') : query + '&fechainicioactiv=';
+    query = (this.contribuyente.fechaCambio) ? query + '&fechacambiosituacion=' + moment(this.contribuyente.fechaCambio).format('DD-MM-YYYY') : query + '&fechacambiosituacion=';
     query = (this.contribuyente.rfc) ? query + '&rfc=' + this.contribuyente.rfc : query + '&rfc=';
-    query = (this.contribuyente.apaterno) ? query + '&apellidopaterno=' + this.contribuyente.apaterno : query + '&apellidopaterno=';
+    query = (this.contribuyente.apaterno) ? query + '&apellidopaterno=' + this.contribuyente.apaterno : query + '&apellidopaterno=' + this.contribuyente.nombre_moral;
     query = (this.contribuyente.amaterno) ? query + '&apellidomaterno=' + this.contribuyente.amaterno : query + '&apellidomaterno=';
     query = (this.contribuyente.curp) ? query + '&curp=' + this.contribuyente.curp : query + '&curp=';
     query = (this.contribuyente.ine) ? query + '&claveife=' + this.contribuyente.ine : query + '&claveife=';
@@ -234,7 +235,9 @@ export class AltaContribuyenteComponent implements OnInit {
     query = (this.contribuyente.fechaDefuncion) ? query + '&fechadefuncion=' + moment(this.contribuyente.fechaDefuncion).format('DD-MM-YYYY') : query + '&fechadefuncion=';
     query = (this.contribuyente.celular) ? query + '&celular=' + this.contribuyente.celular : query + '&celular=';
     query = (this.contribuyente.email) ? query + '&email=' + this.contribuyente.email : query + '&email=';
-    query = query + '&activprincip&idExpediente';
+    query = (this.contribuyente.actPreponderante) ? query + '&activprincip=' + this.contribuyente.actPreponderante : query + '&activprincip=';
+    // query = (this.contribuyente.nombre_moral) ? query + '&apellidopaterno=' + this.contribuyente.nombre_moral : query + '&apellidopaterno=';
+    query = query + '&idExpediente';
 
     this.http.post(this.endpoint + 'registro/insertarContribuyente' + '?' + query, '', this.httpOptions)
         .subscribe(

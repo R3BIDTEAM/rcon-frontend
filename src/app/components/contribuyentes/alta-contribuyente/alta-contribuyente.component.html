@@ -107,19 +107,19 @@
                         <div class="row">
                             <mat-form-field class="col-10">
                                 <mat-label>Nombre:</mat-label>
-                                <input matInput formControlName="nombre" >
+                                <input matInput formControlName="nombre" [(ngModel)]="contribuyente.nombre_moral">
                                 <mat-error *ngIf="moralFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
                             <mat-form-field class="col-5">
                                 <mat-label>RFC:</mat-label>
-                                <input matInput formControlName="rfc" >
+                                <input matInput formControlName="rfc" [(ngModel)]="contribuyente.rfc">
                                 <mat-error *ngIf="moralFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                             <mat-form-field class="col-5">
                                 <mat-label>Act. preponderante:</mat-label>
-                                <input matInput formControlName="actPreponderante" >
+                                <input matInput formControlName="actPreponderante" [(ngModel)]="contribuyente.actPreponderante">
                             </mat-form-field>
                         </div>
                         <div class="row">
@@ -131,7 +131,7 @@
                             </mat-form-field>
                             <mat-form-field class="col-5">
                                 <mat-label>Fecha de inicio de operación:</mat-label>
-                                <input matInput readonly formControlName="fechaInicioOperacion" [matDatepicker]="pickfechaInicioOperacion" >
+                                <input matInput readonly formControlName="fechaInicioOperacion" [matDatepicker]="pickfechaInicioOperacion" [(ngModel)]="contribuyente.fechaInicioOperacion">
                                 <mat-datepicker-toggle matSuffix [for]="pickfechaInicioOperacion"></mat-datepicker-toggle>
                                 <mat-datepicker #pickfechaInicioOperacion></mat-datepicker>
                             </mat-form-field>                            
@@ -145,7 +145,7 @@
                             </mat-form-field>
                             <mat-form-field class="col-5">
                                 <mat-label>Fecha de cambio de situación:</mat-label>
-                                <input matInput readonly formControlName="fechaCambio" [matDatepicker]="pickfechaCambio" >
+                                <input matInput readonly formControlName="fechaCambio" [matDatepicker]="pickfechaCambio" [(ngModel)]="contribuyente.fechaCambio">
                                 <mat-datepicker-toggle matSuffix [for]="pickfechaCambio"></mat-datepicker-toggle>
                                 <mat-datepicker #pickfechaCambio></mat-datepicker>
                             </mat-form-field>                            

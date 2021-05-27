@@ -26,12 +26,10 @@ export interface Filtros {
   email: string;
 }
 
-
 export interface Estados{
   idestado: number;
   estado: string;
 }
-
 
 export interface DocumentosIdentificativos{
   id_documento: number;
@@ -44,16 +42,17 @@ export interface DocumentosIdentificativos{
   templateUrl: './alta-notario.component.html',
   styleUrls: ['./alta-notario.component.css']
 })
+
 export class AltaNotarioComponent implements OnInit {
   endpoint = environment.endpoint + 'registro/';
   httpOptions;
   filtros: Filtros = {} as Filtros;
-  estados: Estados = {} as Estados;
-  loadingEstados = false;
-  documentos: DocumentosIdentificativos = {} as DocumentosIdentificativos;
-  loadingDocumentosIdentificativos = false;
+  estados: Estados[] = [];
+  documentos: DocumentosIdentificativos[] = [];
   loading = false;
-
+  loadingEstados = false;
+  loadingDocumentosIdentificativos = false;
+  
   constructor(
     private http: HttpClient,
     private auth: AuthService,
@@ -80,7 +79,7 @@ export class AltaNotarioComponent implements OnInit {
       (res: any) => {
         this.loadingEstados = false;
         this.estados = res;
-        console.log(this.estados);
+        // console.log(this.estados);
       },
       (error) => {
         this.loadingEstados = false;
@@ -95,7 +94,7 @@ export class AltaNotarioComponent implements OnInit {
       (res: any) => {
         this.loadingDocumentosIdentificativos = false;
         this.documentos = res.CatDocIdentificativos;
-        console.log(this.documentos);
+        // console.log(this.documentos);
       },
       (error) => {
         this.loadingDocumentosIdentificativos = false;
@@ -107,7 +106,6 @@ export class AltaNotarioComponent implements OnInit {
   searchNotario(): void {
     const dialogRef = this.dialog.open(DialogBuscarNotarioAlta, {
       width: '700px',
-      // data: dataNotario,
     });
     dialogRef.afterClosed().subscribe(result => {
       this.filtros.no_notario = result.no_notario;
@@ -150,9 +148,9 @@ export class AltaNotarioComponent implements OnInit {
         .subscribe(
             (res: any) => {
                 this.loading = false;
-                console.log("NOTARIO GUARDADO");
-                console.log(res);
-                this.snackBar.open('guardado correcto', 'Cerrar', {
+                // console.log("NOTARIO GUARDADO");
+                // console.log(res);
+                this.snackBar.open('Notario Dado de Alta Correctamente', 'Cerrar', {
                     duration: 10000,
                     horizontalPosition: 'end',
                     verticalPosition: 'top'
@@ -197,6 +195,7 @@ export interface DocumentosIdentificativos{
   documento: string;
 }
 
+
 @Component({
   selector: 'app-dialog-buscar-notario-alta',
   templateUrl: 'app-dialog-buscar-notario-alta.html',
@@ -225,7 +224,8 @@ export class DialogBuscarNotarioAlta {
   isIdentificativo;
   notarioSeleccionado;
   dataNotarioSeleccionado: DataNotarioSeleccionado = {} as DataNotarioSeleccionado;
-  documentos: DocumentosIdentificativos = {} as DocumentosIdentificativos;
+  // documentos: DocumentosIdentificativos = {} as DocumentosIdentificativos;
+  documentos: DocumentosIdentificativos[] = [];
   loadingDocumentosIdentificativos = false;
   @ViewChild('paginator') paginator: MatPaginator;
 
@@ -253,7 +253,7 @@ export class DialogBuscarNotarioAlta {
       (res: any) => {
         this.loadingDocumentosIdentificativos = false;
         this.documentos = res.CatDocIdentificativos;
-        console.log(this.documentos);
+        // console.log(this.documentos);
       },
       (error) => {
         this.loadingDocumentosIdentificativos = false;
@@ -341,7 +341,7 @@ export class DialogBuscarNotarioAlta {
       query = query.substr(1);
 
       this.loading = true;
-        console.log(this.endpoint + busquedaDatos + '?' + query);
+        // console.log(this.endpoint + busquedaDatos + '?' + query);
         this.http.post(this.endpoint + busquedaDatos + '?' + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
@@ -350,7 +350,7 @@ export class DialogBuscarNotarioAlta {
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                     this.total = this.dataSource.length; 
                     this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
+                    // console.log(this.dataSource);
                 },
                 (error) => {
                     this.loading = false;
@@ -365,9 +365,6 @@ export class DialogBuscarNotarioAlta {
   }
 
   
-
-  
-
   paginado(evt): void{
       this.pagina = evt.pageIndex + 1;
       this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
@@ -388,7 +385,7 @@ export class DialogBuscarNotarioAlta {
     this.dataNotarioSeleccionado.ine = element.CLAVEIFE;
     this.dataNotarioSeleccionado.celular = element.CELULAR;
     this.dataNotarioSeleccionado.email = element.EMAIL;
-    console.log(this.dataNotarioSeleccionado.email);
+    // console.log(this.dataNotarioSeleccionado.email);
   }
 
 }
