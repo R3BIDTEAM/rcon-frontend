@@ -1,13 +1,13 @@
-<h1 mat-dialog-title>Búsqueda de municipios</h1>
+<h1 mat-dialog-title>Búsqueda de Ciudades</h1>
 <div mat-dialog-content>
 
     <ng-container>
         <div class="row">
             <mat-form-field class="col-3">
                 <mat-label>Ciudad:</mat-label>
-                <input matInput>
+                <input matInput [(ngModel)]="buscaCiudad">
             </mat-form-field>
-            <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" >
+            <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="obtenerCiudad()">
                 <mat-icon>search</mat-icon>
             </button>
             <button mat-icon-button color="primary" aria-label="Limpiar Filtros" matTooltip="Limpiar Filtros" >

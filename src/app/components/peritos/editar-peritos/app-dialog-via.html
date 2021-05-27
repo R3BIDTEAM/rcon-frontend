@@ -5,9 +5,9 @@
         <div class="row">
             <mat-form-field class="col-3">
                 <mat-label>Vía:</mat-label>
-                <input matInput>
+                <input matInput [(ngModel)]="buscaVia">
             </mat-form-field>
-            <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" >
+            <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="obtenerVia()">
                 <mat-icon>search</mat-icon>
             </button>
             <button mat-icon-button color="primary" aria-label="Limpiar Filtros" matTooltip="Limpiar Filtros" >

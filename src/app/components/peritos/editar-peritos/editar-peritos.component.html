@@ -178,37 +178,40 @@
                     </div>
                     <div class="row">
                         <div class="col-md-9 offset-md-1">
-                            <div *ngIf="dataDomicilios.length == 0; else domicilios">
-                                No hay datos que mostrar ...
-                            </div>
-                            <ng-template #domicilios>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Tipo Dirección</th>
-                                            <th>Dirección</th>
-                                            <th></th>
-                                            <th>Historial</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let domicilio of dataDomicilios; let i = index;">
-                                            <td>{{domicilio.idtipodireccion}}</td>
-                                            <td>{{domicilio.idestado}}</td>
-                                            <td>
-                                                <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar">
-                                                    <mat-icon>edit</mat-icon>
-                                                </button>
-                                            </td>
-                                            <td>
-                                                <button mat-icon-button type="button" color="primary" aria-label="Ver" matTooltip="Ver" (click)="viewHistorial(i, domicilio)">
-                                                    <mat-icon>search</mat-icon>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
+                            <ng-container>
+                                <div style="padding: 30px; text-align: center;" *ngIf="loadingDomicilios">
+                                    <mat-spinner style="margin:0 auto;"></mat-spinner>
+                                    <p>Cargando...</p>
+                                </div>
+                                <div class="alert alert-info" *ngIf="!loadingDomicilios && dataSourceDom.length == 0">
+                                    No hay direcciones asociadas.
+                                </div> 
+                                <table mat-table [dataSource]="dataSourceDom" *ngIf="!loadingDomicilios && dataSourceDom.length > 0" width="100%">
+                                    <ng-container matColumnDef="tipoDir">
+                                        <th mat-header-cell *matHeaderCellDef width="15%" > Tipo Dirección </th>
+                                        <td mat-cell *matCellDef="let element" width="15%" > {{ element.CODTIPOSDIRECCION }}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="direccion">
+                                        <th mat-header-cell *matHeaderCellDef width="75%"> Dirección </th>
+                                        <td mat-cell *matCellDef="let element" width="75%">
+                                            {{ element.ABREVIATURAVIA }}, {{ element.VIA }} {{ element.NUMEROEXTERIOR }}, Col: {{ element.COLONIA}}
+                                            C.P. {{ element.CODIGOPOSTAL}}, {{ element.DELEGACION}} ({{ element.ESTADO }})
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="historial">
+                                        <th mat-header-cell *matHeaderCellDef> Historial </th>
+                                        <td mat-cell *matCellDef="let element">
+                                            <button mat-icon-button type="button" color="primary" aria-label="Historial" matTooltip="Historial">
+                                                <mat-icon>search</mat-icon>
+                                            </button>
+                                        </td>
+                                    </ng-container>
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumnsDom"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsDom;"></tr>
                                 </table>
-                            </ng-template>                    
+                                <mat-paginator #paginator [length]="totalDom" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginadoDom($event)">
+                                </mat-paginator>
+                            </ng-container>
                         </div>
                     </div>
                 </mat-expansion-panel>
@@ -235,7 +238,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-9 offset-md-1">
-                            <div>
+                            <!-- <div>
                                 No hay datos que mostrar ...
                             </div>
                             <ng-template #domicilios>
@@ -265,7 +268,41 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                            </ng-template>                    
+                            </ng-template> -->
+                            <ng-container>
+                                <div style="padding: 30px; text-align: center;" *ngIf="loadingDomicilios">
+                                    <mat-spinner style="margin:0 auto;"></mat-spinner>
+                                    <p>Cargando...</p>
+                                </div>
+                                <div class="alert alert-info" *ngIf="!loadingDomicilios && dataSourceDom.length == 0">
+                                    No hay direcciones asociadas.
+                                </div> 
+                                <table mat-table [dataSource]="dataSourceDom" *ngIf="!loadingDomicilios && dataSourceDom.length > 0" width="100%">
+                                    <ng-container matColumnDef="tipoDir">
+                                        <th mat-header-cell *matHeaderCellDef width="15%" > Tipo Dirección </th>
+                                        <td mat-cell *matCellDef="let element" width="15%"> {{ element.CODTIPOSDIRECCION }}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="direccion">
+                                        <th mat-header-cell *matHeaderCellDef width="75%"> Dirección </th>
+                                        <td mat-cell *matCellDef="let element" width="75%">
+                                            {{ element.ABREVIATURAVIA }}, {{ element.VIA }} {{ element.NUMEROEXTERIOR }}, Col: {{ element.COLONIA}}
+                                            C.P. {{ element.CODIGOPOSTAL}}, {{ element.DELEGACION}} ({{ element.ESTADO }})
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="historial">
+                                        <th mat-header-cell *matHeaderCellDef> Historial </th>
+                                        <td mat-cell *matCellDef="let element">
+                                            <button mat-icon-button type="button" color="primary" aria-label="Historial" matTooltip="Historial">
+                                                <mat-icon>search</mat-icon>
+                                            </button>
+                                        </td>
+                                    </ng-container>
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumnsDom"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsDom;"></tr>
+                                </table>
+                                <mat-paginator #paginator [length]="totalDom" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginadoDom($event)">
+                                </mat-paginator>
+                            </ng-container>                    
                         </div>
                     </div>
                 </mat-expansion-panel>

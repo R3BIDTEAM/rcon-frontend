@@ -106,22 +106,22 @@ export class AltaPeritosComponent implements OnInit {
         
         query = (this.datoPeritos.nombre) ? query + '&nombre=' + this.datoPeritos.nombre : query + '&nombre=';
 
-        query = (this.datoPeritos.apepaterno) ? query + '&apellidopaterno=' + this.datoPeritos.apepaterno : query + '&apellidopaterno=';
+        query = (this.datoPeritos.apepaterno) ? query + '&apellidoPaterno=' + this.datoPeritos.apepaterno : query + '&apellidoPaterno=';
 
-        query = (this.datoPeritos.apematerno) ? query + '&apellidomaterno=' + this.datoPeritos.apematerno : query + '&apellidomaterno=';
+        query = (this.datoPeritos.apematerno) ? query + '&apellidoMaterno=' + this.datoPeritos.apematerno : query + '&apellidoMaterno=';
 
         query = (this.datoPeritos.rfc) ? query + '&rfc=' + this.datoPeritos.rfc : query + '&rfc=';
 
         query = (this.datoPeritos.curp) ? query + '&curp=' + this.datoPeritos.curp : query + '&curp=';
             
-        query = (this.datoPeritos.ine) ? query + '&claveife=' + this.datoPeritos.ine : query + '&claveife=';
+        query = (this.datoPeritos.ine) ? query + '&ife=' + this.datoPeritos.ine : query + '&ife=';
 
-        query = (this.datoPeritos.identificacion && this.datoPeritos.idedato) ? query + '&iddocidentif=' + this.datoPeritos.identificacion 
-        + '&valdocidentif=' + this.datoPeritos.idedato : query + '&iddocidentif=&valdocidentif=';
+        query = (this.datoPeritos.identificacion && this.datoPeritos.idedato) ? query + '&iddocIdentif=' + this.datoPeritos.identificacion 
+        + '&valdocIdentif=' + this.datoPeritos.idedato : query + '&iddocIdentif=&valdocIdentif=';
 
-        query = (this.datoPeritos.fecha_naci) ? query + '&fechanacimiento=' + moment(this.datoPeritos.fecha_naci).format('DD-MM-YYYY') : query + '&fechanacimiento=';
+        query = (this.datoPeritos.fecha_naci) ? query + '&fechaNacimiento=' + moment(this.datoPeritos.fecha_naci).format('DD-MM-YYYY') : query + '&fechaNacimiento=';
 
-        query = (this.datoPeritos.fecha_def) ? query + '&fechadefuncion=' + moment(this.datoPeritos.fecha_def).format('DD-MM-YYYY') : query + '&fechadefuncion=';
+        query = (this.datoPeritos.fecha_def) ? query + '&fechaDefuncion=' + moment(this.datoPeritos.fecha_def).format('DD-MM-YYYY') : query + '&fechaDefuncion=';
 
         query = (this.datoPeritos.email) ? query + '&email=' + this.datoPeritos.email : query + '&email=';
 
