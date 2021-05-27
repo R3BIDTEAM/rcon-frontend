@@ -74,6 +74,11 @@ export interface DataDocumentoRepresentacion {
   archivos: Array<{nombre: string, base64: string}>;
 }
 
+export interface DocumentosIdentificativos{
+  id_documento: number;
+  documento: string;
+}
+
 @Component({
   selector: 'app-alta-contribuyente',
   templateUrl: './alta-contribuyente.component.html',
@@ -82,13 +87,16 @@ export interface DataDocumentoRepresentacion {
 export class AltaContribuyenteComponent implements OnInit {
   endpoint = environment.endpoint;
   loading = false;
+  loadingDocumentos = false;
   httpOptions;
-  tipoPersona = 'F';
+  // tipoPersona = 'F';
   fisicaFormGroup: FormGroup;
   moralFormGroup: FormGroup;
   dataDomicilios: DataDomicilio[] = [];
   dataRepresentantes: DataRepresentacion[] = [];
   dataRepresentados: DataRepresentacion[] = [];
+  contribuyente: DataRepresentacion = {} as DataRepresentacion;
+  dataDocumentos: DocumentosIdentificativos[] = [];
   
   constructor(
     private http: HttpClient,
@@ -96,7 +104,9 @@ export class AltaContribuyenteComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
     public dialog: MatDialog,
-  ) { }
+  ) { 
+    this.contribuyente.tipoPersona = 'F';
+  }
 
   ngOnInit(): void {
     this.httpOptions = {
@@ -130,6 +140,8 @@ export class AltaContribuyenteComponent implements OnInit {
       idMotivo: ['', []],
       fechaCambio: [null, []],
     });
+
+    this.getDataDocumentos();
   }
 
   changeRequired(remove, add): void {
@@ -142,6 +154,20 @@ export class AltaContribuyenteComponent implements OnInit {
 
   getHistorialDatosGenerales(): void {
     console.log("hola");
+  }
+
+  getDataDocumentos(): void{
+    this.loadingDocumentos = true;
+    this.http.post(this.endpoint + 'registro/getCatalogos', '', this.httpOptions).subscribe(
+      (res: any) => {
+        this.loadingDocumentos = false;
+        this.dataDocumentos = res.CatDocIdentificativos;
+        console.log(this.dataDocumentos);
+      },
+      (error) => {
+        this.loadingDocumentos = false;
+      }
+    );
   }
 
   addDomicilio(i = -1, dataDomicilio = null): void {
@@ -183,6 +209,56 @@ export class AltaContribuyenteComponent implements OnInit {
   removeRepresentante(i){
 		this.dataRepresentantes.splice(i, 1);
 	}
+
+  guardarContribuyente(){
+    console.log("Sirve");
+    // registro/insertarContribuyente?codtipospersona=F&nombre=JONATHAN GIOVANNI&activprincip&idtipomoral&idmotivosmoral&fechainicioactiv&fechacambiosituacion=&rfc=PAGJ830626&apellidopaterno=PALACIOS&apellidomaterno=GOMEZ&curp=PAGJ830626HMCLMN06&claveife=PLGMJN83062615H500&iddocidentif=1&valdocidentif&fechanacimiento=&fechadefuncion&celular=&email=jpalacios@mail.com&idExpediente=36
+
+    let query = '';
+    this.loading = true;
+
+    query = (this.contribuyente.tipoPersona) ? query + '&codtipospersona=' + this.contribuyente.tipoPersona : query + '&codtipospersona=';
+    query = (this.contribuyente.nombre) ? query + '&nombre=' + this.contribuyente.nombre : query + '&nombre=';
+    query = (this.contribuyente.idTipoPersonaMoral) ? query + '&idtipomoral=' + this.contribuyente.idTipoPersonaMoral : query + '&idtipomoral=';
+    query = (this.contribuyente.idMotivo) ? query + '&idmotivosmoral=' + this.contribuyente.idMotivo : query + '&idmotivosmoral=';
+    query = (this.contribuyente.fechaInicioOperacion) ? query + '&fechainicioactiv=' + this.contribuyente.fechaInicioOperacion : query + '&fechainicioactiv=';
+    query = (this.contribuyente.fechaCambio) ? query + '&fechacambiosituacion=' + this.contribuyente.fechaCambio : query + '&fechacambiosituacion=';
+    query = (this.contribuyente.rfc) ? query + '&rfc=' + this.contribuyente.rfc : query + '&rfc=';
+    query = (this.contribuyente.apaterno) ? query + '&apellidopaterno=' + this.contribuyente.apaterno : query + '&apellidopaterno=';
+    query = (this.contribuyente.amaterno) ? query + '&apellidomaterno=' + this.contribuyente.amaterno : query + '&apellidomaterno=';
+    query = (this.contribuyente.curp) ? query + '&curp=' + this.contribuyente.curp : query + '&curp=';
+    query = (this.contribuyente.ine) ? query + '&claveife=' + this.contribuyente.ine : query + '&claveife=';
+    query = (this.contribuyente.idDocIdent) ? query + '&iddocidentif=' + this.contribuyente.idDocIdent : query + '&iddocidentif=';
+    query = (this.contribuyente.docIdent) ? query + '&valdocidentif=' + this.contribuyente.docIdent : query + '&valdocidentif=';
+    query = (this.contribuyente.fechaNacimiento) ? query + '&fechanacimiento=' + moment(this.contribuyente.fechaNacimiento).format('DD-MM-YYYY') : query + '&fechanacimiento=';
+    query = (this.contribuyente.fechaDefuncion) ? query + '&fechadefuncion=' + moment(this.contribuyente.fechaDefuncion).format('DD-MM-YYYY') : query + '&fechadefuncion=';
+    query = (this.contribuyente.celular) ? query + '&celular=' + this.contribuyente.celular : query + '&celular=';
+    query = (this.contribuyente.email) ? query + '&email=' + this.contribuyente.email : query + '&email=';
+    query = query + '&activprincip&idExpediente';
+
+    this.http.post(this.endpoint + 'registro/insertarContribuyente' + '?' + query, '', this.httpOptions)
+        .subscribe(
+            (res: any) => {
+                this.loading = false;
+                console.log("CONTRIBUYENTE GUARDADO");
+                console.log(res);
+                this.snackBar.open('guardado correcto', 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+            },
+            (error) => {
+                this.loading = false;
+                this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+            }
+        );
+    
+  }
 
 }
 
