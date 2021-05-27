@@ -42,6 +42,8 @@ import { EditarPeritosComponent, DialogDomicilioPerito, DialogDocumentoPerito,
 import { EditarSociedadComponent } from './components/sociedad/editar-sociedad/editar-sociedad.component';
 import { VerNotarioComponent } from './components/notarios/ver-notario/ver-notario.component';
 import { EditarNotarioComponent, DialogDomiciliosNotario } from './components/notarios/editar-notario/editar-notario.component';
+import { VerContribuyenteComponent } from './components/contribuyentes/ver-contribuyente/ver-contribuyente.component';
+import { EditarContribuyenteComponent } from './components/contribuyentes/editar-contribuyente/editar-contribuyente.component';
 
 @NgModule({
   declarations: [
@@ -91,7 +93,9 @@ import { EditarNotarioComponent, DialogDomiciliosNotario } from './components/no
     DialogAsentamiento,
     DialogMunicipios,
     DialogCiudad,
-    DialogVia
+    DialogVia,
+    VerContribuyenteComponent,
+    EditarContribuyenteComponent
   ],
   imports: [
     BrowserModule,

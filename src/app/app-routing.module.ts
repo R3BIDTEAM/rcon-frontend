@@ -19,9 +19,11 @@ import { EdicionSociedadComponent } from '@comp/sociedad/edicion-sociedad/edicio
 import { VerPeritosComponent } from '@comp/peritos/ver-peritos/ver-peritos.component';
 import { VerSociedadComponent } from '@comp/sociedad/ver-sociedad/ver-sociedad.component';
 import { VerNotarioComponent } from '@comp/notarios/ver-notario/ver-notario.component';
+import { VerContribuyenteComponent } from '@comp/contribuyentes/ver-contribuyente/ver-contribuyente.component';
 import { EditarPeritosComponent } from '@comp/peritos/editar-peritos/editar-peritos.component';
 import { EditarSociedadComponent } from '@comp/sociedad/editar-sociedad/editar-sociedad.component';
 import { EditarNotarioComponent } from '@comp/notarios/editar-notario/editar-notario.component';
+import { EditarContribuyenteComponent } from '@comp/contribuyentes/editar-contribuyente/editar-contribuyente.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -45,7 +47,9 @@ const routes: Routes = [
       { path: 'ver-sociedad/:idsociedad', component: VerSociedadComponent, canActivate: [GuardService] },
       { path: 'editar-sociedad/:idsociedad', component: EditarSociedadComponent, canActivate: [GuardService] },
       { path: 'ver-notario/:idnotario', component: VerNotarioComponent, canActivate: [GuardService] },
-      { path: 'editar-notario/:idnotario', component: EditarNotarioComponent, canActivate: [GuardService] }
+      { path: 'editar-notario/:idnotario', component: EditarNotarioComponent, canActivate: [GuardService] },
+      { path: 'ver-contribuyente/:idcontribuyente', component: VerContribuyenteComponent, canActivate: [GuardService] },
+      { path: 'editar-contribuyente/:idcontribuyente', component: EditarContribuyenteComponent, canActivate: [GuardService] }
     ]
   },
   { path: '**', redirectTo: '', pathMatch: 'full' },
