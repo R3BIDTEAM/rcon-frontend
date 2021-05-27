@@ -150,6 +150,18 @@ export class EditarPeritosComponent implements OnInit {
     dataPaginateDom;
     endpointActualiza = environment.endpoint + 'registro/';
     isIdentificativo;
+
+    /*PAGINADOS*/
+    dataSource1 = [];
+    total1 = 0;
+    pagina1= 1;
+    dataPaginate1;
+    dataSource2 = [];
+    total2 = 0;
+    pagina2= 1;
+    dataPaginate2;
+    /*PAGINADOS*/
+
     @ViewChild('paginator') paginator: MatPaginator;
 
     constructor(
@@ -262,7 +274,46 @@ export class EditarPeritosComponent implements OnInit {
         this.dataSource = this.paginate(this.dataSource, this.pageSize, this.pagina);
     }
 
+
+    /*PAGINADOS*/
     getDomicilioPerito(){
+        let metodo = 'getDireccionesContribuyente';
+        this.http.post(this.endpointActualiza + metodo + '?idPersona='+ this.idPerito, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loadingDomicilios = false;
+
+                    this.dataSource1 = res.filter(element => element.CODTIPOSDIRECCION === "N");
+                    this.dataSource2 = res.filter(element => element.CODTIPOSDIRECCION !== "N");
+                    this.total1 = this.dataSource1.length;
+                    this.total2 = this.dataSource2.length;
+                    this.dataPaginate1 = this.paginate(this.dataSource1, 15, this.pagina1);
+                    this.dataPaginate2 = this.paginate(this.dataSource2, 15, this.pagina2);
+                    this.datoDelPerito();
+                },
+                (error) => {
+                    this.loadingDomicilios = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
+
+    paginado1(evt): void{
+        this.pagina1 = evt.pageIndex + 1;
+        this.dataSource1 = this.paginate(this.dataSource1, 15, this.pagina1);
+    }
+
+    paginado2(evt): void{
+        this.pagina2 = evt.pageIndex + 1;
+        this.dataSource2 = this.paginate(this.dataSource2, 15, this.pagina2);
+    }
+    /*PAGINADOS*/
+
+    /*getDomicilioPerito(){
         let metodo = 'getDireccionesContribuyente';
         this.http.post(this.endpointActualiza + metodo + '?idPersona='+ this.idPerito, '', this.httpOptions)
             .subscribe(
@@ -290,7 +341,7 @@ export class EditarPeritosComponent implements OnInit {
                     });
                 }
             );
-    }
+    }*/
 
     paginadoDom(evt): void{
         this.paginaDom = evt.pageIndex + 1;
