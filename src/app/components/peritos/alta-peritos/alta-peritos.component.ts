@@ -83,7 +83,7 @@ export class AltaPeritosComponent implements OnInit {
 
     isIndependiente(dato){
         if(dato.checked){
-            this.datoPeritos.independiente = 'S'
+            this.datoPeritos.independiente = 'S';
         }else{
             this.datoPeritos.independiente = 'N';
         }
