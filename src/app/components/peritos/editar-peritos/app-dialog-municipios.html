@@ -5,7 +5,7 @@
         <div class="row">
             <mat-form-field class="col-3">
                 <mat-label>Municipios:</mat-label>
-                <input matInput ([NgModel])="buscaMunicipios">
+                <input matInput [(ngModel)]="buscaMunicipios">
             </mat-form-field>
             <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="obtenerMunicipiosPorNombre()">
                 <mat-icon>search</mat-icon>

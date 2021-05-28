@@ -111,7 +111,8 @@ import { EditarContribuyenteComponent } from './components/contribuyentes/editar
   ],
   entryComponents: [
     DialogAltaBusca,
-    DialogSociedad
+    DialogSociedad,
+    DialogDomicilio
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'es-Mx' },

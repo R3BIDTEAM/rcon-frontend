@@ -111,7 +111,7 @@ export interface DataSociedadAsociada{
     selector: 'app-editar-peritos',
     templateUrl: './editar-peritos.component.html',
     styleUrls: ['./editar-peritos.component.css'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    //changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditarPeritosComponent implements OnInit {
     endpoint = environment.endpoint + 'registro/getPerito';
@@ -288,6 +288,7 @@ export class EditarPeritosComponent implements OnInit {
 
     /*PAGINADOS*/
     getDomicilioPerito(){
+        this.loadingDomicilios = true;
         let metodo = 'getDireccionesContribuyente';
         this.http.post(this.endpointActualiza + metodo + '?idPersona='+ this.idPerito, '', this.httpOptions)
             .subscribe(
@@ -300,7 +301,6 @@ export class EditarPeritosComponent implements OnInit {
                     this.total2 = this.dataSource2.length;
                     this.dataPaginate1 = this.paginate(this.dataSource1, 15, this.pagina1);
                     this.dataPaginate2 = this.paginate(this.dataSource2, 15, this.pagina2);
-                    this.datoDelPerito();
                 },
                 (error) => {
                     this.loadingDomicilios = false;
@@ -322,6 +322,15 @@ export class EditarPeritosComponent implements OnInit {
         this.pagina2 = evt.pageIndex + 1;
         this.dataSource2 = this.paginate(this.dataSource2, 15, this.pagina2);
     }
+
+    paginado3(evt): void{
+        this.pagina3 = evt.pageIndex + 1;
+        this.dataSource3 = this.paginate(this.dataSource3, 15, this.pagina3);
+    }
+    
+    paginate(array, page_size, page_number) {
+        return array.slice((page_number - 1) * page_size, page_number * page_size);
+    }
     /*PAGINADOS*/
 
     getidInmuebles(){
@@ -329,7 +338,7 @@ export class EditarPeritosComponent implements OnInit {
         this.http.post(this.endpointActualiza + 'getIdInmuebleByIdPersona' + '?idPersona='+ this.idPerito, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
-                    this.loadingDomicilios = false;
+                    this.loadingInmuebles = false;
                     console.log("AQUI ENTRO IDINMUEBLE!!!");
                     console.log(res);
                     //console.log(res[0].idinmueble);
@@ -341,7 +350,7 @@ export class EditarPeritosComponent implements OnInit {
                     this.getInmuebles();
                 },
                 (error) => {
-                    this.loadingDomicilios = false;
+                    this.loadingInmuebles = false;
                     this.snackBar.open(error.error.mensaje, 'Cerrar', {
                         duration: 10000,
                         horizontalPosition: 'end',
@@ -367,7 +376,6 @@ export class EditarPeritosComponent implements OnInit {
                     this.paginator.pageIndex = 0;
                     console.log("AQUI ENTRO EL RES WEE");
                     console.log(this.dataPeritoResultado);
-                    this.datoDelPerito();
                 },
                 (error) => {
                     this.loadingDomicilios = false;
@@ -378,20 +386,6 @@ export class EditarPeritosComponent implements OnInit {
                     });
                 }
             );
-    }
-
-    paginado3(evt): void{
-        this.pagina3 = evt.pageIndex + 1;
-        this.dataSource3 = this.paginate(this.dataSource3, 15, this.pagina3);
-    }
-
-    paginadoDom(evt): void{
-        this.paginaDom = evt.pageIndex + 1;
-        this.dataSourceDom = this.paginate(this.dataSourceDom, this.pageSizeDom, this.paginaDom);
-    }
-    
-    paginate(array, page_size, page_number) {
-        return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
 
     actualizarPerito(){
@@ -431,14 +425,14 @@ export class EditarPeritosComponent implements OnInit {
         //http://localhost:8000/api/v1/registro/actualizaContribuyente?codtipospersona=F&nombre=ARMA&activprincip&idtipomoral&idmotivosmoral&fechainicioactiv&fechacambiosituacion&rfc=PARA741106NR3&apellidopaterno=PAZ1454&apellidomaterno=ROCHAS&curp=PARA741106HDRZCR08&claveife=&iddocidentif=&valdocidentif=&fechanacimiento=&fechadefuncion=&celular=&email=armandopaz@gmail.com&idExpediente&idpersona=4315306
         this.query = 'codtipospersona=F&' + this.idPerito; 
         // this.loadingDatosPerito2 = true;
-        // this.loadingDatosPerito = true;
+        this.loadingDatosPerito = true;
         console.log(this.endpointActualiza);
         this.http.post(this.endpointActualiza + 'actualizaContribuyente?' + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
-                    this.loadingDatosPerito2 = false;
+                    this.loadingDatosPerito = false;
                     console.log('ACTUALIZOOOOO!')
-                    console.log(this.loadingDatosPerito2);
+                    console.log(this.loadingDatosPerito);
                     this.loadingDatosPerito = false;
                     console.log(this.loadingDatosPerito);
                     
@@ -512,13 +506,7 @@ export class EditarPeritosComponent implements OnInit {
             },
         });
         dialogRef.afterClosed().subscribe(result => {
-            if(result){
-                if(i != -1){
-                    this.dataDomicilios[i] = result;
-                }else{
-                    this.dataDomicilios.push(result);
-                }
-            }
+                this.getDomicilioPerito();
         });
     }
 
@@ -531,13 +519,7 @@ export class EditarPeritosComponent implements OnInit {
             },
         });
         dialogRef.afterClosed().subscribe(result => {
-            if(result){
-                if(i != -1){
-                    this.dataDomicilios[i] = result;
-                }else{
-                    this.dataDomicilios.push(result);
-                }
-            }
+            this.getDomicilioPerito();
         });
     }
 
@@ -902,10 +884,16 @@ export class DialogDomicilioPerito {
     ninteriorNg
     telefonoNg
     adicionalNg
+    botonAsentamiento = true;
+    botonCiudad = true;
+    botonMunicipio = true;
+    botonVia = true;
+    buscaMunicipios;
     domicilioFormGroup: FormGroup;
     dataDomicilio: DataDomicilio = {} as DataDomicilio;
     constructor(
         private auth: AuthService,
+        private snackBar: MatSnackBar,
         private http: HttpClient,
         private _formBuilder: FormBuilder,
         public dialogRef: MatDialogRef<DialogDomicilioPerito>,
@@ -991,6 +979,7 @@ export class DialogDomicilioPerito {
 
     getNombreDel(event): void {
         this.dataDomicilio.delegacion = event.source.triggerValue;
+        this.botonAsentamiento = false;
     }
 
     getDataEstados(): void {
@@ -1007,6 +996,7 @@ export class DialogDomicilioPerito {
     }
   
     getDataMunicipios(event): void {
+        this.botonMunicipio = false;
         let busquedaMunCol = '';
         busquedaMunCol = (event.value == 9) ? 'getDelegaciones' : 'getMunicipiosByEstado?codEstado=' + event.value;
         this.loadingMunicipios = true;
@@ -1151,7 +1141,20 @@ export class DialogDomicilioPerito {
             .subscribe(
                 (res: any) => {
                     console.log(res);
-                    this.dialogRef.close();
+                    if(res.original.mensaje){
+                        this.snackBar.open('Ocurrio un error al Insertar la dirección, intente nuevemente', 'Cerrar', {
+                            duration: 10000,
+                            horizontalPosition: 'end',
+                            verticalPosition: 'top'
+                        });
+                    }else{
+                        this.snackBar.open('Registro exitoso', 'Cerrar', {
+                            duration: 10000,
+                            horizontalPosition: 'end',
+                            verticalPosition: 'top'
+                        });
+                    }
+                    //this.dialogRef.close();
                 },
                 (error) => {
                 }
@@ -1203,6 +1206,7 @@ export class DialogDomicilioPerito {
                 console.log(result);
                 this.domicilioFormGroup.controls['idmunicipio2'].setValue(result.codmunicipio);
                 this.domicilioFormGroup.controls['municipio'].setValue(result.municipio);
+                this.botonCiudad = false;
             }
         });
     }
@@ -1217,7 +1221,7 @@ export class DialogDomicilioPerito {
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
-
+                this.botonAsentamiento = false;
                 console.log("CIUDAD!!!!!!!");
                 console.log(result);
                 this.domicilioFormGroup.controls['idciudad'].setValue(result.codciudad);
@@ -1241,7 +1245,7 @@ export class DialogDomicilioPerito {
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
-
+                this.botonVia = false;
                 console.log("ASENTAMIENTO!!!!!!!");
                 console.log(result);
                 this.domicilioFormGroup.controls['codasentamiento'].setValue(result.codasentamiento);
@@ -1262,7 +1266,6 @@ export class DialogDomicilioPerito {
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
-
                 console.log("VIA!!!!!!!");
                 console.log(result);
                 this.domicilioFormGroup.controls['codtiposvia'].setValue(result.codtiposvia);
@@ -1378,7 +1381,7 @@ export class DialogMunicipios {
         this.loadingBuscaMun = true;
         let criterio = '';
         let query = '';
-
+        console.log(this.buscaMunicipios);
         if(this.data.codEstado != 9){
             criterio = criterio + 'getMunicipiosByNombre';
             query = query + 'codEstado=' + this.data.codEstado + '&municipio=' + this.buscaMunicipios;
@@ -1746,7 +1749,7 @@ export class DialogVia {
         let query = '';
 
         if(this.buscaVia){
-            query = query + 'nombre' + this.buscaVia;
+            query = query + 'nombre=' + this.buscaVia;
         }else{
             query = query + 'nombre';
         }
@@ -1958,7 +1961,56 @@ export class DialogRepresentacionPeritos {
             this.dataRepresentacion.texto = (this.moralFormGroup.value.texto) ? this.moralFormGroup.value.texto : null;
             this.dataRepresentacion.fechaCaducidad = (this.moralFormGroup.value.fechaCaducidad) ? this.moralFormGroup.value.fechaCaducidad : null;
         }
-  
+        console.log('AQUIII');
+
+        /*const payload = {
+            "participantes": [
+                {
+                    rol: "representante",
+                    codtiposPersona: this.dataRepresentacion.tipoPersona,
+                    idpersona: this.dataRepresentacion.idPersonaRepresentado,
+                    nombre: this.dataRepresentacion.nombre,
+                    rfc: this.dataRepresentacion.rfc,
+                    apellidoPaterno: this.dataRepresentacion.apaterno,
+                    apellidoMaterno: this.dataRepresentacion.amaterno,
+                    curp: this.dataRepresentacion.curp,
+                    ife: this.dataRepresentacion.ine,
+                    iddocIdentif: this.dataRepresentacion.idDocIdent,
+                    valdocIdentif: this.dataRepresentacion.docIdent,
+                    fechaNacimiento: this.dataRepresentacion.fechaNacimiento,
+                    fechaDefuncion: this.dataRepresentacion.fechaDefuncion,
+                    celular: this.dataRepresentacion.celular,
+                    email: this.dataRepresentacion.email,
+                    activprincip: this.dataRepresentacion.actPreponderante,
+                    idtipomoral: this.dataRepresentacion.idTipoPersonaMoral,
+                    idmotivosmoral: this.dataRepresentacion.idMotivo,
+                    fechainicioactiv: this.dataRepresentacion.fechaInicioOperacion,
+                    fechacambiosituacion: this.dataRepresentacion.fechaCambio
+                },
+                {
+                    rol:"representado",
+                    codtiposPersona: "F",
+                    idpersona: this.data.idPerito,
+                    nombre: this.data.dataRepresentado.nombre,
+                    rfc: this.data.dataRepresentado.rfc,
+                    apellidoPaterno: this.data.dataRepresentado.apepaterno,
+                    apellidoMaterno: this.data.dataRepresentado.apematerno,
+                    curp: this.data.dataRepresentado.curp,
+                    ife: this.data.dataRepresentado.ine,
+                    iddocIdentif: this.data.dataRepresentado.identificacion,
+                    valdocIdentif: this.data.dataRepresentado.idedato,
+                    fechaNacimiento: this.data.dataRepresentado.fecha_naci,
+                    fechaDefuncion: this.data.dataRepresentado.fecha_def,
+                    celular: this.data.dataRepresentado.celular,
+                    email: this.data.dataRepresentado.email,
+                    activprincip: null,
+                    idtipomoral: null,
+                    idmotivosmoral: null,
+                    fechainicioactiv: null,
+                    fechacambiosituacion: null
+                }
+            ]
+        };*/
         return this.dataRepresentacion;
     }
   

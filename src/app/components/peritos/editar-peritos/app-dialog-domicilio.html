@@ -44,7 +44,7 @@
                         <input matInput formControlName="municipio" [(ngModel)]="municipioNg">
                         <mat-error *ngIf="domicilioFormGroup.controls.municipio.errors?.required">Requerido</mat-error>
                     </mat-form-field>
-                    <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getMunicipios()">
+                    <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getMunicipios()" [disabled]="botonMunicipio">
                         <mat-icon>search</mat-icon>
                     </button>
                 </div>
@@ -58,7 +58,7 @@
                         <input matInput formControlName="ciudad" [(ngModel)]="ciudadNg">
                         <mat-error *ngIf="domicilioFormGroup.controls.ciudad.errors?.required">Requerido</mat-error>
                     </mat-form-field>
-                    <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getCiudad()">
+                    <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getCiudad()" [disabled]="botonCiudad">
                         <mat-icon>search</mat-icon>
                     </button>
                 </div>
@@ -75,7 +75,7 @@
                     <input matInput formControlName="asentamiento" [(ngModel)]="asentamientoNg">
                     <mat-error *ngIf="domicilioFormGroup.controls.asentamiento.errors?.required">Requerido</mat-error>
                 </mat-form-field>
-                <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getAsentamiento()">
+                <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getAsentamiento()" [disabled]="botonAsentamiento">
                     <mat-icon>search</mat-icon>
                 </button>
             </div>
@@ -116,7 +116,7 @@
                     <input matInput formControlName="via" [(ngModel)]="viaNg">
                     <mat-error *ngIf="domicilioFormGroup.controls.via.errors?.required">Requerido</mat-error>
                 </mat-form-field>
-                <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getVia()">
+                <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getVia()" [disabled]="botonVia">
                     <mat-icon>search</mat-icon>
                 </button>
             </div>
@@ -189,6 +189,6 @@
 
 </div>
 <mat-dialog-actions align="end">
-    <button mat-flat-button color="primary" [disabled]="domicilioFormGroup.invalid" (click)="getDataDomicilio()">Aceptar</button>
+    <button mat-flat-button color="primary" [disabled]="domicilioFormGroup.invalid" mat-dialog-close (click)="getDataDomicilio()">Aceptar</button>
     <button mat-button mat-dialog-close>Cerrar</button>
 </mat-dialog-actions>
