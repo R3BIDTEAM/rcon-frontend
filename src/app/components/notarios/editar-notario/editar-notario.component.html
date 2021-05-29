@@ -169,26 +169,44 @@
             </div>
         </div>
 
-        <table mat-table [dataSource]="dataPaginate" *ngIf="dataSource.length > 0">
-            <ng-container matColumnDef="direccion">
-                <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="width: 50%; font-size: 14px;"> Dirección </th>
-                <td mat-cell *matCellDef="let element" class="contenido-tabla" style="font-size: 13px;"> 
-                    {{ element.VIA + " NÚMERO " + element.NUMEROEXTERIOR + ", INTERIOR " + element.NUMEROINTERIOR + ". COLONIA " + element.COLONIA + ", CÓDIGO POSTAL " + element.CODIGOPOSTAL + ", " + element.DELEGACION + ", " + element.ESTADO}}
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="editar">
-                <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="width: 10%; font-size: 14px; text-align: center;"> Editar </th>
-                <td mat-cell *matCellDef="let element" style="text-align: center; font-size: 13px;">
-                    <button mat-stroked-button color="primary" aria-label="Ver Notario" matTooltip="Ver Notario" style="min-width: 5px;">
-                        <mat-icon style="display: inherit; width: 12px;">create</mat-icon>
-                    </button>
-                </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-        <mat-paginator #paginator [length]="total" [pageSize]="pageSize" [pageSizeOptions]="[pageSize]" [showFirstLastButtons]="true" (page)="paginado($event)">
-        </mat-paginator>
+        <div class="row">
+            <div class="col-md-9 offset-md-1">
+                <ng-container>
+                    <div style="padding: 30px; text-align: center;" *ngIf="loadingDomicilios">
+                        <mat-spinner style="margin:0 auto;"></mat-spinner>
+                        <p>Cargando...</p>
+                    </div>
+                    <div class="alert alert-info" *ngIf="!loadingDomicilios && dataSource1.length == 0">
+                        No hay direcciones asociadas.
+                    </div> 
+                    <table mat-table [dataSource]="dataSource1" *ngIf="!loadingDomicilios && dataSource1.length > 0" width="100%">
+                        <ng-container matColumnDef="tipoDir">
+                            <th mat-header-cell *matHeaderCellDef width="15%" > Tipo Dirección </th>
+                            <td mat-cell *matCellDef="let element" width="15%" > {{ element.CODTIPOSDIRECCION }}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="direccion">
+                            <th mat-header-cell *matHeaderCellDef width="75%"> Dirección </th>
+                            <td mat-cell *matCellDef="let element" width="75%">
+                                {{ element.ABREVIATURAVIA }}, {{ element.VIA }} {{ element.NUMEROEXTERIOR }}, Col: {{ element.COLONIA}}
+                                C.P. {{ element.CODIGOPOSTAL}}, {{ element.DELEGACION}} ({{ element.ESTADO }})
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="historial">
+                            <th mat-header-cell *matHeaderCellDef> Historial </th>
+                            <td mat-cell *matCellDef="let element">
+                                <button mat-icon-button type="button" color="primary" aria-label="Historial" matTooltip="Historial">
+                                    <mat-icon>search</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsDom"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumnsDom;"></tr>
+                    </table>
+                    <mat-paginator #paginator [length]="total1" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado1($event)">
+                    </mat-paginator>
+                </ng-container>
+            </div>
+        </div>
 
 
     </div>

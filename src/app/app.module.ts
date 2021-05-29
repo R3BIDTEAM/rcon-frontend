@@ -41,7 +41,8 @@ import { EditarPeritosComponent, DialogDomicilioPerito, DialogDocumentoPerito,
         DialogAsentamiento, DialogMunicipios, DialogCiudad, DialogVia } from './components/peritos/editar-peritos/editar-peritos.component';
 import { EditarSociedadComponent } from './components/sociedad/editar-sociedad/editar-sociedad.component';
 import { VerNotarioComponent } from './components/notarios/ver-notario/ver-notario.component';
-import { EditarNotarioComponent, DialogDomiciliosNotario } from './components/notarios/editar-notario/editar-notario.component';
+import { EditarNotarioComponent, DialogDomiciliosNotario, DialogAsentamientoNotario, DialogCiudadNotario,
+         DialogMunicipiosNotario, DialogViaNotario } from './components/notarios/editar-notario/editar-notario.component';
 import { VerContribuyenteComponent } from './components/contribuyentes/ver-contribuyente/ver-contribuyente.component';
 import { EditarContribuyenteComponent } from './components/contribuyentes/editar-contribuyente/editar-contribuyente.component';
 
@@ -90,6 +91,10 @@ import { EditarContribuyenteComponent } from './components/contribuyentes/editar
     VerNotarioComponent,
     EditarNotarioComponent,
     DialogDomiciliosNotario,
+    DialogAsentamientoNotario,
+    DialogMunicipiosNotario,
+    DialogCiudadNotario,
+    DialogViaNotario,
     DialogAsentamiento,
     DialogMunicipios,
     DialogCiudad,
