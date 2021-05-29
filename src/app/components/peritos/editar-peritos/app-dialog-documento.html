@@ -13,9 +13,8 @@
                     <ng-template matStepLabel>Selcción de Documentos</ng-template>
                     <mat-form-field class="col-6">
                         <mat-label>Tipo Documento Dígital:</mat-label>
-                        <mat-select formControlName="codtipodocumento">
-                            <mat-option value="">Seleccione ...</mat-option>
-                            <mat-option value="1">Test</mat-option>
+                        <mat-select formControlName="codtipodocumento" [(ngModel)]="selectTipoDoc">
+                            <mat-option value="1">Documentos Jurídicos</mat-option>
                         </mat-select>
                         <mat-error *ngIf="tiposDocumentoFormGroup.controls.codtipodocumento.errors?.required">Requerido</mat-error>
                     </mat-form-field>
@@ -23,8 +22,8 @@
                         <mat-label>Tipo Documento Jurídico:</mat-label>
                         <mat-select formControlName="codtipodocumentojuridico" (selectionChange)="getTipoDocJuridico($event)">
                             <mat-option value="">Seleccione ...</mat-option>
-                            <mat-option value="1">Poder Notarial</mat-option>
-                            <mat-option value="2">Carta Poder</mat-option>
+                            <mat-option value="PN">Poder Notarial</mat-option>
+                            <mat-option value="CP">Carta Poder</mat-option>
                         </mat-select>
                         <mat-error *ngIf="tiposDocumentoFormGroup.controls.codtipodocumentojuridico.errors?.required">Requerido</mat-error>
                     </mat-form-field>

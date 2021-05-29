@@ -1,10 +1,10 @@
-<h1 mat-dialog-title>Buscador de Personas</h1>
+<h1 mat-dialog-title>Buscador de Personas48</h1>
 <div mat-dialog-content>
     <form #formDialog="ngForm">
         <div class="row">
             <mat-form-field class="col-6">
                 <mat-label>Tipo de persona:</mat-label>
-                <mat-select [(value)]="tipoPersona" (selectionChange)="clean()">
+                <mat-select [disabled]="true" [(value)]="tipoPersona" (selectionChange)="clean()">
                     <mat-option value="F">Fisica</mat-option>
                     <mat-option value="M">Moral</mat-option>
                 </mat-select>
@@ -43,14 +43,17 @@
             </div>
             <div class="row">
                 <mat-form-field class="col-4">
-                    <mat-label></mat-label>
+                    <mat-label>Identificación</mat-label>
                     <mat-select [(value)]="filtros.idDocIdent">
-                        <mat-option value=""></mat-option>
-                        <mat-option value="1">Test</mat-option>
+                        <mat-option value="">Seleccionar...</mat-option>
+                        <mat-option value="1">Cédula profecional</mat-option>
+                        <mat-option value="2">Pasaporte</mat-option>
+                        <mat-option value="3">Licencia de conducir</mat-option>
+                        <mat-option value="4">Número de seguro social</mat-option>
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field class="col-8">
-                    <mat-label></mat-label>
+                    <mat-label>Identificación</mat-label>
                     <input matInput [(ngModel)]="filtros.docIdent" name="docIdent" (keyup)="clearInputsIdentNoIdent(true)">
                 </mat-form-field>
             </div>
@@ -118,6 +121,6 @@
     </ng-container>
 </div>
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cerrar</button>
     <button mat-flat-button color="primary" [disabled]="!optionPersona" [mat-dialog-close]="persona">Aceptar</button>
+    <button mat-button mat-dialog-close>Cerrar</button>
 </mat-dialog-actions>

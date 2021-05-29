@@ -87,7 +87,7 @@ export interface DataRepresentacion {
 export interface DataDocumentoRepresentacion {
     codtipodocumento: number;
     nombreTipoDocumento: string;
-    codtipodocumentojuridico: number;
+    codtipodocumentojuridico: string;
     nombreTipoDocumentoJuridico: string;
     idnotario: number;
     noNotario: string;
@@ -526,7 +526,10 @@ export class EditarPeritosComponent implements OnInit {
     addRepresentante(i = -1, dataRepresentante = null): void {
         const dialogRef = this.dialog.open(DialogRepresentacionPeritos, {
             width: '700px',
-            data: dataRepresentante,
+            data: {dataRepresentante : dataRepresentante,
+                    datosPerito : this.datoPeritos,
+                    idPerito : this.idPerito
+            },
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
@@ -1833,10 +1836,11 @@ export class DialogVia {
     styleUrls: ['./editar-peritos.component.css']
 })
 export class DialogRepresentacionPeritos {
-    endpoint = environment.endpoint;
+    endpoint = environment.endpoint + 'registro/';
     loading = false;
     httpOptions;
     tipoPersona = 'F';
+    idPersonaRepresentacion;
     fisicaFormGroup: FormGroup;
     moralFormGroup: FormGroup;
     dataRepresentacion: DataRepresentacion = {} as DataRepresentacion;
@@ -1844,6 +1848,7 @@ export class DialogRepresentacionPeritos {
     constructor(
         private http: HttpClient,
         private _formBuilder: FormBuilder,
+        private snackBar: MatSnackBar,
         public dialog: MatDialog,
         public dialogRef: MatDialogRef<DialogRepresentacionPeritos>,
         @Inject(MAT_DIALOG_DATA) public data: any
@@ -1878,9 +1883,10 @@ export class DialogRepresentacionPeritos {
             texto: [null, []],
             fechaCaducidad: [null, []],
         });
-  
-        if(data){
-            this.setDataRepresentacion(data);
+        console.log("ACA LA DATA DEL DIALOG REPRESENTACION");
+        console.log(data);
+        if(data.dataRepresentante){
+            this.setDataRepresentacion(data.dataRepresentante);
         }
       }
       
@@ -1895,11 +1901,12 @@ export class DialogRepresentacionPeritos {
     addPersona(): void {
         const dialogRef = this.dialog.open(DialogPersonaPeritos, {
             width: '700px',
+            data: this.tipoPersona
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
                 this.tipoPersona = result.tipoPersona;
-    
+                this.idPersonaRepresentacion = result.id;
                 if(this.tipoPersona == 'F') {
                     this.fisicaFormGroup.controls['nombre'].setValue(result.nombre);
                     this.fisicaFormGroup.controls['apaterno'].setValue(result.apaterno);
@@ -1961,14 +1968,19 @@ export class DialogRepresentacionPeritos {
             this.dataRepresentacion.texto = (this.moralFormGroup.value.texto) ? this.moralFormGroup.value.texto : null;
             this.dataRepresentacion.fechaCaducidad = (this.moralFormGroup.value.fechaCaducidad) ? this.moralFormGroup.value.fechaCaducidad : null;
         }
-        console.log('AQUIII');
-
-        /*const payload = {
+        console.log('AQUIII EL JSON');
+        console.log(this.dataRepresentacion);
+        //console.log(JSON.stringify(this.dataRepresentacion));
+        const payload = {
+            "representacion": {
+                textorepresentacion: "Texto Representacion Prueba 33",
+                fechacaducidad: "31-12-2021"
+            },
             "participantes": [
                 {
                     rol: "representante",
                     codtiposPersona: this.dataRepresentacion.tipoPersona,
-                    idpersona: this.dataRepresentacion.idPersonaRepresentado,
+                    idpersona: this.idPersonaRepresentacion,
                     nombre: this.dataRepresentacion.nombre,
                     rfc: this.dataRepresentacion.rfc,
                     apellidoPaterno: this.dataRepresentacion.apaterno,
@@ -1977,40 +1989,70 @@ export class DialogRepresentacionPeritos {
                     ife: this.dataRepresentacion.ine,
                     iddocIdentif: this.dataRepresentacion.idDocIdent,
                     valdocIdentif: this.dataRepresentacion.docIdent,
-                    fechaNacimiento: this.dataRepresentacion.fechaNacimiento,
-                    fechaDefuncion: this.dataRepresentacion.fechaDefuncion,
+                    fechaNacimiento: moment(this.dataRepresentacion.fechaNacimiento).format("DD-MM-YYYY"),
+                    fechaDefuncion: moment(this.dataRepresentacion.fechaDefuncion).format("DD-MM-YYYY"),
                     celular: this.dataRepresentacion.celular,
                     email: this.dataRepresentacion.email,
                     activprincip: this.dataRepresentacion.actPreponderante,
                     idtipomoral: this.dataRepresentacion.idTipoPersonaMoral,
                     idmotivosmoral: this.dataRepresentacion.idMotivo,
-                    fechainicioactiv: this.dataRepresentacion.fechaInicioOperacion,
-                    fechacambiosituacion: this.dataRepresentacion.fechaCambio
+                    fechainicioactiv: moment(this.dataRepresentacion.fechaInicioOperacion).format("DD-MM-YYYY"),
+                    fechacambiosituacion: moment(this.dataRepresentacion.fechaCambio).format("DD-MM-YYYY")
                 },
                 {
                     rol:"representado",
                     codtiposPersona: "F",
                     idpersona: this.data.idPerito,
-                    nombre: this.data.dataRepresentado.nombre,
-                    rfc: this.data.dataRepresentado.rfc,
-                    apellidoPaterno: this.data.dataRepresentado.apepaterno,
-                    apellidoMaterno: this.data.dataRepresentado.apematerno,
-                    curp: this.data.dataRepresentado.curp,
-                    ife: this.data.dataRepresentado.ine,
-                    iddocIdentif: this.data.dataRepresentado.identificacion,
-                    valdocIdentif: this.data.dataRepresentado.idedato,
-                    fechaNacimiento: this.data.dataRepresentado.fecha_naci,
-                    fechaDefuncion: this.data.dataRepresentado.fecha_def,
-                    celular: this.data.dataRepresentado.celular,
-                    email: this.data.dataRepresentado.email,
+                    nombre: this.data.datosPerito.nombre,
+                    rfc: this.data.datosPerito.rfc,
+                    apellidoPaterno: this.data.datosPerito.apepaterno,
+                    apellidoMaterno: this.data.datosPerito.apematerno,
+                    curp: this.data.datosPerito.curp,
+                    ife: this.data.datosPerito.ine,
+                    iddocIdentif: this.data.datosPerito.identificacion,
+                    valdocIdentif: this.data.datosPerito.idedato,
+                    fechaNacimiento: moment(this.data.datosPerito.fecha_naci).format("DD-MM-YYYY"),
+                    fechaDefuncion: moment(this.data.datosPerito.fecha_def).format("DD-MM-YYYY"),
+                    celular: this.data.datosPerito.celular,
+                    email: this.data.datosPerito.email,
                     activprincip: null,
                     idtipomoral: null,
                     idmotivosmoral: null,
                     fechainicioactiv: null,
                     fechacambiosituacion: null
                 }
-            ]
-        };*/
+            ],
+            "documento": {
+                descripcion: this.dataRepresentacion.documentoRepresentacion.descripcion,        
+                codtipodocumento: this.dataRepresentacion.documentoRepresentacion.codtipodocumento,
+                fecha: moment(this.dataRepresentacion.documentoRepresentacion.fecha).format("DD-MM-YYYY"),
+                codTipoDocumentoJuridico: this.dataRepresentacion.documentoRepresentacion.codtipodocumentojuridico,        
+                lugar: this.dataRepresentacion.documentoRepresentacion.lugar,
+                idNotario: this.dataRepresentacion.documentoRepresentacion.idnotario,
+                noEscritura: this.dataRepresentacion.documentoRepresentacion.noNotario,
+                documentos: this.dataRepresentacion.documentoRepresentacion.archivos
+            }
+        };
+        
+        console.log(JSON.stringify(payload));
+        this.http.put(this.endpoint + 'insertarRepresentacion', payload, this.httpOptions).subscribe(
+            (res: any) => {
+                this.snackBar.open('SE HA INSERTADO TODO', 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+                console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTECIÓN");
+                console.log(res);
+            },
+            (error) => {
+                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+            });
+        
         return this.dataRepresentacion;
     }
   
@@ -2116,6 +2158,7 @@ export class DialogRepresentadoPeritos {
     addPersona(): void {
         const dialogRef = this.dialog.open(DialogPersonaPeritos, {
             width: '700px',
+            data: this.tipoPersona
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
@@ -2232,6 +2275,7 @@ export class DialogDocumentoPerito {
     httpOptions;
     tiposDocumentoDigital;
     tiposDocumentoJuridico;
+    selectTipoDoc = '1';
     tiposDocumentoFormGroup: FormGroup;
     infoDocumentoFormGroup: FormGroup;
     archivosDocumentoFormGroup: FormGroup;
@@ -2571,7 +2615,7 @@ export class DialogPersonaPeritos {
     httpOptions;
     filtros: Filtros = {} as Filtros;
     persona: Persona = {} as Persona;
-    tipoPersona = 'F';
+    tipoPersona;
     isIdentificativo;
     optionPersona;
     isBusqueda;
@@ -2593,10 +2637,24 @@ export class DialogPersonaPeritos {
                 Authorization: this.auth.getSession().token
             })
         };
+        this.tipoPersona = data;
+        console.log("aca el tipo person " + data);
+        console.log(this.tipoPersona);
       }
   
     clearInputsIdentNoIdent(isIdentificativo): void {
         this.isIdentificativo = isIdentificativo;
+        if(this.isIdentificativo){
+            this.filtros.apaterno = null;
+            this.filtros.amaterno = null;
+            this.filtros.nombre = null;
+        }else{
+            this.filtros.rfc = null;
+            this.filtros.curp = null;
+            this.filtros.ine = null;
+            this.filtros.idDocIdent = null;
+            this.filtros.docIdent = null;
+        }
     }
   
     getDataPersonas(): void {
