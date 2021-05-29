@@ -76,7 +76,7 @@ export class VerNotarioComponent implements OnInit {
   loading = false;
   dataSource = [];
   dataPaginate = [];
-  displayedColumns: string[] = ['direccion','editar'];
+  displayedColumns: string[] = ['direccion'];
   dataNotarioResultado;
   dataNotarioDireccionesResultado;
   httpOptions;
@@ -85,8 +85,10 @@ export class VerNotarioComponent implements OnInit {
   idNotario;
   datosNotario: DatosNotario = {} as DatosNotario;
   direccionesNotario: DireccionesNotario = {} as DireccionesNotario;
-  estados: Estados = {} as Estados;
-  documentos: DocumentosIdentificativos = {} as DocumentosIdentificativos;
+  // estados: Estados = {} as Estados;
+  // documentos: DocumentosIdentificativos = {} as DocumentosIdentificativos;
+  estados: Estados[] = [];
+  documentos: DocumentosIdentificativos[] = [];
   loadingEstados = false;
   loadingDocumentosIdentificativos = false;
   @ViewChild('paginator') paginator: MatPaginator;

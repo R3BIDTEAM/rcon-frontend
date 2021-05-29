@@ -31,3 +31,7 @@ td, th {
 tr:nth-child(even) {
     background-color: #dddddd;
 }
+
+::ng-deep .mat-expansion-panel-body {
+    margin-right: 33px;
+}

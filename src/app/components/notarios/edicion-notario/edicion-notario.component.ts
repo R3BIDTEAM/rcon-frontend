@@ -47,9 +47,11 @@ export class EdicionNotarioComponent implements OnInit {
   displayedColumns: string[] = ['nombre','datos_identificativos','seleccionar'];
   httpOptions;
   filtros: Filtros = {} as Filtros;
-  estados: Estados = {} as Estados;
+  // estados: Estados = {} as Estados;
+  // documentos: DocumentosIdentificativos = {} as DocumentosIdentificativos;
+  estados: Estados[] = [];
+  documentos: DocumentosIdentificativos[] = [];
   loadingEstados = false;
-  documentos: DocumentosIdentificativos = {} as DocumentosIdentificativos;
   loadingDocumentosIdentificativos = false;
   isIdentificativo;
   canSearch = false;

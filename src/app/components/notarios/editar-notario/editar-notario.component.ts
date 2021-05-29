@@ -123,8 +123,10 @@ export class EditarNotarioComponent implements OnInit {
   datosNotario: DatosNotario = {} as DatosNotario;
   datosGenerales: DatosGenerales = {} as DatosGenerales;
   direccionesNotario: DireccionesNotario = {} as DireccionesNotario;
-  estados: Estados = {} as Estados;
-  documentos: DocumentosIdentificativos = {} as DocumentosIdentificativos;
+  //estados: Estados = {} as Estados;
+  //documentos: DocumentosIdentificativos = {} as DocumentosIdentificativos;
+  estados: Estados[] = [];
+  documentos: DocumentosIdentificativos[] = [];
   dataDomicilio: DataDomicilio[] = [];
   loadingEstados = false;
   loadingDocumentosIdentificativos = false;

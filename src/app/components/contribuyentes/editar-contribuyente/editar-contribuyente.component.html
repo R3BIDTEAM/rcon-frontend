@@ -191,17 +191,15 @@
                                 {{panelDomicilio ? 'Cerrar' : 'Ver'}} los datos de los Domicilios
                             </mat-panel-description>
                         </mat-expansion-panel-header>
-                        <div class="row">
-                            <div class="col-md-9 offset-md-1">
-                                <h3>Agregar domicilio
-                                    <button mat-flat-button type="button" color="primary" aria-label="Agregar" matTooltip="Agregar" (click)="addDomicilio()">
-                                        <mat-icon>add</mat-icon>
-                                    </button>
-                                </h3>
+                        <div class="row" style="margin-bottom: 15px;">
+                            <div class="col-md-4">
+                                <button mat-stroked-button aria-label="Domicilios" style="background-color: #00A447; color: #FFF!important;" (click)="addDomicilio()">
+                                    Domicilios <mat-icon style="display: inherit; width: 15px;">add</mat-icon>
+                                </button>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-9 offset-md-1">
+                            <div class="col-md-12">
                                 <ng-container>
                                     <div style="padding: 30px; text-align: center;" *ngIf="loadingDomicilios">
                                         <mat-spinner style="margin:0 auto;"></mat-spinner>
