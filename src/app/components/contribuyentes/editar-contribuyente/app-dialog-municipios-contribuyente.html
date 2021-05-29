@@ -1,0 +1,50 @@
+<h1 mat-dialog-title>Búsqueda de municipios</h1>
+<div mat-dialog-content>
+
+    <ng-container>
+        <div class="row">
+            <mat-form-field class="col-3">
+                <mat-label>Municipios:</mat-label>
+                <input matInput [(ngModel)]="buscaMunicipios">
+            </mat-form-field>
+            <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="obtenerMunicipiosPorNombre()">
+                <mat-icon>search</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" aria-label="Limpiar Filtros" matTooltip="Limpiar Filtros" >
+                <mat-icon>clear</mat-icon>
+            </button>
+        </div>
+        <div style="padding: 30px; text-align: center;" *ngIf="loadingBuscaMun">
+            <mat-spinner style="margin:0 auto;"></mat-spinner>
+            <p>Cargando...</p>
+        </div>
+        <div class="alert alert-info" *ngIf="dataSource.length == 0 && !loadingBuscaMun">
+            No hay Peritos para el filtro seleccionado
+        </div> 
+        <table mat-table [dataSource]="dataPaginate" *ngIf="!loadingBuscaMun && dataSource.length > 0">
+            <ng-container matColumnDef="coloniaAsentamiento">
+                <th mat-header-cell *matHeaderCellDef> Municipios </th>
+                <td mat-cell *matCellDef="let element"> 
+                    {{ (element.MUNICIPIO) ? element.MUNICIPIO : '' }}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="select">
+                <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-radio-group [(ngModel)]="optionColonia">
+                        <mat-radio-button [value]="element" (change)="selectMunicipios(element)"></mat-radio-button>
+                    </mat-radio-group>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator #paginator [length]="total" [pageSize]="pageSize" [pageSizeOptions]="[pageSize]" [showFirstLastButtons]="true" (page)="paginado($event)">
+        </mat-paginator>
+    </ng-container>
+
+</div>
+<mat-dialog-actions align="end">
+    <button mat-flat-button color="primary" [mat-dialog-close]="dataMunicipios">Aceptar</button>
+    <button mat-button mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>
