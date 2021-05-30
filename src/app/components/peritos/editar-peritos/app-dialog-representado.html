@@ -64,8 +64,11 @@
                     <mat-form-field class="col-6">
                         <mat-label></mat-label>
                         <mat-select formControlName="idDocIdent">
-                            <mat-option value=""></mat-option>
-                            <mat-option value="1">Test</mat-option>
+                            <mat-option value="">Seleccionar</mat-option>
+                            <mat-option value="1">Cédula profecional</mat-option>
+                            <mat-option value="2">Pasaporte</mat-option>
+                            <mat-option value="3">Licencia de conducir</mat-option>
+                            <mat-option value="4">Número de seguro social</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field class="col-6">
@@ -218,6 +221,6 @@
 
 </div>
 <mat-dialog-actions align="end">
-    <button mat-flat-button color="primary" [disabled]="(tipoPersona == 'F' ? fisicaFormGroup.invalid : moralFormGroup.invalid)" [mat-dialog-close]="getDataRepresentacion()">Aceptar</button>
+    <button mat-flat-button color="primary" [disabled]="(tipoPersona == 'F' ? fisicaFormGroup.invalid : moralFormGroup.invalid)" mat-dialog-close (click)="getDataRepresentacion()">Aceptar</button>
     <button mat-button mat-dialog-close>Cerrar</button>
 </mat-dialog-actions>

@@ -36,11 +36,11 @@
             <mat-step [stepControl]="infoDocumentoFormGroup">
                 <form [formGroup]="infoDocumentoFormGroup">
                     <ng-template matStepLabel>{{dataDocumento.nombreTipoDocumentoJuridico}}
-                        <button mat-flat-button type="button" color="primary" [disabled]="tiposDocumentoFormGroup.value.codtipodocumentojuridico != 1" aria-label="Buscar Notario" matTooltip="Buscar Notario" class="little-button" (click)="addNotario()">
+                        <button mat-flat-button type="button" color="primary" [disabled]="tiposDocumentoFormGroup.value.codtipodocumentojuridico != 'PN'" aria-label="Buscar Notario" matTooltip="Buscar Notario" class="little-button" (click)="addNotario()">
                             <mat-icon>search</mat-icon>
                         </button>
                     </ng-template>
-                    <ng-container *ngIf="tiposDocumentoFormGroup.value.codtipodocumentojuridico == 1">
+                    <ng-container *ngIf="tiposDocumentoFormGroup.value.codtipodocumentojuridico == 'PN'">
                         <mat-form-field class="col-6">
                             <mat-label>Número:</mat-label>
                             <input matInput readonly formControlName="noNotario">

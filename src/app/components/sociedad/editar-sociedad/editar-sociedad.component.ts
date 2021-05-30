@@ -193,7 +193,7 @@ export class EditarSociedadComponent implements OnInit {
 
         //http://localhost:8000/api/v1/registro/actualizarSociedad?idPersona=4485244&registro=S-9999-98&fechaAlta=20-05-2021&fechaBaja
         //http://localhost:8000/api/v1/registro/actualizarSociedad?idPersona=4485269&registro=S-0012-99&fechaAlta=21-05-2021&fechaBaja=31-05-2021
-        return;
+        //return;
         this.http.post(this.endpointActualiza + '?' + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {

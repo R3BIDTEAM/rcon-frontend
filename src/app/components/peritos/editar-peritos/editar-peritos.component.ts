@@ -545,7 +545,10 @@ export class EditarPeritosComponent implements OnInit {
     addRepresentado(i = -1, dataRepresentante = null): void {
         const dialogRef = this.dialog.open(DialogRepresentadoPeritos, {
             width: '700px',
-            data: dataRepresentante,
+            data: {dataRepresentante : dataRepresentante,
+                    datosPerito: this.datoPeritos,
+                    idPerito : this.idPerito
+            },
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
@@ -1968,13 +1971,15 @@ export class DialogRepresentacionPeritos {
             this.dataRepresentacion.texto = (this.moralFormGroup.value.texto) ? this.moralFormGroup.value.texto : null;
             this.dataRepresentacion.fechaCaducidad = (this.moralFormGroup.value.fechaCaducidad) ? this.moralFormGroup.value.fechaCaducidad : null;
         }
+        this.idPersonaRepresentacion = (this.idPersonaRepresentacion) ? this.idPersonaRepresentacion : null;
+
         console.log('AQUIII EL JSON');
         console.log(this.dataRepresentacion);
         //console.log(JSON.stringify(this.dataRepresentacion));
         const payload = {
             "representacion": {
-                textorepresentacion: "Texto Representacion Prueba 33",
-                fechacaducidad: "31-12-2021"
+                textorepresentacion: this.dataRepresentacion.texto,
+                fechacaducidad: moment(this.dataRepresentacion.fechaCaducidad).format("DD-MM-YYYY")
             },
             "participantes": [
                 {
@@ -2089,7 +2094,7 @@ export class DialogRepresentacionPeritos {
     }
 }
 
-///////////////REPRESENTACION////////////////
+///////////////REPRESENTADO////////////////
 @Component({
     selector: 'app-dialog-representado',
     templateUrl: 'app-dialog-representado.html',
@@ -2102,10 +2107,12 @@ export class DialogRepresentadoPeritos {
     tipoPersona = 'F';
     fisicaFormGroup: FormGroup;
     moralFormGroup: FormGroup;
+    idPersonaRepresentacion;
     dataRepresentacion: DataRepresentacion = {} as DataRepresentacion;
   
     constructor(
         private http: HttpClient,
+        private snackBar: MatSnackBar,
         private _formBuilder: FormBuilder,
         public dialog: MatDialog,
         public dialogRef: MatDialogRef<DialogRepresentadoPeritos>,
@@ -2142,8 +2149,8 @@ export class DialogRepresentadoPeritos {
             fechaCaducidad: [null, []],
         });
   
-        if(data){
-            this.setDataRepresentacion(data);
+        if(data.dataRepresentante){
+            this.setDataRepresentacion(data.dataRepresentante);
         }
       }
       
@@ -2163,7 +2170,7 @@ export class DialogRepresentadoPeritos {
         dialogRef.afterClosed().subscribe(result => {
             if(result){
                 this.tipoPersona = result.tipoPersona;
-    
+                this.idPersonaRepresentacion = result.id;
                 if(this.tipoPersona == 'F') {
                     this.fisicaFormGroup.controls['nombre'].setValue(result.nombre);
                     this.fisicaFormGroup.controls['apaterno'].setValue(result.apaterno);
@@ -2225,7 +2232,92 @@ export class DialogRepresentadoPeritos {
             this.dataRepresentacion.texto = (this.moralFormGroup.value.texto) ? this.moralFormGroup.value.texto : null;
             this.dataRepresentacion.fechaCaducidad = (this.moralFormGroup.value.fechaCaducidad) ? this.moralFormGroup.value.fechaCaducidad : null;
         }
-  
+
+        this.idPersonaRepresentacion = (this.idPersonaRepresentacion) ? this.idPersonaRepresentacion : null;
+        console.log('AQUIII EL JSON');
+        console.log(this.dataRepresentacion);
+        //console.log(JSON.stringify(this.dataRepresentacion));
+        const payload = {
+            "representacion": {
+                textorepresentacion: this.dataRepresentacion.texto,
+                fechacaducidad: moment(this.dataRepresentacion.fechaCaducidad).format("DD-MM-YYYY")
+            },
+            "participantes": [
+                {
+                    rol: "representante",
+                    codtiposPersona: this.dataRepresentacion.tipoPersona,
+                    idpersona: this.idPersonaRepresentacion,
+                    nombre: this.dataRepresentacion.nombre,
+                    rfc: this.dataRepresentacion.rfc,
+                    apellidoPaterno: this.dataRepresentacion.apaterno,
+                    apellidoMaterno: this.dataRepresentacion.amaterno,
+                    curp: this.dataRepresentacion.curp,
+                    ife: this.dataRepresentacion.ine,
+                    iddocIdentif: this.dataRepresentacion.idDocIdent,
+                    valdocIdentif: this.dataRepresentacion.docIdent,
+                    fechaNacimiento: moment(this.dataRepresentacion.fechaNacimiento).format("DD-MM-YYYY"),
+                    fechaDefuncion: moment(this.dataRepresentacion.fechaDefuncion).format("DD-MM-YYYY"),
+                    celular: this.dataRepresentacion.celular,
+                    email: this.dataRepresentacion.email,
+                    activprincip: this.dataRepresentacion.actPreponderante,
+                    idtipomoral: this.dataRepresentacion.idTipoPersonaMoral,
+                    idmotivosmoral: this.dataRepresentacion.idMotivo,
+                    fechainicioactiv: moment(this.dataRepresentacion.fechaInicioOperacion).format("DD-MM-YYYY"),
+                    fechacambiosituacion: moment(this.dataRepresentacion.fechaCambio).format("DD-MM-YYYY")
+                },
+                {
+                    rol:"representado",
+                    codtiposPersona: "F",
+                    idpersona: this.data.idPerito,
+                    nombre: this.data.datosPerito.nombre,
+                    rfc: this.data.datosPerito.rfc,
+                    apellidoPaterno: this.data.datosPerito.apepaterno,
+                    apellidoMaterno: this.data.datosPerito.apematerno,
+                    curp: this.data.datosPerito.curp,
+                    ife: this.data.datosPerito.ine,
+                    iddocIdentif: this.data.datosPerito.identificacion,
+                    valdocIdentif: this.data.datosPerito.idedato,
+                    fechaNacimiento: moment(this.data.datosPerito.fecha_naci).format("DD-MM-YYYY"),
+                    fechaDefuncion: moment(this.data.datosPerito.fecha_def).format("DD-MM-YYYY"),
+                    celular: this.data.datosPerito.celular,
+                    email: this.data.datosPerito.email,
+                    activprincip: null,
+                    idtipomoral: null,
+                    idmotivosmoral: null,
+                    fechainicioactiv: null,
+                    fechacambiosituacion: null
+                }
+            ],
+            "documento": {
+                descripcion: this.dataRepresentacion.documentoRepresentacion.descripcion,        
+                codtipodocumento: this.dataRepresentacion.documentoRepresentacion.codtipodocumento,
+                fecha: moment(this.dataRepresentacion.documentoRepresentacion.fecha).format("DD-MM-YYYY"),
+                codTipoDocumentoJuridico: this.dataRepresentacion.documentoRepresentacion.codtipodocumentojuridico,        
+                lugar: this.dataRepresentacion.documentoRepresentacion.lugar,
+                idNotario: this.dataRepresentacion.documentoRepresentacion.idnotario,
+                noEscritura: this.dataRepresentacion.documentoRepresentacion.noNotario,
+                documentos: this.dataRepresentacion.documentoRepresentacion.archivos
+            }
+        };
+        
+        console.log(JSON.stringify(payload));
+        this.http.put(this.endpoint + 'insertarRepresentacion', payload, this.httpOptions).subscribe(
+            (res: any) => {
+                this.snackBar.open('SE HA INSERTADO TODO', 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+                console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTECIÓN");
+                console.log(res);
+            },
+            (error) => {
+                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+            });
         return this.dataRepresentacion;
     }
   
@@ -2305,9 +2397,10 @@ export class DialogDocumentoPerito {
         this.archivosDocumentoFormGroup = this._formBuilder.group({
             archivos: this._formBuilder.array([])
         });
-  
+
+        
         this.tiposDocumentoFormGroup.controls.codtipodocumentojuridico.valueChanges.subscribe(codtipodocumentojuridico => {
-        if(codtipodocumentojuridico == 1) {
+        if(codtipodocumentojuridico == 'PN') {
             this.infoDocumentoFormGroup.addControl('noNotario', new FormControl(null, Validators.required));
             this.infoDocumentoFormGroup.addControl('ciudadNotario', new FormControl(null, Validators.required));
             this.infoDocumentoFormGroup.addControl('nombreNotario', new FormControl(null, Validators.required));
@@ -2320,7 +2413,7 @@ export class DialogDocumentoPerito {
         }
             this.infoDocumentoFormGroup.updateValueAndValidity();
         });
-  
+        console.log(this.tiposDocumentoFormGroup.controls.codtipodocumentojuridico);
         if(data){
             this.setDataDocumento(data);
         }
@@ -2401,7 +2494,7 @@ export class DialogDocumentoPerito {
     getDataDocumento(): void {
         this.dataDocumento.codtipodocumento = this.tiposDocumentoFormGroup.value.codtipodocumento;
         this.dataDocumento.codtipodocumentojuridico = this.tiposDocumentoFormGroup.value.codtipodocumentojuridico;
-        if(this.tiposDocumentoFormGroup.value.codtipodocumentojuridico == 1){
+        if(this.tiposDocumentoFormGroup.value.codtipodocumentojuridico == 'PN'){
             this.dataDocumento.noNotario = (this.infoDocumentoFormGroup.value.noNotario) ? this.infoDocumentoFormGroup.value.noNotario : null;
             this.dataDocumento.ciudadNotario = (this.infoDocumentoFormGroup.value.ciudadNotario) ? this.infoDocumentoFormGroup.value.ciudadNotario : null;
             this.dataDocumento.nombreNotario = (this.infoDocumentoFormGroup.value.nombreNotario) ? this.infoDocumentoFormGroup.value.nombreNotario : null;
@@ -2418,7 +2511,7 @@ export class DialogDocumentoPerito {
     setDataDocumento(dataDocumento): void {
         this.tiposDocumentoFormGroup.controls['codtipodocumento'].setValue(dataDocumento.codtipodocumento);
         this.tiposDocumentoFormGroup.controls['codtipodocumentojuridico'].setValue(dataDocumento.codtipodocumentojuridico);
-        if(dataDocumento.codtipodocumentojuridico == 1){
+        if(dataDocumento.codtipodocumentojuridico == 'PN'){
             this.dataDocumento.idnotario = dataDocumento.idnotario;
             this.infoDocumentoFormGroup.controls['noNotario'].setValue(dataDocumento.noNotario);
             this.infoDocumentoFormGroup.controls['ciudadNotario'].setValue(dataDocumento.ciudadNotario);
@@ -2469,7 +2562,8 @@ export interface Notario {
     styleUrls: ['./editar-peritos.component.css']
 })
 export class DialogNotarioPeritos {
-    endpoint = environment.endpoint + 'registro/getNotariosBy';
+    endpoint = environment.endpoint + 'registro/getNotariosByDatosIdentificativos';
+    endpointCatalogos = environment.endpoint + 'registro/';
     pageSize = 15;
     pagina = 1;
     total = 0;
@@ -2484,6 +2578,8 @@ export class DialogNotarioPeritos {
     optionNotario;
     isBusqueda;
     queryParamFiltros;
+    loadingEstados = false;
+    estados;
     @ViewChild('paginator') paginator: MatPaginator;
   
     constructor(
@@ -2500,8 +2596,23 @@ export class DialogNotarioPeritos {
                 Authorization: this.auth.getSession().token
             })
         };
+
+        this.getDataEstados();
     }
-  
+
+    getDataEstados(): void {
+        this.loadingEstados = true;
+        this.http.post(this.endpointCatalogos + 'getEstados', '', this.httpOptions).subscribe(
+            (res: any) => {
+                this.loadingEstados = false;
+                this.estados = res;
+            },
+            (error) => {
+                this.loadingEstados = false;
+            }
+        );
+    }
+
     getDataNotarios(): void {
         this.loading = true;
         this.isBusqueda = true;
@@ -2534,7 +2645,7 @@ export class DialogNotarioPeritos {
             this.queryParamFiltros = this.queryParamFiltros + '&apellidoMaterno=' + this.filtros.apellidoMaterno + '&filtroApellidoMaterno=0';
         }
         
-        this.http.post(this.endpoint + this.tipoBusqueda + '?' + this.queryParamFiltros, '', this.httpOptions).subscribe(
+        this.http.post(this.endpoint + '?' + this.queryParamFiltros, '', this.httpOptions).subscribe(
             (res: any) => {
                 this.loading = false;
                 this.dataNotarios = res;
