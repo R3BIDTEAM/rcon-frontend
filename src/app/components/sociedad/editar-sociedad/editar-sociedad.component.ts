@@ -77,6 +77,7 @@ export class EditarSociedadComponent implements OnInit {
     panelDomicilio = false;
     panelEspecifico = false;
     panelSociedades = false;
+    botonEdit = false;
     datosSociedad: DatosSociedad = {} as DatosSociedad;
     dataDomicilios: DataDomicilio[] = [];
     displayedColumnsDom: string[] = ['tipoDir','direccion', 'historial'];
@@ -242,12 +243,8 @@ export class EditarSociedadComponent implements OnInit {
 
         query = (this.datosSociedad.fecha_baja) ? query + '&fechaBaja=' + moment(this.datosSociedad.fecha_baja).format('DD-MM-YYYY')
                                                 : query + '&fechaBaja=';
-        //this.loading = true;
-        console.log(this.endpointActualiza + 'actualizarSociedad' + '?' + query);
 
-        //http://localhost:8000/api/v1/registro/actualizarSociedad?idPersona=4485244&registro=S-9999-98&fechaAlta=20-05-2021&fechaBaja
-        //http://localhost:8000/api/v1/registro/actualizarSociedad?idPersona=4485269&registro=S-0012-99&fechaAlta=21-05-2021&fechaBaja=31-05-2021
-        //return;
+        console.log(this.endpointActualiza + 'actualizarSociedad' + '?' + query);
         this.http.post(this.endpointActualiza + 'actualizarSociedad' + '?' + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
@@ -301,11 +298,6 @@ export class EditarSociedadComponent implements OnInit {
         this.dataSource1 = this.paginate(this.dataSource1, 15, this.pagina1);
     }
 
-    // paginate(array, page_size, page_number) {
-    //   return array.slice((page_number - 1) * page_size, page_number * page_size);
-    // }
-
-
     addDomicilio(i = -1, dataDomicilio = null): void {
       let codtiposdireccion = '';
       const dialogRef = this.dialog.open(DialogDomicilioSociedad, {
@@ -319,18 +311,204 @@ export class EditarSociedadComponent implements OnInit {
       });
     }
 
+    buscarSociedadPersona(){
+        const dialogRef = this.dialog.open(DialogBuscaSociedad, {
+            width: '700px',
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                console.log("RESULTADO DEL NUEVO NOMBRE SOCIEDAD");
+                console.log(result);
+                console.log(result.apepaterno);
+                this.datosSociedad.razonSocial = result.razonSocial;
+                this.datosSociedad.rfc = result.rfc;
+                this.datosSociedad.acta = result.acta;
+                this.datosSociedad.tipoMoral = result.tipoMoral;
+                this.datosSociedad.fechaInicio = result.fechaInicio;
+                this.datosSociedad.motivoCambio = result.motivoCambio;
+                this.datosSociedad.fechaCambio = result.fechaCambio;
+                this.datosSociedad.registro = result.registro;
+                this.datosSociedad.fecha_alta = result.fecha_alta;
+                this.datosSociedad.fecha_baja = result.fecha_baja;
+                this.botonEdit = false;
+                document.getElementById("apepaterno").focus();
+            }
+        });
+    }
 
+    cleanSociedad(){
+        this.datosSociedad.razonSocial = null;
+        this.datosSociedad.rfc = null;
+        this.datosSociedad.acta = null;
+        this.datosSociedad.tipoMoral = null;
+        this.datosSociedad.fechaInicio = null;
+        this.datosSociedad.motivoCambio = null;
+        this.datosSociedad.fechaCambio = null;
+        this.datosSociedad.registro = null;
+        this.datosSociedad.fecha_alta = null;
+        this.datosSociedad.fecha_baja = null;
+        this.botonEdit = true;
+    }
 }
 
+///////////////BUSCAR PERSONA MORAL////////////////
+export interface DatosSociedadPersona {
+    razonSocial: string;
+    rfc: string;
+    acta: string;
+    tipoMoral: string;
+    fechaInicio: string;
+    motivoCambio: string;
+    fechaCambio: string;
+    registro: string;
+    fecha_alta: Date;
+    fecha_baja: Date;
+    idSociedad: number;
+}
+@Component({
+    selector: 'app-dialog-buscaSociedad',
+    templateUrl: 'app-dialog-buscaSociedad.html',
+    styleUrls: ['./editar-sociedad.component.css']
+})
+export class DialogBuscaSociedad {
+    endpoint = environment.endpoint + 'registro/';
+    displayedColumns: string[] = ['razon','registro', 'rfc', 'select'];
+    pagina = 1;
+    total = 0;
+    pageSize = 15;
+    loading = false;
+    dataSource = [];
+    dataPaginate = [];
+    httpOptions;
+    razonSocial;
+    rfc;
+    registro;
+    search;
+    isIdentificativo;
+    idSociedad;
+    optionSociedadPersona;
+    datosSociedadPersona: DatosSociedadPersona = {} as DatosSociedadPersona;
+    @ViewChild('paginator') paginator: MatPaginator;
 
+    constructor(
+        private auth: AuthService,
+        private http: HttpClient,
+        private snackBar: MatSnackBar,
+        private _formBuilder: FormBuilder,
+        public dialogRef: MatDialogRef<DialogBuscaSociedad>,
+        @Inject(MAT_DIALOG_DATA) public data: any){
+            dialogRef.disableClose = true;
+            this.httpOptions = {
+                headers: new HttpHeaders({
+                    'Content-Type': 'application/json',
+                    Authorization: this.auth.getSession().token
+                })
+            };
+    }
+
+    cleanBusca(): void{
+        this.loading = false;
+        this.pagina = 1;
+        this.total = 0;
+        this.pageSize = 15;
+        this.dataSource = [];
+        this.dataPaginate;
+    }
+
+    validateSearch(){
+        this.search = (
+            this.razonSocial ||
+            this.rfc ||
+            this.registro
+        ) ? true : false;
+    }
+
+    clearInputsIdentNoIdent(isIdentificativo): void {
+        this.isIdentificativo = isIdentificativo;
+        if(this.isIdentificativo){
+            this.razonSocial = null;
+        }else{
+            this.rfc = null;
+            this.registro = null;
+        }
+    }
+
+    getSociedad(){
+        let query = '';
+        let busquedaDatos = '';
+        if( this.razonSocial ){
+            busquedaDatos = busquedaDatos + 'getSocValuacionByDatosPersonales';
+        }else{
+            busquedaDatos = busquedaDatos + 'getSocValuacionByDatosIdentificativos';
+        }
+
+        if( this.razonSocial ){
+            query = query + '&razonSocial=' + this.razonSocial + '&filtroRazon=1';
+        }
+        if(this.rfc){
+            query = query + '&rfc=' + this.rfc;
+        }
+        if(this.registro){
+            query = query + '&registro=' + this.registro;
+        }
+
+        query = query.substr(1);
+
+        this.loading = true;
+        console.log(this.endpoint);
+        this.http.post(this.endpoint + busquedaDatos + '?' + query, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loading = false;
+                    this.dataSource = res;
+                    this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                    this.total = this.dataSource.length; 
+                    this.paginator.pageIndex = 0;
+                    console.log(res);
+                },
+                (error) => {
+                    this.loading = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
+
+    paginado(evt): void{
+        this.pagina = evt.pageIndex + 1;
+        this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+    }
+    
+    paginate(array, page_size, page_number) {
+        return array.slice((page_number - 1) * page_size, page_number * page_size);
+    }
+
+    sociedadPersonaSelected(element){
+        console.log(element);
+        this.datosSociedadPersona.idSociedad = element.IDSOCIEDAD;
+        this.datosSociedadPersona.razonSocial = element.RAZONSOCIAL;
+        this.datosSociedadPersona.rfc = element.RFC;
+        this.datosSociedadPersona.acta = element.ACTIVPRINCIP;
+        this.datosSociedadPersona.tipoMoral = element.TIPOMORAL;
+        this.datosSociedadPersona.fechaInicio = element.FECHAINICIOACTIV;
+        this.datosSociedadPersona.motivoCambio = element.IDMOTIVOSMORAL;
+        this.datosSociedadPersona.fechaCambio = element.FECHACAMBIOSITUACION;
+        this.datosSociedadPersona.registro = element.REGISTRO;
+        this.datosSociedadPersona.fecha_alta = element.FECHAALTA;
+        this.datosSociedadPersona.fecha_baja = element.FECHABAJA;
+    }
+}
 
 ///////////////DOMICILIO////////////////
 @Component({
     selector: 'app-dialog-domicilio-sociedad',
     templateUrl: 'app-dialog-domicilio-sociedad.html',
     styleUrls: ['./editar-sociedad.component.css']
-  })
-  export class DialogDomicilioSociedad {
+})
+export class DialogDomicilioSociedad {
     endpointCatalogos = environment.endpoint + 'registro/';
     //loadingTiposDireccion = false;
     loadingEstados = false;
@@ -451,19 +629,6 @@ export class EditarSociedadComponent implements OnInit {
             this.getDataTiposLocalidad();
         }
     
-    /*getDataTiposDireccion(): void {
-        this.loadingTiposDireccion = true;
-        this.http.get(this.endpointCatalogos, this.httpOptions).subscribe(
-            (res: any) => {
-                this.loadingTiposDireccion = false;
-                this.tiposDireccion = res;
-            },
-            (error) => {
-                this.loadingTiposDireccion = false;
-            }
-        );
-    }*/
-  
     getNombreDel(event): void {
         this.dataDomicilio.delegacion = event.source.triggerValue;
         this.botonAsentamiento = false;
@@ -761,20 +926,20 @@ export class EditarSociedadComponent implements OnInit {
             }
         });
     }
-  }
+}
   
-  ///////////////MUNICIPIOS//////////////////
-  export interface DataMunicipios{
+///////////////MUNICIPIOS//////////////////
+export interface DataMunicipios{
     codmunicipio: number;
     codestado: number;
     municipio: string;
-  }
-  @Component({
+}
+ @Component({
     selector: 'app-dialog-municipios-sociedad',
     templateUrl: 'app-dialog-municipios-sociedad.html',
     styleUrls: ['./editar-sociedad.component.css']
-  })
-  export class DialogMunicipiosSociedad {
+})
+ export class DialogMunicipiosSociedad {
     endpoint = environment.endpoint + 'registro/';
     displayedColumns: string[] = ['coloniaAsentamiento', 'select'];
     pagina = 1;
@@ -894,20 +1059,20 @@ export class EditarSociedadComponent implements OnInit {
                 }
             );
     }
-  }
+}
   
-  ///////////////CIUDAD//////////////////
-  export interface DataCiudad{
+///////////////CIUDAD//////////////////
+export interface DataCiudad{
     codciudad: number;
     codestado: number;
     ciudad: string;
-  }
-  @Component({
+}
+@Component({
     selector: 'app-dialog-ciudad-sociedad',
     templateUrl: 'app-dialog-ciudad-sociedad.html',
     styleUrls: ['./editar-sociedad.component.css']
-  })
-  export class DialogCiudadSociedad {
+})
+export class DialogCiudadSociedad {
     endpoint = environment.endpoint + 'registro/';
     displayedColumns: string[] = ['ciudad', 'select'];
     pagina = 1;
@@ -1001,51 +1166,22 @@ export class EditarSociedadComponent implements OnInit {
         this.dataCiudad.codestado = element.CODESTADO;
     }
   
-    // obtenerAsentamientoPorNombre(){
-    //     this.loadingBuscaCiudad = true;
-    //     let criterio = '';
-    //     let query = '';
+   
+}
   
-    //     if(this.data.codEstado != 9){
-    //         criterio = criterio + 'getMunicipiosByEstado';
-    //         query = query + 'codEstado=' + this.data.codEstado;
-    //     }else{
-    //         criterio = '';
-    //         query = '';
-    //     }
-  
-    //     console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
-    //     this.loadingBuscaCiudad = true;
-    //     this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
-    //         .subscribe(
-    //             (res: any) => {
-    //                 this.loadingBuscaCiudad = false;
-    //                 this.dataSource = res;
-    //                 this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-    //                 this.total = this.dataSource.length; 
-    //                 this.paginator.pageIndex = 0;
-    //                 console.log(this.dataSource);
-    //             },
-    //             (error) => {
-    //                 this.loadingBuscaCiudad = false;
-    //             }
-    //         );
-    // }
-  }
-  
-  ///////////////ASENTAMIENTO//////////////////
-  export interface DataAsentamiento{
+///////////////ASENTAMIENTO//////////////////
+export interface DataAsentamiento{
     codasentamiento: string;
     asentamiento: string;
     codigopostal: string;
     codtiposasentamiento: string;
-  }
-  @Component({
+}
+@Component({
     selector: 'app-dialog-asentamiento-sociedad',
     templateUrl: 'app-dialog-asentamiento-sociedad.html',
     styleUrls: ['./editar-sociedad.component.css']
-  })
-  export class DialogAsentamientoSociedad {
+})
+export class DialogAsentamientoSociedad {
     endpoint = environment.endpoint + 'registro/';
     displayedColumns: string[] = ['coloniaAsentamiento', 'select'];
     pagina = 1;
@@ -1148,46 +1284,20 @@ export class EditarSociedadComponent implements OnInit {
         }
     }
   
-    // obtenerAsentamientoPorNombre(){
-    //     this.loading = true;
-    //     let criterio = 'getAsentamientoByNombre';
-    //     let query = '';
-        
-    //     query = 'nombre=' + this.buscaAsentamiento + '&codEstado=' + this.data.codEstado + '&codMunicipio=' + this.data.codMunicipio;
+}
   
-    //     query = (this.data.codCiudad) ? query + '&codCiudad=' + this.data.codCiudad : query + '&codCiudad=';
-  
-    //     console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
-    //     this.loading = true;
-    //     this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
-    //         .subscribe(
-    //             (res: any) => {
-    //                 this.loading = false;
-    //                 this.dataSource = res;
-    //                 this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-    //                 this.total = this.dataSource.length; 
-    //                 this.paginator.pageIndex = 0;
-    //                 console.log(this.dataSource);
-    //             },
-    //             (error) => {
-    //                 this.loading = false;
-    //             }
-    //         );
-    // }
-  }
-  
-  ///////////////VIA//////////////////
-  export interface dataVia{
+///////////////VIA//////////////////
+export interface dataVia{
     codtiposvia: number;
     idvia: number;
     via : string;
-  }
-  @Component({
+}
+@Component({
     selector: 'app-dialog-via-sociedad',
     templateUrl: 'app-dialog-via-sociedad.html',
     styleUrls: ['./editar-sociedad.component.css']
-  })
-  export class DialogViaSociedad {
+})
+export class DialogViaSociedad {
     endpoint = environment.endpoint + 'registro/';
     displayedColumns: string[] = ['via', 'select'];
     pagina = 1;
@@ -1311,4 +1421,4 @@ export class EditarSociedadComponent implements OnInit {
                 }
             );
     }
-  }
+}

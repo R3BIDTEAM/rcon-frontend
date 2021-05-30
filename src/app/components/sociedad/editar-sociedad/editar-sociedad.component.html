@@ -5,13 +5,19 @@
         </mat-card-header>
 
         
-        <mat-card-header>
+        <mat-card-header *ngIf="!botonEdit">
             <mat-card-title>Datos de persona moral</mat-card-title>
-            <button mat-icon-button color="primary" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente">
+            <button mat-icon-button color="primary" aria-label="Buscar" matTooltip="Buscar" (click)="cleanSociedad()">
                 <mat-icon>clear</mat-icon>
             </button>
-            <button mat-icon-button color="primary" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente">
+            <!-- <button mat-icon-button color="primary" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente">
                 <mat-icon>create</mat-icon>
+            </button> -->
+        </mat-card-header>
+        <mat-card-header *ngIf="botonEdit">
+            <mat-card-title>Datos de persona moral</mat-card-title>
+            <button mat-icon-button color="primary" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente" (click)="buscarSociedadPersona()">
+                <mat-icon>search</mat-icon>
             </button>
         </mat-card-header>
         <div class="row">
