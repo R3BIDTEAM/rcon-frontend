@@ -12,6 +12,11 @@ import * as moment from 'moment';
 export interface DatosSociedad {
     razonSocial: string;
     rfc: string;
+    acta: string;
+    tipoMoral: string;
+    fechaInicio: string;
+    motivoCambio: string;
+    fechaCambio: string;
     registro: string;
     fecha_alta: Date;
     fecha_baja: Date;
@@ -56,7 +61,7 @@ export interface DataDomicilio {
 export class EditarSociedadComponent implements OnInit {
     endpoint = environment.endpoint + 'registro/getSociedadValuacion';
     endpointTable = environment.endpoint + 'registro/getPeritoBySociedad';
-    endpointActualiza = environment.endpoint + 'registro/actualizarSociedad';
+    endpointActualiza = environment.endpoint + 'registro/';
     displayedColumns: string[] = ['nombre','registro', 'rfc'];
     pagina = 1;
     total = 0;
@@ -70,6 +75,8 @@ export class EditarSociedadComponent implements OnInit {
     query;
     idSociedad;
     panelDomicilio = false;
+    panelEspecifico = false;
+    panelSociedades = false;
     datosSociedad: DatosSociedad = {} as DatosSociedad;
     dataDomicilios: DataDomicilio[] = [];
     displayedColumnsDom: string[] = ['tipoDir','direccion', 'historial'];
@@ -80,7 +87,6 @@ export class EditarSociedadComponent implements OnInit {
     dataDomicilioResultado;
     dataSourceDom = [];
     dataPaginateDom;
-    endpointActualiza2 = environment.endpoint + 'registro/';
     @ViewChild('paginator') paginator: MatPaginator;
 
     /*Paginado*/
@@ -160,6 +166,54 @@ export class EditarSociedadComponent implements OnInit {
             );
     }
 
+    guardaSociedad(){
+        let query = 'codtipospersona=M&nombre=';
+        this.loading = true;
+        
+        //codtipospersona=M&nombre=&activprincip=diez&idtipomoral&idmotivosmoral&fechainicioactiv=22-01-2000&fechacambiosituacion=22-02-2002&rfc=RUFV891129R1&apellidopaterno=Veracruzana II&apellidomaterno=&curp=&claveife=&iddocidentif=&valdocidentif=&fechanacimiento=&fechadefuncion=&celular=&email=&idExpediente&idpersona=4485346
+        query = (this.datosSociedad.acta) ? query + '&activprincip=' + this.datosSociedad.acta : query + '&activprincip=';
+
+        query = (this.datosSociedad.tipoMoral) ? query + '&idtipomoral=' + this.datosSociedad.tipoMoral : query + '&idtipomoral=';
+
+        query = (this.datosSociedad.motivoCambio) ? query + '&idmotivosmoral=' + this.datosSociedad.motivoCambio : query + '&idmotivosmoral=';
+
+        query = (this.datosSociedad.fechaInicio) ? query + '&fechainicioactiv=' + moment(this.datosSociedad.fechaInicio).format('DD-MM-YYYY') : query + '&fechainicioactiv=';
+        
+        query = (this.datosSociedad.fechaCambio) ? query + '&fechacambiosituacion=' + moment(this.datosSociedad.fechaCambio).format('DD-MM-YYYY') : query + '&fechacambiosituacion=';
+        
+        query = (this.datosSociedad.rfc) ? query + '&rfc=' + this.datosSociedad.rfc : query + '&rfc=';
+
+        query = (this.datosSociedad.razonSocial) ? query + '&apellidopaterno=' + this.datosSociedad.razonSocial : query + '&apellidopaterno=';
+
+        query = query + '&apellidomaterno=&curp=&claveife=&iddocidentif=&valdocidentif=&fechanacimiento=&fechadefuncion=&celular=&email=&idExpediente';
+
+        query = query + '&idpersona=' + this.idSociedad;
+        //this.datoPeritos.independiente
+        console.log(this.endpointActualiza + 'actualizaContribuyente' + '?' + query);
+        //return;
+        this.http.post(this.endpointActualiza + 'actualizaContribuyente' + '?' + query, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loading = false;
+                    console.log("AQUI ACTUALIZO");
+                    console.log(res);
+                    this.snackBar.open('guardado correcto', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                },
+                (error) => {
+                    this.loading = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
+
     datosDeLaSociedad(){
         this.datosSociedad.razonSocial  = this.dataSocedadResultado.RAZONSOCIAL;
         this.datosSociedad.rfc = this.dataSocedadResultado.RFC;
@@ -189,12 +243,12 @@ export class EditarSociedadComponent implements OnInit {
         query = (this.datosSociedad.fecha_baja) ? query + '&fechaBaja=' + moment(this.datosSociedad.fecha_baja).format('DD-MM-YYYY')
                                                 : query + '&fechaBaja=';
         //this.loading = true;
-        console.log(this.endpointActualiza + '?' + query);
+        console.log(this.endpointActualiza + 'actualizarSociedad' + '?' + query);
 
         //http://localhost:8000/api/v1/registro/actualizarSociedad?idPersona=4485244&registro=S-9999-98&fechaAlta=20-05-2021&fechaBaja
         //http://localhost:8000/api/v1/registro/actualizarSociedad?idPersona=4485269&registro=S-0012-99&fechaAlta=21-05-2021&fechaBaja=31-05-2021
         //return;
-        this.http.post(this.endpointActualiza + '?' + query, '', this.httpOptions)
+        this.http.post(this.endpointActualiza + 'actualizarSociedad' + '?' + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
@@ -219,7 +273,7 @@ export class EditarSociedadComponent implements OnInit {
     getDomicilioSociedad(){
         this.loadingDomicilios = true;
         let metodo = 'getDireccionesContribuyente';
-        this.http.post(this.endpointActualiza2 + metodo + '?idPersona='+ this.idSociedad, '', this.httpOptions)
+        this.http.post(this.endpointActualiza + metodo + '?idPersona='+ this.idSociedad, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingDomicilios = false;

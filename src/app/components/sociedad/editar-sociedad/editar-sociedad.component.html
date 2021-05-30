@@ -21,7 +21,7 @@
                         <div class="col-md-4">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>Razón social</mat-label>
-                                <input matInput placeholder="Placeholder" [(ngModel)]="datosSociedad.razonSocial">
+                                <input matInput placeholder="Razón social" [(ngModel)]="datosSociedad.razonSocial">
                             </mat-form-field>
                         </div>
                     </div>
@@ -30,159 +30,63 @@
                         <div class="col-md-4">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>RFC*</mat-label>
-                                <input matInput placeholder="Placeholder" [(ngModel)]="datosSociedad.rfc">
+                                <input matInput placeholder="RFC" [(ngModel)]="datosSociedad.rfc">
                             </mat-form-field>
                         </div>
                     </div>
-
-
-
-
-
-
-                    <!-- <div class="borde row"> -->
-                        <mat-card-header>
-                            <mat-card-title>Datos de contacto</mat-card-title>
-                        </mat-card-header>
-                        <mat-card-content>
-                            <br>
-                            <mat-accordion>
-                                <mat-expansion-panel (opened)="panelDomicilio = true" (closed)="panelDomicilio = false">
-                                    <mat-expansion-panel-header>
-                                        <mat-panel-title>
-                                            Domicilios
-                                        </mat-panel-title>
-                                        <mat-panel-description>
-                                            {{panelDomicilio ? 'Cerrar' : 'Ver'}} los datos de los Domicilios
-                                        </mat-panel-description>
-                                    </mat-expansion-panel-header>
-                                    <div class="row" style="margin-bottom: 15px;">
-                                        <div class="col-md-4">
-                                            <button mat-stroked-button aria-label="Domicilios" style="background-color: #00A447; color: #FFF!important;" (click)="addDomicilio()">
-                                                Domicilios <mat-icon style="display: inherit; width: 15px;">add</mat-icon>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <ng-container>
-                                                <div style="padding: 30px; text-align: center;" *ngIf="loadingDomicilios">
-                                                    <mat-spinner style="margin:0 auto;"></mat-spinner>
-                                                    <p>Cargando...</p>
-                                                </div>
-                                                <div class="alert alert-info" *ngIf="!loadingDomicilios && dataSource1.length == 0">
-                                                    No hay direcciones asociadas.
-                                                </div> 
-                                                <table mat-table [dataSource]="dataSource1" *ngIf="!loadingDomicilios && dataSource1.length > 0" width="100%">
-                                                    <ng-container matColumnDef="tipoDir">
-                                                        <th mat-header-cell *matHeaderCellDef width="15%" > Tipo Dirección </th>
-                                                        <td mat-cell *matCellDef="let element" width="15%" > {{ element.CODTIPOSDIRECCION }}</td>
-                                                    </ng-container>
-                                                    <ng-container matColumnDef="direccion">
-                                                        <th mat-header-cell *matHeaderCellDef width="75%"> Dirección </th>
-                                                        <td mat-cell *matCellDef="let element" width="75%">
-                                                            {{ element.ABREVIATURAVIA }}, {{ element.VIA }} {{ element.NUMEROEXTERIOR }}, Col: {{ element.COLONIA}}
-                                                            C.P. {{ element.CODIGOPOSTAL}}, {{ element.DELEGACION}} ({{ element.ESTADO }})
-                                                        </td>
-                                                    </ng-container>
-                                                    <ng-container matColumnDef="historial">
-                                                        <th mat-header-cell *matHeaderCellDef> Historial </th>
-                                                        <td mat-cell *matCellDef="let element">
-                                                            <button mat-icon-button type="button" color="primary" aria-label="Historial" matTooltip="Historial">
-                                                                <mat-icon>search</mat-icon>
-                                                            </button>
-                                                        </td>
-                                                    </ng-container>
-                                                    <tr mat-header-row *matHeaderRowDef="displayedColumnsDom"></tr>
-                                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsDom;"></tr>
-                                                </table>
-                                                <mat-paginator #paginator [length]="total1" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado1($event)">
-                                                </mat-paginator>
-                                            </ng-container>
-                                        </div>
-                                    </div>
-                                </mat-expansion-panel>
-                            </mat-accordion>
-                            
-                        </mat-card-content>
-                    <!-- </div> -->
-
-
-
-
-
-                    <mat-card-header>
-                        <mat-card-title>Datos especifícos de la sociedad</mat-card-title>
-                        <button mat-icon-button color="primary" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente">
-                            <mat-icon>add_box</mat-icon>
-                        </button>
-                        <button mat-icon-button color="primary" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente">
-                            <mat-icon>delete</mat-icon>
-                        </button>
-                    </mat-card-header>
                     <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-md-4">
                             <mat-form-field appearance="outline" style="width: 100%;">
-                                <mat-label>Registro*</mat-label>
-                                <input matInput placeholder="Placeholder" [(ngModel)]="datosSociedad.registro">
+                                <mat-label>Acta preponderante*</mat-label>
+                                <input matInput placeholder="Acta preponderante" [(ngModel)]="datosSociedad.acta">
                             </mat-form-field>
                         </div>
-                        <div class="col-md-5">
-                        </div>
                     </div>
+
                     <div class="row">
                         <div class="col-md-5">
                             <mat-form-field appearance="fill" style="width: 100%;">
-                                <mat-label>Fecha Alta</mat-label>
-                                <input matInput [matDatepicker]="fechaAlta" [(ngModel)]="datosSociedad.fecha_alta">
-                                <mat-datepicker-toggle matSuffix [for]="fechaAlta"></mat-datepicker-toggle>
-                                <mat-datepicker #fechaAlta></mat-datepicker>
+                                <mat-label>Tipo de persona moral</mat-label>
+                                <mat-select [(ngModel)]="datosSociedad.tipoMoral">
+                                    <mat-option value=""></mat-option>
+                                </mat-select>
                             </mat-form-field>
                         </div>
                         <div class="col-md-5">
                             <mat-form-field appearance="fill" style="width: 100%;">
-                                <mat-label>Fecha Baja</mat-label>
-                                <input matInput [matDatepicker]="fechaBaja" [(ngModel)]="datosSociedad.fecha_baja">
-                                <mat-datepicker-toggle matSuffix [for]="fechaBaja"></mat-datepicker-toggle>
-                                <mat-datepicker #fechaBaja></mat-datepicker>
+                                <mat-label>Fecha de inicio de operación</mat-label>
+                                <input matInput [matDatepicker]="fechaInicio" [(ngModel)]="datosSociedad.fechaInicio">
+                                <mat-datepicker-toggle matSuffix [for]="fechaInicio"></mat-datepicker-toggle>
+                                <mat-datepicker #fechaInicio></mat-datepicker>
                             </mat-form-field>
                         </div>
                     </div>
-                </ng-container>
-                <h3>Peritos Asociados</h3>
-                <ng-container>
-                    <div style="padding: 30px; text-align: center;" *ngIf="loading">
-                        <mat-spinner style="margin:0 auto;"></mat-spinner>
-                        <p>Cargando...</p>
+
+                    <div class="row">
+                        <div class="col-md-5">
+                            <mat-form-field appearance="fill" style="width: 100%;">
+                                <mat-label>Motivo del cambio de situación</mat-label>
+                                <mat-select [(ngModel)]="datosSociedad.motivoCambio">
+                                    <mat-option value=""></mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-5">
+                            <mat-form-field appearance="fill" style="width: 100%;">
+                                <mat-label>Fecha de cambio de situación</mat-label>
+                                <input matInput [matDatepicker]="fechaCambio" [(ngModel)]="datosSociedad.fechaCambio">
+                                <mat-datepicker-toggle matSuffix [for]="fechaCambio"></mat-datepicker-toggle>
+                                <mat-datepicker #fechaCambio></mat-datepicker>
+                            </mat-form-field>
+                        </div>
                     </div>
-                    <div class="alert alert-info" *ngIf="!loading && dataSource.length == 0">
-                        No hay avalúos para el filtro seleccionado
-                    </div> 
-                    <table mat-table [dataSource]="dataSource" *ngIf="!loading && dataSource.length > 0">
-                        <ng-container matColumnDef="nombre">
-                            <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                            <td mat-cell *matCellDef="let element"> {{ element.nombre }} {{ element.apellidopaterno }} {{ element.apellidomaterno }}</td>
-                        </ng-container>
-                        <ng-container matColumnDef="registro">
-                            <th mat-header-cell *matHeaderCellDef> Registro </th>
-                            <td mat-cell *matCellDef="let element"> {{element.registro}}</td>
-                        </ng-container>
-                        <ng-container matColumnDef="rfc">
-                            <th mat-header-cell *matHeaderCellDef> RFC </th>
-                            <td mat-cell *matCellDef="let element"> {{ element.rfc }}</td>
-                        </ng-container>
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                    </table>
-                    <mat-paginator #paginator [length]="total" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado($event)">
-                    </mat-paginator>
                 </ng-container>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-2 offset-md-8">
+            <div class="col-md-2 offset-md-6">
                 <div class="d-flex flex-row-reverse">
-                    <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" (click)="actualizaSociedad()">
+                    <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" (click)="guardaSociedad()">
                         Guardar
                     </button>
                 </div>
@@ -194,6 +98,200 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </div><br>
     </div>
+    <br>
+    <div class="borde">
+        <mat-card-header>
+            <mat-card-title>Datos de contacto</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <br>
+            <mat-accordion>
+                <mat-expansion-panel (opened)="panelDomicilio = true" (closed)="panelDomicilio = false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Domicilios
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            {{panelDomicilio ? 'Cerrar' : 'Ver'}} los datos de los Domicilios
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <div class="row" style="margin-bottom: 15px;">
+                        <div class="col-md-4">
+                            <button mat-stroked-button aria-label="Domicilios" style="background-color: #00A447; color: #FFF!important;" (click)="addDomicilio()">
+                                Domicilios <mat-icon style="display: inherit; width: 15px;">add</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ng-container>
+                                <div style="padding: 30px; text-align: center;" *ngIf="loadingDomicilios">
+                                    <mat-spinner style="margin:0 auto;"></mat-spinner>
+                                    <p>Cargando...</p>
+                                </div>
+                                <div class="alert alert-info" *ngIf="!loadingDomicilios && dataSource1.length == 0">
+                                    No hay direcciones asociadas.
+                                </div> 
+                                <table mat-table [dataSource]="dataSource1" *ngIf="!loadingDomicilios && dataSource1.length > 0" width="100%">
+                                    <ng-container matColumnDef="tipoDir">
+                                        <th mat-header-cell *matHeaderCellDef width="15%" > Tipo Dirección </th>
+                                        <td mat-cell *matCellDef="let element" width="15%" > {{ element.CODTIPOSDIRECCION }}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="direccion">
+                                        <th mat-header-cell *matHeaderCellDef width="75%"> Dirección </th>
+                                        <td mat-cell *matCellDef="let element" width="75%">
+                                            {{ element.ABREVIATURAVIA }}, {{ element.VIA }} {{ element.NUMEROEXTERIOR }}, Col: {{ element.COLONIA}}
+                                            C.P. {{ element.CODIGOPOSTAL}}, {{ element.DELEGACION}} ({{ element.ESTADO }})
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="historial">
+                                        <th mat-header-cell *matHeaderCellDef> Historial </th>
+                                        <td mat-cell *matCellDef="let element">
+                                            <button mat-icon-button type="button" color="primary" aria-label="Historial" matTooltip="Historial">
+                                                <mat-icon>search</mat-icon>
+                                            </button>
+                                        </td>
+                                    </ng-container>
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumnsDom"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsDom;"></tr>
+                                </table>
+                                <mat-paginator #paginator [length]="total1" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado1($event)">
+                                </mat-paginator>
+                            </ng-container>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </mat-card-content>
+    </div>
+    <br>
+    <div class="borde">
+        <mat-card-header>
+            <mat-card-title>Datos especifícos de la sociedad</mat-card-title>
+            <button mat-icon-button color="primary" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente">
+                <mat-icon>add_box</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </mat-card-header>
+        <mat-accordion>
+            <mat-expansion-panel (opened)="panelEspecifico = true" (closed)="panelEspecifico = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Información
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        {{panelEspecifico ? 'Cerrar' : 'Ver'}} datos especifícos
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <mat-form-field appearance="outline" style="width: 100%;">
+                                    <mat-label>Registro*</mat-label>
+                                    <input matInput placeholder="Placeholder" [(ngModel)]="datosSociedad.registro">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-5">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>Fecha Alta</mat-label>
+                                    <input matInput [matDatepicker]="fechaAlta" [(ngModel)]="datosSociedad.fecha_alta">
+                                    <mat-datepicker-toggle matSuffix [for]="fechaAlta"></mat-datepicker-toggle>
+                                    <mat-datepicker #fechaAlta></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-5">
+                                <mat-form-field appearance="fill" style="width: 100%;">
+                                    <mat-label>Fecha Baja</mat-label>
+                                    <input matInput [matDatepicker]="fechaBaja" [(ngModel)]="datosSociedad.fecha_baja">
+                                    <mat-datepicker-toggle matSuffix [for]="fechaBaja"></mat-datepicker-toggle>
+                                    <mat-datepicker #fechaBaja></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2 offset-md-6">
+                        <div class="d-flex flex-row-reverse">
+                            <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" (click)="actualizaSociedad()">
+                                Guardar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="d-flex flex-row-reverse">
+                            <button mat-stroked-button class="boton-n-representacion" color="warn" aria-label="Cancelar">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion><br>
+    </div>
+    <br>
+    <div class="borde">
+        <mat-card-header>
+            <mat-card-title>Peritos Asociados</mat-card-title>
+            <button mat-icon-button color="primary" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente">
+                <mat-icon>add_box</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </mat-card-header>
+        <mat-accordion>
+            <mat-expansion-panel (opened)="panelSociedades = true" (closed)="panelSociedades = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Información
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        {{panelSociedades ? 'Cerrar' : 'Ver'}} datos de las Sociedades Asociadas
+                    </mat-panel-description>
+                </mat-expansion-panel-header><br>
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <ng-container>
+                            <div style="padding: 30px; text-align: center;" *ngIf="loading">
+                                <mat-spinner style="margin:0 auto;"></mat-spinner>
+                                <p>Cargando...</p>
+                            </div>
+                            <div class="alert alert-info" *ngIf="!loading && dataSource.length == 0">
+                                No hay avalúos para el filtro seleccionado
+                            </div> 
+                            <table mat-table [dataSource]="dataSource" *ngIf="!loading && dataSource.length > 0">
+                                <ng-container matColumnDef="nombre">
+                                    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                                    <td mat-cell *matCellDef="let element"> {{ element.nombre }} {{ element.apellidopaterno }} {{ element.apellidomaterno }}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="registro">
+                                    <th mat-header-cell *matHeaderCellDef> Registro </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.registro}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="rfc">
+                                    <th mat-header-cell *matHeaderCellDef> RFC </th>
+                                    <td mat-cell *matCellDef="let element"> {{ element.rfc }}</td>
+                                </ng-container>
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                            <mat-paginator #paginator [length]="total" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado($event)">
+                            </mat-paginator>
+                        </ng-container>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion><br>
+    </div>
+    <br>
 </mat-card>

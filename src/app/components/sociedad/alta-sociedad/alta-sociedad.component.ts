@@ -100,6 +100,7 @@ export class AltaSociedadComponent implements OnInit {
                 }
             );
     }
+
     openDialogSociedad(): void {
         const dialogRef = this.dialog.open(DialogSociedad, {
             width: '850px',
