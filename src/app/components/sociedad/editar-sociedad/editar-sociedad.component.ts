@@ -349,6 +349,32 @@ export class EditarSociedadComponent implements OnInit {
         this.datosSociedad.fecha_baja = null;
         this.botonEdit = true;
     }
+
+    buscarPeritoPersona(){
+        const dialogRef = this.dialog.open(DialogSociedadPerito, {
+            width: '700px',
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                console.log("RESULTADO DEL NUEVO NOMBRE");
+                console.log(result);
+                console.log(result.apepaterno);
+                // this.datoPeritos.apepaterno = result.apepaterno;
+                // this.datoPeritos.apematerno = result.apematerno;
+                // this.datoPeritos.nombre  = result.nombre;
+                // this.datoPeritos.rfc = result.rfc;
+                // this.datoPeritos.curp = result.curp;
+                // this.datoPeritos.ine = result.ine;
+                // this.datoPeritos.identificacion = result.identificacion;
+                // this.datoPeritos.idedato = result.idedato;
+                // this.datoPeritos.fecha_naci = result.fecha_naci;
+                // this.datoPeritos.fecha_def = result.fecha_def;
+                // this.datoPeritos.celular = result.celular;
+                // this.datoPeritos.email = result.email;
+                this.botonEdit = false;
+            }
+        });
+    }
 }
 
 ///////////////BUSCAR PERSONA MORAL////////////////
@@ -1420,5 +1446,189 @@ export class DialogViaSociedad {
                     this.loadingBuscaVia = false;
                 }
             );
+    }
+}
+
+///////////////BUSCAR PERSONA PERITO////////////////
+export interface DatosPeritoPersona {
+    apepaterno: string;
+    apematerno: string;
+    nombre: string;
+    rfc: string;
+    curp: string;
+    ine: string;
+    identificacion: number;
+    idedato: string;
+    fecha_naci: Date;
+    fecha_def: Date;
+    celular: string;
+    email: string;
+}
+@Component({
+    selector: 'app-dialog-buscaPerito',
+    templateUrl: 'app-dialog-buscaPerito.html',
+    styleUrls: ['./editar-sociedad.component.css']
+})
+export class DialogSociedadPerito {
+    endpoint = environment.endpoint + 'registro/';
+    displayedColumns: string[] = ['nombre', 'datos', 'select'];
+    pagina = 1;
+    total = 0;
+    pageSize = 15;
+    loading = false;
+    dataSource = [];
+    dataPaginate;
+    httpOptions;
+    nombrePerito;
+    filtroNombre;
+    search = false;
+    appaterno;
+    apmaterno
+    nombre;
+    rfc;
+    curp;
+    ine;
+    registro;
+    identificacion;
+    idedato;
+    isIdentificativo;
+    optionPeritoPersona;
+    idperito: number;
+    datoPeritoPersona: DatosPeritoPersona = {} as DatosPeritoPersona;
+    @ViewChild('paginator') paginator: MatPaginator;
+
+    constructor(
+        private auth: AuthService,
+        private http: HttpClient,
+        private _formBuilder: FormBuilder,
+        public dialogRef: MatDialogRef<DialogSociedadPerito>,
+        @Inject(MAT_DIALOG_DATA) public data: any){
+            dialogRef.disableClose = true;
+            this.httpOptions = {
+                headers: new HttpHeaders({
+                    'Content-Type': 'application/json',
+                    Authorization: this.auth.getSession().token
+                })
+            };
+        }
+
+    validateSearchBuscaP(){
+        this.search = (
+            this.appaterno ||
+            this.apmaterno ||
+            this.nombre ||
+            this.rfc ||
+            this.curp ||
+            this.ine ||
+            this.registro ||
+            this.identificacion ||
+            this.idedato
+        ) ? true : false;
+    }
+
+    clearInputsIdentNoIdent2(isIdentificativo): void {
+        this.isIdentificativo = isIdentificativo;
+        if(this.isIdentificativo){
+            this.appaterno = null;
+            this.apmaterno = null;
+            this.nombre = null;            
+        }else{
+            this.rfc = null;
+            this.curp = null;
+            this.ine = null;
+            this.registro = null;
+            this.identificacion = null;
+            this.idedato = null;
+        }
+    }
+
+    cleanBusca(): void{
+        this.pagina = 1;
+        this.total = 0;
+        this.dataSource = [];
+        this.loading = false;
+        this.dataPaginate;
+    }
+
+    getPerito2(){
+        let query = '';
+        let busquedaDatos = '';
+
+        if(this.nombre){
+            query = query + '&nombre=' + this.nombre + '&filtroNombre=0';
+        }
+        if(this.appaterno){
+            query = query + '&apellidoPaterno=' + this.appaterno + '&filtroApellidoPaterno=0';
+        }
+        if(this.apmaterno){
+            query = query + '&apellidoMaterno=' + this.apmaterno + '&filtroApellidoMaterno=0';
+        }
+        if(this.curp){
+            query = query + '&curp=' + this.curp;
+        }
+        if(this.rfc){
+            query = query + '&rfc=' + this.rfc;
+        }
+        if(this.ine){
+            query = query + '&ine=' + this.ine;
+        }
+        if(this.registro){
+            query = query + '&registro=' + this.registro;
+        }
+        if(this.identificacion && this.idedato){
+            query = query + '&iddocidentif=' + this.identificacion + '&valdocidentif=' + this.idedato;
+        }
+
+        if( this.isIdentificativo ){
+            busquedaDatos = busquedaDatos + 'getIdentificativos';
+            query = query + '&coincidenTodos=false';
+        }else{
+            busquedaDatos = busquedaDatos + 'getContribuyente';
+        }
+
+        query = query.substr(1);
+
+        console.log(this.endpoint + busquedaDatos + '?' + query);
+        this.loading = true;
+        this.http.post(this.endpoint + busquedaDatos + '?' + query, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loading = false;
+                    this.dataSource = res;
+                    this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                    this.total = this.dataSource.length; 
+                    this.paginator.pageIndex = 0;
+                    console.log(this.dataSource);
+                },
+                (error) => {
+                    this.loading = false;
+                }
+            );
+    }
+
+    paginado(evt): void{
+        this.pagina = evt.pageIndex + 1;
+        this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+    }
+    
+    paginate(array, page_size, page_number) {
+        return array.slice((page_number - 1) * page_size, page_number * page_size);
+    }
+
+    peritoPersonaSelected(element){
+        console.log(element);
+        this.idperito = element.IDPERITO;
+        this.datoPeritoPersona.nombre = element.NOMBRE;
+        this.datoPeritoPersona.apepaterno = element.APELLIDOPATERNO;
+        this.datoPeritoPersona.apematerno = element.APELLIDOMATERNO;
+        this.datoPeritoPersona.rfc = element.RFC;
+        this.datoPeritoPersona.curp = element.CURP;
+        this.datoPeritoPersona.ine = element.CLAVEIFE;
+        this.datoPeritoPersona.identificacion = element.IDDOCIDENTIF;
+        this.datoPeritoPersona.idedato = element.DESCDOCIDENTIF;
+        this.datoPeritoPersona.fecha_naci = element.FECHANACIMIENTO;
+        this.datoPeritoPersona.fecha_def = element.FECHADEFUNCION;
+        this.datoPeritoPersona.celular = element.CELULAR;
+        this.datoPeritoPersona.email = element.EMAIL;
     }
 }

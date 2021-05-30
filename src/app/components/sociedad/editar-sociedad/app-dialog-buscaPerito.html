@@ -1,0 +1,149 @@
+<h1 mat-dialog-title>Búqueda de personas</h1>
+<div mat-dialog-content>
+    <mat-card-content>
+        <!-- Búsqueda por nombre -->
+        <div class="row">
+            <div class="col-1 text-center">
+            </div>
+                <mat-form-field class="col-4">
+                    <mat-label>Apellido Paterno</mat-label>
+                    <input matInput [(ngModel)]="appaterno" [required]="true" (ngModelChange)="validateSearchBuscaP()" (keyup)="clearInputsIdentNoIdent2(false)">
+                    <mat-error></mat-error>
+                </mat-form-field>
+            <div class="col-1 text-center">
+            </div>
+                <mat-form-field class="col-4">
+                    <mat-label>Apellido Materno</mat-label>
+                    <input matInput [(ngModel)]="apmaterno" [required]="true" (ngModelChange)="validateSearchBuscaP()" (keyup)="clearInputsIdentNoIdent2(false)">
+                    <mat-error></mat-error>
+                </mat-form-field>
+        </div>
+        <div class="row">
+            <div class="col-1 text-center">
+            </div>
+                <mat-form-field class="col-4">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput [(ngModel)]="nombre" [required]="true" (ngModelChange)="validateSearchBuscaP()" (keyup)="clearInputsIdentNoIdent2(false)">
+                    <mat-error></mat-error>
+                </mat-form-field>
+        </div>
+        <!-- Fin de nombre -->
+
+        <!-- Búsqueda por RFC CRUP -->
+        <div class="row">
+            <div class="col-1 text-center">
+            </div>
+                <mat-form-field class="col-4">
+                    <mat-label>RFC</mat-label>
+                    <input matInput [(ngModel)]="rfc" [required]="true" (ngModelChange)="validateSearchBuscaP()" (keyup)="clearInputsIdentNoIdent2(true)">
+                    <mat-error></mat-error>
+                </mat-form-field>
+            <div class="col-1 text-center">
+            </div>
+                <mat-form-field class="col-4">
+                    <mat-label>CURP</mat-label>
+                    <input matInput [(ngModel)]="curp" [required]="true" (ngModelChange)="validateSearchBuscaP()" (keyup)="clearInputsIdentNoIdent2(true)">
+                    <mat-error></mat-error>
+                </mat-form-field>
+        </div>
+        <!-- Fin de RFC CRUP -->
+
+        <!-- Búsqueda por OTROS -->
+        <div class="row">
+            <div class="col-1 text-center">
+            </div>
+                <mat-form-field class="col-4">
+                    <mat-label>INE</mat-label>
+                    <input matInput [(ngModel)]="ine" [required]="true" (ngModelChange)="validateSearchBuscaP()" (keyup)="clearInputsIdentNoIdent2(true)">
+                    <mat-error></mat-error>
+                </mat-form-field>
+                <div class="col-1 text-center">
+                </div>
+                <mat-form-field class="col-4">
+                    <mat-label>Registro</mat-label>
+                    <input matInput [(ngModel)]="registro" [required]="true" (ngModelChange)="validateSearchBuscaP()" (keyup)="clearInputsIdentNoIdent2(true)">
+                    <mat-error></mat-error>
+                </mat-form-field>                    
+        </div>
+        <!-- Fin de OTROS -->
+
+        <div class="row">
+            <div class="col-1 text-center">
+            </div>
+            <mat-form-field class="col-5">
+                <mat-label>Identificación</mat-label>
+                <mat-select [(ngModel)]="identificacion" [required]="true" (ngModelChange)="validateSearchBuscaP();clearInputsIdentNoIdent2(true)">
+                    <mat-option value="1">Cédula profecional</mat-option>
+                    <mat-option value="2">Pasaporte</mat-option>
+                    <mat-option value="3">Licencia de conducir</mat-option>
+                    <mat-option value="4">Número de seguro social</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="col-5">
+                <mat-label></mat-label>
+                <input matInput [(ngModel)]="idedato" [required]="true" (ngModelChange)="validateSearchBuscaP()" (keyup)="clearInputsIdentNoIdent2(true)">
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <div class="col-2">
+
+            </div>
+            <div class="col">
+                <div class="d-flex flex-row-reverse">
+                    <button mat-icon-button color="primary" aria-label="Limpiar Filtros" matTooltip="Limpiar Filtros" (click)="cleanBusca()">
+                        <mat-icon>clear</mat-icon>
+                    </button>
+                    <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getPerito2()" [disabled]="!search">
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="col-6">
+            </div>
+        </div>
+        <br>
+            <ng-container>
+                <div style="padding: 30px; text-align: center;" *ngIf="loading">
+                    <mat-spinner style="margin:0 auto;"></mat-spinner>
+                    <p>Cargando...</p>
+                </div>
+                <div class="alert alert-info" *ngIf="dataSource.length == 0 && !loading">
+                    No hay Peritos para el filtro seleccionado
+                </div> 
+                <table mat-table [dataSource]="dataPaginate" *ngIf="!loading && dataSource.length > 0">
+                    <ng-container matColumnDef="nombre">
+                        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                        <td mat-cell *matCellDef="let element"> 
+                            {{ (element.nombre) ? element.nombre : element.NOMBRE}}
+                            {{ (element.apellidopaterno) ? element.apellidopaterno : element.APELLIDOPATERNO }}
+                            {{ (element.apellidomaterno) ? element.apellidomaterno : element.APELLIDOMATERNO }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="datos">
+                        <th mat-header-cell *matHeaderCellDef> Datos Identificativos </th>
+                        <td mat-cell *matCellDef="let element"> 
+                            RFC: {{ (element.rfc) ? element.rfc : element.RFC }}<br>
+                            CURP: {{ (element.curp) ? element.curp : element.CURP }} <br>
+                            INE: {{ (element.ife) ? element.ife : element.IFE }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-radio-group [(ngModel)]="optionPeritoPersona">
+                                <mat-radio-button [value]="element" (change)="peritoPersonaSelected(element)"></mat-radio-button>
+                            </mat-radio-group>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <mat-paginator #paginator [length]="total" [pageSize]="pageSize" [pageSizeOptions]="[pageSize]" [showFirstLastButtons]="true" (page)="paginado($event)">
+                </mat-paginator>
+            </ng-container>
+    </mat-card-content>
+</div>
+<mat-dialog-actions align="end">
+    <button mat-flat-button color="primary" [mat-dialog-close]="datoPeritoPersona">Aceptar</button>
+    <button mat-button mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>
