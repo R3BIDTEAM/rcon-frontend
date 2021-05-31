@@ -14,9 +14,9 @@ export interface DatosSociedad {
     rfc: string;
     acta: string;
     tipoMoral: string;
-    fechaInicio: string;
+    fechaInicio: Date;
     motivoCambio: string;
-    fechaCambio: string;
+    fechaCambio: Date;
     registro: string;
     fecha_alta: Date;
     fecha_baja: Date;
@@ -53,6 +53,45 @@ export interface DataDomicilio {
     adicional: string;
   }
 
+  export interface DataRepresentacion {
+    tipoPersona: string;
+    nombre: string;
+    apaterno: string;
+    amaterno: string;
+    rfc: string;
+    curp: string;
+    ine: string;
+    idDocIdent: number;
+    docIdent: string;
+    fechaNacimiento: Date;
+    fechaDefuncion: Date;
+    celular: string;
+    email: string;
+    actPreponderante: string;
+    idTipoPersonaMoral: number;
+    fechaInicioOperacion: Date;
+    idMotivo: number;
+    fechaCambio: Date;
+    texto: string;
+    fechaCaducidad: Date;
+    documentoRepresentacion: DataDocumentoRepresentacion;
+}
+export interface DataDocumentoRepresentacion {
+    codtipodocumento: number;
+    nombreTipoDocumento: string;
+    codtipodocumentojuridico: string;
+    nombreTipoDocumentoJuridico: string;
+    idnotario: number;
+    noNotario: string;
+    ciudadNotario: string;
+    nombreNotario: string;
+    num_escritura: string;
+    fecha: Date;
+    descripcion: string;
+    lugar: string;
+    archivos: Array<{nombre: string, base64: string}>;
+}
+
 @Component({
     selector: 'app-editar-sociedad',
     templateUrl: './editar-sociedad.component.html',
@@ -77,6 +116,8 @@ export class EditarSociedadComponent implements OnInit {
     panelDomicilio = false;
     panelEspecifico = false;
     panelSociedades = false;
+    panelRepresentantes = false;
+    panelRepresentados = false;
     botonEdit = false;
     datosSociedad: DatosSociedad = {} as DatosSociedad;
     dataDomicilios: DataDomicilio[] = [];
@@ -88,6 +129,8 @@ export class EditarSociedadComponent implements OnInit {
     dataDomicilioResultado;
     dataSourceDom = [];
     dataPaginateDom;
+    dataRepresentantes: DataRepresentacion[] = [];
+    dataRepresentados: DataRepresentacion[] = [];
     @ViewChild('paginator') paginator: MatPaginator;
 
     /*Paginado*/
@@ -219,8 +262,14 @@ export class EditarSociedadComponent implements OnInit {
         this.datosSociedad.razonSocial  = this.dataSocedadResultado.RAZONSOCIAL;
         this.datosSociedad.rfc = this.dataSocedadResultado.RFC;
         this.datosSociedad.registro = this.dataSocedadResultado.REGISTRO;
-        this.datosSociedad.fecha_alta = new Date(this.dataSocedadResultado.FECHAALTA);
-        this.datosSociedad.fecha_baja = new Date(this.dataSocedadResultado.FECHABAJA);
+        this.datosSociedad.fecha_alta = (this.dataSocedadResultado.FECHAALTA) ? new Date(this.dataSocedadResultado.FECHAALTA) : null;
+        this.datosSociedad.fecha_baja = (this.dataSocedadResultado.FECHABAJA) ? new Date(this.dataSocedadResultado.FECHABAJA) : null;
+        this.datosSociedad.acta = this.dataSocedadResultado.ACTIVPRINCIP;
+        this.datosSociedad.fechaInicio = (this.dataSocedadResultado.FECHAINICIOACTIV) ? new Date(this.dataSocedadResultado.FECHAINICIOACTIV) : null;
+        this.datosSociedad.fechaCambio = (this.dataSocedadResultado.FECHACAMBIOSITUACION) ? new Date(this.dataSocedadResultado.FECHACAMBIOSITUACION) : null;
+        this.datosSociedad.tipoMoral = this.dataSocedadResultado.IDTIPOMORAL;
+        this.datosSociedad.motivoCambio = this.dataSocedadResultado.IDMOTIVOSMORAL;
+
     }
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
@@ -372,6 +421,44 @@ export class EditarSociedadComponent implements OnInit {
                 // this.datoPeritos.celular = result.celular;
                 // this.datoPeritos.email = result.email;
                 this.botonEdit = false;
+            }
+        });
+    }
+
+    addRepresentante(i = -1, dataRepresentante = null): void {
+        const dialogRef = this.dialog.open(DialogRepresentacionSociedad, {
+            width: '700px',
+            data: {dataRepresentante : dataRepresentante,
+                    datosSociedad : this.datosSociedad,
+                    idSociedad : this.idSociedad
+            },
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                if(i != -1){
+                    this.dataRepresentantes[i] = result;
+                }else{
+                    this.dataRepresentantes.push(result);
+                }
+            }
+        });
+    }
+
+    addRepresentado(i = -1, dataRepresentante = null): void {
+        const dialogRef = this.dialog.open(DialogRepresentadoSociedad, {
+            width: '700px',
+            data: {dataRepresentante : dataRepresentante,
+                    datosSociedad: this.datosSociedad,
+                    idSociedad : this.idSociedad
+            },
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                if(i != -1){
+                    this.dataRepresentantes[i] = result;
+                }else{
+                    this.dataRepresentantes.push(result);
+                }
             }
         });
     }
@@ -1449,7 +1536,1035 @@ export class DialogViaSociedad {
     }
 }
 
-///////////////BUSCAR PERSONA PERITO////////////////
+///////////////REPRESENTACION////////////////
+@Component({
+    selector: 'app-dialog-representacion',
+    templateUrl: 'app-dialog-representacion.html',
+    styleUrls: ['./editar-sociedad.component.css']
+})
+export class DialogRepresentacionSociedad {
+    endpoint = environment.endpoint + 'registro/';
+    loading = false;
+    httpOptions;
+    tipoPersona = 'F';
+    idPersonaRepresentacion;
+    fisicaFormGroup: FormGroup;
+    moralFormGroup: FormGroup;
+    dataRepresentacion: DataRepresentacion = {} as DataRepresentacion;
+  
+    constructor(
+        private http: HttpClient,
+        private _formBuilder: FormBuilder,
+        private snackBar: MatSnackBar,
+        public dialog: MatDialog,
+        public dialogRef: MatDialogRef<DialogRepresentacionSociedad>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) {
+
+        dialogRef.disableClose = true;
+        this.fisicaFormGroup = this._formBuilder.group({
+            nombre: [null, [Validators.required]],
+            apaterno: [null, [Validators.required]],
+            amaterno: [null, []],
+            rfc: [null, [Validators.required]],
+            curp: [null, [Validators.required]],
+            ine: [null, []],
+            idDocIdent: ['', []],
+            docIdent: [null, []],
+            fechaNacimiento: [null, []],
+            fechaDefuncion: [null, []],
+            celular: [null, []],
+            email: [null, []],
+            texto: [null, []],
+            fechaCaducidad: [null, []],
+        });
+    
+        this.moralFormGroup = this._formBuilder.group({
+            nombre: [null, [Validators.required]],
+            rfc: [null, [Validators.required]],
+            actPreponderante: [null, []],
+            idTipoPersonaMoral: ['', []],
+            fechaInicioOperacion: [null, []],
+            idMotivo: ['', []],
+            fechaCambio: [null, []],
+            texto: [null, []],
+            fechaCaducidad: [null, []],
+        });
+        console.log("ACA LA DATA DEL DIALOG REPRESENTACION");
+        console.log(data);
+        if(data.dataRepresentante){
+            this.setDataRepresentacion(data.dataRepresentante);
+        }
+      }
+      
+    changeRequired(remove, add): void {
+        this.fisicaFormGroup.controls[remove].setValue(null);
+        this.fisicaFormGroup.controls[remove].clearValidators();
+        this.fisicaFormGroup.controls[add].setValidators(Validators.required);
+        this.fisicaFormGroup.markAsUntouched();
+        this.fisicaFormGroup.updateValueAndValidity();
+    }
+  
+    addPersona(): void {
+        const dialogRef = this.dialog.open(DialogPersonaSociedad, {
+            width: '700px',
+            data: this.tipoPersona
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                this.tipoPersona = result.tipoPersona;
+                this.idPersonaRepresentacion = result.id;
+                if(this.tipoPersona == 'F') {
+                    this.fisicaFormGroup.controls['nombre'].setValue(result.nombre);
+                    this.fisicaFormGroup.controls['apaterno'].setValue(result.apaterno);
+                    this.fisicaFormGroup.controls['amaterno'].setValue(result.amaterno);
+                    this.fisicaFormGroup.controls['rfc'].setValue(result.rfc);
+                    this.fisicaFormGroup.controls['curp'].setValue(result.curp);
+                    this.fisicaFormGroup.controls['ine'].setValue(result.ine);
+                    this.fisicaFormGroup.controls['idDocIdent'].setValue(result.idDocIdent);
+                    this.fisicaFormGroup.controls['docIdent'].setValue(result.docIdent);
+                } else {
+                    this.moralFormGroup.controls['nombre'].setValue(result.apaterno);
+                    this.moralFormGroup.controls['rfc'].setValue(result.rfc);
+                }
+            }
+        });
+    }
+  
+    addDocumento(dataDocumento = null): void {
+        const dialogRef = this.dialog.open(DialogDocumentoSociedad, {
+            width: '700px',
+            data: dataDocumento,
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                this.dataRepresentacion.documentoRepresentacion = result;
+            }
+        });
+    }
+  
+    removeDocumento(){
+          this.dataRepresentacion.documentoRepresentacion = undefined;
+      }
+  
+    getDataRepresentacion(): DataRepresentacion {
+        this.dataRepresentacion.tipoPersona = this.tipoPersona;
+        if(this.tipoPersona == 'F'){
+            this.dataRepresentacion.nombre = (this.fisicaFormGroup.value.nombre) ? this.fisicaFormGroup.value.nombre : null;
+            this.dataRepresentacion.apaterno = (this.fisicaFormGroup.value.apaterno) ? this.fisicaFormGroup.value.apaterno : null;
+            this.dataRepresentacion.amaterno = (this.fisicaFormGroup.value.amaterno) ? this.fisicaFormGroup.value.amaterno : null;
+            this.dataRepresentacion.rfc = (this.fisicaFormGroup.value.rfc) ? this.fisicaFormGroup.value.rfc : null;
+            this.dataRepresentacion.curp = (this.fisicaFormGroup.value.curp) ? this.fisicaFormGroup.value.curp : null;
+            this.dataRepresentacion.ine = (this.fisicaFormGroup.value.ine) ? this.fisicaFormGroup.value.ine : null;
+            this.dataRepresentacion.idDocIdent = this.fisicaFormGroup.value.idDocIdent;
+            this.dataRepresentacion.docIdent = (this.fisicaFormGroup.value.docIdent) ? this.fisicaFormGroup.value.docIdent : null;
+            this.dataRepresentacion.fechaNacimiento = (this.fisicaFormGroup.value.fechaNacimiento) ? this.fisicaFormGroup.value.fechaNacimiento : null;
+            this.dataRepresentacion.fechaDefuncion = (this.fisicaFormGroup.value.fechaDefuncion) ? this.fisicaFormGroup.value.fechaDefuncion : null;
+            this.dataRepresentacion.celular = (this.fisicaFormGroup.value.celular) ? this.fisicaFormGroup.value.celular : null;
+            this.dataRepresentacion.email = (this.fisicaFormGroup.value.email) ? this.fisicaFormGroup.value.email : null;
+            this.dataRepresentacion.texto = (this.fisicaFormGroup.value.texto) ? this.fisicaFormGroup.value.texto : null;
+            this.dataRepresentacion.fechaCaducidad = (this.fisicaFormGroup.value.fechaCaducidad) ? this.fisicaFormGroup.value.fechaCaducidad : null;
+        } else {
+            this.dataRepresentacion.nombre = (this.moralFormGroup.value.nombre) ? this.moralFormGroup.value.nombre : null;
+            this.dataRepresentacion.rfc = (this.moralFormGroup.value.rfc) ? this.moralFormGroup.value.rfc : null;
+            this.dataRepresentacion.actPreponderante = (this.moralFormGroup.value.actPreponderante) ? this.moralFormGroup.value.actPreponderante : null;
+            this.dataRepresentacion.idTipoPersonaMoral = this.moralFormGroup.value.idTipoPersonaMoral;
+            this.dataRepresentacion.fechaInicioOperacion = (this.moralFormGroup.value.fechaInicioOperacion) ? this.moralFormGroup.value.fechaInicioOperacion : null;
+            this.dataRepresentacion.idMotivo = this.moralFormGroup.value.idMotivo;
+            this.dataRepresentacion.fechaCambio = (this.moralFormGroup.value.fechaCambio) ? this.moralFormGroup.value.fechaCambio : null;
+            this.dataRepresentacion.texto = (this.moralFormGroup.value.texto) ? this.moralFormGroup.value.texto : null;
+            this.dataRepresentacion.fechaCaducidad = (this.moralFormGroup.value.fechaCaducidad) ? this.moralFormGroup.value.fechaCaducidad : null;
+        }
+        this.idPersonaRepresentacion = (this.idPersonaRepresentacion) ? this.idPersonaRepresentacion : null;
+
+        console.log('AQUIII EL JSON');
+        console.log(this.dataRepresentacion);
+        //console.log(JSON.stringify(this.dataRepresentacion));
+        const payload = {
+            "representacion": {
+                textorepresentacion: this.dataRepresentacion.texto,
+                fechacaducidad: moment(this.dataRepresentacion.fechaCaducidad).format("DD-MM-YYYY")
+            },
+            "participantes": [
+                {
+                    rol: "representante",
+                    codtiposPersona: this.dataRepresentacion.tipoPersona,
+                    idpersona: this.idPersonaRepresentacion,
+                    nombre: this.dataRepresentacion.nombre,
+                    rfc: this.dataRepresentacion.rfc,
+                    apellidoPaterno: this.dataRepresentacion.apaterno,
+                    apellidoMaterno: this.dataRepresentacion.amaterno,
+                    curp: this.dataRepresentacion.curp,
+                    ife: this.dataRepresentacion.ine,
+                    iddocIdentif: this.dataRepresentacion.idDocIdent,
+                    valdocIdentif: this.dataRepresentacion.docIdent,
+                    fechaNacimiento: moment(this.dataRepresentacion.fechaNacimiento).format("DD-MM-YYYY"),
+                    fechaDefuncion: moment(this.dataRepresentacion.fechaDefuncion).format("DD-MM-YYYY"),
+                    celular: this.dataRepresentacion.celular,
+                    email: this.dataRepresentacion.email,
+                    activprincip: this.dataRepresentacion.actPreponderante,
+                    idtipomoral: this.dataRepresentacion.idTipoPersonaMoral,
+                    idmotivosmoral: this.dataRepresentacion.idMotivo,
+                    fechainicioactiv: moment(this.dataRepresentacion.fechaInicioOperacion).format("DD-MM-YYYY"),
+                    fechacambiosituacion: moment(this.dataRepresentacion.fechaCambio).format("DD-MM-YYYY")
+                },
+                {
+                    rol:"representado",
+                    codtiposPersona: "M",
+                    idpersona: this.data.idSociedad,
+                    nombre: null,
+                    rfc: this.data.datosSociedad.rfc,
+                    apellidoPaterno: this.data.datosSociedad.razonSocial,
+                    apellidoMaterno: null,
+                    curp: null,
+                    ife: null,
+                    iddocIdentif: null,
+                    valdocIdentif: null,
+                    fechaNacimiento: moment(this.data.datosSociedad.fecha_alta).format("DD-MM-YYYY"),
+                    fechaDefuncion: moment(this.data.datosSociedad.fecha_baja).format("DD-MM-YYYY"),
+                    celular: this.data.datosSociedad.celular,
+                    email: this.data.datosSociedad.email,
+                    activprincip: this.data.datosSociedad.acta,
+                    idtipomoral: this.data.datosSociedad.tipoMoral,
+                    idmotivosmoral: this.data.datosSociedad.motivoCambio,
+                    fechainicioactiv: moment(this.data.datosSociedad.fechaInicio).format("DD-MM-YYYY"),
+                    fechacambiosituacion: moment(this.data.datosSociedad.fechaCambio).format("DD-MM-YYYY")
+                }
+            ],
+            "documento": {
+                descripcion: this.dataRepresentacion.documentoRepresentacion.descripcion,        
+                codtipodocumento: this.dataRepresentacion.documentoRepresentacion.codtipodocumento,
+                fecha: moment(this.dataRepresentacion.documentoRepresentacion.fecha).format("DD-MM-YYYY"),
+                codTipoDocumentoJuridico: this.dataRepresentacion.documentoRepresentacion.codtipodocumentojuridico,        
+                lugar: this.dataRepresentacion.documentoRepresentacion.lugar,
+                idNotario: this.dataRepresentacion.documentoRepresentacion.idnotario,
+                noEscritura: this.dataRepresentacion.documentoRepresentacion.noNotario,
+                documentos: this.dataRepresentacion.documentoRepresentacion.archivos
+            }
+        };
+        
+        console.log(JSON.stringify(payload));
+        this.http.put(this.endpoint + 'insertarRepresentacion', payload, this.httpOptions).subscribe(
+            (res: any) => {
+                this.snackBar.open('SE HA INSERTADO TODO', 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+                console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTECIÓN");
+                console.log(res);
+            },
+            (error) => {
+                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+            });
+        
+        return this.dataRepresentacion;
+    }
+  
+    setDataRepresentacion(dataRepresentacion): void {
+        this.tipoPersona = dataRepresentacion.tipoPersona;
+        if(this.tipoPersona == 'F'){
+            this.fisicaFormGroup.controls['nombre'].setValue(dataRepresentacion.nombre);
+            this.fisicaFormGroup.controls['apaterno'].setValue(dataRepresentacion.apaterno);
+            this.fisicaFormGroup.controls['amaterno'].setValue(dataRepresentacion.amaterno);
+            this.fisicaFormGroup.controls['rfc'].setValue(dataRepresentacion.rfc);
+            this.fisicaFormGroup.controls['curp'].setValue(dataRepresentacion.curp);
+            this.fisicaFormGroup.controls['ine'].setValue(dataRepresentacion.ine);
+            this.fisicaFormGroup.controls['idDocIdent'].setValue(dataRepresentacion.idDocIdent);
+            this.fisicaFormGroup.controls['docIdent'].setValue(dataRepresentacion.docIdent);
+            this.fisicaFormGroup.controls['fechaNacimiento'].setValue(dataRepresentacion.fechaNacimiento);
+            this.fisicaFormGroup.controls['fechaDefuncion'].setValue(dataRepresentacion.fechaDefuncion);
+            this.fisicaFormGroup.controls['celular'].setValue(dataRepresentacion.celular);
+            this.fisicaFormGroup.controls['email'].setValue(dataRepresentacion.email);
+            this.fisicaFormGroup.controls['texto'].setValue(dataRepresentacion.texto);
+            this.fisicaFormGroup.controls['fechaCaducidad'].setValue(dataRepresentacion.fechaCaducidad);
+        } else {
+            this.moralFormGroup.controls['nombre'].setValue(dataRepresentacion.nombre);
+            this.moralFormGroup.controls['rfc'].setValue(dataRepresentacion.rfc);
+            this.moralFormGroup.controls['actPreponderante'].setValue(dataRepresentacion.actPreponderante);
+            this.moralFormGroup.controls['idTipoPersonaMoral'].setValue(dataRepresentacion.idTipoPersonaMoral);
+            this.moralFormGroup.controls['fechaInicioOperacion'].setValue(dataRepresentacion.fechaInicioOperacion);
+            this.moralFormGroup.controls['idMotivo'].setValue(dataRepresentacion.idMotivo);
+            this.moralFormGroup.controls['fechaCambio'].setValue(dataRepresentacion.fechaCambio);
+            this.moralFormGroup.controls['texto'].setValue(dataRepresentacion.texto);
+            this.moralFormGroup.controls['fechaCaducidad'].setValue(dataRepresentacion.fechaCaducidad);
+        }
+  
+        this.dataRepresentacion.documentoRepresentacion = dataRepresentacion.documentoRepresentacion;
+    }
+}
+
+///////////////REPRESENTADO////////////////
+@Component({
+    selector: 'app-dialog-representado',
+    templateUrl: 'app-dialog-representado.html',
+    styleUrls: ['./editar-sociedad.component.css']
+})
+export class DialogRepresentadoSociedad {
+    endpoint = environment.endpoint;
+    loading = false;
+    httpOptions;
+    tipoPersona = 'F';
+    fisicaFormGroup: FormGroup;
+    moralFormGroup: FormGroup;
+    idPersonaRepresentacion;
+    dataRepresentacion: DataRepresentacion = {} as DataRepresentacion;
+  
+    constructor(
+        private http: HttpClient,
+        private snackBar: MatSnackBar,
+        private _formBuilder: FormBuilder,
+        public dialog: MatDialog,
+        public dialogRef: MatDialogRef<DialogRepresentadoSociedad>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) {
+
+        dialogRef.disableClose = true;
+        this.fisicaFormGroup = this._formBuilder.group({
+            nombre: [null, [Validators.required]],
+            apaterno: [null, [Validators.required]],
+            amaterno: [null, []],
+            rfc: [null, [Validators.required]],
+            curp: [null, [Validators.required]],
+            ine: [null, []],
+            idDocIdent: ['', []],
+            docIdent: [null, []],
+            fechaNacimiento: [null, []],
+            fechaDefuncion: [null, []],
+            celular: [null, []],
+            email: [null, []],
+            texto: [null, []],
+            fechaCaducidad: [null, []],
+        });
+    
+        this.moralFormGroup = this._formBuilder.group({
+            nombre: [null, [Validators.required]],
+            rfc: [null, [Validators.required]],
+            actPreponderante: [null, []],
+            idTipoPersonaMoral: ['', []],
+            fechaInicioOperacion: [null, []],
+            idMotivo: ['', []],
+            fechaCambio: [null, []],
+            texto: [null, []],
+            fechaCaducidad: [null, []],
+        });
+  
+        if(data.dataRepresentante){
+            this.setDataRepresentacion(data.dataRepresentante);
+        }
+      }
+      
+    changeRequired(remove, add): void {
+        this.fisicaFormGroup.controls[remove].setValue(null);
+        this.fisicaFormGroup.controls[remove].clearValidators();
+        this.fisicaFormGroup.controls[add].setValidators(Validators.required);
+        this.fisicaFormGroup.markAsUntouched();
+        this.fisicaFormGroup.updateValueAndValidity();
+    }
+  
+    addPersona(): void {
+        const dialogRef = this.dialog.open(DialogPersonaSociedad, {
+            width: '700px',
+            data: this.tipoPersona
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                this.tipoPersona = result.tipoPersona;
+                this.idPersonaRepresentacion = result.id;
+                if(this.tipoPersona == 'F') {
+                    this.fisicaFormGroup.controls['nombre'].setValue(result.nombre);
+                    this.fisicaFormGroup.controls['apaterno'].setValue(result.apaterno);
+                    this.fisicaFormGroup.controls['amaterno'].setValue(result.amaterno);
+                    this.fisicaFormGroup.controls['rfc'].setValue(result.rfc);
+                    this.fisicaFormGroup.controls['curp'].setValue(result.curp);
+                    this.fisicaFormGroup.controls['ine'].setValue(result.ine);
+                    this.fisicaFormGroup.controls['idDocIdent'].setValue(result.idDocIdent);
+                    this.fisicaFormGroup.controls['docIdent'].setValue(result.docIdent);
+                } else {
+                    this.moralFormGroup.controls['nombre'].setValue(result.apaterno);
+                    this.moralFormGroup.controls['rfc'].setValue(result.rfc);
+                }
+            }
+        });
+    }
+  
+    addDocumento(dataDocumento = null): void {
+        const dialogRef = this.dialog.open(DialogDocumentoSociedad, {
+            width: '700px',
+            data: dataDocumento,
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                this.dataRepresentacion.documentoRepresentacion = result;
+            }
+        });
+    }
+  
+    removeDocumento(){
+          this.dataRepresentacion.documentoRepresentacion = undefined;
+      }
+  
+    getDataRepresentacion(): DataRepresentacion {
+        this.dataRepresentacion.tipoPersona = this.tipoPersona;
+        if(this.tipoPersona == 'F'){
+            this.dataRepresentacion.nombre = (this.fisicaFormGroup.value.nombre) ? this.fisicaFormGroup.value.nombre : null;
+            this.dataRepresentacion.apaterno = (this.fisicaFormGroup.value.apaterno) ? this.fisicaFormGroup.value.apaterno : null;
+            this.dataRepresentacion.amaterno = (this.fisicaFormGroup.value.amaterno) ? this.fisicaFormGroup.value.amaterno : null;
+            this.dataRepresentacion.rfc = (this.fisicaFormGroup.value.rfc) ? this.fisicaFormGroup.value.rfc : null;
+            this.dataRepresentacion.curp = (this.fisicaFormGroup.value.curp) ? this.fisicaFormGroup.value.curp : null;
+            this.dataRepresentacion.ine = (this.fisicaFormGroup.value.ine) ? this.fisicaFormGroup.value.ine : null;
+            this.dataRepresentacion.idDocIdent = this.fisicaFormGroup.value.idDocIdent;
+            this.dataRepresentacion.docIdent = (this.fisicaFormGroup.value.docIdent) ? this.fisicaFormGroup.value.docIdent : null;
+            this.dataRepresentacion.fechaNacimiento = (this.fisicaFormGroup.value.fechaNacimiento) ? this.fisicaFormGroup.value.fechaNacimiento : null;
+            this.dataRepresentacion.fechaDefuncion = (this.fisicaFormGroup.value.fechaDefuncion) ? this.fisicaFormGroup.value.fechaDefuncion : null;
+            this.dataRepresentacion.celular = (this.fisicaFormGroup.value.celular) ? this.fisicaFormGroup.value.celular : null;
+            this.dataRepresentacion.email = (this.fisicaFormGroup.value.email) ? this.fisicaFormGroup.value.email : null;
+            this.dataRepresentacion.texto = (this.fisicaFormGroup.value.texto) ? this.fisicaFormGroup.value.texto : null;
+            this.dataRepresentacion.fechaCaducidad = (this.fisicaFormGroup.value.fechaCaducidad) ? this.fisicaFormGroup.value.fechaCaducidad : null;
+        } else {
+            this.dataRepresentacion.nombre = (this.moralFormGroup.value.nombre) ? this.moralFormGroup.value.nombre : null;
+            this.dataRepresentacion.rfc = (this.moralFormGroup.value.rfc) ? this.moralFormGroup.value.rfc : null;
+            this.dataRepresentacion.actPreponderante = (this.moralFormGroup.value.actPreponderante) ? this.moralFormGroup.value.actPreponderante : null;
+            this.dataRepresentacion.idTipoPersonaMoral = this.moralFormGroup.value.idTipoPersonaMoral;
+            this.dataRepresentacion.fechaInicioOperacion = (this.moralFormGroup.value.fechaInicioOperacion) ? this.moralFormGroup.value.fechaInicioOperacion : null;
+            this.dataRepresentacion.idMotivo = this.moralFormGroup.value.idMotivo;
+            this.dataRepresentacion.fechaCambio = (this.moralFormGroup.value.fechaCambio) ? this.moralFormGroup.value.fechaCambio : null;
+            this.dataRepresentacion.texto = (this.moralFormGroup.value.texto) ? this.moralFormGroup.value.texto : null;
+            this.dataRepresentacion.fechaCaducidad = (this.moralFormGroup.value.fechaCaducidad) ? this.moralFormGroup.value.fechaCaducidad : null;
+        }
+
+        this.idPersonaRepresentacion = (this.idPersonaRepresentacion) ? this.idPersonaRepresentacion : null;
+        console.log('AQUIII EL JSON');
+        console.log(this.dataRepresentacion);
+        //console.log(JSON.stringify(this.dataRepresentacion));
+        const payload = {
+            "representacion": {
+                textorepresentacion: this.dataRepresentacion.texto,
+                fechacaducidad: moment(this.dataRepresentacion.fechaCaducidad).format("DD-MM-YYYY")
+            },
+            "participantes": [
+                {
+                    rol: "representado",
+                    codtiposPersona: this.dataRepresentacion.tipoPersona,
+                    idpersona: this.idPersonaRepresentacion,
+                    nombre: this.dataRepresentacion.nombre,
+                    rfc: this.dataRepresentacion.rfc,
+                    apellidoPaterno: this.dataRepresentacion.apaterno,
+                    apellidoMaterno: this.dataRepresentacion.amaterno,
+                    curp: this.dataRepresentacion.curp,
+                    ife: this.dataRepresentacion.ine,
+                    iddocIdentif: this.dataRepresentacion.idDocIdent,
+                    valdocIdentif: this.dataRepresentacion.docIdent,
+                    fechaNacimiento: moment(this.dataRepresentacion.fechaNacimiento).format("DD-MM-YYYY"),
+                    fechaDefuncion: moment(this.dataRepresentacion.fechaDefuncion).format("DD-MM-YYYY"),
+                    celular: this.dataRepresentacion.celular,
+                    email: this.dataRepresentacion.email,
+                    activprincip: this.dataRepresentacion.actPreponderante,
+                    idtipomoral: this.dataRepresentacion.idTipoPersonaMoral,
+                    idmotivosmoral: this.dataRepresentacion.idMotivo,
+                    fechainicioactiv: moment(this.dataRepresentacion.fechaInicioOperacion).format("DD-MM-YYYY"),
+                    fechacambiosituacion: moment(this.dataRepresentacion.fechaCambio).format("DD-MM-YYYY")
+                },
+                {
+                    rol:"representante",
+                    codtiposPersona: "M",
+                    idpersona: this.data.idSociedad,
+                    nombre: null,
+                    rfc: this.data.datosSociedad.rfc,
+                    apellidoPaterno: this.data.datosSociedad.razonSocial,
+                    apellidoMaterno: null,
+                    curp: null,
+                    ife: null,
+                    iddocIdentif: null,
+                    valdocIdentif: null,
+                    fechaNacimiento: moment(this.data.datosSociedad.fecha_alta).format("DD-MM-YYYY"),
+                    fechaDefuncion: moment(this.data.datosSociedad.fecha_baja).format("DD-MM-YYYY"),
+                    celular: this.data.datosSociedad.celular,
+                    email: this.data.datosSociedad.email,
+                    activprincip: this.data.datosSociedad.acta,
+                    idtipomoral: this.data.datosSociedad.tipoMoral,
+                    idmotivosmoral: this.data.datosSociedad.motivoCambio,
+                    fechainicioactiv: moment(this.data.datosSociedad.fechaInicio).format("DD-MM-YYYY"),
+                    fechacambiosituacion: moment(this.data.datosSociedad.fechaCambio).format("DD-MM-YYYY")
+                }
+            ],
+            "documento": {
+                descripcion: this.dataRepresentacion.documentoRepresentacion.descripcion,        
+                codtipodocumento: this.dataRepresentacion.documentoRepresentacion.codtipodocumento,
+                fecha: moment(this.dataRepresentacion.documentoRepresentacion.fecha).format("DD-MM-YYYY"),
+                codTipoDocumentoJuridico: this.dataRepresentacion.documentoRepresentacion.codtipodocumentojuridico,        
+                lugar: this.dataRepresentacion.documentoRepresentacion.lugar,
+                idNotario: this.dataRepresentacion.documentoRepresentacion.idnotario,
+                noEscritura: this.dataRepresentacion.documentoRepresentacion.noNotario,
+                documentos: this.dataRepresentacion.documentoRepresentacion.archivos
+            }
+        };
+        
+        console.log(JSON.stringify(payload));
+        this.http.put(this.endpoint + 'insertarRepresentacion', payload, this.httpOptions).subscribe(
+            (res: any) => {
+                this.snackBar.open('SE HA INSERTADO TODO', 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+                console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTECIÓN");
+                console.log(res);
+            },
+            (error) => {
+                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+            });
+        return this.dataRepresentacion;
+    }
+  
+    setDataRepresentacion(dataRepresentacion): void {
+        this.tipoPersona = dataRepresentacion.tipoPersona;
+        if(this.tipoPersona == 'F'){
+            this.fisicaFormGroup.controls['nombre'].setValue(dataRepresentacion.nombre);
+            this.fisicaFormGroup.controls['apaterno'].setValue(dataRepresentacion.apaterno);
+            this.fisicaFormGroup.controls['amaterno'].setValue(dataRepresentacion.amaterno);
+            this.fisicaFormGroup.controls['rfc'].setValue(dataRepresentacion.rfc);
+            this.fisicaFormGroup.controls['curp'].setValue(dataRepresentacion.curp);
+            this.fisicaFormGroup.controls['ine'].setValue(dataRepresentacion.ine);
+            this.fisicaFormGroup.controls['idDocIdent'].setValue(dataRepresentacion.idDocIdent);
+            this.fisicaFormGroup.controls['docIdent'].setValue(dataRepresentacion.docIdent);
+            this.fisicaFormGroup.controls['fechaNacimiento'].setValue(dataRepresentacion.fechaNacimiento);
+            this.fisicaFormGroup.controls['fechaDefuncion'].setValue(dataRepresentacion.fechaDefuncion);
+            this.fisicaFormGroup.controls['celular'].setValue(dataRepresentacion.celular);
+            this.fisicaFormGroup.controls['email'].setValue(dataRepresentacion.email);
+            this.fisicaFormGroup.controls['texto'].setValue(dataRepresentacion.texto);
+            this.fisicaFormGroup.controls['fechaCaducidad'].setValue(dataRepresentacion.fechaCaducidad);
+        } else {
+            this.moralFormGroup.controls['nombre'].setValue(dataRepresentacion.nombre);
+            this.moralFormGroup.controls['rfc'].setValue(dataRepresentacion.rfc);
+            this.moralFormGroup.controls['actPreponderante'].setValue(dataRepresentacion.actPreponderante);
+            this.moralFormGroup.controls['idTipoPersonaMoral'].setValue(dataRepresentacion.idTipoPersonaMoral);
+            this.moralFormGroup.controls['fechaInicioOperacion'].setValue(dataRepresentacion.fechaInicioOperacion);
+            this.moralFormGroup.controls['idMotivo'].setValue(dataRepresentacion.idMotivo);
+            this.moralFormGroup.controls['fechaCambio'].setValue(dataRepresentacion.fechaCambio);
+            this.moralFormGroup.controls['texto'].setValue(dataRepresentacion.texto);
+            this.moralFormGroup.controls['fechaCaducidad'].setValue(dataRepresentacion.fechaCaducidad);
+        }
+  
+        this.dataRepresentacion.documentoRepresentacion = dataRepresentacion.documentoRepresentacion;
+    }
+}
+  
+///////////////DOCUMENTO////////////////
+@Component({
+    selector: 'app-dialog-documento',
+    templateUrl: 'app-dialog-documento.html',
+    styleUrls: ['./editar-sociedad.component.css']
+})
+export class DialogDocumentoSociedad {
+    endpointCatalogos = environment.endpoint;
+    loadingTiposDocumentoDigital = false;
+    loadingTiposDocumentoJuridico = false;
+    httpOptions;
+    tiposDocumentoDigital;
+    tiposDocumentoJuridico;
+    selectTipoDoc = '1';
+    tiposDocumentoFormGroup: FormGroup;
+    infoDocumentoFormGroup: FormGroup;
+    archivosDocumentoFormGroup: FormGroup;
+    dataDocumento: DataDocumentoRepresentacion = {} as DataDocumentoRepresentacion;
+    canSend = false;
+    
+    constructor(
+        private http: HttpClient,
+        private _formBuilder: FormBuilder,
+        public dialog: MatDialog,
+        public dialogRef: MatDialogRef<DialogDocumentoSociedad>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) {
+
+        dialogRef.disableClose = true;
+        this.tiposDocumentoFormGroup = this._formBuilder.group({
+            codtipodocumento: ['', [Validators.required]],
+            codtipodocumentojuridico: ['', [Validators.required]]
+        });
+  
+        this.infoDocumentoFormGroup = this._formBuilder.group({
+            fecha: [null, [Validators.required]],
+            descripcion: [null, []],
+            lugar: [null, [Validators.required]]
+        });
+  
+        this.archivosDocumentoFormGroup = this._formBuilder.group({
+            archivos: this._formBuilder.array([])
+        });
+
+        
+        this.tiposDocumentoFormGroup.controls.codtipodocumentojuridico.valueChanges.subscribe(codtipodocumentojuridico => {
+        if(codtipodocumentojuridico == 'PN') {
+            this.infoDocumentoFormGroup.addControl('noNotario', new FormControl(null, Validators.required));
+            this.infoDocumentoFormGroup.addControl('ciudadNotario', new FormControl(null, Validators.required));
+            this.infoDocumentoFormGroup.addControl('nombreNotario', new FormControl(null, Validators.required));
+            this.infoDocumentoFormGroup.addControl('num_escritura', new FormControl(null, Validators.required));
+        } else {
+            this.infoDocumentoFormGroup.removeControl('noNotario');
+            this.infoDocumentoFormGroup.removeControl('ciudadNotario');
+            this.infoDocumentoFormGroup.removeControl('nombreNotario');
+            this.infoDocumentoFormGroup.removeControl('num_escritura');
+        }
+            this.infoDocumentoFormGroup.updateValueAndValidity();
+        });
+        console.log(this.tiposDocumentoFormGroup.controls.codtipodocumentojuridico);
+        if(data){
+            this.setDataDocumento(data);
+        }
+      }
+  
+    getDataTiposDocumentoDigital(): void {
+        this.loadingTiposDocumentoDigital = true;
+        this.http.get(this.endpointCatalogos, this.httpOptions).subscribe(
+            (res: any) => {
+                this.loadingTiposDocumentoDigital = false;
+                this.tiposDocumentoDigital = res;
+            },
+            (error) => {
+                this.loadingTiposDocumentoDigital = false;
+            }
+        );
+    }
+  
+    getDataTiposDocumentoJuridico(): void {
+        this.loadingTiposDocumentoJuridico = true;
+        this.http.get(this.endpointCatalogos, this.httpOptions).subscribe(
+            (res: any) => {
+                this.loadingTiposDocumentoJuridico = false;
+                this.tiposDocumentoJuridico = res;
+            },
+            (error) => {
+                this.loadingTiposDocumentoJuridico = false;
+            }
+        );
+    }
+  
+    getTipoDocJuridico(event): void {
+        this.dataDocumento.nombreTipoDocumentoJuridico = event.source.triggerValue;
+    }
+  
+    addNotario(): void {
+        const dialogRef = this.dialog.open(DialogNotarioSociedad, {
+            width: '700px',
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                this.dataDocumento.idnotario = result.id;
+                this.infoDocumentoFormGroup.controls['noNotario'].setValue(result.numero);
+                this.infoDocumentoFormGroup.controls['ciudadNotario'].setValue(result.ciudad);
+                this.infoDocumentoFormGroup.controls['nombreNotario'].setValue(result.nombre);
+            }
+        });
+    }
+  
+    createItem(data): FormGroup {
+        return this._formBuilder.group(data);
+    }
+  
+    removeItem(i) {
+        this.archivos.removeAt(i);
+      }
+  
+    get archivos(): FormArray {
+        return this.archivosDocumentoFormGroup.get('archivos') as FormArray;
+    };
+  
+    getArchivos(event) {
+        let files = event.target.files;
+        if(files){
+            for(let file of files){
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => {
+                    this.archivos.push(this.createItem({
+                    nombre: file.name,
+                    base64: reader.result
+                    }));
+                };
+            }
+        }
+    }
+  
+    getDataDocumento(): void {
+        this.dataDocumento.codtipodocumento = this.tiposDocumentoFormGroup.value.codtipodocumento;
+        this.dataDocumento.codtipodocumentojuridico = this.tiposDocumentoFormGroup.value.codtipodocumentojuridico;
+        if(this.tiposDocumentoFormGroup.value.codtipodocumentojuridico == 'PN'){
+            this.dataDocumento.noNotario = (this.infoDocumentoFormGroup.value.noNotario) ? this.infoDocumentoFormGroup.value.noNotario : null;
+            this.dataDocumento.ciudadNotario = (this.infoDocumentoFormGroup.value.ciudadNotario) ? this.infoDocumentoFormGroup.value.ciudadNotario : null;
+            this.dataDocumento.nombreNotario = (this.infoDocumentoFormGroup.value.nombreNotario) ? this.infoDocumentoFormGroup.value.nombreNotario : null;
+            this.dataDocumento.num_escritura = (this.infoDocumentoFormGroup.value.num_escritura) ? this.infoDocumentoFormGroup.value.num_escritura : null;
+        }
+        this.dataDocumento.fecha = (this.infoDocumentoFormGroup.value.fecha) ? this.infoDocumentoFormGroup.value.fecha : null;
+        this.dataDocumento.descripcion = (this.infoDocumentoFormGroup.value.descripcion) ? this.infoDocumentoFormGroup.value.descripcion : null;
+        this.dataDocumento.lugar = (this.infoDocumentoFormGroup.value.lugar) ? this.infoDocumentoFormGroup.value.lugar : null;
+        this.dataDocumento.archivos = this.archivosDocumentoFormGroup.value.archivos;
+    
+        this.canSend = true;
+    }
+  
+    setDataDocumento(dataDocumento): void {
+        this.tiposDocumentoFormGroup.controls['codtipodocumento'].setValue(dataDocumento.codtipodocumento);
+        this.tiposDocumentoFormGroup.controls['codtipodocumentojuridico'].setValue(dataDocumento.codtipodocumentojuridico);
+        if(dataDocumento.codtipodocumentojuridico == 'PN'){
+            this.dataDocumento.idnotario = dataDocumento.idnotario;
+            this.infoDocumentoFormGroup.controls['noNotario'].setValue(dataDocumento.noNotario);
+            this.infoDocumentoFormGroup.controls['ciudadNotario'].setValue(dataDocumento.ciudadNotario);
+            this.infoDocumentoFormGroup.controls['nombreNotario'].setValue(dataDocumento.nombreNotario);
+            this.infoDocumentoFormGroup.controls['num_escritura'].setValue(dataDocumento.num_escritura);
+        }
+        this.dataDocumento.nombreTipoDocumentoJuridico = dataDocumento.nombreTipoDocumentoJuridico;
+        this.infoDocumentoFormGroup.controls['fecha'].setValue(dataDocumento.fecha);
+        this.infoDocumentoFormGroup.controls['descripcion'].setValue(dataDocumento.descripcion);
+        this.infoDocumentoFormGroup.controls['lugar'].setValue(dataDocumento.lugar);
+    
+        if(dataDocumento.archivos){
+            for(let archivo of dataDocumento.archivos){
+            this.archivos.push(this.createItem({
+                nombre: archivo.nombre,
+                base64: archivo.base64
+            }));
+            }
+        }
+    }
+}
+
+///////////////NOTARIO////////////////
+export interface Filtros {
+    numnotario: string;
+    estado: number;
+    rfc: string;
+    curp: string;
+    claveife: string;
+    nombre: string;
+    filtroNombre: number;
+    apellidoPaterno: string;
+    filtroApellidoPaterno: number;
+    apellidoMaterno: string;
+    filtroApellidoMaterno: number;
+}
+
+export interface Notario {
+    id: number;
+    numero: string;
+    ciudad: string;
+    nombre: string;
+}
+
+@Component({
+    selector: 'app-dialog-notario',
+    templateUrl: 'app-dialog-notario.html',
+    styleUrls: ['./editar-sociedad.component.css']
+})
+export class DialogNotarioSociedad {
+    endpoint = environment.endpoint + 'registro/getNotariosByDatosIdentificativos';
+    endpointCatalogos = environment.endpoint + 'registro/';
+    pageSize = 15;
+    pagina = 1;
+    total = 0;
+    loading = false;
+    dataSource = [];
+    dataNotarios = [];
+    displayedColumns: string[] = ['numero', 'datos_personales', 'datos_identificativos', 'select'];
+    httpOptions;
+    filtros: Filtros = {} as Filtros;
+    notario: Notario = {} as Notario;
+    tipoBusqueda = 'DatosIdentificativos';
+    optionNotario;
+    isBusqueda;
+    queryParamFiltros;
+    loadingEstados = false;
+    estados;
+    @ViewChild('paginator') paginator: MatPaginator;
+  
+    constructor(
+        private auth: AuthService,
+        private http: HttpClient,
+        public dialogRef: MatDialogRef<DialogNotarioSociedad>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) {
+        dialogRef.disableClose = true;
+  
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                Authorization: this.auth.getSession().token
+            })
+        };
+
+        this.getDataEstados();
+    }
+
+    getDataEstados(): void {
+        this.loadingEstados = true;
+        this.http.post(this.endpointCatalogos + 'getEstados', '', this.httpOptions).subscribe(
+            (res: any) => {
+                this.loadingEstados = false;
+                this.estados = res;
+            },
+            (error) => {
+                this.loadingEstados = false;
+            }
+        );
+    }
+
+    getDataNotarios(): void {
+        this.loading = true;
+        this.isBusqueda = true;
+        this.optionNotario = undefined;
+        this.pagina = 1;
+        this.queryParamFiltros = '';
+        
+        if(this.filtros.numnotario){
+            this.queryParamFiltros = this.queryParamFiltros + '&numnotario=' + this.filtros.numnotario;
+        }
+        if(this.filtros.estado){
+            this.queryParamFiltros = this.queryParamFiltros + '&estado=' + this.filtros.estado;
+        }
+        if(this.filtros.rfc){
+            this.queryParamFiltros = this.queryParamFiltros + '&rfc=' + this.filtros.rfc;
+        }
+        if(this.filtros.curp){
+            this.queryParamFiltros = this.queryParamFiltros + '&curp=' + this.filtros.curp;
+        }
+        if(this.filtros.claveife){
+            this.queryParamFiltros = this.queryParamFiltros + '&claveife=' + this.filtros.claveife;
+        }
+        if(this.filtros.nombre){
+            this.queryParamFiltros = this.queryParamFiltros + '&nombre=' + this.filtros.nombre + '&filtroNombre=0';
+        }
+        if(this.filtros.apellidoPaterno){
+            this.queryParamFiltros = this.queryParamFiltros + '&apellidoPaterno=' + this.filtros.apellidoPaterno + '&filtroApellidoPaterno=0';
+        }
+        if(this.filtros.apellidoMaterno){
+            this.queryParamFiltros = this.queryParamFiltros + '&apellidoMaterno=' + this.filtros.apellidoMaterno + '&filtroApellidoMaterno=0';
+        }
+        
+        this.http.post(this.endpoint + '?' + this.queryParamFiltros, '', this.httpOptions).subscribe(
+            (res: any) => {
+                this.loading = false;
+                this.dataNotarios = res;
+                this.dataSource = this.paginate(this.dataNotarios, this.pageSize, this.pagina);
+                this.total = this.dataNotarios.length;
+                this.paginator.pageIndex = 0;
+            },
+            (error) => {
+                this.loading = false;
+                this.dataSource = [];
+            });
+    }
+  
+    paginado(evt): void{
+        this.pagina = evt.pageIndex + 1;
+        this.dataSource = this.paginate(this.dataNotarios, this.pageSize, this.pagina);
+    }
+  
+    paginate(array, page_size, page_number) {
+        return array.slice((page_number - 1) * page_size, page_number * page_size);
+    }
+      
+    clean(): void {
+        this.pagina = 1;
+        this.total = 0;
+        this.dataNotarios = [];
+        this.filtros = {} as Filtros;
+        this.notario = {} as Notario;
+        this.optionNotario = undefined;
+        this.isBusqueda = false;
+    }
+  
+    notarioSelected(element) {
+        this.notario.id = element.IDPERSONA;
+        this.notario.numero = element.NUMNOTARIO;
+        this.notario.ciudad = element.ESTADO;
+        this.notario.nombre = element.NOMBRE + ' ' + element.APELLIDOPATERNO + ' ' + element.APELLIDOMATERNO;
+    }
+  }
+  
+///////////////PERSONA////////////////
+export interface Filtros {
+    apaterno: string;
+    amaterno: string;
+    nombre: string;
+    rfc: string;
+    curp: string;
+    ine: string;
+    idDocIdent: string;
+    docIdent: string;
+}
+export interface Persona {
+    tipoPersona: string;
+    id: string;
+    nombre: string;
+    apaterno: string;
+    amaterno: string;
+    rfc: string;
+    curp: string;
+    ine: string;
+    idDocIdent: number;
+    docIdent: string;
+}
+@Component({
+    selector: 'app-dialog-persona',
+    templateUrl: 'app-dialog-persona.html',
+    styleUrls: ['./editar-sociedad.component.css']
+})
+export class DialogPersonaSociedad {
+    endpoint = environment.endpoint + 'registro/';
+    pageSize = 15;
+    pagina = 1;
+    total = 0;
+    loading = false;
+    dataSource = [];
+    dataPersonas = [];
+    displayedColumns: string[] = ['nombre', 'datos_identificativos', 'select'];
+    httpOptions;
+    filtros: Filtros = {} as Filtros;
+    persona: Persona = {} as Persona;
+    tipoPersona;
+    isIdentificativo;
+    optionPersona;
+    isBusqueda;
+    queryParamFiltros;
+    endpointBusqueda;
+    @ViewChild('paginator') paginator: MatPaginator;
+  
+    constructor(
+      private auth: AuthService,
+      private http: HttpClient,
+      public dialogRef: MatDialogRef<DialogPersonaSociedad>,
+      @Inject(MAT_DIALOG_DATA) public data: any
+    ) {
+
+        dialogRef.disableClose = true;
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                Authorization: this.auth.getSession().token
+            })
+        };
+        this.tipoPersona = data;
+        console.log("aca el tipo person " + data);
+        console.log(this.tipoPersona);
+      }
+  
+    clearInputsIdentNoIdent(isIdentificativo): void {
+        this.isIdentificativo = isIdentificativo;
+        if(this.isIdentificativo){
+            this.filtros.apaterno = null;
+            this.filtros.amaterno = null;
+            this.filtros.nombre = null;
+        }else{
+            this.filtros.rfc = null;
+            this.filtros.curp = null;
+            this.filtros.ine = null;
+            this.filtros.idDocIdent = null;
+            this.filtros.docIdent = null;
+        }
+    }
+  
+    getDataPersonas(): void {
+        this.loading = true;
+        this.isBusqueda = true;
+        this.optionPersona = undefined;
+        this.pagina = 1;
+        this.queryParamFiltros = '';
+        this.endpointBusqueda = '';
+        
+        if(this.tipoPersona == 'M'){
+            if(this.isIdentificativo){
+                this.endpointBusqueda = this.endpoint + 'getMoralIdentificativos';
+            if(this.filtros.rfc)
+                this.queryParamFiltros = this.queryParamFiltros + '&rfc=' + this.filtros.rfc;
+            } else {
+                this.endpointBusqueda = this.endpoint + 'getPersonaMoral';
+            if(this.filtros.nombre)
+                this.queryParamFiltros = this.queryParamFiltros + '&razonSocial=' + this.filtros.nombre + '&filtroApellidoPaterno=0';
+            }
+        } else {
+            if(this.isIdentificativo){
+                this.endpointBusqueda = this.endpoint + 'getIdentificativos';
+                if(this.filtros.curp)
+                    this.queryParamFiltros = this.queryParamFiltros + '&curp=' + this.filtros.curp;
+                if(this.filtros.rfc)
+                    this.queryParamFiltros = this.queryParamFiltros + '&rfc=' + this.filtros.rfc;
+                if(this.filtros.ine)
+                    this.queryParamFiltros = this.queryParamFiltros + '&claveife=' + this.filtros.ine;
+                if(this.filtros.idDocIdent)
+                    this.queryParamFiltros = this.queryParamFiltros + '&iddocidentif=' + this.filtros.idDocIdent;
+                if(this.filtros.docIdent)
+                    this.queryParamFiltros = this.queryParamFiltros + '&valdocidentif=' + this.filtros.docIdent;
+        
+                this.queryParamFiltros = this.queryParamFiltros + '&coincidenTodos=false';        
+            } else {
+                this.endpointBusqueda = this.endpoint + 'getContribuyente';
+                if(this.filtros.nombre)
+                    this.queryParamFiltros = this.queryParamFiltros + '&nombre=' + this.filtros.nombre + '&filtroNombre=0';
+                if(this.filtros.apaterno)
+                    this.queryParamFiltros = this.queryParamFiltros + '&apellidoPaterno=' + this.filtros.apaterno + '&filtroApellidoPaterno=0';
+                if(this.filtros.amaterno)
+                    this.queryParamFiltros = this.queryParamFiltros + '&apellidoMaterno=' + this.filtros.amaterno + '&filtroApellidoMaterno=0';
+            }
+        }
+  
+        this.http.post(this.endpointBusqueda + '?' + this.queryParamFiltros, '', this.httpOptions).subscribe(
+            (res: any) => {
+                this.loading = false;
+                this.dataPersonas = res;
+                this.dataSource = this.paginate(this.dataPersonas, this.pageSize, this.pagina);
+                this.total = this.dataPersonas.length;
+                this.paginator.pageIndex = 0;
+            },
+            (error) => {
+                this.loading = false;
+                this.dataSource = [];
+            }
+        );
+    }
+  
+    paginado(evt): void{
+        this.pagina = evt.pageIndex + 1;
+        this.dataSource = this.paginate(this.dataPersonas, this.pageSize, this.pagina);
+    }
+  
+    paginate(array, page_size, page_number) {
+        return array.slice((page_number - 1) * page_size, page_number * page_size);
+    }
+  
+    clean(): void {
+        this.pagina = 1;
+        this.total = 0;
+        this.dataPersonas = [];
+        this.filtros = {} as Filtros;
+        this.persona = {} as Persona;
+        this.optionPersona = undefined;
+        this.isBusqueda = false;
+    }
+  
+    personaSelected(element) {
+        this.persona.tipoPersona = this.tipoPersona;
+        this.persona.id = element.IDPERSONA;
+        this.persona.nombre = element.NOMBRE;
+        this.persona.apaterno = element.APELLIDOPATERNO;
+        this.persona.amaterno = element.APELLIDOMATERNO;
+        this.persona.rfc = element.RFC;
+        this.persona.curp = element.CURP;
+        this.persona.ine = element.CLAVEIFE;
+        this.persona.idDocIdent = element.IDDOCIDENTIF;
+        this.persona.docIdent = element.VALDOCIDENTIF;
+    }
+}
+
+///////////////BUSCAR PERSONA SOCIEDAD////////////////
 export interface DatosPeritoPersona {
     apepaterno: string;
     apematerno: string;

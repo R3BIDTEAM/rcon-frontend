@@ -173,6 +173,135 @@
         </mat-card-content>
     </div>
     <br>
+    <!--------------------------------------- REPRESENTACIÓN --------------------------------------->
+    <div class="borde">
+        <mat-card-header>
+            <mat-card-title>Datos de representación</mat-card-title>
+        </mat-card-header>
+        <mat-accordion>
+            <mat-expansion-panel (opened)="panelRepresentantes = true" (closed)="panelRepresentantes = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Representantes
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        {{panelRepresentantes ? 'Cerrar' : 'Ver'}} los datos de los Representantes
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <mat-card-content>
+                    <br>
+                    <div class="row">
+                        <div class="col-4">
+                            <h3>Agregar
+                                <button mat-flat-button type="button" color="primary" aria-label="Agregar" matTooltip="Agregar" class="little-button" (click)="addRepresentante()">
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                            </h3>
+                        </div>
+                        <div class="col-4"></div>
+                        <div class="col-4"></div>                    
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div>
+                                No hay datos que mostrar ...
+                            </div>
+                            <ng-template #representantes>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Representante</th>
+                                            <th>Texto Representación</th>
+                                            <th>Caducidad</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>
+                                                <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar">
+                                                    <mat-icon>edit</mat-icon>
+                                                </button>
+                                                <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar">
+                                                    <mat-icon>delete</mat-icon>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </ng-template>                    
+                        </div>
+                    </div><br><br>
+                </mat-card-content>
+            </mat-expansion-panel>
+        </mat-accordion>
+        <br><hr><br>
+        <mat-accordion>
+            <mat-expansion-panel (opened)="panelRepresentados = true" (closed)="panelRepresentados = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Representados
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        {{panelRepresentados ? 'Cerrar' : 'Ver'}} los datos de los Representados
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <mat-card-content>
+                    <br>
+                    <div class="row">
+                        <div class="col-4">
+                            <h3>Representados
+                                <button mat-flat-button type="button" color="primary" aria-label="Agregar" matTooltip="Agregar" class="little-button" (click)="addRepresentado()">
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                            </h3>
+                        </div>
+                        <div class="col-4"></div>
+                        <div class="col-4"></div>                    
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div>
+                                No hay datos que mostrar ...
+                            </div>
+                            <ng-template #representado>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Representante</th>
+                                            <th>Texto Representación</th>
+                                            <th>Caducidad</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>
+                                                <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar">
+                                                    <mat-icon>edit</mat-icon>
+                                                </button>
+                                                <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar">
+                                                    <mat-icon>delete</mat-icon>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </ng-template>                    
+                        </div>
+                    </div><br><br>
+                </mat-card-content>
+            </mat-expansion-panel>
+        </mat-accordion><br>
+    </div>
+    <br>
+    <!--  -->
     <div class="borde">
         <mat-card-header>
             <mat-card-title>Datos especifícos de la sociedad</mat-card-title>

@@ -2244,7 +2244,7 @@ export class DialogRepresentadoPeritos {
             },
             "participantes": [
                 {
-                    rol: "representante",
+                    rol: "representado",
                     codtiposPersona: this.dataRepresentacion.tipoPersona,
                     idpersona: this.idPersonaRepresentacion,
                     nombre: this.dataRepresentacion.nombre,
@@ -2266,7 +2266,7 @@ export class DialogRepresentadoPeritos {
                     fechacambiosituacion: moment(this.dataRepresentacion.fechaCambio).format("DD-MM-YYYY")
                 },
                 {
-                    rol:"representado",
+                    rol:"representante",
                     codtiposPersona: "F",
                     idpersona: this.data.idPerito,
                     nombre: this.data.datosPerito.nombre,
