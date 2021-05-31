@@ -560,7 +560,7 @@ export class DialogDomiciliosNotario {
         // }
         if(data){
             this.setDataDomicilio(data);
-            this.domicilioFormGroup.controls['cp'].setValue('11111');
+            // this.domicilioFormGroup.controls['cp'].val('11111');
         }
         this.getDataTiposAsentamiento();
         this.getDataTiposVia();
