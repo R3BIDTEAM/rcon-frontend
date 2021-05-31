@@ -113,13 +113,14 @@ export class EditarNotarioComponent implements OnInit {
   loading = false;
   dataSource = [];
   dataPaginate = [];
-  displayedColumnsDom: string[] = ['tipoDir','direccion', 'historial'];
+  displayedColumnsDom: string[] = ['direccion', 'historial', 'editar'];
   dataNotarioResultado;
   dataNotarioDireccionesResultado;
   httpOptions;
   search = false;
   query;
   idNotario;
+  idDireccion;
   datosNotario: DatosNotario = {} as DatosNotario;
   datosGenerales: DatosGenerales = {} as DatosGenerales;
   direccionesNotario: DireccionesNotario = {} as DireccionesNotario;
@@ -128,11 +129,13 @@ export class EditarNotarioComponent implements OnInit {
   estados: Estados[] = [];
   documentos: DocumentosIdentificativos[] = [];
   dataDomicilio: DataDomicilio[] = [];
+  dataDomicilioEspecifico: DataDomicilio[] = [];
   loadingEstados = false;
   loadingDocumentosIdentificativos = false;
   loadingDatosNotario = false;
   loadingDatosGenerales = false;
   loadingDomicilios = false;
+  loadingDireccionEspecifica = false;
 
   /*PAGINADOS*/
   dataSource1 = [];
@@ -167,7 +170,9 @@ export class EditarNotarioComponent implements OnInit {
         })
     };
     this.idNotario = this.route.snapshot.paramMap.get('idnotario');
+    this.idDireccion = this.route.snapshot.paramMap.get('iddireccion');
     console.log(this.idNotario);
+    console.log(this.idDireccion);
     this.getNotarioDatos();
     this.getNotarioDirecciones();
     this.getDataEstados();
@@ -256,16 +261,42 @@ export class EditarNotarioComponent implements OnInit {
                 (res: any) => {
                     this.loadingDomicilios = false;
 
-                    this.dataSource1 = res.filter(element => element.CODTIPOSDIRECCION !== "N");
-                    this.dataSource2 = res.filter(element => element.CODTIPOSDIRECCION === "N");
+                    // this.dataSource1 = res.filter(element => element.CODTIPOSDIRECCION !== "N");
+                    this.dataSource1 = res;
+                    // this.dataSource2 = res.filter(element => element.CODTIPOSDIRECCION === "N");
                     this.total1 = this.dataSource1.length;
-                    this.total2 = this.dataSource2.length;
+                    // this.total2 = this.dataSource2.length;
                     this.dataPaginate1 = this.paginate(this.dataSource1, 15, this.pagina1);
-                    this.dataPaginate2 = this.paginate(this.dataSource2, 15, this.pagina2);
+                    // this.dataPaginate2 = this.paginate(this.dataSource2, 15, this.pagina2);
                     console.log('entra');
+                    console.log(this.dataSource1);
                 },
                 (error) => {
                     this.loadingDomicilios = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
+
+    getDireccionEspecifica(iddireccion){
+        this.loadingDireccionEspecifica = true;
+        let metodo = 'getDireccionById';
+        this.http.post(this.endpointEstados + metodo + '?idDireccion='+ iddireccion, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    alert('entro');
+                    this.loadingDireccionEspecifica = false;
+                    this.dataDomicilioEspecifico = res;
+                    this.editDomicilio(this.dataDomicilioEspecifico);
+                    console.log('domicilio único encontrado');
+                    console.log(this.dataDomicilioEspecifico);
+                },
+                (error) => {
+                    this.loadingDireccionEspecifica = false;
                     this.snackBar.open(error.error.mensaje, 'Cerrar', {
                         duration: 10000,
                         horizontalPosition: 'end',
@@ -381,6 +412,17 @@ export class EditarNotarioComponent implements OnInit {
         });
   }
 
+  editDomicilio(dataDomicilioEspecifico): void {
+    let codtiposdireccion = '';
+        const dialogRef = this.dialog.open(DialogDomiciliosNotario, {
+            width: '700px',
+            data: {dataDomicilioEspecifico:dataDomicilioEspecifico},
+        });
+        dialogRef.afterClosed().subscribe(result => {
+                // this.getNotarioDirecciones();
+        });
+  }
+
   removeDomicilio(i){
 		this.dataDomicilio.splice(i, 1);
 	}
@@ -443,6 +485,9 @@ export class DialogDomiciliosNotario {
     buscaMunicipios;
     domicilioFormGroup: FormGroup;
     dataDomicilio: DataDomicilio = {} as DataDomicilio;
+    dataDomicilioEspecifico: DataDomicilio = {} as DataDomicilio;
+    loadingDireccionEspecifica = false;
+    iddomicilio;
 
   constructor(
     private auth: AuthService,
@@ -461,7 +506,8 @@ export class DialogDomiciliosNotario {
         };
 
     this.codtiposdireccion = data.codtiposdireccion;
-    this.dataDomicilio = {} as DataDomicilio
+    this.dataDomicilio = {} as DataDomicilio;
+    this.dataDomicilioEspecifico = {} as DataDomicilio;
     this.getDataEstados();
     
         this.domicilioFormGroup = this._formBuilder.group({
@@ -509,13 +555,40 @@ export class DialogDomiciliosNotario {
             this.domicilioFormGroup.updateValueAndValidity();
         });
 
+        // if(data){
+        //     this.setDataDomicilio(data);
+        // }
         if(data){
             this.setDataDomicilio(data);
+            this.domicilioFormGroup.controls['cp'].setValue('11111');
         }
         this.getDataTiposAsentamiento();
         this.getDataTiposVia();
         this.getDataTiposLocalidad();
 
+    }
+
+    getDireccionEspecifica(iddireccion){
+        this.loadingDireccionEspecifica = true;
+        let metodo = 'getDireccionById';
+        this.http.post(this.endpointCatalogos + metodo + '?idDireccion='+ iddireccion, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loadingDireccionEspecifica = false;
+                    this.dataDomicilioEspecifico = res;
+                    this.setDataDomicilio(this.dataDomicilioEspecifico);
+                    console.log('domicilio único encontrado');
+                    console.log(this.dataDomicilioEspecifico);
+                },
+                (error) => {
+                    this.loadingDireccionEspecifica = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
     }
 
     getNombreDel(event): void {
@@ -701,36 +774,101 @@ export class DialogDomiciliosNotario {
                 }
             );
     }
+
+    actualizarDomicilio(){
+        
+        let query = 'actualizarDireccion?idPersona=' + this.data.idNotario + 'idDireccion=';
+
+        query = (this.dataDomicilio.codtiposvia) ? query + '&codtiposvia=' + this.dataDomicilio.codtiposvia : query + '&codtiposvia=';
+        query = (this.dataDomicilio.idtipovia) ? query + '&idvia=' + this.dataDomicilio.idtipovia : query + '&idvia=';
+        query = (this.dataDomicilio.via) ? query + '&via=' + this.dataDomicilio.via : query + '&via=';
+        query = (this.dataDomicilio.nexterior) ? query + '&numeroexterior=' + this.dataDomicilio.nexterior : query + '&numeroexterior=';
+        query = (this.dataDomicilio.entrecalle1) ? query + '&entrecalle1='  + this.dataDomicilio.entrecalle1 : query + '&entrecalle1';
+        query = (this.dataDomicilio.entrecalle2) ? query + '&entrecalle2='  + this.dataDomicilio.entrecalle2 : query + '&entrecalle2';
+        query = (this.dataDomicilio.andador) ? query + '&andador=' + this.dataDomicilio.andador : query + '&andador';
+        query = (this.dataDomicilio.edificio) ? query + '&edificio=' + this.dataDomicilio.edificio : query + '&edificio';
+        query = (this.dataDomicilio.seccion) ? query + '&seccion=' + this.dataDomicilio.seccion : query + '&seccion=';
+        query = (this.dataDomicilio.entrada) ? query + '&entrada=' + this.dataDomicilio.entrada : query + '&entrada=';
+        query = (this.dataDomicilio.idtipolocalidad) ? query + '&codtiposlocalidad=' + this.dataDomicilio.idtipolocalidad : query + '&codtiposlocalidad=';
+        query = (this.dataDomicilio.idtipoasentamiento) ? query + '&codtiposasentamiento=' + this.dataDomicilio.idtipoasentamiento : query + '&codtiposasentamiento=';
+        query = (this.dataDomicilio.codasentamiento) ? query + '&idcolonia=' + this.dataDomicilio.codasentamiento : query + '&idcolonia=';
+        query = (this.dataDomicilio.codasentamiento) ? query + '&codasentamiento=' + this.dataDomicilio.codasentamiento : query + '&codasentamiento=';
+        query = (this.dataDomicilio.asentamiento) ? query + '&colonia=' + this.dataDomicilio.asentamiento : query + '&colonia=';
+        query = (this.dataDomicilio.cp) ? query + '&codigopostal=' + this.dataDomicilio.cp : query + '&codigopostal=';
+        query = (this.dataDomicilio.idciudad) ? query + '&codciudad=' + this.dataDomicilio.idciudad : query + '&codciudad=';
+        query = (this.dataDomicilio.ciudad) ? query + '&ciudad=' + this.dataDomicilio.ciudad : query + '&ciudad=';
+        query = (this.dataDomicilio.idmunicipio) ? query + '&iddelegacion=' + this.dataDomicilio.idmunicipio : query + '&iddelegacion';
+        query = (this.dataDomicilio.idmunicipio2) ? query + '&codmunicipio=' + this.dataDomicilio.idmunicipio2 : query + '&codmunicipio=';
+        query = (this.dataDomicilio.idestado == 9) ? query + '&delegacion=' + this.dataDomicilio.delegacion : query + '&delegacion=' + this.dataDomicilio.municipio;
+        query = (this.dataDomicilio.telefono) ? query + '&telefono=' + this.dataDomicilio.telefono : query + '&telefono=';
+        query = (this.dataDomicilio.idestado) ? query + '&codestado=' + this.dataDomicilio.idestado : query + '&codestado=';
+        query = (this.codtiposdireccion) ? query + '&codtiposdireccion=' + this.codtiposdireccion : query + '&codtiposdireccion=';
+        query = (this.dataDomicilio.adicional) ? query + '&indicacionesadicionales=' + this.dataDomicilio.adicional : query + '&indicacionesadicionales=';
+        query = (this.dataDomicilio.ninterior) ? query + '&numerointerior=' + this.dataDomicilio.ninterior : query + '&numerointerior=';
+        
+        console.log('Actualizacion de Direcciones...');
+        console.log(query);
+        
+        //localhost:8000/api/v1/registro/actualizarDireccion?idPersona=4353312&idDireccion=3597172&codtiposvia=1&idvia=2568&via=ABRAHAM SANCHEZ&numeroexterior=21&entrecalle1&entrecalle2&andador&edificio&seccion&entrada&codtiposlocalidad=1&numerointerior=&codtiposasentamiento=9&idcolonia=8&codasentamiento=&colonia=DOCTORES&codigopostal=06720&codciudad&ciudad&iddelegacion=5&codmunicipio=15&delegacion=CUAUHTEMOC&telefono&codestado=9&codtiposdireccion=&indicacionesadicionales
+
+        this.http.post(this.endpointCatalogos + query, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    console.log(res);
+                    if(res.length > 0){
+                        this.snackBar.open('Registro exitoso', 'Cerrar', {
+                            duration: 10000,
+                            horizontalPosition: 'end',
+                            verticalPosition: 'top'
+                        });                        
+                    }else{
+                        this.snackBar.open('Ocurrio un error al Insertar la dirección, intente nuevemente', 'Cerrar', {
+                            duration: 10000,
+                            horizontalPosition: 'end',
+                            verticalPosition: 'top'
+                        });
+                    }
+                },
+                (error) => {
+                }
+            );
+    }
   
-    setDataDomicilio(dataDomicilio): void {
+    setDataDomicilio(dataDomicilioEspecifico): void {
+        // alert('Entro');
+        console.log(dataDomicilioEspecifico);
+        console.log(dataDomicilioEspecifico.dataDomicilioEspecifico[0].CODESTADO);
         //this.domicilioFormGroup.controls['idtipodireccion'].setValue(dataDomicilio.idtipodireccion);
-        this.domicilioFormGroup.controls['idestado'].setValue(dataDomicilio.idestado);
+        let idestadoNg = dataDomicilioEspecifico.dataDomicilioEspecifico[0].CODESTADO;
+       
+        this.domicilioFormGroup.controls['idestado'].setValue('3');
         this.getDataMunicipios({value: this.domicilioFormGroup.value.idestado});
-        this.domicilioFormGroup.controls['codasentamiento'].setValue(dataDomicilio.codasentamiento);
-        this.domicilioFormGroup.controls['idtipoasentamiento'].setValue(dataDomicilio.idtipoasentamiento);
-        this.domicilioFormGroup.controls['asentamiento'].setValue(dataDomicilio.asentamiento);
-        this.domicilioFormGroup.controls['codtiposvia'].setValue(dataDomicilio.codtiposvia);
-        this.domicilioFormGroup.controls['idtipovia'].setValue(dataDomicilio.idtipovia);
-        this.domicilioFormGroup.controls['via'].setValue(dataDomicilio.via);
-        this.domicilioFormGroup.controls['idtipolocalidad'].setValue(dataDomicilio.idtipolocalidad);
-        this.domicilioFormGroup.controls['cp'].setValue(dataDomicilio.cp);
-        this.domicilioFormGroup.controls['nexterior'].setValue(dataDomicilio.nexterior);
-        this.domicilioFormGroup.controls['entrecalle1'].setValue(dataDomicilio.entrecalle1);
-        this.domicilioFormGroup.controls['entrecalle2'].setValue(dataDomicilio.entrecalle2);
-        this.domicilioFormGroup.controls['andador'].setValue(dataDomicilio.andador);
-        this.domicilioFormGroup.controls['edificio'].setValue(dataDomicilio.edificio);
-        this.domicilioFormGroup.controls['seccion'].setValue(dataDomicilio.seccion);
-        this.domicilioFormGroup.controls['entrada'].setValue(dataDomicilio.entrada);
-        this.domicilioFormGroup.controls['ninterior'].setValue(dataDomicilio.ninterior);
-        this.domicilioFormGroup.controls['telefono'].setValue(dataDomicilio.telefono);
-        this.domicilioFormGroup.controls['adicional'].setValue(dataDomicilio.adicional);
+        this.domicilioFormGroup.controls['codasentamiento'].setValue(dataDomicilioEspecifico.dataDomicilioEspecifico[0].codasentamiento);
+        this.domicilioFormGroup.controls['idtipoasentamiento'].setValue(dataDomicilioEspecifico.dataDomicilioEspecifico[0].CODTIPOSASENTAMIENTO);
+        this.domicilioFormGroup.controls['asentamiento'].setValue(dataDomicilioEspecifico.asentamiento);
+        this.domicilioFormGroup.controls['codtiposvia'].setValue(dataDomicilioEspecifico.codtiposvia);
+        this.domicilioFormGroup.controls['idtipovia'].setValue(dataDomicilioEspecifico.idtipovia);
+        this.domicilioFormGroup.controls['via'].setValue(dataDomicilioEspecifico.via);
+        this.domicilioFormGroup.controls['idtipolocalidad'].setValue(dataDomicilioEspecifico.idtipolocalidad);
+        this.domicilioFormGroup.controls['cp'].setValue('12130');
+        this.domicilioFormGroup.controls['nexterior'].setValue(dataDomicilioEspecifico.nexterior);
+        this.domicilioFormGroup.controls['entrecalle1'].setValue(dataDomicilioEspecifico.entrecalle1);
+        this.domicilioFormGroup.controls['entrecalle2'].setValue(dataDomicilioEspecifico.entrecalle2);
+        this.domicilioFormGroup.controls['andador'].setValue(dataDomicilioEspecifico.andador);
+        this.domicilioFormGroup.controls['edificio'].setValue(dataDomicilioEspecifico.edificio);
+        this.domicilioFormGroup.controls['seccion'].setValue(dataDomicilioEspecifico.seccion);
+        this.domicilioFormGroup.controls['entrada'].setValue(dataDomicilioEspecifico.entrada);
+        this.domicilioFormGroup.controls['ninterior'].setValue(dataDomicilioEspecifico.ninterior);
+        this.domicilioFormGroup.controls['telefono'].setValue(dataDomicilioEspecifico.telefono);
+        this.domicilioFormGroup.controls['adicional'].setValue(dataDomicilioEspecifico.adicional);
     
-        if(dataDomicilio.idestado == 9){
-            this.domicilioFormGroup.controls['idmunicipio'].setValue(dataDomicilio.idmunicipio);
+        if(dataDomicilioEspecifico.dataDomicilioEspecifico[0].CODESTADO == 9){
+            // alert('funciona');
+            // this.domicilioFormGroup.controls['idmunicipio'].setValue(dataDomicilioEspecifico.idmunicipio);
         } else {
-            this.domicilioFormGroup.controls['idmunicipio2'].setValue(dataDomicilio.idmunicipio);
-            this.domicilioFormGroup.controls['municipio'].setValue(dataDomicilio.municipio);
-            this.domicilioFormGroup.controls['ciudad'].setValue(dataDomicilio.ciudad);
+            this.domicilioFormGroup.controls['idmunicipio2'].setValue(dataDomicilioEspecifico.idmunicipio);
+            this.domicilioFormGroup.controls['municipio'].setValue(dataDomicilioEspecifico.municipio);
+            this.domicilioFormGroup.controls['ciudad'].setValue(dataDomicilioEspecifico.ciudad);
         }
     }
 
