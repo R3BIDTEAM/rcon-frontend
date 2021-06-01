@@ -706,6 +706,7 @@ export class DialogDomiciliosNotario {
         
         if(this.domicilioFormGroup.value.idestado == 9){
             this.dataDomicilio.idmunicipio = this.domicilioFormGroup.value.idmunicipio;
+            alert(this.dataDomicilio.idmunicipio);
             //this.dataDomicilio.delegacion = this.domicilioFormGroup.value.delegacion;
         } else {
             this.dataDomicilio.idmunicipio2 = this.domicilioFormGroup.value.idmunicipio2;
@@ -835,23 +836,39 @@ export class DialogDomiciliosNotario {
 
         this.http.post(this.endpointCatalogos + query, '', this.httpOptions)
             .subscribe(
+                // (res: any) => {
+                //     console.log(res);
+                //     if(res.length > 0){
+                //         this.snackBar.open('Actualización exitosa', 'Cerrar', {
+                //             duration: 10000,
+                //             horizontalPosition: 'end',
+                //             verticalPosition: 'top'
+                //         });                        
+                //     }else{
+                //         this.snackBar.open('Ocurrio un error al Insertar la dirección, intente nuevemente', 'Cerrar', {
+                //             duration: 10000,
+                //             horizontalPosition: 'end',
+                //             verticalPosition: 'top'
+                //         });
+                //     }
+                // },
+                // (error) => {
+                // }
                 (res: any) => {
+                    console.log("AQUI ACTUALIZO");
                     console.log(res);
-                    if(res.length > 0){
-                        this.snackBar.open('Actualización exitosa', 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
-                        });                        
-                    }else{
-                        this.snackBar.open('Ocurrio un error al Insertar la dirección, intente nuevemente', 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
-                        });
-                    }
+                    this.snackBar.open('Actualización Correcta', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
                 },
                 (error) => {
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
                 }
             );
     }
@@ -886,7 +903,7 @@ export class DialogDomiciliosNotario {
     
         if(data.CODESTADO == 9){
             alert('funciona');
-            this.domicilioFormGroup.controls['idmunicipio'].setValue(data.CODMUNICIPIO);
+            this.domicilioFormGroup.controls['idmunicipio'].setValue(data.IDDELEGACION);
         } else {
             this.domicilioFormGroup.controls['idmunicipio2'].setValue(data.CODMUNICIPIO);
             this.domicilioFormGroup.controls['municipio'].setValue(data.DELEGACION);
@@ -1046,6 +1063,7 @@ export class DialogMunicipiosNotario {
             criterio = criterio + 'getMunicipiosByEstado';
             query = query + 'codEstado=' + this.data.codEstado;
         }else{
+            alert('es cdmx');
             criterio = '';
             query = '';
         }
