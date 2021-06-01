@@ -289,7 +289,7 @@ export class EditarNotarioComponent implements OnInit {
         this.http.post(this.endpointEstados + metodo + '?idDireccion='+ iddireccion, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
-                    alert('entro');
+                    // alert('entro');
                     this.loadingDireccionEspecifica = false;
                     this.dataDomicilioEspecifico = res;
                     this.editDomicilio(this.dataDomicilioEspecifico);
@@ -706,7 +706,7 @@ export class DialogDomiciliosNotario {
         
         if(this.domicilioFormGroup.value.idestado == 9){
             this.dataDomicilio.idmunicipio = this.domicilioFormGroup.value.idmunicipio;
-            alert(this.dataDomicilio.idmunicipio);
+            // alert(this.dataDomicilio.idmunicipio);
             //this.dataDomicilio.delegacion = this.domicilioFormGroup.value.delegacion;
         } else {
             this.dataDomicilio.idmunicipio2 = this.domicilioFormGroup.value.idmunicipio2;
@@ -718,10 +718,10 @@ export class DialogDomiciliosNotario {
 
             // alert(this.dataDomicilio.id_direccion);
             if(this.domicilioFormGroup.value.id_direccion == null){
-                alert('guardar');
+                // alert('guardar');
                  this.guardaDomicilio();
             } else{
-                alert('actualizar');
+                // alert('actualizar');
                  this.actualizarDomicilio();
             }
 
@@ -902,7 +902,7 @@ export class DialogDomiciliosNotario {
         this.domicilioFormGroup.controls['id_direccion'].setValue(data.IDDIRECCION);
     
         if(data.CODESTADO == 9){
-            alert('funciona');
+            // alert('funciona');
             this.domicilioFormGroup.controls['idmunicipio'].setValue(data.IDDELEGACION);
         } else {
             this.domicilioFormGroup.controls['idmunicipio2'].setValue(data.CODMUNICIPIO);
@@ -1063,7 +1063,7 @@ export class DialogMunicipiosNotario {
             criterio = criterio + 'getMunicipiosByEstado';
             query = query + 'codEstado=' + this.data.codEstado;
         }else{
-            alert('es cdmx');
+            // alert('es cdmx');
             criterio = '';
             query = '';
         }
