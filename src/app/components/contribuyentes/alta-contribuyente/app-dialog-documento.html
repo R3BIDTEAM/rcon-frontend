@@ -13,9 +13,8 @@
                     <ng-template matStepLabel>Selcción de Documentos</ng-template>
                     <mat-form-field class="col-6">
                         <mat-label>Tipo Documento Dígital:</mat-label>
-                        <mat-select formControlName="codtipodocumento">
-                            <mat-option value="">Seleccione ...</mat-option>
-                            <mat-option value="1">Test</mat-option>
+                        <mat-select formControlName="codtipodocumento" [(ngModel)]="selectTipoDoc">
+                            <mat-option value="1">Documentos Jurídicos</mat-option>
                         </mat-select>
                         <mat-error *ngIf="tiposDocumentoFormGroup.controls.codtipodocumento.errors?.required">Requerido</mat-error>
                     </mat-form-field>
@@ -23,8 +22,8 @@
                         <mat-label>Tipo Documento Jurídico:</mat-label>
                         <mat-select formControlName="codtipodocumentojuridico" (selectionChange)="getTipoDocJuridico($event)">
                             <mat-option value="">Seleccione ...</mat-option>
-                            <mat-option value="1">Poder Notarial</mat-option>
-                            <mat-option value="2">Carta Poder</mat-option>
+                            <mat-option value="PN">Poder Notarial</mat-option>
+                            <mat-option value="CP">Carta Poder</mat-option>
                         </mat-select>
                         <mat-error *ngIf="tiposDocumentoFormGroup.controls.codtipodocumentojuridico.errors?.required">Requerido</mat-error>
                     </mat-form-field>
@@ -37,11 +36,11 @@
             <mat-step [stepControl]="infoDocumentoFormGroup">
                 <form [formGroup]="infoDocumentoFormGroup">
                     <ng-template matStepLabel>{{dataDocumento.nombreTipoDocumentoJuridico}}
-                        <button mat-flat-button type="button" color="primary" [disabled]="tiposDocumentoFormGroup.value.codtipodocumentojuridico != 1" aria-label="Buscar Notario" matTooltip="Buscar Notario" class="little-button" (click)="addNotario()">
+                        <button mat-flat-button type="button" color="primary" [disabled]="tiposDocumentoFormGroup.value.codtipodocumentojuridico != 'PN'" aria-label="Buscar Notario" matTooltip="Buscar Notario" class="little-button" (click)="addNotario()">
                             <mat-icon>search</mat-icon>
                         </button>
                     </ng-template>
-                    <ng-container *ngIf="tiposDocumentoFormGroup.value.codtipodocumentojuridico == 1">
+                    <ng-container *ngIf="tiposDocumentoFormGroup.value.codtipodocumentojuridico == 'PN'">
                         <mat-form-field class="col-6">
                             <mat-label>Número:</mat-label>
                             <input matInput readonly formControlName="noNotario">
@@ -109,6 +108,38 @@
                         <button mat-button matStepperNext>Siguiente</button>
                     </div>
                 </form>
+                <div>dada
+                    <table mat-table [dataSource]="dataDoc" *ngIf=" dataDoc.length > 0" width="100%">
+                        <ng-container matColumnDef="nombre">
+                            <th mat-header-cell *matHeaderCellDef width="15%" > Tipo Dirección </th>
+                            <td mat-cell *matCellDef="let element" width="15%" > {{ element.nombre }}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="descripcion">
+                            <th mat-header-cell *matHeaderCellDef width="75%"> Dirección </th>
+                            <td mat-cell *matCellDef="let element" width="75%">
+                                {{ element.descripcion }}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="download">
+                            <th mat-header-cell *matHeaderCellDef> Descargar </th>
+                            <td mat-cell *matCellDef="let element">
+                                <button mat-icon-button type="button" color="primary" aria-label="Descargar" matTooltip="Historial">
+                                    <mat-icon>download</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="eliminar">
+                            <th mat-header-cell *matHeaderCellDef> Elminar </th>
+                            <td mat-cell *matCellDef="let element">
+                                <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsDoc"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumnsDoc;"></tr>
+                    </table>
+                </div>
             </mat-step>
 
             <mat-step>

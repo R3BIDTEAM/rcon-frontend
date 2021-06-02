@@ -21,7 +21,9 @@ import { LoginComponent } from './components/login/login.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { LoginFirmaComponent } from './components/login-firma/login-firma.component';
 import { MainComponent } from './components/main/main.component';
-import { AltaContribuyenteComponent, DialogDomicilio, DialogRepresentacion, DialogDocumento, DialogNotario, DialogPersona } from './components/contribuyentes/alta-contribuyente/alta-contribuyente.component';
+import { AltaContribuyenteComponent, DialogRepresentacionAltaC, DialogDomicilioAlta, 
+          DialogMunicipiosAlta, DialogCiudadAlta, DialogAsentamientoAlta, DialogRepresentadoAltaC,
+          DialogViaAlta, DialogDocumentoAltaC, DialogNotarioAltaC, DialogPersonaAltaC } from './components/contribuyentes/alta-contribuyente/alta-contribuyente.component';
 import { ConsultaContribuyenteComponent } from './components/contribuyentes/consulta-contribuyente/consulta-contribuyente.component';
 import { EdicionContribuyenteComponent } from './components/contribuyentes/edicion-contribuyente/edicion-contribuyente.component';
 import { AltaNotarioComponent, DialogBuscarNotarioAlta } from './components/notarios/alta-notario/alta-notario.component';
@@ -74,12 +76,7 @@ import { EditarContribuyenteComponent, DialogDomicilioContribuyente, DialogAsent
     EdicionSociedadComponent,
     DialogAltaBusca,
     DialogSociedad,
-    DialogDomicilio,
     VerPeritosComponent,
-    DialogRepresentacion,
-    DialogDocumento,
-    DialogNotario,
-    DialogPersona,
     DialogBuscarNotarioAlta,
     VerSociedadComponent,
     EditarPeritosComponent,
@@ -121,7 +118,17 @@ import { EditarContribuyenteComponent, DialogDomicilioContribuyente, DialogAsent
     DialogRepresentadoSociedad,
     DialogDocumentoSociedad,
     DialogNotarioSociedad,
-    DialogPersonaSociedad
+    DialogPersonaSociedad,
+    DialogRepresentacionAltaC,
+    DialogDomicilioAlta,
+    DialogMunicipiosAlta,
+    DialogCiudadAlta,
+    DialogAsentamientoAlta,
+    DialogViaAlta,
+    DialogDocumentoAltaC,
+    DialogNotarioAltaC,
+    DialogPersonaAltaC,
+    DialogRepresentadoAltaC
   ],
   imports: [
     BrowserModule,
@@ -138,7 +145,6 @@ import { EditarContribuyenteComponent, DialogDomicilioContribuyente, DialogAsent
   entryComponents: [
     DialogAltaBusca,
     DialogSociedad,
-    DialogDomicilio
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'es-Mx' },

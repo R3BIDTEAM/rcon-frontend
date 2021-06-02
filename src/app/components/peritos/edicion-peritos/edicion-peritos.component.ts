@@ -34,6 +34,9 @@ export class EdicionPeritosComponent implements OnInit {
     identificacion;
     idedato;
     isIdentificativo;
+    panelDomicilio = false;
+    panelDomPredial = false;
+    panelBienes = false;
     @ViewChild('paginator') paginator: MatPaginator;
 
     constructor(

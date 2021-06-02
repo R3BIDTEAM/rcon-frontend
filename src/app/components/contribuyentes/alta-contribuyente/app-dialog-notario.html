@@ -19,8 +19,10 @@
                 <mat-form-field class="col-6">
                     <mat-label>Estado:</mat-label>
                     <mat-select [(value)]="filtros.estado">
-                        <mat-option value="">Seleccione un Estado ...</mat-option>
-                        <mat-option value="1">Test</mat-option>
+                        <mat-option value="">Seleccione Estado ...</mat-option>
+                        <mat-option *ngFor="let estado of estados" [value]="estado.CODESTADO">
+                            {{ estado.ESTADO }}
+                        </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>

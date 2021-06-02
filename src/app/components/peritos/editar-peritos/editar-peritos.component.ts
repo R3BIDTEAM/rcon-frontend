@@ -936,30 +936,6 @@ export class DialogDomicilioPerito {
     tiposLocalidad;
     optionCiudad;
     codtiposdireccion;
-    idestadoNg
-    idmunicipioNg
-    idmunicipio2Ng
-    municipioNg
-    idciudadNg
-    ciudadNg
-    codasentamientoNg
-    asentamientoNg
-    idtipoasentamientoNg
-    cpNg
-    codtiposviaNg
-    idtipoviaNg
-    viaNg
-    idtipolocalidadNg
-    nexteriorNg
-    entrecalle1Ng
-    entrecalle2Ng
-    andadorNg
-    edificioNg
-    seccionNg
-    entradaNg
-    ninteriorNg
-    telefonoNg
-    adicionalNg
     botonAsentamiento = true;
     botonCiudad = true;
     botonMunicipio = true;
@@ -2191,7 +2167,7 @@ export class DialogRepresentadoPeritos {
     idDocumento;
     insertOrUpdate = null;
     dataRepresentacion: DataRepresentacion = {} as DataRepresentacion;
-  
+
     constructor(
         private http: HttpClient,
         private snackBar: MatSnackBar,
@@ -2873,7 +2849,7 @@ export class DialogNotarioPeritos {
         this.notario.ciudad = element.ESTADO;
         this.notario.nombre = element.NOMBRE + ' ' + element.APELLIDOPATERNO + ' ' + element.APELLIDOMATERNO;
     }
-  }
+}
   
 ///////////////PERSONA////////////////
 export interface Filtros {
