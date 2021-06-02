@@ -582,13 +582,10 @@ export class EditarPeritosComponent implements OnInit {
             },
         });
         dialogRef.afterClosed().subscribe(result => {
-            if(result){
-                if(i != -1){
-                    this.dataRepresentantes[i] = result;
-                }else{
-                    this.dataRepresentantes.push(result);
-                }
-            }
+            setTimeout (() => {
+                this.loadingRepresentante = true;
+                this.getRepresentacion();
+            }, 1000);
         });
     }
 
@@ -601,13 +598,10 @@ export class EditarPeritosComponent implements OnInit {
             },
         });
         dialogRef.afterClosed().subscribe(result => {
-            if(result){
-                if(i != -1){
-                    this.dataRepresentantes[i] = result;
-                }else{
-                    this.dataRepresentantes.push(result);
-                }
-            }
+            setTimeout (() => {
+                this.loadingRepresentado = true;
+                this.getRepresentado();
+            }, 1000);
         });
     }
 
@@ -1740,36 +1734,7 @@ export class DialogCiudad {
         this.dataCiudad.codestado = element.CODESTADO;
     }
 
-    // obtenerAsentamientoPorNombre(){
-    //     this.loadingBuscaCiudad = true;
-    //     let criterio = '';
-    //     let query = '';
-
-    //     if(this.data.codEstado != 9){
-    //         criterio = criterio + 'getMunicipiosByEstado';
-    //         query = query + 'codEstado=' + this.data.codEstado;
-    //     }else{
-    //         criterio = '';
-    //         query = '';
-    //     }
-
-    //     console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
-    //     this.loadingBuscaCiudad = true;
-    //     this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
-    //         .subscribe(
-    //             (res: any) => {
-    //                 this.loadingBuscaCiudad = false;
-    //                 this.dataSource = res;
-    //                 this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-    //                 this.total = this.dataSource.length; 
-    //                 this.paginator.pageIndex = 0;
-    //                 console.log(this.dataSource);
-    //             },
-    //             (error) => {
-    //                 this.loadingBuscaCiudad = false;
-    //             }
-    //         );
-    // }
+    
 }
 
 ///////////////ASENTAMIENTO//////////////////
@@ -1887,32 +1852,7 @@ export class DialogAsentamiento {
         }
     }
 
-    // obtenerAsentamientoPorNombre(){
-    //     this.loading = true;
-    //     let criterio = 'getAsentamientoByNombre';
-    //     let query = '';
-        
-    //     query = 'nombre=' + this.buscaAsentamiento + '&codEstado=' + this.data.codEstado + '&codMunicipio=' + this.data.codMunicipio;
-
-    //     query = (this.data.codCiudad) ? query + '&codCiudad=' + this.data.codCiudad : query + '&codCiudad=';
-
-    //     console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
-    //     this.loading = true;
-    //     this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
-    //         .subscribe(
-    //             (res: any) => {
-    //                 this.loading = false;
-    //                 this.dataSource = res;
-    //                 this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-    //                 this.total = this.dataSource.length; 
-    //                 this.paginator.pageIndex = 0;
-    //                 console.log(this.dataSource);
-    //             },
-    //             (error) => {
-    //                 this.loading = false;
-    //             }
-    //         );
-    // }
+    
 }
 
 ///////////////VIA//////////////////

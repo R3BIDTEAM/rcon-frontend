@@ -125,8 +125,11 @@ export class EditarSociedadComponent implements OnInit {
     dataDomicilioEspecifico: DataDomicilio[] = [];
     displayedColumnsDom: string[] = ['direccion', 'historial', 'editar'];
     // displayedColumnsDom: string[] = ['tipoDir','direccion', 'historial'];
+    displayedColumnsRepdo: string[] = ['representacion','texto','caducidad','editar','eliminar'];
     loadingDomicilios = false;
     loadingDireccionEspecifica = false;
+    loadingRepresentante = false;
+    loadingRepresentado = false;
     paginaDom = 1;
     totalDom = 0;
     pageSizeDom = 15;
@@ -138,10 +141,18 @@ export class EditarSociedadComponent implements OnInit {
     @ViewChild('paginator') paginator: MatPaginator;
 
     /*Paginado*/
-   dataSource1 = [];
-   total1 = 0;
-   pagina1= 1;
-   dataPaginate1;
+    dataSource1 = [];
+    total1 = 0;
+    pagina1= 1;
+    dataPaginate1;
+    dataSource4 = [];
+    total4 = 0;
+    pagina4= 1;
+    dataPaginate4;
+    dataSource5 = [];
+    total5 = 0;
+    pagina5= 1;
+    dataPaginate5;
    /*Paginado*/
 
     constructor(
@@ -164,6 +175,8 @@ export class EditarSociedadComponent implements OnInit {
         console.log(this.idSociedad);
         this.getSociedadDatos();
         this.getDomicilioSociedad();
+        this.getRepresentacion();
+        this.getRepresentado();
     }
 
     getSociedadDatos(){
@@ -475,13 +488,10 @@ export class EditarSociedadComponent implements OnInit {
             },
         });
         dialogRef.afterClosed().subscribe(result => {
-            if(result){
-                if(i != -1){
-                    this.dataRepresentantes[i] = result;
-                }else{
-                    this.dataRepresentantes.push(result);
-                }
-            }
+            setTimeout (() => {
+                this.loadingRepresentante = true;
+                this.getRepresentacion();
+            }, 1000);
         });
     }
 
@@ -494,14 +504,68 @@ export class EditarSociedadComponent implements OnInit {
             },
         });
         dialogRef.afterClosed().subscribe(result => {
-            if(result){
-                if(i != -1){
-                    this.dataRepresentantes[i] = result;
-                }else{
-                    this.dataRepresentantes.push(result);
-                }
-            }
+            setTimeout (() => {
+                this.loadingRepresentado = true;
+                this.getRepresentado();
+            }, 1000);
         });
+    }
+
+    getRepresentacion(){
+        this.loadingRepresentante = true;
+        let queryRep = 'rep=Representantes&idPersona=' + this.idSociedad;
+        this.http.post(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRep, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loadingRepresentante = false;
+                    this.dataSource4 = res;
+                    this.total4 = this.dataSource4.length;
+                    this.dataPaginate4 = this.paginate(this.dataSource4, 15, this.pagina4);
+                },
+                (error) => {
+                    this.loadingRepresentante = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
+
+    paginado4(evt): void{
+        this.pagina4 = evt.pageIndex + 1;
+        this.dataSource4 = this.paginate(this.dataSource4, 15, this.pagina4);
+    }
+
+    getRepresentado(){
+        this.loadingRepresentado = true;
+        let queryRepdo = 'rep=Representado&idPersona=' + this.idSociedad;
+        console.log(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRepdo);
+        this.http.post(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRepdo, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loadingRepresentado = false;
+                    this.dataSource5 = res;
+                    console.log("ACA ENTRO EL REPRESENTADO");
+                    console.log(res);
+                    this.total5 = this.dataSource5.length;
+                    this.dataPaginate5 = this.paginate(this.dataSource5, 15, this.pagina5);
+                },
+                (error) => {
+                    this.loadingRepresentado = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
+
+    paginado5(evt): void{
+        this.pagina5 = evt.pageIndex + 1;
+        this.dataSource5 = this.paginate(this.dataSource5, 15, this.pagina5);
     }
 }
 
@@ -1730,6 +1794,7 @@ export class DialogRepresentacionSociedad {
         private _formBuilder: FormBuilder,
         private snackBar: MatSnackBar,
         public dialog: MatDialog,
+        private auth: AuthService,
         public dialogRef: MatDialogRef<DialogRepresentacionSociedad>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
@@ -1763,6 +1828,14 @@ export class DialogRepresentacionSociedad {
             texto: [null, []],
             fechaCaducidad: [null, []],
         });
+
+        this.httpOptions = {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/json',
+              Authorization: this.auth.getSession().token
+            })
+        };
+
         console.log("ACA LA DATA DEL DIALOG REPRESENTACION");
         console.log(data);
         if(data.dataRepresentante){
@@ -1917,7 +1990,7 @@ export class DialogRepresentacionSociedad {
         };
         
         console.log(JSON.stringify(payload));
-        this.http.put(this.endpoint + 'insertarRepresentacion', payload, this.httpOptions).subscribe(
+        this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
             (res: any) => {
                 this.snackBar.open('SE HA INSERTADO TODO', 'Cerrar', {
                     duration: 10000,
@@ -1992,6 +2065,7 @@ export class DialogRepresentadoSociedad {
         private snackBar: MatSnackBar,
         private _formBuilder: FormBuilder,
         public dialog: MatDialog,
+        private auth: AuthService,
         public dialogRef: MatDialogRef<DialogRepresentadoSociedad>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
@@ -2026,6 +2100,13 @@ export class DialogRepresentadoSociedad {
             fechaCaducidad: [null, []],
         });
   
+        this.httpOptions = {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/json',
+              Authorization: this.auth.getSession().token
+            })
+        };
+
         if(data.dataRepresentante){
             this.setDataRepresentacion(data.dataRepresentante);
         }
@@ -2178,7 +2259,7 @@ export class DialogRepresentadoSociedad {
         };
         
         console.log(JSON.stringify(payload));
-        this.http.put(this.endpoint + 'insertarRepresentacion', payload, this.httpOptions).subscribe(
+        this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
             (res: any) => {
                 this.snackBar.open('SE HA INSERTADO TODO', 'Cerrar', {
                     duration: 10000,
