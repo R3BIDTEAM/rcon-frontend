@@ -47,18 +47,17 @@ export class EdicionNotarioComponent implements OnInit {
   displayedColumns: string[] = ['nombre','datos_identificativos','seleccionar'];
   httpOptions;
   filtros: Filtros = {} as Filtros;
-  // estados: Estados = {} as Estados;
-  // documentos: DocumentosIdentificativos = {} as DocumentosIdentificativos;
   estados: Estados[] = [];
   documentos: DocumentosIdentificativos[] = [];
   loadingEstados = false;
   loadingDocumentosIdentificativos = false;
   isIdentificativo;
-  canSearch = false;
+  search = false;
   isBusqueda;
   queryParamFiltros;
   endpointBusqueda;
   @ViewChild('paginator') paginator: MatPaginator;
+
 
   constructor(
     private http: HttpClient,
@@ -68,7 +67,6 @@ export class EdicionNotarioComponent implements OnInit {
   ) { 
     
   }
-
 
   ngOnInit(): void {
     this.isBusqueda = false;
@@ -82,21 +80,19 @@ export class EdicionNotarioComponent implements OnInit {
     this.getDataDocumentosIdentificativos();
   }
 
-
   getDataEstados(): void {
     this.loadingEstados = true;
     this.http.post(this.endpoint + 'getEstados', '', this.httpOptions).subscribe(
       (res: any) => {
         this.loadingEstados = false;
         this.estados = res;
-        console.log(this.estados);
+        // console.log(this.estados);
       },
       (error) => {
         this.loadingEstados = false;
       }
     );
   }
-
   
   getDataDocumentosIdentificativos(): void{
     this.loadingDocumentosIdentificativos = true;
@@ -104,14 +100,13 @@ export class EdicionNotarioComponent implements OnInit {
       (res: any) => {
         this.loadingDocumentosIdentificativos = false;
         this.documentos = res.CatDocIdentificativos;
-        console.log(this.documentos);
+        // console.log(this.documentos);
       },
       (error) => {
         this.loadingDocumentosIdentificativos = false;
       }
     );
   }
-
 
   clearInputsIdentNoIdent(isIdentificativo): void {
       this.isIdentificativo = isIdentificativo;
@@ -130,6 +125,23 @@ export class EdicionNotarioComponent implements OnInit {
           }
   }
 
+  validateSearch(){
+    this.search = (
+            this.filtros.apellido_paterno ||
+            this.filtros.apellido_materno ||
+            this.filtros.nombre ||
+            this.filtros.rfc ||
+            this.filtros.curp ||
+            this.filtros.no_notario ||
+            this.filtros.estado
+        ) ? true : false;
+  }
+
+  otroDocumento(){
+    if(this.filtros.otro_documento === null || this.filtros.otro_documento === ''){
+      this.filtros.numero_documento = '';
+    }
+  }
 
   getData(): void {
       let query = '';
@@ -176,7 +188,7 @@ export class EdicionNotarioComponent implements OnInit {
       query = query.substr(1);
 
       this.loading = true;
-        console.log(this.endpoint + busquedaDatos + '?' + query);
+        // console.log(this.endpoint + busquedaDatos + '?' + query);
         this.http.post(this.endpoint + busquedaDatos + '?' + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
@@ -184,8 +196,8 @@ export class EdicionNotarioComponent implements OnInit {
                     this.dataSource = res;
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                     this.total = this.dataSource.length; 
-                    this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
+                    // this.paginator.pageIndex = 0;
+                    // console.log(this.dataSource);
                 },
                 (error) => {
                     this.loading = false;

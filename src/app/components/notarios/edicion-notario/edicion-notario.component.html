@@ -1,24 +1,24 @@
 <div class="row">
     <div class="col-md-8 offset-md-2">
-        <h1 class="titulo-cdmx">Edición de Notarios</h1>
+        <h1 class="titulo-cdmx" style="margin: 0 0 25px 0;">Edición de Notarios</h1>
 
         <div class="row">
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>Apellido Paterno</mat-label>
-                    <input matInput #apellido_paterno [(ngModel)]="filtros.apellido_paterno" placeholder="Placeholder" (keyup)="clearInputsIdentNoIdent(false)">
+                    <input matInput #apellido_paterno [(ngModel)]="filtros.apellido_paterno" placeholder="Placeholder" (keyup)="clearInputsIdentNoIdent(false)" (ngModelChange)="validateSearch()">
                 </mat-form-field>
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>Apellido Materno</mat-label>
-                    <input matInput #apellido_materno [(ngModel)]="filtros.apellido_materno" placeholder="Placeholder" (keyup)="clearInputsIdentNoIdent(false)">
+                    <input matInput #apellido_materno [(ngModel)]="filtros.apellido_materno" placeholder="Placeholder" (keyup)="clearInputsIdentNoIdent(false)" (ngModelChange)="validateSearch()">
                 </mat-form-field>
             </div> 
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>Nombre</mat-label>
-                    <input matInput #nombre [(ngModel)]="filtros.nombre" placeholder="Placeholder" (keyup)="clearInputsIdentNoIdent(false)">
+                    <input matInput #nombre [(ngModel)]="filtros.nombre" placeholder="Placeholder" (keyup)="clearInputsIdentNoIdent(false)" (ngModelChange)="validateSearch()">
                 </mat-form-field>
             </div>
         </div>
@@ -27,13 +27,13 @@
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>RFC*</mat-label>
-                    <input matInput #rfc [(ngModel)]="filtros.rfc" placeholder="Placeholder" (keyup)="clearInputsIdentNoIdent(true)">
+                    <input matInput #rfc [(ngModel)]="filtros.rfc" placeholder="Placeholder" (keyup)="clearInputsIdentNoIdent(true)" (ngModelChange)="validateSearch()">
                 </mat-form-field>
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>CURP*</mat-label>
-                    <input matInput #curp [(ngModel)]="filtros.curp" placeholder="Placeholder" (keyup)="clearInputsIdentNoIdent(true)">
+                    <input matInput #curp [(ngModel)]="filtros.curp" placeholder="Placeholder" (keyup)="clearInputsIdentNoIdent(true)" (ngModelChange)="validateSearch()">
                 </mat-form-field>
             </div>
         </div>
@@ -48,7 +48,7 @@
             <div class="col-md-4">
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Otro Documento:</mat-label>
-                    <mat-select #otro_documento [(ngModel)]="filtros.otro_documento">
+                    <mat-select #otro_documento [(ngModel)]="filtros.otro_documento" (ngModelChange)="otroDocumento()">
                         <mat-option value="">Seleccione...</mat-option>
                         <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF">
                             {{ documento.DESCRIPCION }}
@@ -59,7 +59,7 @@
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>Número Documento</mat-label>
-                    <input matInput #numero_documento [(ngModel)]="filtros.numero_documento" placeholder="Número documento">
+                    <input matInput #numero_documento [(ngModel)]="filtros.numero_documento" [disabled]="filtros.otro_documento == '' || filtros.otro_documento == null" placeholder="Número documento">
                 </mat-form-field>
             </div>
         </div> 
@@ -68,13 +68,13 @@
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>No. Notario</mat-label>
-                    <input matInput #no_notario [(ngModel)]="filtros.no_notario" placeholder="Placeholder" (keyup)="clearInputsIdentNoIdent(true)">
+                    <input matInput #no_notario [(ngModel)]="filtros.no_notario" placeholder="Placeholder" (keyup)="clearInputsIdentNoIdent(true)" (ngModelChange)="validateSearch()">
                 </mat-form-field>
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Estado:</mat-label>
-                    <mat-select #estado [(ngModel)]="filtros.estado" (selectionChange)="clearInputsIdentNoIdent(true)">
+                    <mat-select #estado [(ngModel)]="filtros.estado" (selectionChange)="clearInputsIdentNoIdent(true)" (ngModelChange)="validateSearch()">
                         <mat-option value="">Seleccione ...</mat-option>
                         <mat-option *ngFor="let estado of estados" [value]="estado.CODESTADO">
                             {{ estado.ESTADO }}
@@ -87,7 +87,7 @@
         <div class="row">
             <div class="col-md-2 offset-md-10">
                 <div class="d-flex flex-row-reverse">
-                    <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getData()">
+                    <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getData()" [disabled]="!search">
                         Buscar
                     </button>
                 </div>
@@ -96,48 +96,61 @@
 
 
 
-        <h3 class="verde-cdmx" style="margin-top: 10%;">Lista de notarios</h3>
-
         <!-- Table generado por la búsqueda -->
         <ng-container>
+
             <div style="padding: 30px; text-align: center;" *ngIf="loading">
                 <mat-spinner style="margin:0 auto;"></mat-spinner>
                 <p>Cargando...</p>
             </div>
-            <div class="alert alert-info" *ngIf="dataSource.length == 0 && !loading">
-                No hay Notarios para el filtro seleccionado
-            </div> 
-            <table mat-table [dataSource]="dataPaginate" *ngIf="!loading && dataSource.length > 0">
-                <ng-container matColumnDef="nombre">
-                    <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="width: 50%; font-size: 14px;"> Nombre </th>
-                    <td mat-cell *matCellDef="let element" class="contenido-tabla"> 
-                        {{ (element.nombre) ? element.nombre : element.NOMBRE}}
-                        {{ (element.apellidopaterno) ? element.apellidopaterno : element.APELLIDOPATERNO }}
-                        {{ (element.apellidomaterno) ? element.apellidomaterno : element.APELLIDOMATERNO }}
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="datos_identificativos">
-                    <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="width: 40%;  font-size: 14px;"> Datos Identificativos </th>
-                    <td mat-cell *matCellDef="let element" class="contenido-tabla"> 
-                        <b>RFC: </b> {{ (element.rfc) ? element.rfc : element.RFC }}<br>
-                        <b>CURP: </b> {{ (element.curp) ? element.curp : element.CURP }} <br>
-                        <b>INE: </b> {{ (element.claveife) ? element.claveife : element.CLAVEIFE }}
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="seleccionar">
-                    <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="width: 10%;  font-size: 14px;"> Seleccionar </th>
-                    <td mat-cell *matCellDef="let element" style="text-align: center;">
-                        <button mat-stroked-button color="primary" aria-label="Editar Notario" matTooltip="Editar Notario" [routerLink]="['/main/editar-notario', (element.idpersona) ? element.idpersona : element.IDPERSONA]">
-                            Editar
-                        </button>
-                    </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-            <mat-paginator #paginator [length]="total" [pageSize]="pageSize" [pageSizeOptions]="[pageSize]" [showFirstLastButtons]="true" (page)="paginado($event)">
-            </mat-paginator>
+
+            <div class="row" *ngIf="dataSource.length == 0 && !loading">
+                <div class="col-md-12">
+                    <h3 class="verde-cdmx" style="margin-top: 10%;">Lista de notarios:</h3>
+                    <div class="alert alert-info" >
+                        No hay Notarios para el filtro seleccionado
+                    </div> 
+                </div>
+            </div>
+
+            <div class="row" *ngIf="!loading && dataSource.length > 0">
+                <div class="col-md-12">
+                    <h3 class="verde-cdmx" style="margin-top: 10%;">Lista de notarios:</h3>
+                    <table mat-table [dataSource]="dataPaginate">
+                        <ng-container matColumnDef="nombre">
+                            <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="width: 50%; font-size: 14px;"> Nombre </th>
+                            <td mat-cell *matCellDef="let element" class="contenido-tabla"> 
+                                {{ (element.nombre) ? element.nombre : element.NOMBRE}}
+                                {{ (element.apellidopaterno) ? element.apellidopaterno : element.APELLIDOPATERNO }}
+                                {{ (element.apellidomaterno) ? element.apellidomaterno : element.APELLIDOMATERNO }}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="datos_identificativos">
+                            <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="width: 40%;  font-size: 14px;"> Datos Identificativos </th>
+                            <td mat-cell *matCellDef="let element" class="contenido-tabla"> 
+                                <b>RFC: </b> {{ (element.rfc) ? element.rfc : element.RFC }}<br>
+                                <b>CURP: </b> {{ (element.curp) ? element.curp : element.CURP }} <br>
+                                <b>INE: </b> {{ (element.claveife) ? element.claveife : element.CLAVEIFE }}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="seleccionar">
+                            <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="width: 10%;  font-size: 14px;"> Seleccionar </th>
+                            <td mat-cell *matCellDef="let element" style="text-align: center;">
+                                <button mat-stroked-button color="primary" aria-label="Editar Notario" matTooltip="Editar Notario" [routerLink]="['/main/editar-notario', (element.idpersona) ? element.idpersona : element.IDPERSONA]">
+                                    Editar
+                                </button>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                    <mat-paginator #paginator [length]="total" [pageSize]="pageSize" [pageSizeOptions]="[pageSize]" [showFirstLastButtons]="true" (page)="paginado($event)">
+                    </mat-paginator>
+                </div>
+            </div>
+            
         </ng-container>
+        <!-- Fin de table generado por la búsqueda -->
     
     </div>
 </div>
