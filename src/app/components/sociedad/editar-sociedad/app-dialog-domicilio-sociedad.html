@@ -23,9 +23,9 @@
                 </mat-form-field>
                 <mat-form-field class="col-6" *ngIf="domicilioFormGroup.controls.idestado.value == 9">
                     <mat-label>Alcaldía:</mat-label>
-                    <mat-select formControlName="idmunicipio" [class.spinner]="loadingMunicipios" [disabled]="loadingMunicipios" [(ngModel)]="idmunicipioNg" (selectionChange)="getNombreDel($event)" >
+                    <mat-select formControlName="idmunicipio" [class.spinner]="loadingMunicipios" [disabled]="loadingMunicipios"  (selectionChange)="getNombreDel($event)" >
                         <mat-option value="">Seleccione ...</mat-option>
-                        <mat-option *ngFor="let municipio of municipios" [value]="(municipio.CODMUNICIPIO) ? municipio.CODMUNICIPIO : municipio.iddelegacion">
+                        <mat-option *ngFor="let municipio of municipios" [value]="(municipio.CODMUNICIPIO) ? municipio.CODMUNICIPIO : municipio.codmunicipiosepomex">
                             {{ (municipio.MUNICIPIO) ? municipio.MUNICIPIO : municipio.nombre }}
                         </mat-option>
                     </mat-select>
