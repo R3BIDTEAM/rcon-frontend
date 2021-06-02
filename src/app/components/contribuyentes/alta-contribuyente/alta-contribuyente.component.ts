@@ -10,6 +10,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import * as moment from 'moment';
 
 export interface DatosContribuyente {
+    codtipopersona: string;
     apepaterno: string;
     apematerno: string;
     nombre: string;
@@ -27,6 +28,11 @@ export interface DatosContribuyente {
     independienteAct: string;
     fecha_alta: Date;
     fecha_baja: Date;
+    fechacambiosituacion: Date;
+    fechainicioactiv: Date;
+    idmotivosmoral: string;
+    idtipomoral: string;
+    activprincip: string;
 }
 
 export interface DataDomicilio {
@@ -129,6 +135,7 @@ export class AltaContribuyenteComponent implements OnInit {
     domInsertCont = false;
     panelRepresentantes = false;
     panelRepresentados = false;
+    resultadoAlta;
 
     /*PAGINADOS*/
     dataSource1 = [];
@@ -265,7 +272,9 @@ export class AltaContribuyenteComponent implements OnInit {
                     console.log(res);
                     this.domInsertCont = true;
                     this.idPersona = res[0].idpersona;
+                    this.resultadoAlta = res;
                     console.log(res[0].idpersona);
+                    this.setDatosContribuyente();
                     this.snackBar.open('guardado correcto', 'Cerrar', {
                         duration: 10000,
                         horizontalPosition: 'end',
@@ -282,6 +291,29 @@ export class AltaContribuyenteComponent implements OnInit {
                 }
             );
         
+    }
+
+    setDatosContribuyente(){
+        this.datosContribuyente.nombre = this.resultadoAlta[0].nombre;
+        this.datosContribuyente.apepaterno = this.resultadoAlta[0].apellidopaterno;
+        this.datosContribuyente.apematerno = this.resultadoAlta[0].apellidomaterno;
+        this.datosContribuyente.rfc = this.resultadoAlta[0].rfc;
+        this.datosContribuyente.curp = this.resultadoAlta[0].curp;
+        this.datosContribuyente.ine = this.resultadoAlta[0].claveife;
+        this.datosContribuyente.fecha_naci = this.resultadoAlta[0].fechanacimiento;
+        this.datosContribuyente.fecha_def = this.resultadoAlta[0].fechadefuncion;
+        this.datosContribuyente.identificacion = this.resultadoAlta[0].iddocidentif;
+        this.datosContribuyente.idedato = this.resultadoAlta[0].descdocidentif;
+        this.datosContribuyente.celular = this.resultadoAlta[0].celular;
+        this.datosContribuyente.email = this.resultadoAlta[0].email;
+        this.datosContribuyente.activprincip = this.resultadoAlta[0].activprincip;
+        this.datosContribuyente.fechainicioactiv = this.resultadoAlta[0].fechainicioactiv;
+        this.datosContribuyente.idtipomoral = this.resultadoAlta[0].idtipomoral;
+        this.datosContribuyente.idmotivosmoral = this.resultadoAlta[0].idmotivosmoral;
+        this.datosContribuyente.fechacambiosituacion = this.resultadoAlta[0].fechacambiosituacion;
+        this.datosContribuyente.codtipopersona = this.resultadoAlta[0].codtipopersona;
+        console.log("ACA LA SET DEL DATOS CONTRI");
+        console.log(this.datosContribuyente);
     }
 
     //////////////////// DOMICILIO ///////////////////////////
@@ -1470,19 +1502,19 @@ export class DialogRepresentacionAltaC {
                     ife: this.dataRepresentacion.ine,
                     iddocIdentif: this.dataRepresentacion.idDocIdent,
                     valdocIdentif: this.dataRepresentacion.docIdent,
-                    fechaNacimiento: moment(this.dataRepresentacion.fechaNacimiento).format("DD-MM-YYYY"),
-                    fechaDefuncion: moment(this.dataRepresentacion.fechaDefuncion).format("DD-MM-YYYY"),
+                    fechaNacimiento: this.dataRepresentacion.fechaNacimiento,
+                    fechaDefuncion: this.dataRepresentacion.fechaDefuncion,
                     celular: this.dataRepresentacion.celular,
                     email: this.dataRepresentacion.email,
                     activprincip: this.dataRepresentacion.actPreponderante,
                     idtipomoral: this.dataRepresentacion.idTipoPersonaMoral,
                     idmotivosmoral: this.dataRepresentacion.idMotivo,
-                    fechainicioactiv: moment(this.dataRepresentacion.fechaInicioOperacion).format("DD-MM-YYYY"),
-                    fechacambiosituacion: moment(this.dataRepresentacion.fechaCambio).format("DD-MM-YYYY")
+                    fechainicioactiv: this.dataRepresentacion.fechaInicioOperacion,
+                    fechacambiosituacion: this.dataRepresentacion.fechaCambio
                 },
                 {
                     rol:"representado",
-                    codtiposPersona: "F",
+                    codtiposPersona: this.data.codtipopersona,
                     idpersona: this.data.idPerito,
                     nombre: this.data.datosPerito.nombre,
                     rfc: this.data.datosPerito.rfc,
@@ -1492,15 +1524,15 @@ export class DialogRepresentacionAltaC {
                     ife: this.data.datosPerito.ine,
                     iddocIdentif: this.data.datosPerito.identificacion,
                     valdocIdentif: this.data.datosPerito.idedato,
-                    fechaNacimiento: moment(this.data.datosPerito.fecha_naci).format("DD-MM-YYYY"),
-                    fechaDefuncion: moment(this.data.datosPerito.fecha_def).format("DD-MM-YYYY"),
+                    fechaNacimiento: this.data.datosPerito.fecha_naci,
+                    fechaDefuncion: this.data.datosPerito.fecha_def,
                     celular: this.data.datosPerito.celular,
                     email: this.data.datosPerito.email,
-                    activprincip: null,
-                    idtipomoral: null,
-                    idmotivosmoral: null,
-                    fechainicioactiv: null,
-                    fechacambiosituacion: null
+                    activprincip: this.data.datosPerito.activprincip,
+                    idtipomoral: this.data.datosPerito.idtipomoral,
+                    idmotivosmoral: this.data.datosPerito.idmotivosmoral,
+                    fechainicioactiv: this.data.datosPerito.fechainicioactiv,
+                    fechacambiosituacion: this.data.datosPerito.fechacambiosituacion
                 }
             ],
             "documento": {
@@ -1640,7 +1672,7 @@ export class DialogRepresentadoAltaC {
             this.idDocumento = data.dataRepresentante.IDDOCUMENTOREPRESENTACION;
             this.insertOrUpdate = 2;
         }
-      }
+    }
       
     changeRequired(remove, add): void {
         this.fisicaFormGroup.controls[remove].setValue(null);
@@ -1755,7 +1787,7 @@ export class DialogRepresentadoAltaC {
                 },
                 {
                     rol:"representante",
-                    codtiposPersona: "F",
+                    codtiposPersona: this.data.codtipopersona,
                     idpersona: this.data.idPerito,
                     nombre: this.data.datosPerito.nombre,
                     rfc: this.data.datosPerito.rfc,
@@ -1765,15 +1797,15 @@ export class DialogRepresentadoAltaC {
                     ife: this.data.datosPerito.ine,
                     iddocIdentif: this.data.datosPerito.identificacion,
                     valdocIdentif: this.data.datosPerito.idedato,
-                    fechaNacimiento: moment(this.data.datosPerito.fecha_naci).format("DD-MM-YYYY"),
-                    fechaDefuncion: moment(this.data.datosPerito.fecha_def).format("DD-MM-YYYY"),
+                    fechaNacimiento: this.data.datosPerito.fecha_naci,
+                    fechaDefuncion: this.data.datosPerito.fecha_def,
                     celular: this.data.datosPerito.celular,
                     email: this.data.datosPerito.email,
-                    activprincip: null,
-                    idtipomoral: null,
-                    idmotivosmoral: null,
-                    fechainicioactiv: null,
-                    fechacambiosituacion: null
+                    activprincip: this.data.datosPerito.activprincip,
+                    idtipomoral: this.data.datosPerito.idtipomoral,
+                    idmotivosmoral: this.data.datosPerito.idmotivosmoral,
+                    fechainicioactiv: this.data.datosPerito.fechainicioactiv,
+                    fechacambiosituacion: this.data.datosPerito.fechacambiosituacion
                 }
             ],
             "documento": {
