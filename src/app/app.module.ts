@@ -51,6 +51,7 @@ import { EditarNotarioComponent, DialogDomiciliosNotario, DialogAsentamientoNota
 import { VerContribuyenteComponent } from './components/contribuyentes/ver-contribuyente/ver-contribuyente.component';
 import { EditarContribuyenteComponent, DialogDomicilioContribuyente, DialogAsentamientoContribuyente,
          DialogCiudadContribuyente, DialogMunicipiosContribuyente, DialogViaContribuyente } from './components/contribuyentes/editar-contribuyente/editar-contribuyente.component';
+import { VerHistoricoDomicilioNotarioComponent } from './components/notarios/ver-historico-domicilio-notario/ver-historico-domicilio-notario.component';
 
 @NgModule({
   declarations: [
@@ -129,7 +130,8 @@ import { EditarContribuyenteComponent, DialogDomicilioContribuyente, DialogAsent
     DialogDocumentoAltaC,
     DialogNotarioAltaC,
     DialogPersonaAltaC,
-    DialogRepresentadoAltaC
+    DialogRepresentadoAltaC,
+    VerHistoricoDomicilioNotarioComponent
   ],
   imports: [
     BrowserModule,
