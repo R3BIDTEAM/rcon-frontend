@@ -21,7 +21,7 @@ export interface DatosGenerales {
   rfc: string;
   curp: string;
   ine: string;
-  otro_documento: number;
+  otro_documento: string;
   numero_documento: string;
   fecha_nacimiento: Date;
   fecha_defuncion: Date;
@@ -125,8 +125,6 @@ export class EditarNotarioComponent implements OnInit {
   datosNotario: DatosNotario = {} as DatosNotario;
   datosGenerales: DatosGenerales = {} as DatosGenerales;
   direccionesNotario: DireccionesNotario = {} as DireccionesNotario;
-  //estados: Estados = {} as Estados;
-  //documentos: DocumentosIdentificativos = {} as DocumentosIdentificativos;
   estados: Estados[] = [];
   documentos: DocumentosIdentificativos[] = [];
   dataDomicilio: DataDomicilio[] = [];
@@ -143,14 +141,6 @@ export class EditarNotarioComponent implements OnInit {
   total1 = 0;
   pagina1= 1;
   dataPaginate1;
-  dataSource2 = [];
-  total2 = 0;
-  pagina2= 1;
-  dataPaginate2;
-  dataSource3 = [];
-  total3 = 0;
-  pagina3= 1;
-  dataPaginate3;
   /*PAGINADOS*/
 
   @ViewChild('paginator') paginator: MatPaginator;
@@ -208,6 +198,12 @@ export class EditarNotarioComponent implements OnInit {
     );
   }
 
+  otroDocumento(){
+    if(this.datosGenerales.otro_documento === null || this.datosGenerales.otro_documento === ''){
+      this.datosGenerales.numero_documento = '';
+    }
+  }
+
   getNotarioDatos(){
       this.query = 'infoExtra=true&idPersona=' + this.idNotario; 
       this.loading = true;
@@ -253,7 +249,6 @@ export class EditarNotarioComponent implements OnInit {
   }
   
 
-
     getNotarioDirecciones(){
         this.loadingDomicilios = true;
         let metodo = 'getDireccionesContribuyente';
@@ -261,16 +256,11 @@ export class EditarNotarioComponent implements OnInit {
             .subscribe(
                 (res: any) => {
                     this.loadingDomicilios = false;
-
-                    // this.dataSource1 = res.filter(element => element.CODTIPOSDIRECCION !== "N");
                     this.dataSource1 = res;
-                    // this.dataSource2 = res.filter(element => element.CODTIPOSDIRECCION === "N");
                     this.total1 = this.dataSource1.length;
-                    // this.total2 = this.dataSource2.length;
                     this.dataPaginate1 = this.paginate(this.dataSource1, 15, this.pagina1);
-                    // this.dataPaginate2 = this.paginate(this.dataSource2, 15, this.pagina2);
-                    console.log('entra');
-                    console.log(this.dataSource1);
+                    // console.log('entra');
+                    // console.log(this.dataSource1);
                 },
                 (error) => {
                     this.loadingDomicilios = false;
@@ -293,8 +283,8 @@ export class EditarNotarioComponent implements OnInit {
                     this.loadingDireccionEspecifica = false;
                     this.dataDomicilioEspecifico = res;
                     this.editDomicilio(this.dataDomicilioEspecifico);
-                    console.log('domicilio único encontrado');
-                    console.log(this.dataDomicilioEspecifico);
+                    // console.log('domicilio único encontrado');
+                    // console.log(this.dataDomicilioEspecifico);
                 },
                 (error) => {
                     this.loadingDireccionEspecifica = false;
@@ -311,21 +301,10 @@ export class EditarNotarioComponent implements OnInit {
         this.pagina1 = evt.pageIndex + 1;
         this.dataSource1 = this.paginate(this.dataSource1, 15, this.pagina1);
     }
-
-    paginado2(evt): void{
-        this.pagina2 = evt.pageIndex + 1;
-        this.dataSource2 = this.paginate(this.dataSource2, 15, this.pagina2);
-    }
-
-    paginado3(evt): void{
-        this.pagina3 = evt.pageIndex + 1;
-        this.dataSource3 = this.paginate(this.dataSource3, 15, this.pagina3);
-    }
     
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
-
 
 
   actualizarDatosNotario(){
@@ -399,7 +378,6 @@ export class EditarNotarioComponent implements OnInit {
 
   }
 
-
   addDomicilio(i = -1, dataDomicilio = null): void {
     let codtiposdireccion = '';
         const dialogRef = this.dialog.open(DialogDomiciliosNotario, {
@@ -421,6 +399,16 @@ export class EditarNotarioComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe(result => {
                 this.getNotarioDirecciones();
+        });
+  }
+
+  viewHistoricoDomicilio(): void {
+        const dialogRef = this.dialog.open(DialogDomicilioHistoricoNotario, {
+            width: '700px',
+            data: {},
+        });
+        dialogRef.afterClosed().subscribe(result => {
+                // this.getNotarioDirecciones();
         });
   }
 
@@ -559,19 +547,14 @@ export class DialogDomiciliosNotario {
             this.domicilioFormGroup.updateValueAndValidity();
         });
 
-        // if(data){
-        //     this.setDataDomicilio(data);
-        // }
-        if(data){
-            console.log(data.dataDomicilioEspecifico);
-            console.log("recibimos data seteado1");
-            //console.log(data.dataDomicilioEspecifico[0]);
-            // this.domicilioFormGroup.controls['cp'].val('11111');
-        }
-        this.getDataTiposAsentamiento();
-        this.getDataTiposVia();
-        this.getDataTiposLocalidad();
-        //this.getDireccionEspecifica();
+            if(data){
+                console.log(data.dataDomicilioEspecifico);
+                console.log("recibimos data seteado1");
+            }
+            this.getDataTiposAsentamiento();
+            this.getDataTiposVia();
+            this.getDataTiposLocalidad();
+            //this.getDireccionEspecifica();
 
     }
 
@@ -707,7 +690,6 @@ export class DialogDomiciliosNotario {
         if(this.domicilioFormGroup.value.idestado == 9){
             this.dataDomicilio.idmunicipio = this.domicilioFormGroup.value.idmunicipio;
             // alert(this.dataDomicilio.idmunicipio);
-            //this.dataDomicilio.delegacion = this.domicilioFormGroup.value.delegacion;
         } else {
             this.dataDomicilio.idmunicipio2 = this.domicilioFormGroup.value.idmunicipio2;
             this.dataDomicilio.municipio = (this.domicilioFormGroup.value.municipio) ? this.domicilioFormGroup.value.municipio : null;
@@ -725,12 +707,7 @@ export class DialogDomiciliosNotario {
                  this.actualizarDomicilio();
             }
 
-       
     
-
-        //console.log('AQUEI EL FORM VALID');
-        // console.log(this.domicilioFormGroup);
-        ///retu
     }
         
     guardaDomicilio(){
@@ -769,11 +746,9 @@ export class DialogDomiciliosNotario {
         query = (this.dataDomicilio.adicional) ? query + '&indicacionesadicionales=' + this.dataDomicilio.adicional : query + '&indicacionesadicionales=';
         query = (this.dataDomicilio.ninterior) ? query + '&numerointerior=' + this.dataDomicilio.ninterior : query + '&numerointerior=';
         
-        console.log('EL SUPER QUERY!!!!!!');
-        console.log(query);
-        //insertarDireccion?idPersona=4485239&codtiposvia=1&idvia=686&via=DR LAVISTA&numeroexterior=144&entrecalle1&entrecalle2&andador&edificio&seccion&entrada
-            //&codtiposlocalidad=1&codtiposasentamiento=9&idcolonia=8&codasentamiento=&colonia=DOCTORES&codigopostal=06720
-            //&codciudad=&ciudad&iddelegacion=5&codmunicipio=15&delegacion=CUAUHTEMOC&telefono&codestado=9&codtiposdireccion=N&indicacionesadicionales&numerointerior=
+        // console.log('EL SUPER QUERY!!!!!!');
+        // console.log(query);
+        // insertarDireccion?idPersona=4485239&codtiposvia=1&idvia=686&via=DR LAVISTA&numeroexterior=144&entrecalle1&entrecalle2&andador&edificio&seccion&entrada&codtiposlocalidad=1&codtiposasentamiento=9&idcolonia=8&codasentamiento=&colonia=DOCTORES&codigopostal=06720&codciudad=&ciudad&iddelegacion=5&codmunicipio=15&delegacion=CUAUHTEMOC&telefono&codestado=9&codtiposdireccion=N&indicacionesadicionales&numerointerior=
         this.http.post(this.endpointCatalogos + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
@@ -836,24 +811,6 @@ export class DialogDomiciliosNotario {
 
         this.http.post(this.endpointCatalogos + query, '', this.httpOptions)
             .subscribe(
-                // (res: any) => {
-                //     console.log(res);
-                //     if(res.length > 0){
-                //         this.snackBar.open('Actualización exitosa', 'Cerrar', {
-                //             duration: 10000,
-                //             horizontalPosition: 'end',
-                //             verticalPosition: 'top'
-                //         });                        
-                //     }else{
-                //         this.snackBar.open('Ocurrio un error al Insertar la dirección, intente nuevemente', 'Cerrar', {
-                //             duration: 10000,
-                //             horizontalPosition: 'end',
-                //             verticalPosition: 'top'
-                //         });
-                //     }
-                // },
-                // (error) => {
-                // }
                 (res: any) => {
                     console.log("AQUI ACTUALIZO");
                     console.log(res);
@@ -877,7 +834,6 @@ export class DialogDomiciliosNotario {
         console.log("ACA EL COD DATA ESPE");
         console.log(data);
         // console.log("ACA EL COD ESTADO SETEADO"+data.dataDomicilioEspecifico.CODESTADO);
-        //this.domicilioFormGroup.controls['idtipodireccion'].setValue(dataDomicilio.idtipodireccion);
        
         this.domicilioFormGroup.controls['idestado'].setValue(data.CODESTADO);
         this.getDataMunicipios({value: this.domicilioFormGroup.value.idestado});
@@ -996,8 +952,6 @@ export class DialogDomiciliosNotario {
 
 
 }
-
-
 
 
 ///////////////MUNICIPIOS//////////////////
@@ -1134,6 +1088,7 @@ export class DialogMunicipiosNotario {
     }
 }
 
+
 ///////////////CIUDAD//////////////////
 export interface DataCiudad{
     codciudad: number;
@@ -1239,37 +1194,8 @@ export class DialogCiudadNotario {
         this.dataCiudad.codestado = element.CODESTADO;
     }
 
-    // obtenerAsentamientoPorNombre(){
-    //     this.loadingBuscaCiudad = true;
-    //     let criterio = '';
-    //     let query = '';
-
-    //     if(this.data.codEstado != 9){
-    //         criterio = criterio + 'getMunicipiosByEstado';
-    //         query = query + 'codEstado=' + this.data.codEstado;
-    //     }else{
-    //         criterio = '';
-    //         query = '';
-    //     }
-
-    //     console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
-    //     this.loadingBuscaCiudad = true;
-    //     this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
-    //         .subscribe(
-    //             (res: any) => {
-    //                 this.loadingBuscaCiudad = false;
-    //                 this.dataSource = res;
-    //                 this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-    //                 this.total = this.dataSource.length; 
-    //                 this.paginator.pageIndex = 0;
-    //                 console.log(this.dataSource);
-    //             },
-    //             (error) => {
-    //                 this.loadingBuscaCiudad = false;
-    //             }
-    //         );
-    // }
 }
+
 
 ///////////////ASENTAMIENTO//////////////////
 export interface DataAsentamiento{
@@ -1386,33 +1312,8 @@ export class DialogAsentamientoNotario {
         }
     }
 
-    // obtenerAsentamientoPorNombre(){
-    //     this.loading = true;
-    //     let criterio = 'getAsentamientoByNombre';
-    //     let query = '';
-        
-    //     query = 'nombre=' + this.buscaAsentamiento + '&codEstado=' + this.data.codEstado + '&codMunicipio=' + this.data.codMunicipio;
-
-    //     query = (this.data.codCiudad) ? query + '&codCiudad=' + this.data.codCiudad : query + '&codCiudad=';
-
-    //     console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
-    //     this.loading = true;
-    //     this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
-    //         .subscribe(
-    //             (res: any) => {
-    //                 this.loading = false;
-    //                 this.dataSource = res;
-    //                 this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-    //                 this.total = this.dataSource.length; 
-    //                 this.paginator.pageIndex = 0;
-    //                 console.log(this.dataSource);
-    //             },
-    //             (error) => {
-    //                 this.loading = false;
-    //             }
-    //         );
-    // }
 }
+
 
 ///////////////VIA//////////////////
 export interface dataVia{
@@ -1550,3 +1451,15 @@ export class DialogViaNotario {
             );
     }
 }
+
+
+
+/////////////// DOMICILIOS ////////////////
+@Component({
+    selector: 'app-dialog-domicilio-historico-notario',
+    templateUrl: 'app-dialog-domicilio-historico-notario.html',
+    styleUrls: ['./editar-notario.component.css']
+  })
+  export class DialogDomicilioHistoricoNotario {
+
+  }
