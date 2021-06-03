@@ -402,10 +402,10 @@ export class EditarNotarioComponent implements OnInit {
         });
   }
 
-  viewHistoricoDomicilio(): void {
+  viewHistoricoDomicilio(idDireccion): void {
         const dialogRef = this.dialog.open(DialogDomicilioHistoricoNotario, {
             width: '700px',
-            data: {},
+            data: {idDireccion},
         });
         dialogRef.afterClosed().subscribe(result => {
                 // this.getNotarioDirecciones();
@@ -1454,12 +1454,87 @@ export class DialogViaNotario {
 
 
 
-/////////////// DOMICILIOS ////////////////
+/////////////// DOMICILIOS HISTORICO ////////////////
+export interface DataHistorico{
+    fecha_desde: Date;
+    fecha_hasta: Date;
+}
+
 @Component({
     selector: 'app-dialog-domicilio-historico-notario',
     templateUrl: 'app-dialog-domicilio-historico-notario.html',
     styleUrls: ['./editar-notario.component.css']
   })
   export class DialogDomicilioHistoricoNotario {
+    endpoint = environment.endpoint + 'registro/';
+    httpOptions;
+    idDireccion;
+    displayedColumns: string[] = ['fecha', 'descripcion', 'numero_expediente', 'tipo_tramite', 'tipo_subtramite', 'detalle'];
+    dataHistoricoModificaciones: DataHistorico = {} as DataHistorico;
+    dataSource = [];
+    pagina = 1;
+    total = 0;
+    pageSize = 10;
+    dataPaginate;
+    loading = true;
+    
+    constructor(
+        private auth: AuthService,
+        private snackBar: MatSnackBar,
+        private http: HttpClient,
+        private _formBuilder: FormBuilder,
+        public dialogRef: MatDialogRef<DialogDomicilioHistoricoNotario>,
+        public dialog: MatDialog,
+        @Inject(MAT_DIALOG_DATA) public data: any) {
+            dialogRef.disableClose = true;
+            this.httpOptions = {
+                headers: new HttpHeaders({
+                    'Content-Type': 'application/json',
+                    Authorization: this.auth.getSession().token
+                })
+            };
+        
+            this.idDireccion = data.idDireccion;
+            this.getHistoricoModificaciones();
+    
+        }
+
+    getHistoricoModificaciones(){
+        let query = '';
+      
+        query = (this.dataHistoricoModificaciones.fecha_desde) ? query + '&fechaDesde=' + moment(this.dataHistoricoModificaciones.fecha_desde).format('DD-MM-YYYY') : query + '&fechaDesde=';
+        query = (this.dataHistoricoModificaciones.fecha_hasta) ? query + '&fechaHasta=' + moment(this.dataHistoricoModificaciones.fecha_hasta).format('DD-MM-YYYY') : query + '&fechaHasta=';
+        query = query + '&idDireccion=' + this.idDireccion;
+
+        this.loading = true;
+        let metodo = 'getHistoricosDireccion';
+        this.http.post(this.endpoint + metodo + '?' + query, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loading = false;
+                    this.dataSource = res;
+                    console.log(this.dataSource);
+                    this.total = this.dataSource.length;
+                    this.dataPaginate = this.paginate(this.dataSource, 15, this.pagina);
+                },
+                (error) => {
+                    this.loading = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
+
+    paginado(evt): void{
+        this.pagina = evt.pageIndex + 1;
+        this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+    }
+    
+    paginate(array, page_size, page_number) {
+        return array.slice((page_number - 1) * page_size, page_number * page_size);
+    }
 
   }
