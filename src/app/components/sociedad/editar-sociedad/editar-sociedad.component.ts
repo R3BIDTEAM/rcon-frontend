@@ -117,6 +117,7 @@ export class EditarSociedadComponent implements OnInit {
     idSociedad;
     idPeritoD;
     panelDomicilio = false;
+    panelDomPredial = false;
     panelEspecifico = false;
     panelSociedades = false;
     panelRepresentantes = false;
@@ -125,7 +126,7 @@ export class EditarSociedadComponent implements OnInit {
     datosSociedad: DatosSociedad = {} as DatosSociedad;
     dataDomicilios: DataDomicilio[] = [];
     dataDomicilioEspecifico: DataDomicilio[] = [];
-    displayedColumnsDom: string[] = ['direccion', 'historial', 'editar'];
+    displayedColumnsDom: string[] = ['tipoDir', 'direccion', 'historial', 'editar'];
     // displayedColumnsDom: string[] = ['tipoDir','direccion', 'historial'];
     displayedColumnsRepdo: string[] = ['representacion','texto','caducidad','editar','eliminar'];
     loadingDomicilios = false;
@@ -148,6 +149,10 @@ export class EditarSociedadComponent implements OnInit {
     total1 = 0;
     pagina1= 1;
     dataPaginate1;
+    dataSource2 = [];
+    total2 = 0;
+    pagina2= 1;
+    dataPaginate2;
     dataSource4 = [];
     total4 = 0;
     pagina4= 1;
@@ -345,11 +350,11 @@ export class EditarSociedadComponent implements OnInit {
                     this.loadingDomicilios = false;
 
                     this.dataSource1 = res.filter(element => element.CODTIPOSDIRECCION !== "N");
-                    // this.dataSource2 = res.filter(element => element.CODTIPOSDIRECCION === "N");
+                    this.dataSource2 = res.filter(element => element.CODTIPOSDIRECCION === "N");
                     this.total1 = this.dataSource1.length;
-                    // this.total2 = this.dataSource2.length;
+                    this.total2 = this.dataSource2.length;
                     this.dataPaginate1 = this.paginate(this.dataSource1, 15, this.pagina1);
-                    // this.dataPaginate2 = this.paginate(this.dataSource2, 15, this.pagina2);
+                    this.dataPaginate2 = this.paginate(this.dataSource2, 15, this.pagina2);
                 },
                 (error) => {
                     this.loadingDomicilios = false;
@@ -392,6 +397,11 @@ export class EditarSociedadComponent implements OnInit {
         this.dataSource1 = this.paginate(this.dataSource1, 15, this.pagina1);
     }
 
+    paginado2(evt): void{
+        this.pagina1 = evt.pageIndex + 1;
+        this.dataSource1 = this.paginate(this.dataSource1, 15, this.pagina1);
+    }
+
     addDomicilio(i = -1, dataDomicilio = null): void {
       let codtiposdireccion = '';
       const dialogRef = this.dialog.open(DialogDomicilioSociedad, {
@@ -403,6 +413,19 @@ export class EditarSociedadComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
               this.getDomicilioSociedad();
       });
+    }
+
+    addDomicilioBoleta(i = -1, dataDomicilio = null): void {
+        let codtiposdireccion = 'N';
+        const dialogRef = this.dialog.open(DialogDomicilioSociedad, {
+            width: '700px',
+            data: {dataDomicilio:dataDomicilio, idSociedad: this.idSociedad,
+                codtiposdireccion: codtiposdireccion 
+            },
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            this.getDomicilioSociedad();
+        });
     }
 
     // P-2
