@@ -25,7 +25,7 @@
                     <mat-label>Alcaldía:</mat-label>
                     <mat-select formControlName="idmunicipio" [class.spinner]="loadingMunicipios" [disabled]="loadingMunicipios"  (selectionChange)="getNombreDel($event)" >
                         <mat-option value="">Seleccione ...</mat-option>
-                        <mat-option *ngFor="let municipio of municipios" [value]="(municipio.CODMUNICIPIO) ? municipio.CODMUNICIPIO : municipio.codmunicipiosepomex">
+                        <mat-option *ngFor="let municipio of municipios" [value]="(municipio.CODMUNICIPIO) ? municipio.CODMUNICIPIO : municipio.iddelegacion">
                             {{ (municipio.MUNICIPIO) ? municipio.MUNICIPIO : municipio.nombre }}
                         </mat-option>
                     </mat-select>
