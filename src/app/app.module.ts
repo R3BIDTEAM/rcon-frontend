@@ -40,7 +40,7 @@ import { VerSociedadComponent } from './components/sociedad/ver-sociedad/ver-soc
 import { EditarPeritosComponent, DialogDomicilioPerito, DialogDocumentoPerito,
         DialogNotarioPeritos, DialogPersonaPeritos, DialogRepresentacionPeritos,
         DialogRepresentadoPeritos, DialogSociedadAsociada, DialogBuscaPerito,
-        DialogAsentamiento, DialogMunicipios, DialogCiudad, DialogVia } from './components/peritos/editar-peritos/editar-peritos.component';
+        DialogAsentamiento, DialogMunicipios, DialogCiudad, DialogVia, DialogDomicilioHistoricoPerito, DialogDomicilioHistoricoEspecificoPerito } from './components/peritos/editar-peritos/editar-peritos.component';
 import { EditarSociedadComponent, DialogAsentamientoSociedad, DialogCiudadSociedad, DialogDomicilioSociedad,
           DialogBuscaSociedad, DialogMunicipiosSociedad, DialogViaSociedad, DialogSociedadPerito,
           DialogRepresentacionSociedad, DialogRepresentadoSociedad, DialogDocumentoSociedad,
@@ -50,7 +50,8 @@ import { EditarNotarioComponent, DialogDomiciliosNotario, DialogAsentamientoNota
          DialogMunicipiosNotario, DialogViaNotario, DialogDomicilioHistoricoNotario, DialogDomicilioHistoricoEspecificoNotario } from './components/notarios/editar-notario/editar-notario.component';
 import { VerContribuyenteComponent } from './components/contribuyentes/ver-contribuyente/ver-contribuyente.component';
 import { EditarContribuyenteComponent, DialogDomicilioContribuyente, DialogAsentamientoContribuyente,
-         DialogCiudadContribuyente, DialogMunicipiosContribuyente, DialogViaContribuyente } from './components/contribuyentes/editar-contribuyente/editar-contribuyente.component';
+         DialogCiudadContribuyente, DialogMunicipiosContribuyente, DialogViaContribuyente, DialogDocumentoC,
+          DialogPersonaC, DialogNotarioC, DialogRepresentacionC, DialogRepresentadoC } from './components/contribuyentes/editar-contribuyente/editar-contribuyente.component';
 import { VerHistoricoDomicilioNotarioComponent } from './components/notarios/ver-historico-domicilio-notario/ver-historico-domicilio-notario.component';
 
 @NgModule({
@@ -132,7 +133,14 @@ import { VerHistoricoDomicilioNotarioComponent } from './components/notarios/ver
     DialogPersonaAltaC,
     DialogRepresentadoAltaC,
     VerHistoricoDomicilioNotarioComponent,
-    DialogDomicilioHistoricoEspecificoNotario
+    DialogDomicilioHistoricoEspecificoNotario,
+    DialogDomicilioHistoricoPerito,
+    DialogDomicilioHistoricoEspecificoPerito,
+    DialogDocumentoC,
+    DialogPersonaC,
+    DialogNotarioC,
+    DialogRepresentacionC,
+    DialogRepresentadoC
   ],
   imports: [
     BrowserModule,
