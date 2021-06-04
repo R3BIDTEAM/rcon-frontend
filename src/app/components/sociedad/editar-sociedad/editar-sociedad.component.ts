@@ -103,7 +103,7 @@ export class EditarSociedadComponent implements OnInit {
     endpoint = environment.endpoint + 'registro/getSociedadValuacion';
     endpointTable = environment.endpoint + 'registro/getPeritoBySociedad';
     endpointActualiza = environment.endpoint + 'registro/';
-    displayedColumns: string[] = ['nombre','registro', 'rfc'];
+    displayedColumns: string[] = ['nombre','registro', 'rfc', 'elimina'];
     pagina = 1;
     total = 0;
     pageSize = 15;
@@ -115,6 +115,7 @@ export class EditarSociedadComponent implements OnInit {
     search = false;
     query;
     idSociedad;
+    idPeritoD;
     panelDomicilio = false;
     panelEspecifico = false;
     panelSociedades = false;
@@ -131,6 +132,7 @@ export class EditarSociedadComponent implements OnInit {
     loadingDireccionEspecifica = false;
     loadingRepresentante = false;
     loadingRepresentado = false;
+    loadingDatosPerito = false;
     paginaDom = 1;
     totalDom = 0;
     pageSizeDom = 15;
@@ -213,7 +215,7 @@ export class EditarSociedadComponent implements OnInit {
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                     this.total = this.dataPaginate.length; 
                     this.paginator.pageIndex = 0;
-                    console.log("OTRO RES");
+                    console.log("RES PERITOS SOCIEDAD");
                     console.log(this.total);
                     this.datosDeLaSociedad();
                 },
@@ -454,32 +456,6 @@ export class EditarSociedadComponent implements OnInit {
         this.botonEdit = true;
     }
 
-    buscarPeritoPersona(){
-        const dialogRef = this.dialog.open(DialogSociedadPerito, {
-            width: '700px',
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            if(result){
-                console.log("RESULTADO DEL NUEVO NOMBRE");
-                console.log(result);
-                console.log(result.apepaterno);
-                // this.datoPeritos.apepaterno = result.apepaterno;
-                // this.datoPeritos.apematerno = result.apematerno;
-                // this.datoPeritos.nombre  = result.nombre;
-                // this.datoPeritos.rfc = result.rfc;
-                // this.datoPeritos.curp = result.curp;
-                // this.datoPeritos.ine = result.ine;
-                // this.datoPeritos.identificacion = result.identificacion;
-                // this.datoPeritos.idedato = result.idedato;
-                // this.datoPeritos.fecha_naci = result.fecha_naci;
-                // this.datoPeritos.fecha_def = result.fecha_def;
-                // this.datoPeritos.celular = result.celular;
-                // this.datoPeritos.email = result.email;
-                this.botonEdit = false;
-            }
-        });
-    }
-
     addRepresentante(i = -1, dataRepresentante = null): void {
         const dialogRef = this.dialog.open(DialogRepresentacionSociedad, {
             width: '700px',
@@ -611,6 +587,101 @@ export class EditarSociedadComponent implements OnInit {
     paginado5(evt): void{
         this.pagina5 = evt.pageIndex + 1;
         this.dataSource5 = this.paginate(this.dataSource5, 15, this.pagina5);
+    }
+
+    ///////////////////////////// DATOS PERITOS - SOCIEDAD //////////////////////////
+    buscarPeritoPersona(){
+        const dialogRef = this.dialog.open(DialogSociedadPerito, {
+            width: '700px',
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                console.log("RESULTADO DEL NUEVO NOMBRE");
+                console.log(result);
+                console.log(result.apepaterno);
+                this.idPeritoD = result.idperito;
+                this.botonEdit = false;
+                this.insertaPeritoSociedad();
+            }
+        });
+    }
+
+    insertaPeritoSociedad(){
+        this.loading = true;
+        let queryPS = 'idPersona=' + this.idPeritoD + '&idSociedad=' + this.idSociedad;
+        this.http.post(this.endpointActualiza + 'insertarPeritoSoci?' + queryPS, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    console.log(res);
+                    if(res){
+                        this.snackBar.open("Se ha registrado correctamente", 'Cerrar', {
+                            duration: 10000,
+                            horizontalPosition: 'end',
+                            verticalPosition: 'top'
+                        });
+                        this.getPeritosSociedad();
+                    }else{
+                        this.snackBar.open("Ha ocurrido un problema, intentelo más tarde", 'Cerrar', {
+                            duration: 10000,
+                            horizontalPosition: 'end',
+                            verticalPosition: 'top'
+                        });
+                    }
+                },
+                (error) => {
+                    this.loadingDatosPerito = false;
+                    this.snackBar.open("Ha ocurrido un problema, intentelo más tarde", 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );     
+    }
+
+    eliminarPeritoSoicedad(element){
+        this.loading = true;
+        let peritoId = element.idperito;
+        console.log(element);
+        let queryEPS = 'idPersona=' + peritoId + '&idSociedad=' + element.idsociedad;
+        this.http.post(this.endpointActualiza + 'borrarPeritoSoci' + '?' + queryEPS, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    if(res){
+                        this.snackBar.open("Se ha registrado correctamente", 'Cerrar', {
+                            duration: 10000,
+                            horizontalPosition: 'end',
+                            verticalPosition: 'top'
+                        });
+                        this.getPeritosSociedad();
+                    }else{
+                        this.snackBar.open("Ha ocurrido un problema, intentelo más tarde", 'Cerrar', {
+                            duration: 10000,
+                            horizontalPosition: 'end',
+                            verticalPosition: 'top'
+                        });
+                    }
+                },
+                (error) => {
+                    this.loading = false;
+                }
+            );
+    }
+
+    eliminarPeritoSoicedadTodos(){
+        this.loadingDatosPerito = true;
+        let queryEPS = 'idPersona=' + this.idSociedad;
+        this.http.post(this.endpointActualiza + 'borrarPeritoSociTodos' + '?' + queryEPS, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    //this.loadingDatosPerito = false;
+                    console.log(res);
+                    //this.getPeritoDatos();
+                },
+                (error) => {
+                    this.loading = false;
+                }
+            );
     }
 }
 
@@ -3150,6 +3221,7 @@ export interface DatosPeritoPersona {
     fecha_def: Date;
     celular: string;
     email: string;
+    idperito: string;
 }
 @Component({
     selector: 'app-dialog-buscaPerito',
@@ -3267,10 +3339,10 @@ export class DialogSociedadPerito {
         }
 
         if( this.isIdentificativo ){
-            busquedaDatos = busquedaDatos + 'getIdentificativos';
-            query = query + '&coincidenTodos=false';
+            busquedaDatos = busquedaDatos + 'getPeritosByDatosIdentificativos';
+            //query = query + '&coincidenTodos=false';
         }else{
-            busquedaDatos = busquedaDatos + 'getContribuyente';
+            busquedaDatos = busquedaDatos + 'getPeritosByDatosPersonales';
         }
 
         query = query.substr(1);
@@ -3304,7 +3376,7 @@ export class DialogSociedadPerito {
 
     peritoPersonaSelected(element){
         console.log(element);
-        this.idperito = element.IDPERITO;
+        this.datoPeritoPersona.idperito = element.IDPERITO;
         this.datoPeritoPersona.nombre = element.NOMBRE;
         this.datoPeritoPersona.apepaterno = element.APELLIDOPATERNO;
         this.datoPeritoPersona.apematerno = element.APELLIDOMATERNO;
