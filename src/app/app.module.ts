@@ -40,7 +40,7 @@ import { VerSociedadComponent } from './components/sociedad/ver-sociedad/ver-soc
 import { EditarPeritosComponent, DialogDomicilioPerito, DialogDocumentoPerito,
         DialogNotarioPeritos, DialogPersonaPeritos, DialogRepresentacionPeritos,
         DialogRepresentadoPeritos, DialogSociedadAsociada, DialogBuscaPerito,
-        DialogAsentamiento, DialogMunicipios, DialogCiudad, DialogVia } from './components/peritos/editar-peritos/editar-peritos.component';
+        DialogAsentamiento, DialogMunicipios, DialogCiudad, DialogVia, DialogDomicilioHistoricoPerito, DialogDomicilioHistoricoEspecificoPerito } from './components/peritos/editar-peritos/editar-peritos.component';
 import { EditarSociedadComponent, DialogAsentamientoSociedad, DialogCiudadSociedad, DialogDomicilioSociedad,
           DialogBuscaSociedad, DialogMunicipiosSociedad, DialogViaSociedad, DialogSociedadPerito,
           DialogRepresentacionSociedad, DialogRepresentadoSociedad, DialogDocumentoSociedad,
@@ -132,7 +132,9 @@ import { VerHistoricoDomicilioNotarioComponent } from './components/notarios/ver
     DialogPersonaAltaC,
     DialogRepresentadoAltaC,
     VerHistoricoDomicilioNotarioComponent,
-    DialogDomicilioHistoricoEspecificoNotario
+    DialogDomicilioHistoricoEspecificoNotario,
+    DialogDomicilioHistoricoPerito,
+    DialogDomicilioHistoricoEspecificoPerito
   ],
   imports: [
     BrowserModule,
