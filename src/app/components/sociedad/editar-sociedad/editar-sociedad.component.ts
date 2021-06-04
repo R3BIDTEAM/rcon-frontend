@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import * as moment from 'moment';
+import * as FileSaver from 'file-saver';
 
 export interface DatosSociedad {
     razonSocial: string;
@@ -488,10 +489,12 @@ export class EditarSociedadComponent implements OnInit {
             },
         });
         dialogRef.afterClosed().subscribe(result => {
-            setTimeout (() => {
-                this.loadingRepresentante = true;
-                this.getRepresentacion();
-            }, 1000);
+            if(result){
+                setTimeout (() => {
+                    this.loadingRepresentante = true;
+                    this.getRepresentacion();
+                }, 1000);
+            }
         });
     }
 
@@ -504,11 +507,53 @@ export class EditarSociedadComponent implements OnInit {
             },
         });
         dialogRef.afterClosed().subscribe(result => {
-            setTimeout (() => {
-                this.loadingRepresentado = true;
-                this.getRepresentado();
-            }, 1000);
+            if(result){
+                setTimeout (() => {
+                    this.loadingRepresentado = true;
+                    this.getRepresentado();
+                }, 1000);
+            }
         });
+    }
+
+
+    eliminarRepresentacion(element,tipo){
+        let queryDelRep = 'idRepresentacion=' + element.IDREPRESENTACION;
+        console.log(element);
+        console.log(this.endpointActualiza + 'deleteRepresentacion?' + queryDelRep);
+        this.http.post(this.endpointActualiza + 'deleteRepresentacion?' + queryDelRep, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    console.log("ELIMINADO");
+                    console.log(res);
+                    if(res){
+                        if(tipo == 1){
+                            this.getRepresentacion();
+                        }else{
+                            this.getRepresentado();
+                        }
+                        this.snackBar.open("Se ha eliminado la representación", 'Cerrar', {
+                            duration: 10000,
+                            horizontalPosition: 'end',
+                            verticalPosition: 'top'
+                        });
+                        
+                    }else{
+                        this.snackBar.open("Ocorrio un error al eliminar, intentelo nuevamente", 'Cerrar', {
+                            duration: 10000,
+                            horizontalPosition: 'end',
+                            verticalPosition: 'top'
+                        });
+                    }
+                },
+                (error) => {
+                    this.snackBar.open("Ocorrio un error al eliminar, intentelo nuevamente", 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
     }
 
     getRepresentacion(){
@@ -1785,9 +1830,14 @@ export class DialogRepresentacionSociedad {
     httpOptions;
     tipoPersona = 'F';
     idPersonaRepresentacion;
+    idDocumento;
+    idRepresentacion;
+    insertOrUpdate = null;
+    insUp = false;
     fisicaFormGroup: FormGroup;
     moralFormGroup: FormGroup;
     dataRepresentacion: DataRepresentacion = {} as DataRepresentacion;
+  
   
     constructor(
         private http: HttpClient,
@@ -1829,19 +1879,23 @@ export class DialogRepresentacionSociedad {
             fechaCaducidad: [null, []],
         });
 
+        console.log("ACA LA DATA DEL DIALOG REPRESENTACION");
+        console.log(data);
+        if(data.dataRepresentante){
+            this.setDataRepresentacion(data.dataRepresentante);
+            this.idDocumento = data.dataRepresentante.IDDOCUMENTOREPRESENTACION;
+            this.idRepresentacion = data.dataRepresentante.IDREPRESENTACION;
+            this.insertOrUpdate = 2;
+            this.insUp = true;
+        }
+
         this.httpOptions = {
             headers: new HttpHeaders({
               'Content-Type': 'application/json',
               Authorization: this.auth.getSession().token
             })
         };
-
-        console.log("ACA LA DATA DEL DIALOG REPRESENTACION");
-        console.log(data);
-        if(data.dataRepresentante){
-            this.setDataRepresentacion(data.dataRepresentante);
-        }
-      }
+    }
       
     changeRequired(remove, add): void {
         this.fisicaFormGroup.controls[remove].setValue(null);
@@ -1880,7 +1934,9 @@ export class DialogRepresentacionSociedad {
     addDocumento(dataDocumento = null): void {
         const dialogRef = this.dialog.open(DialogDocumentoSociedad, {
             width: '700px',
-            data: dataDocumento,
+            data: {idDocumento: this.idDocumento,
+                insertOrUpdate: this.insertOrUpdate
+            },
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
@@ -1926,78 +1982,116 @@ export class DialogRepresentacionSociedad {
         console.log('AQUIII EL JSON');
         console.log(this.dataRepresentacion);
         //console.log(JSON.stringify(this.dataRepresentacion));
-        const payload = {
-            "representacion": {
-                textorepresentacion: this.dataRepresentacion.texto,
-                fechacaducidad: moment(this.dataRepresentacion.fechaCaducidad).format("DD-MM-YYYY")
-            },
-            "participantes": [
-                {
-                    rol: "representante",
-                    codtiposPersona: this.dataRepresentacion.tipoPersona,
-                    idpersona: this.idPersonaRepresentacion,
-                    nombre: this.dataRepresentacion.nombre,
-                    rfc: this.dataRepresentacion.rfc,
-                    apellidoPaterno: this.dataRepresentacion.apaterno,
-                    apellidoMaterno: this.dataRepresentacion.amaterno,
-                    curp: this.dataRepresentacion.curp,
-                    ife: this.dataRepresentacion.ine,
-                    iddocIdentif: this.dataRepresentacion.idDocIdent,
-                    valdocIdentif: this.dataRepresentacion.docIdent,
-                    fechaNacimiento: moment(this.dataRepresentacion.fechaNacimiento).format("DD-MM-YYYY"),
-                    fechaDefuncion: moment(this.dataRepresentacion.fechaDefuncion).format("DD-MM-YYYY"),
-                    celular: this.dataRepresentacion.celular,
-                    email: this.dataRepresentacion.email,
-                    activprincip: this.dataRepresentacion.actPreponderante,
-                    idtipomoral: this.dataRepresentacion.idTipoPersonaMoral,
-                    idmotivosmoral: this.dataRepresentacion.idMotivo,
-                    fechainicioactiv: moment(this.dataRepresentacion.fechaInicioOperacion).format("DD-MM-YYYY"),
-                    fechacambiosituacion: moment(this.dataRepresentacion.fechaCambio).format("DD-MM-YYYY")
+        if(this.insertOrUpdate == 2){
+            this.updateRepresentacion();            
+        }else{
+            const payload = {
+                "representacion": {
+                    textorepresentacion: this.dataRepresentacion.texto,
+                    fechacaducidad: moment(this.dataRepresentacion.fechaCaducidad).format("DD-MM-YYYY")
                 },
-                {
-                    rol:"representado",
-                    codtiposPersona: "M",
-                    idpersona: this.data.idSociedad,
-                    nombre: null,
-                    rfc: this.data.datosSociedad.rfc,
-                    apellidoPaterno: this.data.datosSociedad.razonSocial,
-                    apellidoMaterno: null,
-                    curp: null,
-                    ife: null,
-                    iddocIdentif: null,
-                    valdocIdentif: null,
-                    fechaNacimiento: moment(this.data.datosSociedad.fecha_alta).format("DD-MM-YYYY"),
-                    fechaDefuncion: moment(this.data.datosSociedad.fecha_baja).format("DD-MM-YYYY"),
-                    celular: this.data.datosSociedad.celular,
-                    email: this.data.datosSociedad.email,
-                    activprincip: this.data.datosSociedad.acta,
-                    idtipomoral: this.data.datosSociedad.tipoMoral,
-                    idmotivosmoral: this.data.datosSociedad.motivoCambio,
-                    fechainicioactiv: moment(this.data.datosSociedad.fechaInicio).format("DD-MM-YYYY"),
-                    fechacambiosituacion: moment(this.data.datosSociedad.fechaCambio).format("DD-MM-YYYY")
+                "participantes": [
+                    {
+                        rol: "representante",
+                        codtiposPersona: this.dataRepresentacion.tipoPersona,
+                        idpersona: this.idPersonaRepresentacion,
+                        nombre: this.dataRepresentacion.nombre,
+                        rfc: this.dataRepresentacion.rfc,
+                        apellidoPaterno: this.dataRepresentacion.apaterno,
+                        apellidoMaterno: this.dataRepresentacion.amaterno,
+                        curp: this.dataRepresentacion.curp,
+                        ife: this.dataRepresentacion.ine,
+                        iddocIdentif: this.dataRepresentacion.idDocIdent,
+                        valdocIdentif: this.dataRepresentacion.docIdent,
+                        fechaNacimiento: moment(this.dataRepresentacion.fechaNacimiento).format("DD-MM-YYYY"),
+                        fechaDefuncion: moment(this.dataRepresentacion.fechaDefuncion).format("DD-MM-YYYY"),
+                        celular: this.dataRepresentacion.celular,
+                        email: this.dataRepresentacion.email,
+                        activprincip: this.dataRepresentacion.actPreponderante,
+                        idtipomoral: this.dataRepresentacion.idTipoPersonaMoral,
+                        idmotivosmoral: this.dataRepresentacion.idMotivo,
+                        fechainicioactiv: moment(this.dataRepresentacion.fechaInicioOperacion).format("DD-MM-YYYY"),
+                        fechacambiosituacion: moment(this.dataRepresentacion.fechaCambio).format("DD-MM-YYYY")
+                    },
+                    {
+                        rol:"representado",
+                        codtiposPersona: "M",
+                        idpersona: this.data.idSociedad,
+                        nombre: null,
+                        rfc: this.data.datosSociedad.rfc,
+                        apellidoPaterno: this.data.datosSociedad.razonSocial,
+                        apellidoMaterno: null,
+                        curp: null,
+                        ife: null,
+                        iddocIdentif: null,
+                        valdocIdentif: null,
+                        fechaNacimiento: moment(this.data.datosSociedad.fecha_alta).format("DD-MM-YYYY"),
+                        fechaDefuncion: moment(this.data.datosSociedad.fecha_baja).format("DD-MM-YYYY"),
+                        celular: this.data.datosSociedad.celular,
+                        email: this.data.datosSociedad.email,
+                        activprincip: this.data.datosSociedad.acta,
+                        idtipomoral: this.data.datosSociedad.tipoMoral,
+                        idmotivosmoral: this.data.datosSociedad.motivoCambio,
+                        fechainicioactiv: moment(this.data.datosSociedad.fechaInicio).format("DD-MM-YYYY"),
+                        fechacambiosituacion: moment(this.data.datosSociedad.fechaCambio).format("DD-MM-YYYY")
+                    }
+                ],
+                "documento": {
+                    descripcion: this.dataRepresentacion.documentoRepresentacion.descripcion,        
+                    codtipodocumento: this.dataRepresentacion.documentoRepresentacion.codtipodocumento,
+                    fecha: moment(this.dataRepresentacion.documentoRepresentacion.fecha).format("DD-MM-YYYY"),
+                    codTipoDocumentoJuridico: this.dataRepresentacion.documentoRepresentacion.codtipodocumentojuridico,        
+                    lugar: this.dataRepresentacion.documentoRepresentacion.lugar,
+                    idNotario: this.dataRepresentacion.documentoRepresentacion.idnotario,
+                    noEscritura: this.dataRepresentacion.documentoRepresentacion.noNotario,
+                    documentos: this.dataRepresentacion.documentoRepresentacion.archivos
                 }
-            ],
-            "documento": {
-                descripcion: this.dataRepresentacion.documentoRepresentacion.descripcion,        
-                codtipodocumento: this.dataRepresentacion.documentoRepresentacion.codtipodocumento,
-                fecha: moment(this.dataRepresentacion.documentoRepresentacion.fecha).format("DD-MM-YYYY"),
-                codTipoDocumentoJuridico: this.dataRepresentacion.documentoRepresentacion.codtipodocumentojuridico,        
-                lugar: this.dataRepresentacion.documentoRepresentacion.lugar,
-                idNotario: this.dataRepresentacion.documentoRepresentacion.idnotario,
-                noEscritura: this.dataRepresentacion.documentoRepresentacion.noNotario,
-                documentos: this.dataRepresentacion.documentoRepresentacion.archivos
-            }
-        };
-        
-        console.log(JSON.stringify(payload));
-        this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
+            };
+            
+            console.log(JSON.stringify(payload));
+            this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
+                (res: any) => {
+                    this.snackBar.open('SE HA INSERTADO TODO', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                    console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTECIÓN");
+                    console.log(res);
+                },
+                (error) => {
+                    this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                });
+        }        
+        return this.dataRepresentacion;
+    }
+
+    updateRepresentacion(){
+        console.log("ACTUALIZA");
+        let queryActRep = '';
+
+        queryActRep = (this.dataRepresentacion.texto) ? queryActRep + 'textorepresentacion=' + this.dataRepresentacion.texto : queryActRep + 'textorepresentacion=';
+
+        queryActRep = (this.dataRepresentacion.fechaCaducidad) ? queryActRep + '&fechacaducidad=' + moment(this.dataRepresentacion.fechaCaducidad).format("DD-MM-YYYY") : queryActRep + '&fechacaducidad=';
+
+        queryActRep = queryActRep + '&idRepresentacion=' + this.idRepresentacion + '&idDocumentoDigital=' + this.idDocumento;
+
+        //actualizarRepresentaciontextorepresentacion=Texto Representacion Prueba 33&fechacaducidad=Fri Dec 31 2021 00:00:00 GMT-0600 (hora estándar central)&idRepresentacion=14&idDocumentoDigital=17646226
+        console.log("QUERY ACTUALIZA");
+        console.log(queryActRep);
+        //return;
+        this.http.post(this.endpoint + 'actualizarRepresentacion?' + queryActRep, '', this.httpOptions).subscribe(
             (res: any) => {
-                this.snackBar.open('SE HA INSERTADO TODO', 'Cerrar', {
+                this.snackBar.open('SE HA ACTUALIZADO EL REPRESENTADO', 'Cerrar', {
                     duration: 10000,
                     horizontalPosition: 'end',
                     verticalPosition: 'top'
                 });
-                console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTECIÓN");
+                console.log("AQUI ENTRO LAS RESPUESTA DEL POST ACT REPRESENTADO");
                 console.log(res);
             },
             (error) => {
@@ -2007,40 +2101,42 @@ export class DialogRepresentacionSociedad {
                     verticalPosition: 'top'
                 });
             });
-        
-        return this.dataRepresentacion;
     }
-  
+
     setDataRepresentacion(dataRepresentacion): void {
-        this.tipoPersona = dataRepresentacion.tipoPersona;
+        console.log("ACA ENTRO EL SLECCIONADO REPRESENTACION");
+        console.log(dataRepresentacion);
+        (dataRepresentacion.RFC) ? this.changeRequired('curp', 'rfc') : this.changeRequired('rfc', 'curp');
+
+        this.tipoPersona = dataRepresentacion.CODTIPOPERSONA;
         if(this.tipoPersona == 'F'){
-            this.fisicaFormGroup.controls['nombre'].setValue(dataRepresentacion.nombre);
-            this.fisicaFormGroup.controls['apaterno'].setValue(dataRepresentacion.apaterno);
-            this.fisicaFormGroup.controls['amaterno'].setValue(dataRepresentacion.amaterno);
-            this.fisicaFormGroup.controls['rfc'].setValue(dataRepresentacion.rfc);
-            this.fisicaFormGroup.controls['curp'].setValue(dataRepresentacion.curp);
-            this.fisicaFormGroup.controls['ine'].setValue(dataRepresentacion.ine);
-            this.fisicaFormGroup.controls['idDocIdent'].setValue(dataRepresentacion.idDocIdent);
-            this.fisicaFormGroup.controls['docIdent'].setValue(dataRepresentacion.docIdent);
-            this.fisicaFormGroup.controls['fechaNacimiento'].setValue(dataRepresentacion.fechaNacimiento);
-            this.fisicaFormGroup.controls['fechaDefuncion'].setValue(dataRepresentacion.fechaDefuncion);
-            this.fisicaFormGroup.controls['celular'].setValue(dataRepresentacion.celular);
-            this.fisicaFormGroup.controls['email'].setValue(dataRepresentacion.email);
-            this.fisicaFormGroup.controls['texto'].setValue(dataRepresentacion.texto);
-            this.fisicaFormGroup.controls['fechaCaducidad'].setValue(dataRepresentacion.fechaCaducidad);
+            this.fisicaFormGroup.controls['nombre'].setValue(dataRepresentacion.NOMBRE);
+            this.fisicaFormGroup.controls['apaterno'].setValue(dataRepresentacion.APELLIDOMATERNO);
+            this.fisicaFormGroup.controls['amaterno'].setValue(dataRepresentacion.APELLIDOPATERNO);
+            this.fisicaFormGroup.controls['rfc'].setValue(dataRepresentacion.RFC);
+            this.fisicaFormGroup.controls['curp'].setValue(dataRepresentacion.CURP);
+            this.fisicaFormGroup.controls['ine'].setValue(dataRepresentacion.CLAVEIFE);
+            this.fisicaFormGroup.controls['idDocIdent'].setValue(dataRepresentacion.IDDOCIDENTIF);
+            this.fisicaFormGroup.controls['docIdent'].setValue(dataRepresentacion.DESCDOCIDENTIF);
+            this.fisicaFormGroup.controls['fechaNacimiento'].setValue((dataRepresentacion.FECHANACIMIENTO) ? new Date(dataRepresentacion.FECHANACIMIENTO) : null);
+            this.fisicaFormGroup.controls['fechaDefuncion'].setValue((dataRepresentacion.FECHADEFUNCION) ? new Date(dataRepresentacion.FECHADEFUNCION) : null);
+            this.fisicaFormGroup.controls['celular'].setValue(dataRepresentacion.CELULAR);
+            this.fisicaFormGroup.controls['email'].setValue(dataRepresentacion.EMAIL);
+            this.fisicaFormGroup.controls['texto'].setValue(dataRepresentacion.TEXTOREPRESENTACION);
+            this.fisicaFormGroup.controls['fechaCaducidad'].setValue((dataRepresentacion.FECHACADUCIDAD) ? new Date(dataRepresentacion.FECHACADUCIDAD) : null);
         } else {
-            this.moralFormGroup.controls['nombre'].setValue(dataRepresentacion.nombre);
-            this.moralFormGroup.controls['rfc'].setValue(dataRepresentacion.rfc);
-            this.moralFormGroup.controls['actPreponderante'].setValue(dataRepresentacion.actPreponderante);
-            this.moralFormGroup.controls['idTipoPersonaMoral'].setValue(dataRepresentacion.idTipoPersonaMoral);
-            this.moralFormGroup.controls['fechaInicioOperacion'].setValue(dataRepresentacion.fechaInicioOperacion);
-            this.moralFormGroup.controls['idMotivo'].setValue(dataRepresentacion.idMotivo);
-            this.moralFormGroup.controls['fechaCambio'].setValue(dataRepresentacion.fechaCambio);
-            this.moralFormGroup.controls['texto'].setValue(dataRepresentacion.texto);
-            this.moralFormGroup.controls['fechaCaducidad'].setValue(dataRepresentacion.fechaCaducidad);
+            this.moralFormGroup.controls['nombre'].setValue(dataRepresentacion.APELLIDOPATERNO);
+            this.moralFormGroup.controls['rfc'].setValue(dataRepresentacion.RFC);
+            this.moralFormGroup.controls['actPreponderante'].setValue(dataRepresentacion.ACTIVPRINCIP);
+            this.moralFormGroup.controls['idTipoPersonaMoral'].setValue(dataRepresentacion.IDTIPOMORAL);
+            this.moralFormGroup.controls['fechaInicioOperacion'].setValue((dataRepresentacion.FECHAINICIOACTIV) ? new Date(dataRepresentacion.FECHAINICIOACTIV) : null);
+            this.moralFormGroup.controls['idMotivo'].setValue(dataRepresentacion.IDMOTIVOSMORAL);
+            this.moralFormGroup.controls['fechaCambio'].setValue((dataRepresentacion.FECHACAMBIOSITUACION) ? new Date(dataRepresentacion.FECHACAMBIOSITUACION) : null);
+            this.moralFormGroup.controls['texto'].setValue(dataRepresentacion.TEXTOREPRESENTACION);
+            this.moralFormGroup.controls['fechaCaducidad'].setValue((dataRepresentacion.FECHACADUCIDAD) ? new Date(dataRepresentacion.FECHACADUCIDAD) : null);
         }
-  
-        this.dataRepresentacion.documentoRepresentacion = dataRepresentacion.documentoRepresentacion;
+        
+        //this.dataRepresentacion.documentoRepresentacion = dataRepresentacion.documentoRepresentacion;
     }
 }
 
@@ -2051,13 +2147,18 @@ export class DialogRepresentacionSociedad {
     styleUrls: ['./editar-sociedad.component.css']
 })
 export class DialogRepresentadoSociedad {
-    endpoint = environment.endpoint;
+    endpoint = environment.endpoint + 'registro/';
     loading = false;
     httpOptions;
     tipoPersona = 'F';
     fisicaFormGroup: FormGroup;
     moralFormGroup: FormGroup;
     idPersonaRepresentacion;
+    fechaCaducidad;
+    idDocumento;
+    idRepresentacion;
+    insertOrUpdate = null;
+    insUp = false;
     dataRepresentacion: DataRepresentacion = {} as DataRepresentacion;
   
     constructor(
@@ -2069,6 +2170,13 @@ export class DialogRepresentadoSociedad {
         public dialogRef: MatDialogRef<DialogRepresentadoSociedad>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
+
+        this.httpOptions = {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/json',
+              Authorization: this.auth.getSession().token
+            })
+        };
 
         dialogRef.disableClose = true;
         this.fisicaFormGroup = this._formBuilder.group({
@@ -2100,17 +2208,14 @@ export class DialogRepresentadoSociedad {
             fechaCaducidad: [null, []],
         });
   
-        this.httpOptions = {
-            headers: new HttpHeaders({
-              'Content-Type': 'application/json',
-              Authorization: this.auth.getSession().token
-            })
-        };
-
         if(data.dataRepresentante){
             this.setDataRepresentacion(data.dataRepresentante);
+            this.idDocumento = data.dataRepresentante.IDDOCUMENTOREPRESENTACION;
+            this.idRepresentacion = data.dataRepresentante.IDREPRESENTACION;
+            this.insertOrUpdate = 2;
+            this.insUp = true;
         }
-      }
+    }
       
     changeRequired(remove, add): void {
         this.fisicaFormGroup.controls[remove].setValue(null);
@@ -2149,7 +2254,9 @@ export class DialogRepresentadoSociedad {
     addDocumento(dataDocumento = null): void {
         const dialogRef = this.dialog.open(DialogDocumentoSociedad, {
             width: '700px',
-            data: dataDocumento,
+            data: {idDocumento: this.idDocumento,
+                insertOrUpdate: this.insertOrUpdate
+            },
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
@@ -2192,81 +2299,121 @@ export class DialogRepresentadoSociedad {
         }
 
         this.idPersonaRepresentacion = (this.idPersonaRepresentacion) ? this.idPersonaRepresentacion : null;
-        console.log('AQUIII EL JSON');
+        console.log('AQUIII EL JSON DEL REPRESENTADO');
         console.log(this.dataRepresentacion);
         //console.log(JSON.stringify(this.dataRepresentacion));
-        const payload = {
-            "representacion": {
-                textorepresentacion: this.dataRepresentacion.texto,
-                fechacaducidad: moment(this.dataRepresentacion.fechaCaducidad).format("DD-MM-YYYY")
-            },
-            "participantes": [
-                {
-                    rol: "representado",
-                    codtiposPersona: this.dataRepresentacion.tipoPersona,
-                    idpersona: this.idPersonaRepresentacion,
-                    nombre: this.dataRepresentacion.nombre,
-                    rfc: this.dataRepresentacion.rfc,
-                    apellidoPaterno: this.dataRepresentacion.apaterno,
-                    apellidoMaterno: this.dataRepresentacion.amaterno,
-                    curp: this.dataRepresentacion.curp,
-                    ife: this.dataRepresentacion.ine,
-                    iddocIdentif: this.dataRepresentacion.idDocIdent,
-                    valdocIdentif: this.dataRepresentacion.docIdent,
-                    fechaNacimiento: moment(this.dataRepresentacion.fechaNacimiento).format("DD-MM-YYYY"),
-                    fechaDefuncion: moment(this.dataRepresentacion.fechaDefuncion).format("DD-MM-YYYY"),
-                    celular: this.dataRepresentacion.celular,
-                    email: this.dataRepresentacion.email,
-                    activprincip: this.dataRepresentacion.actPreponderante,
-                    idtipomoral: this.dataRepresentacion.idTipoPersonaMoral,
-                    idmotivosmoral: this.dataRepresentacion.idMotivo,
-                    fechainicioactiv: moment(this.dataRepresentacion.fechaInicioOperacion).format("DD-MM-YYYY"),
-                    fechacambiosituacion: moment(this.dataRepresentacion.fechaCambio).format("DD-MM-YYYY")
+
+        if(this.insertOrUpdate == 2){
+            this.updateRepresentacion();            
+        }else{
+            const payload = {
+                "representacion": {
+                    textorepresentacion: this.dataRepresentacion.texto,
+                    fechacaducidad: moment(this.dataRepresentacion.fechaCaducidad).format("DD-MM-YYYY")
                 },
-                {
-                    rol:"representante",
-                    codtiposPersona: "M",
-                    idpersona: this.data.idSociedad,
-                    nombre: null,
-                    rfc: this.data.datosSociedad.rfc,
-                    apellidoPaterno: this.data.datosSociedad.razonSocial,
-                    apellidoMaterno: null,
-                    curp: null,
-                    ife: null,
-                    iddocIdentif: null,
-                    valdocIdentif: null,
-                    fechaNacimiento: moment(this.data.datosSociedad.fecha_alta).format("DD-MM-YYYY"),
-                    fechaDefuncion: moment(this.data.datosSociedad.fecha_baja).format("DD-MM-YYYY"),
-                    celular: this.data.datosSociedad.celular,
-                    email: this.data.datosSociedad.email,
-                    activprincip: this.data.datosSociedad.acta,
-                    idtipomoral: this.data.datosSociedad.tipoMoral,
-                    idmotivosmoral: this.data.datosSociedad.motivoCambio,
-                    fechainicioactiv: moment(this.data.datosSociedad.fechaInicio).format("DD-MM-YYYY"),
-                    fechacambiosituacion: moment(this.data.datosSociedad.fechaCambio).format("DD-MM-YYYY")
+                "participantes": [
+                    {
+                        rol: "representado",
+                        codtiposPersona: this.dataRepresentacion.tipoPersona,
+                        idpersona: this.idPersonaRepresentacion,
+                        nombre: this.dataRepresentacion.nombre,
+                        rfc: this.dataRepresentacion.rfc,
+                        apellidoPaterno: this.dataRepresentacion.apaterno,
+                        apellidoMaterno: this.dataRepresentacion.amaterno,
+                        curp: this.dataRepresentacion.curp,
+                        ife: this.dataRepresentacion.ine,
+                        iddocIdentif: this.dataRepresentacion.idDocIdent,
+                        valdocIdentif: this.dataRepresentacion.docIdent,
+                        fechaNacimiento: moment(this.dataRepresentacion.fechaNacimiento).format("DD-MM-YYYY"),
+                        fechaDefuncion: moment(this.dataRepresentacion.fechaDefuncion).format("DD-MM-YYYY"),
+                        celular: this.dataRepresentacion.celular,
+                        email: this.dataRepresentacion.email,
+                        activprincip: this.dataRepresentacion.actPreponderante,
+                        idtipomoral: this.dataRepresentacion.idTipoPersonaMoral,
+                        idmotivosmoral: this.dataRepresentacion.idMotivo,
+                        fechainicioactiv: moment(this.dataRepresentacion.fechaInicioOperacion).format("DD-MM-YYYY"),
+                        fechacambiosituacion: moment(this.dataRepresentacion.fechaCambio).format("DD-MM-YYYY")
+                    },
+                    {
+                        rol:"representante",
+                        codtiposPersona: "M",
+                        idpersona: this.data.idSociedad,
+                        nombre: null,
+                        rfc: this.data.datosSociedad.rfc,
+                        apellidoPaterno: this.data.datosSociedad.razonSocial,
+                        apellidoMaterno: null,
+                        curp: null,
+                        ife: null,
+                        iddocIdentif: null,
+                        valdocIdentif: null,
+                        fechaNacimiento: moment(this.data.datosSociedad.fecha_alta).format("DD-MM-YYYY"),
+                        fechaDefuncion: moment(this.data.datosSociedad.fecha_baja).format("DD-MM-YYYY"),
+                        celular: this.data.datosSociedad.celular,
+                        email: this.data.datosSociedad.email,
+                        activprincip: this.data.datosSociedad.acta,
+                        idtipomoral: this.data.datosSociedad.tipoMoral,
+                        idmotivosmoral: this.data.datosSociedad.motivoCambio,
+                        fechainicioactiv: moment(this.data.datosSociedad.fechaInicio).format("DD-MM-YYYY"),
+                        fechacambiosituacion: moment(this.data.datosSociedad.fechaCambio).format("DD-MM-YYYY")
+                    }
+                ],
+                "documento": {
+                    descripcion: this.dataRepresentacion.documentoRepresentacion.descripcion,        
+                    codtipodocumento: this.dataRepresentacion.documentoRepresentacion.codtipodocumento,
+                    fecha: moment(this.dataRepresentacion.documentoRepresentacion.fecha).format("DD-MM-YYYY"),
+                    codTipoDocumentoJuridico: this.dataRepresentacion.documentoRepresentacion.codtipodocumentojuridico,        
+                    lugar: this.dataRepresentacion.documentoRepresentacion.lugar,
+                    idNotario: this.dataRepresentacion.documentoRepresentacion.idnotario,
+                    noEscritura: this.dataRepresentacion.documentoRepresentacion.noNotario,
+                    documentos: this.dataRepresentacion.documentoRepresentacion.archivos
                 }
-            ],
-            "documento": {
-                descripcion: this.dataRepresentacion.documentoRepresentacion.descripcion,        
-                codtipodocumento: this.dataRepresentacion.documentoRepresentacion.codtipodocumento,
-                fecha: moment(this.dataRepresentacion.documentoRepresentacion.fecha).format("DD-MM-YYYY"),
-                codTipoDocumentoJuridico: this.dataRepresentacion.documentoRepresentacion.codtipodocumentojuridico,        
-                lugar: this.dataRepresentacion.documentoRepresentacion.lugar,
-                idNotario: this.dataRepresentacion.documentoRepresentacion.idnotario,
-                noEscritura: this.dataRepresentacion.documentoRepresentacion.noNotario,
-                documentos: this.dataRepresentacion.documentoRepresentacion.archivos
-            }
-        };
-        
-        console.log(JSON.stringify(payload));
-        this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
+            };
+            
+            console.log(JSON.stringify(payload));
+            this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
+                (res: any) => {
+                    this.snackBar.open('SE HA INSERTADO TODO', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                    console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTECIÓN");
+                    console.log(res);
+                },
+                (error) => {
+                    this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                });
+        }
+
+        return this.dataRepresentacion;
+    }
+  
+    updateRepresentacion(){
+        console.log("ACTUALIZA");
+        let queryActRep = '';
+
+        queryActRep = (this.dataRepresentacion.texto) ? queryActRep + 'textorepresentacion=' + this.dataRepresentacion.texto : queryActRep + 'textorepresentacion=';
+
+        queryActRep = (this.dataRepresentacion.fechaCaducidad) ? queryActRep + '&fechacaducidad=' + moment(this.dataRepresentacion.fechaCaducidad).format("DD-MM-YYYY") : queryActRep + '&fechacaducidad=';
+
+        queryActRep = queryActRep + '&idRepresentacion=' + this.idRepresentacion + '&idDocumentoDigital=' + this.idDocumento;
+
+        //actualizarRepresentaciontextorepresentacion=Texto Representacion Prueba 33&fechacaducidad=Fri Dec 31 2021 00:00:00 GMT-0600 (hora estándar central)&idRepresentacion=14&idDocumentoDigital=17646226
+        console.log("QUERY ACTUALIZA");
+        console.log(queryActRep);
+        //return;
+        this.http.post(this.endpoint + 'actualizarRepresentacion?' + queryActRep, '', this.httpOptions).subscribe(
             (res: any) => {
-                this.snackBar.open('SE HA INSERTADO TODO', 'Cerrar', {
+                this.snackBar.open('SE HA ACTUALIZADO EL REPRESENTADO', 'Cerrar', {
                     duration: 10000,
                     horizontalPosition: 'end',
                     verticalPosition: 'top'
                 });
-                console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTECIÓN");
+                console.log("AQUI ENTRO LAS RESPUESTA DEL POST ACT REPRESENTADO");
                 console.log(res);
             },
             (error) => {
@@ -2276,39 +2423,43 @@ export class DialogRepresentadoSociedad {
                     verticalPosition: 'top'
                 });
             });
-        return this.dataRepresentacion;
     }
-  
+
     setDataRepresentacion(dataRepresentacion): void {
-        this.tipoPersona = dataRepresentacion.tipoPersona;
+        console.log("ACA ENTRO EL SLECCIONADO REPRESENTACION");
+        console.log(dataRepresentacion);
+        (dataRepresentacion.RFC) ? this.changeRequired('curp', 'rfc') : this.changeRequired('rfc', 'curp');
+        
+        this.tipoPersona = dataRepresentacion.CODTIPOPERSONA;
         if(this.tipoPersona == 'F'){
-            this.fisicaFormGroup.controls['nombre'].setValue(dataRepresentacion.nombre);
-            this.fisicaFormGroup.controls['apaterno'].setValue(dataRepresentacion.apaterno);
-            this.fisicaFormGroup.controls['amaterno'].setValue(dataRepresentacion.amaterno);
-            this.fisicaFormGroup.controls['rfc'].setValue(dataRepresentacion.rfc);
-            this.fisicaFormGroup.controls['curp'].setValue(dataRepresentacion.curp);
-            this.fisicaFormGroup.controls['ine'].setValue(dataRepresentacion.ine);
-            this.fisicaFormGroup.controls['idDocIdent'].setValue(dataRepresentacion.idDocIdent);
-            this.fisicaFormGroup.controls['docIdent'].setValue(dataRepresentacion.docIdent);
-            this.fisicaFormGroup.controls['fechaNacimiento'].setValue(dataRepresentacion.fechaNacimiento);
-            this.fisicaFormGroup.controls['fechaDefuncion'].setValue(dataRepresentacion.fechaDefuncion);
-            this.fisicaFormGroup.controls['celular'].setValue(dataRepresentacion.celular);
-            this.fisicaFormGroup.controls['email'].setValue(dataRepresentacion.email);
-            this.fisicaFormGroup.controls['texto'].setValue(dataRepresentacion.texto);
-            this.fisicaFormGroup.controls['fechaCaducidad'].setValue(dataRepresentacion.fechaCaducidad);
+            this.fisicaFormGroup.controls['nombre'].setValue(dataRepresentacion.NOMBRE);
+            this.fisicaFormGroup.controls['apaterno'].setValue(dataRepresentacion.APELLIDOMATERNO);
+            this.fisicaFormGroup.controls['amaterno'].setValue(dataRepresentacion.APELLIDOPATERNO);
+            this.fisicaFormGroup.controls['rfc'].setValue(dataRepresentacion.RFC);
+            this.fisicaFormGroup.controls['curp'].setValue(dataRepresentacion.CURP);
+            this.fisicaFormGroup.controls['ine'].setValue(dataRepresentacion.CLAVEIFE);
+            this.fisicaFormGroup.controls['idDocIdent'].setValue(dataRepresentacion.IDDOCIDENTIF);
+            this.fisicaFormGroup.controls['docIdent'].setValue(dataRepresentacion.DESCDOCIDENTIF);
+            this.fisicaFormGroup.controls['fechaNacimiento'].setValue((dataRepresentacion.FECHANACIMIENTO) ? new Date(dataRepresentacion.FECHANACIMIENTO) : null);
+            this.fisicaFormGroup.controls['fechaDefuncion'].setValue((dataRepresentacion.FECHADEFUNCION) ? new Date(dataRepresentacion.FECHADEFUNCION) : null);
+            this.fisicaFormGroup.controls['celular'].setValue(dataRepresentacion.CELULAR);
+            this.fisicaFormGroup.controls['email'].setValue(dataRepresentacion.EMAIL);
+            this.fisicaFormGroup.controls['texto'].setValue(dataRepresentacion.TEXTOREPRESENTACION);
+            this.fisicaFormGroup.controls['fechaCaducidad'].setValue((dataRepresentacion.FECHACADUCIDAD) ? new Date(dataRepresentacion.FECHACADUCIDAD) : null);
         } else {
-            this.moralFormGroup.controls['nombre'].setValue(dataRepresentacion.nombre);
-            this.moralFormGroup.controls['rfc'].setValue(dataRepresentacion.rfc);
-            this.moralFormGroup.controls['actPreponderante'].setValue(dataRepresentacion.actPreponderante);
-            this.moralFormGroup.controls['idTipoPersonaMoral'].setValue(dataRepresentacion.idTipoPersonaMoral);
-            this.moralFormGroup.controls['fechaInicioOperacion'].setValue(dataRepresentacion.fechaInicioOperacion);
-            this.moralFormGroup.controls['idMotivo'].setValue(dataRepresentacion.idMotivo);
-            this.moralFormGroup.controls['fechaCambio'].setValue(dataRepresentacion.fechaCambio);
-            this.moralFormGroup.controls['texto'].setValue(dataRepresentacion.texto);
-            this.moralFormGroup.controls['fechaCaducidad'].setValue(dataRepresentacion.fechaCaducidad);
+            this.moralFormGroup.controls['nombre'].setValue(dataRepresentacion.APELLIDOPATERNO);
+            this.moralFormGroup.controls['rfc'].setValue(dataRepresentacion.RFC);
+            this.moralFormGroup.controls['actPreponderante'].setValue(dataRepresentacion.ACTIVPRINCIP);
+            this.moralFormGroup.controls['idTipoPersonaMoral'].setValue(dataRepresentacion.IDTIPOMORAL);
+            this.moralFormGroup.controls['fechaInicioOperacion'].setValue((dataRepresentacion.FECHAINICIOACTIV) ? new Date(dataRepresentacion.FECHAINICIOACTIV) : null);
+            this.moralFormGroup.controls['idMotivo'].setValue(dataRepresentacion.IDMOTIVOSMORAL);
+            this.moralFormGroup.controls['fechaCambio'].setValue((dataRepresentacion.FECHACAMBIOSITUACION) ? new Date(dataRepresentacion.FECHACAMBIOSITUACION) : null);
+            this.moralFormGroup.controls['texto'].setValue(dataRepresentacion.TEXTOREPRESENTACION);
+            this.moralFormGroup.controls['fechaCaducidad'].setValue((dataRepresentacion.FECHACADUCIDAD) ? new Date(dataRepresentacion.FECHACADUCIDAD) : null);
         }
-  
-        this.dataRepresentacion.documentoRepresentacion = dataRepresentacion.documentoRepresentacion;
+        
+        //this.dataRepresentacion.documentoRepresentacion = dataRepresentacion.documentoRepresentacion;
+        
     }
 }
   
@@ -2319,28 +2470,46 @@ export class DialogRepresentadoSociedad {
     styleUrls: ['./editar-sociedad.component.css']
 })
 export class DialogDocumentoSociedad {
-    endpointCatalogos = environment.endpoint;
+    endpoint = environment.endpoint + 'registro/';
     loadingTiposDocumentoDigital = false;
     loadingTiposDocumentoJuridico = false;
     httpOptions;
     tiposDocumentoDigital;
     tiposDocumentoJuridico;
     selectTipoDoc = '1';
+    idDocumento;
+    insertOrUpdate;
+    insUp = false;
     tiposDocumentoFormGroup: FormGroup;
     infoDocumentoFormGroup: FormGroup;
     archivosDocumentoFormGroup: FormGroup;
+    dataDocumentoSet;
+    fechaDocto;
+    dataDoc = [];
+    descargaFichero = [];
+    displayedColumnsDoc: string[] = ['nombre','descripcion', 'download', 'eliminar'];
     dataDocumento: DataDocumentoRepresentacion = {} as DataDocumentoRepresentacion;
     canSend = false;
     
     constructor(
         private http: HttpClient,
         private _formBuilder: FormBuilder,
+        private snackBar: MatSnackBar,
         public dialog: MatDialog,
+        private auth: AuthService,
         public dialogRef: MatDialogRef<DialogDocumentoSociedad>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
 
         dialogRef.disableClose = true;
+
+        this.httpOptions = {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/json',
+              Authorization: this.auth.getSession().token
+            })
+        };
+
         this.tiposDocumentoFormGroup = this._formBuilder.group({
             codtipodocumento: ['', [Validators.required]],
             codtipodocumentojuridico: ['', [Validators.required]]
@@ -2372,14 +2541,19 @@ export class DialogDocumentoSociedad {
             this.infoDocumentoFormGroup.updateValueAndValidity();
         });
         console.log(this.tiposDocumentoFormGroup.controls.codtipodocumentojuridico);
-        if(data){
-            this.setDataDocumento(data);
+        if(data.idDocumento){
+            this.setDataDocumento(data.idDocumento);
+            this.insertOrUpdate = data.insertOrUpdate;
+            this.idDocumento = data.idDocumento;
+            this.insUp = true;
         }
-      }
+        console.log("ACA EL DATA DEL DOCU DIALOG");
+        console.log(data);
+    }
   
     getDataTiposDocumentoDigital(): void {
         this.loadingTiposDocumentoDigital = true;
-        this.http.get(this.endpointCatalogos, this.httpOptions).subscribe(
+        this.http.get(this.endpoint, this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingTiposDocumentoDigital = false;
                 this.tiposDocumentoDigital = res;
@@ -2392,7 +2566,7 @@ export class DialogDocumentoSociedad {
   
     getDataTiposDocumentoJuridico(): void {
         this.loadingTiposDocumentoJuridico = true;
-        this.http.get(this.endpointCatalogos, this.httpOptions).subscribe(
+        this.http.get(this.endpoint, this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingTiposDocumentoJuridico = false;
                 this.tiposDocumentoJuridico = res;
@@ -2463,32 +2637,176 @@ export class DialogDocumentoSociedad {
         this.dataDocumento.lugar = (this.infoDocumentoFormGroup.value.lugar) ? this.infoDocumentoFormGroup.value.lugar : null;
         this.dataDocumento.archivos = this.archivosDocumentoFormGroup.value.archivos;
     
-        this.canSend = true;
+        if(this.insertOrUpdate == 2){
+            this.updateDocto();
+        }else{
+            this.canSend = true;
+        }
     }
   
-    setDataDocumento(dataDocumento): void {
-        this.tiposDocumentoFormGroup.controls['codtipodocumento'].setValue(dataDocumento.codtipodocumento);
-        this.tiposDocumentoFormGroup.controls['codtipodocumentojuridico'].setValue(dataDocumento.codtipodocumentojuridico);
-        if(dataDocumento.codtipodocumentojuridico == 'PN'){
-            this.dataDocumento.idnotario = dataDocumento.idnotario;
-            this.infoDocumentoFormGroup.controls['noNotario'].setValue(dataDocumento.noNotario);
-            this.infoDocumentoFormGroup.controls['ciudadNotario'].setValue(dataDocumento.ciudadNotario);
-            this.infoDocumentoFormGroup.controls['nombreNotario'].setValue(dataDocumento.nombreNotario);
-            this.infoDocumentoFormGroup.controls['num_escritura'].setValue(dataDocumento.num_escritura);
+    setDataDocumento(idDocumento2): void {
+
+        this.http.post(this.endpoint + 'infoDocumentos?idDocumentoDigital=' + idDocumento2, '', this.httpOptions).subscribe(
+            (res: any) => {
+                console.log("AQUI ENTRO EL RESULTADO DEL DOCUMENTO");
+                this.dataDocumentoSet = res;
+                console.log(this.dataDocumentoSet.infoDocumento[0].iddocumentodigital);
+                console.log(res);
+                this.setDoc();
+            },
+            (error) => {
+                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+            });
+    }
+
+    setDoc(){
+        console.log("LA FECHA NO SE DEJA");
+        console.log(this.fechaDocto);
+
+        //this.tiposDocumentoFormGroup.controls['codtipodocumento'].setValue(1);
+        this.tiposDocumentoFormGroup.controls['codtipodocumentojuridico'].setValue(this.dataDocumentoSet.infoDocumento[0].codtipodocumentojuridico);
+        if(this.dataDocumentoSet.infoDocumento[0].codtipodocumentojuridico == 'PN'){
+            this.dataDocumento.idnotario = this.dataDocumentoSet.infoNotario[0].idnotario;
+            this.infoDocumentoFormGroup.controls['noNotario'].setValue(this.dataDocumentoSet.infoNotario[0].numnotario);
+            this.infoDocumentoFormGroup.controls['ciudadNotario'].setValue(this.dataDocumentoSet.infoNotario[0].codestado);
+            this.infoDocumentoFormGroup.controls['nombreNotario'].setValue(this.dataDocumentoSet.infoNotario[0].nombre);
+            this.infoDocumentoFormGroup.controls['num_escritura'].setValue('');
         }
-        this.dataDocumento.nombreTipoDocumentoJuridico = dataDocumento.nombreTipoDocumentoJuridico;
-        this.infoDocumentoFormGroup.controls['fecha'].setValue(dataDocumento.fecha);
-        this.infoDocumentoFormGroup.controls['descripcion'].setValue(dataDocumento.descripcion);
-        this.infoDocumentoFormGroup.controls['lugar'].setValue(dataDocumento.lugar);
-    
-        if(dataDocumento.archivos){
-            for(let archivo of dataDocumento.archivos){
-            this.archivos.push(this.createItem({
-                nombre: archivo.nombre,
-                base64: archivo.base64
-            }));
+        //this.dataDocumento.nombreTipoDocumentoJuridico = dataDocumento.nombreTipoDocumentoJuridico;
+        this.infoDocumentoFormGroup.controls['fecha'].setValue(new Date(this.dataDocumentoSet.infoDocumento[0].fecha));
+        this.infoDocumentoFormGroup.controls['descripcion'].setValue(this.dataDocumentoSet.infoDocumento[0].descripcion);
+        this.infoDocumentoFormGroup.controls['lugar'].setValue(this.dataDocumentoSet.infoDocumento[0].lugar);
+
+        console.log(this.fechaDocto);    
+        this.dataDoc = this.dataDocumentoSet.infoFicheros;
+        // if(this.dataDocumentoSet.infoFicheros){
+        //     for(let archivo of this.dataDocumentoSet.infoFicheros){
+        //         this.archivos.push(this.createItem({
+        //             nombre: archivo.nombre,
+        //             base64: archivo.base64
+        //         }));
+        //     }
+        // }
+    }
+
+    descargarDoc(element){
+
+        console.log("ACA EL DESCARGAR FICHERO");
+        console.log(element);
+
+        this.http.post( this.endpoint + 'getFichero?idFichero=' + element.idficherodocumento, '', this.httpOptions ). subscribe (
+            (res: any) => {
+                this.descargaFichero = res;
+                console.log("EL RES DEL FICHERO");
+                console.log(this.descargaFichero);
+                console.log(this.descargaFichero[0].binariodatos);
+                this.convertirDoc();
+            },
+            (error) => {
+                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+            });
+    }
+
+    convertirDoc(){
+        let dataFichero = this.descargaFichero[0].binariodatos;
+        dataFichero = dataFichero.split("data:application/pdf;base64,");
+        console.log("split");
+        console.log(dataFichero);
+        //return;
+        const blob = this.b64toBlob(dataFichero[1], 'application/pdf');
+        FileSaver.saveAs(blob, this.descargaFichero[0].nombre);
+    }
+
+    b64toBlob(b64Data, contentType = '', sliceSize = 512): Blob {
+        const byteCharacters = atob(b64Data);
+        const byteArrays = [];
+        for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+            const slice = byteCharacters.slice(offset, offset + sliceSize);
+            const byteNumbers = new Array(slice.length);
+            for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
             }
+            const byteArray = new Uint8Array(byteNumbers);
+            byteArrays.push(byteArray);
         }
+        const blob = new Blob(byteArrays, {type: contentType});
+        return blob;
+    }
+
+    eliminarDoc(element, i){
+        console.log("ACA EL ELIMINAR FICHERO");
+        console.log(element);
+
+        
+
+        this.http.post( this.endpoint + 'borrarFichero?lista=' + element.idficherodocumento, '', this.httpOptions ). subscribe (
+            (res: any) => {
+                this.snackBar.open('SE HA HA BORRADO EL DOCTO', 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+                this.dataDoc.splice(i,1);
+                console.log("AQUI ENTRO LAS RESPUESTA DEL BORRADO");
+                console.log(res);
+            },
+            (error) => {
+                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+            });
+    }
+
+    updateDocto(){
+        this.canSend = true;
+        const payload = {
+            "documento": {
+                idDocumetoDigital: this.idDocumento,
+                descripcion: this.dataDocumento.descripcion,        
+                fecha: moment(this.dataDocumento.fecha).format("DD-MM-YYYY"),
+                lugar: this.dataDocumento.lugar,
+                eliminados: null,
+                documentos: this.dataDocumento.archivos
+            }
+        };
+        
+        
+        console.log(JSON.stringify(payload));
+        this.http.post( this.endpoint + 'actualizarDocumentos', payload, this.httpOptions ). subscribe (
+            (res: any) => {
+                if(res === true){
+                    this.snackBar.open('SE HA ACTUALIZADO CORRECTAMENTE LA INFORMACIÓN', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                    console.log("RESPUESTA DE LA ACTUALIZACIÓN");
+                    console.log(res);
+                }else{
+                    this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            },
+            (error) => {
+                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+            });
     }
 }
 

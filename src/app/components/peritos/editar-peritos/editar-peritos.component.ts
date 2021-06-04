@@ -2431,7 +2431,7 @@ export class DialogRepresentadoPeritos {
             this.insertOrUpdate = 2;
             this.insUp = true;
         }
-      }
+    }
       
     changeRequired(remove, add): void {
         this.fisicaFormGroup.controls[remove].setValue(null);

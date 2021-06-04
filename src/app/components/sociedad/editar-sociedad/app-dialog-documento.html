@@ -20,7 +20,7 @@
                     </mat-form-field>
                     <mat-form-field class="col-6">
                         <mat-label>Tipo Documento Jurídico:</mat-label>
-                        <mat-select formControlName="codtipodocumentojuridico" (selectionChange)="getTipoDocJuridico($event)">
+                        <mat-select formControlName="codtipodocumentojuridico" (selectionChange)="getTipoDocJuridico($event)" [disabled]="insUp">
                             <mat-option value="">Seleccione ...</mat-option>
                             <mat-option value="PN">Poder Notarial</mat-option>
                             <mat-option value="CP">Carta Poder</mat-option>
@@ -36,29 +36,29 @@
             <mat-step [stepControl]="infoDocumentoFormGroup">
                 <form [formGroup]="infoDocumentoFormGroup">
                     <ng-template matStepLabel>{{dataDocumento.nombreTipoDocumentoJuridico}}
-                        <button mat-flat-button type="button" color="primary" [disabled]="tiposDocumentoFormGroup.value.codtipodocumentojuridico != 'PN'" aria-label="Buscar Notario" matTooltip="Buscar Notario" class="little-button" (click)="addNotario()">
+                        <button mat-flat-button type="button" color="primary" [disabled]="tiposDocumentoFormGroup.value.codtipodocumentojuridico != 'PN'" aria-label="Buscar Notario" matTooltip="Buscar Notario" class="little-button" (click)="addNotario()" [readonly]="insUp">
                             <mat-icon>search</mat-icon>
                         </button>
                     </ng-template>
                     <ng-container *ngIf="tiposDocumentoFormGroup.value.codtipodocumentojuridico == 'PN'">
                         <mat-form-field class="col-6">
                             <mat-label>Número:</mat-label>
-                            <input matInput readonly formControlName="noNotario">
+                            <input matInput readonly formControlName="noNotario" [readonly]="insUp">
                             <mat-error *ngIf="infoDocumentoFormGroup.controls.noNotario.errors?.required">Requerido</mat-error>
                         </mat-form-field>
                         <mat-form-field class="col-6">
                             <mat-label>Estado:</mat-label>
-                            <input matInput readonly formControlName="ciudadNotario">
+                            <input matInput readonly formControlName="ciudadNotario" [readonly]="insUp">
                             <mat-error *ngIf="infoDocumentoFormGroup.controls.ciudadNotario.errors?.required">Requerido</mat-error>
                         </mat-form-field>
                         <mat-form-field class="col-12">
                             <mat-label>Nombre:</mat-label>
-                            <input matInput readonly formControlName="nombreNotario">
+                            <input matInput readonly formControlName="nombreNotario" [readonly]="insUp">
                             <mat-error *ngIf="infoDocumentoFormGroup.controls.nombreNotario.errors?.required">Requerido</mat-error>
                         </mat-form-field>
                         <mat-form-field class="col-6">
                             <mat-label>N° Escritura:</mat-label>
-                            <input matInput formControlName="num_escritura">
+                            <input matInput formControlName="num_escritura" [readonly]="insUp">
                             <mat-error *ngIf="infoDocumentoFormGroup.controls.num_escritura.errors?.required">Requerido</mat-error>
                         </mat-form-field>
                         <div class="col-6"></div>
@@ -107,7 +107,27 @@
                         <button mat-button matStepperPrevious>Regresar</button>
                         <button mat-button matStepperNext>Siguiente</button>
                     </div>
-                </form>
+                </form><br><br>
+                <div>
+                    <table>
+                        <tr>
+                            <th>Tipo Dirección</th>
+                            <th>Dirección</th>
+                            <th>Descargar</th>
+                            <th>Elminar</th>
+                        </tr>
+                        <tr *ngFor="let row of dataDoc; let i = index;">
+                            <td>{{ row.nombre }}</td>
+                            <td>{{ row.descripcion }}</td>
+                            <td><button mat-icon-button type="button" color="primary" aria-label="Descargar" matTooltip="Descargar" (click)="descargarDoc(row)">
+                                <mat-icon>download</mat-icon>
+                            </button></td>
+                            <td><button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar" (click)="eliminarDoc(row, index)">
+                                <mat-icon>delete</mat-icon>
+                            </button></td>
+                        </tr>
+                    </table>
+                </div>
             </mat-step>
 
             <mat-step>

@@ -241,7 +241,7 @@
                                     <ng-container matColumnDef="editar">
                                         <th mat-header-cell *matHeaderCellDef width="75%"> Editar </th>
                                         <td mat-cell *matCellDef="let element" width="75%">
-                                            <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar">
+                                            <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar" (click)="addRepresentante(null, element)">
                                                 <mat-icon>edit</mat-icon>
                                             </button>
                                         </td>
@@ -249,7 +249,7 @@
                                     <ng-container matColumnDef="eliminar">
                                         <th mat-header-cell *matHeaderCellDef> Eliminar </th>
                                         <td mat-cell *matCellDef="let element">
-                                            <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar">
+                                            <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar" (click)="eliminarRepresentacion(element,1)">
                                                 <mat-icon>delete</mat-icon>
                                             </button>
                                         </td>
@@ -329,7 +329,7 @@
                                     <ng-container matColumnDef="eliminar">
                                         <th mat-header-cell *matHeaderCellDef> Eliminar </th>
                                         <td mat-cell *matCellDef="let element">
-                                            <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar">
+                                            <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar" (click)="eliminarRepresentacion(element,2)">
                                                 <mat-icon>delete</mat-icon>
                                             </button>
                                         </td>
