@@ -49,7 +49,8 @@ import { EditarSociedadComponent, DialogAsentamientoSociedad, DialogCiudadSocied
           DialogDomicilioHistoricoEspecificoSociedad } from './components/sociedad/editar-sociedad/editar-sociedad.component';
 import { VerNotarioComponent } from './components/notarios/ver-notario/ver-notario.component';
 import { EditarNotarioComponent, DialogDomiciliosNotario, DialogAsentamientoNotario, DialogCiudadNotario,
-         DialogMunicipiosNotario, DialogViaNotario, DialogDomicilioHistoricoNotario, DialogDomicilioHistoricoEspecificoNotario } from './components/notarios/editar-notario/editar-notario.component';
+         DialogMunicipiosNotario, DialogViaNotario, DialogDomicilioHistoricoNotario, DialogDomicilioHistoricoEspecificoNotario,
+         DialogPersonalesHistoricoNotario, DialogPersonalesHistoricoEspecificoNotario } from './components/notarios/editar-notario/editar-notario.component';
 import { VerContribuyenteComponent } from './components/contribuyentes/ver-contribuyente/ver-contribuyente.component';
 import { EditarContribuyenteComponent, DialogDomicilioContribuyente, DialogAsentamientoContribuyente,
          DialogCiudadContribuyente, DialogMunicipiosContribuyente, DialogViaContribuyente, DialogDocumentoC,
@@ -144,7 +145,9 @@ import { VerHistoricoDomicilioNotarioComponent } from './components/notarios/ver
     DialogRepresentacionC,
     DialogRepresentadoC,
     DialogDomicilioHistoricoSociedad,
-    DialogDomicilioHistoricoEspecificoSociedad
+    DialogDomicilioHistoricoEspecificoSociedad,
+    DialogPersonalesHistoricoNotario, 
+    DialogPersonalesHistoricoEspecificoNotario
   ],
   imports: [
     BrowserModule,

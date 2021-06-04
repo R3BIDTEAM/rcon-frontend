@@ -412,6 +412,16 @@ export class EditarNotarioComponent implements OnInit {
         });
   }
 
+  viewHistoricoDatosPersonales(idPersona): void {
+        const dialogRef = this.dialog.open(DialogPersonalesHistoricoNotario, {
+            width: '700px',
+            data: {idPersona},
+        });
+        dialogRef.afterClosed().subscribe(result => {
+                // this.getNotarioDirecciones();
+        });
+  }
+
   removeDomicilio(i){
 		this.dataDomicilio.splice(i, 1);
 	}
@@ -1925,5 +1935,117 @@ export interface DataHistorico{
         });
     }
 
+
+  }
+
+
+
+
+
+
+
+
+
+
+/////////////// DOMICILIOS HISTORICO ////////////////
+@Component({
+    selector: 'app-dialog-personales-historico-notario',
+    templateUrl: 'app-dialog-personales-historico-notario.html',
+    styleUrls: ['./editar-notario.component.css']
+  })
+  export class DialogPersonalesHistoricoNotario {
+    endpoint = environment.endpoint + 'registro/';
+    httpOptions;
+    idPersona;
+    displayedColumns: string[] = ['fecha', 'descripcion', 'numero_expediente', 'tipo_tramite', 'tipo_subtramite', 'detalle'];
+    dataHistoricoModificaciones: DataHistorico = {} as DataHistorico;
+    dataSource = [];
+    pagina = 1;
+    total = 0;
+    pageSize = 10;
+    dataPaginate;
+    loading = true;
+    
+    constructor(
+        private auth: AuthService,
+        private snackBar: MatSnackBar,
+        private http: HttpClient,
+        private _formBuilder: FormBuilder,
+        public dialogRef: MatDialogRef<DialogPersonalesHistoricoNotario>,
+        public dialog: MatDialog,
+        @Inject(MAT_DIALOG_DATA) public data: any) {
+            dialogRef.disableClose = true;
+            this.httpOptions = {
+                headers: new HttpHeaders({
+                    'Content-Type': 'application/json',
+                    Authorization: this.auth.getSession().token
+                })
+            };
+        
+            this.idPersona = data.idPersona;
+            this.getHistoricoModificaciones();
+    
+        }
+
+    getHistoricoModificaciones(){
+        let query = '';
+      
+        query = (this.dataHistoricoModificaciones.fecha_desde) ? query + '&fechaDesde=' + moment(this.dataHistoricoModificaciones.fecha_desde).format('DD-MM-YYYY') : query + '&fechaDesde=';
+        query = (this.dataHistoricoModificaciones.fecha_hasta) ? query + '&fechaHasta=' + moment(this.dataHistoricoModificaciones.fecha_hasta).format('DD-MM-YYYY') : query + '&fechaHasta=';
+        query = query + '&idPersona=' + this.idPersona;
+
+        query = query.substr(1);
+
+        this.loading = true;
+        let metodo = 'getHistoricosPersona';
+        this.http.post(this.endpoint + metodo + '?' + query, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loading = false;
+                    this.dataSource = res;
+                    console.log(this.dataSource);
+                    this.total = this.dataSource.length;
+                    this.dataPaginate = this.paginate(this.dataSource, 10, this.pagina);
+                },
+                (error) => {
+                    this.loading = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
+
+    paginado(evt): void{
+        this.pagina = evt.pageIndex + 1;
+        this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+    }
+    
+    paginate(array, page_size, page_number) {
+        return array.slice((page_number - 1) * page_size, page_number * page_size);
+    }
+
+    viewHistoricoPersonalesEspecifico(dataPersonalesEspecifico): void {
+        const dialogRef = this.dialog.open(DialogPersonalesHistoricoEspecificoNotario, {
+            width: '700px',
+            data: { dataPersonalesEspecifico:dataPersonalesEspecifico, idDireccion:this.idPersona },
+        });
+        dialogRef.afterClosed().subscribe(result => {
+                // this.getNotarioDirecciones();
+        });
+    }
+
+}
+
+
+/////////////// PERSONALES HISTORICO ESPECIFICO ////////////////
+@Component({
+    selector: 'app-dialog-personales-historico-especifico-notario',
+    templateUrl: 'app-dialog-personales-historico-especifico-notario.html',
+    styleUrls: ['./editar-notario.component.css']
+  })
+  export class DialogPersonalesHistoricoEspecificoNotario {
 
   }
