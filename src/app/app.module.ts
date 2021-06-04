@@ -40,11 +40,13 @@ import { VerSociedadComponent } from './components/sociedad/ver-sociedad/ver-soc
 import { EditarPeritosComponent, DialogDomicilioPerito, DialogDocumentoPerito,
         DialogNotarioPeritos, DialogPersonaPeritos, DialogRepresentacionPeritos,
         DialogRepresentadoPeritos, DialogSociedadAsociada, DialogBuscaPerito,
-        DialogAsentamiento, DialogMunicipios, DialogCiudad, DialogVia, DialogDomicilioHistoricoPerito, DialogDomicilioHistoricoEspecificoPerito } from './components/peritos/editar-peritos/editar-peritos.component';
+        DialogAsentamiento, DialogMunicipios, DialogCiudad, DialogVia, DialogDomicilioHistoricoPerito, 
+        DialogDomicilioHistoricoEspecificoPerito } from './components/peritos/editar-peritos/editar-peritos.component';
 import { EditarSociedadComponent, DialogAsentamientoSociedad, DialogCiudadSociedad, DialogDomicilioSociedad,
           DialogBuscaSociedad, DialogMunicipiosSociedad, DialogViaSociedad, DialogSociedadPerito,
           DialogRepresentacionSociedad, DialogRepresentadoSociedad, DialogDocumentoSociedad,
-          DialogNotarioSociedad, DialogPersonaSociedad } from './components/sociedad/editar-sociedad/editar-sociedad.component';
+          DialogNotarioSociedad, DialogPersonaSociedad, DialogDomicilioHistoricoSociedad,
+          DialogDomicilioHistoricoEspecificoSociedad } from './components/sociedad/editar-sociedad/editar-sociedad.component';
 import { VerNotarioComponent } from './components/notarios/ver-notario/ver-notario.component';
 import { EditarNotarioComponent, DialogDomiciliosNotario, DialogAsentamientoNotario, DialogCiudadNotario,
          DialogMunicipiosNotario, DialogViaNotario, DialogDomicilioHistoricoNotario, DialogDomicilioHistoricoEspecificoNotario } from './components/notarios/editar-notario/editar-notario.component';
@@ -140,7 +142,9 @@ import { VerHistoricoDomicilioNotarioComponent } from './components/notarios/ver
     DialogPersonaC,
     DialogNotarioC,
     DialogRepresentacionC,
-    DialogRepresentadoC
+    DialogRepresentadoC,
+    DialogDomicilioHistoricoSociedad,
+    DialogDomicilioHistoricoEspecificoSociedad
   ],
   imports: [
     BrowserModule,
