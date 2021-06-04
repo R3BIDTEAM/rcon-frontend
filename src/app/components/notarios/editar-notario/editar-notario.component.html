@@ -1,10 +1,8 @@
 <div class="row">
     <div class="col-md-8 offset-md-2">
 
-
         <!-- Datos del Notario -->
         <h3 style="margin: 0 0 15px 0;" class="verde-cdmx">Datos del Notario:</h3>
-
 
         <div class="row">
             <div class="col-md-4">
@@ -33,9 +31,6 @@
                         </div>
                     </div>
         </div>
-
-
-
 
 
         <!-- Datos Generales -->
@@ -87,7 +82,7 @@
             <div class="col-md-4">
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Otro Documento:</mat-label>
-                    <mat-select #otro_documento [(ngModel)]="datosGenerales.otro_documento">
+                    <mat-select #otro_documento [(ngModel)]="datosGenerales.otro_documento" (ngModelChange)="otroDocumento()">
                         <mat-option value="">Seleccione...</mat-option>
                         <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF">
                             {{ documento.DESCRIPCION }}
@@ -98,7 +93,7 @@
             <div class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>Número Documento</mat-label>
-                    <input matInput #numero_documento [(ngModel)]="datosGenerales.numero_documento" placeholder="Número documento">
+                    <input matInput #numero_documento [(ngModel)]="datosGenerales.numero_documento" [disabled]="datosGenerales.otro_documento == '' || datosGenerales.otro_documento == null" placeholder="Número documento">
                 </mat-form-field>
             </div>
         </div>
@@ -161,13 +156,7 @@
             </div>
         </div>
 
-        <!-- <div class="row">
-            <div class="col-md-12" *ngIf="dataSource.length == 0">
-                <div class="alert alert-info">
-                    No hay datos que mostrar...
-                </div>
-            </div>
-        </div> -->
+
 
         <div class="row">
             <div class="col-md-12">
@@ -180,10 +169,7 @@
                         No hay direcciones asociadas.
                     </div> 
                     <table mat-table [dataSource]="dataSource1" *ngIf="!loadingDomicilios && dataSource1.length > 0" width="100%">
-                        <!-- <ng-container matColumnDef="tipoDir">
-                            <th mat-header-cell *matHeaderCellDef width="15%" > Tipo Dirección </th>
-                            <td mat-cell *matCellDef="let element" width="15%" > {{ element.CODTIPOSDIRECCION }}</td>
-                        </ng-container> -->
+                        
                         <ng-container matColumnDef="direccion">
                             <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="70%"> Dirección </th>
                             <td mat-cell *matCellDef="let element">
@@ -191,14 +177,16 @@
                                 C.P. {{ element.CODIGOPOSTAL}}, {{ element.DELEGACION}} ({{ element.ESTADO }})
                             </td>
                         </ng-container>
+
                         <ng-container matColumnDef="historial">
                             <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="15%"> Historial </th>
                             <td mat-cell *matCellDef="let element">
-                                <button mat-icon-button type="button" color="primary" aria-label="Historial" matTooltip="Historial">
+                                <button mat-icon-button type="button" color="primary" aria-label="Historial" matTooltip="Historial" (click)="viewHistoricoDomicilio(element.IDDIRECCION)">
                                     <mat-icon>search</mat-icon>
                                 </button>
                             </td>
                         </ng-container>
+
                         <ng-container matColumnDef="editar">
                             <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="15%"> Editar </th>
                             <td mat-cell *matCellDef="let element">
