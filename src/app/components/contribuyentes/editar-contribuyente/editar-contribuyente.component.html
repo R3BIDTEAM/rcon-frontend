@@ -37,12 +37,12 @@
                         <div class="row">
                             <mat-form-field class="col-5">
                                 <mat-label>Apellido Paterno:</mat-label>
-                                <input matInput formControlName="apaterno" [(ngModel)]="contribuyente.apaterno">
-                                <mat-error *ngIf="fisicaFormGroup.controls.apaterno.errors?.required">Requerido</mat-error>
+                                <input matInput formControlName="apepaterno" [(ngModel)]="contribuyente.apepaterno">
+                                <mat-error *ngIf="fisicaFormGroup.controls.apepaterno.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                             <mat-form-field class="col-5">
                                 <mat-label>Apellido Materno:</mat-label>
-                                <input matInput formControlName="amaterno" [(ngModel)]="contribuyente.amaterno">
+                                <input matInput formControlName="apematerno" [(ngModel)]="contribuyente.apematerno">
                             </mat-form-field>
                         </div>
                         <div class="row">
@@ -81,13 +81,13 @@
                         <div class="row">
                             <mat-form-field class="col-5">
                                 <mat-label>Fecha Nacimiento:</mat-label>
-                                <input matInput readonly formControlName="fechaNacimiento" [matDatepicker]="pickfechaNacimiento" [(ngModel)]="contribuyente.fechaNacimiento">
+                                <input matInput readonly formControlName="fecha_naci" [matDatepicker]="pickfechaNacimiento" [(ngModel)]="contribuyente.fecha_naci">
                                 <mat-datepicker-toggle matSuffix [for]="pickfechaNacimiento"></mat-datepicker-toggle>
                                 <mat-datepicker #pickfechaNacimiento></mat-datepicker>
                             </mat-form-field>
                             <mat-form-field class="col-5">
                                 <mat-label>Fecha Defunción:</mat-label>
-                                <input matInput readonly formControlName="fechaDefuncion" [matDatepicker]="pickfechaDefuncion" [(ngModel)]="contribuyente.fechaDefuncion">
+                                <input matInput readonly formControlName="fecha_def" [matDatepicker]="pickfechaDefuncion" [(ngModel)]="contribuyente.fecha_def">
                                 <mat-datepicker-toggle matSuffix [for]="pickfechaDefuncion"></mat-datepicker-toggle>
                                 <mat-datepicker #pickfechaDefuncion></mat-datepicker>
                             </mat-form-field>

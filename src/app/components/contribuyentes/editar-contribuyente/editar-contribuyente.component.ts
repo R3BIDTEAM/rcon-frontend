@@ -10,7 +10,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import * as moment from 'moment';
 import * as FileSaver from 'file-saver';
 
-export interface DatosContrinuyente {
+export interface DatosContribuyente {
+    tipoPersona: string;
     apepaterno: string;
     apematerno: string;
     nombre: string;
@@ -33,6 +34,7 @@ export interface DatosContrinuyente {
     fechaInicioOperacion: Date;
     idMotivo: number;
     fechaCambio: Date;
+    nombre_moral: string;
 }
 
 export interface DataRepresentacion {
@@ -131,7 +133,7 @@ export class EditarContribuyenteComponent implements OnInit {
     panelDomicilio = false;
     dataRepresentantes: DataRepresentacion[] = [];
     dataRepresentados: DataRepresentacion[] = [];
-    contribuyente: DataRepresentacion = {} as DataRepresentacion;
+    contribuyente: DatosContribuyente = {} as DatosContribuyente;
     dataDocumentos: DocumentosIdentificativos[] = [];
     dataDomicilios: DataDomicilio[] = [];
     dataDomicilioEspecifico: DataDomicilio[] = [];
@@ -187,15 +189,15 @@ export class EditarContribuyenteComponent implements OnInit {
 
         this.fisicaFormGroup = this._formBuilder.group({
             nombre: [null, [Validators.required]],
-            apaterno: [null, [Validators.required]],
-            amaterno: [null, []],
+            apepaterno: [null, [Validators.required]],
+            apematerno: [null, []],
             rfc: [null, [Validators.required]],
             curp: [null, [Validators.required]],
             ine: [null, []],
             idDocIdent: ['', []],
             docIdent: [null, []],
-            fechaNacimiento: [null, []],
-            fechaDefuncion: [null, []],
+            fecha_naci: [null, []],
+            fecha_def: [null, []],
             celular: [null, []],
             email: [null, []],
         });
@@ -214,6 +216,8 @@ export class EditarContribuyenteComponent implements OnInit {
         this.getDataDocumentos();
         this.getContribuyenteDatos();
         this.getDomicilioContribuyente();
+        this.getRepresentacion();
+        this.getRepresentado();
     }
 
     changeRequired(remove, add): void {
@@ -266,22 +270,22 @@ export class EditarContribuyenteComponent implements OnInit {
         this.contribuyente.tipoPersona = this.dataContribuyenteResultado[0].CODTIPOPERSONA;
         this.contribuyente.nombre  = this.dataContribuyenteResultado[0].NOMBRE;
         this.contribuyente.nombre_moral  = this.dataContribuyenteResultado[0].APELLIDOPATERNO;
-        this.contribuyente.apaterno = this.dataContribuyenteResultado[0].APELLIDOPATERNO;
-        this.contribuyente.amaterno = this.dataContribuyenteResultado[0].APELLIDOMATERNO;
+        this.contribuyente.apepaterno = this.dataContribuyenteResultado[0].APELLIDOPATERNO;
+        this.contribuyente.apematerno = this.dataContribuyenteResultado[0].APELLIDOMATERNO;
         this.contribuyente.rfc = this.dataContribuyenteResultado[0].RFC;
         this.contribuyente.curp = this.dataContribuyenteResultado[0].CURP;
         this.contribuyente.ine = this.dataContribuyenteResultado[0].CLAVEIFE;
-        this.contribuyente.idDocIdent = this.dataContribuyenteResultado[0].IDDOCIDENTIF;
-        this.contribuyente.docIdent = this.dataContribuyenteResultado[0].VALDOCIDENTIF;
-        this.contribuyente.fechaNacimiento = new Date(this.dataContribuyenteResultado[0].FECHANACIMIENTO);
-        this.contribuyente.fechaDefuncion = new Date(this.dataContribuyenteResultado[0].FECHADEFUNCION);
+        this.contribuyente.identificacion = this.dataContribuyenteResultado[0].IDDOCIDENTIF;
+        this.contribuyente.idedato = this.dataContribuyenteResultado[0].VALDOCIDENTIF;
+        this.contribuyente.fecha_naci = (this.dataContribuyenteResultado[0].FECHANACIMIENTO) ? new Date(this.dataContribuyenteResultado[0].FECHANACIMIENTO) : null;
+        this.contribuyente.fecha_def = (this.dataContribuyenteResultado[0].FECHADEFUNCION) ? new Date(this.dataContribuyenteResultado[0].FECHADEFUNCION) : null;
         this.contribuyente.celular = this.dataContribuyenteResultado[0].CELULAR;
         this.contribuyente.email = this.dataContribuyenteResultado[0].EMAIL;
         this.contribuyente.actPreponderante = this.dataContribuyenteResultado[0].ACTIVPRINCIP;
         this.contribuyente.idTipoPersonaMoral = this.dataContribuyenteResultado[0].IDTIPOMORAL;
-        this.contribuyente.fechaInicioOperacion = new Date(this.dataContribuyenteResultado[0].FECHAINICIOACTIV);
+        this.contribuyente.fechaInicioOperacion = (this.dataContribuyenteResultado[0].FECHAINICIOACTIV) ? new Date(this.dataContribuyenteResultado[0].FECHAINICIOACTIV) : null;
         this.contribuyente.idMotivo = this.dataContribuyenteResultado[0].IDMOTIVOSMORAL;
-        this.contribuyente.fechaCambio = new Date(this.dataContribuyenteResultado[0].FECHACAMBIOSITUACION);
+        this.contribuyente.fechaCambio = (this.dataContribuyenteResultado[0].FECHACAMBIOSITUACION) ? new Date(this.dataContribuyenteResultado[0].FECHACAMBIOSITUACION) : null;
 
         console.log(this.contribuyente.nombre_moral);
         
@@ -301,14 +305,14 @@ export class EditarContribuyenteComponent implements OnInit {
         query = (this.contribuyente.fechaInicioOperacion) ? query + '&fechainicioactiv=' + moment(this.contribuyente.fechaInicioOperacion).format('DD-MM-YYYY') : query + '&fechainicioactiv=';
         query = (this.contribuyente.fechaCambio) ? query + '&fechacambiosituacion=' + moment(this.contribuyente.fechaCambio).format('DD-MM-YYYY') : query + '&fechacambiosituacion=';
         query = (this.contribuyente.rfc) ? query + '&rfc=' + this.contribuyente.rfc : query + '&rfc=';
-        query = (this.contribuyente.apaterno) ? query + '&apellidopaterno=' + this.contribuyente.apaterno : query + '&apellidopaterno=';
-        query = (this.contribuyente.amaterno) ? query + '&apellidomaterno=' + this.contribuyente.amaterno : query + '&apellidomaterno=';
+        query = (this.contribuyente.apepaterno) ? query + '&apellidopaterno=' + this.contribuyente.apepaterno : query + '&apellidopaterno=';
+        query = (this.contribuyente.apematerno) ? query + '&apellidomaterno=' + this.contribuyente.apematerno : query + '&apellidomaterno=';
         query = (this.contribuyente.curp) ? query + '&curp=' + this.contribuyente.curp : query + '&curp=';
         query = (this.contribuyente.ine) ? query + '&claveife=' + this.contribuyente.ine : query + '&claveife=';
-        query = (this.contribuyente.idDocIdent) ? query + '&iddocidentif=' + this.contribuyente.idDocIdent : query + '&iddocidentif=';
-        query = (this.contribuyente.docIdent) ? query + '&valdocidentif=' + this.contribuyente.docIdent : query + '&valdocidentif=';
-        query = (this.contribuyente.fechaNacimiento) ? query + '&fechanacimiento=' + moment(this.contribuyente.fechaNacimiento).format('DD-MM-YYYY') : query + '&fechanacimiento=';
-        query = (this.contribuyente.fechaDefuncion) ? query + '&fechadefuncion=' + moment(this.contribuyente.fechaDefuncion).format('DD-MM-YYYY') : query + '&fechadefuncion=';
+        query = (this.contribuyente.identificacion) ? query + '&iddocidentif=' + this.contribuyente.identificacion : query + '&iddocidentif=';
+        query = (this.contribuyente.idedato) ? query + '&valdocidentif=' + this.contribuyente.idedato : query + '&valdocidentif=';
+        query = (this.contribuyente.fecha_naci) ? query + '&fechanacimiento=' + moment(this.contribuyente.fecha_naci).format('DD-MM-YYYY') : query + '&fechanacimiento=';
+        query = (this.contribuyente.fecha_def) ? query + '&fechadefuncion=' + moment(this.contribuyente.fecha_def).format('DD-MM-YYYY') : query + '&fechadefuncion=';
         query = (this.contribuyente.celular) ? query + '&celular=' + this.contribuyente.celular : query + '&celular=';
         query = (this.contribuyente.email) ? query + '&email=' + this.contribuyente.email : query + '&email=';
         query = (this.contribuyente.actPreponderante) ? query + '&activprincip=' + this.contribuyente.actPreponderante : query + '&activprincip=';
@@ -426,10 +430,10 @@ export class EditarContribuyenteComponent implements OnInit {
     addRepresentante(i = -1, dataRepresentante = null): void {
         const dialogRef = this.dialog.open(DialogRepresentacionC, {
             width: '700px',
-            // data: {dataRepresentante : dataRepresentante,
-            //         datosPerito : this.datoPeritos,
-            //         idPerito : this.idPerito
-            // },
+            data: {dataRepresentante : dataRepresentante,
+                    datosPerito : this.contribuyente,
+                    idPerito : this.idContribuyente
+            },
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
@@ -444,10 +448,10 @@ export class EditarContribuyenteComponent implements OnInit {
     addRepresentado(i = -1, dataRepresentante = null): void {
         const dialogRef = this.dialog.open(DialogRepresentadoC, {
             width: '700px',
-            // data: {dataRepresentante : dataRepresentante,
-            //         datosPerito: this.datoPeritos,
-            //         idPerito : this.idPerito
-            // },
+            data: {dataRepresentante : dataRepresentante,
+                    datosPerito: this.contribuyente,
+                    idPerito : this.idContribuyente
+            },
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
@@ -500,24 +504,24 @@ export class EditarContribuyenteComponent implements OnInit {
 
     getRepresentacion(){
         this.loadingRepresentante = true;
-        // let queryRep = 'rep=Representantes&idPersona=' + this.idPerito;
-        // this.http.post(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRep, '', this.httpOptions)
-        //     .subscribe(
-        //         (res: any) => {
-        //             this.loadingRepresentante = false;
-        //             this.dataSource4 = res;
-        //             this.total4 = this.dataSource4.length;
-        //             this.dataPaginate4 = this.paginate(this.dataSource4, 15, this.pagina4);
-        //         },
-        //         (error) => {
-        //             this.loadingRepresentante = false;
-        //             this.snackBar.open(error.error.mensaje, 'Cerrar', {
-        //                 duration: 10000,
-        //                 horizontalPosition: 'end',
-        //                 verticalPosition: 'top'
-        //             });
-        //         }
-        //     );
+        let queryRep = 'rep=Representantes&idPersona=' + this.idContribuyente;
+        this.http.post(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRep, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loadingRepresentante = false;
+                    this.dataSource4 = res;
+                    this.total4 = this.dataSource4.length;
+                    this.dataPaginate4 = this.paginate(this.dataSource4, 15, this.pagina4);
+                },
+                (error) => {
+                    this.loadingRepresentante = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
     }
 
     paginado4(evt): void{
@@ -527,27 +531,27 @@ export class EditarContribuyenteComponent implements OnInit {
 
     getRepresentado(){
         this.loadingRepresentado = true;
-        // let queryRepdo = 'rep=Representado&idPersona=' + this.idPerito;
-        // console.log(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRepdo);
-        // this.http.post(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRepdo, '', this.httpOptions)
-        //     .subscribe(
-        //         (res: any) => {
-        //             this.loadingRepresentado = false;
-        //             this.dataSource5 = res;
-        //             console.log("ACA ENTRO EL REPRESENTADO");
-        //             console.log(res);
-        //             this.total5 = this.dataSource5.length;
-        //             this.dataPaginate5 = this.paginate(this.dataSource5, 15, this.pagina5);
-        //         },
-        //         (error) => {
-        //             this.loadingRepresentado = false;
-        //             this.snackBar.open(error.error.mensaje, 'Cerrar', {
-        //                 duration: 10000,
-        //                 horizontalPosition: 'end',
-        //                 verticalPosition: 'top'
-        //             });
-        //         }
-        //     );
+        let queryRepdo = 'rep=Representado&idPersona=' + this.idContribuyente;
+        console.log(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRepdo);
+        this.http.post(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRepdo, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loadingRepresentado = false;
+                    this.dataSource5 = res;
+                    console.log("ACA ENTRO EL REPRESENTADO");
+                    console.log(res);
+                    this.total5 = this.dataSource5.length;
+                    this.dataPaginate5 = this.paginate(this.dataSource5, 15, this.pagina5);
+                },
+                (error) => {
+                    this.loadingRepresentado = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
     }
 
     paginado5(evt): void{
@@ -1867,19 +1871,19 @@ export class DialogRepresentacionC {
                         ife: this.dataRepresentacion.ine,
                         iddocIdentif: this.dataRepresentacion.idDocIdent,
                         valdocIdentif: this.dataRepresentacion.docIdent,
-                        fechaNacimiento: moment(this.dataRepresentacion.fechaNacimiento).format("DD-MM-YYYY"),
-                        fechaDefuncion: moment(this.dataRepresentacion.fechaDefuncion).format("DD-MM-YYYY"),
+                        fechaNacimiento: this.dataRepresentacion.fechaNacimiento,
+                        fechaDefuncion: this.dataRepresentacion.fechaDefuncion,
                         celular: this.dataRepresentacion.celular,
                         email: this.dataRepresentacion.email,
                         activprincip: this.dataRepresentacion.actPreponderante,
                         idtipomoral: this.dataRepresentacion.idTipoPersonaMoral,
                         idmotivosmoral: this.dataRepresentacion.idMotivo,
-                        fechainicioactiv: moment(this.dataRepresentacion.fechaInicioOperacion).format("DD-MM-YYYY"),
-                        fechacambiosituacion: moment(this.dataRepresentacion.fechaCambio).format("DD-MM-YYYY")
+                        fechainicioactiv: this.dataRepresentacion.fechaInicioOperacion,
+                        fechacambiosituacion: this.dataRepresentacion.fechaCambio
                     },
                     {
                         rol:"representado",
-                        codtiposPersona: "F",
+                        codtiposPersona: this.data.datosPerito.tipoPersona,
                         idpersona: this.data.idPerito,
                         nombre: this.data.datosPerito.nombre,
                         rfc: this.data.datosPerito.rfc,
@@ -1889,8 +1893,8 @@ export class DialogRepresentacionC {
                         ife: this.data.datosPerito.ine,
                         iddocIdentif: this.data.datosPerito.identificacion,
                         valdocIdentif: this.data.datosPerito.idedato,
-                        fechaNacimiento: moment(this.data.datosPerito.fecha_naci).format("DD-MM-YYYY"),
-                        fechaDefuncion: moment(this.data.datosPerito.fecha_def).format("DD-MM-YYYY"),
+                        fechaNacimiento: this.data.datosPerito.fecha_naci,
+                        fechaDefuncion: this.data.datosPerito.fecha_def,
                         celular: this.data.datosPerito.celular,
                         email: this.data.datosPerito.email,
                         activprincip: null,
@@ -2188,19 +2192,19 @@ export class DialogRepresentadoC {
                         ife: this.dataRepresentacion.ine,
                         iddocIdentif: this.dataRepresentacion.idDocIdent,
                         valdocIdentif: this.dataRepresentacion.docIdent,
-                        fechaNacimiento: moment(this.dataRepresentacion.fechaNacimiento).format("DD-MM-YYYY"),
-                        fechaDefuncion: moment(this.dataRepresentacion.fechaDefuncion).format("DD-MM-YYYY"),
+                        fechaNacimiento: this.dataRepresentacion.fechaNacimiento,
+                        fechaDefuncion: this.dataRepresentacion.fechaDefuncion,
                         celular: this.dataRepresentacion.celular,
                         email: this.dataRepresentacion.email,
                         activprincip: this.dataRepresentacion.actPreponderante,
                         idtipomoral: this.dataRepresentacion.idTipoPersonaMoral,
                         idmotivosmoral: this.dataRepresentacion.idMotivo,
-                        fechainicioactiv: moment(this.dataRepresentacion.fechaInicioOperacion).format("DD-MM-YYYY"),
-                        fechacambiosituacion: moment(this.dataRepresentacion.fechaCambio).format("DD-MM-YYYY")
+                        fechainicioactiv: this.dataRepresentacion.fechaInicioOperacion,
+                        fechacambiosituacion: this.dataRepresentacion.fechaCambio
                     },
                     {
                         rol:"representante",
-                        codtiposPersona: "F",
+                        codtiposPersona: this.data.datosPerito.tipoPersona,
                         idpersona: this.data.idPerito,
                         nombre: this.data.datosPerito.nombre,
                         rfc: this.data.datosPerito.rfc,
@@ -2210,8 +2214,8 @@ export class DialogRepresentadoC {
                         ife: this.data.datosPerito.ine,
                         iddocIdentif: this.data.datosPerito.identificacion,
                         valdocIdentif: this.data.datosPerito.idedato,
-                        fechaNacimiento: moment(this.data.datosPerito.fecha_naci).format("DD-MM-YYYY"),
-                        fechaDefuncion: moment(this.data.datosPerito.fecha_def).format("DD-MM-YYYY"),
+                        fechaNacimiento: this.data.datosPerito.fecha_naci,
+                        fechaDefuncion: this.data.datosPerito.fecha_def,
                         celular: this.data.datosPerito.celular,
                         email: this.data.datosPerito.email,
                         activprincip: null,
@@ -2548,14 +2552,6 @@ export class DialogDocumentoC {
 
         console.log(this.fechaDocto);    
         this.dataDoc = this.dataDocumentoSet.infoFicheros;
-        // if(this.dataDocumentoSet.infoFicheros){
-        //     for(let archivo of this.dataDocumentoSet.infoFicheros){
-        //         this.archivos.push(this.createItem({
-        //             nombre: archivo.nombre,
-        //             base64: archivo.base64
-        //         }));
-        //     }
-        // }
     }
 
     descargarDoc(element){
