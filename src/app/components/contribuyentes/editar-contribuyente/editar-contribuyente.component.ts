@@ -8,6 +8,32 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import * as moment from 'moment';
+import * as FileSaver from 'file-saver';
+
+export interface DatosContrinuyente {
+    apepaterno: string;
+    apematerno: string;
+    nombre: string;
+    rfc: string;
+    curp: string;
+    ine: string;
+    identificacion: number;
+    idedato: string;
+    fecha_naci: Date;
+    fecha_def: Date;
+    celular: string;
+    email: string;
+    registro: string;
+    independiente: boolean;
+    independienteAct: string;
+    fecha_alta: Date;
+    fecha_baja: Date;
+    actPreponderante: string;
+    idTipoPersonaMoral: number;
+    fechaInicioOperacion: Date;
+    idMotivo: number;
+    fechaCambio: Date;
+}
 
 export interface DataRepresentacion {
   tipoPersona: string;
@@ -31,7 +57,7 @@ export interface DataRepresentacion {
   fechaCambio: Date;
   texto: string;
   fechaCaducidad: Date;
-  // documentoRepresentacion: DataDocumentoRepresentacion;
+  documentoRepresentacion: DataDocumentoRepresentacion;
 }
 
 export interface DocumentosIdentificativos{
@@ -39,6 +65,21 @@ export interface DocumentosIdentificativos{
   documento: string;
 }
 
+export interface DataDocumentoRepresentacion {
+    codtipodocumento: number;
+    nombreTipoDocumento: string;
+    codtipodocumentojuridico: string;
+    nombreTipoDocumentoJuridico: string;
+    idnotario: number;
+    noNotario: string;
+    ciudadNotario: string;
+    nombreNotario: string;
+    num_escritura: string;
+    fecha: Date;
+    descripcion: string;
+    lugar: string;
+    archivos: Array<{nombre: string, base64: string}>;
+}
 export interface DataDomicilio {
   codtiposdireccion: string;
   idestado: number;
@@ -78,211 +119,224 @@ export interface DataDomicilio {
 })
 
 export class EditarContribuyenteComponent implements OnInit {
-  endpoint = environment.endpoint + 'registro/';
-  loading = false;
-  loadingDocumentos = false;
-  httpOptions;
-  fisicaFormGroup: FormGroup;
-  moralFormGroup: FormGroup;
-  dataContribuyenteResultado;
-  query;
-  idContribuyente;
-  panelDomicilio = false;
-  dataRepresentantes: DataRepresentacion[] = [];
-  dataRepresentados: DataRepresentacion[] = [];
-  contribuyente: DataRepresentacion = {} as DataRepresentacion;
-  dataDocumentos: DocumentosIdentificativos[] = [];
-  dataDomicilios: DataDomicilio[] = [];
-  dataDomicilioEspecifico: DataDomicilio[] = [];
-  displayedColumnsDom: string[] = ['tipoDir','direccion', 'historial', 'editar'];
-  loadingDomicilios = false;
-  paginaDom = 1;
-  totalDom = 0;
-  pageSizeDom = 15;
-  dataDomicilioResultado;
-  dataSourceDom = [];
-  dataPaginateDom;
-  endpointActualiza = environment.endpoint + 'registro/';
-  isIdentificativo;
-  idInmueble;
-  loadingDireccionEspecifica = false;
+    endpoint = environment.endpoint + 'registro/';
+    loading = false;
+    loadingDocumentos = false;
+    httpOptions;
+    fisicaFormGroup: FormGroup;
+    moralFormGroup: FormGroup;
+    dataContribuyenteResultado;
+    query;
+    idContribuyente;
+    panelDomicilio = false;
+    dataRepresentantes: DataRepresentacion[] = [];
+    dataRepresentados: DataRepresentacion[] = [];
+    contribuyente: DataRepresentacion = {} as DataRepresentacion;
+    dataDocumentos: DocumentosIdentificativos[] = [];
+    dataDomicilios: DataDomicilio[] = [];
+    dataDomicilioEspecifico: DataDomicilio[] = [];
+    displayedColumnsDom: string[] = ['tipoDir','direccion', 'historial', 'editar'];
+    displayedColumnsRepdo: string[] = ['representacion','texto','caducidad','editar','eliminar'];
+    loadingDomicilios = false;
+    paginaDom = 1;
+    totalDom = 0;
+    pageSizeDom = 15;
+    dataDomicilioResultado;
+    dataSourceDom = [];
+    dataPaginateDom;
+    endpointActualiza = environment.endpoint + 'registro/';
+    isIdentificativo;
+    idInmueble;
+    loadingDireccionEspecifica = false;
+    panelRepresentantes = false;
+    panelRepresentados = false;
+    loadingRepresentante = false;
+    loadingRepresentado = false;
 
-   /*Paginado*/
-   dataSource1 = [];
-   total1 = 0;
-   pagina1= 1;
-   dataPaginate1;
-   /*Paginado*/
+    /*Paginado*/
+    dataSource1 = [];
+    total1 = 0;
+    pagina1= 1;
+    dataPaginate1;
+    dataSource4 = [];
+    total4 = 0;
+    pagina4= 1;
+    dataPaginate4;
+    dataSource5 = [];
+    total5 = 0;
+    pagina5= 1;
+    dataPaginate5;
+    /*Paginado*/
 
-  constructor(
-    private http: HttpClient,
-    private auth: AuthService,
-    private _formBuilder: FormBuilder,
-    private snackBar: MatSnackBar,
-    public dialog: MatDialog,
-    private route: ActivatedRoute
-  ) { }
+    constructor(
+        private http: HttpClient,
+        private auth: AuthService,
+        private _formBuilder: FormBuilder,
+        private snackBar: MatSnackBar,
+        public dialog: MatDialog,
+        private route: ActivatedRoute
+    ) { }
 
-  ngOnInit(): void {
-    this.httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: this.auth.getSession().token
-      })
-    };
+    ngOnInit(): void {
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                Authorization: this.auth.getSession().token
+            })
+        };
 
-    this.fisicaFormGroup = this._formBuilder.group({
-      nombre: [null, [Validators.required]],
-      apaterno: [null, [Validators.required]],
-      amaterno: [null, []],
-      rfc: [null, [Validators.required]],
-      curp: [null, [Validators.required]],
-      ine: [null, []],
-      idDocIdent: ['', []],
-      docIdent: [null, []],
-      fechaNacimiento: [null, []],
-      fechaDefuncion: [null, []],
-      celular: [null, []],
-      email: [null, []],
-    });
+        this.fisicaFormGroup = this._formBuilder.group({
+            nombre: [null, [Validators.required]],
+            apaterno: [null, [Validators.required]],
+            amaterno: [null, []],
+            rfc: [null, [Validators.required]],
+            curp: [null, [Validators.required]],
+            ine: [null, []],
+            idDocIdent: ['', []],
+            docIdent: [null, []],
+            fechaNacimiento: [null, []],
+            fechaDefuncion: [null, []],
+            celular: [null, []],
+            email: [null, []],
+        });
 
-    this.moralFormGroup = this._formBuilder.group({
-      nombre_moral: [null, [Validators.required]],
-      rfc: [null, [Validators.required]],
-      actPreponderante: [null, []],
-      idTipoPersonaMoral: ['', []],
-      fechaInicioOperacion: [null, []],
-      idMotivo: ['', []],
-      fechaCambio: [null, []],
-    });
+        this.moralFormGroup = this._formBuilder.group({
+            nombre_moral: [null, [Validators.required]],
+            rfc: [null, [Validators.required]],
+            actPreponderante: [null, []],
+            idTipoPersonaMoral: ['', []],
+            fechaInicioOperacion: [null, []],
+            idMotivo: ['', []],
+            fechaCambio: [null, []],
+        });
 
-    this.idContribuyente = this.route.snapshot.paramMap.get('idcontribuyente');
-    this.getDataDocumentos();
-    this.getContribuyenteDatos();
-    this.getDomicilioContribuyente();
-  }
+        this.idContribuyente = this.route.snapshot.paramMap.get('idcontribuyente');
+        this.getDataDocumentos();
+        this.getContribuyenteDatos();
+        this.getDomicilioContribuyente();
+    }
 
-  changeRequired(remove, add): void {
-    this.fisicaFormGroup.controls[remove].setValue(null);
-    this.fisicaFormGroup.controls[remove].clearValidators();
-    this.fisicaFormGroup.controls[add].setValidators(Validators.required);
-    this.fisicaFormGroup.markAsUntouched();
-    this.fisicaFormGroup.updateValueAndValidity();
-  }
+    changeRequired(remove, add): void {
+        this.fisicaFormGroup.controls[remove].setValue(null);
+        this.fisicaFormGroup.controls[remove].clearValidators();
+        this.fisicaFormGroup.controls[add].setValidators(Validators.required);
+        this.fisicaFormGroup.markAsUntouched();
+        this.fisicaFormGroup.updateValueAndValidity();
+    }
 
-  getDataDocumentos(): void{
-    this.loadingDocumentos = true;
-    this.http.post(this.endpoint + 'getCatalogos', '', this.httpOptions).subscribe(
-      (res: any) => {
-        this.loadingDocumentos = false;
-        this.dataDocumentos = res.CatDocIdentificativos;
-        console.log(this.dataDocumentos);
-      },
-      (error) => {
-        this.loadingDocumentos = false;
-      }
-    );
-  }
-
-  getContribuyenteDatos(){
-    this.query = '&idPersona=' + this.idContribuyente; 
-    this.loading = true;
-    console.log(this.endpoint);
-    this.http.post(this.endpoint + 'getInfoContribuyente?' + this.query, '', this.httpOptions)
-        .subscribe(
-            (res: any) => {
-                this.loading = false;
-                this.dataContribuyenteResultado = res.contribuyente;
-                console.log("AQUI ENTRO EL RES");
-                console.log(this.dataContribuyenteResultado);
-                this.datoDelContribuyente();
-            },
-            (error) => {
-                this.loading = false;
-                this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
-                });
-            }
+    getDataDocumentos(): void{
+        this.loadingDocumentos = true;
+        this.http.post(this.endpoint + 'getCatalogos', '', this.httpOptions).subscribe(
+        (res: any) => {
+            this.loadingDocumentos = false;
+            this.dataDocumentos = res.CatDocIdentificativos;
+            console.log(this.dataDocumentos);
+        },
+        (error) => {
+            this.loadingDocumentos = false;
+        }
         );
-  }
+    }
 
-  datoDelContribuyente(){
-    this.contribuyente.tipoPersona = this.dataContribuyenteResultado[0].CODTIPOPERSONA;
-    this.contribuyente.nombre  = this.dataContribuyenteResultado[0].NOMBRE;
-    this.contribuyente.nombre_moral  = this.dataContribuyenteResultado[0].APELLIDOPATERNO;
-    this.contribuyente.apaterno = this.dataContribuyenteResultado[0].APELLIDOPATERNO;
-    this.contribuyente.amaterno = this.dataContribuyenteResultado[0].APELLIDOMATERNO;
-    this.contribuyente.rfc = this.dataContribuyenteResultado[0].RFC;
-    this.contribuyente.curp = this.dataContribuyenteResultado[0].CURP;
-    this.contribuyente.ine = this.dataContribuyenteResultado[0].CLAVEIFE;
-    this.contribuyente.idDocIdent = this.dataContribuyenteResultado[0].IDDOCIDENTIF;
-    this.contribuyente.docIdent = this.dataContribuyenteResultado[0].VALDOCIDENTIF;
-    this.contribuyente.fechaNacimiento = new Date(this.dataContribuyenteResultado[0].FECHANACIMIENTO);
-    this.contribuyente.fechaDefuncion = new Date(this.dataContribuyenteResultado[0].FECHADEFUNCION);
-    this.contribuyente.celular = this.dataContribuyenteResultado[0].CELULAR;
-    this.contribuyente.email = this.dataContribuyenteResultado[0].EMAIL;
-    this.contribuyente.actPreponderante = this.dataContribuyenteResultado[0].ACTIVPRINCIP;
-    this.contribuyente.idTipoPersonaMoral = this.dataContribuyenteResultado[0].IDTIPOMORAL;
-    this.contribuyente.fechaInicioOperacion = new Date(this.dataContribuyenteResultado[0].FECHAINICIOACTIV);
-    this.contribuyente.idMotivo = this.dataContribuyenteResultado[0].IDMOTIVOSMORAL;
-    this.contribuyente.fechaCambio = new Date(this.dataContribuyenteResultado[0].FECHACAMBIOSITUACION);
+    getContribuyenteDatos(){
+        this.query = '&idPersona=' + this.idContribuyente; 
+        this.loading = true;
+        console.log(this.endpoint);
+        this.http.post(this.endpoint + 'getInfoContribuyente?' + this.query, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loading = false;
+                    this.dataContribuyenteResultado = res.contribuyente;
+                    console.log("AQUI ENTRO EL RES");
+                    console.log(this.dataContribuyenteResultado);
+                    this.datoDelContribuyente();
+                },
+                (error) => {
+                    this.loading = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
 
-    console.log(this.contribuyente.nombre_moral);
-    
-  }
+    datoDelContribuyente(){
+        this.contribuyente.tipoPersona = this.dataContribuyenteResultado[0].CODTIPOPERSONA;
+        this.contribuyente.nombre  = this.dataContribuyenteResultado[0].NOMBRE;
+        this.contribuyente.nombre_moral  = this.dataContribuyenteResultado[0].APELLIDOPATERNO;
+        this.contribuyente.apaterno = this.dataContribuyenteResultado[0].APELLIDOPATERNO;
+        this.contribuyente.amaterno = this.dataContribuyenteResultado[0].APELLIDOMATERNO;
+        this.contribuyente.rfc = this.dataContribuyenteResultado[0].RFC;
+        this.contribuyente.curp = this.dataContribuyenteResultado[0].CURP;
+        this.contribuyente.ine = this.dataContribuyenteResultado[0].CLAVEIFE;
+        this.contribuyente.idDocIdent = this.dataContribuyenteResultado[0].IDDOCIDENTIF;
+        this.contribuyente.docIdent = this.dataContribuyenteResultado[0].VALDOCIDENTIF;
+        this.contribuyente.fechaNacimiento = new Date(this.dataContribuyenteResultado[0].FECHANACIMIENTO);
+        this.contribuyente.fechaDefuncion = new Date(this.dataContribuyenteResultado[0].FECHADEFUNCION);
+        this.contribuyente.celular = this.dataContribuyenteResultado[0].CELULAR;
+        this.contribuyente.email = this.dataContribuyenteResultado[0].EMAIL;
+        this.contribuyente.actPreponderante = this.dataContribuyenteResultado[0].ACTIVPRINCIP;
+        this.contribuyente.idTipoPersonaMoral = this.dataContribuyenteResultado[0].IDTIPOMORAL;
+        this.contribuyente.fechaInicioOperacion = new Date(this.dataContribuyenteResultado[0].FECHAINICIOACTIV);
+        this.contribuyente.idMotivo = this.dataContribuyenteResultado[0].IDMOTIVOSMORAL;
+        this.contribuyente.fechaCambio = new Date(this.dataContribuyenteResultado[0].FECHACAMBIOSITUACION);
+
+        console.log(this.contribuyente.nombre_moral);
+        
+    }
 
 
-  actualizarContribuyente(){
-    //registro/actualizaContribuyente?codtipospersona=F&nombre=Jose Albert&activprincip&idtipomoral&idmotivosmoral&fechainicioactiv&fechacambiosituacion&rfc=RUFV891129R15&apellidopaterno=Hernandez&apellidomaterno=MESSIE&curp=PAGJ830626HMCLMN11&claveife=mmmmmm&iddocidentif=1&valdocidentif=888&fechanacimiento=02-02-1989&fechadefuncion=02-02-2020&celular=5555555&email=nuevo_mail@mail.com&idExpediente&idpersona=4485307
-    console.log('Preparando actualización...');
-    let query = '';
-    this.loading = true;
+    actualizarContribuyente(){
+        //registro/actualizaContribuyente?codtipospersona=F&nombre=Jose Albert&activprincip&idtipomoral&idmotivosmoral&fechainicioactiv&fechacambiosituacion&rfc=RUFV891129R15&apellidopaterno=Hernandez&apellidomaterno=MESSIE&curp=PAGJ830626HMCLMN11&claveife=mmmmmm&iddocidentif=1&valdocidentif=888&fechanacimiento=02-02-1989&fechadefuncion=02-02-2020&celular=5555555&email=nuevo_mail@mail.com&idExpediente&idpersona=4485307
+        console.log('Preparando actualización...');
+        let query = '';
+        this.loading = true;
 
-    query = (this.contribuyente.tipoPersona) ? query + '&codtipospersona=' + this.contribuyente.tipoPersona : query + '&codtipospersona=';
-    query = (this.contribuyente.nombre) ? query + '&nombre=' + this.contribuyente.nombre : query + '&nombre=';
-    query = (this.contribuyente.idTipoPersonaMoral) ? query + '&idtipomoral=' + this.contribuyente.idTipoPersonaMoral : query + '&idtipomoral=';
-    query = (this.contribuyente.idMotivo) ? query + '&idmotivosmoral=' + this.contribuyente.idMotivo : query + '&idmotivosmoral=';
-    query = (this.contribuyente.fechaInicioOperacion) ? query + '&fechainicioactiv=' + moment(this.contribuyente.fechaInicioOperacion).format('DD-MM-YYYY') : query + '&fechainicioactiv=';
-    query = (this.contribuyente.fechaCambio) ? query + '&fechacambiosituacion=' + moment(this.contribuyente.fechaCambio).format('DD-MM-YYYY') : query + '&fechacambiosituacion=';
-    query = (this.contribuyente.rfc) ? query + '&rfc=' + this.contribuyente.rfc : query + '&rfc=';
-    query = (this.contribuyente.apaterno) ? query + '&apellidopaterno=' + this.contribuyente.apaterno : query + '&apellidopaterno=';
-    query = (this.contribuyente.amaterno) ? query + '&apellidomaterno=' + this.contribuyente.amaterno : query + '&apellidomaterno=';
-    query = (this.contribuyente.curp) ? query + '&curp=' + this.contribuyente.curp : query + '&curp=';
-    query = (this.contribuyente.ine) ? query + '&claveife=' + this.contribuyente.ine : query + '&claveife=';
-    query = (this.contribuyente.idDocIdent) ? query + '&iddocidentif=' + this.contribuyente.idDocIdent : query + '&iddocidentif=';
-    query = (this.contribuyente.docIdent) ? query + '&valdocidentif=' + this.contribuyente.docIdent : query + '&valdocidentif=';
-    query = (this.contribuyente.fechaNacimiento) ? query + '&fechanacimiento=' + moment(this.contribuyente.fechaNacimiento).format('DD-MM-YYYY') : query + '&fechanacimiento=';
-    query = (this.contribuyente.fechaDefuncion) ? query + '&fechadefuncion=' + moment(this.contribuyente.fechaDefuncion).format('DD-MM-YYYY') : query + '&fechadefuncion=';
-    query = (this.contribuyente.celular) ? query + '&celular=' + this.contribuyente.celular : query + '&celular=';
-    query = (this.contribuyente.email) ? query + '&email=' + this.contribuyente.email : query + '&email=';
-    query = (this.contribuyente.actPreponderante) ? query + '&activprincip=' + this.contribuyente.actPreponderante : query + '&activprincip=';
-    query = (this.contribuyente.nombre_moral) ? query + '&apellidopaterno=' + this.contribuyente.nombre_moral : query + '&apellidopaterno=';
-    query = query + '&idExpediente&idpersona='  + this.idContribuyente;
+        query = (this.contribuyente.tipoPersona) ? query + '&codtipospersona=' + this.contribuyente.tipoPersona : query + '&codtipospersona=';
+        query = (this.contribuyente.nombre) ? query + '&nombre=' + this.contribuyente.nombre : query + '&nombre=';
+        query = (this.contribuyente.idTipoPersonaMoral) ? query + '&idtipomoral=' + this.contribuyente.idTipoPersonaMoral : query + '&idtipomoral=';
+        query = (this.contribuyente.idMotivo) ? query + '&idmotivosmoral=' + this.contribuyente.idMotivo : query + '&idmotivosmoral=';
+        query = (this.contribuyente.fechaInicioOperacion) ? query + '&fechainicioactiv=' + moment(this.contribuyente.fechaInicioOperacion).format('DD-MM-YYYY') : query + '&fechainicioactiv=';
+        query = (this.contribuyente.fechaCambio) ? query + '&fechacambiosituacion=' + moment(this.contribuyente.fechaCambio).format('DD-MM-YYYY') : query + '&fechacambiosituacion=';
+        query = (this.contribuyente.rfc) ? query + '&rfc=' + this.contribuyente.rfc : query + '&rfc=';
+        query = (this.contribuyente.apaterno) ? query + '&apellidopaterno=' + this.contribuyente.apaterno : query + '&apellidopaterno=';
+        query = (this.contribuyente.amaterno) ? query + '&apellidomaterno=' + this.contribuyente.amaterno : query + '&apellidomaterno=';
+        query = (this.contribuyente.curp) ? query + '&curp=' + this.contribuyente.curp : query + '&curp=';
+        query = (this.contribuyente.ine) ? query + '&claveife=' + this.contribuyente.ine : query + '&claveife=';
+        query = (this.contribuyente.idDocIdent) ? query + '&iddocidentif=' + this.contribuyente.idDocIdent : query + '&iddocidentif=';
+        query = (this.contribuyente.docIdent) ? query + '&valdocidentif=' + this.contribuyente.docIdent : query + '&valdocidentif=';
+        query = (this.contribuyente.fechaNacimiento) ? query + '&fechanacimiento=' + moment(this.contribuyente.fechaNacimiento).format('DD-MM-YYYY') : query + '&fechanacimiento=';
+        query = (this.contribuyente.fechaDefuncion) ? query + '&fechadefuncion=' + moment(this.contribuyente.fechaDefuncion).format('DD-MM-YYYY') : query + '&fechadefuncion=';
+        query = (this.contribuyente.celular) ? query + '&celular=' + this.contribuyente.celular : query + '&celular=';
+        query = (this.contribuyente.email) ? query + '&email=' + this.contribuyente.email : query + '&email=';
+        query = (this.contribuyente.actPreponderante) ? query + '&activprincip=' + this.contribuyente.actPreponderante : query + '&activprincip=';
+        query = (this.contribuyente.nombre_moral) ? query + '&apellidopaterno=' + this.contribuyente.nombre_moral : query + '&apellidopaterno=';
+        query = query + '&idExpediente&idpersona='  + this.idContribuyente;
 
-    this.http.post(this.endpoint + 'actualizaContribuyente' + '?' + query, '', this.httpOptions)
-        .subscribe(
-            (res: any) => {
-                this.loading = false;
-                console.log("CONTRIBUYENTE ACTUALIZADO");
-                console.log(res);
-                this.snackBar.open('guardado correcto', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
-                });
-            },
-            (error) => {
-                this.loading = false;
-                this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
-                });
-            }
-        );
-  }
+        this.http.post(this.endpoint + 'actualizaContribuyente' + '?' + query, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loading = false;
+                    console.log("CONTRIBUYENTE ACTUALIZADO");
+                    console.log(res);
+                    this.snackBar.open('guardado correcto', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                },
+                (error) => {
+                    this.loading = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
 
 
     getDomicilioContribuyente(){
@@ -367,8 +421,139 @@ export class EditarContribuyenteComponent implements OnInit {
             dialogRef.afterClosed().subscribe(result => {
                     this.getDomicilioContribuyente();
             });
-      }
+    }
 
+    addRepresentante(i = -1, dataRepresentante = null): void {
+        const dialogRef = this.dialog.open(DialogRepresentacionC, {
+            width: '700px',
+            // data: {dataRepresentante : dataRepresentante,
+            //         datosPerito : this.datoPeritos,
+            //         idPerito : this.idPerito
+            // },
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                setTimeout (() => {
+                    this.loadingRepresentante = true;
+                    this.getRepresentacion();
+                }, 1000);
+            }
+        });
+    }
+
+    addRepresentado(i = -1, dataRepresentante = null): void {
+        const dialogRef = this.dialog.open(DialogRepresentadoC, {
+            width: '700px',
+            // data: {dataRepresentante : dataRepresentante,
+            //         datosPerito: this.datoPeritos,
+            //         idPerito : this.idPerito
+            // },
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                setTimeout (() => {
+                    this.loadingRepresentado = true;
+                    this.getRepresentado();
+                }, 1000);
+            }
+        });
+    }
+
+    eliminarRepresentacion(element,tipo){
+        let queryDelRep = 'idRepresentacion=' + element.IDREPRESENTACION;
+        console.log(element);
+        console.log(this.endpointActualiza + 'deleteRepresentacion?' + queryDelRep);
+        this.http.post(this.endpointActualiza + 'deleteRepresentacion?' + queryDelRep, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    console.log("ELIMINADO");
+                    console.log(res);
+                    if(res){
+                        if(tipo == 1){
+                            this.getRepresentacion();
+                        }else{
+                            this.getRepresentado();
+                        }
+                        this.snackBar.open("Se ha eliminado la representación", 'Cerrar', {
+                            duration: 10000,
+                            horizontalPosition: 'end',
+                            verticalPosition: 'top'
+                        });
+                        
+                    }else{
+                        this.snackBar.open("Ocorrio un error al eliminar, intentelo nuevamente", 'Cerrar', {
+                            duration: 10000,
+                            horizontalPosition: 'end',
+                            verticalPosition: 'top'
+                        });
+                    }
+                },
+                (error) => {
+                    this.snackBar.open("Ocorrio un error al eliminar, intentelo nuevamente", 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
+
+    getRepresentacion(){
+        this.loadingRepresentante = true;
+        // let queryRep = 'rep=Representantes&idPersona=' + this.idPerito;
+        // this.http.post(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRep, '', this.httpOptions)
+        //     .subscribe(
+        //         (res: any) => {
+        //             this.loadingRepresentante = false;
+        //             this.dataSource4 = res;
+        //             this.total4 = this.dataSource4.length;
+        //             this.dataPaginate4 = this.paginate(this.dataSource4, 15, this.pagina4);
+        //         },
+        //         (error) => {
+        //             this.loadingRepresentante = false;
+        //             this.snackBar.open(error.error.mensaje, 'Cerrar', {
+        //                 duration: 10000,
+        //                 horizontalPosition: 'end',
+        //                 verticalPosition: 'top'
+        //             });
+        //         }
+        //     );
+    }
+
+    paginado4(evt): void{
+        this.pagina4 = evt.pageIndex + 1;
+        this.dataSource4 = this.paginate(this.dataSource4, 15, this.pagina4);
+    }
+
+    getRepresentado(){
+        this.loadingRepresentado = true;
+        // let queryRepdo = 'rep=Representado&idPersona=' + this.idPerito;
+        // console.log(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRepdo);
+        // this.http.post(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRepdo, '', this.httpOptions)
+        //     .subscribe(
+        //         (res: any) => {
+        //             this.loadingRepresentado = false;
+        //             this.dataSource5 = res;
+        //             console.log("ACA ENTRO EL REPRESENTADO");
+        //             console.log(res);
+        //             this.total5 = this.dataSource5.length;
+        //             this.dataPaginate5 = this.paginate(this.dataSource5, 15, this.pagina5);
+        //         },
+        //         (error) => {
+        //             this.loadingRepresentado = false;
+        //             this.snackBar.open(error.error.mensaje, 'Cerrar', {
+        //                 duration: 10000,
+        //                 horizontalPosition: 'end',
+        //                 verticalPosition: 'top'
+        //             });
+        //         }
+        //     );
+    }
+
+    paginado5(evt): void{
+        this.pagina5 = evt.pageIndex + 1;
+        this.dataSource5 = this.paginate(this.dataSource5, 15, this.pagina5);
+    }
 }
 
 
@@ -1497,4 +1682,1321 @@ export class DialogViaContribuyente {
               }
           );
   }
+}
+
+///////////////REPRESENTACION////////////////
+@Component({
+    selector: 'app-dialog-representacion',
+    templateUrl: 'app-dialog-representacion.html',
+    styleUrls: ['./editar-contribuyente.component.css']
+})
+export class DialogRepresentacionC {
+    endpoint = environment.endpoint + 'registro/';
+    loading = false;
+    httpOptions;
+    tipoPersona = 'F';
+    idPersonaRepresentacion;
+    idDocumento;
+    idRepresentacion;
+    insertOrUpdate = null;
+    insUp = false;
+    fisicaFormGroup: FormGroup;
+    moralFormGroup: FormGroup;
+    dataRepresentacion: DataRepresentacion = {} as DataRepresentacion;
+  
+    constructor(
+        private http: HttpClient,
+        private _formBuilder: FormBuilder,
+        private snackBar: MatSnackBar,
+        public dialog: MatDialog,
+        public dialogRef: MatDialogRef<DialogRepresentacionC>,
+        private auth: AuthService,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) {
+        
+        dialogRef.disableClose = true;
+        this.fisicaFormGroup = this._formBuilder.group({
+            nombre: [null, [Validators.required]],
+            apaterno: [null, [Validators.required]],
+            amaterno: [null, []],
+            rfc: [null, [Validators.required]],
+            curp: [null, [Validators.required]],
+            ine: [null, []],
+            idDocIdent: ['', []],
+            docIdent: [null, []],
+            fechaNacimiento: [null, []],
+            fechaDefuncion: [null, []],
+            celular: [null, []],
+            email: [null, []],
+            texto: [null, []],
+            fechaCaducidad: [null, []],
+        });
+    
+        this.moralFormGroup = this._formBuilder.group({
+            nombre: [null, [Validators.required]],
+            rfc: [null, [Validators.required]],
+            actPreponderante: [null, []],
+            idTipoPersonaMoral: ['', []],
+            fechaInicioOperacion: [null, []],
+            idMotivo: ['', []],
+            fechaCambio: [null, []],
+            texto: [null, []],
+            fechaCaducidad: [null, []],
+        });
+        console.log("ACA LA DATA DEL DIALOG REPRESENTACION");
+        console.log(data);
+        if(data.dataRepresentante){
+            this.setDataRepresentacion(data.dataRepresentante);
+            this.idDocumento = data.dataRepresentante.IDDOCUMENTOREPRESENTACION;
+            this.idRepresentacion = data.dataRepresentante.IDREPRESENTACION;
+            this.insertOrUpdate = 2;
+            this.insUp = true;
+        }
+
+        this.httpOptions = {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/json',
+              Authorization: this.auth.getSession().token
+            })
+        };
+    }
+
+    changeRequired(remove, add): void {
+        this.fisicaFormGroup.controls[remove].setValue(null);
+        this.fisicaFormGroup.controls[remove].clearValidators();
+        this.fisicaFormGroup.controls[add].setValidators(Validators.required);
+        this.fisicaFormGroup.markAsUntouched();
+        this.fisicaFormGroup.updateValueAndValidity();
+    }
+  
+    addPersona(): void {
+        const dialogRef = this.dialog.open(DialogPersonaC, {
+            width: '700px',
+            data: this.tipoPersona
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                this.tipoPersona = result.tipoPersona;
+                this.idPersonaRepresentacion = result.id;
+                if(this.tipoPersona == 'F') {
+                    this.fisicaFormGroup.controls['nombre'].setValue(result.nombre);
+                    this.fisicaFormGroup.controls['apaterno'].setValue(result.apaterno);
+                    this.fisicaFormGroup.controls['amaterno'].setValue(result.amaterno);
+                    this.fisicaFormGroup.controls['rfc'].setValue(result.rfc);
+                    this.fisicaFormGroup.controls['curp'].setValue(result.curp);
+                    this.fisicaFormGroup.controls['ine'].setValue(result.ine);
+                    this.fisicaFormGroup.controls['idDocIdent'].setValue(result.idDocIdent);
+                    this.fisicaFormGroup.controls['docIdent'].setValue(result.docIdent);
+                } else {
+                    this.moralFormGroup.controls['nombre'].setValue(result.apaterno);
+                    this.moralFormGroup.controls['rfc'].setValue(result.rfc);
+                }
+            }
+        });
+    }
+  
+    addDocumento(dataDocumento = null): void {
+        const dialogRef = this.dialog.open(DialogDocumentoC, {
+            width: '700px',
+            data: {idDocumento: this.idDocumento,
+                    insertOrUpdate: this.insertOrUpdate
+            },
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                this.dataRepresentacion.documentoRepresentacion = result;
+            }
+        });
+    }
+  
+    removeDocumento(){
+          this.dataRepresentacion.documentoRepresentacion = undefined;
+      }
+  
+    getDataRepresentacion(): DataRepresentacion {
+        this.dataRepresentacion.tipoPersona = this.tipoPersona;
+        if(this.tipoPersona == 'F'){
+            this.dataRepresentacion.nombre = (this.fisicaFormGroup.value.nombre) ? this.fisicaFormGroup.value.nombre : null;
+            this.dataRepresentacion.apaterno = (this.fisicaFormGroup.value.apaterno) ? this.fisicaFormGroup.value.apaterno : null;
+            this.dataRepresentacion.amaterno = (this.fisicaFormGroup.value.amaterno) ? this.fisicaFormGroup.value.amaterno : null;
+            this.dataRepresentacion.rfc = (this.fisicaFormGroup.value.rfc) ? this.fisicaFormGroup.value.rfc : null;
+            this.dataRepresentacion.curp = (this.fisicaFormGroup.value.curp) ? this.fisicaFormGroup.value.curp : null;
+            this.dataRepresentacion.ine = (this.fisicaFormGroup.value.ine) ? this.fisicaFormGroup.value.ine : null;
+            this.dataRepresentacion.idDocIdent = this.fisicaFormGroup.value.idDocIdent;
+            this.dataRepresentacion.docIdent = (this.fisicaFormGroup.value.docIdent) ? this.fisicaFormGroup.value.docIdent : null;
+            this.dataRepresentacion.fechaNacimiento = (this.fisicaFormGroup.value.fechaNacimiento) ? this.fisicaFormGroup.value.fechaNacimiento : null;
+            this.dataRepresentacion.fechaDefuncion = (this.fisicaFormGroup.value.fechaDefuncion) ? this.fisicaFormGroup.value.fechaDefuncion : null;
+            this.dataRepresentacion.celular = (this.fisicaFormGroup.value.celular) ? this.fisicaFormGroup.value.celular : null;
+            this.dataRepresentacion.email = (this.fisicaFormGroup.value.email) ? this.fisicaFormGroup.value.email : null;
+            this.dataRepresentacion.texto = (this.fisicaFormGroup.value.texto) ? this.fisicaFormGroup.value.texto : null;
+            this.dataRepresentacion.fechaCaducidad = (this.fisicaFormGroup.value.fechaCaducidad) ? this.fisicaFormGroup.value.fechaCaducidad : null;
+        } else {
+            this.dataRepresentacion.nombre = (this.moralFormGroup.value.nombre) ? this.moralFormGroup.value.nombre : null;
+            this.dataRepresentacion.rfc = (this.moralFormGroup.value.rfc) ? this.moralFormGroup.value.rfc : null;
+            this.dataRepresentacion.actPreponderante = (this.moralFormGroup.value.actPreponderante) ? this.moralFormGroup.value.actPreponderante : null;
+            this.dataRepresentacion.idTipoPersonaMoral = this.moralFormGroup.value.idTipoPersonaMoral;
+            this.dataRepresentacion.fechaInicioOperacion = (this.moralFormGroup.value.fechaInicioOperacion) ? this.moralFormGroup.value.fechaInicioOperacion : null;
+            this.dataRepresentacion.idMotivo = this.moralFormGroup.value.idMotivo;
+            this.dataRepresentacion.fechaCambio = (this.moralFormGroup.value.fechaCambio) ? this.moralFormGroup.value.fechaCambio : null;
+            this.dataRepresentacion.texto = (this.moralFormGroup.value.texto) ? this.moralFormGroup.value.texto : null;
+            this.dataRepresentacion.fechaCaducidad = (this.moralFormGroup.value.fechaCaducidad) ? this.moralFormGroup.value.fechaCaducidad : null;
+        }
+        this.idPersonaRepresentacion = (this.idPersonaRepresentacion) ? this.idPersonaRepresentacion : null;
+
+        console.log('AQUIII EL JSON');
+        console.log(this.dataRepresentacion);
+        //console.log(JSON.stringify(this.dataRepresentacion));
+        if(this.insertOrUpdate == 2){
+            this.updateRepresentacion();            
+        }else{
+            const payload = {
+                "representacion": {
+                    textorepresentacion: this.dataRepresentacion.texto,
+                    fechacaducidad: moment(this.dataRepresentacion.fechaCaducidad).format("DD-MM-YYYY")
+                },
+                "participantes": [
+                    {
+                        rol: "representante",
+                        codtiposPersona: this.dataRepresentacion.tipoPersona,
+                        idpersona: this.idPersonaRepresentacion,
+                        nombre: this.dataRepresentacion.nombre,
+                        rfc: this.dataRepresentacion.rfc,
+                        apellidoPaterno: this.dataRepresentacion.apaterno,
+                        apellidoMaterno: this.dataRepresentacion.amaterno,
+                        curp: this.dataRepresentacion.curp,
+                        ife: this.dataRepresentacion.ine,
+                        iddocIdentif: this.dataRepresentacion.idDocIdent,
+                        valdocIdentif: this.dataRepresentacion.docIdent,
+                        fechaNacimiento: moment(this.dataRepresentacion.fechaNacimiento).format("DD-MM-YYYY"),
+                        fechaDefuncion: moment(this.dataRepresentacion.fechaDefuncion).format("DD-MM-YYYY"),
+                        celular: this.dataRepresentacion.celular,
+                        email: this.dataRepresentacion.email,
+                        activprincip: this.dataRepresentacion.actPreponderante,
+                        idtipomoral: this.dataRepresentacion.idTipoPersonaMoral,
+                        idmotivosmoral: this.dataRepresentacion.idMotivo,
+                        fechainicioactiv: moment(this.dataRepresentacion.fechaInicioOperacion).format("DD-MM-YYYY"),
+                        fechacambiosituacion: moment(this.dataRepresentacion.fechaCambio).format("DD-MM-YYYY")
+                    },
+                    {
+                        rol:"representado",
+                        codtiposPersona: "F",
+                        idpersona: this.data.idPerito,
+                        nombre: this.data.datosPerito.nombre,
+                        rfc: this.data.datosPerito.rfc,
+                        apellidoPaterno: this.data.datosPerito.apepaterno,
+                        apellidoMaterno: this.data.datosPerito.apematerno,
+                        curp: this.data.datosPerito.curp,
+                        ife: this.data.datosPerito.ine,
+                        iddocIdentif: this.data.datosPerito.identificacion,
+                        valdocIdentif: this.data.datosPerito.idedato,
+                        fechaNacimiento: moment(this.data.datosPerito.fecha_naci).format("DD-MM-YYYY"),
+                        fechaDefuncion: moment(this.data.datosPerito.fecha_def).format("DD-MM-YYYY"),
+                        celular: this.data.datosPerito.celular,
+                        email: this.data.datosPerito.email,
+                        activprincip: null,
+                        idtipomoral: null,
+                        idmotivosmoral: null,
+                        fechainicioactiv: null,
+                        fechacambiosituacion: null
+                    }
+                ],
+                "documento": {
+                    descripcion: this.dataRepresentacion.documentoRepresentacion.descripcion,        
+                    codtipodocumento: this.dataRepresentacion.documentoRepresentacion.codtipodocumento,
+                    fecha: moment(this.dataRepresentacion.documentoRepresentacion.fecha).format("DD-MM-YYYY"),
+                    codTipoDocumentoJuridico: this.dataRepresentacion.documentoRepresentacion.codtipodocumentojuridico,        
+                    lugar: this.dataRepresentacion.documentoRepresentacion.lugar,
+                    idNotario: this.dataRepresentacion.documentoRepresentacion.idnotario,
+                    noEscritura: this.dataRepresentacion.documentoRepresentacion.noNotario,
+                    documentos: this.dataRepresentacion.documentoRepresentacion.archivos
+                }
+            };
+            
+            console.log(JSON.stringify(payload));
+            this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
+                (res: any) => {
+                    this.snackBar.open('SE HA INSERTADO TODO', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                    console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTECIÓN");
+                    console.log(res);
+                },
+                (error) => {
+                    this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                });
+        }
+        return this.dataRepresentacion;
+    }
+
+    updateRepresentacion(){
+        console.log("ACTUALIZA");
+        let queryActRep = '';
+
+        queryActRep = (this.dataRepresentacion.texto) ? queryActRep + 'textorepresentacion=' + this.dataRepresentacion.texto : queryActRep + 'textorepresentacion=';
+
+        queryActRep = (this.dataRepresentacion.fechaCaducidad) ? queryActRep + '&fechacaducidad=' + moment(this.dataRepresentacion.fechaCaducidad).format("DD-MM-YYYY") : queryActRep + '&fechacaducidad=';
+
+        queryActRep = queryActRep + '&idRepresentacion=' + this.idRepresentacion + '&idDocumentoDigital=' + this.idDocumento;
+
+        //actualizarRepresentaciontextorepresentacion=Texto Representacion Prueba 33&fechacaducidad=Fri Dec 31 2021 00:00:00 GMT-0600 (hora estándar central)&idRepresentacion=14&idDocumentoDigital=17646226
+        console.log("QUERY ACTUALIZA");
+        console.log(queryActRep);
+        //return;
+        this.http.post(this.endpoint + 'actualizarRepresentacion?' + queryActRep, '', this.httpOptions).subscribe(
+            (res: any) => {
+                this.snackBar.open('SE HA ACTUALIZADO EL REPRESENTADO', 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+                console.log("AQUI ENTRO LAS RESPUESTA DEL POST ACT REPRESENTADO");
+                console.log(res);
+            },
+            (error) => {
+                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+            });
+    }
+
+    setDataRepresentacion(dataRepresentacion): void {
+        console.log("ACA ENTRO EL SLECCIONADO REPRESENTACION");
+        console.log(dataRepresentacion);
+        (dataRepresentacion.RFC) ? this.changeRequired('curp', 'rfc') : this.changeRequired('rfc', 'curp');
+        
+        this.tipoPersona = dataRepresentacion.CODTIPOPERSONA;
+        if(this.tipoPersona == 'F'){
+            this.fisicaFormGroup.controls['nombre'].setValue(dataRepresentacion.NOMBRE);
+            this.fisicaFormGroup.controls['apaterno'].setValue(dataRepresentacion.APELLIDOMATERNO);
+            this.fisicaFormGroup.controls['amaterno'].setValue(dataRepresentacion.APELLIDOPATERNO);
+            this.fisicaFormGroup.controls['rfc'].setValue(dataRepresentacion.RFC);
+            this.fisicaFormGroup.controls['curp'].setValue(dataRepresentacion.CURP);
+            this.fisicaFormGroup.controls['ine'].setValue(dataRepresentacion.CLAVEIFE);
+            this.fisicaFormGroup.controls['idDocIdent'].setValue(dataRepresentacion.IDDOCIDENTIF);
+            this.fisicaFormGroup.controls['docIdent'].setValue(dataRepresentacion.DESCDOCIDENTIF);
+            this.fisicaFormGroup.controls['fechaNacimiento'].setValue((dataRepresentacion.FECHANACIMIENTO) ? new Date(dataRepresentacion.FECHANACIMIENTO) : null);
+            this.fisicaFormGroup.controls['fechaDefuncion'].setValue((dataRepresentacion.FECHADEFUNCION) ? new Date(dataRepresentacion.FECHADEFUNCION) : null);
+            this.fisicaFormGroup.controls['celular'].setValue(dataRepresentacion.CELULAR);
+            this.fisicaFormGroup.controls['email'].setValue(dataRepresentacion.EMAIL);
+            this.fisicaFormGroup.controls['texto'].setValue(dataRepresentacion.TEXTOREPRESENTACION);
+            this.fisicaFormGroup.controls['fechaCaducidad'].setValue((dataRepresentacion.FECHACADUCIDAD) ? new Date(dataRepresentacion.FECHACADUCIDAD) : null);
+        } else {
+            this.moralFormGroup.controls['nombre'].setValue(dataRepresentacion.APELLIDOPATERNO);
+            this.moralFormGroup.controls['rfc'].setValue(dataRepresentacion.RFC);
+            this.moralFormGroup.controls['actPreponderante'].setValue(dataRepresentacion.ACTIVPRINCIP);
+            this.moralFormGroup.controls['idTipoPersonaMoral'].setValue(dataRepresentacion.IDTIPOMORAL);
+            this.moralFormGroup.controls['fechaInicioOperacion'].setValue((dataRepresentacion.FECHAINICIOACTIV) ? new Date(dataRepresentacion.FECHAINICIOACTIV) : null);
+            this.moralFormGroup.controls['idMotivo'].setValue(dataRepresentacion.IDMOTIVOSMORAL);
+            this.moralFormGroup.controls['fechaCambio'].setValue((dataRepresentacion.FECHACAMBIOSITUACION) ? new Date(dataRepresentacion.FECHACAMBIOSITUACION) : null);
+            this.moralFormGroup.controls['texto'].setValue(dataRepresentacion.TEXTOREPRESENTACION);
+            this.moralFormGroup.controls['fechaCaducidad'].setValue((dataRepresentacion.FECHACADUCIDAD) ? new Date(dataRepresentacion.FECHACADUCIDAD) : null);
+        }
+        
+        //this.dataRepresentacion.documentoRepresentacion = dataRepresentacion.documentoRepresentacion;
+        
+    }
+}
+
+///////////////REPRESENTADO////////////////
+@Component({
+    selector: 'app-dialog-representado',
+    templateUrl: 'app-dialog-representado.html',
+    styleUrls: ['./editar-contribuyente.component.css']
+})
+export class DialogRepresentadoC {
+    endpoint = environment.endpoint + 'registro/';
+    loading = false;
+    httpOptions;
+    tipoPersona = 'F';
+    fisicaFormGroup: FormGroup;
+    moralFormGroup: FormGroup;
+    idPersonaRepresentacion;
+    fechaCaducidad;
+    idDocumento;
+    idRepresentacion;
+    insertOrUpdate = null;
+    insUp = false;
+    dataRepresentacion: DataRepresentacion = {} as DataRepresentacion;
+
+    constructor(
+        private http: HttpClient,
+        private snackBar: MatSnackBar,
+        private _formBuilder: FormBuilder,
+        private auth: AuthService,
+        public dialog: MatDialog,
+        public dialogRef: MatDialogRef<DialogRepresentadoC>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) {
+        this.httpOptions = {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/json',
+              Authorization: this.auth.getSession().token
+            })
+        };
+
+        dialogRef.disableClose = true;
+        this.fisicaFormGroup = this._formBuilder.group({
+            nombre: [null, [Validators.required]],
+            apaterno: [null, [Validators.required]],
+            amaterno: [null, []],
+            rfc: [null, [Validators.required]],
+            curp: [null, [Validators.required]],
+            ine: [null, []],
+            idDocIdent: ['', []],
+            docIdent: [null, []],
+            fechaNacimiento: [null, []],
+            fechaDefuncion: [null, []],
+            celular: [null, []],
+            email: [null, []],
+            texto: [null, []],
+            fechaCaducidad: [null, []],
+        });
+    
+        this.moralFormGroup = this._formBuilder.group({
+            nombre: [null, [Validators.required]],
+            rfc: [null, [Validators.required]],
+            actPreponderante: [null, []],
+            idTipoPersonaMoral: ['', []],
+            fechaInicioOperacion: [null, []],
+            idMotivo: ['', []],
+            fechaCambio: [null, []],
+            texto: [null, []],
+            fechaCaducidad: [null, []],
+        });
+  
+        if(data.dataRepresentante){
+            this.setDataRepresentacion(data.dataRepresentante);
+            this.idDocumento = data.dataRepresentante.IDDOCUMENTOREPRESENTACION;
+            this.idRepresentacion = data.dataRepresentante.IDREPRESENTACION;
+            this.insertOrUpdate = 2;
+            this.insUp = true;
+        }
+    }
+      
+    changeRequired(remove, add): void {
+        this.fisicaFormGroup.controls[remove].setValue(null);
+        this.fisicaFormGroup.controls[remove].clearValidators();
+        this.fisicaFormGroup.controls[add].setValidators(Validators.required);
+        this.fisicaFormGroup.markAsUntouched();
+        this.fisicaFormGroup.updateValueAndValidity();
+    }
+  
+    addPersona(): void {
+        const dialogRef = this.dialog.open(DialogPersonaC, {
+            width: '700px',
+            data: this.tipoPersona
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                this.tipoPersona = result.tipoPersona;
+                this.idPersonaRepresentacion = result.id;
+                if(this.tipoPersona == 'F') {
+                    this.fisicaFormGroup.controls['nombre'].setValue(result.nombre);
+                    this.fisicaFormGroup.controls['apaterno'].setValue(result.apaterno);
+                    this.fisicaFormGroup.controls['amaterno'].setValue(result.amaterno);
+                    this.fisicaFormGroup.controls['rfc'].setValue(result.rfc);
+                    this.fisicaFormGroup.controls['curp'].setValue(result.curp);
+                    this.fisicaFormGroup.controls['ine'].setValue(result.ine);
+                    this.fisicaFormGroup.controls['idDocIdent'].setValue(result.idDocIdent);
+                    this.fisicaFormGroup.controls['docIdent'].setValue(result.docIdent);
+                } else {
+                    this.moralFormGroup.controls['nombre'].setValue(result.apaterno);
+                    this.moralFormGroup.controls['rfc'].setValue(result.rfc);
+                }
+            }
+        });
+    }
+  
+    addDocumento(dataDocumento = null): void {
+        const dialogRef = this.dialog.open(DialogDocumentoC, {
+            width: '700px',
+            data: {idDocumento: this.idDocumento,
+                    insertOrUpdate: this.insertOrUpdate
+            },
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                this.dataRepresentacion.documentoRepresentacion = result;
+            }
+        });
+    }
+  
+    removeDocumento(){
+          this.dataRepresentacion.documentoRepresentacion = undefined;
+    }
+  
+    getDataRepresentacion(): DataRepresentacion {
+        this.dataRepresentacion.tipoPersona = this.tipoPersona;
+        if(this.tipoPersona == 'F'){
+            this.dataRepresentacion.nombre = (this.fisicaFormGroup.value.nombre) ? this.fisicaFormGroup.value.nombre : null;
+            this.dataRepresentacion.apaterno = (this.fisicaFormGroup.value.apaterno) ? this.fisicaFormGroup.value.apaterno : null;
+            this.dataRepresentacion.amaterno = (this.fisicaFormGroup.value.amaterno) ? this.fisicaFormGroup.value.amaterno : null;
+            this.dataRepresentacion.rfc = (this.fisicaFormGroup.value.rfc) ? this.fisicaFormGroup.value.rfc : null;
+            this.dataRepresentacion.curp = (this.fisicaFormGroup.value.curp) ? this.fisicaFormGroup.value.curp : null;
+            this.dataRepresentacion.ine = (this.fisicaFormGroup.value.ine) ? this.fisicaFormGroup.value.ine : null;
+            this.dataRepresentacion.idDocIdent = this.fisicaFormGroup.value.idDocIdent;
+            this.dataRepresentacion.docIdent = (this.fisicaFormGroup.value.docIdent) ? this.fisicaFormGroup.value.docIdent : null;
+            this.dataRepresentacion.fechaNacimiento = (this.fisicaFormGroup.value.fechaNacimiento) ? this.fisicaFormGroup.value.fechaNacimiento : null;
+            this.dataRepresentacion.fechaDefuncion = (this.fisicaFormGroup.value.fechaDefuncion) ? this.fisicaFormGroup.value.fechaDefuncion : null;
+            this.dataRepresentacion.celular = (this.fisicaFormGroup.value.celular) ? this.fisicaFormGroup.value.celular : null;
+            this.dataRepresentacion.email = (this.fisicaFormGroup.value.email) ? this.fisicaFormGroup.value.email : null;
+            this.dataRepresentacion.texto = (this.fisicaFormGroup.value.texto) ? this.fisicaFormGroup.value.texto : null;
+            this.dataRepresentacion.fechaCaducidad = (this.fisicaFormGroup.value.fechaCaducidad) ? this.fisicaFormGroup.value.fechaCaducidad : null;
+        } else {
+            this.dataRepresentacion.nombre = (this.moralFormGroup.value.nombre) ? this.moralFormGroup.value.nombre : null;
+            this.dataRepresentacion.rfc = (this.moralFormGroup.value.rfc) ? this.moralFormGroup.value.rfc : null;
+            this.dataRepresentacion.actPreponderante = (this.moralFormGroup.value.actPreponderante) ? this.moralFormGroup.value.actPreponderante : null;
+            this.dataRepresentacion.idTipoPersonaMoral = this.moralFormGroup.value.idTipoPersonaMoral;
+            this.dataRepresentacion.fechaInicioOperacion = (this.moralFormGroup.value.fechaInicioOperacion) ? this.moralFormGroup.value.fechaInicioOperacion : null;
+            this.dataRepresentacion.idMotivo = this.moralFormGroup.value.idMotivo;
+            this.dataRepresentacion.fechaCambio = (this.moralFormGroup.value.fechaCambio) ? this.moralFormGroup.value.fechaCambio : null;
+            this.dataRepresentacion.texto = (this.moralFormGroup.value.texto) ? this.moralFormGroup.value.texto : null;
+            this.dataRepresentacion.fechaCaducidad = (this.moralFormGroup.value.fechaCaducidad) ? this.moralFormGroup.value.fechaCaducidad : null;
+        }
+
+        this.idPersonaRepresentacion = (this.idPersonaRepresentacion) ? this.idPersonaRepresentacion : null;
+        console.log('AQUIII EL JSON DEL REPRESENTADO');
+        // console.log(this.dataRepresentacion);
+        // console.log(JSON.stringify(this.dataRepresentacion));
+        
+        if(this.insertOrUpdate == 2){
+            this.updateRepresentacion();            
+        }else{
+            const payload = {
+                "representacion": {
+                    textorepresentacion: this.dataRepresentacion.texto,
+                    fechacaducidad: moment(this.dataRepresentacion.fechaCaducidad).format("DD-MM-YYYY")
+                },
+                "participantes": [
+                    {
+                        rol: "representado",
+                        codtiposPersona: this.dataRepresentacion.tipoPersona,
+                        idpersona: this.idPersonaRepresentacion,
+                        nombre: this.dataRepresentacion.nombre,
+                        rfc: this.dataRepresentacion.rfc,
+                        apellidoPaterno: this.dataRepresentacion.apaterno,
+                        apellidoMaterno: this.dataRepresentacion.amaterno,
+                        curp: this.dataRepresentacion.curp,
+                        ife: this.dataRepresentacion.ine,
+                        iddocIdentif: this.dataRepresentacion.idDocIdent,
+                        valdocIdentif: this.dataRepresentacion.docIdent,
+                        fechaNacimiento: moment(this.dataRepresentacion.fechaNacimiento).format("DD-MM-YYYY"),
+                        fechaDefuncion: moment(this.dataRepresentacion.fechaDefuncion).format("DD-MM-YYYY"),
+                        celular: this.dataRepresentacion.celular,
+                        email: this.dataRepresentacion.email,
+                        activprincip: this.dataRepresentacion.actPreponderante,
+                        idtipomoral: this.dataRepresentacion.idTipoPersonaMoral,
+                        idmotivosmoral: this.dataRepresentacion.idMotivo,
+                        fechainicioactiv: moment(this.dataRepresentacion.fechaInicioOperacion).format("DD-MM-YYYY"),
+                        fechacambiosituacion: moment(this.dataRepresentacion.fechaCambio).format("DD-MM-YYYY")
+                    },
+                    {
+                        rol:"representante",
+                        codtiposPersona: "F",
+                        idpersona: this.data.idPerito,
+                        nombre: this.data.datosPerito.nombre,
+                        rfc: this.data.datosPerito.rfc,
+                        apellidoPaterno: this.data.datosPerito.apepaterno,
+                        apellidoMaterno: this.data.datosPerito.apematerno,
+                        curp: this.data.datosPerito.curp,
+                        ife: this.data.datosPerito.ine,
+                        iddocIdentif: this.data.datosPerito.identificacion,
+                        valdocIdentif: this.data.datosPerito.idedato,
+                        fechaNacimiento: moment(this.data.datosPerito.fecha_naci).format("DD-MM-YYYY"),
+                        fechaDefuncion: moment(this.data.datosPerito.fecha_def).format("DD-MM-YYYY"),
+                        celular: this.data.datosPerito.celular,
+                        email: this.data.datosPerito.email,
+                        activprincip: null,
+                        idtipomoral: null,
+                        idmotivosmoral: null,
+                        fechainicioactiv: null,
+                        fechacambiosituacion: null
+                    }
+                ],
+                "documento": {
+                    descripcion: this.dataRepresentacion.documentoRepresentacion.descripcion,        
+                    codtipodocumento: this.dataRepresentacion.documentoRepresentacion.codtipodocumento,
+                    fecha: moment(this.dataRepresentacion.documentoRepresentacion.fecha).format("DD-MM-YYYY"),
+                    codTipoDocumentoJuridico: this.dataRepresentacion.documentoRepresentacion.codtipodocumentojuridico,        
+                    lugar: this.dataRepresentacion.documentoRepresentacion.lugar,
+                    idNotario: this.dataRepresentacion.documentoRepresentacion.idnotario,
+                    noEscritura: this.dataRepresentacion.documentoRepresentacion.noNotario,
+                    documentos: this.dataRepresentacion.documentoRepresentacion.archivos
+                }
+            };
+
+            console.log(JSON.stringify(payload));
+            //this.insertRepresentacion(payload);
+            this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
+                (res: any) => {
+                    this.snackBar.open('SE HA INSERTADO EL REPRESENTADO', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                    console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTADO");
+                    console.log(res);
+                },
+                (error) => {
+                    this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                });
+        }
+
+        return this.dataRepresentacion;
+    }
+
+    updateRepresentacion(){
+        console.log("ACTUALIZA");
+        let queryActRep = '';
+
+        queryActRep = (this.dataRepresentacion.texto) ? queryActRep + 'textorepresentacion=' + this.dataRepresentacion.texto : queryActRep + 'textorepresentacion=';
+
+        queryActRep = (this.dataRepresentacion.fechaCaducidad) ? queryActRep + '&fechacaducidad=' + moment(this.dataRepresentacion.fechaCaducidad).format("DD-MM-YYYY") : queryActRep + '&fechacaducidad=';
+
+        queryActRep = queryActRep + '&idRepresentacion=' + this.idRepresentacion + '&idDocumentoDigital=' + this.idDocumento;
+
+        //actualizarRepresentaciontextorepresentacion=Texto Representacion Prueba 33&fechacaducidad=Fri Dec 31 2021 00:00:00 GMT-0600 (hora estándar central)&idRepresentacion=14&idDocumentoDigital=17646226
+        console.log("QUERY ACTUALIZA");
+        console.log(queryActRep);
+        //return;
+        this.http.post(this.endpoint + 'actualizarRepresentacion?' + queryActRep, '', this.httpOptions).subscribe(
+            (res: any) => {
+                this.snackBar.open('SE HA ACTUALIZADO EL REPRESENTADO', 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+                console.log("AQUI ENTRO LAS RESPUESTA DEL POST ACT REPRESENTADO");
+                console.log(res);
+            },
+            (error) => {
+                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+            });
+    }
+
+    setDataRepresentacion(dataRepresentacion): void {
+        console.log("ACA ENTRO EL SLECCIONADO REPRESENTACION");
+        console.log(dataRepresentacion);
+        (dataRepresentacion.RFC) ? this.changeRequired('curp', 'rfc') : this.changeRequired('rfc', 'curp');
+        
+        this.tipoPersona = dataRepresentacion.CODTIPOPERSONA;
+        if(this.tipoPersona == 'F'){
+            this.fisicaFormGroup.controls['nombre'].setValue(dataRepresentacion.NOMBRE);
+            this.fisicaFormGroup.controls['apaterno'].setValue(dataRepresentacion.APELLIDOMATERNO);
+            this.fisicaFormGroup.controls['amaterno'].setValue(dataRepresentacion.APELLIDOPATERNO);
+            this.fisicaFormGroup.controls['rfc'].setValue(dataRepresentacion.RFC);
+            this.fisicaFormGroup.controls['curp'].setValue(dataRepresentacion.CURP);
+            this.fisicaFormGroup.controls['ine'].setValue(dataRepresentacion.CLAVEIFE);
+            this.fisicaFormGroup.controls['idDocIdent'].setValue(dataRepresentacion.IDDOCIDENTIF);
+            this.fisicaFormGroup.controls['docIdent'].setValue(dataRepresentacion.DESCDOCIDENTIF);
+            this.fisicaFormGroup.controls['fechaNacimiento'].setValue((dataRepresentacion.FECHANACIMIENTO) ? new Date(dataRepresentacion.FECHANACIMIENTO) : null);
+            this.fisicaFormGroup.controls['fechaDefuncion'].setValue((dataRepresentacion.FECHADEFUNCION) ? new Date(dataRepresentacion.FECHADEFUNCION) : null);
+            this.fisicaFormGroup.controls['celular'].setValue(dataRepresentacion.CELULAR);
+            this.fisicaFormGroup.controls['email'].setValue(dataRepresentacion.EMAIL);
+            this.fisicaFormGroup.controls['texto'].setValue(dataRepresentacion.TEXTOREPRESENTACION);
+            this.fisicaFormGroup.controls['fechaCaducidad'].setValue((dataRepresentacion.FECHACADUCIDAD) ? new Date(dataRepresentacion.FECHACADUCIDAD) : null);
+        } else {
+            this.moralFormGroup.controls['nombre'].setValue(dataRepresentacion.APELLIDOPATERNO);
+            this.moralFormGroup.controls['rfc'].setValue(dataRepresentacion.RFC);
+            this.moralFormGroup.controls['actPreponderante'].setValue(dataRepresentacion.ACTIVPRINCIP);
+            this.moralFormGroup.controls['idTipoPersonaMoral'].setValue(dataRepresentacion.IDTIPOMORAL);
+            this.moralFormGroup.controls['fechaInicioOperacion'].setValue((dataRepresentacion.FECHAINICIOACTIV) ? new Date(dataRepresentacion.FECHAINICIOACTIV) : null);
+            this.moralFormGroup.controls['idMotivo'].setValue(dataRepresentacion.IDMOTIVOSMORAL);
+            this.moralFormGroup.controls['fechaCambio'].setValue((dataRepresentacion.FECHACAMBIOSITUACION) ? new Date(dataRepresentacion.FECHACAMBIOSITUACION) : null);
+            this.moralFormGroup.controls['texto'].setValue(dataRepresentacion.TEXTOREPRESENTACION);
+            this.moralFormGroup.controls['fechaCaducidad'].setValue((dataRepresentacion.FECHACADUCIDAD) ? new Date(dataRepresentacion.FECHACADUCIDAD) : null);
+        }
+        
+        //this.dataRepresentacion.documentoRepresentacion = dataRepresentacion.documentoRepresentacion;
+        
+    }
+}
+  
+///////////////DOCUMENTO////////////////
+@Component({
+    selector: 'app-dialog-documento',
+    templateUrl: 'app-dialog-documento.html',
+    styleUrls: ['./editar-contribuyente.component.css']
+})
+export class DialogDocumentoC {
+    endpoint = environment.endpoint + 'registro/';
+    loadingTiposDocumentoDigital = false;
+    loadingTiposDocumentoJuridico = false;
+    httpOptions;
+    tiposDocumentoDigital;
+    tiposDocumentoJuridico;
+    selectTipoDoc = '1';
+    idDocumento;
+    insertOrUpdate;
+    insUp = false;
+    tiposDocumentoFormGroup: FormGroup;
+    infoDocumentoFormGroup: FormGroup;
+    archivosDocumentoFormGroup: FormGroup;
+    dataDocumentoSet;
+    fechaDocto;
+    dataDoc = [];
+    descargaFichero = [];
+    displayedColumnsDoc: string[] = ['nombre','descripcion', 'download', 'eliminar'];
+    dataDocumento: DataDocumentoRepresentacion = {} as DataDocumentoRepresentacion;
+    canSend = false;
+    
+    constructor(
+        private http: HttpClient,
+        private _formBuilder: FormBuilder,
+        private snackBar: MatSnackBar,
+        public dialog: MatDialog,
+        private auth: AuthService,
+        public dialogRef: MatDialogRef<DialogDocumentoC>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) {
+
+        dialogRef.disableClose = true;
+
+        this.httpOptions = {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/json',
+              Authorization: this.auth.getSession().token
+            })
+        };
+
+        this.tiposDocumentoFormGroup = this._formBuilder.group({
+            codtipodocumento: ['', [Validators.required]],
+            codtipodocumentojuridico: ['', [Validators.required]]
+        });
+  
+        this.infoDocumentoFormGroup = this._formBuilder.group({
+            fecha: [null, [Validators.required]],
+            descripcion: [null, []],
+            lugar: [null, [Validators.required]]
+        });
+  
+        this.archivosDocumentoFormGroup = this._formBuilder.group({
+            archivos: this._formBuilder.array([])
+        });
+
+        
+        this.tiposDocumentoFormGroup.controls.codtipodocumentojuridico.valueChanges.subscribe(codtipodocumentojuridico => {
+        if(codtipodocumentojuridico == 'PN') {
+            this.infoDocumentoFormGroup.addControl('noNotario', new FormControl(null, Validators.required));
+            this.infoDocumentoFormGroup.addControl('ciudadNotario', new FormControl(null, Validators.required));
+            this.infoDocumentoFormGroup.addControl('nombreNotario', new FormControl(null, Validators.required));
+            this.infoDocumentoFormGroup.addControl('num_escritura', new FormControl(null, Validators.required));
+        } else {
+            this.infoDocumentoFormGroup.removeControl('noNotario');
+            this.infoDocumentoFormGroup.removeControl('ciudadNotario');
+            this.infoDocumentoFormGroup.removeControl('nombreNotario');
+            this.infoDocumentoFormGroup.removeControl('num_escritura');
+        }
+            this.infoDocumentoFormGroup.updateValueAndValidity();
+        });
+        console.log(this.tiposDocumentoFormGroup.controls.codtipodocumentojuridico);
+        if(data.idDocumento){
+            this.setDataDocumento(data.idDocumento);
+            this.insertOrUpdate = data.insertOrUpdate;
+            this.idDocumento = data.idDocumento;
+            this.insUp = true;
+        }
+        console.log("ACA EL DATA DEL DOCU DIALOG");
+        console.log(data);
+    }
+  
+    getDataTiposDocumentoDigital(): void {
+        this.loadingTiposDocumentoDigital = true;
+        this.http.get(this.endpoint, this.httpOptions).subscribe(
+            (res: any) => {
+                this.loadingTiposDocumentoDigital = false;
+                this.tiposDocumentoDigital = res;
+            },
+            (error) => {
+                this.loadingTiposDocumentoDigital = false;
+            }
+        );
+    }
+  
+    getDataTiposDocumentoJuridico(): void {
+        this.loadingTiposDocumentoJuridico = true;
+        this.http.get(this.endpoint, this.httpOptions).subscribe(
+            (res: any) => {
+                this.loadingTiposDocumentoJuridico = false;
+                this.tiposDocumentoJuridico = res;
+            },
+            (error) => {
+                this.loadingTiposDocumentoJuridico = false;
+            }
+        );
+    }
+  
+    getTipoDocJuridico(event): void {
+        this.dataDocumento.nombreTipoDocumentoJuridico = event.source.triggerValue;
+    }
+  
+    addNotario(): void {
+        const dialogRef = this.dialog.open(DialogNotarioC, {
+            width: '700px',
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                this.dataDocumento.idnotario = result.id;
+                this.infoDocumentoFormGroup.controls['noNotario'].setValue(result.numero);
+                this.infoDocumentoFormGroup.controls['ciudadNotario'].setValue(result.ciudad);
+                this.infoDocumentoFormGroup.controls['nombreNotario'].setValue(result.nombre);
+            }
+        });
+    }
+  
+    createItem(data): FormGroup {
+        return this._formBuilder.group(data);
+    }
+  
+    removeItem(i) {
+        this.archivos.removeAt(i);
+      }
+  
+    get archivos(): FormArray {
+        return this.archivosDocumentoFormGroup.get('archivos') as FormArray;
+    };
+  
+    getArchivos(event) {
+        let files = event.target.files;
+        if(files){
+            for(let file of files){
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => {
+                    this.archivos.push(this.createItem({
+                    nombre: file.name,
+                    base64: reader.result
+                    }));
+                };
+            }
+        }
+    }
+  
+    getDataDocumento(): void {
+        this.dataDocumento.codtipodocumento = this.tiposDocumentoFormGroup.value.codtipodocumento;
+        this.dataDocumento.codtipodocumentojuridico = this.tiposDocumentoFormGroup.value.codtipodocumentojuridico;
+        if(this.tiposDocumentoFormGroup.value.codtipodocumentojuridico == 'PN'){
+            this.dataDocumento.noNotario = (this.infoDocumentoFormGroup.value.noNotario) ? this.infoDocumentoFormGroup.value.noNotario : null;
+            this.dataDocumento.ciudadNotario = (this.infoDocumentoFormGroup.value.ciudadNotario) ? this.infoDocumentoFormGroup.value.ciudadNotario : null;
+            this.dataDocumento.nombreNotario = (this.infoDocumentoFormGroup.value.nombreNotario) ? this.infoDocumentoFormGroup.value.nombreNotario : null;
+            this.dataDocumento.num_escritura = (this.infoDocumentoFormGroup.value.num_escritura) ? this.infoDocumentoFormGroup.value.num_escritura : null;
+        }
+        this.dataDocumento.fecha = (this.infoDocumentoFormGroup.value.fecha) ? this.infoDocumentoFormGroup.value.fecha : null;
+        this.dataDocumento.descripcion = (this.infoDocumentoFormGroup.value.descripcion) ? this.infoDocumentoFormGroup.value.descripcion : null;
+        this.dataDocumento.lugar = (this.infoDocumentoFormGroup.value.lugar) ? this.infoDocumentoFormGroup.value.lugar : null;
+        this.dataDocumento.archivos = this.archivosDocumentoFormGroup.value.archivos;
+    
+        if(this.insertOrUpdate == 2){
+            this.updateDocto();
+        }else{
+            this.canSend = true;
+        }
+    }
+  
+    setDataDocumento(idDocumento2): void {
+
+        this.http.post(this.endpoint + 'infoDocumentos?idDocumentoDigital=' + idDocumento2, '', this.httpOptions).subscribe(
+            (res: any) => {
+                console.log("AQUI ENTRO EL RESULTADO DEL DOCUMENTO");
+                this.dataDocumentoSet = res;
+                console.log(this.dataDocumentoSet.infoDocumento[0].iddocumentodigital);
+                console.log(res);
+                this.setDoc();
+            },
+            (error) => {
+                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+            });
+    }
+
+    setDoc(){
+        console.log("LA FECHA NO SE DEJA");
+        console.log(this.fechaDocto);
+
+        //this.tiposDocumentoFormGroup.controls['codtipodocumento'].setValue(1);
+        this.tiposDocumentoFormGroup.controls['codtipodocumentojuridico'].setValue(this.dataDocumentoSet.infoDocumento[0].codtipodocumentojuridico);
+        if(this.dataDocumentoSet.infoDocumento[0].codtipodocumentojuridico == 'PN'){
+            this.dataDocumento.idnotario = this.dataDocumentoSet.infoNotario[0].idnotario;
+            this.infoDocumentoFormGroup.controls['noNotario'].setValue(this.dataDocumentoSet.infoNotario[0].numnotario);
+            this.infoDocumentoFormGroup.controls['ciudadNotario'].setValue(this.dataDocumentoSet.infoNotario[0].codestado);
+            this.infoDocumentoFormGroup.controls['nombreNotario'].setValue(this.dataDocumentoSet.infoNotario[0].nombre);
+            this.infoDocumentoFormGroup.controls['num_escritura'].setValue('');
+        }
+        //this.dataDocumento.nombreTipoDocumentoJuridico = dataDocumento.nombreTipoDocumentoJuridico;
+        this.infoDocumentoFormGroup.controls['fecha'].setValue(new Date(this.dataDocumentoSet.infoDocumento[0].fecha));
+        this.infoDocumentoFormGroup.controls['descripcion'].setValue(this.dataDocumentoSet.infoDocumento[0].descripcion);
+        this.infoDocumentoFormGroup.controls['lugar'].setValue(this.dataDocumentoSet.infoDocumento[0].lugar);
+
+        console.log(this.fechaDocto);    
+        this.dataDoc = this.dataDocumentoSet.infoFicheros;
+        // if(this.dataDocumentoSet.infoFicheros){
+        //     for(let archivo of this.dataDocumentoSet.infoFicheros){
+        //         this.archivos.push(this.createItem({
+        //             nombre: archivo.nombre,
+        //             base64: archivo.base64
+        //         }));
+        //     }
+        // }
+    }
+
+    descargarDoc(element){
+
+        console.log("ACA EL DESCARGAR FICHERO");
+        console.log(element);
+
+        this.http.post( this.endpoint + 'getFichero?idFichero=' + element.idficherodocumento, '', this.httpOptions ). subscribe (
+            (res: any) => {
+                this.descargaFichero = res;
+                console.log("EL RES DEL FICHERO");
+                console.log(this.descargaFichero);
+                console.log(this.descargaFichero[0].binariodatos);
+                this.convertirDoc();
+            },
+            (error) => {
+                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+            });
+    }
+
+    convertirDoc(){
+        let dataFichero = this.descargaFichero[0].binariodatos;
+        dataFichero = dataFichero.split("data:application/pdf;base64,");
+        console.log("split");
+        console.log(dataFichero);
+        //return;
+        const blob = this.b64toBlob(dataFichero[1], 'application/pdf');
+        FileSaver.saveAs(blob, this.descargaFichero[0].nombre);
+    }
+
+    b64toBlob(b64Data, contentType = '', sliceSize = 512): Blob {
+        const byteCharacters = atob(b64Data);
+        const byteArrays = [];
+        for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+            const slice = byteCharacters.slice(offset, offset + sliceSize);
+            const byteNumbers = new Array(slice.length);
+            for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+            }
+            const byteArray = new Uint8Array(byteNumbers);
+            byteArrays.push(byteArray);
+        }
+        const blob = new Blob(byteArrays, {type: contentType});
+        return blob;
+    }
+
+    eliminarDoc(element, i){
+        console.log("ACA EL ELIMINAR FICHERO");
+        console.log(element);
+
+        
+
+        this.http.post( this.endpoint + 'borrarFichero?lista=' + element.idficherodocumento, '', this.httpOptions ). subscribe (
+            (res: any) => {
+                this.snackBar.open('SE HA HA BORRADO EL DOCTO', 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+                this.dataDoc.splice(i,1);
+                console.log("AQUI ENTRO LAS RESPUESTA DEL BORRADO");
+                console.log(res);
+            },
+            (error) => {
+                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+            });
+    }
+
+    updateDocto(){
+        this.canSend = true;
+        const payload = {
+            "documento": {
+                idDocumetoDigital: this.idDocumento,
+                descripcion: this.dataDocumento.descripcion,        
+                fecha: moment(this.dataDocumento.fecha).format("DD-MM-YYYY"),
+                lugar: this.dataDocumento.lugar,
+                eliminados: null,
+                documentos: this.dataDocumento.archivos
+            }
+        };
+        
+        
+        console.log(JSON.stringify(payload));
+        this.http.post( this.endpoint + 'actualizarDocumentos', payload, this.httpOptions ). subscribe (
+            (res: any) => {
+                if(res === true){
+                    this.snackBar.open('SE HA ACTUALIZADO CORRECTAMENTE LA INFORMACIÓN', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                    console.log("RESPUESTA DE LA ACTUALIZACIÓN");
+                    console.log(res);
+                }else{
+                    this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            },
+            (error) => {
+                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+            });
+    }
+}
+
+///////////////NOTARIO////////////////
+export interface Filtros {
+    numnotario: string;
+    estado: number;
+    rfc: string;
+    curp: string;
+    claveife: string;
+    nombre: string;
+    filtroNombre: number;
+    apellidoPaterno: string;
+    filtroApellidoPaterno: number;
+    apellidoMaterno: string;
+    filtroApellidoMaterno: number;
+}
+
+export interface Notario {
+    id: number;
+    numero: string;
+    ciudad: string;
+    nombre: string;
+}
+
+@Component({
+    selector: 'app-dialog-notario',
+    templateUrl: 'app-dialog-notario.html',
+    styleUrls: ['./editar-contribuyente.component.css']
+})
+export class DialogNotarioC {
+    endpoint = environment.endpoint + 'registro/getNotariosByDatosIdentificativos';
+    endpointCatalogos = environment.endpoint + 'registro/';
+    pageSize = 15;
+    pagina = 1;
+    total = 0;
+    loading = false;
+    dataSource = [];
+    dataNotarios = [];
+    displayedColumns: string[] = ['numero', 'datos_personales', 'datos_identificativos', 'select'];
+    httpOptions;
+    filtros: Filtros = {} as Filtros;
+    notario: Notario = {} as Notario;
+    tipoBusqueda = 'DatosIdentificativos';
+    optionNotario;
+    isBusqueda;
+    queryParamFiltros;
+    loadingEstados = false;
+    estados;
+    @ViewChild('paginator') paginator: MatPaginator;
+  
+    constructor(
+        private auth: AuthService,
+        private http: HttpClient,
+        public dialogRef: MatDialogRef<DialogNotarioC>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) {
+        dialogRef.disableClose = true;
+  
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                Authorization: this.auth.getSession().token
+            })
+        };
+
+        this.getDataEstados();
+    }
+
+    getDataEstados(): void {
+        this.loadingEstados = true;
+        this.http.post(this.endpointCatalogos + 'getEstados', '', this.httpOptions).subscribe(
+            (res: any) => {
+                this.loadingEstados = false;
+                this.estados = res;
+            },
+            (error) => {
+                this.loadingEstados = false;
+            }
+        );
+    }
+
+    getDataNotarios(): void {
+        this.loading = true;
+        this.isBusqueda = true;
+        this.optionNotario = undefined;
+        this.pagina = 1;
+        this.queryParamFiltros = '';
+        
+        if(this.filtros.numnotario){
+            this.queryParamFiltros = this.queryParamFiltros + '&numnotario=' + this.filtros.numnotario;
+        }
+        if(this.filtros.estado){
+            this.queryParamFiltros = this.queryParamFiltros + '&estado=' + this.filtros.estado;
+        }
+        if(this.filtros.rfc){
+            this.queryParamFiltros = this.queryParamFiltros + '&rfc=' + this.filtros.rfc;
+        }
+        if(this.filtros.curp){
+            this.queryParamFiltros = this.queryParamFiltros + '&curp=' + this.filtros.curp;
+        }
+        if(this.filtros.claveife){
+            this.queryParamFiltros = this.queryParamFiltros + '&claveife=' + this.filtros.claveife;
+        }
+        if(this.filtros.nombre){
+            this.queryParamFiltros = this.queryParamFiltros + '&nombre=' + this.filtros.nombre + '&filtroNombre=0';
+        }
+        if(this.filtros.apellidoPaterno){
+            this.queryParamFiltros = this.queryParamFiltros + '&apellidoPaterno=' + this.filtros.apellidoPaterno + '&filtroApellidoPaterno=0';
+        }
+        if(this.filtros.apellidoMaterno){
+            this.queryParamFiltros = this.queryParamFiltros + '&apellidoMaterno=' + this.filtros.apellidoMaterno + '&filtroApellidoMaterno=0';
+        }
+        
+        this.http.post(this.endpoint + '?' + this.queryParamFiltros, '', this.httpOptions).subscribe(
+            (res: any) => {
+                this.loading = false;
+                this.dataNotarios = res;
+                this.dataSource = this.paginate(this.dataNotarios, this.pageSize, this.pagina);
+                this.total = this.dataNotarios.length;
+                this.paginator.pageIndex = 0;
+            },
+            (error) => {
+                this.loading = false;
+                this.dataSource = [];
+            });
+    }
+  
+    paginado(evt): void{
+        this.pagina = evt.pageIndex + 1;
+        this.dataSource = this.paginate(this.dataNotarios, this.pageSize, this.pagina);
+    }
+  
+    paginate(array, page_size, page_number) {
+        return array.slice((page_number - 1) * page_size, page_number * page_size);
+    }
+      
+    clean(): void {
+        this.pagina = 1;
+        this.total = 0;
+        this.dataNotarios = [];
+        this.filtros = {} as Filtros;
+        this.notario = {} as Notario;
+        this.optionNotario = undefined;
+        this.isBusqueda = false;
+    }
+  
+    notarioSelected(element) {
+        this.notario.id = element.IDPERSONA;
+        this.notario.numero = element.NUMNOTARIO;
+        this.notario.ciudad = element.ESTADO;
+        this.notario.nombre = element.NOMBRE + ' ' + element.APELLIDOPATERNO + ' ' + element.APELLIDOMATERNO;
+    }
+}
+
+///////////////PERSONA////////////////
+export interface Filtros {
+    apaterno: string;
+    amaterno: string;
+    nombre: string;
+    rfc: string;
+    curp: string;
+    ine: string;
+    idDocIdent: string;
+    docIdent: string;
+}
+export interface Persona {
+    tipoPersona: string;
+    id: string;
+    nombre: string;
+    apaterno: string;
+    amaterno: string;
+    rfc: string;
+    curp: string;
+    ine: string;
+    idDocIdent: number;
+    docIdent: string;
+}
+@Component({
+    selector: 'app-dialog-persona',
+    templateUrl: 'app-dialog-persona.html',
+    styleUrls: ['./editar-contribuyente.component.css']
+})
+export class DialogPersonaC {
+    endpoint = environment.endpoint + 'registro/';
+    pageSize = 15;
+    pagina = 1;
+    total = 0;
+    loading = false;
+    dataSource = [];
+    dataPersonas = [];
+    displayedColumns: string[] = ['nombre', 'datos_identificativos', 'select'];
+    httpOptions;
+    filtros: Filtros = {} as Filtros;
+    persona: Persona = {} as Persona;
+    tipoPersona;
+    isIdentificativo;
+    optionPersona;
+    isBusqueda;
+    queryParamFiltros;
+    endpointBusqueda;
+    @ViewChild('paginator') paginator: MatPaginator;
+  
+    constructor(
+      private auth: AuthService,
+      private http: HttpClient,
+      public dialogRef: MatDialogRef<DialogPersonaC>,
+      @Inject(MAT_DIALOG_DATA) public data: any
+    ) {
+
+        dialogRef.disableClose = true;
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                Authorization: this.auth.getSession().token
+            })
+        };
+        this.tipoPersona = data;
+        console.log("aca el tipo person " + data);
+        console.log(this.tipoPersona);
+      }
+  
+    clearInputsIdentNoIdent(isIdentificativo): void {
+        this.isIdentificativo = isIdentificativo;
+        if(this.isIdentificativo){
+            this.filtros.apaterno = null;
+            this.filtros.amaterno = null;
+            this.filtros.nombre = null;
+        }else{
+            this.filtros.rfc = null;
+            this.filtros.curp = null;
+            this.filtros.ine = null;
+            this.filtros.idDocIdent = null;
+            this.filtros.docIdent = null;
+        }
+    }
+  
+    getDataPersonas(): void {
+        this.loading = true;
+        this.isBusqueda = true;
+        this.optionPersona = undefined;
+        this.pagina = 1;
+        this.queryParamFiltros = '';
+        this.endpointBusqueda = '';
+        
+        if(this.tipoPersona == 'M'){
+            if(this.isIdentificativo){
+                this.endpointBusqueda = this.endpoint + 'getMoralIdentificativos';
+            if(this.filtros.rfc)
+                this.queryParamFiltros = this.queryParamFiltros + '&rfc=' + this.filtros.rfc;
+            } else {
+                this.endpointBusqueda = this.endpoint + 'getPersonaMoral';
+            if(this.filtros.nombre)
+                this.queryParamFiltros = this.queryParamFiltros + '&razonSocial=' + this.filtros.nombre + '&filtroApellidoPaterno=0';
+            }
+        } else {
+            if(this.isIdentificativo){
+                this.endpointBusqueda = this.endpoint + 'getIdentificativos';
+                if(this.filtros.curp)
+                    this.queryParamFiltros = this.queryParamFiltros + '&curp=' + this.filtros.curp;
+                if(this.filtros.rfc)
+                    this.queryParamFiltros = this.queryParamFiltros + '&rfc=' + this.filtros.rfc;
+                if(this.filtros.ine)
+                    this.queryParamFiltros = this.queryParamFiltros + '&claveife=' + this.filtros.ine;
+                if(this.filtros.idDocIdent)
+                    this.queryParamFiltros = this.queryParamFiltros + '&iddocidentif=' + this.filtros.idDocIdent;
+                if(this.filtros.docIdent)
+                    this.queryParamFiltros = this.queryParamFiltros + '&valdocidentif=' + this.filtros.docIdent;
+        
+                this.queryParamFiltros = this.queryParamFiltros + '&coincidenTodos=false';        
+            } else {
+                this.endpointBusqueda = this.endpoint + 'getContribuyente';
+                if(this.filtros.nombre)
+                    this.queryParamFiltros = this.queryParamFiltros + '&nombre=' + this.filtros.nombre + '&filtroNombre=0';
+                if(this.filtros.apaterno)
+                    this.queryParamFiltros = this.queryParamFiltros + '&apellidoPaterno=' + this.filtros.apaterno + '&filtroApellidoPaterno=0';
+                if(this.filtros.amaterno)
+                    this.queryParamFiltros = this.queryParamFiltros + '&apellidoMaterno=' + this.filtros.amaterno + '&filtroApellidoMaterno=0';
+            }
+        }
+  
+        this.http.post(this.endpointBusqueda + '?' + this.queryParamFiltros, '', this.httpOptions).subscribe(
+            (res: any) => {
+                this.loading = false;
+                this.dataPersonas = res;
+                this.dataSource = this.paginate(this.dataPersonas, this.pageSize, this.pagina);
+                this.total = this.dataPersonas.length;
+                this.paginator.pageIndex = 0;
+            },
+            (error) => {
+                this.loading = false;
+                this.dataSource = [];
+            }
+        );
+    }
+  
+    paginado(evt): void{
+        this.pagina = evt.pageIndex + 1;
+        this.dataSource = this.paginate(this.dataPersonas, this.pageSize, this.pagina);
+    }
+  
+    paginate(array, page_size, page_number) {
+        return array.slice((page_number - 1) * page_size, page_number * page_size);
+    }
+  
+    clean(): void {
+        this.pagina = 1;
+        this.total = 0;
+        this.dataPersonas = [];
+        this.filtros = {} as Filtros;
+        this.persona = {} as Persona;
+        this.optionPersona = undefined;
+        this.isBusqueda = false;
+    }
+  
+    personaSelected(element) {
+        this.persona.tipoPersona = this.tipoPersona;
+        this.persona.id = element.IDPERSONA;
+        this.persona.nombre = element.NOMBRE;
+        this.persona.apaterno = element.APELLIDOPATERNO;
+        this.persona.amaterno = element.APELLIDOMATERNO;
+        this.persona.rfc = element.RFC;
+        this.persona.curp = element.CURP;
+        this.persona.ine = element.CLAVEIFE;
+        this.persona.idDocIdent = element.IDDOCIDENTIF;
+        this.persona.docIdent = element.VALDOCIDENTIF;
+    }
 }

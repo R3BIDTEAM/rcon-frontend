@@ -1,10 +1,5 @@
 <mat-card>
 
-    <!-- <div style="padding: 30px; text-align: center;" *ngIf="false">
-        <mat-spinner style="margin:0 auto;"></mat-spinner>
-        <p>Cargando...</p>
-    </div> -->
-    
     <!-- <ng-container *ngIf="true"> -->
     <ng-container>
 
@@ -12,7 +7,12 @@
             <mat-card-header>
                 <h3 style="margin: 0 0 15px;" class="verde-cdmx">Datos Generales:</h3>
             </mat-card-header>
-            <mat-card-content>
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+            <div style="padding: 30px; text-align: center;" *ngIf="loading">
+                <mat-spinner style="margin:0 auto;"></mat-spinner>
+                <p>Cargando...</p>
+            </div>
                 <!-- <br>
                 <div class="row">
                     <mat-form-field class="col-4">
@@ -24,7 +24,8 @@
                     </mat-form-field>
                 </div> -->
                 <br>
-                <ng-container *ngIf="contribuyente.tipoPersona == 'F'">
+               
+                <ng-container *ngIf="contribuyente.tipoPersona == 'F' && !loading">
                     <form [formGroup]="fisicaFormGroup">
                         <div class="row">
                             <mat-form-field class="col-10">
@@ -162,7 +163,7 @@
                             </button>
                         </div>
                     </div>
-                </div>
+                </div><br>
                 <!-- <div class="row">
                     <div class="col">
                         <button mat-stroked-button color="primary" aria-label="Historial Datos Generales" matTooltip="Historial Datos Generales" (click)="getHistorialDatosGenerales()">
@@ -170,11 +171,12 @@
                         </button>
                     </div>
                 </div> -->
-            </mat-card-content>
+                </div>
+            </div>
         </div>
         <br>
 
-
+        <!------------------------- DOMICILIO ------------------------------->
         <div class="borde">
             <mat-card-header>
                 <mat-card-title>Datos de contacto</mat-card-title>
@@ -249,8 +251,171 @@
             </mat-card-content>
         </div>
         
-      
-
+        <!-------------------------- REPRESENTACIÓN -------------------------->
+        <div class="borde">
+            <mat-card-header>
+                <mat-card-title>Datos de representación</mat-card-title>
+            </mat-card-header>
+            <mat-accordion>
+                <mat-expansion-panel (opened)="panelRepresentantes = true" (closed)="panelRepresentantes = false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Representantes
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            {{panelRepresentantes ? 'Cerrar' : 'Ver'}} los datos de los Representantes
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <mat-card-content>
+                        <br>
+                        <div class="row">
+                            <div class="col-4">
+                                <h3>Agregar
+                                    <button mat-flat-button type="button" color="primary" aria-label="Agregar" matTooltip="Agregar" class="little-button" (click)="addRepresentante()">
+                                        <mat-icon>add</mat-icon>
+                                    </button>
+                                </h3>
+                            </div>
+                            <div class="col-4"></div>
+                            <div class="col-4"></div>                    
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ng-container>
+                                    <div style="padding: 30px; text-align: center;" *ngIf="loadingRepresentante">
+                                        <mat-spinner style="margin:0 auto;"></mat-spinner>
+                                        <p>Cargando...</p>
+                                    </div>
+                                    <div class="alert alert-info" *ngIf="!loadingRepresentante && dataSource4.length == 0">
+                                        No hay representantes asociados.
+                                    </div> 
+                                    <table mat-table [dataSource]="dataSource4" *ngIf="!loadingRepresentante && dataSource4.length > 0" width="100%">
+                                        <ng-container matColumnDef="representacion">
+                                            <th mat-header-cell *matHeaderCellDef width="15%" > Tipo Dirección </th>
+                                            <td mat-cell *matCellDef="let element" width="15%" >
+                                                {{ element.APELLIDOPATERNO }} {{ element.APELLIDOMATERNO }} {{ element.NOMBRE }}
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="texto">
+                                            <th mat-header-cell *matHeaderCellDef width="75%"> Texto </th>
+                                            <td mat-cell *matCellDef="let element" width="75%">
+                                                {{ element.TEXTOREPRESENTACION }}
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="caducidad">
+                                            <th mat-header-cell *matHeaderCellDef width="75%"> Caducidad </th>
+                                            <td mat-cell *matCellDef="let element" width="75%">
+                                                {{ element.FECHACADUCIDAD }}
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="editar">
+                                            <th mat-header-cell *matHeaderCellDef width="75%"> Editar </th>
+                                            <td mat-cell *matCellDef="let element" width="75%">
+                                                <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar" (click)="addRepresentante(null, element)">
+                                                    <mat-icon>edit</mat-icon>
+                                                </button>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="eliminar">
+                                            <th mat-header-cell *matHeaderCellDef> Eliminar </th>
+                                            <td mat-cell *matCellDef="let element">
+                                                <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar" (click)="eliminarRepresentacion(element,1)">
+                                                    <mat-icon>delete</mat-icon>
+                                                </button>
+                                            </td>
+                                        </ng-container>
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumnsRepdo"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumnsRepdo;"></tr>
+                                    </table>
+                                    <mat-paginator #paginator [length]="total4" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado4($event)">
+                                    </mat-paginator>
+                                </ng-container>
+                            </div>
+                        </div><br><br>
+                    </mat-card-content>
+                </mat-expansion-panel>
+            </mat-accordion>
+            <br><hr><br>
+            <mat-accordion>
+                <mat-expansion-panel (opened)="panelRepresentados = true" (closed)="panelRepresentados = false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Representados
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            {{panelRepresentados ? 'Cerrar' : 'Ver'}} los datos de los Representados
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <mat-card-content>
+                        <br>
+                        <div class="row">
+                            <div class="col-4">
+                                <h3>Representados
+                                    <button mat-flat-button type="button" color="primary" aria-label="Agregar" matTooltip="Agregar" class="little-button" (click)="addRepresentado()">
+                                        <mat-icon>add</mat-icon>
+                                    </button>
+                                </h3>
+                            </div>
+                            <div class="col-4"></div>
+                            <div class="col-4"></div>                    
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ng-container>
+                                    <div style="padding: 30px; text-align: center;" *ngIf="loadingRepresentado">
+                                        <mat-spinner style="margin:0 auto;"></mat-spinner>
+                                        <p>Cargando...</p>
+                                    </div>
+                                    <div class="alert alert-info" *ngIf="!loadingRepresentado && dataSource5.length == 0">
+                                        No hay representantes asociados.
+                                    </div> 
+                                    <table mat-table [dataSource]="dataSource5" *ngIf="!loadingRepresentado && dataSource5.length > 0" width="100%">
+                                        <ng-container matColumnDef="representacion">
+                                            <th mat-header-cell *matHeaderCellDef width="15%" > Tipo Dirección </th>
+                                            <td mat-cell *matCellDef="let element" width="15%" >
+                                                {{ element.APELLIDOPATERNO }} {{ element.APELLIDOMATERNO }} {{ element.NOMBRE }}
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="texto">
+                                            <th mat-header-cell *matHeaderCellDef width="75%"> Texto </th>
+                                            <td mat-cell *matCellDef="let element" width="75%">
+                                                {{ element.TEXTOREPRESENTACION }}
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="caducidad">
+                                            <th mat-header-cell *matHeaderCellDef width="75%"> Caducidad </th>
+                                            <td mat-cell *matCellDef="let element" width="75%">
+                                                {{ element.FECHACADUCIDAD }}
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="editar">
+                                            <th mat-header-cell *matHeaderCellDef width="75%"> Editar </th>
+                                            <td mat-cell *matCellDef="let element" width="75%">
+                                                <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar" (click)="addRepresentado(null, element)">
+                                                    <mat-icon>edit</mat-icon>
+                                                </button>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="eliminar">
+                                            <th mat-header-cell *matHeaderCellDef> Eliminar </th>
+                                            <td mat-cell *matCellDef="let element">
+                                                <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar" (click)="eliminarRepresentacion(element,2)">
+                                                    <mat-icon>delete</mat-icon>
+                                                </button>
+                                            </td>
+                                        </ng-container>
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumnsRepdo"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumnsRepdo;"></tr>
+                                    </table>
+                                    <mat-paginator #paginator [length]="total5" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado5($event)">
+                                    </mat-paginator>
+                                </ng-container>
+                            </div>
+                        </div><br><br>
+                    </mat-card-content>
+                </mat-expansion-panel>
+            </mat-accordion><br>
+        </div>
     </ng-container>
 
 </mat-card>

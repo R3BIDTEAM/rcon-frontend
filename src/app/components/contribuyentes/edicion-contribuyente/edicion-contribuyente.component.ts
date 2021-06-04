@@ -177,6 +177,8 @@ export class EdicionContribuyenteComponent implements OnInit {
         this.dataSource = this.paginate(this.data, this.pageSize, this.pagina);
         this.total = this.data.length;
         this.paginator.pageIndex = 0;
+        console.log("ACA EL RESULTADO");
+        console.log(res);
       },
       (error) => {
         this.loadingResponse = false;
