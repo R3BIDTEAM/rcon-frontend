@@ -411,6 +411,11 @@
                 </mat-card-content>
             </mat-expansion-panel>
         </mat-accordion><br>
+        <mat-card-content>
+            <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar" (click)="historialRepresentacion()" *ngIf="!loadingRepresentado">
+                <b>Historial Representaciones</b>
+            </button>
+        </mat-card-content><br>
     </div>
     <br>
     <!--  -->

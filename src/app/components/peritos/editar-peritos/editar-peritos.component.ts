@@ -2078,6 +2078,7 @@ export class DialogRepresentacionPeritos {
     insUp = false;
     fisicaFormGroup: FormGroup;
     moralFormGroup: FormGroup;
+    noHistorico = true;
     dataRepresentacion: DataRepresentacion = {} as DataRepresentacion;
   
     constructor(
@@ -3608,15 +3609,89 @@ export class DialogHistorialRep {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
 
-    // viewHistoricoDomicilioEspecifico(dataDomicilioEspecifico): void {
-    //     const dialogRef = this.dialog.open(DialogDomicilioHistoricoEspecificoPerito, {
+    // historicoDetalle(){
+    //     const dialogRef = this.dialog.open(DialogHistorialRepDetalle, {
     //         width: '700px',
-    //         data: { dataDomicilioEspecifico:dataDomicilioEspecifico, idDireccion:this.idDireccion },
     //     });
     //     dialogRef.afterClosed().subscribe(result => {
-    //             // this.getNotarioDirecciones();
+    //         if(result){
+    //         }
     //     });
     // }
+  
+}
+
+///////////////HISTORIAL DE REPRESENTACIONES DETALLE////////////////
+export interface DataHistoricoRep{
+    fecha_desde: Date;
+    fecha_hasta: Date;
+}
+
+@Component({
+    selector: 'app-dialog-representacion',
+    templateUrl: 'app-dialog-representacion.html',
+    styleUrls: ['./editar-peritos.component.css']
+})
+export class DialogHistorialRepDetalle {
+    endpoint = environment.endpoint + 'registro/';
+    httpOptions;
+    dataDoc = [];
+    loadingH = true;
+    noHistorico = false;
+
+    constructor(
+        private http: HttpClient,
+        private _formBuilder: FormBuilder,
+        private snackBar: MatSnackBar,
+        public dialog: MatDialog,
+        private auth: AuthService,
+        public dialogRef: MatDialogRef<DialogHistorialRepDetalle>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) {
+
+        dialogRef.disableClose = true;
+
+        this.httpOptions = {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/json',
+              Authorization: this.auth.getSession().token
+            })
+        };
+
+        console.log("ACA EL EL HISTORIAL");
+        console.log(data);
+        //this.idPersona = data;
+        this.getHistorialRepresentacion();
+    }
+
+    getHistorialRepresentacion(){
+        // let query = '';
+
+        // query = 'idPersona=' + this.idPersona;
+        // query = (this.dataHistoricoRep.fecha_desde) ? query + '&fechaDesde=' + moment(this.dataHistoricoRep.fecha_desde).format('DD-MM-YYYY') : query + '&fechaDesde=';
+        // query = (this.dataHistoricoRep.fecha_hasta) ? query + '&fechaHasta=' + moment(this.dataHistoricoRep.fecha_hasta).format('DD-MM-YYYY') : query + '&fechaHasta=';
+
+
+        // this.loadingH = true;
+        // let metodo = 'getHistoricosRepresentacion';
+        // this.http.post(this.endpoint + metodo + '?' + query, '', this.httpOptions)
+        //     .subscribe(
+        //         (res: any) => {
+        //             this.loadingH = false;
+
+        //         },
+        //         (error) => {
+        //             this.loadingH = false;
+        //             this.snackBar.open("Ha ocurrido un problema al obtener el historial", 'Cerrar', {
+        //                 duration: 10000,
+        //                 horizontalPosition: 'end',
+        //                 verticalPosition: 'top'
+        //             });
+        //         }
+        //     );
+    }
+
+
   
 }
 

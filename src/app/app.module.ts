@@ -41,12 +41,12 @@ import { EditarPeritosComponent, DialogDomicilioPerito, DialogDocumentoPerito,
         DialogNotarioPeritos, DialogPersonaPeritos, DialogRepresentacionPeritos,
         DialogRepresentadoPeritos, DialogSociedadAsociada, DialogBuscaPerito,
         DialogAsentamiento, DialogMunicipios, DialogCiudad, DialogVia, DialogDomicilioHistoricoPerito, 
-        DialogDomicilioHistoricoEspecificoPerito, DialogHistorialRep } from './components/peritos/editar-peritos/editar-peritos.component';
+        DialogDomicilioHistoricoEspecificoPerito, DialogHistorialRep, DialogHistorialRepDetalle } from './components/peritos/editar-peritos/editar-peritos.component';
 import { EditarSociedadComponent, DialogAsentamientoSociedad, DialogCiudadSociedad, DialogDomicilioSociedad,
           DialogBuscaSociedad, DialogMunicipiosSociedad, DialogViaSociedad, DialogSociedadPerito,
           DialogRepresentacionSociedad, DialogRepresentadoSociedad, DialogDocumentoSociedad,
           DialogNotarioSociedad, DialogPersonaSociedad, DialogDomicilioHistoricoSociedad,
-          DialogDomicilioHistoricoEspecificoSociedad } from './components/sociedad/editar-sociedad/editar-sociedad.component';
+          DialogDomicilioHistoricoEspecificoSociedad, DialogHistorialRepS } from './components/sociedad/editar-sociedad/editar-sociedad.component';
 import { VerNotarioComponent } from './components/notarios/ver-notario/ver-notario.component';
 import { EditarNotarioComponent, DialogDomiciliosNotario, DialogAsentamientoNotario, DialogCiudadNotario,
          DialogMunicipiosNotario, DialogViaNotario, DialogDomicilioHistoricoNotario, DialogDomicilioHistoricoEspecificoNotario,
@@ -56,7 +56,7 @@ import { EditarContribuyenteComponent, DialogDomicilioContribuyente, DialogAsent
          DialogCiudadContribuyente, DialogMunicipiosContribuyente, DialogViaContribuyente, DialogDocumentoC,
          DialogPersonaC, DialogNotarioC, DialogRepresentacionC, DialogRepresentadoC, DialogDomicilioHistoricoContribuyente,
          DialogDomicilioHistoricoEspecificoContribuyente, DialogPersonalesHistoricoContribuyente, 
-         DialogPersonalesHistoricoEspecificoContribuyente } from './components/contribuyentes/editar-contribuyente/editar-contribuyente.component';
+         DialogPersonalesHistoricoEspecificoContribuyente, DialogHistorialRepC } from './components/contribuyentes/editar-contribuyente/editar-contribuyente.component';
 import { VerHistoricoDomicilioNotarioComponent } from './components/notarios/ver-historico-domicilio-notario/ver-historico-domicilio-notario.component';
 
 @NgModule({
@@ -154,7 +154,10 @@ import { VerHistoricoDomicilioNotarioComponent } from './components/notarios/ver
     DialogDomicilioHistoricoContribuyente,
     DialogDomicilioHistoricoEspecificoContribuyente,
     DialogPersonalesHistoricoContribuyente, 
-    DialogPersonalesHistoricoEspecificoContribuyente
+    DialogPersonalesHistoricoEspecificoContribuyente,
+    DialogHistorialRepDetalle,
+    DialogHistorialRepS,
+    DialogHistorialRepC
   ],
   imports: [
     BrowserModule,
