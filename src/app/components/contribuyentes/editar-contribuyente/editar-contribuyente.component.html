@@ -156,7 +156,14 @@
                 </ng-container>
                 <br>
                 <div class="row">
-                    <div class="col-md-3 offset-md-8">
+                    <div class="col-md-5">
+                        <div class="d-flex flex-row-reverse" style="float: left;">
+                            <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Historial" style="margin: auto; font-size: 11px;" (click)="viewHistoricoDatosPersonales(this.idContribuyente)">
+                                Historial Datos Generales <mat-icon style="display: inherit; width: 11px;">list</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-4 offset-md-3">
                         <div class="d-flex flex-row-reverse">
                             <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Actualizar" (click)="actualizarContribuyente()">
                                 Actualizar <mat-icon style="display: inherit; width: 15px;">update</mat-icon>
