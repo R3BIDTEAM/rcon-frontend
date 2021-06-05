@@ -41,7 +41,7 @@ import { EditarPeritosComponent, DialogDomicilioPerito, DialogDocumentoPerito,
         DialogNotarioPeritos, DialogPersonaPeritos, DialogRepresentacionPeritos,
         DialogRepresentadoPeritos, DialogSociedadAsociada, DialogBuscaPerito,
         DialogAsentamiento, DialogMunicipios, DialogCiudad, DialogVia, DialogDomicilioHistoricoPerito, 
-        DialogDomicilioHistoricoEspecificoPerito } from './components/peritos/editar-peritos/editar-peritos.component';
+        DialogDomicilioHistoricoEspecificoPerito, DialogHistorialRep } from './components/peritos/editar-peritos/editar-peritos.component';
 import { EditarSociedadComponent, DialogAsentamientoSociedad, DialogCiudadSociedad, DialogDomicilioSociedad,
           DialogBuscaSociedad, DialogMunicipiosSociedad, DialogViaSociedad, DialogSociedadPerito,
           DialogRepresentacionSociedad, DialogRepresentadoSociedad, DialogDocumentoSociedad,
@@ -147,7 +147,8 @@ import { VerHistoricoDomicilioNotarioComponent } from './components/notarios/ver
     DialogDomicilioHistoricoSociedad,
     DialogDomicilioHistoricoEspecificoSociedad,
     DialogPersonalesHistoricoNotario, 
-    DialogPersonalesHistoricoEspecificoNotario
+    DialogPersonalesHistoricoEspecificoNotario,
+    DialogHistorialRep
   ],
   imports: [
     BrowserModule,

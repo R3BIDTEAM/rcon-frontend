@@ -743,6 +743,20 @@ export class EditarPeritosComponent implements OnInit {
         this.dataSource5 = this.paginate(this.dataSource5, 15, this.pagina5);
     }
 
+    historialRepresentacion(){
+        const dialogRef = this.dialog.open(DialogHistorialRep, {
+            width: '700px',
+            data: this.idPerito,
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                setTimeout (() => {
+                    
+                }, 1000);
+            }
+        });
+    }
+
     ///////////////////////// DATOS ESPECIFICOS //////////////////
     agregaSociedadEditar(){
         const dialogRef = this.dialog.open(DialogSociedadAsociada, {
@@ -3504,7 +3518,107 @@ export class DialogSociedadAsociada {
 }
 
 
+///////////////HISTORIAL DE REPRESENTACIONES////////////////
+export interface DataHistoricoRep{
+    fecha_desde: Date;
+    fecha_hasta: Date;
+}
 
+@Component({
+    selector: 'app-dialog-historialRep',
+    templateUrl: 'app-dialog-historialRep.html',
+    styleUrls: ['./editar-peritos.component.css']
+})
+export class DialogHistorialRep {
+    endpoint = environment.endpoint + 'registro/';
+    httpOptions;
+    dataDoc = [];
+    displayedColumns: string[] = ['fecha', 'descripcion', 'numero_expediente', 'tipo_tramite', 'tipo_subtramite', 'detalle'];
+    dataHistoricoRep: DataHistoricoRep = {} as DataHistoricoRep;
+    dataSource = [];
+    pagina = 1;
+    total = 0;
+    pageSize = 10;
+    dataPaginate;
+    loadingH = true;
+    idPersona;
+
+    constructor(
+        private http: HttpClient,
+        private _formBuilder: FormBuilder,
+        private snackBar: MatSnackBar,
+        public dialog: MatDialog,
+        private auth: AuthService,
+        public dialogRef: MatDialogRef<DialogHistorialRep>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) {
+
+        dialogRef.disableClose = true;
+
+        this.httpOptions = {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/json',
+              Authorization: this.auth.getSession().token
+            })
+        };
+
+        console.log("ACA EL EL HISTORIAL");
+        console.log(data);
+        this.idPersona = data;
+        this.getHistorialRepresentacion();
+    }
+
+    getHistorialRepresentacion(){
+        let query = '';
+      
+
+        query = 'idPersona=' + this.idPersona;
+        query = (this.dataHistoricoRep.fecha_desde) ? query + '&fechaDesde=' + moment(this.dataHistoricoRep.fecha_desde).format('DD-MM-YYYY') : query + '&fechaDesde=';
+        query = (this.dataHistoricoRep.fecha_hasta) ? query + '&fechaHasta=' + moment(this.dataHistoricoRep.fecha_hasta).format('DD-MM-YYYY') : query + '&fechaHasta=';
+
+
+        this.loadingH = true;
+        let metodo = 'getHistoricosRepresentacion';
+        this.http.post(this.endpoint + metodo + '?' + query, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loadingH = false;
+                    this.dataSource = res;
+                    console.log(this.dataSource);
+                    this.total = this.dataSource.length;
+                    this.dataPaginate = this.paginate(this.dataSource, 10, this.pagina);
+                },
+                (error) => {
+                    this.loadingH = false;
+                    this.snackBar.open("Ha ocurrido un problema al obtener el historial", 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
+
+    paginado(evt): void{
+        this.pagina = evt.pageIndex + 1;
+        this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+    }
+    
+    paginate(array, page_size, page_number) {
+        return array.slice((page_number - 1) * page_size, page_number * page_size);
+    }
+
+    // viewHistoricoDomicilioEspecifico(dataDomicilioEspecifico): void {
+    //     const dialogRef = this.dialog.open(DialogDomicilioHistoricoEspecificoPerito, {
+    //         width: '700px',
+    //         data: { dataDomicilioEspecifico:dataDomicilioEspecifico, idDireccion:this.idDireccion },
+    //     });
+    //     dialogRef.afterClosed().subscribe(result => {
+    //             // this.getNotarioDirecciones();
+    //     });
+    // }
+  
+}
 
 /////////////// DOMICILIOS HISTORICO ////////////////
 export interface DataHistorico{

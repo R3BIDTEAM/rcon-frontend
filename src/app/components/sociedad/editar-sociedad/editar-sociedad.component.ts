@@ -3427,6 +3427,7 @@ export class DialogSociedadPerito {
 
 
 
+
 /////////////// DOMICILIOS HISTORICO ////////////////
 export interface DataHistorico{
     fecha_desde: Date;
