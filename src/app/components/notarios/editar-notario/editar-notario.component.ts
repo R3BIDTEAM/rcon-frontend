@@ -1947,7 +1947,7 @@ export interface DataHistorico{
 
 
 
-/////////////// DOMICILIOS HISTORICO ////////////////
+/////////////// PERSONALES HISTORICO ////////////////
 @Component({
     selector: 'app-dialog-personales-historico-notario',
     templateUrl: 'app-dialog-personales-historico-notario.html',
