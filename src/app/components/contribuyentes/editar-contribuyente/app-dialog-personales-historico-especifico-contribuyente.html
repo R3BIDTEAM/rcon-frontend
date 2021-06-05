@@ -1,0 +1,138 @@
+<mat-dialog-actions align="end">
+    <button style="border: 0px; background-color: transparent; cursor: pointer;" mat-dialog-close><mat-icon style="color: red;">clear</mat-icon></button>
+</mat-dialog-actions>
+
+<div style="padding: 30px; text-align: center;" *ngIf="loading">
+    <mat-spinner style="margin:0 auto;"></mat-spinner>
+    <p>Cargando...</p>
+</div>
+
+<ng-container *ngIf="contribuyente.tipoPersona == 'F' && !loading">
+    <form [formGroup]="fisicaFormGroup">
+        <div class="row">
+            <mat-form-field class="col-10">
+                <mat-label>Nombre:</mat-label>
+                <input matInput formControlName="nombre" [(ngModel)]="contribuyente.nombre">
+                <mat-error *ngIf="fisicaFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field class="col-5">
+                <mat-label>Apellido Paterno:</mat-label>
+                <input matInput formControlName="apepaterno" [(ngModel)]="contribuyente.apepaterno">
+                <mat-error *ngIf="fisicaFormGroup.controls.apepaterno.errors?.required">Requerido</mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-5">
+                <mat-label>Apellido Materno:</mat-label>
+                <input matInput formControlName="apematerno" [(ngModel)]="contribuyente.apematerno">
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field class="col-5">
+                <mat-label>RFC:</mat-label>
+                <input matInput formControlName="rfc" (keyup)="changeRequired('curp', 'rfc')" [(ngModel)]="contribuyente.rfc">
+                <mat-error *ngIf="fisicaFormGroup.controls.rfc.errors?.required">Se han de llenar algunos de los campos de RFC o CURP</mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-5">
+                <mat-label>CURP:</mat-label>
+                <input matInput formControlName="curp" (keyup)="changeRequired('rfc', 'curp')" [(ngModel)]="contribuyente.curp">
+                <mat-error *ngIf="fisicaFormGroup.controls.curp.errors?.required">Se han de llenar algunos de los campos de RFC o CURP</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field class="col-5">
+                <mat-label>Clave INE:</mat-label>
+                <input matInput formControlName="ine" [(ngModel)]="contribuyente.ine">
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field class="col-5">
+                <mat-label>Otro Documento:</mat-label>
+                <mat-select formControlName="idDocIdent" [(ngModel)]="contribuyente.idDocIdent">
+                    <mat-option value="">Seleccione...</mat-option>
+                    <mat-option *ngFor="let documento of dataDocumentos" [value]="documento.IDDOCIDENTIF">
+                        {{ documento.DESCRIPCION }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="col-5">
+                <mat-label>Número Documento</mat-label>
+                <input matInput formControlName="docIdent" [(ngModel)]="contribuyente.docIdent">
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field class="col-5">
+                <mat-label>Fecha Nacimiento:</mat-label>
+                <input matInput readonly formControlName="fecha_naci" [matDatepicker]="pickfechaNacimiento" [(ngModel)]="contribuyente.fecha_naci">
+                <mat-datepicker-toggle matSuffix [for]="pickfechaNacimiento"></mat-datepicker-toggle>
+                <mat-datepicker #pickfechaNacimiento></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="col-5">
+                <mat-label>Fecha Defunción:</mat-label>
+                <input matInput readonly formControlName="fecha_def" [matDatepicker]="pickfechaDefuncion" [(ngModel)]="contribuyente.fecha_def">
+                <mat-datepicker-toggle matSuffix [for]="pickfechaDefuncion"></mat-datepicker-toggle>
+                <mat-datepicker #pickfechaDefuncion></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field class="col-5">
+                <mat-label>Celular:</mat-label>
+                <input matInput formControlName="celular" [(ngModel)]="contribuyente.celular">
+            </mat-form-field>
+            <mat-form-field class="col-5">
+                <mat-label>E-mail:</mat-label>
+                <input matInput formControlName="email" [(ngModel)]="contribuyente.email">
+            </mat-form-field>
+        </div>
+    </form>
+</ng-container>
+<ng-container *ngIf="contribuyente.tipoPersona == 'M'">
+    <form [formGroup]="moralFormGroup">
+        <div class="row">
+            <mat-form-field class="col-10">
+                <mat-label>Nombre:</mat-label>
+                <input matInput formControlName="nombre_moral" [(ngModel)]="contribuyente.nombre_moral">
+                <mat-error *ngIf="moralFormGroup.controls.nombre_moral.errors?.required">Requerido</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field class="col-5">
+                <mat-label>RFC:</mat-label>
+                <input matInput formControlName="rfc" [(ngModel)]="contribuyente.rfc">
+                <mat-error *ngIf="moralFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-5">
+                <mat-label>Act. preponderante:</mat-label>
+                <input matInput formControlName="actPreponderante" [(ngModel)]="contribuyente.actPreponderante">
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field class="col-5">
+                <mat-label>Tipo de persona moral</mat-label>
+                <mat-select formControlName="idTipoPersonaMoral">
+                    <mat-option value=""></mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="col-5">
+                <mat-label>Fecha de inicio de operación:</mat-label>
+                <input matInput readonly formControlName="fechaInicioOperacion" [matDatepicker]="pickfechaInicioOperacion" [(ngModel)]="contribuyente.fechaInicioOperacion">
+                <mat-datepicker-toggle matSuffix [for]="pickfechaInicioOperacion"></mat-datepicker-toggle>
+                <mat-datepicker #pickfechaInicioOperacion></mat-datepicker>
+            </mat-form-field>                            
+        </div>
+        <div class="row">
+            <mat-form-field class="col-5">
+                <mat-label>Motivo del cambio de situación</mat-label>
+                <mat-select formControlName="idMotivo" >
+                    <mat-option value=""></mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="col-5">
+                <mat-label>Fecha de cambio de situación:</mat-label>
+                <input matInput readonly formControlName="fechaCambio" [matDatepicker]="pickfechaCambio" [(ngModel)]="contribuyente.fechaCambio">
+                <mat-datepicker-toggle matSuffix [for]="pickfechaCambio"></mat-datepicker-toggle>
+                <mat-datepicker #pickfechaCambio></mat-datepicker>
+            </mat-form-field>                            
+        </div>
+    </form>
+</ng-container>

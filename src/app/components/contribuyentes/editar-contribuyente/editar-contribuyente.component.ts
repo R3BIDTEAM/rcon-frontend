@@ -3602,7 +3602,7 @@ export interface DataHistorico{
     viewHistoricoPersonalesEspecifico(dataPersonalesEspecifico): void {
         const dialogRef = this.dialog.open(DialogPersonalesHistoricoEspecificoContribuyente, {
             width: '700px',
-            data: { dataPersonalesEspecifico:dataPersonalesEspecifico, idDireccion:this.idPersona },
+            data: { dataPersonalesEspecifico:dataPersonalesEspecifico, idPersona:this.idPersona },
         });
         dialogRef.afterClosed().subscribe(result => {
                 // this.getNotarioDirecciones();
@@ -3619,5 +3619,135 @@ export interface DataHistorico{
     styleUrls: ['./editar-contribuyente.component.css']
   })
   export class DialogPersonalesHistoricoEspecificoContribuyente {
+    endpoint = environment.endpoint + 'registro/';
+    loading = true;
+    loadingDocumentos = false;
+    idChs;
+    idPersona;
+    httpOptions;
+    fisicaFormGroup: FormGroup;
+    moralFormGroup: FormGroup;
+    dataContribuyenteResultado;
+    query;
+    idContribuyente;
+    contribuyente: DatosContribuyente = {} as DatosContribuyente;
+    dataDocumentos: DocumentosIdentificativos[] = [];
+    loadingDomicilios = false;
+    dataDomicilioResultado;
+    isIdentificativo;
+
+    constructor(
+        private auth: AuthService,
+        private snackBar: MatSnackBar,
+        private http: HttpClient,
+        private _formBuilder: FormBuilder,
+        public dialogRef: MatDialogRef<DialogPersonalesHistoricoEspecificoContribuyente>,
+        public dialog: MatDialog,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+        dialogRef.disableClose = true;
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                Authorization: this.auth.getSession().token
+            })
+        };
+
+        this.idChs = data.dataPersonalesEspecifico;
+        this.idPersona = data.idPersona;
+        console.log(this.idChs);
+        console.log(this.idPersona);
+
+        this.fisicaFormGroup = this._formBuilder.group({
+            nombre: [null, [Validators.required]],
+            apepaterno: [null, [Validators.required]],
+            apematerno: [null, []],
+            rfc: [null, [Validators.required]],
+            curp: [null, [Validators.required]],
+            ine: [null, []],
+            idDocIdent: ['', []],
+            docIdent: [null, []],
+            fecha_naci: [null, []],
+            fecha_def: [null, []],
+            celular: [null, []],
+            email: [null, []],
+        });
+
+        this.moralFormGroup = this._formBuilder.group({
+            nombre_moral: [null, [Validators.required]],
+            rfc: [null, [Validators.required]],
+            actPreponderante: [null, []],
+            idTipoPersonaMoral: ['', []],
+            fechaInicioOperacion: [null, []],
+            idMotivo: ['', []],
+            fechaCambio: [null, []],
+        });
+
+        this.getDataDocumentos();
+        this.getContribuyenteDatos();
+    }
+
+
+    getDataDocumentos(): void{
+        this.loadingDocumentos = true;
+        this.http.post(this.endpoint + 'getCatalogos', '', this.httpOptions).subscribe(
+        (res: any) => {
+            this.loadingDocumentos = false;
+            this.dataDocumentos = res.CatDocIdentificativos;
+            console.log(this.dataDocumentos);
+        },
+        (error) => {
+            this.loadingDocumentos = false;
+        }
+        );
+    }
+
+    getContribuyenteDatos(){
+        this.query = '&idPersona=' + this.idPersona + '&idChs=' + this.idChs; 
+        this.loading = true;
+        console.log(this.endpoint);
+        this.http.post(this.endpoint + 'getHistoricosPersonaDetalle?' + this.query, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loading = false;
+                    this.dataContribuyenteResultado = res;
+                    console.log("AQUI ENTRO EL RES");
+                    console.log(this.dataContribuyenteResultado);
+                    this.datoDelContribuyente();
+                },
+                (error) => {
+                    this.loading = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
+
+    datoDelContribuyente(){
+        this.contribuyente.tipoPersona = this.dataContribuyenteResultado[0].CODTIPOSPERSONA;
+        this.contribuyente.nombre  = this.dataContribuyenteResultado[0].NOMBRE;
+        this.contribuyente.nombre_moral  = this.dataContribuyenteResultado[0].APELLIDOPATERNO;
+        this.contribuyente.apepaterno = this.dataContribuyenteResultado[0].APELLIDOPATERNO;
+        this.contribuyente.apematerno = this.dataContribuyenteResultado[0].APELLIDOMATERNO;
+        this.contribuyente.rfc = this.dataContribuyenteResultado[0].RFC;
+        this.contribuyente.curp = this.dataContribuyenteResultado[0].CURP;
+        this.contribuyente.ine = this.dataContribuyenteResultado[0].CLAVEIFE;
+        this.contribuyente.identificacion = this.dataContribuyenteResultado[0].IDDOCIDENTIF;
+        this.contribuyente.idedato = this.dataContribuyenteResultado[0].VALDOCIDENTIF;
+        this.contribuyente.fecha_naci = (this.dataContribuyenteResultado[0].FECHANACIMIENTO) ? new Date(this.dataContribuyenteResultado[0].FECHANACIMIENTO) : null;
+        this.contribuyente.fecha_def = (this.dataContribuyenteResultado[0].FECHADEFUNCION) ? new Date(this.dataContribuyenteResultado[0].FECHADEFUNCION) : null;
+        this.contribuyente.celular = this.dataContribuyenteResultado[0].CELULAR;
+        this.contribuyente.email = this.dataContribuyenteResultado[0].EMAIL;
+        this.contribuyente.actPreponderante = this.dataContribuyenteResultado[0].ACTIVPRINCIP;
+        this.contribuyente.idTipoPersonaMoral = this.dataContribuyenteResultado[0].IDTIPOMORAL;
+        this.contribuyente.fechaInicioOperacion = (this.dataContribuyenteResultado[0].MD_FECHADESDE) ? new Date(this.dataContribuyenteResultado[0].MD_FECHADESDE) : null;
+        this.contribuyente.idMotivo = this.dataContribuyenteResultado[0].IDMOTIVOSMORAL;
+        this.contribuyente.fechaCambio = (this.dataContribuyenteResultado[0].MD_FECHAHASTA) ? new Date(this.dataContribuyenteResultado[0].MD_FECHAHASTA) : null;
+
+        console.log(this.contribuyente.tipoPersona);
+        
+    }
 
   }
