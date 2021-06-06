@@ -136,6 +136,7 @@ export class AltaContribuyenteComponent implements OnInit {
     panelRepresentantes = false;
     panelRepresentados = false;
     resultadoAlta;
+    inserto = false;
 
     /*PAGINADOS*/
     dataSource1 = [];
@@ -271,6 +272,7 @@ export class AltaContribuyenteComponent implements OnInit {
                     console.log("CONTRIBUYENTE GUARDADO");
                     console.log(res);
                     this.domInsertCont = true;
+                    this.inserto = true
                     this.idPersona = res[0].idpersona;
                     this.resultadoAlta = res;
                     console.log(res[0].idpersona);

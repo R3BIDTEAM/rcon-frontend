@@ -1,11 +1,11 @@
 <mat-card>
 
-    <div style="padding: 30px; text-align: center;" *ngIf="false">
+    <div style="padding: 30px; text-align: center;" *ngIf="loading">
         <mat-spinner style="margin:0 auto;"></mat-spinner>
         <p>Cargando...</p>
     </div>
     
-    <ng-container *ngIf="true">
+    <ng-container *ngIf="!loading">
 
         <div class="borde">
             <mat-card-header>
@@ -16,7 +16,7 @@
                 <div class="row">
                     <mat-form-field class="col-4">
                         <mat-label>Tipo de persona:</mat-label>
-                        <mat-select [(ngModel)]="contribuyente.tipoPersona">
+                        <mat-select [(ngModel)]="contribuyente.tipoPersona" [disabled]="inserto">
                             <mat-option value="F">Fisica</mat-option>
                             <mat-option value="M">Moral</mat-option>
                         </mat-select>
@@ -28,43 +28,43 @@
                         <div class="row">
                             <mat-form-field class="col-10">
                                 <mat-label>Nombre:</mat-label>
-                                <input matInput formControlName="nombre" [(ngModel)]="contribuyente.nombre">
+                                <input matInput formControlName="nombre" [(ngModel)]="contribuyente.nombre" [readonly]="inserto">
                                 <mat-error *ngIf="fisicaFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
                             <mat-form-field class="col-5">
                                 <mat-label>Apellido Paterno:</mat-label>
-                                <input matInput formControlName="apaterno" [(ngModel)]="contribuyente.apaterno">
+                                <input matInput formControlName="apaterno" [(ngModel)]="contribuyente.apaterno" [readonly]="inserto">
                                 <mat-error *ngIf="fisicaFormGroup.controls.apaterno.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                             <mat-form-field class="col-5">
                                 <mat-label>Apellido Materno:</mat-label>
-                                <input matInput formControlName="amaterno" [(ngModel)]="contribuyente.amaterno">
+                                <input matInput formControlName="amaterno" [(ngModel)]="contribuyente.amaterno" [readonly]="inserto">
                             </mat-form-field>
                         </div>
                         <div class="row">
                             <mat-form-field class="col-5">
                                 <mat-label>RFC:</mat-label>
-                                <input matInput formControlName="rfc" (keyup)="changeRequired('curp', 'rfc')" [(ngModel)]="contribuyente.rfc">
+                                <input matInput formControlName="rfc" (keyup)="changeRequired('curp', 'rfc')" [(ngModel)]="contribuyente.rfc" [readonly]="inserto">
                                 <mat-error *ngIf="fisicaFormGroup.controls.rfc.errors?.required">Se han de llenar algunos de los campos de RFC o CURP</mat-error>
                             </mat-form-field>
                             <mat-form-field class="col-5">
                                 <mat-label>CURP:</mat-label>
-                                <input matInput formControlName="curp" (keyup)="changeRequired('rfc', 'curp')" [(ngModel)]="contribuyente.curp">
+                                <input matInput formControlName="curp" (keyup)="changeRequired('rfc', 'curp')" [(ngModel)]="contribuyente.curp" [readonly]="inserto">
                                 <mat-error *ngIf="fisicaFormGroup.controls.curp.errors?.required">Se han de llenar algunos de los campos de RFC o CURP</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
                             <mat-form-field class="col-5">
                                 <mat-label>Clave INE:</mat-label>
-                                <input matInput formControlName="ine" [(ngModel)]="contribuyente.ine">
+                                <input matInput formControlName="ine" [(ngModel)]="contribuyente.ine" [readonly]="inserto">
                             </mat-form-field>
                         </div>
                         <div class="row">
                             <mat-form-field class="col-5">
                                 <mat-label>Otro Documento:</mat-label>
-                                <mat-select formControlName="idDocIdent" [(ngModel)]="contribuyente.idDocIdent">
+                                <mat-select formControlName="idDocIdent" [(ngModel)]="contribuyente.idDocIdent" [disabled]="inserto">
                                     <mat-option value="">Seleccione...</mat-option>
                                     <mat-option *ngFor="let documento of dataDocumentos" [value]="documento.IDDOCIDENTIF">
                                         {{ documento.DESCRIPCION }}
@@ -73,19 +73,19 @@
                             </mat-form-field>
                             <mat-form-field class="col-5">
                                 <mat-label>Número Documento</mat-label>
-                                <input matInput formControlName="docIdent" [(ngModel)]="contribuyente.docIdent">
+                                <input matInput formControlName="docIdent" [(ngModel)]="contribuyente.docIdent" [disabled]="inserto">
                             </mat-form-field>
                         </div>
                         <div class="row">
                             <mat-form-field class="col-5">
                                 <mat-label>Fecha Nacimiento:</mat-label>
-                                <input matInput readonly formControlName="fechaNacimiento" [matDatepicker]="pickfechaNacimiento" [(ngModel)]="contribuyente.fechaNacimiento">
+                                <input matInput readonly formControlName="fechaNacimiento" [matDatepicker]="pickfechaNacimiento" [(ngModel)]="contribuyente.fechaNacimiento" [disabled]="inserto">
                                 <mat-datepicker-toggle matSuffix [for]="pickfechaNacimiento"></mat-datepicker-toggle>
                                 <mat-datepicker #pickfechaNacimiento></mat-datepicker>
                             </mat-form-field>
                             <mat-form-field class="col-5">
                                 <mat-label>Fecha Defunción:</mat-label>
-                                <input matInput readonly formControlName="fechaDefuncion" [matDatepicker]="pickfechaDefuncion" [(ngModel)]="contribuyente.fechaDefuncion">
+                                <input matInput readonly formControlName="fechaDefuncion" [matDatepicker]="pickfechaDefuncion" [(ngModel)]="contribuyente.fechaDefuncion" [disabled]="inserto">
                                 <mat-datepicker-toggle matSuffix [for]="pickfechaDefuncion"></mat-datepicker-toggle>
                                 <mat-datepicker #pickfechaDefuncion></mat-datepicker>
                             </mat-form-field>
@@ -93,11 +93,11 @@
                         <div class="row">
                             <mat-form-field class="col-5">
                                 <mat-label>Celular:</mat-label>
-                                <input matInput formControlName="celular" [(ngModel)]="contribuyente.celular">
+                                <input matInput formControlName="celular" [(ngModel)]="contribuyente.celular" [readonly]="inserto">
                             </mat-form-field>
                             <mat-form-field class="col-5">
                                 <mat-label>E-mail:</mat-label>
-                                <input matInput formControlName="email" [(ngModel)]="contribuyente.email">
+                                <input matInput formControlName="email" [(ngModel)]="contribuyente.email" [readonly]="inserto">
                             </mat-form-field>
                         </div>
                     </form>
@@ -107,31 +107,31 @@
                         <div class="row">
                             <mat-form-field class="col-10">
                                 <mat-label>Nombre:</mat-label>
-                                <input matInput formControlName="nombre" [(ngModel)]="contribuyente.nombre_moral">
+                                <input matInput formControlName="nombre" [(ngModel)]="contribuyente.nombre_moral" [readonly]="inserto">
                                 <mat-error *ngIf="moralFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
                             <mat-form-field class="col-5">
                                 <mat-label>RFC:</mat-label>
-                                <input matInput formControlName="rfc" [(ngModel)]="contribuyente.rfc">
+                                <input matInput formControlName="rfc" [(ngModel)]="contribuyente.rfc" [readonly]="inserto">
                                 <mat-error *ngIf="moralFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                             <mat-form-field class="col-5">
                                 <mat-label>Act. preponderante:</mat-label>
-                                <input matInput formControlName="actPreponderante" [(ngModel)]="contribuyente.actPreponderante">
+                                <input matInput formControlName="actPreponderante" [(ngModel)]="contribuyente.actPreponderante" [readonly]="inserto">
                             </mat-form-field>
                         </div>
                         <div class="row">
                             <mat-form-field class="col-5">
                                 <mat-label>Tipo de persona moral</mat-label>
-                                <mat-select formControlName="idTipoPersonaMoral" >
+                                <mat-select formControlName="idTipoPersonaMoral" [disabled]="inserto">
                                     <mat-option value=""></mat-option>
                                 </mat-select>
                             </mat-form-field>
                             <mat-form-field class="col-5">
                                 <mat-label>Fecha de inicio de operación:</mat-label>
-                                <input matInput readonly formControlName="fechaInicioOperacion" [matDatepicker]="pickfechaInicioOperacion" [(ngModel)]="contribuyente.fechaInicioOperacion">
+                                <input matInput readonly formControlName="fechaInicioOperacion" [matDatepicker]="pickfechaInicioOperacion" [(ngModel)]="contribuyente.fechaInicioOperacion" [disabled]="inserto">
                                 <mat-datepicker-toggle matSuffix [for]="pickfechaInicioOperacion"></mat-datepicker-toggle>
                                 <mat-datepicker #pickfechaInicioOperacion></mat-datepicker>
                             </mat-form-field>                            
@@ -139,13 +139,13 @@
                         <div class="row">
                             <mat-form-field class="col-5">
                                 <mat-label>Motivo del cambio de situación</mat-label>
-                                <mat-select formControlName="idMotivo" >
+                                <mat-select formControlName="idMotivo" [disabled]="inserto">
                                     <mat-option value=""></mat-option>
                                 </mat-select>
                             </mat-form-field>
                             <mat-form-field class="col-5">
                                 <mat-label>Fecha de cambio de situación:</mat-label>
-                                <input matInput readonly formControlName="fechaCambio" [matDatepicker]="pickfechaCambio" [(ngModel)]="contribuyente.fechaCambio">
+                                <input matInput readonly formControlName="fechaCambio" [matDatepicker]="pickfechaCambio" [(ngModel)]="contribuyente.fechaCambio" [disabled]="inserto">
                                 <mat-datepicker-toggle matSuffix [for]="pickfechaCambio"></mat-datepicker-toggle>
                                 <mat-datepicker #pickfechaCambio></mat-datepicker>
                             </mat-form-field>                            
@@ -338,7 +338,7 @@
             </mat-card-content>
         </div>
         <br>
-        <div class="borde">
+        <div class="borde" *ngIf="domInsertCont">
             <mat-card-header>
                 <mat-card-title>Datos de representación</mat-card-title>
             </mat-card-header>

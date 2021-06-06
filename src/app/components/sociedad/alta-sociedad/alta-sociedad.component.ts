@@ -28,7 +28,9 @@ export class AltaSociedadComponent implements OnInit {
     search;
     isIdentificativo;
     loading = false;
+    inserto = false;
     @ViewChild('paginator') paginator: MatPaginator;
+
     constructor(
         private http: HttpClient,
         private _formBuilder: FormBuilder,
@@ -82,6 +84,7 @@ export class AltaSociedadComponent implements OnInit {
             .subscribe(
                 (res: any) => {
                     this.loading = false;
+                    this.inserto = true;
                     console.log("AQUI ENTRO EL RES DEL NUEVO PERITO");
                     console.log(res);
                     this.snackBar.open('guardado correcto', 'Cerrar', {

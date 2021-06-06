@@ -41,6 +41,7 @@ export class AltaPeritosComponent implements OnInit {
     loading = false;
     httpOptions;
     search = false;
+    inserto = false;
     @ViewChild('paginator') paginator: MatPaginator;
 
     constructor(
@@ -136,6 +137,7 @@ export class AltaPeritosComponent implements OnInit {
             .subscribe(
                 (res: any) => {
                     this.loading = false;
+                    this.inserto = true;
                     console.log("AQUI ENTRO EL RES DEL NUEVO PERITO");
                     console.log(res);
                     this.snackBar.open('guardado correcto', 'Cerrar', {
