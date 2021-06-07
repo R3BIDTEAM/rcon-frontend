@@ -131,7 +131,15 @@ export class EdicionContribuyenteComponent implements OnInit {
     this.endpointBusqueda = '';
     
     if(this.tipoBusqueda == 'cuenta'){
-      this.endpointBusqueda = this.endpoint;
+      this.endpointBusqueda = this.endpoint + 'getContribuyenteByCuenta';
+        if(this.cuentaFormGroup.value.region)
+          this.queryParamFiltros = this.queryParamFiltros + '&region=' + this.cuentaFormGroup.value.region;
+        if(this.cuentaFormGroup.value.manzana)
+          this.queryParamFiltros = this.queryParamFiltros + '&manzana=' + this.cuentaFormGroup.value.manzana;
+        if(this.cuentaFormGroup.value.lote)
+          this.queryParamFiltros = this.queryParamFiltros + '&lote=' + this.cuentaFormGroup.value.lote;
+        if(this.cuentaFormGroup.value.unidad)
+          this.queryParamFiltros = this.queryParamFiltros + '&unidadPrivativa=' + this.cuentaFormGroup.value.unidad;
     } else {
       if(this.contribuyenteFormGroup.value.tipo_persona == 'M'){
         if(this.isIdentificativo){

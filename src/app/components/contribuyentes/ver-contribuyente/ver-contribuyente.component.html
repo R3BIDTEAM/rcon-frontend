@@ -1,179 +1,153 @@
 <mat-card>
 
-    <!-- <div style="padding: 30px; text-align: center;" *ngIf="false">
-        <mat-spinner style="margin:0 auto;"></mat-spinner>
-        <p>Cargando...</p>
-    </div> -->
-    
-    <!-- <ng-container *ngIf="true"> -->
     <ng-container>
 
         <div class="borde">
+
             <mat-card-header>
                 <h3 style="margin: 0 0 15px;" class="verde-cdmx">Datos Generales:</h3>
             </mat-card-header>
-            <mat-card-content>
-                <!-- <br>
-                <div class="row">
-                    <mat-form-field class="col-4">
-                        <mat-label>Tipo de persona:</mat-label>
-                        <mat-select [(ngModel)]="contribuyente.tipoPersona">
-                            <mat-option value="F">Fisica</mat-option>
-                            <mat-option value="M">Moral</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div> -->
-                <br>
-                <ng-container *ngIf="contribuyente.tipoPersona == 'F'">
-                    <form [formGroup]="fisicaFormGroup">
-                        <div class="row">
-                            <mat-form-field class="col-10">
-                                <mat-label>Nombre:</mat-label>
-                                <input matInput formControlName="nombre" [(ngModel)]="contribuyente.nombre">
-                                <mat-error *ngIf="fisicaFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div class="row">
-                            <mat-form-field class="col-5">
-                                <mat-label>Apellido Paterno:</mat-label>
-                                <input matInput formControlName="apaterno" [(ngModel)]="contribuyente.apaterno">
-                                <mat-error *ngIf="fisicaFormGroup.controls.apaterno.errors?.required">Requerido</mat-error>
-                            </mat-form-field>
-                            <mat-form-field class="col-5">
-                                <mat-label>Apellido Materno:</mat-label>
-                                <input matInput formControlName="amaterno" [(ngModel)]="contribuyente.amaterno">
-                            </mat-form-field>
-                        </div>
-                        <div class="row">
-                            <mat-form-field class="col-5">
-                                <mat-label>RFC:</mat-label>
-                                <input matInput formControlName="rfc" (keyup)="changeRequired('curp', 'rfc')" [(ngModel)]="contribuyente.rfc">
-                                <mat-error *ngIf="fisicaFormGroup.controls.rfc.errors?.required">Se han de llenar algunos de los campos de RFC o CURP</mat-error>
-                            </mat-form-field>
-                            <mat-form-field class="col-5">
-                                <mat-label>CURP:</mat-label>
-                                <input matInput formControlName="curp" (keyup)="changeRequired('rfc', 'curp')" [(ngModel)]="contribuyente.curp">
-                                <mat-error *ngIf="fisicaFormGroup.controls.curp.errors?.required">Se han de llenar algunos de los campos de RFC o CURP</mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div class="row">
-                            <mat-form-field class="col-5">
-                                <mat-label>Clave INE:</mat-label>
-                                <input matInput formControlName="ine" [(ngModel)]="contribuyente.ine">
-                            </mat-form-field>
-                        </div>
-                        <div class="row">
-                            <mat-form-field class="col-5">
-                                <mat-label>Otro Documento:</mat-label>
-                                <mat-select formControlName="idDocIdent" [(ngModel)]="contribuyente.idDocIdent">
-                                    <mat-option value="">Seleccione...</mat-option>
-                                    <mat-option *ngFor="let documento of dataDocumentos" [value]="documento.IDDOCIDENTIF">
-                                        {{ documento.DESCRIPCION }}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                            <mat-form-field class="col-5">
-                                <mat-label>Número Documento</mat-label>
-                                <input matInput formControlName="docIdent" [(ngModel)]="contribuyente.docIdent">
-                            </mat-form-field>
-                        </div>
-                        <div class="row">
-                            <mat-form-field class="col-5">
-                                <mat-label>Fecha Nacimiento:</mat-label>
-                                <input matInput readonly formControlName="fechaNacimiento" [matDatepicker]="pickfechaNacimiento" [(ngModel)]="contribuyente.fechaNacimiento">
-                                <mat-datepicker-toggle matSuffix [for]="pickfechaNacimiento"></mat-datepicker-toggle>
-                                <mat-datepicker #pickfechaNacimiento></mat-datepicker>
-                            </mat-form-field>
-                            <mat-form-field class="col-5">
-                                <mat-label>Fecha Defunción:</mat-label>
-                                <input matInput readonly formControlName="fechaDefuncion" [matDatepicker]="pickfechaDefuncion" [(ngModel)]="contribuyente.fechaDefuncion">
-                                <mat-datepicker-toggle matSuffix [for]="pickfechaDefuncion"></mat-datepicker-toggle>
-                                <mat-datepicker #pickfechaDefuncion></mat-datepicker>
-                            </mat-form-field>
-                        </div>
-                        <div class="row">
-                            <mat-form-field class="col-5">
-                                <mat-label>Celular:</mat-label>
-                                <input matInput formControlName="celular" [(ngModel)]="contribuyente.celular">
-                            </mat-form-field>
-                            <mat-form-field class="col-5">
-                                <mat-label>E-mail:</mat-label>
-                                <input matInput formControlName="email" [(ngModel)]="contribuyente.email">
-                            </mat-form-field>
-                        </div>
-                    </form>
-                </ng-container>
-                <ng-container *ngIf="contribuyente.tipoPersona == 'M'">
-                    <form [formGroup]="moralFormGroup">
-                        <div class="row">
-                            <mat-form-field class="col-10">
-                                <mat-label>Nombre:</mat-label>
-                                <input matInput formControlName="nombre_moral" [(ngModel)]="contribuyente.nombre_moral">
-                                <mat-error *ngIf="moralFormGroup.controls.nombre_moral.errors?.required">Requerido</mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div class="row">
-                            <mat-form-field class="col-5">
-                                <mat-label>RFC:</mat-label>
-                                <input matInput formControlName="rfc" [(ngModel)]="contribuyente.rfc">
-                                <mat-error *ngIf="moralFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
-                            </mat-form-field>
-                            <mat-form-field class="col-5">
-                                <mat-label>Act. preponderante:</mat-label>
-                                <input matInput formControlName="actPreponderante" [(ngModel)]="contribuyente.actPreponderante">
-                            </mat-form-field>
-                        </div>
-                        <div class="row">
-                            <mat-form-field class="col-5">
-                                <mat-label>Tipo de persona moral</mat-label>
-                                <mat-select formControlName="idTipoPersonaMoral">
-                                    <mat-option value=""></mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                            <mat-form-field class="col-5">
-                                <mat-label>Fecha de inicio de operación:</mat-label>
-                                <input matInput readonly formControlName="fechaInicioOperacion" [matDatepicker]="pickfechaInicioOperacion" [(ngModel)]="contribuyente.fechaInicioOperacion">
-                                <mat-datepicker-toggle matSuffix [for]="pickfechaInicioOperacion"></mat-datepicker-toggle>
-                                <mat-datepicker #pickfechaInicioOperacion></mat-datepicker>
-                            </mat-form-field>                            
-                        </div>
-                        <div class="row">
-                            <mat-form-field class="col-5">
-                                <mat-label>Motivo del cambio de situación</mat-label>
-                                <mat-select formControlName="idMotivo" >
-                                    <mat-option value=""></mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                            <mat-form-field class="col-5">
-                                <mat-label>Fecha de cambio de situación:</mat-label>
-                                <input matInput readonly formControlName="fechaCambio" [matDatepicker]="pickfechaCambio" [(ngModel)]="contribuyente.fechaCambio">
-                                <mat-datepicker-toggle matSuffix [for]="pickfechaCambio"></mat-datepicker-toggle>
-                                <mat-datepicker #pickfechaCambio></mat-datepicker>
-                            </mat-form-field>                            
-                        </div>
-                    </form>
-                </ng-container>
-                <br>
-                <!-- <div class="row">
-                    <div class="col-md-3 offset-md-8">
-                        <div class="d-flex flex-row-reverse">
-                            <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" (click)="guardarContribuyente()">
-                                Guardar <mat-icon style="display: inherit; width: 15px;">save</mat-icon>
-                            </button>
-                        </div>
-                    </div>
-                </div> -->
-                <!-- <div class="row">
-                    <div class="col">
-                        <button mat-stroked-button color="primary" aria-label="Historial Datos Generales" matTooltip="Historial Datos Generales" (click)="getHistorialDatosGenerales()">
-                            <mat-icon>assignment</mat-icon>Historial Datos Generales
-                        </button>
-                    </div>
-                </div> -->
+            
+            <div style="padding: 30px; text-align: center;" *ngIf="loading">
+                <mat-spinner style="margin:0 auto;"></mat-spinner>
+                <p>Cargando...</p>
+            </div>
+            
+            <mat-card-content style="padding-left: 30px;">
+            
+                    <ng-container *ngIf="contribuyente.tipoPersona == 'F' && !loading">
+                        <form [formGroup]="fisicaFormGroup">
+                            <div class="row">
+                                <mat-form-field class="col-10">
+                                    <mat-label>Nombre:</mat-label>
+                                    <input matInput formControlName="nombre" [(ngModel)]="contribuyente.nombre">
+                                    <mat-error *ngIf="fisicaFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="row">
+                                <mat-form-field class="col-5">
+                                    <mat-label>Apellido Paterno:</mat-label>
+                                    <input matInput formControlName="apaterno" [(ngModel)]="contribuyente.apaterno">
+                                    <mat-error *ngIf="fisicaFormGroup.controls.apaterno.errors?.required">Requerido</mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="col-5">
+                                    <mat-label>Apellido Materno:</mat-label>
+                                    <input matInput formControlName="amaterno" [(ngModel)]="contribuyente.amaterno">
+                                </mat-form-field>
+                            </div>
+                            <div class="row">
+                                <mat-form-field class="col-5">
+                                    <mat-label>RFC:</mat-label>
+                                    <input matInput formControlName="rfc" (keyup)="changeRequired('curp', 'rfc')" [(ngModel)]="contribuyente.rfc">
+                                    <mat-error *ngIf="fisicaFormGroup.controls.rfc.errors?.required">Se han de llenar algunos de los campos de RFC o CURP</mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="col-5">
+                                    <mat-label>CURP:</mat-label>
+                                    <input matInput formControlName="curp" (keyup)="changeRequired('rfc', 'curp')" [(ngModel)]="contribuyente.curp">
+                                    <mat-error *ngIf="fisicaFormGroup.controls.curp.errors?.required">Se han de llenar algunos de los campos de RFC o CURP</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="row">
+                                <mat-form-field class="col-5">
+                                    <mat-label>Clave INE:</mat-label>
+                                    <input matInput formControlName="ine" [(ngModel)]="contribuyente.ine">
+                                </mat-form-field>
+                            </div>
+                            <div class="row">
+                                <mat-form-field class="col-5">
+                                    <mat-label>Otro Documento:</mat-label>
+                                    <mat-select formControlName="idDocIdent" [(ngModel)]="contribuyente.idDocIdent">
+                                        <mat-option value="">Seleccione...</mat-option>
+                                        <mat-option *ngFor="let documento of dataDocumentos" [value]="documento.IDDOCIDENTIF">
+                                            {{ documento.DESCRIPCION }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field class="col-5">
+                                    <mat-label>Número Documento</mat-label>
+                                    <input matInput formControlName="docIdent" [(ngModel)]="contribuyente.docIdent">
+                                </mat-form-field>
+                            </div>
+                            <div class="row">
+                                <mat-form-field class="col-5">
+                                    <mat-label>Fecha Nacimiento:</mat-label>
+                                    <input matInput readonly formControlName="fechaNacimiento" [matDatepicker]="pickfechaNacimiento" [(ngModel)]="contribuyente.fechaNacimiento">
+                                    <mat-datepicker-toggle matSuffix [for]="pickfechaNacimiento"></mat-datepicker-toggle>
+                                    <mat-datepicker #pickfechaNacimiento></mat-datepicker>
+                                </mat-form-field>
+                                <mat-form-field class="col-5">
+                                    <mat-label>Fecha Defunción:</mat-label>
+                                    <input matInput readonly formControlName="fechaDefuncion" [matDatepicker]="pickfechaDefuncion" [(ngModel)]="contribuyente.fechaDefuncion">
+                                    <mat-datepicker-toggle matSuffix [for]="pickfechaDefuncion"></mat-datepicker-toggle>
+                                    <mat-datepicker #pickfechaDefuncion></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="row">
+                                <mat-form-field class="col-5">
+                                    <mat-label>Celular:</mat-label>
+                                    <input matInput formControlName="celular" [(ngModel)]="contribuyente.celular">
+                                </mat-form-field>
+                                <mat-form-field class="col-5">
+                                    <mat-label>E-mail:</mat-label>
+                                    <input matInput formControlName="email" [(ngModel)]="contribuyente.email">
+                                </mat-form-field>
+                            </div>
+                        </form>
+                    </ng-container>
+                    <ng-container *ngIf="contribuyente.tipoPersona == 'M' && !loading">
+                        <form [formGroup]="moralFormGroup">
+                            <div class="row">
+                                <mat-form-field class="col-10">
+                                    <mat-label>Nombre:</mat-label>
+                                    <input matInput formControlName="nombre_moral" [(ngModel)]="contribuyente.nombre_moral">
+                                    <mat-error *ngIf="moralFormGroup.controls.nombre_moral.errors?.required">Requerido</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="row">
+                                <mat-form-field class="col-5">
+                                    <mat-label>RFC:</mat-label>
+                                    <input matInput formControlName="rfc" [(ngModel)]="contribuyente.rfc">
+                                    <mat-error *ngIf="moralFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="col-5">
+                                    <mat-label>Act. preponderante:</mat-label>
+                                    <input matInput formControlName="actPreponderante" [(ngModel)]="contribuyente.actPreponderante">
+                                </mat-form-field>
+                            </div>
+                            <div class="row">
+                                <mat-form-field class="col-5">
+                                    <mat-label>Tipo de persona moral</mat-label>
+                                    <mat-select formControlName="idTipoPersonaMoral">
+                                        <mat-option value=""></mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field class="col-5">
+                                    <mat-label>Fecha de inicio de operación:</mat-label>
+                                    <input matInput readonly formControlName="fechaInicioOperacion" [matDatepicker]="pickfechaInicioOperacion" [(ngModel)]="contribuyente.fechaInicioOperacion">
+                                    <mat-datepicker-toggle matSuffix [for]="pickfechaInicioOperacion"></mat-datepicker-toggle>
+                                    <mat-datepicker #pickfechaInicioOperacion></mat-datepicker>
+                                </mat-form-field>                            
+                            </div>
+                            <div class="row">
+                                <mat-form-field class="col-5">
+                                    <mat-label>Motivo del cambio de situación</mat-label>
+                                    <mat-select formControlName="idMotivo" >
+                                        <mat-option value=""></mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field class="col-5">
+                                    <mat-label>Fecha de cambio de situación:</mat-label>
+                                    <input matInput readonly formControlName="fechaCambio" [matDatepicker]="pickfechaCambio" [(ngModel)]="contribuyente.fechaCambio">
+                                    <mat-datepicker-toggle matSuffix [for]="pickfechaCambio"></mat-datepicker-toggle>
+                                    <mat-datepicker #pickfechaCambio></mat-datepicker>
+                                </mat-form-field>                            
+                            </div>
+                        </form>
+                    </ng-container>
+
+             
             </mat-card-content>
         </div>
-        <br>
-        
       
 
     </ng-container>
