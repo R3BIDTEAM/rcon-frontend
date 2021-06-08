@@ -3543,7 +3543,7 @@ export class DialogHistorialRep {
     dataPaginate;
     loadingH = true;
     idPersona;
-
+    idChs;
     constructor(
         private http: HttpClient,
         private _formBuilder: FormBuilder,
@@ -3609,9 +3609,13 @@ export class DialogHistorialRep {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
 
-    historicoDetalle(){
+    historicoDetalle(element){
+        console.log("ACA EL IDCSH");
+        console.log(element);
+        this.idChs = element;
         const dialogRef = this.dialog.open(DialogHistorialRepDetalle, {
             width: '700px',
+            data: this.idChs
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
@@ -3702,14 +3706,14 @@ export class DialogHistorialRepDetalle {
 
         console.log("ACA EL EL HISTORIAL");
         console.log(data);
-        this.idChs = 1523034;
+        this.idChs = data;
         this.getHistorialRepresentacionDetalle();
     }
 
     getHistorialRepresentacionDetalle(){
         let query = '';
 
-        query = 'idChs=1523034';
+        query = 'idChs=' + this.idChs;
 
         this.loadingH = true;
         let metodo = 'getHistoricosRepresentacionDetalle';
@@ -3747,8 +3751,8 @@ export class DialogHistorialRepDetalle {
             }else{
                 this.tipoDj = 'Poder Notarial - ' + moment(this.dataRepresentacion.infoDocumento.infoDocumento[0].codtipodocumentojuridico.fecha).format("DD-MM-YYYY");
             }
-            this.texto = this.dataRepresentacion.infoRepresentacion[0].TEXTOREPRESENTACION;
-            this.fechaCaducidad = ((this.dataRepresentacion.infoRepresentacion[0].FECHACADUCIDAD) ? new Date(this.dataRepresentacion.infoRepresentacion[0].FECHACADUCIDAD) : null);
+            this.texto = this.dataRepresentacion.infoRepresentacion[0].textorepresentacion;
+            this.fechaCaducidad = ((this.dataRepresentacion.infoRepresentacion[0].fechacaducidad) ? new Date(this.dataRepresentacion.infoRepresentacion[0].fechacaducidad) : null);
 
             /////////////////////////////// REPRESENTANTE /////////////////////////////////
             this.tipoPersonaRep = this.dataRepresentacion.infoRepresentante[0].CODTIPOSPERSONA;
