@@ -3511,15 +3511,202 @@ export class DialogHistorialRepS {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
 
-    // historicoDetalle(){
-    //     const dialogRef = this.dialog.open(DialogHistorialRepDetalle, {
-    //         width: '700px',
-    //     });
-    //     dialogRef.afterClosed().subscribe(result => {
-    //         if(result){
-    //         }
-    //     });
-    // }
+    historicoDetalle(){
+        const dialogRef = this.dialog.open(DialogHistorialRepDetalleS, {
+            width: '700px',
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+            }
+        });
+    }
+
+}
+
+///////////////HISTORIAL DE REPRESENTACIONES DETALLE////////////////
+export interface DataHistoricoRep{
+    fecha_desde: Date;
+    fecha_hasta: Date;
+}
+
+@Component({
+    selector: 'app-dialog-historialRepDetalle',
+    templateUrl: 'app-dialog-historialRepDetalle.html',
+    styleUrls: ['./editar-sociedad.component.css']
+})
+export class DialogHistorialRepDetalleS {
+    endpoint = environment.endpoint + 'registro/';
+    httpOptions;
+    dataDoc = [];
+    loadingH = false;
+    insUp = true;
+    idChs;
+    fisicaFormGroup: FormGroup;
+    moralFormGroup: FormGroup;
+    dataRepresentacion;
+    tipoPersonaRep;
+    tipoPersonaRepdo;
+    nombreR;
+    apaternoR;
+    amaternoR;
+    rfcR;
+    curpR;
+    ineR;
+    idDocIdentR;
+    docIdentR;
+    fechaNacimientoR;
+    fechaDefuncionR;
+    celularR;
+    emailR;
+    actPreponderanteR;
+    idTipoPersonaMoralR;
+    fechaInicioOperacionR;
+    idMotivoR;
+    fechaCambioR;
+    nombreRdo;
+    apaternoRdo;
+    amaternoRdo;
+    rfcRdo;
+    curpRdo;
+    ineRdo;
+    idDocIdentRdo;
+    docIdentRdo;
+    fechaNacimientoRdo;
+    fechaDefuncionRdo;
+    celularRdo;
+    emailRdo;
+    actPreponderanteRdo;
+    idTipoPersonaMoralRdo;
+    fechaInicioOperacionRdo;
+    idMotivoRdo;
+    fechaCambioRdo;
+    texto;
+    fechaCaducidad;
+    tipoDj;
+    constructor(
+        private http: HttpClient,
+        private _formBuilder: FormBuilder,
+        private snackBar: MatSnackBar,
+        public dialog: MatDialog,
+        private auth: AuthService,
+        public dialogRef: MatDialogRef<DialogHistorialRepDetalleS>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) {
+
+        dialogRef.disableClose = true;
+
+        this.httpOptions = {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/json',
+              Authorization: this.auth.getSession().token
+            })
+        };
+
+        console.log("ACA EL EL HISTORIAL");
+        console.log(data);
+        this.idChs = 1523034;
+        this.getHistorialRepresentacionDetalle();
+    }
+
+    getHistorialRepresentacionDetalle(){
+        let query = '';
+
+        query = 'idChs=1523034';
+
+        this.loadingH = true;
+        let metodo = 'getHistoricosRepresentacionDetalle';
+        this.http.post(this.endpoint + metodo + '?' + query, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loadingH = false;
+                    console.log("RESULTADO DEL DETALLE REP");
+                    console.log(res);
+                    this.dataRepresentacion = res;
+                    console.log(this.dataRepresentacion.infoRepresentante.CAUSA);
+                    console.log(this.dataRepresentacion.infoRepresentante[0].CAUSA);
+                    this.setDetalle();
+                },
+                (error) => {
+                    this.loadingH = false;
+                    this.snackBar.open("Ha ocurrido un problema al obtener el detalle", 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
+
+    setDetalle(){
+            console.log("ACA ENTRO EL SLECCIONADO REPRESENTACION");
+            console.log(this.dataRepresentacion.infoRepresentante[0]);
+            console.log(this.dataRepresentacion.infoDocumento.infoDocumento[0].codtipodocumentojuridico);
+            //(this.dataRepresentacion.infoRepresentante[0].RFC) ? this.changeRequired('curp', 'rfc') : this.changeRequired('rfc', 'curp');
+
+            ///////////////// DATOS DEL DOCUMENTO ////////////////////////
+            if(this.dataRepresentacion.infoDocumento.infoDocumento[0].codtipodocumentojuridico == "CP"){
+                this.tipoDj = 'Carta Poder - ' + moment(this.dataRepresentacion.infoDocumento.infoDocumento[0].codtipodocumentojuridico.fecha).format("DD-MM-YYYY");
+            }else{
+                this.tipoDj = 'Poder Notarial - ' + moment(this.dataRepresentacion.infoDocumento.infoDocumento[0].codtipodocumentojuridico.fecha).format("DD-MM-YYYY");
+            }
+            this.texto = this.dataRepresentacion.infoRepresentacion[0].TEXTOREPRESENTACION;
+            this.fechaCaducidad = ((this.dataRepresentacion.infoRepresentacion[0].FECHACADUCIDAD) ? new Date(this.dataRepresentacion.infoRepresentacion[0].FECHACADUCIDAD) : null);
+
+            /////////////////////////////// REPRESENTANTE /////////////////////////////////
+            this.tipoPersonaRep = this.dataRepresentacion.infoRepresentante[0].CODTIPOSPERSONA;
+            if(this.tipoPersonaRep == 'F'){
+                this.nombreR = this.dataRepresentacion.infoRepresentante[0].NOMBRE;
+                this.apaternoR = this.dataRepresentacion.infoRepresentante[0].APELLIDOMATERNO;
+                this.amaternoR = this.dataRepresentacion.infoRepresentante[0].APELLIDOPATERNO;
+                this.rfcR = this.dataRepresentacion.infoRepresentante[0].RFC;
+                this.curpR = this.dataRepresentacion.infoRepresentante[0].CURP;
+                this.ineR = this.dataRepresentacion.infoRepresentante[0].CLAVEIFE;
+                this.idDocIdentR = this.dataRepresentacion.infoRepresentante[0].IDDOCIDENTIF;
+                this.docIdentR = this.dataRepresentacion.infoRepresentante[0].DESCDOCIDENTIF;
+                this.fechaNacimientoR = ((this.dataRepresentacion.infoRepresentante[0].FECHANACIMIENTO) ? new Date(this.dataRepresentacion.infoRepresentante[0].FECHANACIMIENTO) : null);
+                this.fechaDefuncionR = ((this.dataRepresentacion.infoRepresentante[0].FECHADEFUNCION) ? new Date(this.dataRepresentacion.infoRepresentante[0].FECHADEFUNCION) : null);
+                this.celularR = this.dataRepresentacion.infoRepresentante[0].CELULAR;
+                this.emailR = this.dataRepresentacion.infoRepresentante[0].EMAIL;
+                
+            } else {
+                this.nombreR = this.dataRepresentacion.infoRepresentante[0].APELLIDOPATERNO;
+                this.rfcR = this.dataRepresentacion.infoRepresentante[0].RFC;
+                this.actPreponderanteR = this.dataRepresentacion.infoRepresentante[0].ACTIVPRINCIP;
+                this.idTipoPersonaMoralR = this.dataRepresentacion.infoRepresentante[0].IDTIPOMORAL;
+                this.fechaInicioOperacionR = ((this.dataRepresentacion.infoRepresentante[0].FECHAINICIOACTIV) ? new Date(this.dataRepresentacion.infoRepresentante[0].FECHAINICIOACTIV) : null);
+                this.idMotivoR = this.dataRepresentacion.infoRepresentante[0].IDMOTIVOSMORAL;
+                this.fechaCambioR = ((this.dataRepresentacion.infoRepresentante[0].FECHACAMBIOSITUACION) ? new Date(this.dataRepresentacion.infoRepresentante[0].FECHACAMBIOSITUACION) : null);
+            }
+
+            /////////////////////////////// REPRESENTADO /////////////////////////////////
+            this.tipoPersonaRepdo = this.dataRepresentacion.infoRepresentado[0].CODTIPOSPERSONA;
+            if(this.tipoPersonaRepdo == 'F'){
+                this.nombreRdo = this.dataRepresentacion.infoRepresentado[0].NOMBRE;
+                this.apaternoRdo = this.dataRepresentacion.infoRepresentado[0].APELLIDOMATERNO;
+                this.amaternoRdo = this.dataRepresentacion.infoRepresentado[0].APELLIDOPATERNO;
+                this.rfcRdo = this.dataRepresentacion.infoRepresentado[0].RFC;
+                this.curpRdo = this.dataRepresentacion.infoRepresentado[0].CURP;
+                this.ineRdo = this.dataRepresentacion.infoRepresentado[0].CLAVEIFE;
+                this.idDocIdentRdo = this.dataRepresentacion.infoRepresentado[0].IDDOCIDENTIF;
+                this.docIdentRdo = this.dataRepresentacion.infoRepresentado[0].DESCDOCIDENTIF;
+                this.fechaNacimientoRdo = ((this.dataRepresentacion.infoRepresentado[0].FECHANACIMIENTO) ? new Date(this.dataRepresentacion.infoRepresentado[0].FECHANACIMIENTO) : null);
+                this.fechaDefuncionRdo = ((this.dataRepresentacion.infoRepresentado[0].FECHADEFUNCION) ? new Date(this.dataRepresentacion.infoRepresentado[0].FECHADEFUNCION) : null);
+                this.celularRdo = this.dataRepresentacion.infoRepresentado[0].CELULAR;
+                this.emailRdo = this.dataRepresentacion.infoRepresentado[0].EMAIL;
+                
+            } else {
+                this.nombreRdo = this.dataRepresentacion.infoRepresentado[0].APELLIDOPATERNO;
+                this.rfcRdo = this.dataRepresentacion.infoRepresentado[0].RFC;
+                this.actPreponderanteRdo = this.dataRepresentacion.infoRepresentado[0].ACTIVPRINCIP;
+                this.idTipoPersonaMoralRdo = this.dataRepresentacion.infoRepresentado[0].IDTIPOMORAL;
+                this.fechaInicioOperacionRdo = ((this.dataRepresentacion.infoRepresentado[0].FECHAINICIOACTIV) ? new Date(this.dataRepresentacion.infoRepresentado[0].FECHAINICIOACTIV) : null);
+                this.idMotivoRdo = this.dataRepresentacion.infoRepresentado[0].IDMOTIVOSMORAL;
+                this.fechaCambioRdo = ((this.dataRepresentacion.infoRepresentado[0].FECHACAMBIOSITUACION) ? new Date(this.dataRepresentacion.infoRepresentado[0].FECHACAMBIOSITUACION) : null);
+            }
+            
+            
+    }
+
   
 }
 
