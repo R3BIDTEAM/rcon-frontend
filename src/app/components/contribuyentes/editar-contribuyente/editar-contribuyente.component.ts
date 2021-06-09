@@ -11,6 +11,9 @@ import * as moment from 'moment';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import * as FileSaver from 'file-saver';
+import pdfMake from "pdfmake/build/pdfmake";  
+import pdfFonts from "pdfmake/build/vfs_fonts";  
+pdfMake.vfs = pdfFonts.pdfMake.vfs; 
 
 export interface DatosContribuyente {
     tipoPersona: string;
@@ -445,6 +448,68 @@ export class EditarContribuyenteComponent implements OnInit {
         pdf.save('new-file.pdf'); // Generated PDF
         });
       }
+
+      async generatePDF() {
+        let docDefinition = {
+          content: [
+            {
+                image: await this.getBase64ImageFromURL(
+                "assets/img/logo_dependencia_rcon.PNG"
+              ),
+              width: 450,
+              alignment: 'center',
+            }, 
+            {  
+                text: 'COMPROBANTE DE AVISO DE MODIFICACIÓN A LOS DATOS ADMINISTRATIVOS DEL PADRÓN DE CONTRIBUYENTES DEL IMPUESTO PREDIAL',  
+                fontSize: 9,  
+                alignment: 'center',  
+                color: '#000'  
+            }, 
+            {
+                image: await this.getBase64ImageFromURL(
+                "assets/img/logo_dependencia_rcon.PNG"
+              ),
+              width: 420,
+              alignment: 'center',
+            },  
+            {  
+                text: 'COMPROBANTE DE AVISO DE MODIFICACIÓN A LOS DATOS ADMINISTRATIVOS DEL PADRÓN DE CONTRIBUYENTES DEL IMPUESTO PREDIAL',  
+                fontSize: 9,  
+                alignment: 'center',  
+                color: '#000'  
+            }   
+          ]
+        };
+    
+        pdfMake.createPdf(docDefinition).open();
+      }
+
+      getBase64ImageFromURL(url) {
+        return new Promise((resolve, reject) => {
+          var img = new Image();
+          img.setAttribute("crossOrigin", "anonymous");
+    
+          img.onload = () => {
+            var canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+    
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0);
+    
+            var dataURL = canvas.toDataURL("image/png");
+    
+            resolve(dataURL);
+          };
+    
+          img.onerror = error => {
+            reject(error);
+          };
+    
+          img.src = url;
+        });
+      }
+    
 
     getDomicilioContribuyente(){
         this.loadingDomicilios = true;
