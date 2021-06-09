@@ -44,7 +44,7 @@ export class ConsultaNotarioComponent implements OnInit {
   loading = false;
   dataSource = [];
   dataPaginate = [];
-  displayedColumns: string[] = ['nombre','datos_identificativos','seleccionar'];
+  displayedColumns: string[] = ['nombre','numero_notario','datos_identificativos','seleccionar'];
   httpOptions;
   filtros: Filtros = {} as Filtros;
   estados: Estados[] = [];

@@ -122,6 +122,7 @@ export class AltaContribuyenteComponent implements OnInit {
     httpOptions;
     dataPaginate;
     idPersona;
+    idChs;
     // tipoPersona = 'F';
     fisicaFormGroup: FormGroup;
     moralFormGroup: FormGroup;
@@ -274,8 +275,10 @@ export class AltaContribuyenteComponent implements OnInit {
                     this.domInsertCont = true;
                     this.inserto = true
                     this.idPersona = res[0].idpersona;
+                    this.idChs = res[0].idchs;
                     this.resultadoAlta = res;
                     console.log(res[0].idpersona);
+                    console.log(this.idChs);
                     this.setDatosContribuyente();
                     this.snackBar.open('guardado correcto', 'Cerrar', {
                         duration: 10000,
@@ -293,6 +296,36 @@ export class AltaContribuyenteComponent implements OnInit {
                 }
             );
         
+    }
+
+    printComprobante(){
+        let query = '';
+        this.loading = true;
+
+        query = '&idPersona=' + this.idPersona + '&idChs=' + this.idChs;
+
+        this.http.post(this.endpoint + 'infoComprobante' + '?' + query, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loading = false;
+                    console.log("Generando PDF");
+                    console.log(res);
+                    this.resultadoAlta = res;
+                    this.snackBar.open('guardado correcto', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                },
+                (error) => {
+                    this.loading = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
     }
 
     setDatosContribuyente(){

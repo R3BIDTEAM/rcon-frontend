@@ -163,7 +163,14 @@
                             </button>
                         </div>
                     </div>
-                    <div class="col-md-4 offset-md-3">
+                    <div class="col-md-4">
+                        <div class="d-flex flex-row-reverse">
+                            <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Imprimir" style="font-size: 11px;" *ngIf="!loading && actualizado" (click)="convetToPDF()">
+                                Imprimir Comprobante <mat-icon style="display: inherit; width: 15px;">print</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
                         <div class="d-flex flex-row-reverse">
                             <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Actualizar" (click)="actualizarContribuyente()" *ngIf="!loading">
                                 Actualizar <mat-icon style="display: inherit; width: 15px;">update</mat-icon>
@@ -497,3 +504,240 @@
     </ng-container>
 
 </mat-card>
+
+
+
+
+
+
+<!-- <mat-accordion>
+    <mat-expansion-panel (opened)="panelPDF = true" (closed)="panelPDF = false">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Representantes
+            </mat-panel-title>
+            <mat-panel-description>
+                {{panelRepresentantes ? 'Cerrar' : 'Ver'}} los datos de los Representantes
+            </mat-panel-description>
+        </mat-expansion-panel-header> -->
+
+        <div id="contentToConvert" style="padding-left: 50px; padding-right: 50px;" >
+            
+            <div class="d-block d-md-none d-lg-none d-xl-none">
+                <img src="assets/img/logo_dependencia_rcon.PNG" class="img-responsive" alt="Secretaría de Administración y Finanzas">
+            </div>
+            <div class="d-none d-md-block d-lg-block d-xl-block">
+                <img src="assets/img/logo_dependencia_rcon.PNG" height="80" width="100%" alt="Secretaría de Administración y Finanzas">
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12" style="text-align: center;">
+                    <strong>COMPROBANTE DE AVISO DE MODIFICACIÓN A LOS DATOS ADMINISTRATIVOS DEL PADRÓN DE CONTRIBUYENTES DEL IMPUESTO PREDIAL</strong>
+                </div>
+            </div>
+
+            <!-- Sección 1 -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <strong>ADMINISTRACIÓN TRIBUTARIA: {{this.dataActualizacion.at}}</strong>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <strong>NÚMERO DE CUENTA PREDIAL: {{this.dataActualizacion.cuentaP}}</strong>
+                    </div>
+                </div>
+
+                <div class="row" style="padding-left: 0px; padding-right: 0px;">
+                    <div class="col-md-12">
+                        <table class="tabla_pdf_rcon">
+                            <thead>
+                                <tr>
+                                    <th width="30%"></th>
+                                    <th width="10%"></th>
+                                    <th width="30%" style="text-align: right;">ANTES</th>
+                                    <th width="30%">DESPUÉS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="text-align: right;">Datos del contribuyente</td>
+                                    <td>Datos del contribuyente</td>
+                                </tr>
+                                <tr>
+                                    <td>Nombre del contribuyente:</td>
+                                    <td></td>
+                                    <td style="text-align: right;">{{this.dataActualizacion.before_Nombre}}</td>
+                                    <td>{{this.dataActualizacion.after_Nombre}}</td>
+                                </tr>
+                                <tr>
+                                    <td>RFC (Para personas morales)</td>
+                                    <td></td>
+                                    <td style="text-align: right;">{{this.dataActualizacion.before_RFC}}</td>
+                                    <td>{{this.dataActualizacion.after_RFC}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <br><br>
+
+                <div class="row" style="padding-left: 0px; padding-right: 15px;">
+                    <div class="col-md-8 offset-md-4" style="border-top: 1px solid black;">
+                        NOMBRE Y FIRMA DE CONFORMIDAD DEL CONTRIBUYENTE O REPRESENTANTE LEGAL
+                    </div>
+                </div>
+
+                <br>
+                
+                <div class="row" style="padding-left: 0px; padding-right: 0px;">
+                    <div class="col-md-12">
+                        <table class="tabla_pdf_rcon">
+                            <thead>
+                                <tr>
+                                    <th width="25%">Nombre de usuario:</th>
+                                    <th width="75%">{{this.dataActualizacion.usuario}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Área de consulta:</td>
+                                    <td>{{this.dataActualizacion.area}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Fecha de consulta:</td>
+                                    <td>{{this.dataActualizacion.fechaConsulta}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Folio:</td>
+                                    <td>{{this.dataActualizacion.folio}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <br>
+
+                <div class="row" style="padding-left: 15px; padding-right: 15px;">
+                    <div class="col-md-12" style="border: 1px solid black;">
+                        DE CONFORMIDAD CON EL ÚLTIMO PÁRRAFO DEL ARTÍCULO 126 DEL CÓDIGO FISCAL PARA LA CIUDAD DE MÉXICO, LOS DATOS CATASTRALES O ADMINISTRATIVOS, CUALESQUIERA QUE ÉSTOS SEAN, SÓLO PRODUCIRÁN EFECTOS FISCALES O CATASTRALES Y NO DE PROPIEDAD.
+                    </div>
+                </div>
+            <!-- Fin de 1 -->
+
+            <br>
+            
+            <div class="d-block d-md-none d-lg-none d-xl-none">
+                <img src="assets/img/logo_dependencia_rcon.PNG" class="img-responsive" alt="Secretaría de Administración y Finanzas">
+            </div>
+            <div class="d-none d-md-block d-lg-block d-xl-block">
+                <img src="assets/img/logo_dependencia_rcon.PNG" height="80" width="100%" alt="Secretaría de Administración y Finanzas">
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12" style="text-align: center;">
+                    <strong>COMPROBANTE DE AVISO DE MODIFICACIÓN A LOS DATOS ADMINISTRATIVOS DEL PADRÓN DE CONTRIBUYENTES DEL IMPUESTO PREDIAL</strong>
+                </div>
+            </div>
+
+            <!-- Sección 2 -->
+            <div class="row">
+                <div class="col-md-12">
+                    <strong>ADMINISTRACIÓN TRIBUTARIA: {{this.dataActualizacion.at}}</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <strong>NÚMERO DE CUENTA PREDIAL: {{this.dataActualizacion.cuentaP}}</strong>
+                </div>
+            </div>
+
+            <div class="row" style="padding-left: 0px; padding-right: 0px;">
+                <div class="col-md-12">
+                    <table class="tabla_pdf_rcon">
+                        <thead>
+                            <tr>
+                                <th width="30%"></th>
+                                <th width="10%"></th>
+                                <th width="30%" style="text-align: right;">ANTES</th>
+                                <th width="30%">DESPUÉS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: right;">Datos del contribuyente</td>
+                                <td>Datos del contribuyente</td>
+                            </tr>
+                            <tr>
+                                <td>Nombre del contribuyente:</td>
+                                <td></td>
+                                <td style="text-align: right;">{{this.dataActualizacion.before_Nombre}}</td>
+                                <td>{{this.dataActualizacion.after_Nombre}}</td>
+                            </tr>
+                            <tr>
+                                <td>RFC (Para personas morales)</td>
+                                <td></td>
+                                <td style="text-align: right;">{{this.dataActualizacion.before_RFC}}</td>
+                                <td>{{this.dataActualizacion.after_RFC}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <br><br>
+
+            <div class="row" style="padding-left: 0px; padding-right: 15px;">
+                <div class="col-md-8 offset-md-4" style="border-top: 1px solid black;">
+                    NOMBRE Y FIRMA DE CONFORMIDAD DEL CONTRIBUYENTE O REPRESENTANTE LEGAL
+                </div>
+            </div>
+
+            <br>
+            
+            <div class="row" style="padding-left: 0px; padding-right: 0px;">
+                <div class="col-md-12">
+                    <table class="tabla_pdf_rcon">
+                        <thead>
+                            <tr>
+                                <th width="25%">Nombre de usuario:</th>
+                                <th width="75%">{{this.dataActualizacion.usuario}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Área de consulta:</td>
+                                <td>{{this.dataActualizacion.area}}</td>
+                            </tr>
+                            <tr>
+                                <td>Fecha de consulta:</td>
+                                <td>{{this.dataActualizacion.fechaConsulta}}</td>
+                            </tr>
+                            <tr>
+                                <td>Folio:</td>
+                                <td>{{this.dataActualizacion.folio}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="row" style="padding-left: 15px; padding-right: 15px;">
+                <div class="col-md-12" style="border: 1px solid black;">
+                    DE CONFORMIDAD CON EL ÚLTIMO PÁRRAFO DEL ARTÍCULO 126 DEL CÓDIGO FISCAL PARA LA CIUDAD DE MÉXICO, LOS DATOS CATASTRALES O ADMINISTRATIVOS, CUALESQUIERA QUE ÉSTOS SEAN, SÓLO PRODUCIRÁN EFECTOS FISCALES O CATASTRALES Y NO DE PROPIEDAD.
+                </div>
+            </div>
+            <!-- Fin de 2 -->
+
+            
+        </div>
+    <!-- </mat-expansion-panel>
+</mat-accordion> -->

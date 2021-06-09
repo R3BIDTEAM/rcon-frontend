@@ -8,6 +8,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import * as moment from 'moment';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 import * as FileSaver from 'file-saver';
 
 export interface DatosContribuyente {
@@ -114,6 +116,26 @@ export interface DataDomicilio {
   id_direccion: string;
 }
 
+export interface DataActualizacion{
+    after_CP: string;
+    after_Col: string;
+    after_Direccion: string;
+    after_Nombre: string;
+    after_RFC: string;
+    area: string;
+    at: string;
+    before_CP: string;
+    before_Col: string;
+    before_Direccion: string;
+    before_Nombre: string;
+    before_RFC: string;
+    cuentaP: string;
+    fechaConsulta: string;
+    folio: string;
+    idpersona: string;
+    usuario: string;
+}
+
 @Component({
   selector: 'app-editar-contribuyente',
   templateUrl: './editar-contribuyente.component.html',
@@ -130,10 +152,12 @@ export class EditarContribuyenteComponent implements OnInit {
     dataContribuyenteResultado;
     query;
     idContribuyente;
+    idChs;
     panelDomicilio = false;
     panelDomPredial = false;
     dataRepresentantes: DataRepresentacion[] = [];
     dataRepresentados: DataRepresentacion[] = [];
+    dataActualizacion: DataActualizacion = {} as DataActualizacion;
     contribuyente: DatosContribuyente = {} as DatosContribuyente;
     dataDocumentos: DocumentosIdentificativos[] = [];
     dataDomicilios: DataDomicilio[] = [];
@@ -155,6 +179,8 @@ export class EditarContribuyenteComponent implements OnInit {
     panelRepresentados = false;
     loadingRepresentante = false;
     loadingRepresentado = false;
+    panelPDF = false;
+    actualizado = false;
 
     /*Paginado*/
     dataSource1 = [];
@@ -182,15 +208,17 @@ export class EditarContribuyenteComponent implements OnInit {
         private snackBar: MatSnackBar,
         public dialog: MatDialog,
         private route: ActivatedRoute
-    ) { }
-
-    ngOnInit(): void {
+    ) {
         this.httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
                 Authorization: this.auth.getSession().token
             })
         };
+     }
+
+    ngOnInit(): void {
+        
 
         this.fisicaFormGroup = this._formBuilder.group({
             nombre: [null, [Validators.required]],
@@ -302,6 +330,7 @@ export class EditarContribuyenteComponent implements OnInit {
         console.log('Preparando actualización...');
         let query = '';
         this.loading = true;
+        this.actualizado = false;
 
         query = (this.contribuyente.tipoPersona) ? query + '&codtipospersona=' + this.contribuyente.tipoPersona : query + '&codtipospersona=';
         query = (this.contribuyente.nombre) ? query + '&nombre=' + this.contribuyente.nombre : query + '&nombre=';
@@ -330,6 +359,28 @@ export class EditarContribuyenteComponent implements OnInit {
                     this.loading = false;
                     console.log("CONTRIBUYENTE ACTUALIZADO");
                     console.log(res);
+            
+                        this.dataActualizacion.after_CP = res.after_CP;
+                        this.dataActualizacion.after_Col = res.after_Col;
+                        this.dataActualizacion.after_Direccion = res.after_Direccion;
+                        this.dataActualizacion.after_Nombre = res.after_Nombre;
+                        this.dataActualizacion.after_RFC = res.after_RFC;
+                        this.dataActualizacion.area = res.area;
+                        this.dataActualizacion.at = res.at;
+                        this.dataActualizacion.before_CP = res.before_CP;
+                        this.dataActualizacion.before_Col = res.before_Col;
+                        this.dataActualizacion.before_Direccion = res.before_Direccion;
+                        this.dataActualizacion.before_Nombre = res.before_Nombre;
+                        this.dataActualizacion.before_RFC = res.before_RFC;
+                        this.dataActualizacion.cuentaP = res.cuentaP;
+                        this.dataActualizacion.fechaConsulta = res.fechaConsulta;
+                        this.dataActualizacion.folio = res.folio;
+                        this.dataActualizacion.idpersona = res.idpersona;
+                        this.dataActualizacion.usuario = res.usuario;
+
+                        this.actualizado = true;
+
+                    console.log(this.dataActualizacion);
                     this.snackBar.open('guardado correcto', 'Cerrar', {
                         duration: 10000,
                         horizontalPosition: 'end',
@@ -347,6 +398,53 @@ export class EditarContribuyenteComponent implements OnInit {
             );
     }
 
+    // printComprobante(){
+    //     let query = '';
+    //     this.loading = true;
+
+    //     query = 'idPersona=' + this.idContribuyente + '&idChs=' + this.idChs;
+
+    //     this.http.post(this.endpoint + 'infoComprobante' + '?' + query, '', this.httpOptions)
+    //         .subscribe(
+    //             (res: any) => {
+    //                 this.loading = false;
+    //                 console.log("Generando PDF");
+    //                 console.log(res);
+    //                 this.snackBar.open('guardado correcto', 'Cerrar', {
+    //                     duration: 10000,
+    //                     horizontalPosition: 'end',
+    //                     verticalPosition: 'top'
+    //                 });
+    //             },
+    //             (error) => {
+    //                 this.loading = false;
+    //                 this.snackBar.open(error.error.mensaje, 'Cerrar', {
+    //                     duration: 10000,
+    //                     horizontalPosition: 'end',
+    //                     verticalPosition: 'top'
+    //                 });
+    //             }
+    //         );
+    // }
+
+    public convetToPDF(){
+        var data = document.getElementById('contentToConvert');
+        html2canvas(data).then(canvas => {
+        // Few necessary setting options
+        var imgWidth = 208;
+        // var pageHeight = 295;
+        var imgHeight = canvas.height * imgWidth / canvas.width;
+        var heightLeft = imgHeight;
+        
+        const contentDataURL = canvas.toDataURL('image/png')
+        let pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF
+        let width = pdf.internal.pageSize.getWidth();
+        let height = pdf.internal.pageSize.getHeight();
+        var position = 5;
+        pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
+        pdf.save('new-file.pdf'); // Generated PDF
+        });
+      }
 
     getDomicilioContribuyente(){
         this.loadingDomicilios = true;
