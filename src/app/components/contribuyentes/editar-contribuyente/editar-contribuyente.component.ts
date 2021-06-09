@@ -342,7 +342,7 @@ export class EditarContribuyenteComponent implements OnInit {
         query = (this.contribuyente.fechaInicioOperacion) ? query + '&fechainicioactiv=' + moment(this.contribuyente.fechaInicioOperacion).format('DD-MM-YYYY') : query + '&fechainicioactiv=';
         query = (this.contribuyente.fechaCambio) ? query + '&fechacambiosituacion=' + moment(this.contribuyente.fechaCambio).format('DD-MM-YYYY') : query + '&fechacambiosituacion=';
         query = (this.contribuyente.rfc) ? query + '&rfc=' + this.contribuyente.rfc : query + '&rfc=';
-        query = (this.contribuyente.apepaterno) ? query + '&apellidopaterno=' + this.contribuyente.apepaterno : query + '&apellidopaterno=';
+        // query = (this.contribuyente.apepaterno) ? query + '&apellidopaterno=' + this.contribuyente.apepaterno : query + '&apellidopaterno=';
         query = (this.contribuyente.apematerno) ? query + '&apellidomaterno=' + this.contribuyente.apematerno : query + '&apellidomaterno=';
         query = (this.contribuyente.curp) ? query + '&curp=' + this.contribuyente.curp : query + '&curp=';
         query = (this.contribuyente.ine) ? query + '&claveife=' + this.contribuyente.ine : query + '&claveife=';
@@ -353,7 +353,14 @@ export class EditarContribuyenteComponent implements OnInit {
         query = (this.contribuyente.celular) ? query + '&celular=' + this.contribuyente.celular : query + '&celular=';
         query = (this.contribuyente.email) ? query + '&email=' + this.contribuyente.email : query + '&email=';
         query = (this.contribuyente.actPreponderante) ? query + '&activprincip=' + this.contribuyente.actPreponderante : query + '&activprincip=';
-        query = (this.contribuyente.nombre_moral) ? query + '&apellidopaterno=' + this.contribuyente.nombre_moral : query + '&apellidopaterno=';
+        // query = (this.contribuyente.nombre_moral) ? query + '&apellidopaterno=' + this.contribuyente.nombre_moral : query + '&apellidopaterno=';
+
+        if(this.contribuyente.tipoPersona === 'F'){
+            query = (this.contribuyente.apepaterno) ? query + '&apellidopaterno=' + this.contribuyente.apepaterno : query + '&apellidopaterno=';
+        } else {
+            query = (this.contribuyente.nombre_moral) ? query + '&apellidopaterno=' + this.contribuyente.nombre_moral : query + '&apellidopaterno=';
+        }
+
         query = query + '&idExpediente&idpersona='  + this.idContribuyente;
 
         this.http.post(this.endpoint + 'actualizaContribuyente' + '?' + query, '', this.httpOptions)
@@ -430,24 +437,6 @@ export class EditarContribuyenteComponent implements OnInit {
     //         );
     // }
 
-    public convetToPDF(){
-        var data = document.getElementById('contentToConvert');
-        html2canvas(data).then(canvas => {
-        // Few necessary setting options
-        var imgWidth = 208;
-        // var pageHeight = 295;
-        var imgHeight = canvas.height * imgWidth / canvas.width;
-        var heightLeft = imgHeight;
-        
-        const contentDataURL = canvas.toDataURL('image/png')
-        let pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF
-        let width = pdf.internal.pageSize.getWidth();
-        let height = pdf.internal.pageSize.getHeight();
-        var position = 5;
-        pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
-        pdf.save('new-file.pdf'); // Generated PDF
-        });
-      }
 
       async generatePDF() {
         let docDefinition = {
@@ -472,7 +461,7 @@ export class EditarContribuyenteComponent implements OnInit {
                 color: '#000'  
             }, 
             {  
-                text: 'NUMERO DE CUENTA PREDIAL: ',  
+                text: 'NUMERO DE CUENTA PREDIAL: ' + this.dataActualizacion.cuentaP,  
                 fontSize: 9,  
                 alignment: 'left',  
                 color: '#000'  
@@ -498,33 +487,228 @@ export class EditarContribuyenteComponent implements OnInit {
                     body: [  
                         ['', '', { text: 'ANTES', bold: true, alignment: 'right', fontSize: 9 }, { text: 'DESPUÉS', bold: true, fontSize: 9 }],  
                         [ '', '', { text: 'Datos del contribuyente', bold: true, alignment: 'right', fontSize: 9 }, { text: 'Datos del contribuyente', bold: true, fontSize: 9 } ],
-                        [ { text: 'Nombre del contribuyente:', fontSize: 9 }, '', { text: 'VERA MÁRQUEZ JUAN DANIEL', fontSize: 9, alignment: 'right' }, { text: 'VERA MÁRQUEZ JUAN DANIEL', fontSize: 9 } ],
-                        [ { text: 'RFC (para personas morales)', fontSize: 9 }, '', { text: 'VEMJ770817R41', fontSize: 9, alignment: 'right' }, { text: 'VEMJ770817R41', fontSize: 9 } ] 
+                        [ { text: 'Nombre del contribuyente:', fontSize: 9 }, '', { text: this.dataActualizacion.before_Nombre, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_Nombre, fontSize: 9 } ],
+                        [ { text: 'RFC (para personas morales)', fontSize: 9 }, '', { text: this.dataActualizacion.before_RFC, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_RFC, fontSize: 9 } ] 
                     ]  
                 }  
             },
+            {
+                canvas: [
+                    {
+                        type: 'line',
+                        x1: 525,
+                        y1: 20,
+                        x2: 150,
+                        y2: 20,
+                        lineWidth: 0.5
+                    }
+                ]
+            },
             {  
+                layout: 'noBorders',
                 table: {  
                     headerRows: 1,  
                     widths: ['30%', '70%'],  
                     body: [  
                         ['', { text: 'NOMBRE Y FIRMA DE CONFORMIDAD DEL CONTRIBUYENTE O REPRESENTANTE LEGAL', bold: true, alignment: 'center', fontSize: 8 }],    
                     ]  
+                }   
+            },
+            {
+                canvas: [
+                    {
+                        type: 'line',
+                        color: 'white',
+                        x1: 0,
+                        y1: 20,
+                        x2: 250,
+                        y2: 20,
+                        lineWidth: 0.5
+                    }
+                ]
+            },
+            {  
+                layout: 'noBorders',
+                table: {  
+                    headerRows: 1,  
+                    widths: ['20%', '80%'],  
+                    body: [  
+                        [{ text: 'Nombre de usuario:', fontSize: 9 }, { text: this.dataActualizacion.usuario, fontSize: 9 }],  
+                        [{ text: 'Área de consulta:', fontSize: 9 }, { text: this.dataActualizacion.area, fontSize: 9 }],    
+                        [{ text: 'Fecha de consulta:', fontSize: 9 }, { text: this.dataActualizacion.fechaConsulta, fontSize: 9 }],  
+                        [{ text: 'Folio:', fontSize: 9 }, { text: this.dataActualizacion.folio, fontSize: 9 }],    
+                    ]  
                 }  
+            },
+            {
+                canvas: [
+                    {
+                        type: 'line',
+                        color: 'white',
+                        x1: 0,
+                        y1: 10,
+                        x2: 250,
+                        y2: 10,
+                        lineWidth: 0.5
+                    }
+                ]
+            },
+            {  
+                table: {  
+                    headerRows: 1,  
+                    widths: ['100%'],  
+                    body: [  
+                        [{ text: 'DE CONFORMIDAD CON EL ÚLTIMO PÁRRAFO DEL ARTÍCULO 126 DEL CÓDIGO FISCAL PARA LA CIUDAD DE MÉXICO, LOS DATOS CATASTRALES O ADMINISTRATIVOS, CUALESQUIERA QUE ÉSTOS SEAN, SÓLO PRODUCIRÁN EFECTOS FISCALES O CATASTRALES Y NO DE PROPIEDAD.', fontSize: 9 }]    
+                    ]  
+                }  
+            },
+            {
+                canvas: [
+                    {
+                        type: 'line',
+                        color: 'white',
+                        x1: 0,
+                        y1: 10,
+                        x2: 250,
+                        y2: 10,
+                        lineWidth: 0.5
+                    }
+                ]
             },
             {
                 image: await this.getBase64ImageFromURL(
                 "assets/img/logo_dependencia_rcon.PNG"
               ),
-              width: 420,
+              width: 450,
               alignment: 'center',
-            },  
+            }, 
             {  
                 text: 'COMPROBANTE DE AVISO DE MODIFICACIÓN A LOS DATOS ADMINISTRATIVOS DEL PADRÓN DE CONTRIBUYENTES DEL IMPUESTO PREDIAL',  
                 fontSize: 9,  
                 alignment: 'center',  
                 color: '#000'  
-            }   
+            }, 
+            {  
+                text: 'ADMINISTRACIÓN TRIBUTARIA: ' + this.dataActualizacion.at,  
+                fontSize: 9,  
+                alignment: 'left',  
+                color: '#000'  
+            }, 
+            {  
+                text: 'NUMERO DE CUENTA PREDIAL: ' + this.dataActualizacion.cuentaP,  
+                fontSize: 9,  
+                alignment: 'left',  
+                color: '#000'  
+            }, 
+            {
+                canvas: [
+                    {
+                        type: 'line',
+                        color: 'white',
+                        x1: 0,
+                        y1: 5,
+                        x2: 250,
+                        y2: 5,
+                        lineWidth: 0.5
+                    }
+                ]
+            },
+            {  
+                layout: 'noBorders',
+                table: {  
+                    headerRows: 1,  
+                    widths: ['30%', '10%', '30%', '30%'],  
+                    body: [  
+                        ['', '', { text: 'ANTES', bold: true, alignment: 'right', fontSize: 9 }, { text: 'DESPUÉS', bold: true, fontSize: 9 }],  
+                        [ '', '', { text: 'Datos del contribuyente', bold: true, alignment: 'right', fontSize: 9 }, { text: 'Datos del contribuyente', bold: true, fontSize: 9 } ],
+                        [ { text: 'Nombre del contribuyente:', fontSize: 9 }, '', { text: this.dataActualizacion.before_Nombre, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_Nombre, fontSize: 9 } ],
+                        [ { text: 'RFC (para personas morales)', fontSize: 9 }, '', { text: this.dataActualizacion.before_RFC, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_RFC, fontSize: 9 } ] 
+                    ]  
+                }  
+            },
+            {
+                canvas: [
+                    {
+                        type: 'line',
+                        x1: 525,
+                        y1: 20,
+                        x2: 150,
+                        y2: 20,
+                        lineWidth: 0.5
+                    }
+                ]
+            },
+            {  
+                layout: 'noBorders',
+                table: {  
+                    headerRows: 1,  
+                    widths: ['30%', '70%'],  
+                    body: [  
+                        ['', { text: 'NOMBRE Y FIRMA DE CONFORMIDAD DEL CONTRIBUYENTE O REPRESENTANTE LEGAL', bold: true, alignment: 'center', fontSize: 8 }],    
+                    ]  
+                }   
+            },
+            {
+                canvas: [
+                    {
+                        type: 'line',
+                        color: 'white',
+                        x1: 0,
+                        y1: 20,
+                        x2: 250,
+                        y2: 20,
+                        lineWidth: 0.5
+                    }
+                ]
+            },
+            {  
+                layout: 'noBorders',
+                table: {  
+                    headerRows: 1,  
+                    widths: ['20%', '80%'],  
+                    body: [  
+                        [{ text: 'Nombre de usuario:', fontSize: 9 }, { text: this.dataActualizacion.usuario, fontSize: 9 }],  
+                        [{ text: 'Área de consulta:', fontSize: 9 }, { text: this.dataActualizacion.area, fontSize: 9 }],    
+                        [{ text: 'Fecha de consulta:', fontSize: 9 }, { text: this.dataActualizacion.fechaConsulta, fontSize: 9 }],  
+                        [{ text: 'Folio:', fontSize: 9 }, { text: this.dataActualizacion.folio, fontSize: 9 }],    
+                    ]  
+                }  
+            },
+            {
+                canvas: [
+                    {
+                        type: 'line',
+                        color: 'white',
+                        x1: 0,
+                        y1: 10,
+                        x2: 250,
+                        y2: 10,
+                        lineWidth: 0.5
+                    }
+                ]
+            },
+            {  
+                table: {  
+                    headerRows: 1,  
+                    widths: ['100%'],  
+                    body: [  
+                        [{ text: 'DE CONFORMIDAD CON EL ÚLTIMO PÁRRAFO DEL ARTÍCULO 126 DEL CÓDIGO FISCAL PARA LA CIUDAD DE MÉXICO, LOS DATOS CATASTRALES O ADMINISTRATIVOS, CUALESQUIERA QUE ÉSTOS SEAN, SÓLO PRODUCIRÁN EFECTOS FISCALES O CATASTRALES Y NO DE PROPIEDAD.', fontSize: 9 }]    
+                    ]  
+                }  
+            },
+            {
+                canvas: [
+                    {
+                        type: 'line',
+                        color: 'white',
+                        x1: 0,
+                        y1: 10,
+                        x2: 250,
+                        y2: 10,
+                        lineWidth: 0.5
+                    }
+                ]
+            },
           ]
         };
     
