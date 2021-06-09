@@ -8,6 +8,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 
+export interface DocumentosIdentificativos{
+  id_documento: number;
+  documento: string;
+}
+
 @Component({
   selector: 'app-edicion-contribuyente',
   templateUrl: './edicion-contribuyente.component.html',
@@ -22,6 +27,7 @@ export class EdicionContribuyenteComponent implements OnInit {
   dataSource = [];
   data = [];
   displayedColumns: string[] = ['nombre', 'datos_identificativos', 'seleccionar'];
+  documentos: DocumentosIdentificativos[] = [];
   httpOptions;
   cuentaFormGroup: FormGroup;
   contribuyenteFormGroup: FormGroup;
@@ -30,6 +36,7 @@ export class EdicionContribuyenteComponent implements OnInit {
   busqueda = false;
   queryParamFiltros;
   endpointBusqueda;
+  loadingDocumentosIdentificativos = false;
   @ViewChild('paginator') paginator: MatPaginator;
 
   constructor(
@@ -46,6 +53,8 @@ export class EdicionContribuyenteComponent implements OnInit {
         Authorization: this.auth.getSession().token
       })
     };
+
+    this.getDataDocumentosIdentificativos();
 
     this.cuentaFormGroup = this._formBuilder.group({
       region: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
@@ -78,6 +87,20 @@ export class EdicionContribuyenteComponent implements OnInit {
       }
       this.contribuyenteFormGroup.updateValueAndValidity();
     });
+  }
+
+  getDataDocumentosIdentificativos(): void{
+    this.loadingDocumentosIdentificativos = true;
+    this.http.post(this.endpoint + 'getCatalogos', '', this.httpOptions).subscribe(
+      (res: any) => {
+        this.loadingDocumentosIdentificativos = false;
+        this.documentos = res.CatDocIdentificativos;
+        // console.log(this.documentos);
+      },
+      (error) => {
+        this.loadingDocumentosIdentificativos = false;
+      }
+    );
   }
 
   keyPressAlphaNumeric(event) {

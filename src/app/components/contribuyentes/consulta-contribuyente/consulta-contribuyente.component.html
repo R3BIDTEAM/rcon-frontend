@@ -127,8 +127,10 @@
                             <mat-form-field class="col-4">
                                 <mat-label>Otro documento identificativo:</mat-label>
                                 <mat-select formControlName="iddocumentoidentificativo" (selectionChange)="clearInputsIdentNoIdent(true)">
-                                    <mat-option value="">Seleccione un rol ...</mat-option>
-                                    <mat-option value="1">Test</mat-option>
+                                    <mat-option value="">Seleccione...</mat-option>
+                                    <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF">
+                                        {{ documento.DESCRIPCION }}
+                                    </mat-option>
                                 </mat-select>
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.iddocumentoidentificativo.errors?.required">Requerido</mat-error>
                             </mat-form-field>
