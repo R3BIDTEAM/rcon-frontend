@@ -72,6 +72,22 @@ export class AltaNotarioComponent implements OnInit {
     this.getDataDocumentosIdentificativos();
   }
 
+  clean(){
+    this.filtros.no_notario = null;
+    this.filtros.estado = null;
+    this.filtros.nombre = null;
+    this.filtros.apellido_paterno = null;
+    this.filtros.apellido_materno = null;
+    this.filtros.rfc = null;
+    this.filtros.curp = null;
+    this.filtros.ine = null;
+    this.filtros.otro_documento = null;
+    this.filtros.numero_documento = null;
+    this.filtros.fecha_nacimiento = null;
+    this.filtros.fecha_defuncion = null;
+    this.filtros.email = null;
+    this.filtros.celular = null;
+  }
 
   getDataEstados(): void {
     this.loadingEstados = true;
