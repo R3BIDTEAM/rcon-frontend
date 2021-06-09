@@ -15,86 +15,88 @@
             <mat-card-title>Datos persona moral</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <!-- Búsqueda por nombre -->
-            <div class="row">
-                <div class="col-1 text-center">
-                </div>
-                <mat-form-field class="col-10">
-                    <mat-label>Razón Social</mat-label>
-                    <input matInput [required]="true" [(ngModel)]="razonSocial" [readonly]="inserto">
-                    <mat-error></mat-error>
-                </mat-form-field>
-            </div>
-            <div class="row">
-                <div class="col-1 text-center">
-                </div>
-                    <mat-form-field class="col-4">
-                        <mat-label>RFC</mat-label>
-                        <input matInput [required]="true" [(ngModel)]="rfc" [readonly]="inserto">
-                        <mat-error></mat-error>
+            <form [formGroup]="sociedadFormGroup">
+                <!-- Búsqueda por nombre -->
+                <div class="row">
+                    <div class="col-1 text-center">
+                    </div>
+                    <mat-form-field class="col-10">
+                        <mat-label>Razón Social</mat-label>
+                        <input matInput  [readonly]="inserto" formControlName="razonSocial">
+                        <mat-error *ngIf="sociedadFormGroup.controls.razonSocial.errors?.required">Requerido</mat-error>
                     </mat-form-field>
-            </div>
-            <!-- Fin de nombre -->
+                </div>
+                <div class="row">
+                    <div class="col-1 text-center">
+                    </div>
+                        <mat-form-field class="col-4">
+                            <mat-label>RFC</mat-label>
+                            <input matInput  [readonly]="inserto" formControlName="rfc">
+                            <mat-error *ngIf="sociedadFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
+                        </mat-form-field>
+                </div>
+                <!-- Fin de nombre -->
 
-            <br>
-            <mat-card-header>
-                <mat-card-title>Datos especificos de la sociedad</mat-card-title>
-            </mat-card-header>
-            <div class="row">
-                <div class="col-1 text-center">
+                <br>
+                <mat-card-header>
+                    <mat-card-title>Datos especificos de la sociedad</mat-card-title>
+                </mat-card-header>
+                <div class="row">
+                    <div class="col-1 text-center">
+                    </div>
+                    <mat-form-field class="col-4">
+                        <mat-label>Registro</mat-label>
+                        <input matInput  [readonly]="inserto" formControlName="registro">
+                        <mat-error *ngIf="sociedadFormGroup.controls.registro.errors?.required">Requerido</mat-error>
+                    </mat-form-field>
                 </div>
-                <mat-form-field class="col-4">
-                    <mat-label>Registro</mat-label>
-                    <input matInput [required]="true" [(ngModel)]="registro" [readonly]="inserto">
-                    <mat-error></mat-error>
-                </mat-form-field>
-            </div>
 
-            <div class="row">
-                <div class="col-1 text-center">
+                <div class="row">
+                    <div class="col-1 text-center">
+                    </div>
+                        <mat-form-field class="col-4">
+                            <mat-label>Fecha Alta</mat-label>
+                            <input matInput readonly [matDatepicker]="pickini"  [disabled]="inserto" formControlName="fecha_alta">
+                            <mat-datepicker-toggle matSuffix [for]="pickini"></mat-datepicker-toggle>
+                            <mat-datepicker #pickini></mat-datepicker>
+                        </mat-form-field>
+                    <div class="col-1 text-center">
+                    </div>
+                        <mat-form-field class="col-4">
+                            <mat-label>Fecha Baja</mat-label>
+                            <input matInput readonly [matDatepicker]="pickfin"  [disabled]="inserto" formControlName="fecha_baja">
+                            <mat-datepicker-toggle matSuffix [for]="pickfin"></mat-datepicker-toggle>
+                            <mat-datepicker #pickfin></mat-datepicker>
+                            <mat-error></mat-error>
+                        </mat-form-field>
                 </div>
-                    <mat-form-field class="col-4">
-                        <mat-label>Fecha Alta</mat-label>
-                        <input matInput readonly [matDatepicker]="pickini" [(ngModel)]="fecha_alta" [disabled]="inserto">
-                        <mat-datepicker-toggle matSuffix [for]="pickini"></mat-datepicker-toggle>
-                        <mat-datepicker #pickini></mat-datepicker>
-                    </mat-form-field>
-                <div class="col-1 text-center">
-                </div>
-                    <mat-form-field class="col-4">
-                        <mat-label>Fecha Baja</mat-label>
-                        <input matInput readonly [matDatepicker]="pickfin" [(ngModel)]="fecha_baja" [disabled]="inserto">
-                        <mat-datepicker-toggle matSuffix [for]="pickfin"></mat-datepicker-toggle>
-                        <mat-datepicker #pickfin></mat-datepicker>
-                        <mat-error></mat-error>
-                    </mat-form-field>
-            </div>
 
-            <div class="row">
-                <div class="col-1 text-center">
+                <div class="row">
+                    <div class="col-1 text-center">
+                    </div>
+                        <mat-form-field class="col-4">
+                            <mat-label>E-Mail</mat-label>
+                            <input matInput type="email" [email]="true" [disabled]="inserto" formControlName="email">
+                            <mat-error *ngIf="sociedadFormGroup.hasError('email', 'email') && sociedadFormGroup.get('email').touched">Correo invalido</mat-error>
+                        </mat-form-field>
                 </div>
-                    <mat-form-field class="col-4">
-                        <mat-label>E-Mail</mat-label>
-                        <input matInput [required]="true" [(ngModel)]="email" [disabled]="inserto">
-                        <mat-error></mat-error>
-                    </mat-form-field>
-            </div>
 
-            <div class="row">
-                <div class="col-1 text-center">
+                <div class="row">
+                    <div class="col-1 text-center">
+                    </div>
+                        <mat-form-field class="col-4">
+                            <mat-label>Login</mat-label>
+                            <input matInput [disabled]="inserto" formControlName="login">
+                            <mat-error *ngIf="sociedadFormGroup.controls.login.errors?.required">Requerido</mat-error>
+                        </mat-form-field>
                 </div>
-                    <mat-form-field class="col-4">
-                        <mat-label>Login</mat-label>
-                        <input matInput [required]="true" [(ngModel)]="login" [disabled]="inserto">
-                        <mat-error></mat-error>
-                    </mat-form-field>
-            </div>
+            </form>
             <br>
 
             <div class="row">
                 <div class="col-md-2 offset-md-8">
                     <div class="d-flex flex-row-reverse">
-                        <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" (click)="guardaSociedad()" [disabled]="inserto">
+                        <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" (click)="guardaSociedad()" [disabled]="sociedadFormGroup.invalid">
                             Guardar
                         </button>
                     </div>

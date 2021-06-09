@@ -17,6 +17,7 @@ import * as moment from 'moment';
 })
 export class AltaSociedadComponent implements OnInit {
     endpoint = environment.endpoint + 'registro/insertarSociedad';
+    sociedadFormGroup: FormGroup;
     httpOptions;
     razonSocial;
     rfc;
@@ -47,6 +48,16 @@ export class AltaSociedadComponent implements OnInit {
               Authorization: this.auth.getSession().token
             })
         };
+
+        this.sociedadFormGroup = this._formBuilder.group({
+            razonSocial: ['', Validators.required],
+            rfc: ['', Validators.required],
+            registro: ['', Validators.required],
+            fecha_alta: [null],
+            fecha_baja: [null],
+            email: ['', Validators.email],
+            login: ['', Validators.required],
+          });
     }
 
     clean(): void{
@@ -55,6 +66,14 @@ export class AltaSociedadComponent implements OnInit {
     }
 
     guardaSociedad(){
+
+        this.razonSocial = this.sociedadFormGroup.value.razonSocial;
+        this.rfc = this.sociedadFormGroup.value.rfc;
+        this.registro = this.sociedadFormGroup.value.registro;
+        this.fecha_alta = this.sociedadFormGroup.value.fecha_alta;
+        this.fecha_baja = this.sociedadFormGroup.value.fecha_baja;
+        this.email = this.sociedadFormGroup.value.email;
+        this.login = this.sociedadFormGroup.value.login;
         let query = 'idPersona';
         this.loading = true;
         

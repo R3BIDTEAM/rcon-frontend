@@ -32,13 +32,13 @@
                     </div>
                     <mat-form-field class="col-5">
                         <mat-label>Apellido Paterno:</mat-label>
-                        <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.apepaterno" formControlName="apellidopaterno" [readonly]="inserto">
-                        <mat-error *ngIf="peritoPersonaFormGroup.controls.apellidopaterno.errors?.required">Requerido</mat-error>
+                        <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.apepaterno" formControlName="apepaterno" [readonly]="inserto">
+                        <mat-error *ngIf="peritoPersonaFormGroup.controls.apepaterno.errors?.required">Requerido</mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-5">
                         <mat-label>Apellido Materno:</mat-label>
-                        <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.apematerno" formControlName="apellidomaterno" [readonly]="inserto">
-                        <mat-error *ngIf="peritoPersonaFormGroup.controls.apellidomaterno.errors?.required">Requerido</mat-error>
+                        <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.apematerno" formControlName="apematerno" [readonly]="inserto">
+                        <mat-error *ngIf="peritoPersonaFormGroup.controls.apematerno.errors?.required">Requerido</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="row">
@@ -106,7 +106,9 @@
                     </mat-form-field>
                     <mat-form-field class="col-5">
                         <mat-label>E-mail:</mat-label>
-                        <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.email" formControlName="email" [readonly]="inserto">
+                        <input matInput type="email" [email]="true" placeholder="E-mail" [(ngModel)]="datoPeritos.email" formControlName="email" [readonly]="inserto">
+                        <mat-error *ngIf="peritoPersonaFormGroup.hasError('email', 'email') && peritoPersonaFormGroup.get('email').touched">Correo invalido</mat-error>
+                        
                     </mat-form-field>
                 </div>
                 <!-- Fin de nombre -->
@@ -147,6 +149,7 @@
                     <mat-form-field class="col-5">
                         <mat-label>Login:</mat-label>
                         <input matInput formControlName="login" [readonly]="inserto">
+                        <mat-error *ngIf="peritoPersonaFormGroup.controls.login.errors?.required">Requerido</mat-error>
                     </mat-form-field>
                 </div>
             </form>
@@ -159,7 +162,7 @@
             <div class="row">
                 <div class="col-md-2 offset-md-8">
                     <div class="d-flex flex-row-reverse">
-                        <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" (click)="guardaPerito()" [disabled]="inserto">
+                        <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" (click)="guardaPerito()" [disabled]="peritoPersonaFormGroup.invalid">
                             Guardar
                         </button>
                     </div>

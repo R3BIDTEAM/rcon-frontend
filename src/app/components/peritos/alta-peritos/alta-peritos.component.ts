@@ -27,6 +27,7 @@ export interface DatosPeritos {
     independiente: string;
     fecha_alta: Date;
     fecha_baja: Date;
+    login: string;
 }
 @Component({
     selector: 'app-alta-peritos',
@@ -62,22 +63,22 @@ export class AltaPeritosComponent implements OnInit {
             })
         };
         this.peritoPersonaFormGroup = this._formBuilder.group({
-            apellidopaterno: ['', Validators.required],
-            apellidomaterno: ['', Validators.required],
+            apepaterno: ['', Validators.required],
+            apematerno: ['', Validators.required],
             nombre: ['', Validators.required],
             rfc: ['', Validators.required],
             curp: ['', Validators.required],
-            ine: ['', Validators.required],
+            ine: [null],
             identificacion: [null],
             idedato: [null],
             fechaNacimiento: [null],
             fechaDefuncion: [null],
             celular: [null],
-            email: [null],
+            email: ['', Validators.email],
             registro: [null, []],
             fechaInicio: [null, []],
             fechaFin: [null, []],
-            login: [null, []]
+            login: ['', Validators.required]
           });
           this.datoPeritos.independiente = 'N';
     }
@@ -96,6 +97,21 @@ export class AltaPeritosComponent implements OnInit {
         
         //http://localhost:8000/api/v1/registro/insertarPerito?idPersona&registro=v-9999-99&fechaAlta=10-05-2021&fechaBaja&independiente=N&nombre=Omar Isaias&apellidoPaterno=Vidal&apellidoMaterno=Perez&rfc=VIP900629MG5&curp&ife=PLGMJN83062615H500&iddocIdentif=1&valdocIdentif&fechaNacimiento&fechaDefuncion&email=ividal@mail.com&celular&codtiposPersona=F&persona&idExpediente=347418
         //http://localhost:8000/api/v1/registro/insertarPerito?idPersona&registro=V-9988-48&fechaAlta=&fechaBaja=&independiente=N&nombre=VIVIANA&apellidopaterno=CHAVEZ&apellidomaterno=ROSAS&rfc=PIPO900929FA0&curp=PIPO900929HASDER08&claveife=DA181F&iddocidentif=&valdocidentif=&fechanacimiento=&fechadefuncion=&email=lli@gmail.com&celular=&codtiposPersona=F&persona&idExpediente=347418
+
+        this.datoPeritos.registro = this.peritoPersonaFormGroup.value.registro;
+        this.datoPeritos.fecha_alta = this.peritoPersonaFormGroup.value.fecha_alta;
+        this.datoPeritos.fecha_baja = this.peritoPersonaFormGroup.value.fecha_baja;
+        this.datoPeritos.nombre = this.peritoPersonaFormGroup.value.nombre;
+        this.datoPeritos.apepaterno = this.peritoPersonaFormGroup.value.apepaterno;
+        this.datoPeritos.apematerno = this.peritoPersonaFormGroup.value.apematerno;
+        this.datoPeritos.rfc = this.peritoPersonaFormGroup.value.rfc;
+        this.datoPeritos.ine = this.peritoPersonaFormGroup.value.ine;
+        this.datoPeritos.identificacion = this.peritoPersonaFormGroup.value.identificacion;
+        this.datoPeritos.fecha_naci = this.peritoPersonaFormGroup.value.fecha_naci;
+        this.datoPeritos.fecha_def = this.peritoPersonaFormGroup.value.fecha_def;
+        this.datoPeritos.email = this.peritoPersonaFormGroup.value.email;
+        this.datoPeritos.celular = this.peritoPersonaFormGroup.value.celular;
+        this.datoPeritos.login = this.peritoPersonaFormGroup.value.login;
 
         query = (this.datoPeritos.registro) ? query + '&registro=' + this.datoPeritos.registro : query + '&registro=';
         
@@ -129,6 +145,8 @@ export class AltaPeritosComponent implements OnInit {
         query = (this.datoPeritos.celular) ? query + '&celular=' + this.datoPeritos.celular : query + '&celular=';        
 
         query = query + '&codtiposPersona=F&persona&idExpediente';
+
+        query = (this.datoPeritos.login) ? query + '&login=' + this.datoPeritos.login : query + '&login=';
 
         //this.datoPeritos.independiente
         console.log(this.datoPeritos.independiente);
