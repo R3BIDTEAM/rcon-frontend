@@ -61,8 +61,14 @@ export class AltaSociedadComponent implements OnInit {
     }
 
     clean(): void{
-        // this.busqueda = false;
-        // this.resetPaginator();
+        this.sociedadFormGroup.controls['razonSocial'].setValue(null);
+        this.sociedadFormGroup.controls['rfc'].setValue(null);
+        this.sociedadFormGroup.controls['registro'].setValue(null);
+        this.sociedadFormGroup.controls['fecha_alta'].setValue(null);
+        this.sociedadFormGroup.controls['fecha_baja'].setValue(null);
+        this.sociedadFormGroup.controls['email'].setValue(null);
+        this.sociedadFormGroup.controls['login'].setValue(null);
+        this.inserto = false;
     }
 
     guardaSociedad(){
@@ -113,6 +119,7 @@ export class AltaSociedadComponent implements OnInit {
                     });
                 },
                 (error) => {
+                    console.log(error.error);
                     this.loading = false;
                     this.snackBar.open(error.error.mensaje, 'Cerrar', {
                         duration: 10000,

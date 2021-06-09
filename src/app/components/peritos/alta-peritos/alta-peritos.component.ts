@@ -83,6 +83,26 @@ export class AltaPeritosComponent implements OnInit {
           this.datoPeritos.independiente = 'N';
     }
 
+    clean(){
+        this.peritoPersonaFormGroup.controls['apepaterno'].setValue(null);
+        this.peritoPersonaFormGroup.controls['apematerno'].setValue(null);
+        this.peritoPersonaFormGroup.controls['nombre'].setValue(null);
+        this.peritoPersonaFormGroup.controls['rfc'].setValue(null);
+        this.peritoPersonaFormGroup.controls['curp'].setValue(null);
+        this.peritoPersonaFormGroup.controls['ine'].setValue(null);
+        this.peritoPersonaFormGroup.controls['identificacion'].setValue(null);
+        this.peritoPersonaFormGroup.controls['idedato'].setValue(null);
+        this.peritoPersonaFormGroup.controls['fechaNacimiento'].setValue(null);
+        this.peritoPersonaFormGroup.controls['fechaDefuncion'].setValue(null);
+        this.peritoPersonaFormGroup.controls['celular'].setValue(null);
+        this.peritoPersonaFormGroup.controls['email'].setValue(null);
+        this.peritoPersonaFormGroup.controls['registro'].setValue(null);
+        this.peritoPersonaFormGroup.controls['fechaInicio'].setValue(null);
+        this.peritoPersonaFormGroup.controls['fechaFin'].setValue(null);
+        this.peritoPersonaFormGroup.controls['login'].setValue(null);
+        this.inserto = false;
+    }
+
     isIndependiente(dato){
         if(dato.checked){
             this.datoPeritos.independiente = 'S';

@@ -94,7 +94,7 @@
             <br>
 
             <div class="row">
-                <div class="col-md-2 offset-md-8">
+                <div class="col-md-2 offset-md-6">
                     <div class="d-flex flex-row-reverse">
                         <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" (click)="guardaSociedad()" [disabled]="sociedadFormGroup.invalid">
                             Guardar
@@ -103,7 +103,7 @@
                 </div>
                 <div class="col-md-2">
                     <div class="d-flex flex-row-reverse">
-                        <button mat-stroked-button class="boton-n-representacion" color="warn" aria-label="Cancelar">
+                        <button mat-stroked-button class="boton-n-representacion" color="warn" aria-label="Cancelar" (click)="clean()">
                             Cancelar
                         </button>
                     </div>
