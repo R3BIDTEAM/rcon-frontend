@@ -465,6 +465,53 @@ export class EditarContribuyenteComponent implements OnInit {
                 alignment: 'center',  
                 color: '#000'  
             }, 
+            {  
+                text: 'ADMINISTRACIÓN TRIBUTARIA: ' + this.dataActualizacion.at,  
+                fontSize: 9,  
+                alignment: 'left',  
+                color: '#000'  
+            }, 
+            {  
+                text: 'NUMERO DE CUENTA PREDIAL: ',  
+                fontSize: 9,  
+                alignment: 'left',  
+                color: '#000'  
+            }, 
+            {
+                canvas: [
+                    {
+                        type: 'line',
+                        color: 'white',
+                        x1: 0,
+                        y1: 5,
+                        x2: 250,
+                        y2: 5,
+                        lineWidth: 0.5
+                    }
+                ]
+            },
+            {  
+                layout: 'noBorders',
+                table: {  
+                    headerRows: 1,  
+                    widths: ['30%', '10%', '30%', '30%'],  
+                    body: [  
+                        ['', '', { text: 'ANTES', bold: true, alignment: 'right', fontSize: 9 }, { text: 'DESPUÉS', bold: true, fontSize: 9 }],  
+                        [ '', '', { text: 'Datos del contribuyente', bold: true, alignment: 'right', fontSize: 9 }, { text: 'Datos del contribuyente', bold: true, fontSize: 9 } ],
+                        [ { text: 'Nombre del contribuyente:', fontSize: 9 }, '', { text: 'VERA MÁRQUEZ JUAN DANIEL', fontSize: 9, alignment: 'right' }, { text: 'VERA MÁRQUEZ JUAN DANIEL', fontSize: 9 } ],
+                        [ { text: 'RFC (para personas morales)', fontSize: 9 }, '', { text: 'VEMJ770817R41', fontSize: 9, alignment: 'right' }, { text: 'VEMJ770817R41', fontSize: 9 } ] 
+                    ]  
+                }  
+            },
+            {  
+                table: {  
+                    headerRows: 1,  
+                    widths: ['30%', '70%'],  
+                    body: [  
+                        ['', { text: 'NOMBRE Y FIRMA DE CONFORMIDAD DEL CONTRIBUYENTE O REPRESENTANTE LEGAL', bold: true, alignment: 'center', fontSize: 8 }],    
+                    ]  
+                }  
+            },
             {
                 image: await this.getBase64ImageFromURL(
                 "assets/img/logo_dependencia_rcon.PNG"
