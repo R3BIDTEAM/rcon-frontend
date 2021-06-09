@@ -600,7 +600,7 @@
                                 <p>Cargando...</p>
                             </div>
                             <div class="alert alert-info" *ngIf="!loadingDatosPerito && dataSource.length == 0">
-                                No hay avalúos para el filtro seleccionado
+                                No hay registros para el filtro seleccionado
                             </div> 
                             <table mat-table [dataSource]="dataSource" *ngIf="!loadingDatosPerito && dataSource.length > 0" width="100%">
                                 <ng-container matColumnDef="nombre">
