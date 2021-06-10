@@ -8,8 +8,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import * as moment from 'moment';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
 import * as FileSaver from 'file-saver';
 import pdfMake from "pdfmake/build/pdfmake";  
 import pdfFonts from "pdfmake/build/vfs_fonts";  
