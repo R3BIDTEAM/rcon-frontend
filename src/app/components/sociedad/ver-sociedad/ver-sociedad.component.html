@@ -5,12 +5,6 @@
         </mat-card-header>
         <mat-card-header>
             <mat-card-title>Datos de persona moral</mat-card-title>
-            <button mat-icon-button color="primary" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente">
-                <mat-icon>clear</mat-icon>
-            </button>
-            <button mat-icon-button color="primary" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente">
-                <mat-icon>create</mat-icon>
-            </button>
         </mat-card-header>
         <div class="row">
             <div class="col-md-8 offset-md-2">
@@ -19,7 +13,7 @@
                         <div class="col-md-4">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>Razón social</mat-label>
-                                <input matInput placeholder="Placeholder" [(ngModel)]="datosSociedad.razonSocial">
+                                <input matInput placeholder="Placeholder" [(ngModel)]="datosSociedad.razonSocial" [readonly]="true">
                             </mat-form-field>
                         </div>
                     </div>
@@ -28,25 +22,19 @@
                         <div class="col-md-4">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>RFC*</mat-label>
-                                <input matInput placeholder="Placeholder" [(ngModel)]="datosSociedad.rfc">
+                                <input matInput placeholder="Placeholder" [(ngModel)]="datosSociedad.rfc" [readonly]="true">
                             </mat-form-field>
                         </div>
                     </div>
 
                     <mat-card-header>
                         <mat-card-title>Datos especifícos de la sociedad</mat-card-title>
-                        <button mat-icon-button color="primary" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente">
-                            <mat-icon>add_box</mat-icon>
-                        </button>
-                        <button mat-icon-button color="primary" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente">
-                            <mat-icon>delete</mat-icon>
-                        </button>
                     </mat-card-header>
                     <div class="row">
                         <div class="col-md-5">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>Registro*</mat-label>
-                                <input matInput placeholder="Placeholder" [(ngModel)]="datosSociedad.registro">
+                                <input matInput placeholder="Placeholder" [(ngModel)]="datosSociedad.registro" [readonly]="true">
                             </mat-form-field>
                         </div>
                         <div class="col-md-5">
@@ -56,7 +44,7 @@
                         <div class="col-md-5">
                             <mat-form-field appearance="fill" style="width: 100%;">
                                 <mat-label>Fecha Alta</mat-label>
-                                <input matInput [matDatepicker]="fechaAlta" [(ngModel)]="datosSociedad.fecha_alta">
+                                <input matInput [matDatepicker]="fechaAlta" [(ngModel)]="datosSociedad.fecha_alta" [disabled]="true">
                                 <mat-datepicker-toggle matSuffix [for]="fechaAlta"></mat-datepicker-toggle>
                                 <mat-datepicker #fechaAlta></mat-datepicker>
                             </mat-form-field>
@@ -64,7 +52,7 @@
                         <div class="col-md-5">
                             <mat-form-field appearance="fill" style="width: 100%;">
                                 <mat-label>Fecha Baja</mat-label>
-                                <input matInput [matDatepicker]="fechaBaja" [(ngModel)]="datosSociedad.fecha_baja">
+                                <input matInput [matDatepicker]="fechaBaja" [(ngModel)]="datosSociedad.fecha_baja" [disabled]="true">
                                 <mat-datepicker-toggle matSuffix [for]="fechaBaja"></mat-datepicker-toggle>
                                 <mat-datepicker #fechaBaja></mat-datepicker>
                             </mat-form-field>
@@ -99,22 +87,6 @@
                     <mat-paginator #paginator [length]="total" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado($event)">
                     </mat-paginator>
                 </ng-container>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-2 offset-md-8">
-                <div class="d-flex flex-row-reverse">
-                    <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar">
-                        Guardar
-                    </button>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="d-flex flex-row-reverse">
-                    <button mat-stroked-button class="boton-n-representacion" color="warn" aria-label="Cancelar">
-                        Cancelar
-                    </button>
-                </div>
             </div>
         </div>
     </div>
