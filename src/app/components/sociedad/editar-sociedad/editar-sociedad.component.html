@@ -22,6 +22,10 @@
         </mat-card-header>
         <div class="row">
             <div class="col-md-8 offset-md-2">
+                <div style="padding: 30px; text-align: center;" *ngIf="loading">
+                    <mat-spinner style="margin:0 auto;"></mat-spinner>
+                    <p>Cargando...</p>
+                </div>
                 <ng-container *ngIf="!loading">
                     <div class="row">
                         <div class="col-md-4">
@@ -89,7 +93,7 @@
                 </ng-container>
             </div>
         </div>
-        <div class="row">
+        <div class="row" *ngIf="!loading">
             <div class="col-md-2 offset-md-6">
                 <div class="d-flex flex-row-reverse">
                     <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" (click)="guardaSociedad()">

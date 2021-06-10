@@ -224,6 +224,8 @@ export class AltaContribuyenteComponent implements OnInit {
         this.fisicaFormGroup.controls['fechaDefuncion'].setValue(null);
         this.fisicaFormGroup.controls['celular'].setValue(null);
         this.fisicaFormGroup.controls['email'].setValue(null);
+        this.moralFormGroup.controls['nombre'].setValue(null);
+        this.moralFormGroup.controls['rfc'].setValue(null);
         this.moralFormGroup.controls['actPreponderante'].setValue(null);
         this.moralFormGroup.controls['idTipoPersonaMoral'].setValue(null);
         this.moralFormGroup.controls['fechaInicioOperacion'].setValue(null);
