@@ -161,10 +161,17 @@
                             </button> -->
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3 offset-md-4">
                         <div class="d-flex flex-row-reverse">
                             <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" (click)="guardarContribuyente()">
                                 Guardar <mat-icon style="display: inherit; width: 15px;">save</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="d-flex flex-row-reverse">
+                            <button mat-stroked-button class="boton-n-representacion" color="warn" aria-label="Cancelar" (click)="clean()">
+                                Cancelar
                             </button>
                         </div>
                     </div>
@@ -298,44 +305,6 @@
                         </div>
                     </mat-expansion-panel>
                 </mat-accordion>
-                <!-- <br><hr><br> -->
-                <!-- <mat-accordion>
-                    <mat-expansion-panel (opened)="panelBienes = true" (closed)="panelBienes = false">
-                        <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            Datos de bienes
-                        </mat-panel-title>
-                        <mat-panel-description>
-                            {{panelBienes ? 'Cerrar' : 'Ver'}} datos de bienes
-                        </mat-panel-description>
-                        </mat-expansion-panel-header>
-                        <div class="row">
-                            <div class="col-md-9 offset-md-1">
-                                <ng-container>
-                                    <div style="padding: 30px; text-align: center;" *ngIf="loadingInmuebles">
-                                        <mat-spinner style="margin:0 auto;"></mat-spinner>
-                                        <p>Cargando...</p>
-                                    </div>
-                                    <div class="alert alert-info" *ngIf="!loadingInmuebles && dataSource3.length == 0">
-                                        No hay inmuebles asociados.
-                                    </div> 
-                                    <table mat-table [dataSource]="dataSource3" *ngIf="!loadingInmuebles && dataSource3.length > 0" width="100%">
-                                        <ng-container matColumnDef="direccion">
-                                            <th mat-header-cell *matHeaderCellDef width="75%"> Dirección </th>
-                                            <td mat-cell *matCellDef="let element" width="75%">
-                                                {{ element.DIRECCIONINMUEBLE }}
-                                            </td>
-                                        </ng-container>
-                                        <tr mat-header-row *matHeaderRowDef="displayedColumnsInm"></tr>
-                                        <tr mat-row *matRowDef="let row; columns: displayedColumnsInm;"></tr>
-                                    </table>
-                                    <mat-paginator #paginator [length]="total3" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado3($event)">
-                                    </mat-paginator>
-                                </ng-container>                    
-                            </div>
-                        </div>
-                    </mat-expansion-panel>
-                </mat-accordion> -->
             </mat-card-content>
         </div>
         <br>

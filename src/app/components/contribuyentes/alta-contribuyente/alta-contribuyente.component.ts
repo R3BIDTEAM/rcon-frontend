@@ -211,6 +211,27 @@ export class AltaContribuyenteComponent implements OnInit {
     this.getDataDocumentos();
 }
 
+    clean(){
+        this.fisicaFormGroup.controls['nombre'].setValue(null);
+        this.fisicaFormGroup.controls['apaterno'].setValue(null);
+        this.fisicaFormGroup.controls['amaterno'].setValue(null);
+        this.fisicaFormGroup.controls['rfc'].setValue(null);
+        this.fisicaFormGroup.controls['curp'].setValue(null);
+        this.fisicaFormGroup.controls['ine'].setValue(null);
+        this.fisicaFormGroup.controls['idDocIdent'].setValue(null);
+        this.fisicaFormGroup.controls['docIdent'].setValue(null);
+        this.fisicaFormGroup.controls['fechaNacimiento'].setValue(null);
+        this.fisicaFormGroup.controls['fechaDefuncion'].setValue(null);
+        this.fisicaFormGroup.controls['celular'].setValue(null);
+        this.fisicaFormGroup.controls['email'].setValue(null);
+        this.moralFormGroup.controls['actPreponderante'].setValue(null);
+        this.moralFormGroup.controls['idTipoPersonaMoral'].setValue(null);
+        this.moralFormGroup.controls['fechaInicioOperacion'].setValue(null);
+        this.moralFormGroup.controls['idMotivo'].setValue(null);
+        this.moralFormGroup.controls['fechaCambio'].setValue(null);
+        this.inserto = false;
+    }
+
     changeRequired(remove, add): void {
         this.fisicaFormGroup.controls[remove].setValue(null);
         this.fisicaFormGroup.controls[remove].clearValidators();
