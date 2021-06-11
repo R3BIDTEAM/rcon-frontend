@@ -277,7 +277,7 @@ export class AltaContribuyenteComponent implements OnInit {
 
         query = (this.contribuyente.ine) ? query + '&claveife=' + this.contribuyente.ine : query + '&claveife=';
 
-        query = query + '&actividadPrincip=';
+        query = (this.contribuyente.actPreponderante) ? query + '&actividadPrincip=' + this.contribuyente.actPreponderante : query + '&actividadPrincip=';
 
         console.log(this.endpoint + busquedaDatos + '?' + query);
         this.loading = true;
