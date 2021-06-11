@@ -13,7 +13,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
     styleUrls: ['./dialog-duplicados.component.css']
 })
 export class DialogDuplicadosComponent implements OnInit {
-    displayedColumns: string[] = ['razon','registro', 'rfc', 'select'];
+    displayedColumns: string[] = ['nombre','rfc', 'datos', 'select'];
     pagina = 1;
     total = 0;
     pageSize = 15;

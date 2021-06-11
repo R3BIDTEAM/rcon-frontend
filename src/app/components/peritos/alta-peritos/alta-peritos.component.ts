@@ -9,6 +9,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox'; 
 import * as moment from 'moment';
+import { DialogDuplicadosComponent } from '@comp/dialog-duplicados/dialog-duplicados.component';
 
 export interface DatosPeritos {
     apepaterno: string;
@@ -35,7 +36,7 @@ export interface DatosPeritos {
     styleUrls: ['./alta-peritos.component.css']
 })
 export class AltaPeritosComponent implements OnInit {
-    endpoint = environment.endpoint + 'registro/insertarPerito';
+    endpoint = environment.endpoint + 'registro/';
     peritoPersonaFormGroup: FormGroup;
     datoPeritos: DatosPeritos = {} as DatosPeritos;
     botonEdit = false;
@@ -43,6 +44,7 @@ export class AltaPeritosComponent implements OnInit {
     httpOptions;
     search = false;
     inserto = false;
+    isIdentificativo;
     @ViewChild('paginator') paginator: MatPaginator;
 
     constructor(
@@ -111,13 +113,7 @@ export class AltaPeritosComponent implements OnInit {
         }
     }
 
-    guardaPerito(){
-        let query = 'idPersona';
-        this.loading = true;
-        
-        //http://localhost:8000/api/v1/registro/insertarPerito?idPersona&registro=v-9999-99&fechaAlta=10-05-2021&fechaBaja&independiente=N&nombre=Omar Isaias&apellidoPaterno=Vidal&apellidoMaterno=Perez&rfc=VIP900629MG5&curp&ife=PLGMJN83062615H500&iddocIdentif=1&valdocIdentif&fechaNacimiento&fechaDefuncion&email=ividal@mail.com&celular&codtiposPersona=F&persona&idExpediente=347418
-        //http://localhost:8000/api/v1/registro/insertarPerito?idPersona&registro=V-9988-48&fechaAlta=&fechaBaja=&independiente=N&nombre=VIVIANA&apellidopaterno=CHAVEZ&apellidomaterno=ROSAS&rfc=PIPO900929FA0&curp=PIPO900929HASDER08&claveife=DA181F&iddocidentif=&valdocidentif=&fechanacimiento=&fechadefuncion=&email=lli@gmail.com&celular=&codtiposPersona=F&persona&idExpediente=347418
-
+    consulta_previa(){
         this.datoPeritos.registro = this.peritoPersonaFormGroup.value.registro;
         this.datoPeritos.fecha_alta = this.peritoPersonaFormGroup.value.fecha_alta;
         this.datoPeritos.fecha_baja = this.peritoPersonaFormGroup.value.fecha_baja;
@@ -132,6 +128,72 @@ export class AltaPeritosComponent implements OnInit {
         this.datoPeritos.email = this.peritoPersonaFormGroup.value.email;
         this.datoPeritos.celular = this.peritoPersonaFormGroup.value.celular;
         this.datoPeritos.login = this.peritoPersonaFormGroup.value.login;
+        
+        let query = '';
+        let busquedaDatos = 'getContribuyentesSimilares';
+
+        query = (this.datoPeritos.nombre) ? query + 'nombre=' + this.datoPeritos.nombre + '&filtroNombre=' : query + 'nombre=&filtroNombre=';
+
+        query = (this.datoPeritos.apepaterno) ? query + '&apellidoPaterno=' + this.datoPeritos.apepaterno + '&filtroApellidoPaterno=' : query + '&apellidoPaterno=&filtroApellidoPaterno=';
+
+        query = (this.datoPeritos.apematerno) ? query + '&apellidoMaterno=' + this.datoPeritos.apematerno + '&filtroApellidoMaterno=' : query + '&apellidoMaterno=&filtroApellidoMaterno=';
+
+        query = (this.datoPeritos.curp) ? query + '&curp=' + this.datoPeritos.curp : query + '&curp=';
+
+        query = (this.datoPeritos.rfc) ? query + '&rfc=' + this.datoPeritos.rfc : query + '&rfc=';
+
+        query = (this.datoPeritos.ine) ? query + '&claveife=' + this.datoPeritos.ine : query + '&claveife=';
+
+        query = query + '&actividadPrincip=';
+
+        console.log(this.endpoint + busquedaDatos + '?' + query);
+        this.loading = true;
+        this.http.post(this.endpoint + busquedaDatos + '?' + query, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loading = false;
+                    console.log(res);
+                    console.log("CON");
+                    if(res.length > 0){
+                        this.validaDialog(res);
+                    }else{
+                        this.guardaPerito();
+                    }
+                },
+                (error) => {
+                    this.loading = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
+
+    validaDialog(res){
+        const dialogRef = this.dialog.open(DialogDuplicadosComponent, {
+            width: '850px',
+            data: {
+                dataSource: res,
+                bandeja: 3
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                console.log(result);
+                this.guardaPerito();
+            }
+        });
+    }
+
+    guardaPerito(){
+        let metodo = 'insertarPerito';
+        let query = 'idPersona';
+        this.loading = true;
+        
+        //http://localhost:8000/api/v1/registro/insertarPerito?idPersona&registro=v-9999-99&fechaAlta=10-05-2021&fechaBaja&independiente=N&nombre=Omar Isaias&apellidoPaterno=Vidal&apellidoMaterno=Perez&rfc=VIP900629MG5&curp&ife=PLGMJN83062615H500&iddocIdentif=1&valdocIdentif&fechaNacimiento&fechaDefuncion&email=ividal@mail.com&celular&codtiposPersona=F&persona&idExpediente=347418
+        //http://localhost:8000/api/v1/registro/insertarPerito?idPersona&registro=V-9988-48&fechaAlta=&fechaBaja=&independiente=N&nombre=VIVIANA&apellidopaterno=CHAVEZ&apellidomaterno=ROSAS&rfc=PIPO900929FA0&curp=PIPO900929HASDER08&claveife=DA181F&iddocidentif=&valdocidentif=&fechanacimiento=&fechadefuncion=&email=lli@gmail.com&celular=&codtiposPersona=F&persona&idExpediente=347418
 
         query = (this.datoPeritos.registro) ? query + '&registro=' + this.datoPeritos.registro : query + '&registro=';
         
@@ -171,7 +233,7 @@ export class AltaPeritosComponent implements OnInit {
         //this.datoPeritos.independiente
         console.log(this.datoPeritos.independiente);
         //return;
-        this.http.post(this.endpoint + '?' + query, '', this.httpOptions)
+        this.http.post(this.endpoint + metodo + '?' + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;

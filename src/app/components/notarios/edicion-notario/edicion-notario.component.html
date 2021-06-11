@@ -98,12 +98,10 @@
 
         <!-- Table generado por la búsqueda -->
         <ng-container>
-
             <div style="padding: 30px; text-align: center;" *ngIf="loading">
                 <mat-spinner style="margin:0 auto;"></mat-spinner>
                 <p>Cargando...</p>
             </div>
-
             <div class="row" *ngIf="dataSource.length == 0 && !loading">
                 <div class="col-md-12">
                     <h3 class="verde-cdmx" style="margin-top: 10%;">Lista de notarios:</h3>
@@ -112,7 +110,6 @@
                     </div> 
                 </div>
             </div>
-
             <div class="row" *ngIf="!loading && dataSource.length > 0">
                 <div class="col-md-12">
                     <h3 class="verde-cdmx" style="margin-top: 10%;">Lista de notarios:</h3>

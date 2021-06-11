@@ -84,12 +84,22 @@ export class AltaSociedadComponent implements OnInit {
         this.login = this.sociedadFormGroup.value.login;
 
         let query = '';
-        let busquedaDatos = 'getSocValuacionByDatosIdentificativos';
+        let busquedaDatos = 'getContribuyentesSimilares';
         
-        if(this.rfc){
-            query = query + 'rfc=' + this.rfc;
+        query = query + 'nombre=&filtroNombre=';
+
+        if(this.razonSocial){
+            query = query + '&apellidoPaterno='+ this.razonSocial + '&filtroApellidoPaterno=';
         }
 
+        query = query + '&apellidoMaterno=&filtroApellidoMaterno=&curp=';
+
+        if(this.rfc){
+            query = query + '&rfc=' + this.rfc;
+        }
+
+        query = query + '&claveife&actividadPrincip=';
+        //http://localhost:8000/api/v1/registro/getContribuyentesSimilares?nombre=&filtroNombre=&apellidoPaterno=&filtroApellidoPaterno=&apellidoMaterno=&filtroApellidoMaterno=&curp=VIPI900629HDFDRS08&rfc=VIPI900629MG5&claveife&actividadPrincip=
         this.loading = true;
         console.log("RESULTADO DE LA BUSQUEDA");
         console.log(this.endpoint);
