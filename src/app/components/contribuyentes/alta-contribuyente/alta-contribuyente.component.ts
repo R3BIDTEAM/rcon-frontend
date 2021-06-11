@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import * as moment from 'moment';
+import { DialogDuplicadosComponent } from '@comp/dialog-duplicados/dialog-duplicados.component';
 
 export interface DatosContribuyente {
     codtipopersona: string;
@@ -258,6 +259,65 @@ export class AltaContribuyenteComponent implements OnInit {
                 this.loadingDocumentos = false;
             }
         );
+    }
+
+    consulta_previa(){
+        let query = '';
+        let busquedaDatos = 'getContribuyentesSimilares';
+
+        query = (this.contribuyente.nombre) ? query + 'nombre=' + this.contribuyente.nombre : query + 'nombre=';
+
+        query = (this.contribuyente.apaterno) ? query + '&apellidopaterno=' + this.contribuyente.apaterno : query + '&apellidopaterno=' + this.contribuyente.nombre_moral;
+
+        query = (this.contribuyente.amaterno) ? query + '&apellidomaterno=' + this.contribuyente.amaterno : query + '&apellidomaterno=';
+
+        query = (this.contribuyente.rfc) ? query + '&rfc=' + this.contribuyente.rfc : query + '&rfc=';
+
+        query = (this.contribuyente.curp) ? query + '&curp=' + this.contribuyente.curp : query + '&curp=';
+
+        query = (this.contribuyente.ine) ? query + '&claveife=' + this.contribuyente.ine : query + '&claveife=';
+
+        query = query + '&actividadPrincip=';
+
+        console.log(this.endpoint + busquedaDatos + '?' + query);
+        this.loading = true;
+        this.http.post(this.endpoint + busquedaDatos + '?' + query, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loading = false;
+                    console.log(res);
+                    console.log("CON");
+                    if(res.length > 0){
+                        this.validaDialog(res);
+                    }else{
+                        this.guardarContribuyente();
+                    }
+                },
+                (error) => {
+                    this.loading = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
+
+    validaDialog(res){
+        const dialogRef = this.dialog.open(DialogDuplicadosComponent, {
+            width: '850px',
+            data: {
+                dataSource: res,
+                bandeja: 1
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                console.log(result);
+                this.guardarContribuyente();
+            }
+        });
     }
 
     guardarContribuyente(){
