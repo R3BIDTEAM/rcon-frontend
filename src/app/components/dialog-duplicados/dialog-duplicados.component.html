@@ -1,0 +1,56 @@
+<h1 mat-dialog-title>Búqueda de personas</h1>
+<div mat-dialog-content>
+    <ng-container>
+        <div style="padding: 30px; text-align: center;" *ngIf="loading">
+            <mat-spinner style="margin:0 auto;"></mat-spinner>
+            <p>Cargando...</p>
+        </div>
+        <div class="alert alert-info" *ngIf="dataSource.length == 0 && !loading">
+            No hay registros para el filtro seleccionado
+        </div> 
+        <table mat-table [dataSource]="dataPaginate" *ngIf="!loading && dataSource.length > 0">
+            <ng-container matColumnDef="razon">
+                <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                <td mat-cell *matCellDef="let element">{{ element.RAZONSOCIAL }}</td>
+            </ng-container>
+            <ng-container matColumnDef="registro">
+                <th mat-header-cell *matHeaderCellDef> Registro </th>
+                <td mat-cell *matCellDef="let element"> {{ element.REGISTRO }}</td>
+            </ng-container>
+            <ng-container matColumnDef="rfc">
+                <th mat-header-cell *matHeaderCellDef> RFC </th>
+                <td mat-cell *matCellDef="let element">{{ element.RFC }}</td>
+            </ng-container>
+            <ng-container matColumnDef="select">
+                <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
+                <td mat-cell *matCellDef="let element">
+                    <button *ngIf="bandeja == 4" mat-stroked-button color="primary" aria-label="Editar Sociedad" matTooltip="Editar Sociedad" [routerLink]="['/main/editar-sociedad', element.IDSOCIEDAD]" [mat-dialog-close]="false">
+                        Editar
+                    </button>
+                    <button *ngIf="bandeja == 3" mat-stroked-button color="primary" aria-label="Ver Perito" matTooltip="Ver Perito" [routerLink]="['/main/editar-peritos', (element.idperito) ? element.idperito : element.IDPERITO]">
+                        Ver
+                    </button>
+                    <button *ngIf="bandeja == 2" mat-stroked-button color="primary" aria-label="Editar Notario" matTooltip="Editar Notario" [routerLink]="['/main/editar-notario', (element.idpersona) ? element.idpersona : element.IDPERSONA]">
+                        Editar
+                    </button>
+                    <button *ngIf="bandeja == 1" mat-stroked-button color="primary" aria-label="Editar Contribuyente" matTooltip="Editar Contribuyente" [routerLink]="['/main/editar-contribuyente', (element.idpersona) ? element.idpersona : element.IDPERSONA]">
+                        Editar
+                    </button>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator #paginator [length]="total" [pageSize]="pageSize" [pageSizeOptions]="[pageSize]" [showFirstLastButtons]="true" (page)="paginado($event)">
+        </mat-paginator>
+    </ng-container>
+</div>
+<table>
+    <!-- <tr *ngFor="let row of dataSource">
+        <td></td>
+    </tr> -->
+</table>
+<mat-dialog-actions align="end">
+    <button mat-flat-button color="primary" [mat-dialog-close]="true">Nueva alta</button>
+    <button mat-button [mat-dialog-close]="false">Cerrar</button>
+</mat-dialog-actions>

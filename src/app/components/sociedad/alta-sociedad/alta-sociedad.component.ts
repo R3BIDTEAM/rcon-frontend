@@ -9,6 +9,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox'; 
 import * as moment from 'moment';
+import { DialogDuplicadosComponent } from '@comp/dialog-duplicados/dialog-duplicados.component';
 
 @Component({
     selector: 'app-alta-sociedad',
@@ -17,6 +18,7 @@ import * as moment from 'moment';
 })
 export class AltaSociedadComponent implements OnInit {
     endpoint = environment.endpoint + 'registro/insertarSociedad';
+    endpointPrevia = environment.endpoint + 'registro/';
     sociedadFormGroup: FormGroup;
     httpOptions;
     razonSocial;
@@ -30,6 +32,7 @@ export class AltaSociedadComponent implements OnInit {
     isIdentificativo;
     loading = false;
     inserto = false;
+    dataSource = [];
     @ViewChild('paginator') paginator: MatPaginator;
 
     constructor(
@@ -71,8 +74,7 @@ export class AltaSociedadComponent implements OnInit {
         this.inserto = false;
     }
 
-    guardaSociedad(){
-
+    consulta_previa(){
         this.razonSocial = this.sociedadFormGroup.value.razonSocial;
         this.rfc = this.sociedadFormGroup.value.rfc;
         this.registro = this.sociedadFormGroup.value.registro;
@@ -80,6 +82,59 @@ export class AltaSociedadComponent implements OnInit {
         this.fecha_baja = this.sociedadFormGroup.value.fecha_baja;
         this.email = this.sociedadFormGroup.value.email;
         this.login = this.sociedadFormGroup.value.login;
+
+        let query = '';
+        let busquedaDatos = 'getSocValuacionByDatosIdentificativos';
+        
+        if(this.rfc){
+            query = query + 'rfc=' + this.rfc;
+        }
+
+        this.loading = true;
+        console.log("RESULTADO DE LA BUSQUEDA");
+        console.log(this.endpoint);
+        this.http.post(this.endpointPrevia + busquedaDatos + '?' + query, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loading = false;
+                    if(res.length > 0){
+                        console.log(res);
+                        console.log("CON");
+                        this.validaDialog(res);
+                    }
+                    
+                    
+                },
+                (error) => {
+                    this.loading = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
+
+    validaDialog(res): void {
+        //this.dataSource = res;
+        const dialogRef = this.dialog.open(DialogDuplicadosComponent, {
+            width: '850px',
+            data: {
+                dataSource: res,
+                bandeja: 4
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                console.log(result);
+                this.guardaSociedad();
+            }
+        });
+    }
+
+    guardaSociedad(){
+
         let query = 'idPersona';
         this.loading = true;
         
