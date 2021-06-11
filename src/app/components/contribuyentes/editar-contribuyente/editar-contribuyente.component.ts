@@ -183,6 +183,8 @@ export class EditarContribuyenteComponent implements OnInit {
     loadingRepresentado = false;
     panelPDF = false;
     actualizado = false;
+    accionDomicilio = false;
+    accionDomicilioBoletas = false;
 
     /*Paginado*/
     dataSource1 = [];
@@ -388,6 +390,8 @@ export class EditarContribuyenteComponent implements OnInit {
                         this.dataActualizacion.usuario = res.usuario;
 
                         this.actualizado = true;
+                        this.accionDomicilio = false;
+                        this.accionDomicilioBoletas = false;
 
                     console.log(this.dataActualizacion);
                     this.snackBar.open('guardado correcto', 'Cerrar', {
@@ -407,34 +411,6 @@ export class EditarContribuyenteComponent implements OnInit {
             );
     }
 
-    // printComprobante(){
-    //     let query = '';
-    //     this.loading = true;
-
-    //     query = 'idPersona=' + this.idContribuyente + '&idChs=' + this.idChs;
-
-    //     this.http.post(this.endpoint + 'infoComprobante' + '?' + query, '', this.httpOptions)
-    //         .subscribe(
-    //             (res: any) => {
-    //                 this.loading = false;
-    //                 console.log("Generando PDF");
-    //                 console.log(res);
-    //                 this.snackBar.open('guardado correcto', 'Cerrar', {
-    //                     duration: 10000,
-    //                     horizontalPosition: 'end',
-    //                     verticalPosition: 'top'
-    //                 });
-    //             },
-    //             (error) => {
-    //                 this.loading = false;
-    //                 this.snackBar.open(error.error.mensaje, 'Cerrar', {
-    //                     duration: 10000,
-    //                     horizontalPosition: 'end',
-    //                     verticalPosition: 'top'
-    //                 });
-    //             }
-    //         );
-    // }
 
 
       async generatePDF() {
@@ -956,66 +932,167 @@ export class EditarContribuyenteComponent implements OnInit {
 
 
     addDomicilio(i = -1, dataDomicilio = null): void {
-      let codtiposdireccion = '';
-      const dialogRef = this.dialog.open(DialogDomicilioContribuyente, {
-          width: '700px',
-          data: {dataDomicilio:dataDomicilio, idContribuyente: this.idContribuyente,
-                  codtiposdireccion: codtiposdireccion
-          },
-      });
-      dialogRef.afterClosed().subscribe(result => {
-              this.getDomicilioContribuyente();
-      });
+        let codtiposdireccion = '';
+        const dialogRef = this.dialog.open(DialogDomicilioContribuyente, {
+            width: '700px',
+            data: {dataDomicilio:dataDomicilio, idContribuyente: this.idContribuyente, codtiposdireccion: codtiposdireccion},
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                console.log(result);
+
+                this.dataActualizacion.after_CP = result.after_CP;
+                this.dataActualizacion.after_Col = result.after_Col;
+                this.dataActualizacion.after_Direccion = result.after_Direccion;
+                this.dataActualizacion.after_Nombre = result.after_Nombre;
+                this.dataActualizacion.after_RFC = result.after_RFC;
+                this.dataActualizacion.area = result.area;
+                this.dataActualizacion.at = result.at;
+                this.dataActualizacion.before_CP = result.before_CP;
+                this.dataActualizacion.before_Col = result.before_Col;
+                this.dataActualizacion.before_Direccion = result.before_Direccion;
+                this.dataActualizacion.before_Nombre = result.before_Nombre;
+                this.dataActualizacion.before_RFC = result.before_RFC;
+                this.dataActualizacion.cuentaP = result.cuentaP;
+                this.dataActualizacion.fechaConsulta = result.fechaConsulta;
+                this.dataActualizacion.folio = result.folio;
+                this.dataActualizacion.idpersona = result.idpersona;
+                this.dataActualizacion.usuario = result.usuario;
+                
+                console.log(this.dataActualizacion.after_CP);
+                console.log(this.dataActualizacion.after_Nombre);
+
+                this.accionDomicilio = true;
+                this.accionDomicilioBoletas = false;
+                this.actualizado = false;
+            
+            }
+            this.getDomicilioContribuyente();
+        });
     }
+
 
     addDomicilioBoleta(i = -1, dataDomicilio = null): void {
         let codtiposdireccion = 'N';
         const dialogRef = this.dialog.open(DialogDomicilioContribuyente, {
             width: '700px',
-            data: {dataDomicilio:dataDomicilio, idContribuyente: this.idContribuyente,
-                codtiposdireccion: codtiposdireccion 
-            },
+            data: {dataDomicilio:dataDomicilio, idContribuyente: this.idContribuyente, codtiposdireccion: codtiposdireccion},
         });
         dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                console.log(result);
+
+                this.dataActualizacion.after_CP = result.after_CP;
+                this.dataActualizacion.after_Col = result.after_Col;
+                this.dataActualizacion.after_Direccion = result.after_Direccion;
+                this.dataActualizacion.after_Nombre = result.after_Nombre;
+                this.dataActualizacion.after_RFC = result.after_RFC;
+                this.dataActualizacion.area = result.area;
+                this.dataActualizacion.at = result.at;
+                this.dataActualizacion.before_CP = result.before_CP;
+                this.dataActualizacion.before_Col = result.before_Col;
+                this.dataActualizacion.before_Direccion = result.before_Direccion;
+                this.dataActualizacion.before_Nombre = result.before_Nombre;
+                this.dataActualizacion.before_RFC = result.before_RFC;
+                this.dataActualizacion.cuentaP = result.cuentaP;
+                this.dataActualizacion.fechaConsulta = result.fechaConsulta;
+                this.dataActualizacion.folio = result.folio;
+                this.dataActualizacion.idpersona = result.idpersona;
+                this.dataActualizacion.usuario = result.usuario;
+                
+                console.log(this.dataActualizacion.after_CP);
+                console.log(this.dataActualizacion.after_Nombre);
+
+                this.accionDomicilio = false;
+                this.accionDomicilioBoletas = true;
+                this.actualizado = false;
+            
+            }
             this.getDomicilioContribuyente();
         });
     }
 
-    editDomicilio(dataDomicilioEspecifico): void {
-        let codtiposdireccion = '';
-            const dialogRef = this.dialog.open(DialogDomicilioContribuyente, {
-                width: '700px',
-                data: {dataDomicilioEspecifico:dataDomicilioEspecifico, idContribuyente: this.idContribuyente},
-            });
-            dialogRef.afterClosed().subscribe(result => {
-                if(result){
-                    console.log(result);
 
-                    this.dataActualizacion.after_CP = result.after_CP;
-                    this.dataActualizacion.after_Col = result.after_Col;
-                    this.dataActualizacion.after_Direccion = result.after_Direccion;
-                    this.dataActualizacion.after_Nombre = result.after_Nombre;
-                    this.dataActualizacion.after_RFC = result.after_RFC;
-                    this.dataActualizacion.area = result.area;
-                    this.dataActualizacion.at = result.at;
-                    this.dataActualizacion.before_CP = result.before_CP;
-                    this.dataActualizacion.before_Col = result.before_Col;
-                    this.dataActualizacion.before_Direccion = result.before_Direccion;
-                    this.dataActualizacion.before_Nombre = result.before_Nombre;
-                    this.dataActualizacion.before_RFC = result.before_RFC;
-                    this.dataActualizacion.cuentaP = result.cuentaP;
-                    this.dataActualizacion.fechaConsulta = result.fechaConsulta;
-                    this.dataActualizacion.folio = result.folio;
-                    this.dataActualizacion.idpersona = result.idpersona;
-                    this.dataActualizacion.usuario = result.usuario;
-                    
-                    console.log(this.dataActualizacion.after_CP);
-                    console.log(this.dataActualizacion.after_Nombre);
-                    
-                    //this.getDomicilioContribuyente();
-                }
-            });
+    editDomicilio(dataDomicilioEspecifico): void {
+        const dialogRef = this.dialog.open(DialogDomicilioContribuyente, {
+            width: '700px',
+            data: {dataDomicilioEspecifico:dataDomicilioEspecifico, idContribuyente: this.idContribuyente},
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                console.log(result);
+
+                this.dataActualizacion.after_CP = result.after_CP;
+                this.dataActualizacion.after_Col = result.after_Col;
+                this.dataActualizacion.after_Direccion = result.after_Direccion;
+                this.dataActualizacion.after_Nombre = result.after_Nombre;
+                this.dataActualizacion.after_RFC = result.after_RFC;
+                this.dataActualizacion.area = result.area;
+                this.dataActualizacion.at = result.at;
+                this.dataActualizacion.before_CP = result.before_CP;
+                this.dataActualizacion.before_Col = result.before_Col;
+                this.dataActualizacion.before_Direccion = result.before_Direccion;
+                this.dataActualizacion.before_Nombre = result.before_Nombre;
+                this.dataActualizacion.before_RFC = result.before_RFC;
+                this.dataActualizacion.cuentaP = result.cuentaP;
+                this.dataActualizacion.fechaConsulta = result.fechaConsulta;
+                this.dataActualizacion.folio = result.folio;
+                this.dataActualizacion.idpersona = result.idpersona;
+                this.dataActualizacion.usuario = result.usuario;
+                
+                console.log(this.dataActualizacion.after_CP);
+                console.log(this.dataActualizacion.after_Nombre);
+
+                this.accionDomicilio = true;
+                this.accionDomicilioBoletas = false;
+                this.actualizado = false;
+            
+            }
+            this.getDomicilioContribuyente();
+        });
     }
+
+
+    editDomicilioBoleta(dataDomicilioEspecifico): void {
+        let codtiposdireccion = 'N';
+        const dialogRef = this.dialog.open(DialogDomicilioContribuyente, {
+            width: '700px',
+            data: {dataDomicilioEspecifico:dataDomicilioEspecifico, idContribuyente: this.idContribuyente, codtiposdireccion: codtiposdireccion},
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                console.log(result);
+
+                this.dataActualizacion.after_CP = result.after_CP;
+                this.dataActualizacion.after_Col = result.after_Col;
+                this.dataActualizacion.after_Direccion = result.after_Direccion;
+                this.dataActualizacion.after_Nombre = result.after_Nombre;
+                this.dataActualizacion.after_RFC = result.after_RFC;
+                this.dataActualizacion.area = result.area;
+                this.dataActualizacion.at = result.at;
+                this.dataActualizacion.before_CP = result.before_CP;
+                this.dataActualizacion.before_Col = result.before_Col;
+                this.dataActualizacion.before_Direccion = result.before_Direccion;
+                this.dataActualizacion.before_Nombre = result.before_Nombre;
+                this.dataActualizacion.before_RFC = result.before_RFC;
+                this.dataActualizacion.cuentaP = result.cuentaP;
+                this.dataActualizacion.fechaConsulta = result.fechaConsulta;
+                this.dataActualizacion.folio = result.folio;
+                this.dataActualizacion.idpersona = result.idpersona;
+                this.dataActualizacion.usuario = result.usuario;
+                
+                console.log(this.dataActualizacion.after_CP);
+                console.log(this.dataActualizacion.after_Nombre);
+
+                this.accionDomicilio = false;
+                this.accionDomicilioBoletas = true;
+                this.actualizado = false;
+            
+            }
+            this.getDomicilioContribuyente();
+        });
+    }
+
 
     viewHistoricoDomicilio(idDireccion): void {
         const dialogRef = this.dialog.open(DialogDomicilioHistoricoContribuyente, {
@@ -1522,150 +1599,165 @@ export class DialogDomicilioContribuyente {
       ///retu
   }
       
-  guardaDomicilio(){
-      
-      let query = 'insertarDireccion?idPersona=' + this.data.idContribuyente;
 
-      query = (this.dataDomicilio.codtiposvia) ? query + '&codtiposvia=' + this.dataDomicilio.codtiposvia : query + '&codtiposvia=';
-      query = (this.dataDomicilio.idtipovia) ? query + '&idvia=' + this.dataDomicilio.idtipovia : query + '&idvia=';
-      query = (this.dataDomicilio.via) ? query + '&via=' + this.dataDomicilio.via : query + '&via=';
+    guardaDomicilio(){
+      
+        let query = 'insertarDireccion?idPersona=' + this.data.idContribuyente;
 
-      query = (this.dataDomicilio.nexterior) ? query + '&numeroexterior=' + this.dataDomicilio.nexterior : query + '&numeroexterior=';
-      query = (this.dataDomicilio.entrecalle1) ? query + '&entrecalle1='  + this.dataDomicilio.entrecalle1 : query + '&entrecalle1';
-      query = (this.dataDomicilio.entrecalle2) ? query + '&entrecalle2='  + this.dataDomicilio.entrecalle2 : query + '&entrecalle2';
-      query = (this.dataDomicilio.andador) ? query + '&andador=' + this.dataDomicilio.andador : query + '&andador';
-      query = (this.dataDomicilio.edificio) ? query + '&edificio=' + this.dataDomicilio.edificio : query + '&edificio';
-      query = (this.dataDomicilio.seccion) ? query + '&seccion=' + this.dataDomicilio.seccion : query + '&seccion=';
-      query = (this.dataDomicilio.entrada) ? query + '&entrada=' + this.dataDomicilio.entrada : query + '&entrada=';
-      query = (this.dataDomicilio.idtipolocalidad) ? query + '&codtiposlocalidad=' + this.dataDomicilio.idtipolocalidad : query + '&codtiposlocalidad=';
-      query = (this.dataDomicilio.idtipoasentamiento) ? query + '&codtiposasentamiento=' + this.dataDomicilio.idtipoasentamiento : query + '&codtiposasentamiento=';
+        query = (this.dataDomicilio.codtiposvia) ? query + '&codtiposvia=' + this.dataDomicilio.codtiposvia : query + '&codtiposvia=';
+        query = (this.dataDomicilio.idtipovia) ? query + '&idvia=' + this.dataDomicilio.idtipovia : query + '&idvia=';
+        query = (this.dataDomicilio.via) ? query + '&via=' + this.dataDomicilio.via : query + '&via=';
+        query = (this.dataDomicilio.nexterior) ? query + '&numeroexterior=' + this.dataDomicilio.nexterior : query + '&numeroexterior=';
+        query = (this.dataDomicilio.entrecalle1) ? query + '&entrecalle1='  + this.dataDomicilio.entrecalle1 : query + '&entrecalle1';
+        query = (this.dataDomicilio.entrecalle2) ? query + '&entrecalle2='  + this.dataDomicilio.entrecalle2 : query + '&entrecalle2';
+        query = (this.dataDomicilio.andador) ? query + '&andador=' + this.dataDomicilio.andador : query + '&andador';
+        query = (this.dataDomicilio.edificio) ? query + '&edificio=' + this.dataDomicilio.edificio : query + '&edificio';
+        query = (this.dataDomicilio.seccion) ? query + '&seccion=' + this.dataDomicilio.seccion : query + '&seccion=';
+        query = (this.dataDomicilio.entrada) ? query + '&entrada=' + this.dataDomicilio.entrada : query + '&entrada=';
+        query = (this.dataDomicilio.idtipolocalidad) ? query + '&codtiposlocalidad=' + this.dataDomicilio.idtipolocalidad : query + '&codtiposlocalidad=';
+        query = (this.dataDomicilio.idtipoasentamiento) ? query + '&codtiposasentamiento=' + this.dataDomicilio.idtipoasentamiento : query + '&codtiposasentamiento=';
+        query = (this.dataDomicilio.codasentamiento) ? query + '&idcolonia=' + this.dataDomicilio.codasentamiento : query + '&idcolonia=';
+        query = (this.dataDomicilio.codasentamiento) ? query + '&codasentamiento=' + this.dataDomicilio.codasentamiento : query + '&codasentamiento=';
+        query = (this.dataDomicilio.asentamiento) ? query + '&colonia=' + this.dataDomicilio.asentamiento : query + '&colonia=';
+        query = (this.dataDomicilio.cp) ? query + '&codigopostal=' + this.dataDomicilio.cp : query + '&codigopostal=';
+        query = (this.dataDomicilio.idciudad) ? query + '&codciudad=' + this.dataDomicilio.idciudad : query + '&codciudad=';
+        query = (this.dataDomicilio.ciudad) ? query + '&ciudad=' + this.dataDomicilio.ciudad : query + '&ciudad=';
+        query = (this.dataDomicilio.idmunicipio) ? query + '&iddelegacion=' + this.dataDomicilio.idmunicipio : query + '&iddelegacion';
+        query = (this.dataDomicilio.idmunicipio2) ? query + '&codmunicipio=' + this.dataDomicilio.idmunicipio2 : query + '&codmunicipio=';
+        query = (this.dataDomicilio.idestado == 9) ? query + '&delegacion=' + this.dataDomicilio.delegacion : query + '&delegacion=' + this.dataDomicilio.municipio;
+        query = (this.dataDomicilio.telefono) ? query + '&telefono=' + this.dataDomicilio.telefono : query + '&telefono=';
+        query = (this.dataDomicilio.idestado) ? query + '&codestado=' + this.dataDomicilio.idestado : query + '&codestado=';
+        query = (this.codtiposdireccion) ? query + '&codtiposdireccion=' + this.codtiposdireccion : query + '&codtiposdireccion=';
+        query = (this.dataDomicilio.adicional) ? query + '&indicacionesadicionales=' + this.dataDomicilio.adicional : query + '&indicacionesadicionales=';
+        query = (this.dataDomicilio.ninterior) ? query + '&numerointerior=' + this.dataDomicilio.ninterior : query + '&numerointerior=';
       
-      query = (this.dataDomicilio.codasentamiento) ? query + '&idcolonia=' + this.dataDomicilio.codasentamiento : query + '&idcolonia=';
-      
-      query = (this.dataDomicilio.codasentamiento) ? query + '&codasentamiento=' + this.dataDomicilio.codasentamiento : query + '&codasentamiento=';
-      query = (this.dataDomicilio.asentamiento) ? query + '&colonia=' + this.dataDomicilio.asentamiento : query + '&colonia=';
-      query = (this.dataDomicilio.cp) ? query + '&codigopostal=' + this.dataDomicilio.cp : query + '&codigopostal=';
-      query = (this.dataDomicilio.idciudad) ? query + '&codciudad=' + this.dataDomicilio.idciudad : query + '&codciudad=';
-      query = (this.dataDomicilio.ciudad) ? query + '&ciudad=' + this.dataDomicilio.ciudad : query + '&ciudad=';
-      query = (this.dataDomicilio.idmunicipio) ? query + '&iddelegacion=' + this.dataDomicilio.idmunicipio : query + '&iddelegacion';
-      query = (this.dataDomicilio.idmunicipio2) ? query + '&codmunicipio=' + this.dataDomicilio.idmunicipio2 : query + '&codmunicipio=';
-      
-      query = (this.dataDomicilio.idestado == 9) ? query + '&delegacion=' + this.dataDomicilio.delegacion : query + '&delegacion=' + this.dataDomicilio.municipio;
-      
-      query = (this.dataDomicilio.telefono) ? query + '&telefono=' + this.dataDomicilio.telefono : query + '&telefono=';
-      query = (this.dataDomicilio.idestado) ? query + '&codestado=' + this.dataDomicilio.idestado : query + '&codestado=';
-      query = (this.codtiposdireccion) ? query + '&codtiposdireccion=' + this.codtiposdireccion : query + '&codtiposdireccion=';
-      query = (this.dataDomicilio.adicional) ? query + '&indicacionesadicionales=' + this.dataDomicilio.adicional : query + '&indicacionesadicionales=';
-      query = (this.dataDomicilio.ninterior) ? query + '&numerointerior=' + this.dataDomicilio.ninterior : query + '&numerointerior=';
-      
-      console.log('EL SUPER QUERY!!!!!!');
-      console.log(query);
-      //insertarDireccion?idPersona=4485239&codtiposvia=1&idvia=686&via=DR LAVISTA&numeroexterior=144&entrecalle1&entrecalle2&andador&edificio&seccion&entrada
-          //&codtiposlocalidad=1&codtiposasentamiento=9&idcolonia=8&codasentamiento=&colonia=DOCTORES&codigopostal=06720
-          //&codciudad=&ciudad&iddelegacion=5&codmunicipio=15&delegacion=CUAUHTEMOC&telefono&codestado=9&codtiposdireccion=N&indicacionesadicionales&numerointerior=
-      this.http.post(this.endpointCatalogos + query, '', this.httpOptions)
-          .subscribe(
-              (res: any) => {
-                  console.log(res);
-                  if(res.length > 0){
-                    this.snackBar.open('Registro exitoso', 'Cerrar', {
-                          duration: 10000,
-                          horizontalPosition: 'end',
-                          verticalPosition: 'top'
-                      });
-                  }else{
-                      this.snackBar.open('Ocurrio un error al Insertar la dirección, intente nuevemente', 'Cerrar', {
-                          duration: 10000,
-                          horizontalPosition: 'end',
-                          verticalPosition: 'top'
-                      });
-                  }
-                  //this.dialogRef.close();
-              },
-              (error) => {
-              }
-          );
-  }
-
-  actualizarDomicilio(){
+        console.log('EL SUPER QUERY!!!!!!');
+        console.log(query);
+        //insertarDireccion?idPersona=4485239&codtiposvia=1&idvia=686&via=DR LAVISTA&numeroexterior=144&entrecalle1&entrecalle2&andador&edificio&seccion&entrada&codtiposlocalidad=1&codtiposasentamiento=9&idcolonia=8&codasentamiento=&colonia=DOCTORES&codigopostal=06720&codciudad=&ciudad&iddelegacion=5&codmunicipio=15&delegacion=CUAUHTEMOC&telefono&codestado=9&codtiposdireccion=N&indicacionesadicionales&numerointerior=
         
-    let query = 'actualizarDireccion?idPersona=' + this.data.idContribuyente + '&idDireccion=' + this.iddireccion;
+        this.http.post(this.endpointCatalogos + query, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    console.log("Aquí se inserta una nueva Dirección");
+                    console.log(res);
+                    console.log(this.codtiposdireccion);
 
-    query = (this.dataDomicilio.codtiposvia) ? query + '&codtiposvia=' + this.dataDomicilio.codtiposvia : query + '&codtiposvia=';
-    query = (this.dataDomicilio.idtipovia) ? query + '&idvia=' + this.dataDomicilio.idtipovia : query + '&idvia=';
-    query = (this.dataDomicilio.via) ? query + '&via=' + this.dataDomicilio.via : query + '&via=';
-    query = (this.dataDomicilio.nexterior) ? query + '&numeroexterior=' + this.dataDomicilio.nexterior : query + '&numeroexterior=';
-    query = (this.dataDomicilio.entrecalle1) ? query + '&entrecalle1='  + this.dataDomicilio.entrecalle1 : query + '&entrecalle1';
-    query = (this.dataDomicilio.entrecalle2) ? query + '&entrecalle2='  + this.dataDomicilio.entrecalle2 : query + '&entrecalle2';
-    query = (this.dataDomicilio.andador) ? query + '&andador=' + this.dataDomicilio.andador : query + '&andador';
-    query = (this.dataDomicilio.edificio) ? query + '&edificio=' + this.dataDomicilio.edificio : query + '&edificio';
-    query = (this.dataDomicilio.seccion) ? query + '&seccion=' + this.dataDomicilio.seccion : query + '&seccion=';
-    query = (this.dataDomicilio.entrada) ? query + '&entrada=' + this.dataDomicilio.entrada : query + '&entrada=';
-    query = (this.dataDomicilio.idtipolocalidad) ? query + '&codtiposlocalidad=' + this.dataDomicilio.idtipolocalidad : query + '&codtiposlocalidad=';
-    query = (this.dataDomicilio.idtipoasentamiento) ? query + '&codtiposasentamiento=' + this.dataDomicilio.idtipoasentamiento : query + '&codtiposasentamiento=';
-    query = (this.dataDomicilio.codasentamiento) ? query + '&idcolonia=' + this.dataDomicilio.codasentamiento : query + '&idcolonia=';
-    query = (this.dataDomicilio.codasentamiento) ? query + '&codasentamiento=' + this.dataDomicilio.codasentamiento : query + '&codasentamiento=';
-    query = (this.dataDomicilio.asentamiento) ? query + '&colonia=' + this.dataDomicilio.asentamiento : query + '&colonia=';
-    query = (this.dataDomicilio.cp) ? query + '&codigopostal=' + this.dataDomicilio.cp : query + '&codigopostal=';
-    query = (this.dataDomicilio.idciudad) ? query + '&codciudad=' + this.dataDomicilio.idciudad : query + '&codciudad=';
-    query = (this.dataDomicilio.ciudad) ? query + '&ciudad=' + this.dataDomicilio.ciudad : query + '&ciudad=';
-    query = (this.dataDomicilio.idmunicipio) ? query + '&iddelegacion=' + this.dataDomicilio.idmunicipio : query + '&iddelegacion';
-    query = (this.dataDomicilio.idmunicipio2) ? query + '&codmunicipio=' + this.dataDomicilio.idmunicipio2 : query + '&codmunicipio=';
-    query = (this.dataDomicilio.idestado == 9) ? query + '&delegacion=' + this.dataDomicilio.delegacion : query + '&delegacion=' + this.dataDomicilio.municipio;
-    query = (this.dataDomicilio.telefono) ? query + '&telefono=' + this.dataDomicilio.telefono : query + '&telefono=';
-    query = (this.dataDomicilio.idestado) ? query + '&codestado=' + this.dataDomicilio.idestado : query + '&codestado=';
-    query = (this.codtiposdireccion) ? query + '&codtiposdireccion=' + this.codtiposdireccion : query + '&codtiposdireccion=';
-    query = (this.dataDomicilio.adicional) ? query + '&indicacionesadicionales=' + this.dataDomicilio.adicional : query + '&indicacionesadicionales=';
-    query = (this.dataDomicilio.ninterior) ? query + '&numerointerior=' + this.dataDomicilio.ninterior : query + '&numerointerior=';
+                    this.dataMovimientoDomicilio.after_CP = res.after_CP;
+                    this.dataMovimientoDomicilio.after_Col = res.after_Col;
+                    this.dataMovimientoDomicilio.after_Direccion = res.after_Direccion;
+                    this.dataMovimientoDomicilio.after_Nombre = res.after_Nombre;
+                    this.dataMovimientoDomicilio.after_RFC = res.after_RFC;
+                    this.dataMovimientoDomicilio.area = res.area;
+                    this.dataMovimientoDomicilio.at = res.at;
+                    this.dataMovimientoDomicilio.before_CP = res.before_CP;
+                    this.dataMovimientoDomicilio.before_Col = res.before_Col;
+                    this.dataMovimientoDomicilio.before_Direccion = res.before_Direccion;
+                    this.dataMovimientoDomicilio.before_Nombre = res.before_Nombre;
+                    this.dataMovimientoDomicilio.before_RFC = res.before_RFC;
+                    this.dataMovimientoDomicilio.cuentaP = res.cuentaP;
+                    this.dataMovimientoDomicilio.fechaConsulta = res.fechaConsulta;
+                    this.dataMovimientoDomicilio.folio = res.folio;
+                    this.dataMovimientoDomicilio.idpersona = res.idpersona;
+                    this.dataMovimientoDomicilio.usuario = res.usuario;
+
+                    this.dialogRef.close(this.dataMovimientoDomicilio);
+
+                    this.snackBar.open('Registro exitoso', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                },
+                (error) => {
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
+
+
+    actualizarDomicilio(){
+        
+        let query = 'actualizarDireccion?idPersona=' + this.data.idContribuyente + '&idDireccion=' + this.iddireccion;
+
+        query = (this.dataDomicilio.codtiposvia) ? query + '&codtiposvia=' + this.dataDomicilio.codtiposvia : query + '&codtiposvia=';
+        query = (this.dataDomicilio.idtipovia) ? query + '&idvia=' + this.dataDomicilio.idtipovia : query + '&idvia=';
+        query = (this.dataDomicilio.via) ? query + '&via=' + this.dataDomicilio.via : query + '&via=';
+        query = (this.dataDomicilio.nexterior) ? query + '&numeroexterior=' + this.dataDomicilio.nexterior : query + '&numeroexterior=';
+        query = (this.dataDomicilio.entrecalle1) ? query + '&entrecalle1='  + this.dataDomicilio.entrecalle1 : query + '&entrecalle1';
+        query = (this.dataDomicilio.entrecalle2) ? query + '&entrecalle2='  + this.dataDomicilio.entrecalle2 : query + '&entrecalle2';
+        query = (this.dataDomicilio.andador) ? query + '&andador=' + this.dataDomicilio.andador : query + '&andador';
+        query = (this.dataDomicilio.edificio) ? query + '&edificio=' + this.dataDomicilio.edificio : query + '&edificio';
+        query = (this.dataDomicilio.seccion) ? query + '&seccion=' + this.dataDomicilio.seccion : query + '&seccion=';
+        query = (this.dataDomicilio.entrada) ? query + '&entrada=' + this.dataDomicilio.entrada : query + '&entrada=';
+        query = (this.dataDomicilio.idtipolocalidad) ? query + '&codtiposlocalidad=' + this.dataDomicilio.idtipolocalidad : query + '&codtiposlocalidad=';
+        query = (this.dataDomicilio.idtipoasentamiento) ? query + '&codtiposasentamiento=' + this.dataDomicilio.idtipoasentamiento : query + '&codtiposasentamiento=';
+        query = (this.dataDomicilio.codasentamiento) ? query + '&idcolonia=' + this.dataDomicilio.codasentamiento : query + '&idcolonia=';
+        query = (this.dataDomicilio.codasentamiento) ? query + '&codasentamiento=' + this.dataDomicilio.codasentamiento : query + '&codasentamiento=';
+        query = (this.dataDomicilio.asentamiento) ? query + '&colonia=' + this.dataDomicilio.asentamiento : query + '&colonia=';
+        query = (this.dataDomicilio.cp) ? query + '&codigopostal=' + this.dataDomicilio.cp : query + '&codigopostal=';
+        query = (this.dataDomicilio.idciudad) ? query + '&codciudad=' + this.dataDomicilio.idciudad : query + '&codciudad=';
+        query = (this.dataDomicilio.ciudad) ? query + '&ciudad=' + this.dataDomicilio.ciudad : query + '&ciudad=';
+        query = (this.dataDomicilio.idmunicipio) ? query + '&iddelegacion=' + this.dataDomicilio.idmunicipio : query + '&iddelegacion';
+        query = (this.dataDomicilio.idmunicipio2) ? query + '&codmunicipio=' + this.dataDomicilio.idmunicipio2 : query + '&codmunicipio=';
+        query = (this.dataDomicilio.idestado == 9) ? query + '&delegacion=' + this.dataDomicilio.delegacion : query + '&delegacion=' + this.dataDomicilio.municipio;
+        query = (this.dataDomicilio.telefono) ? query + '&telefono=' + this.dataDomicilio.telefono : query + '&telefono=';
+        query = (this.dataDomicilio.idestado) ? query + '&codestado=' + this.dataDomicilio.idestado : query + '&codestado=';
+        query = (this.codtiposdireccion) ? query + '&codtiposdireccion=' + this.codtiposdireccion : query + '&codtiposdireccion=';
+        query = (this.dataDomicilio.adicional) ? query + '&indicacionesadicionales=' + this.dataDomicilio.adicional : query + '&indicacionesadicionales=';
+        query = (this.dataDomicilio.ninterior) ? query + '&numerointerior=' + this.dataDomicilio.ninterior : query + '&numerointerior=';
     
-    console.log('Actualizacion de Direcciones...');
-    console.log(query);
+        console.log('Actualizacion de Direcciones...');
+        console.log(query);
     
-    //localhost:8000/api/v1/registro/actualizarDireccion?idPersona=4353312&idDireccion=3597172&codtiposvia=1&idvia=2568&via=ABRAHAM SANCHEZ&numeroexterior=21&entrecalle1&entrecalle2&andador&edificio&seccion&entrada&codtiposlocalidad=1&numerointerior=&codtiposasentamiento=9&idcolonia=8&codasentamiento=&colonia=DOCTORES&codigopostal=06720&codciudad&ciudad&iddelegacion=5&codmunicipio=15&delegacion=CUAUHTEMOC&telefono&codestado=9&codtiposdireccion=&indicacionesadicionales
+        //localhost:8000/api/v1/registro/actualizarDireccion?idPersona=4353312&idDireccion=3597172&codtiposvia=1&idvia=2568&via=ABRAHAM SANCHEZ&numeroexterior=21&entrecalle1&entrecalle2&andador&edificio&seccion&entrada&codtiposlocalidad=1&numerointerior=&codtiposasentamiento=9&idcolonia=8&codasentamiento=&colonia=DOCTORES&codigopostal=06720&codciudad&ciudad&iddelegacion=5&codmunicipio=15&delegacion=CUAUHTEMOC&telefono&codestado=9&codtiposdireccion=&indicacionesadicionales
 
-    this.http.post(this.endpointCatalogos + query, '', this.httpOptions)
-        .subscribe(
-           
-            (res: any) => {
-                console.log("AQUI ACTUALIZO");
-                console.log(res);
+        this.http.post(this.endpointCatalogos + query, '', this.httpOptions)
+            .subscribe(
+            
+                (res: any) => {
+                    console.log("AQUI ACTUALIZO");
+                    console.log(res);
+                    console.log(this.codtiposdireccion);
 
-                this.dataMovimientoDomicilio.after_CP = res.after_CP;
-                this.dataMovimientoDomicilio.after_Col = res.after_Col;
-                this.dataMovimientoDomicilio.after_Direccion = res.after_Direccion;
-                this.dataMovimientoDomicilio.after_Nombre = res.after_Nombre;
-                this.dataMovimientoDomicilio.after_RFC = res.after_RFC;
-                this.dataMovimientoDomicilio.area = res.area;
-                this.dataMovimientoDomicilio.at = res.at;
-                this.dataMovimientoDomicilio.before_CP = res.before_CP;
-                this.dataMovimientoDomicilio.before_Col = res.before_Col;
-                this.dataMovimientoDomicilio.before_Direccion = res.before_Direccion;
-                this.dataMovimientoDomicilio.before_Nombre = res.before_Nombre;
-                this.dataMovimientoDomicilio.before_RFC = res.before_RFC;
-                this.dataMovimientoDomicilio.cuentaP = res.cuentaP;
-                this.dataMovimientoDomicilio.fechaConsulta = res.fechaConsulta;
-                this.dataMovimientoDomicilio.folio = res.folio;
-                this.dataMovimientoDomicilio.idpersona = res.idpersona;
-                this.dataMovimientoDomicilio.usuario = res.usuario;
+                    this.dataMovimientoDomicilio.after_CP = res.after_CP;
+                    this.dataMovimientoDomicilio.after_Col = res.after_Col;
+                    this.dataMovimientoDomicilio.after_Direccion = res.after_Direccion;
+                    this.dataMovimientoDomicilio.after_Nombre = res.after_Nombre;
+                    this.dataMovimientoDomicilio.after_RFC = res.after_RFC;
+                    this.dataMovimientoDomicilio.area = res.area;
+                    this.dataMovimientoDomicilio.at = res.at;
+                    this.dataMovimientoDomicilio.before_CP = res.before_CP;
+                    this.dataMovimientoDomicilio.before_Col = res.before_Col;
+                    this.dataMovimientoDomicilio.before_Direccion = res.before_Direccion;
+                    this.dataMovimientoDomicilio.before_Nombre = res.before_Nombre;
+                    this.dataMovimientoDomicilio.before_RFC = res.before_RFC;
+                    this.dataMovimientoDomicilio.cuentaP = res.cuentaP;
+                    this.dataMovimientoDomicilio.fechaConsulta = res.fechaConsulta;
+                    this.dataMovimientoDomicilio.folio = res.folio;
+                    this.dataMovimientoDomicilio.idpersona = res.idpersona;
+                    this.dataMovimientoDomicilio.usuario = res.usuario;
 
-                console.log(this.dataMovimientoDomicilio.after_CP);
-                this.dialogRef.close(this.dataMovimientoDomicilio);
+                    this.dialogRef.close(this.dataMovimientoDomicilio);
 
-                this.snackBar.open('Actualización Correcta', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
-                });
-            },
-            (error) => {
-                this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
-                });
-            }
-        );
-}
+                    this.snackBar.open('Actualización Correcta', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                },
+                (error) => {
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
 
   setDataDomicilio(data): void {
     console.log("ACA EL COD DATA ESPE");
