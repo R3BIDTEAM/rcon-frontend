@@ -989,33 +989,29 @@ export class EditarContribuyenteComponent implements OnInit {
             });
             dialogRef.afterClosed().subscribe(result => {
                 if(result){
+                    console.log(result);
+
                     this.dataActualizacion.after_CP = result.after_CP;
-                    this.dataActualizacion.after_Nombre = 'tiempo';
-                    // this.dataActualizacion.after_Col = result.after_Col;
-                    // this.dataActualizacion.after_Direccion = result.after_Direccion;
-                    // this.dataActualizacion.after_Nombre = result.after_Nombre;
-                    // this.dataActualizacion.after_RFC = result.after_RFC;
-                    // this.dataActualizacion.area = result.area;
-                    // this.dataActualizacion.at = result.at;
-                    // this.dataActualizacion.before_CP = result.before_CP;
-                    // this.dataActualizacion.before_Col = result.before_Col;
-                    // this.dataActualizacion.before_Direccion = result.before_Direccion;
-                    // this.dataActualizacion.before_Nombre = result.before_Nombre;
-                    // this.dataActualizacion.before_RFC = result.before_RFC;
-                    // this.dataActualizacion.cuentaP = result.cuentaP;
-                    // this.dataActualizacion.fechaConsulta = result.fechaConsulta;
-                    // this.dataActualizacion.folio = result.folio;
-                    // this.dataActualizacion.idpersona = result.idpersona;
-                    // this.dataActualizacion.usuario = '1';
-                    console.log("el result");
-                    console.log(result.data);
+                    this.dataActualizacion.after_Col = result.after_Col;
+                    this.dataActualizacion.after_Direccion = result.after_Direccion;
+                    this.dataActualizacion.after_Nombre = result.after_Nombre;
+                    this.dataActualizacion.after_RFC = result.after_RFC;
+                    this.dataActualizacion.area = result.area;
+                    this.dataActualizacion.at = result.at;
+                    this.dataActualizacion.before_CP = result.before_CP;
+                    this.dataActualizacion.before_Col = result.before_Col;
+                    this.dataActualizacion.before_Direccion = result.before_Direccion;
+                    this.dataActualizacion.before_Nombre = result.before_Nombre;
+                    this.dataActualizacion.before_RFC = result.before_RFC;
+                    this.dataActualizacion.cuentaP = result.cuentaP;
+                    this.dataActualizacion.fechaConsulta = result.fechaConsulta;
+                    this.dataActualizacion.folio = result.folio;
+                    this.dataActualizacion.idpersona = result.idpersona;
+                    this.dataActualizacion.usuario = result.usuario;
+                    
                     console.log(this.dataActualizacion.after_CP);
                     console.log(this.dataActualizacion.after_Nombre);
-                    // console.log(result.folio);
-                    // console.log("el interface");
                     
-                    // console.log(this.dataActualizacion.usuario);
-                    // console.log(result[0].dataMovimientoDomicilio.folio);
                     //this.getDomicilioContribuyente();
                 }
             });
@@ -1629,68 +1625,31 @@ export class DialogDomicilioContribuyente {
 
     this.http.post(this.endpointCatalogos + query, '', this.httpOptions)
         .subscribe(
-            // (res: any) => {
-            //     console.log(res);
-            //     if(res.length > 0){
-            //         this.snackBar.open('Actualización exitosa', 'Cerrar', {
-            //             duration: 10000,
-            //             horizontalPosition: 'end',
-            //             verticalPosition: 'top'
-            //         });                        
-            //     }else{
-            //         this.snackBar.open('Ocurrio un error al Insertar la dirección, intente nuevemente', 'Cerrar', {
-            //             duration: 10000,
-            //             horizontalPosition: 'end',
-            //             verticalPosition: 'top'
-            //         });
-            //     }
-            // },
-            // (error) => {
-            // }
+           
             (res: any) => {
                 console.log("AQUI ACTUALIZO");
                 console.log(res);
-                // console.log(JSON.parse(JSON.stringify(res)));
-
-              
 
                 this.dataMovimientoDomicilio.after_CP = res.after_CP;
                 this.dataMovimientoDomicilio.after_Col = res.after_Col;
-                // this.dataMovimientoDomicilio.after_Direccion = res.after_Direccion;
-                // this.dataMovimientoDomicilio.after_Nombre = res.after_Nombre;
-                // this.dataMovimientoDomicilio.after_RFC = res.after_RFC;
-                // this.dataMovimientoDomicilio.area = res.area;
-                // this.dataMovimientoDomicilio.at = res.at;
-                // this.dataMovimientoDomicilio.before_CP = res.before_CP;
-                // this.dataMovimientoDomicilio.before_Col = res.before_Col;
-                // this.dataMovimientoDomicilio.before_Direccion = res.before_Direccion;
-                // this.dataMovimientoDomicilio.before_Nombre = res.before_Nombre;
-                // this.dataMovimientoDomicilio.before_RFC = res.before_RFC;
-                // this.dataMovimientoDomicilio.cuentaP = res.cuentaP;
-                // this.dataMovimientoDomicilio.fechaConsulta = res.fechaConsulta;
-                // this.dataMovimientoDomicilio.folio = res.folio;
-                // this.dataMovimientoDomicilio.idpersona = res.idpersona;
-                // this.dataMovimientoDomicilio.usuario = res.usuario;
-
-                // this.dataMovimientoDomicilio.after_CP = '1';
-                // this.dataMovimientoDomicilio.after_Col = '2';
-                // this.dataMovimientoDomicilio.after_Direccion = '3';
-                // this.dataMovimientoDomicilio.after_Nombre = '4';
-                // this.dataMovimientoDomicilio.after_RFC = '5';
-                // this.dataMovimientoDomicilio.area = '6';
-                // this.dataMovimientoDomicilio.at = '7';
-                // this.dataMovimientoDomicilio.before_CP = '8';
-                // this.dataMovimientoDomicilio.before_Col = '9';
-                // this.dataMovimientoDomicilio.before_Direccion = '10';
-                // this.dataMovimientoDomicilio.before_Nombre = '11';
-                // this.dataMovimientoDomicilio.before_RFC = '12';
-                // this.dataMovimientoDomicilio.cuentaP = '13';
-                // this.dataMovimientoDomicilio.fechaConsulta = '14';
-                // this.dataMovimientoDomicilio.folio = '15';
-                // this.dataMovimientoDomicilio.idpersona = '16';
-                // this.dataMovimientoDomicilio.usuario = '17'
+                this.dataMovimientoDomicilio.after_Direccion = res.after_Direccion;
+                this.dataMovimientoDomicilio.after_Nombre = res.after_Nombre;
+                this.dataMovimientoDomicilio.after_RFC = res.after_RFC;
+                this.dataMovimientoDomicilio.area = res.area;
+                this.dataMovimientoDomicilio.at = res.at;
+                this.dataMovimientoDomicilio.before_CP = res.before_CP;
+                this.dataMovimientoDomicilio.before_Col = res.before_Col;
+                this.dataMovimientoDomicilio.before_Direccion = res.before_Direccion;
+                this.dataMovimientoDomicilio.before_Nombre = res.before_Nombre;
+                this.dataMovimientoDomicilio.before_RFC = res.before_RFC;
+                this.dataMovimientoDomicilio.cuentaP = res.cuentaP;
+                this.dataMovimientoDomicilio.fechaConsulta = res.fechaConsulta;
+                this.dataMovimientoDomicilio.folio = res.folio;
+                this.dataMovimientoDomicilio.idpersona = res.idpersona;
+                this.dataMovimientoDomicilio.usuario = res.usuario;
 
                 console.log(this.dataMovimientoDomicilio.after_CP);
+                this.dialogRef.close(this.dataMovimientoDomicilio);
 
                 this.snackBar.open('Actualización Correcta', 'Cerrar', {
                     duration: 10000,
