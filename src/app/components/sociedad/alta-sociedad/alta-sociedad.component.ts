@@ -101,9 +101,9 @@ export class AltaSociedadComponent implements OnInit {
                         console.log(res);
                         console.log("CON");
                         this.validaDialog(res);
+                    }else{
+                        this.guardaSociedad();
                     }
-                    
-                    
                 },
                 (error) => {
                     this.loading = false;
