@@ -137,6 +137,7 @@ export interface DataActualizacion{
     usuario: string;
 }
 
+
 @Component({
   selector: 'app-editar-contribuyente',
   templateUrl: './editar-contribuyente.component.html',
@@ -713,6 +714,155 @@ export class EditarContribuyenteComponent implements OnInit {
         pdfMake.createPdf(docDefinition).open();
       }
 
+      async generatePDFDomicilio() {
+        let docDefinition = {
+          content: [
+            {
+                image: await this.getBase64ImageFromURL(
+                "assets/img/logo_dependencia_rcon.PNG"
+              ),
+              width: 450,
+              alignment: 'center',
+            }, 
+            {  
+                text: 'COMPROBANTE DE AVISO DE MODIFICACIÓN AL PADRÓN DE CONTRIBUYENTES DEL IMPUESTO PREDIAL',  
+                fontSize: 9,  
+                alignment: 'center',  
+                color: '#000'  
+            }, 
+            {
+                canvas: [
+                    {
+                        type: 'line',
+                        color: 'white',
+                        x1: 0,
+                        y1: 10,
+                        x2: 250,
+                        y2: 10,
+                        lineWidth: 0.5
+                    }
+                ]
+            },
+            {  
+                text: 'ADMINISTRACIÓN TRIBUTARIA: ' + this.dataActualizacion.at,  
+                fontSize: 9,  
+                alignment: 'left',  
+                color: '#000'  
+            }, 
+            {  
+                text: 'NUMERO DE CUENTA PREDIAL: ' + this.dataActualizacion.cuentaP,  
+                fontSize: 9,  
+                alignment: 'left',  
+                color: '#000'  
+            }, 
+            {
+                canvas: [
+                    {
+                        type: 'line',
+                        color: 'white',
+                        x1: 0,
+                        y1: 5,
+                        x2: 250,
+                        y2: 5,
+                        lineWidth: 0.5
+                    }
+                ]
+            },
+            {  
+                layout: 'noBorders',
+                table: {  
+                    headerRows: 1,  
+                    widths: ['30%', '10%', '30%', '30%'],  
+                    body: [  
+                        ['', '', { text: 'ANTES', bold: true, alignment: 'right', fontSize: 9 }, { text: 'DESPUÉS', bold: true, fontSize: 9 }],  
+                        [ '', '', { text: 'Datos del contribuyente', bold: true, alignment: 'right', fontSize: 9 }, { text: 'Datos del contribuyente', bold: true, fontSize: 9 } ],
+                        [ { text: 'Nombre del contribuyente:', fontSize: 9 }, '', { text: this.dataActualizacion.before_Nombre, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_Nombre, fontSize: 9 } ],
+                        [ { text: 'RFC', fontSize: 9 }, '', { text: this.dataActualizacion.before_RFC, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_RFC, fontSize: 9 } ],
+                        ['', '', { text: 'Datos Administrativos del Inmueble', bold: true, alignment: 'right', fontSize: 9 }, { text: 'Datos Administrativos del Inmueble', bold: true, fontSize: 9 }],
+                        [ { text: 'Domicilio de notificación:', fontSize: 9 }, '', { text: this.dataActualizacion.before_Direccion, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_Direccion, fontSize: 9 } ],
+                        [ { text: 'Colonia:', fontSize: 9 }, '', { text: this.dataActualizacion.before_Col, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_Col, fontSize: 9 } ],
+                        [ { text: 'C.P:', fontSize: 9 }, '', { text: this.dataActualizacion.before_CP, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_CP, fontSize: 9 } ],
+                    ]  
+                }  
+            },
+            {
+                canvas: [
+                    {
+                        type: 'line',
+                        x1: 525,
+                        y1: 20,
+                        x2: 150,
+                        y2: 20,
+                        lineWidth: 0.5
+                    }
+                ]
+            },
+            {  
+                layout: 'noBorders',
+                table: {  
+                    headerRows: 1,  
+                    widths: ['30%', '70%'],  
+                    body: [  
+                        ['', { text: 'NOMBRE Y FIRMA DE CONFORMIDAD DEL CONTRIBUYENTE O REPRESENTANTE LEGAL', bold: true, alignment: 'center', fontSize: 8 }],    
+                    ]  
+                }   
+            },
+            {
+                canvas: [
+                    {
+                        type: 'line',
+                        color: 'white',
+                        x1: 0,
+                        y1: 20,
+                        x2: 250,
+                        y2: 20,
+                        lineWidth: 0.5
+                    }
+                ]
+            },
+            {  
+                layout: 'noBorders',
+                table: {  
+                    headerRows: 1,  
+                    widths: ['20%', '80%'],  
+                    body: [  
+                        [{ text: 'Nombre de usuario:', fontSize: 9 }, { text: this.dataActualizacion.usuario, fontSize: 9 }],  
+                        [{ text: 'Área de consulta:', fontSize: 9 }, { text: this.dataActualizacion.area, fontSize: 9 }],    
+                        [{ text: 'Fecha de consulta:', fontSize: 9 }, { text: this.dataActualizacion.fechaConsulta, fontSize: 9 }],  
+                        [{ text: 'Folio:', fontSize: 9 }, { text: this.dataActualizacion.folio, fontSize: 9 }],    
+                    ]  
+                }  
+            },
+            {
+                canvas: [
+                    {
+                        type: 'line',
+                        color: 'white',
+                        x1: 0,
+                        y1: 10,
+                        x2: 250,
+                        y2: 10,
+                        lineWidth: 0.5
+                    }
+                ]
+            },
+            {  
+                layout: 'noBorders',
+                table: {  
+                    headerRows: 1,  
+                    widths: ['100%'],  
+                    body: [  
+                        [{ text: 'Contribuyente: De conformidad con el artículo 56, inciso b) párrafo segundo del Código Fiscal del Distrito Federal, los avisos que se presenten en forma extemporánea, surtirán sus efectos a partir de la fecha en que sean presentados. Asímismo, se le recuerda que, conforme con el artículo 73, fracción VII, las autoridades competentes a fin de cerciorarse del cumplimiento de las disposiciones que rigen la materia y comprobar infracciones a las mismas, están facultadas para realizar la verificación física, clasificación, valuación o comprobación de toda clase de bienes relacionados con las obligaciones fiscales establecidas en el mencionado Código.', fontSize: 8, alignment: "justify" }]    
+                    ]  
+                }  
+            },
+          ]
+        };
+    
+        pdfMake.createPdf(docDefinition).open();
+      }
+
+
       getBase64ImageFromURL(url) {
         return new Promise((resolve, reject) => {
           var img = new Image();
@@ -838,7 +988,36 @@ export class EditarContribuyenteComponent implements OnInit {
                 data: {dataDomicilioEspecifico:dataDomicilioEspecifico, idContribuyente: this.idContribuyente},
             });
             dialogRef.afterClosed().subscribe(result => {
-                    this.getDomicilioContribuyente();
+                if(result){
+                    this.dataActualizacion.after_CP = result.after_CP;
+                    this.dataActualizacion.after_Nombre = 'tiempo';
+                    // this.dataActualizacion.after_Col = result.after_Col;
+                    // this.dataActualizacion.after_Direccion = result.after_Direccion;
+                    // this.dataActualizacion.after_Nombre = result.after_Nombre;
+                    // this.dataActualizacion.after_RFC = result.after_RFC;
+                    // this.dataActualizacion.area = result.area;
+                    // this.dataActualizacion.at = result.at;
+                    // this.dataActualizacion.before_CP = result.before_CP;
+                    // this.dataActualizacion.before_Col = result.before_Col;
+                    // this.dataActualizacion.before_Direccion = result.before_Direccion;
+                    // this.dataActualizacion.before_Nombre = result.before_Nombre;
+                    // this.dataActualizacion.before_RFC = result.before_RFC;
+                    // this.dataActualizacion.cuentaP = result.cuentaP;
+                    // this.dataActualizacion.fechaConsulta = result.fechaConsulta;
+                    // this.dataActualizacion.folio = result.folio;
+                    // this.dataActualizacion.idpersona = result.idpersona;
+                    // this.dataActualizacion.usuario = '1';
+                    console.log("el result");
+                    console.log(result.data);
+                    console.log(this.dataActualizacion.after_CP);
+                    console.log(this.dataActualizacion.after_Nombre);
+                    // console.log(result.folio);
+                    // console.log("el interface");
+                    
+                    // console.log(this.dataActualizacion.usuario);
+                    // console.log(result[0].dataMovimientoDomicilio.folio);
+                    //this.getDomicilioContribuyente();
+                }
             });
     }
 
@@ -1013,6 +1192,26 @@ export class EditarContribuyenteComponent implements OnInit {
 
 
 ///////////////DOMICILIO////////////////
+export interface DataMovimientoDomicilio {
+    after_CP: string;
+    after_Col: string;
+    after_Direccion: string;
+    after_Nombre: string;
+    after_RFC: string;
+    area: string;
+    at: string;
+    before_CP: string;
+    before_Col: string;
+    before_Direccion: string;
+    before_Nombre: string;
+    before_RFC: string;
+    cuentaP: string;
+    fechaConsulta: string;
+    folio: string;
+    idpersona: string;
+    usuario: string;
+}
+
 @Component({
   selector: 'app-dialog-domicilio-contribuyente',
   templateUrl: 'app-dialog-domicilio-contribuyente.html',
@@ -1067,9 +1266,11 @@ export class DialogDomicilioContribuyente {
   domicilioFormGroup: FormGroup;
   dataDomicilio: DataDomicilio = {} as DataDomicilio;
   dataDomicilioEspecifico: DataDomicilio = {} as DataDomicilio;
+  dataMovimientoDomicilio: DataMovimientoDomicilio = {} as DataMovimientoDomicilio;
   loadingDireccionEspecifica = false;
   iddomicilio;
   iddireccion;
+  lafinal: DataMovimientoDomicilio[] = [];
 
   constructor(
       private auth: AuthService,
@@ -1449,6 +1650,48 @@ export class DialogDomicilioContribuyente {
             (res: any) => {
                 console.log("AQUI ACTUALIZO");
                 console.log(res);
+                // console.log(JSON.parse(JSON.stringify(res)));
+
+              
+
+                this.dataMovimientoDomicilio.after_CP = res.after_CP;
+                this.dataMovimientoDomicilio.after_Col = res.after_Col;
+                // this.dataMovimientoDomicilio.after_Direccion = res.after_Direccion;
+                // this.dataMovimientoDomicilio.after_Nombre = res.after_Nombre;
+                // this.dataMovimientoDomicilio.after_RFC = res.after_RFC;
+                // this.dataMovimientoDomicilio.area = res.area;
+                // this.dataMovimientoDomicilio.at = res.at;
+                // this.dataMovimientoDomicilio.before_CP = res.before_CP;
+                // this.dataMovimientoDomicilio.before_Col = res.before_Col;
+                // this.dataMovimientoDomicilio.before_Direccion = res.before_Direccion;
+                // this.dataMovimientoDomicilio.before_Nombre = res.before_Nombre;
+                // this.dataMovimientoDomicilio.before_RFC = res.before_RFC;
+                // this.dataMovimientoDomicilio.cuentaP = res.cuentaP;
+                // this.dataMovimientoDomicilio.fechaConsulta = res.fechaConsulta;
+                // this.dataMovimientoDomicilio.folio = res.folio;
+                // this.dataMovimientoDomicilio.idpersona = res.idpersona;
+                // this.dataMovimientoDomicilio.usuario = res.usuario;
+
+                // this.dataMovimientoDomicilio.after_CP = '1';
+                // this.dataMovimientoDomicilio.after_Col = '2';
+                // this.dataMovimientoDomicilio.after_Direccion = '3';
+                // this.dataMovimientoDomicilio.after_Nombre = '4';
+                // this.dataMovimientoDomicilio.after_RFC = '5';
+                // this.dataMovimientoDomicilio.area = '6';
+                // this.dataMovimientoDomicilio.at = '7';
+                // this.dataMovimientoDomicilio.before_CP = '8';
+                // this.dataMovimientoDomicilio.before_Col = '9';
+                // this.dataMovimientoDomicilio.before_Direccion = '10';
+                // this.dataMovimientoDomicilio.before_Nombre = '11';
+                // this.dataMovimientoDomicilio.before_RFC = '12';
+                // this.dataMovimientoDomicilio.cuentaP = '13';
+                // this.dataMovimientoDomicilio.fechaConsulta = '14';
+                // this.dataMovimientoDomicilio.folio = '15';
+                // this.dataMovimientoDomicilio.idpersona = '16';
+                // this.dataMovimientoDomicilio.usuario = '17'
+
+                console.log(this.dataMovimientoDomicilio.after_CP);
+
                 this.snackBar.open('Actualización Correcta', 'Cerrar', {
                     duration: 10000,
                     horizontalPosition: 'end',
