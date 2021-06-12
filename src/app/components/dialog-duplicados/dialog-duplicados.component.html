@@ -20,9 +20,10 @@
             <ng-container matColumnDef="datos">
                 <th mat-header-cell *matHeaderCellDef> Datos Identificativos </th>
                 <td mat-cell *matCellDef="let element">
-                    {{ (element.REGISTRO) ? element.REGISTRO : '' }}
-                    {{ (element.CLAVEIFE) ? element.CLAVEIFE : '' }}
-                    {{ (element.ACTIVPRINCIP) ? element.ACTIVPRINCIP : '' }}
+                    <label *ngIf="(element.REGISTRO) ? element.REGISTRO : ''">Registro: </label> {{ (element.REGISTRO) ? element.REGISTRO : '' }}
+                    <label *ngIf="(element.CLAVEIFE) ? element.CLAVEIFE : ''">IFE: </label> {{ (element.CLAVEIFE) ? element.CLAVEIFE : '' }}
+                    <label *ngIf="(element.ACTIVPRINCIP) ? element.ACTIVPRINCIP : ''">Acta: </label> {{ (element.ACTIVPRINCIP) ? element.ACTIVPRINCIP : '' }}
+                    <label *ngIf="(element.CURP) ? element.CURP : ''">CURP: </label> {{ (element.CURP) ? element.CURP : '' }}
                 </td>
             </ng-container>
             <ng-container matColumnDef="select">
