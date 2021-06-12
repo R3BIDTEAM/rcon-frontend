@@ -132,11 +132,14 @@ export class AltaPeritosComponent implements OnInit {
         let query = '';
         let busquedaDatos = 'getContribuyentesSimilares';
 
-        query = (this.datoPeritos.nombre) ? query + 'nombre=' + this.datoPeritos.nombre + '&filtroNombre=' : query + 'nombre=&filtroNombre=';
+        //query = (this.datoPeritos.nombre) ? query + 'nombre=' + this.datoPeritos.nombre + '&filtroNombre=' : query + 'nombre=&filtroNombre=';
+        query = query + 'nombre=&filtroNombre=';
 
-        query = (this.datoPeritos.apepaterno) ? query + '&apellidoPaterno=' + this.datoPeritos.apepaterno + '&filtroApellidoPaterno=' : query + '&apellidoPaterno=&filtroApellidoPaterno=';
+        //query = (this.datoPeritos.apepaterno) ? query + '&apellidoPaterno=' + this.datoPeritos.apepaterno + '&filtroApellidoPaterno=' : query + '&apellidoPaterno=&filtroApellidoPaterno=';
+        query = query + '&apellidoPaterno=&filtroApellidoPaterno=';
 
-        query = (this.datoPeritos.apematerno) ? query + '&apellidoMaterno=' + this.datoPeritos.apematerno + '&filtroApellidoMaterno=' : query + '&apellidoMaterno=&filtroApellidoMaterno=';
+        //query = (this.datoPeritos.apematerno) ? query + '&apellidoMaterno=' + this.datoPeritos.apematerno + '&filtroApellidoMaterno=' : query + '&apellidoMaterno=&filtroApellidoMaterno=';
+        query = query + '&apellidoMaterno=&filtroApellidoMaterno=';
 
         query = (this.datoPeritos.curp) ? query + '&curp=' + this.datoPeritos.curp : query + '&curp=';
 

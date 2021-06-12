@@ -143,11 +143,14 @@ export class AltaNotarioComponent implements OnInit {
         let query = '';
         let busquedaDatos = 'getContribuyentesSimilares';
 
-        query = (this.filtros.nombre) ? query + 'nombre=' + this.filtros.nombre  + '&filtroNombre=' : query +  'nombre=&filtroNombre=';
+        //query = (this.filtros.nombre) ? query + 'nombre=' + this.filtros.nombre  + '&filtroNombre=' : query +  'nombre=&filtroNombre=';
+        query = query + 'nombre=&filtroNombre=';
 
-        query = (this.filtros.apellido_paterno) ? query + '&apellidoPaterno=' + this.filtros.apellido_paterno : query + '&apellidoPaterno=';
+        //query = (this.filtros.apellido_paterno) ? query + '&apellidoPaterno=' + this.filtros.apellido_paterno : query + '&apellidoPaterno=';
+        query = query + '&apellidopaterno=&filtroApellidoPaterno=';
 
-        query = (this.filtros.apellido_materno) ? query + '&apellidoMaterno=' + this.filtros.apellido_materno : query + '&apellidoMaterno=';
+        //query = (this.filtros.apellido_materno) ? query + '&apellidoMaterno=' + this.filtros.apellido_materno : query + '&apellidoMaterno=';
+        query = query + '&apellidomaterno=&filtroApellidoMaterno=';
 
         query = (this.filtros.curp) ? query + '&curp=' + this.filtros.curp : query + '&curp=';
 

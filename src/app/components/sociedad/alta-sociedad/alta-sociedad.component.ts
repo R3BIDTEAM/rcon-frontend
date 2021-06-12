@@ -88,10 +88,11 @@ export class AltaSociedadComponent implements OnInit {
         
         query = query + 'nombre=&filtroNombre=';
 
-        if(this.razonSocial){
-            query = query + '&apellidoPaterno='+ this.razonSocial + '&filtroApellidoPaterno=';
-        }
-
+        // if(this.razonSocial){
+        //     query = query + '&apellidoPaterno='+ this.razonSocial + '&filtroApellidoPaterno=';
+        // }
+        query = query + '&apellidoPaterno=&filtroApellidoPaterno=';
+        
         query = query + '&apellidoMaterno=&filtroApellidoMaterno=&curp=';
 
         if(this.rfc){

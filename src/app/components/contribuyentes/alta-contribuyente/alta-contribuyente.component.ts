@@ -265,11 +265,14 @@ export class AltaContribuyenteComponent implements OnInit {
         let query = '';
         let busquedaDatos = 'getContribuyentesSimilares';
 
-        query = (this.contribuyente.nombre) ? query + 'nombre=' + this.contribuyente.nombre : query + 'nombre=';
+        //query = (this.contribuyente.nombre) ? query + 'nombre=' + this.contribuyente.nombre : query + 'nombre=';
+        query = query + 'nombre=&filtroNombre=';
 
-        query = (this.contribuyente.apaterno) ? query + '&apellidopaterno=' + this.contribuyente.apaterno : query + '&apellidopaterno=' + this.contribuyente.nombre_moral;
+        //query = (this.contribuyente.apaterno) ? query + '&apellidopaterno=' + this.contribuyente.apaterno : query + '&apellidopaterno=' + this.contribuyente.nombre_moral;
+        query = query + '&apellidopaterno=&filtroApellidoPaterno=';
 
-        query = (this.contribuyente.amaterno) ? query + '&apellidomaterno=' + this.contribuyente.amaterno : query + '&apellidomaterno=';
+        //query = (this.contribuyente.amaterno) ? query + '&apellidomaterno=' + this.contribuyente.amaterno : query + '&apellidomaterno=';
+        query = query + '&apellidomaterno=&filtroApellidoMaterno=';
 
         query = (this.contribuyente.rfc) ? query + '&rfc=' + this.contribuyente.rfc : query + '&rfc=';
 
