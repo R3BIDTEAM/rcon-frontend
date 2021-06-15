@@ -29,6 +29,13 @@ export interface DatosPeritos {
     independienteAct: string;
     fecha_alta: Date;
     fecha_baja: Date;
+    tipoPersona: string;
+    actPreponderante: string;
+    idTipoPersonaMoral: number;
+    fechaInicioOperacion: Date;
+    idMotivo: number;
+    fechaCambio: Date;
+    nombre_moral: string;
 }
 
 export interface DataDomicilio {
@@ -144,6 +151,7 @@ export class EditarPeritosComponent implements OnInit {
     panelSociedades = false;
     botonEdit = false;
     peritoPersonaFormGroup: FormGroup;
+    moralFormGroup: FormGroup;
     loadingDatosPerito = false;
     loadingRepresentante = false;
     loadingRepresentado = false;
@@ -162,6 +170,9 @@ export class EditarPeritosComponent implements OnInit {
     endpointActualiza = environment.endpoint + 'registro/';
     isIdentificativo;
     idInmueble;
+    cambioPersona;
+    actCambioPersona = true;
+    isRequired = true;
 
     /*PAGINADOS*/
     dataSource1 = [];
@@ -210,6 +221,16 @@ export class EditarPeritosComponent implements OnInit {
             celular: [null],
             email: [null],
         });
+
+        this.moralFormGroup = this._formBuilder.group({
+            nombre_moral: [null, [Validators.required]],
+            rfc: [null, [Validators.required]],
+            actPreponderante: [null, []],
+            idTipoPersonaMoral: ['', []],
+            fechaInicioOperacion: [null, []],
+            idMotivo: ['', []],
+            fechaCambio: [null, []],
+        });
     }
 
     ngOnInit(): void {
@@ -247,7 +268,7 @@ export class EditarPeritosComponent implements OnInit {
     getPeritoDatos(){
         this.query = 'obtenerSociedades=1&idPerito=' + this.idPerito; 
         this.loadingDatosPerito = true;
-        console.log(this.endpoint);
+        console.log(this.endpoint + '?' + this.query);
         this.http.post(this.endpoint + '?' + this.query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
@@ -273,6 +294,8 @@ export class EditarPeritosComponent implements OnInit {
     }
 
     datoDelPerito(){
+        this.cambioPersona = this.dataPeritoResultado.CODTIPOSPERSONA;
+        this.datoPeritos.tipoPersona = this.dataPeritoResultado.CODTIPOSPERSONA;
         this.datoPeritos.apepaterno = this.dataPeritoResultado.APELLIDOPATERNO;
         this.datoPeritos.apematerno = this.dataPeritoResultado.APELLIDOMATERNO;
         this.datoPeritos.nombre  = this.dataPeritoResultado.NOMBRE;
@@ -301,6 +324,22 @@ export class EditarPeritosComponent implements OnInit {
         this.dataSource = this.paginate(this.dataSource, this.pageSize, this.pagina);
     }
 
+    checkRequired(){
+        if(this.peritoPersonaFormGroup.value.rfc === ''){
+            this.isRequired = true;
+        } else {
+            this.isRequired = false;
+        }
+    }
+
+    actualizaPersona(event){
+        console.log(event)
+        this.actCambioPersona = (event == this.cambioPersona) ? true : false;
+        console.log(this.actCambioPersona);
+        if(this.datoPeritos.tipoPersona == 'M'){
+            this.datoPeritos.nombre_moral = this.datoPeritos.apepaterno + ' ' + this.datoPeritos.apematerno + ' ' + this.datoPeritos.nombre;
+        }
+    }
 
     /*PAGINADOS*/
     getDomicilioPerito(){
@@ -486,6 +525,69 @@ export class EditarPeritosComponent implements OnInit {
                     });
                 }
             );
+    }
+
+    cambiarTipoPersona(){
+        let query = 'idpersona=' + this.idPerito;
+        this.loadingDatosPerito = true;
+        
+        query = (this.datoPeritos.tipoPersona) ? query + '&codtipospersona=' + this.datoPeritos.tipoPersona : query + '&codtipospersona=';
+
+        if(this.datoPeritos.tipoPersona === 'F'){
+            query = (this.datoPeritos.apepaterno) ? query + '&apellidopaterno=' + this.datoPeritos.apepaterno : query + '&apellidopaterno=';
+            query = (this.datoPeritos.apematerno) ? query + '&apellidomaterno=' + this.datoPeritos.apematerno : query + '&apellidomaterno=';
+            query = (this.datoPeritos.nombre) ? query + '&nombre=' + this.datoPeritos.nombre : query + '&nombre=';
+            query = (this.datoPeritos.rfc) ? query + '&rfcF=' + this.datoPeritos.rfc : query + '&rfcF=';
+        } else {
+            query = (this.datoPeritos.nombre_moral) ? query + '&apellidopaterno=' + this.datoPeritos.nombre_moral : query + '&apellidopaterno=';
+            query = (this.datoPeritos.nombre) ? query + '&nombreM=' + this.datoPeritos.nombre : query + '&nombreM=';
+            query = (this.datoPeritos.rfc) ? query + '&rfcM=' + this.datoPeritos.rfc : query + '&rfcM=';
+        }
+        
+        query = (this.datoPeritos.curp) ? query + '&curp=' + this.datoPeritos.curp : query + '&curp=';
+        query = (this.datoPeritos.ine) ? query + '&claveife=' + this.datoPeritos.ine : query + '&claveife=';
+        query = (this.datoPeritos.identificacion) ? query + '&iddocidentif=' + this.datoPeritos.identificacion : query + '&iddocidentif=';
+        query = (this.datoPeritos.idedato) ? query + '&valdocidentif=' + this.datoPeritos.idedato : query + '&valdocidentif=';
+        query = (this.datoPeritos.fecha_naci) ? query + '&fechanacimiento=' + moment(this.datoPeritos.fecha_naci).format('DD-MM-YYYY') : query + '&fechanacimiento=';
+        query = (this.datoPeritos.fecha_def) ? query + '&fechadefuncion=' + moment(this.datoPeritos.fecha_def).format('DD-MM-YYYY') : query + '&fechadefuncion=';
+        query = (this.datoPeritos.celular) ? query + '&celular=' + this.datoPeritos.celular : query + '&celular=';
+        query = (this.datoPeritos.email) ? query + '&email=' + this.datoPeritos.email : query + '&email=';
+
+        query = (this.datoPeritos.actPreponderante) ? query + '&activprincip=' + this.datoPeritos.actPreponderante : query + '&activprincip=';
+        query = (this.datoPeritos.idTipoPersonaMoral) ? query + '&idtipomoral=' + this.datoPeritos.idTipoPersonaMoral : query + '&idtipomoral=';
+        query = (this.datoPeritos.idMotivo) ? query + '&idmotivosmoral=' + this.datoPeritos.idMotivo : query + '&idmotivosmoral=';
+        query = (this.datoPeritos.fechaInicioOperacion) ? query + '&fechainicioactiv=' + moment(this.datoPeritos.fechaInicioOperacion).format('DD-MM-YYYY') : query + '&fechainicioactiv=';
+        query = (this.datoPeritos.fechaCambio) ? query + '&fechacambiosituacion=' + moment(this.datoPeritos.fechaCambio).format('DD-MM-YYYY') : query + '&fechacambiosituacion=';
+
+        this.http.post(this.endpointActualiza + 'cambioTipoPersona' + '?' + query, '', this.httpOptions)
+        .subscribe(
+            (res: any) => {
+                this.loadingDatosPerito = false;
+                console.log("Cambio de persona");
+                console.log(res);
+                if(res){
+                    this.snackBar.open('Actualización correcta', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }else{
+                    this.snackBar.open('Se ha presentado un problema intente más tarde', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            },
+            (error) => {
+                this.loadingDatosPerito = false;
+                this.snackBar.open('Se ha presentado un problema intente más tarde', 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+            }
+        );
     }
 
     isIndependiente(dato){
