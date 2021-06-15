@@ -21,6 +21,18 @@ export interface DatosSociedad {
     registro: string;
     fecha_alta: Date;
     fecha_baja: Date;
+    tipoPersona: string;
+    nombre: string;
+    apaterno: string;
+    amaterno: string;
+    curp: string;
+    ine: string;
+    idDocIdent: number;
+    docIdent: string;
+    fechaNacimiento: Date;
+    fechaDefuncion: Date;
+    celular: string;
+    email: string;
 }
 
 export interface DataDomicilio {
@@ -143,6 +155,11 @@ export class EditarSociedadComponent implements OnInit {
     dataRepresentantes: DataRepresentacion[] = [];
     dataRepresentados: DataRepresentacion[] = [];
     @ViewChild('paginator') paginator: MatPaginator;
+    cambioPersona;
+    actCambioPersona = true;
+    isRequired = true;
+    fisicaFormGroup: FormGroup;
+    moralFormGroup: FormGroup;
 
     /*Paginado*/
     dataSource1 = [];
@@ -179,12 +196,47 @@ export class EditarSociedadComponent implements OnInit {
               Authorization: this.auth.getSession().token
             })
         };
+
+        this.fisicaFormGroup = this._formBuilder.group({
+            nombre: [null, [Validators.required]],
+            apepaterno: [null, [Validators.required]],
+            apematerno: [null, []],
+            rfc: [null, [Validators.required]],
+            curp: [null, [Validators.required]],
+            ine: [null, []],
+            idDocIdent: ['', []],
+            docIdent: [null, []],
+            fecha_naci: [null, []],
+            fecha_def: [null, []],
+            celular: [null, []],
+            email: [null, []],
+        });
+
+        this.moralFormGroup = this._formBuilder.group({
+            razonSocial: [null, [Validators.required]],
+            rfc: [null, [Validators.required]],
+            actPreponderante: [null, []],
+            idTipoPersonaMoral: ['', []],
+            fechaInicioOperacion: [null, []],
+            idMotivo: ['', []],
+            fechaCambio: [null, []],
+        });
+
         this.idSociedad = this.route.snapshot.paramMap.get('idsociedad');
         console.log(this.idSociedad);
         this.getSociedadDatos();
         this.getDomicilioSociedad();
         this.getRepresentacion();
         this.getRepresentado();
+    }
+
+    actualizaPersona(event){
+        console.log(event)
+        this.actCambioPersona = (event == this.cambioPersona) ? true : false;
+        console.log(this.actCambioPersona);
+        if(this.datosSociedad.tipoPersona == 'M'){
+            this.datosSociedad.razonSocial = this.datosSociedad.apaterno + ' ' + this.datosSociedad.amaterno + ' ' + this.datosSociedad.nombre;
+        }
     }
 
     getSociedadDatos(){
@@ -283,7 +335,72 @@ export class EditarSociedadComponent implements OnInit {
             );
     }
 
+cambiarTipoPersona(){
+        let query = 'idpersona=' + this.idSociedad;
+        this.loading = true;
+        
+        query = (this.datosSociedad.tipoPersona) ? query + '&codtipospersona=' + this.datosSociedad.tipoPersona : query + '&codtipospersona=';
+
+        if(this.datosSociedad.tipoPersona === 'F'){
+            query = (this.datosSociedad.apaterno) ? query + '&apellidopaterno=' + this.datosSociedad.apaterno : query + '&apellidopaterno=';
+            query = (this.datosSociedad.amaterno) ? query + '&apellidomaterno=' + this.datosSociedad.amaterno : query + '&apellidomaterno=';
+            query = (this.datosSociedad.nombre) ? query + '&nombre=' + this.datosSociedad.nombre : query + '&nombre=';
+            query = (this.datosSociedad.rfc) ? query + '&rfcF=' + this.datosSociedad.rfc : query + '&rfcF=';
+        } else {
+            query = (this.datosSociedad.razonSocial) ? query + '&apellidopaterno=' + this.datosSociedad.razonSocial : query + '&apellidopaterno=';
+            query = (this.datosSociedad.nombre) ? query + '&nombreM=' + this.datosSociedad.nombre : query + '&nombreM=';
+            query = (this.datosSociedad.rfc) ? query + '&rfcM=' + this.datosSociedad.rfc : query + '&rfcM=';
+        }
+        
+        query = (this.datosSociedad.curp) ? query + '&curp=' + this.datosSociedad.curp : query + '&curp=';
+        query = (this.datosSociedad.ine) ? query + '&claveife=' + this.datosSociedad.ine : query + '&claveife=';
+        query = (this.datosSociedad.idDocIdent) ? query + '&iddocidentif=' + this.datosSociedad.idDocIdent : query + '&iddocidentif=';
+        query = (this.datosSociedad.docIdent) ? query + '&valdocidentif=' + this.datosSociedad.docIdent : query + '&valdocidentif=';
+        query = (this.datosSociedad.fechaNacimiento) ? query + '&fechanacimiento=' + moment(this.datosSociedad.fechaNacimiento).format('DD-MM-YYYY') : query + '&fechanacimiento=';
+        query = (this.datosSociedad.fechaDefuncion) ? query + '&fechadefuncion=' + moment(this.datosSociedad.fechaDefuncion).format('DD-MM-YYYY') : query + '&fechadefuncion=';
+        query = (this.datosSociedad.celular) ? query + '&celular=' + this.datosSociedad.celular : query + '&celular=';
+        query = (this.datosSociedad.email) ? query + '&email=' + this.datosSociedad.email : query + '&email=';
+
+        query = (this.datosSociedad.acta) ? query + '&activprincip=' + this.datosSociedad.acta : query + '&activprincip=';
+        query = (this.datosSociedad.tipoMoral) ? query + '&idtipomoral=' + this.datosSociedad.tipoMoral : query + '&idtipomoral=';
+        query = (this.datosSociedad.motivoCambio) ? query + '&idmotivosmoral=' + this.datosSociedad.motivoCambio : query + '&idmotivosmoral=';
+        query = (this.datosSociedad.fechaInicio) ? query + '&fechainicioactiv=' + moment(this.datosSociedad.fechaInicio).format('DD-MM-YYYY') : query + '&fechainicioactiv=';
+        query = (this.datosSociedad.fechaCambio) ? query + '&fechacambiosituacion=' + moment(this.datosSociedad.fechaCambio).format('DD-MM-YYYY') : query + '&fechacambiosituacion=';
+
+        this.http.post(this.endpointActualiza + 'cambioTipoPersona' + '?' + query, '', this.httpOptions)
+        .subscribe(
+            (res: any) => {
+                this.loading = false;
+                console.log("Cambio de persona");
+                console.log(res);
+                if(res){
+                    this.snackBar.open('Actualización correcta', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }else{
+                    this.snackBar.open('Se ha presentado un problema intente más tarde', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            },
+            (error) => {
+                this.loading = false;
+                this.snackBar.open('Se ha presentado un problema intente más tarde', 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+            }
+        );
+    }
+
     datosDeLaSociedad(){
+        this.cambioPersona = this.dataSocedadResultado.CODTIPOSPERSONA;
+        this.datosSociedad.tipoPersona = this.dataSocedadResultado.CODTIPOSPERSONA;
         this.datosSociedad.razonSocial  = this.dataSocedadResultado.RAZONSOCIAL;
         this.datosSociedad.rfc = this.dataSocedadResultado.RFC;
         this.datosSociedad.registro = this.dataSocedadResultado.REGISTRO;
@@ -296,6 +413,7 @@ export class EditarSociedadComponent implements OnInit {
         this.datosSociedad.motivoCambio = this.dataSocedadResultado.IDMOTIVOSMORAL;
 
     }
+
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
         this.dataSource = this.paginate(this.dataSource, this.pageSize, this.pagina);
