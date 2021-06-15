@@ -185,6 +185,9 @@ export class EditarContribuyenteComponent implements OnInit {
     actualizado = false;
     accionDomicilio = false;
     accionDomicilioBoletas = false;
+    cambioPersona;
+    actCambioPersona = true;
+    isRequired = true;
 
     /*Paginado*/
     dataSource1 = [];
@@ -257,25 +260,39 @@ export class EditarContribuyenteComponent implements OnInit {
         this.getRepresentado();
     }
 
-    changeRequired(remove, add): void {
-        this.fisicaFormGroup.controls[remove].setValue(null);
-        this.fisicaFormGroup.controls[remove].clearValidators();
-        this.fisicaFormGroup.controls[add].setValidators(Validators.required);
-        this.fisicaFormGroup.markAsUntouched();
-        this.fisicaFormGroup.updateValueAndValidity();
+    actualizaPersona(event){
+        console.log(event)
+        this.actCambioPersona = (event == this.cambioPersona) ? true : false;
+        console.log(this.actCambioPersona);
+        if(this.contribuyente.tipoPersona == 'M'){
+            this.contribuyente.nombre_moral = this.contribuyente.apepaterno + ' ' + this.contribuyente.apematerno + ' ' + this.contribuyente.nombre;
+        }
+    }
+
+    changeRequired(): void {
+        // this.fisicaFormGroup.controls[remove].setValue(null);
+        // this.fisicaFormGroup.controls[remove].clearValidators();
+        // this.fisicaFormGroup.controls[add].setValidators(Validators.required);
+        // this.fisicaFormGroup.markAsUntouched();
+        // this.fisicaFormGroup.updateValueAndValidity();
+        if(this.fisicaFormGroup.value.rfc === ''){
+            this.isRequired = true;
+        } else {
+            this.isRequired = false;
+        }
     }
 
     getDataDocumentos(): void{
         this.loadingDocumentos = true;
         this.http.post(this.endpoint + 'getCatalogos', '', this.httpOptions).subscribe(
-        (res: any) => {
-            this.loadingDocumentos = false;
-            this.dataDocumentos = res.CatDocIdentificativos;
-            console.log(this.dataDocumentos);
-        },
-        (error) => {
-            this.loadingDocumentos = false;
-        }
+            (res: any) => {
+                this.loadingDocumentos = false;
+                this.dataDocumentos = res.CatDocIdentificativos;
+                console.log(this.dataDocumentos);
+            },
+            (error) => {
+                this.loadingDocumentos = false;
+            }
         );
     }
 
@@ -304,6 +321,7 @@ export class EditarContribuyenteComponent implements OnInit {
     }
 
     datoDelContribuyente(){
+        this.cambioPersona = this.dataContribuyenteResultado[0].CODTIPOPERSONA;
         this.contribuyente.tipoPersona = this.dataContribuyenteResultado[0].CODTIPOPERSONA;
         this.contribuyente.nombre  = this.dataContribuyenteResultado[0].NOMBRE;
         this.contribuyente.nombre_moral  = this.dataContribuyenteResultado[0].APELLIDOPATERNO;
@@ -411,7 +429,71 @@ export class EditarContribuyenteComponent implements OnInit {
             );
     }
 
+    cambiarTipoPersona(){
+        console.log("ACA ESTAMOS CAMBIANDO LA PERSONA");
+        let query = 'idpersona=' + this.idContribuyente;
+        this.loading = true;
+        this.actualizado = false;
 
+        query = (this.contribuyente.tipoPersona) ? query + '&codtipospersona=' + this.contribuyente.tipoPersona : query + '&codtipospersona=';
+
+        if(this.contribuyente.tipoPersona === 'F'){
+            query = (this.contribuyente.apepaterno) ? query + '&apellidopaterno=' + this.contribuyente.apepaterno : query + '&apellidopaterno=';
+            query = (this.contribuyente.apematerno) ? query + '&apellidomaterno=' + this.contribuyente.apematerno : query + '&apellidomaterno=';
+            query = (this.contribuyente.nombre) ? query + '&nombreF=' + this.contribuyente.nombre : query + '&nombreF=';
+            query = (this.contribuyente.rfc) ? query + '&rfcF=' + this.contribuyente.rfc : query + '&rfcF=';
+        } else {
+            query = (this.contribuyente.nombre_moral) ? query + '&apellidopaterno=' + this.contribuyente.nombre_moral : query + '&apellidopaterno=';
+            query = (this.contribuyente.nombre) ? query + '&nombreM=' + this.contribuyente.nombre : query + '&nombreM=';
+            query = (this.contribuyente.rfc) ? query + '&rfcM=' + this.contribuyente.rfc : query + '&rfcM=';
+        }
+
+        query = (this.contribuyente.curp) ? query + '&curp=' + this.contribuyente.curp : query + '&curp=';
+        query = (this.contribuyente.ine) ? query + '&claveife=' + this.contribuyente.ine : query + '&claveife=';
+        query = (this.contribuyente.identificacion) ? query + '&iddocidentif=' + this.contribuyente.identificacion : query + '&iddocidentif=';
+        query = (this.contribuyente.idedato) ? query + '&valdocidentif=' + this.contribuyente.idedato : query + '&valdocidentif=';
+        query = (this.contribuyente.fecha_naci) ? query + '&fechanacimiento=' + moment(this.contribuyente.fecha_naci).format('DD-MM-YYYY') : query + '&fechanacimiento=';
+        query = (this.contribuyente.fecha_def) ? query + '&fechadefuncion=' + moment(this.contribuyente.fecha_def).format('DD-MM-YYYY') : query + '&fechadefuncion=';
+        query = (this.contribuyente.celular) ? query + '&celular=' + this.contribuyente.celular : query + '&celular=';
+        query = (this.contribuyente.email) ? query + '&email=' + this.contribuyente.email : query + '&email=';
+
+        query = (this.contribuyente.actPreponderante) ? query + '&activprincip=' + this.contribuyente.actPreponderante : query + '&activprincip=';
+        query = (this.contribuyente.idTipoPersonaMoral) ? query + '&idtipomoral=' + this.contribuyente.idTipoPersonaMoral : query + '&idtipomoral=';
+        query = (this.contribuyente.idMotivo) ? query + '&idmotivosmoral=' + this.contribuyente.idMotivo : query + '&idmotivosmoral=';
+        query = (this.contribuyente.fechaInicioOperacion) ? query + '&fechainicioactiv=' + moment(this.contribuyente.fechaInicioOperacion).format('DD-MM-YYYY') : query + '&fechainicioactiv=';
+        query = (this.contribuyente.fechaCambio) ? query + '&fechacambiosituacion=' + moment(this.contribuyente.fechaCambio).format('DD-MM-YYYY') : query + '&fechacambiosituacion=';
+        //cambioTipoPersona?idpersona=4493942&apellidopaterno=Palacios&apellidomaterno=Garcia&nombreF=Telesforo&rfcF=PAGT830626AE0&curp&claveife=&iddocidentif&valdocidentif&fechanacimiento=26-06-1983&fechadefuncion
+        //&codtipospersona=M&nombreM=Telesforo Palacios Garcia&activprincipM&idtipomoral&idmotivosmoral&fechainicioactiv&fechacambiosituacion&rfcM=GEC8501014I5&celular&email=
+        this.http.post(this.endpoint + 'cambioTipoPersona' + '?' + query, '', this.httpOptions)
+        .subscribe(
+            (res: any) => {
+                this.loading = false;
+                console.log("Cambio de persona");
+                console.log(res);
+                if(res){
+                    this.snackBar.open('Actualización correcta', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }else{
+                    this.snackBar.open('Se ha presentado un problema intente más tarde', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            },
+            (error) => {
+                this.loading = false;
+                this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+            }
+        );
+    }
 
       async generatePDF() {
         let docDefinition = {
@@ -1345,259 +1427,246 @@ export class DialogDomicilioContribuyente {
   iddireccion;
   lafinal: DataMovimientoDomicilio[] = [];
 
-  constructor(
-      private auth: AuthService,
-      private snackBar: MatSnackBar,
-      private http: HttpClient,
-      private _formBuilder: FormBuilder,
-      public dialogRef: MatDialogRef<DialogDomicilioContribuyente>,
-      public dialog: MatDialog,
-      @Inject(MAT_DIALOG_DATA) public data: any) {
-          console.log(data);
-          dialogRef.disableClose = true;
-          this.httpOptions = {
-              headers: new HttpHeaders({
-                  'Content-Type': 'application/json',
-                  Authorization: this.auth.getSession().token
-              })
-          };
+    constructor(
+        private auth: AuthService,
+        private snackBar: MatSnackBar,
+        private http: HttpClient,
+        private _formBuilder: FormBuilder,
+        public dialogRef: MatDialogRef<DialogDomicilioContribuyente>,
+        public dialog: MatDialog,
+        @Inject(MAT_DIALOG_DATA) public data: any) {
+            console.log(data);
+            dialogRef.disableClose = true;
+            this.httpOptions = {
+                headers: new HttpHeaders({
+                    'Content-Type': 'application/json',
+                    Authorization: this.auth.getSession().token
+                })
+            };
 
-          this.iddireccion = data.dataDomicilioEspecifico;
-          this.codtiposdireccion = data.codtiposdireccion;
-          this.dataDomicilio = {} as DataDomicilio;
-          this.dataDomicilioEspecifico = {} as DataDomicilio;
-          this.getDataEstados();
-          this.getDireccionEspecifica();
-          
-          this.domicilioFormGroup = this._formBuilder.group({
-              //idtipodireccion: ['', Validators.required],
-              idestado: ['', Validators.required],
-              delegacion: [null],
-              municipio: [null, Validators.required],
-              idciudad: [null],
-              ciudad: [null, Validators.required],
-              codasentamiento: [null, Validators.required],
-              asentamiento: [null, Validators.required],
-              idtipoasentamiento: [null],
-              codtiposvia: [null],
-              idtipovia: ['', Validators.required],
-              via: [null, Validators.required],
-              idtipolocalidad: [null],
-              cp: [null],
-              nexterior: [null, Validators.required],
-              entrecalle1: [null],
-              entrecalle2: [null],
-              andador: [null],
-              edificio: [null],
-              seccion: [null],
-              entrada: [null],
-              ninterior: [null],
-              telefono: [null],
-              adicional: [null],
-              id_direccion: [null]
-          });
-  
-          this.domicilioFormGroup.controls.idestado.valueChanges.subscribe(idestado => {
-              if(idestado == 9) {
-                  this.domicilioFormGroup.removeControl('municipio');
-                  this.domicilioFormGroup.removeControl('idciudad');
-                  this.domicilioFormGroup.removeControl('ciudad');
-                  this.domicilioFormGroup.addControl('idmunicipio', new FormControl('', Validators.required));
-                  this.domicilioFormGroup.removeControl('idmunicipio2');
-              } else {
-                  this.domicilioFormGroup.removeControl('idmunicipio');
-                  this.domicilioFormGroup.addControl('municipio', new FormControl(null, Validators.required));
-                  this.domicilioFormGroup.addControl('idciudad', new FormControl(null, Validators.required));
-                  this.domicilioFormGroup.addControl('ciudad', new FormControl(null, Validators.required));
-                  this.domicilioFormGroup.addControl('idmunicipio2', new FormControl('', Validators.required));
-              }
-              this.domicilioFormGroup.updateValueAndValidity();
-          });
-  
-        //   if(data){
-        //       this.setDataDomicilio(data);
-        //   }
-        if(data){
-            console.log(data.dataDomicilioEspecifico);
-            console.log("recibimos data seteado1");
-            //console.log(data.dataDomicilioEspecifico[0]);
-            // this.domicilioFormGroup.controls['cp'].val('11111');
+            this.iddireccion = data.dataDomicilioEspecifico;
+            this.codtiposdireccion = data.codtiposdireccion;
+            this.dataDomicilio = {} as DataDomicilio;
+            this.dataDomicilioEspecifico = {} as DataDomicilio;
+            this.getDataEstados();
+            this.getDireccionEspecifica();
+            
+            this.domicilioFormGroup = this._formBuilder.group({
+                //idtipodireccion: ['', Validators.required],
+                idestado: ['', Validators.required],
+                delegacion: [null],
+                municipio: [null, Validators.required],
+                idciudad: [null],
+                ciudad: [null, Validators.required],
+                codasentamiento: [null, Validators.required],
+                asentamiento: [null, Validators.required],
+                idtipoasentamiento: [null],
+                codtiposvia: [null],
+                idtipovia: ['', Validators.required],
+                via: [null, Validators.required],
+                idtipolocalidad: [null],
+                cp: [null],
+                nexterior: [null, Validators.required],
+                entrecalle1: [null],
+                entrecalle2: [null],
+                andador: [null],
+                edificio: [null],
+                seccion: [null],
+                entrada: [null],
+                ninterior: [null],
+                telefono: [null],
+                adicional: [null],
+                id_direccion: [null]
+            });
+    
+            this.domicilioFormGroup.controls.idestado.valueChanges.subscribe(idestado => {
+                if(idestado == 9) {
+                    this.domicilioFormGroup.removeControl('municipio');
+                    this.domicilioFormGroup.removeControl('idciudad');
+                    this.domicilioFormGroup.removeControl('ciudad');
+                    this.domicilioFormGroup.addControl('idmunicipio', new FormControl('', Validators.required));
+                    this.domicilioFormGroup.removeControl('idmunicipio2');
+                } else {
+                    this.domicilioFormGroup.removeControl('idmunicipio');
+                    this.domicilioFormGroup.addControl('municipio', new FormControl(null, Validators.required));
+                    this.domicilioFormGroup.addControl('idciudad', new FormControl(null, Validators.required));
+                    this.domicilioFormGroup.addControl('ciudad', new FormControl(null, Validators.required));
+                    this.domicilioFormGroup.addControl('idmunicipio2', new FormControl('', Validators.required));
+                }
+                this.domicilioFormGroup.updateValueAndValidity();
+            });
+    
+            //   if(data){
+            //       this.setDataDomicilio(data);
+            //   }
+            if(data){
+                console.log(data.dataDomicilioEspecifico);
+                console.log("recibimos data seteado1");
+                //console.log(data.dataDomicilioEspecifico[0]);
+                // this.domicilioFormGroup.controls['cp'].val('11111');
+            }
+            this.getDataTiposAsentamiento();
+            this.getDataTiposVia();
+            this.getDataTiposLocalidad();
         }
-          this.getDataTiposAsentamiento();
-          this.getDataTiposVia();
-          this.getDataTiposLocalidad();
-      }
   
-  /*getDataTiposDireccion(): void {
-      this.loadingTiposDireccion = true;
-      this.http.get(this.endpointCatalogos, this.httpOptions).subscribe(
-          (res: any) => {
-              this.loadingTiposDireccion = false;
-              this.tiposDireccion = res;
-          },
-          (error) => {
-              this.loadingTiposDireccion = false;
-          }
-      );
-  }*/
+    getDireccionEspecifica(){
+        this.loadingDireccionEspecifica = true;
+        let metodo = 'getDireccionById';
+        this.http.post(this.endpointCatalogos + metodo + '?idDireccion='+ this.iddireccion, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loadingDireccionEspecifica = false;
+                    this.dataDomicilioEspecifico = res;
+                    this.setDataDomicilio(this.dataDomicilioEspecifico[0]);
+                    console.log('domicilio único encontrado');
+                    console.log(this.dataDomicilioEspecifico);
+                },
+                (error) => {
+                    this.loadingDireccionEspecifica = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
 
-  getDireccionEspecifica(){
-    this.loadingDireccionEspecifica = true;
-    let metodo = 'getDireccionById';
-    this.http.post(this.endpointCatalogos + metodo + '?idDireccion='+ this.iddireccion, '', this.httpOptions)
-        .subscribe(
+    getNombreDel(event): void {
+        this.dataDomicilio.delegacion = event.source.triggerValue;
+        this.botonAsentamiento = false;
+    }
+
+    getDataEstados(): void {
+        this.loadingEstados = true;
+        this.http.post(this.endpointCatalogos + 'getEstados', '', this.httpOptions).subscribe(
             (res: any) => {
-                this.loadingDireccionEspecifica = false;
-                this.dataDomicilioEspecifico = res;
-                this.setDataDomicilio(this.dataDomicilioEspecifico[0]);
-                console.log('domicilio único encontrado');
-                console.log(this.dataDomicilioEspecifico);
+                this.loadingEstados = false;
+                this.estados = res;
             },
             (error) => {
-                this.loadingDireccionEspecifica = false;
-                this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
-                });
+                this.loadingEstados = false;
             }
         );
-  }
+    }
 
-  getNombreDel(event): void {
-      this.dataDomicilio.delegacion = event.source.triggerValue;
-      this.botonAsentamiento = false;
-  }
+    getDataMunicipios(event): void {
+        this.botonMunicipio = false;
+        let busquedaMunCol = '';
+        busquedaMunCol = (event.value == 9) ? 'getDelegaciones' : 'getMunicipiosByEstado?codEstado=' + event.value;
+        this.loadingMunicipios = true;
+        this.http.post(this.endpointCatalogos + busquedaMunCol, '', this.httpOptions).subscribe(
+            (res: any) => {
+                this.loadingMunicipios = false;
+                this.municipios = res;
+                console.log('GETDELEG');
+                console.log(res);
+            },
+            (error) => {
+                this.loadingMunicipios = false;
+            }
+        );
+    }
+    
+    getDataTiposAsentamiento(): void {
+        this.loadingTiposAsentamiento = true;
+        this.http.post(this.endpointCatalogos + 'getTiposAsentamiento', '', this.httpOptions).subscribe(
+            (res: any) => {
+                this.loadingTiposAsentamiento = false;
+                this.tiposAsentamiento = res;
+                console.log('AQUI EL ASENTAMIENTO SELECT');
+                console.log(this.tiposAsentamiento);
+            },
+            (error) => {
+                this.loadingTiposAsentamiento = false;
+            }
+        );
+    }
 
-  getDataEstados(): void {
-      this.loadingEstados = true;
-      this.http.post(this.endpointCatalogos + 'getEstados', '', this.httpOptions).subscribe(
-          (res: any) => {
-              this.loadingEstados = false;
-              this.estados = res;
-          },
-          (error) => {
-              this.loadingEstados = false;
-          }
-      );
-  }
+    getDataTiposVia(): void {
+        this.loadingTiposVia = true;
+        this.http.post(this.endpointCatalogos + 'getTiposVia', '', this.httpOptions).subscribe(
+            (res: any) => {
+                this.loadingTiposVia = false;
+                this.tiposVia = res;
+                console.log('AQUI EL TIPOS VIA SELECT');
+                console.log(this.tiposVia);
+                console.log(this.codtiposdireccion);
+            },
+            (error) => {
+                this.loadingTiposVia = false;
+            }
+        );
+    }
 
-  getDataMunicipios(event): void {
-      this.botonMunicipio = false;
-      let busquedaMunCol = '';
-      busquedaMunCol = (event.value == 9) ? 'getDelegaciones' : 'getMunicipiosByEstado?codEstado=' + event.value;
-      this.loadingMunicipios = true;
-      this.http.post(this.endpointCatalogos + busquedaMunCol, '', this.httpOptions).subscribe(
-          (res: any) => {
-              this.loadingMunicipios = false;
-              this.municipios = res;
-              console.log('GETDELEG');
-              console.log(res);
-          },
-          (error) => {
-              this.loadingMunicipios = false;
-          }
-      );
-  }
-  
-  getDataTiposAsentamiento(): void {
-      this.loadingTiposAsentamiento = true;
-      this.http.post(this.endpointCatalogos + 'getTiposAsentamiento', '', this.httpOptions).subscribe(
-          (res: any) => {
-              this.loadingTiposAsentamiento = false;
-              this.tiposAsentamiento = res;
-              console.log('AQUI EL ASENTAMIENTO SELECT');
-              console.log(this.tiposAsentamiento);
-          },
-          (error) => {
-              this.loadingTiposAsentamiento = false;
-          }
-      );
-  }
+    getDataTiposLocalidad(): void {
+        this.loadingTiposLocalidad = true;
+        this.http.post(this.endpointCatalogos + 'getTiposLocalidad', '', this.httpOptions).subscribe(
+            (res: any) => {
+                this.loadingTiposLocalidad = false;
+                this.tiposLocalidad = res;
+                console.log('AQUI EL TIPOS LOCALIDAD');
+                console.log(this.tiposLocalidad);
+            },
+            (error) => {
+                this.loadingTiposLocalidad = false;
+            }
+        );
+    }
 
-  getDataTiposVia(): void {
-      this.loadingTiposVia = true;
-      this.http.post(this.endpointCatalogos + 'getTiposVia', '', this.httpOptions).subscribe(
-          (res: any) => {
-              this.loadingTiposVia = false;
-              this.tiposVia = res;
-              console.log('AQUI EL TIPOS VIA SELECT');
-              console.log(this.tiposVia);
-              console.log(this.codtiposdireccion);
-          },
-          (error) => {
-              this.loadingTiposVia = false;
-          }
-      );
-  }
+    getDataDomicilio(): void {
+        //this.dataDomicilio.idtipodireccion = this.domicilioFormGroup.value.idtipodireccion;
+        this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
+        this.dataDomicilio.codasentamiento = this.domicilioFormGroup.value.codasentamiento;
+        this.dataDomicilio.idtipoasentamiento = this.domicilioFormGroup.value.idtipoasentamiento;
+        this.dataDomicilio.asentamiento = (this.domicilioFormGroup.value.asentamiento) ? this.domicilioFormGroup.value.asentamiento : null;
+        this.dataDomicilio.codtiposvia = (this.domicilioFormGroup.value.codtiposvia) ? this.domicilioFormGroup.value.codtiposvia : null;
+        this.dataDomicilio.idtipovia = this.domicilioFormGroup.value.idtipovia;
+        this.dataDomicilio.via = (this.domicilioFormGroup.value.via) ? this.domicilioFormGroup.value.via : null;
+        this.dataDomicilio.idtipolocalidad = this.domicilioFormGroup.value.idtipolocalidad;
+        this.dataDomicilio.cp = (this.domicilioFormGroup.value.cp) ? this.domicilioFormGroup.value.cp : null;
+        this.dataDomicilio.nexterior = (this.domicilioFormGroup.value.nexterior) ? this.domicilioFormGroup.value.nexterior : null;
+        this.dataDomicilio.entrecalle1 = (this.domicilioFormGroup.value.entrecalle1) ? this.domicilioFormGroup.value.entrecalle1 : null;
+        this.dataDomicilio.entrecalle2 = (this.domicilioFormGroup.value.entrecalle2) ? this.domicilioFormGroup.value.entrecalle2 : null;
+        this.dataDomicilio.andador = (this.domicilioFormGroup.value.andador) ? this.domicilioFormGroup.value.andador : null;
+        this.dataDomicilio.edificio = (this.domicilioFormGroup.value.edificio) ? this.domicilioFormGroup.value.edificio : null;
+        this.dataDomicilio.seccion = (this.domicilioFormGroup.value.seccion) ? this.domicilioFormGroup.value.seccion : null;
+        this.dataDomicilio.entrada = (this.domicilioFormGroup.value.entrada) ? this.domicilioFormGroup.value.entrada : null;
+        this.dataDomicilio.ninterior = (this.domicilioFormGroup.value.ninterior) ? this.domicilioFormGroup.value.ninterior : null;
+        this.dataDomicilio.telefono = (this.domicilioFormGroup.value.telefono) ? this.domicilioFormGroup.value.telefono : null;
+        this.dataDomicilio.adicional = (this.domicilioFormGroup.value.adicional) ? this.domicilioFormGroup.value.adicional : null;
 
-  getDataTiposLocalidad(): void {
-      this.loadingTiposLocalidad = true;
-      this.http.post(this.endpointCatalogos + 'getTiposLocalidad', '', this.httpOptions).subscribe(
-          (res: any) => {
-              this.loadingTiposLocalidad = false;
-              this.tiposLocalidad = res;
-              console.log('AQUI EL TIPOS LOCALIDAD');
-              console.log(this.tiposLocalidad);
-          },
-          (error) => {
-              this.loadingTiposLocalidad = false;
-          }
-      );
-  }
-
-  getDataDomicilio(): void {
-      //this.dataDomicilio.idtipodireccion = this.domicilioFormGroup.value.idtipodireccion;
-      this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
-      this.dataDomicilio.codasentamiento = this.domicilioFormGroup.value.codasentamiento;
-      this.dataDomicilio.idtipoasentamiento = this.domicilioFormGroup.value.idtipoasentamiento;
-      this.dataDomicilio.asentamiento = (this.domicilioFormGroup.value.asentamiento) ? this.domicilioFormGroup.value.asentamiento : null;
-      this.dataDomicilio.codtiposvia = (this.domicilioFormGroup.value.codtiposvia) ? this.domicilioFormGroup.value.codtiposvia : null;
-      this.dataDomicilio.idtipovia = this.domicilioFormGroup.value.idtipovia;
-      this.dataDomicilio.via = (this.domicilioFormGroup.value.via) ? this.domicilioFormGroup.value.via : null;
-      this.dataDomicilio.idtipolocalidad = this.domicilioFormGroup.value.idtipolocalidad;
-      this.dataDomicilio.cp = (this.domicilioFormGroup.value.cp) ? this.domicilioFormGroup.value.cp : null;
-      this.dataDomicilio.nexterior = (this.domicilioFormGroup.value.nexterior) ? this.domicilioFormGroup.value.nexterior : null;
-      this.dataDomicilio.entrecalle1 = (this.domicilioFormGroup.value.entrecalle1) ? this.domicilioFormGroup.value.entrecalle1 : null;
-      this.dataDomicilio.entrecalle2 = (this.domicilioFormGroup.value.entrecalle2) ? this.domicilioFormGroup.value.entrecalle2 : null;
-      this.dataDomicilio.andador = (this.domicilioFormGroup.value.andador) ? this.domicilioFormGroup.value.andador : null;
-      this.dataDomicilio.edificio = (this.domicilioFormGroup.value.edificio) ? this.domicilioFormGroup.value.edificio : null;
-      this.dataDomicilio.seccion = (this.domicilioFormGroup.value.seccion) ? this.domicilioFormGroup.value.seccion : null;
-      this.dataDomicilio.entrada = (this.domicilioFormGroup.value.entrada) ? this.domicilioFormGroup.value.entrada : null;
-      this.dataDomicilio.ninterior = (this.domicilioFormGroup.value.ninterior) ? this.domicilioFormGroup.value.ninterior : null;
-      this.dataDomicilio.telefono = (this.domicilioFormGroup.value.telefono) ? this.domicilioFormGroup.value.telefono : null;
-      this.dataDomicilio.adicional = (this.domicilioFormGroup.value.adicional) ? this.domicilioFormGroup.value.adicional : null;
-
-      this.dataDomicilio.id_direccion = (this.domicilioFormGroup.value.id_direccion) ? this.domicilioFormGroup.value.id_direccion : null;
-      
-      if(this.domicilioFormGroup.value.idestado == 9){
-          this.dataDomicilio.idmunicipio = this.domicilioFormGroup.value.idmunicipio;
-          // alert(this.dataDomicilio.idmunicipio);
-          //this.dataDomicilio.delegacion = this.domicilioFormGroup.value.delegacion;
-      } else {
-          this.dataDomicilio.idmunicipio2 = this.domicilioFormGroup.value.idmunicipio2;
-          this.dataDomicilio.municipio = (this.domicilioFormGroup.value.municipio) ? this.domicilioFormGroup.value.municipio : null;
-          this.dataDomicilio.ciudad = (this.domicilioFormGroup.value.ciudad) ? this.domicilioFormGroup.value.ciudad : null;
-          this.dataDomicilio.idciudad = (this.domicilioFormGroup.value.idciudad) ? this.domicilioFormGroup.value.idciudad : null;
-      }
+        this.dataDomicilio.id_direccion = (this.domicilioFormGroup.value.id_direccion) ? this.domicilioFormGroup.value.id_direccion : null;
+        
+        if(this.domicilioFormGroup.value.idestado == 9){
+            this.dataDomicilio.idmunicipio = this.domicilioFormGroup.value.idmunicipio;
+            // alert(this.dataDomicilio.idmunicipio);
+            //this.dataDomicilio.delegacion = this.domicilioFormGroup.value.delegacion;
+        } else {
+            this.dataDomicilio.idmunicipio2 = this.domicilioFormGroup.value.idmunicipio2;
+            this.dataDomicilio.municipio = (this.domicilioFormGroup.value.municipio) ? this.domicilioFormGroup.value.municipio : null;
+            this.dataDomicilio.ciudad = (this.domicilioFormGroup.value.ciudad) ? this.domicilioFormGroup.value.ciudad : null;
+            this.dataDomicilio.idciudad = (this.domicilioFormGroup.value.idciudad) ? this.domicilioFormGroup.value.idciudad : null;
+        }
 
 
-          // alert(this.dataDomicilio.id_direccion);
-          if(this.domicilioFormGroup.value.id_direccion == null){
-              // alert('guardar');
-               this.guardaDomicilio();
-          } else{
-              // alert('actualizar');
-               this.actualizarDomicilio();
-          }
+            // alert(this.dataDomicilio.id_direccion);
+            if(this.domicilioFormGroup.value.id_direccion == null){
+                // alert('guardar');
+                this.guardaDomicilio();
+            } else{
+                // alert('actualizar');
+                this.actualizarDomicilio();
+            }
 
-     
-  
+        
+    
 
-      //console.log('AQUEI EL FORM VALID');
-      // console.log(this.domicilioFormGroup);
-      ///retu
-  }
+        //console.log('AQUEI EL FORM VALID');
+        // console.log(this.domicilioFormGroup);
+        ///retu
+    }
       
 
     guardaDomicilio(){

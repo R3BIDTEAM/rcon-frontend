@@ -139,6 +139,7 @@ export class AltaContribuyenteComponent implements OnInit {
     panelRepresentados = false;
     resultadoAlta;
     inserto = false;
+    isRequired = true;
 
     /*PAGINADOS*/
     dataSource1 = [];
@@ -235,12 +236,25 @@ export class AltaContribuyenteComponent implements OnInit {
         this.inserto = false;
     }
 
+    // checkRequired(){
+    //     if(this.fisicaFormGroup.value.rfc === '' && this.fisicaFormGroup.value.curp === ''){
+    //         this.isRequired = true;
+    //     } else {
+    //         this.isRequired = false;
+    //     }
+    // }
+
     changeRequired(remove, add): void {
         this.fisicaFormGroup.controls[remove].setValue(null);
         this.fisicaFormGroup.controls[remove].clearValidators();
         this.fisicaFormGroup.controls[add].setValidators(Validators.required);
         this.fisicaFormGroup.markAsUntouched();
         this.fisicaFormGroup.updateValueAndValidity();
+        if(this.fisicaFormGroup.value.add === ''){
+            this.isRequired = true;
+        } else {
+            this.isRequired = false;
+        }
     }
 
     getHistorialDatosGenerales(): void {

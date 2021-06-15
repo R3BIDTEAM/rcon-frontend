@@ -46,7 +46,7 @@
                         <div class="row">
                             <mat-form-field class="col-5">
                                 <mat-label>RFC:</mat-label>
-                                <input matInput formControlName="rfc" (keyup)="changeRequired('curp', 'rfc')" [(ngModel)]="contribuyente.rfc" [readonly]="inserto">
+                                <input matInput formControlName="rfc" (keyup)="changeRequired('curp', 'rfc')" [(ngModel)]="contribuyente.rfc" [readonly]="inserto" pattern="^([A-ZÑ&]{4})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$">
                                 <mat-error *ngIf="fisicaFormGroup.controls.rfc.errors?.required">Se han de llenar algunos de los campos de RFC o CURP</mat-error>
                             </mat-form-field>
                             <mat-form-field class="col-5">
