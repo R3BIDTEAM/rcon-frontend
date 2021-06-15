@@ -15,18 +15,25 @@ export interface DatosNotario {
 }
 
 export interface DatosGenerales {
-  nombre: string;
-  apellido_paterno: string;
-  apellido_materno: string;
-  rfc: string;
-  curp: string;
-  ine: string;
-  otro_documento: string;
-  numero_documento: string;
-  fecha_nacimiento: Date;
-  fecha_defuncion: Date;
-  celular: string;
-  email: string;
+    nombre: string;
+    apellido_paterno: string;
+    apellido_materno: string;
+    rfc: string;
+    curp: string;
+    ine: string;
+    otro_documento: string;
+    numero_documento: string;
+    fecha_nacimiento: Date;
+    fecha_defuncion: Date;
+    celular: string;
+    email: string;
+    actPreponderante: string;
+    idTipoPersonaMoral: number;
+    fechaInicioOperacion: Date;
+    idMotivo: number;
+    fechaCambio: Date;
+    nombre_moral: string;
+    tipoPersona: string;
 }
 
 export interface DireccionesNotario {
@@ -106,147 +113,181 @@ export interface DataDomicilio {
   styleUrls: ['./editar-notario.component.css']
 })
 export class EditarNotarioComponent implements OnInit {
-  endpoint = environment.endpoint + 'registro/getInfoNotario';
-  endpointEstados = environment.endpoint + 'registro/';
-  pagina = 1;
-  total = 0;
-  pageSize = 10;
-  loading = false;
-  dataSource = [];
-  dataPaginate = [];
-  displayedColumnsDom: string[] = ['direccion', 'historial', 'editar'];
-  dataNotarioResultado;
-  dataNotarioDireccionesResultado;
-  httpOptions;
-  search = false;
-  query;
-  idNotario;
-  idDireccion;
-  datosNotario: DatosNotario = {} as DatosNotario;
-  datosGenerales: DatosGenerales = {} as DatosGenerales;
-  direccionesNotario: DireccionesNotario = {} as DireccionesNotario;
-  estados: Estados[] = [];
-  documentos: DocumentosIdentificativos[] = [];
-  dataDomicilio: DataDomicilio[] = [];
-  dataDomicilioEspecifico: DataDomicilio[] = [];
-  loadingEstados = false;
-  loadingDocumentosIdentificativos = false;
-  loadingDatosNotario = false;
-  loadingDatosGenerales = false;
-  loadingDomicilios = false;
-  loadingDireccionEspecifica = false;
+    endpoint = environment.endpoint + 'registro/getInfoNotario';
+    endpointEstados = environment.endpoint + 'registro/';
+    pagina = 1;
+    total = 0;
+    pageSize = 10;
+    loading = false;
+    dataSource = [];
+    dataPaginate = [];
+    displayedColumnsDom: string[] = ['direccion', 'historial', 'editar'];
+    dataNotarioResultado;
+    dataNotarioDireccionesResultado;
+    httpOptions;
+    search = false;
+    query;
+    idNotario;
+    idDireccion;
+    personaFormGroup: FormGroup;
+    moralFormGroup: FormGroup;
+    datosNotario: DatosNotario = {} as DatosNotario;
+    datosGenerales: DatosGenerales = {} as DatosGenerales;
+    direccionesNotario: DireccionesNotario = {} as DireccionesNotario;
+    estados: Estados[] = [];
+    documentos: DocumentosIdentificativos[] = [];
+    dataDomicilio: DataDomicilio[] = [];
+    dataDomicilioEspecifico: DataDomicilio[] = [];
+    loadingEstados = false;
+    loadingDocumentosIdentificativos = false;
+    loadingDatosNotario = false;
+    loadingDatosGenerales = false;
+    loadingDomicilios = false;
+    loadingDireccionEspecifica = false;
+    cambioPersona;
+    actCambioPersona = true;
+    isRequired = true;
 
-  /*PAGINADOS*/
-  dataSource1 = [];
-  total1 = 0;
-  pagina1= 1;
-  dataPaginate1;
-  /*PAGINADOS*/
+    /*PAGINADOS*/
+    dataSource1 = [];
+    total1 = 0;
+    pagina1= 1;
+    dataPaginate1;
+    /*PAGINADOS*/
 
-  @ViewChild('paginator') paginator: MatPaginator;
+    @ViewChild('paginator') paginator: MatPaginator;
 
-  constructor(
-    private http: HttpClient,
-    private snackBar: MatSnackBar,
-    private auth: AuthService,
-    private route: ActivatedRoute,
-    public dialog: MatDialog
-  ) { }
+    constructor(
+        private http: HttpClient,
+        private _formBuilder: FormBuilder,
+        private snackBar: MatSnackBar,
+        private auth: AuthService,
+        private route: ActivatedRoute,
+        public dialog: MatDialog
+    ) { }
 
-  ngOnInit(): void {
-    this.httpOptions = {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          Authorization: this.auth.getSession().token
-        })
-    };
-    this.idNotario = this.route.snapshot.paramMap.get('idnotario');
-    this.idDireccion = this.route.snapshot.paramMap.get('iddireccion');
-    console.log(this.idNotario);
-    console.log(this.idDireccion);
-    this.getNotarioDatos();
-    this.getNotarioDirecciones();
-    this.getDataEstados();
-    this.getDataDocumentosIdentificativos();
-  }
+    ngOnInit(): void {
+        this.httpOptions = {
+            headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            Authorization: this.auth.getSession().token
+            })
+        };
 
-  getDataEstados(): void {
-    this.loadingEstados = true;
-    this.http.post(this.endpointEstados + 'getEstados', '', this.httpOptions).subscribe(
-      (res: any) => {
-        this.loadingEstados = false;
-        this.estados = res;
-        console.log(this.estados);
-      },
-      (error) => {
-        this.loadingEstados = false;
-      }
-    );
-  }
+        this.personaFormGroup = this._formBuilder.group({
+            apellidopaterno: ['', Validators.required],
+            apellidomaterno: ['', Validators.required],
+            nombre: ['', Validators.required],
+            rfc: ['', Validators.required],
+            curp: ['', Validators.required],
+            ine: ['', Validators.required],
+            identificacion: [null],
+            idedato: [null],
+            fechaNacimiento: [null],
+            fechaDefuncion: [null],
+            celular: [null],
+            email: [null],
+        });
 
-  getDataDocumentosIdentificativos(): void{
-    this.loadingDocumentosIdentificativos = true;
-    this.http.post(this.endpointEstados + 'getCatalogos', '', this.httpOptions).subscribe(
-      (res: any) => {
-        this.loadingDocumentosIdentificativos = false;
-        this.documentos = res.CatDocIdentificativos;
-        console.log(this.documentos);
-      },
-      (error) => {
-        this.loadingDocumentosIdentificativos = false;
-      }
-    );
-  }
+        this.moralFormGroup = this._formBuilder.group({
+            nombre_moral: [null, [Validators.required]],
+            rfc: [null, [Validators.required]],
+            actPreponderante: [null, []],
+            idTipoPersonaMoral: ['', []],
+            fechaInicioOperacion: [null, []],
+            idMotivo: ['', []],
+            fechaCambio: [null, []],
+        });
 
-  otroDocumento(){
-    if(this.datosGenerales.otro_documento === null || this.datosGenerales.otro_documento === ''){
-      this.datosGenerales.numero_documento = '';
+        this.idNotario = this.route.snapshot.paramMap.get('idnotario');
+        this.idDireccion = this.route.snapshot.paramMap.get('iddireccion');
+        console.log(this.idNotario);
+        console.log(this.idDireccion);
+        this.getNotarioDatos();
+        this.getNotarioDirecciones();
+        this.getDataEstados();
+        this.getDataDocumentosIdentificativos();
     }
-  }
 
-  getNotarioDatos(){
-      this.query = 'infoExtra=true&idPersona=' + this.idNotario; 
-      this.loading = true;
-      console.log(this.endpoint);
-      this.http.post(this.endpoint + '?' + this.query, '', this.httpOptions)
-          .subscribe(
-              (res: any) => {
-                  this.loading = false;
-                  this.dataNotarioResultado = res.notario;
-                  console.log("AQUI ENTRO EL RES");
-                  console.log(this.dataNotarioResultado);
-                  this.datoDelNotario();
-              },
-              (error) => {
-                  this.loading = false;
-                  this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                      duration: 10000,
-                      horizontalPosition: 'end',
-                      verticalPosition: 'top'
-                  });
-              }
-          );
-  }
+    getDataEstados(): void {
+        this.loadingEstados = true;
+        this.http.post(this.endpointEstados + 'getEstados', '', this.httpOptions).subscribe(
+        (res: any) => {
+            this.loadingEstados = false;
+            this.estados = res;
+            console.log(this.estados);
+        },
+        (error) => {
+            this.loadingEstados = false;
+        }
+        );
+    }
 
-  datoDelNotario(){
-      this.datosNotario.no_notario = this.dataNotarioResultado[0].NUMNOTARIO;
-      this.datosNotario.estado = this.dataNotarioResultado[0].CODESTADO;
-      this.datosGenerales.nombre  = this.dataNotarioResultado[0].NOMBRE;
-      this.datosGenerales.apellido_paterno = this.dataNotarioResultado[0].APELLIDOPATERNO;
-      this.datosGenerales.apellido_materno = this.dataNotarioResultado[0].APELLIDOMATERNO;
-      this.datosGenerales.rfc = this.dataNotarioResultado[0].RFC;
-      this.datosGenerales.curp = this.dataNotarioResultado[0].CURP;
-      this.datosGenerales.ine = this.dataNotarioResultado[0].CLAVEIFE;
-      this.datosGenerales.otro_documento = this.dataNotarioResultado[0].IDDOCIDENTIF;
-      this.datosGenerales.numero_documento = this.dataNotarioResultado[0].VALDOCIDENTIF;
-      this.datosGenerales.fecha_nacimiento = new Date(this.dataNotarioResultado[0].FECHANACIMIENTO);
-      this.datosGenerales.fecha_defuncion = new Date(this.dataNotarioResultado[0].FECHADEFUNCION);
-      this.datosGenerales.celular = this.dataNotarioResultado[0].CELULAR;
-      this.datosGenerales.email = this.dataNotarioResultado[0].EMAIL;
+    getDataDocumentosIdentificativos(): void{
+        this.loadingDocumentosIdentificativos = true;
+        this.http.post(this.endpointEstados + 'getCatalogos', '', this.httpOptions).subscribe(
+        (res: any) => {
+            this.loadingDocumentosIdentificativos = false;
+            this.documentos = res.CatDocIdentificativos;
+            console.log(this.documentos);
+        },
+        (error) => {
+            this.loadingDocumentosIdentificativos = false;
+        }
+        );
+    }
 
-      console.log(this.datosGenerales.fecha_nacimiento);
-      
-  }
+    otroDocumento(){
+        if(this.datosGenerales.otro_documento === null || this.datosGenerales.otro_documento === ''){
+        this.datosGenerales.numero_documento = '';
+        }
+    }
+
+    getNotarioDatos(){
+        this.query = 'infoExtra=true&idPersona=' + this.idNotario; 
+        this.loading = true;
+        console.log(this.endpoint);
+        this.http.post(this.endpoint + '?' + this.query, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loading = false;
+                    this.dataNotarioResultado = res.notario;
+                    console.log("AQUI ENTRO EL RES");
+                    console.log(this.dataNotarioResultado);
+                    this.datoDelNotario();
+                },
+                (error) => {
+                    this.loading = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
+
+    datoDelNotario(){
+        this.cambioPersona = this.dataNotarioResultado[0].CODTIPOPERSONA;
+        this.datosGenerales.tipoPersona = this.dataNotarioResultado[0].CODTIPOPERSONA;
+        this.datosNotario.no_notario = this.dataNotarioResultado[0].NUMNOTARIO;
+        this.datosNotario.estado = this.dataNotarioResultado[0].CODESTADO;
+        this.datosGenerales.nombre  = this.dataNotarioResultado[0].NOMBRE;
+        this.datosGenerales.apellido_paterno = this.dataNotarioResultado[0].APELLIDOPATERNO;
+        this.datosGenerales.apellido_materno = this.dataNotarioResultado[0].APELLIDOMATERNO;
+        this.datosGenerales.rfc = this.dataNotarioResultado[0].RFC;
+        this.datosGenerales.curp = this.dataNotarioResultado[0].CURP;
+        this.datosGenerales.ine = this.dataNotarioResultado[0].CLAVEIFE;
+        this.datosGenerales.otro_documento = this.dataNotarioResultado[0].IDDOCIDENTIF;
+        this.datosGenerales.numero_documento = this.dataNotarioResultado[0].VALDOCIDENTIF;
+        this.datosGenerales.fecha_nacimiento = new Date(this.dataNotarioResultado[0].FECHANACIMIENTO);
+        this.datosGenerales.fecha_defuncion = new Date(this.dataNotarioResultado[0].FECHADEFUNCION);
+        this.datosGenerales.celular = this.dataNotarioResultado[0].CELULAR;
+        this.datosGenerales.email = this.dataNotarioResultado[0].EMAIL;
+
+        console.log(this.datosGenerales.fecha_nacimiento);
+        
+    }
   
 
     getNotarioDirecciones(){
@@ -307,79 +348,151 @@ export class EditarNotarioComponent implements OnInit {
     }
 
 
-  actualizarDatosNotario(){
-    let query = '';
+    actualizarDatosNotario(){
+        let query = '';
 
-    query = 'idPersona=' + this.idNotario;
-    query = (this.datosNotario.no_notario) ? query + '&numNotario=' + this.datosNotario.no_notario : query + '&numNotario=';
-    query = (this.datosNotario.estado) ? query + '&codEstado=' + this.datosNotario.estado : query + '&codEstado=';
+        query = 'idPersona=' + this.idNotario;
+        query = (this.datosNotario.no_notario) ? query + '&numNotario=' + this.datosNotario.no_notario : query + '&numNotario=';
+        query = (this.datosNotario.estado) ? query + '&codEstado=' + this.datosNotario.estado : query + '&codEstado=';
 
-    this.http.post(this.endpointEstados + 'actualizarNotario?' + query, '', this.httpOptions)
+        this.http.post(this.endpointEstados + 'actualizarNotario?' + query, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    console.log(res);
+                    this.loadingDatosNotario = false;
+                    this.snackBar.open('Datos de Notario actualizados correctamente', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                },
+                (error) => {
+                    this.loadingDatosNotario = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
+
+    actualizarDatosGenerales(){
+        let query = '';
+        this.loadingDatosNotario = true;
+        query = 'codtipospersona=F';
+        query = (this.datosGenerales.nombre) ? query + '&nombre=' + this.datosGenerales.nombre : query + '&nombre=';
+        query = query + '&activprincip&idtipomoral&idmotivosmoral&fechainicioactiv&fechacambiosituacion&idExpediente';
+        query = (this.datosGenerales.rfc) ? query + '&rfc=' + this.datosGenerales.rfc : query + '&rfc=';
+        query = (this.datosGenerales.apellido_paterno) ? query + '&apellidopaterno=' + this.datosGenerales.apellido_paterno : query + '&apellidopaterno=';
+        query = (this.datosGenerales.apellido_materno) ? query + '&apellidomaterno=' + this.datosGenerales.apellido_materno : query + '&apellidomaterno=';
+        query = (this.datosGenerales.curp) ? query + '&curp=' + this.datosGenerales.curp : query + '&curp=';
+        query = (this.datosGenerales.ine) ? query + '&claveife=' + this.datosGenerales.ine : query + '&claveife=';
+        query = (this.datosGenerales.otro_documento) ? query + '&iddocidentif=' + this.datosGenerales.otro_documento : query + '&iddocidentif=';
+        query = (this.datosGenerales.numero_documento) ? query + '&valdocidentif=' + this.datosGenerales.numero_documento : query + '&valdocidentif=';
+        query = (this.datosGenerales.fecha_nacimiento) ? query + '&fechanacimiento=' + moment(this.datosGenerales.fecha_nacimiento).format('DD-MM-YYYY') : query + '&fechanacimiento=';
+        query = (this.datosGenerales.fecha_defuncion) ? query + '&fechadefuncion=' + moment(this.datosGenerales.fecha_defuncion).format('DD-MM-YYYY') : query + '&fechadefuncion=';
+        query = (this.datosGenerales.celular) ? query + '&celular=' + this.datosGenerales.celular : query + '&celular=';
+        query = (this.datosGenerales.email) ? query + '&email=' + this.datosGenerales.email : query + '&email=';
+        query = query + '&idExpediente&idpersona=' + this.idNotario;
+
+        this.http.post(this.endpointEstados + 'actualizaContribuyente?' + query, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    console.log(res);
+                    this.loadingDatosNotario = false;
+                    this.snackBar.open('Datos de Notario actualizados correctamente', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                },
+                (error) => {
+                    this.loadingDatosNotario = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );  
+
+    }
+
+    cambiarTipoPersona(){
+        let query = 'idpersona=' + this.idNotario;
+        this.loading = true;
+
+        query = (this.datosGenerales.tipoPersona) ? query + '&codtipospersona=' + this.datosGenerales.tipoPersona : query + '&codtipospersona=';
+
+        if(this.datosGenerales.tipoPersona === 'F'){
+            query = (this.datosGenerales.apellido_paterno) ? query + '&apellidopaterno=' + this.datosGenerales.apellido_paterno : query + '&apellidopaterno=';
+            query = (this.datosGenerales.apellido_materno) ? query + '&apellidomaterno=' + this.datosGenerales.apellido_materno : query + '&apellidomaterno=';
+            query = (this.datosGenerales.nombre) ? query + '&nombre=' + this.datosGenerales.nombre : query + '&nombre=';
+            query = (this.datosGenerales.rfc) ? query + '&rfcF=' + this.datosGenerales.rfc : query + '&rfcF=';
+        } else {
+            query = (this.datosGenerales.nombre_moral) ? query + '&apellidopaterno=' + this.datosGenerales.nombre_moral : query + '&apellidopaterno=';
+            query = (this.datosGenerales.nombre) ? query + '&nombreM=' + this.datosGenerales.nombre : query + '&nombreM=';
+            query = (this.datosGenerales.rfc) ? query + '&rfcM=' + this.datosGenerales.rfc : query + '&rfcM=';
+        }
+        
+        query = (this.datosGenerales.curp) ? query + '&curp=' + this.datosGenerales.curp : query + '&curp=';
+        query = (this.datosGenerales.ine) ? query + '&claveife=' + this.datosGenerales.ine : query + '&claveife=';
+        query = (this.datosGenerales.otro_documento) ? query + '&iddocidentif=' + this.datosGenerales.otro_documento : query + '&iddocidentif=';
+        query = (this.datosGenerales.numero_documento) ? query + '&valdocidentif=' + this.datosGenerales.numero_documento : query + '&valdocidentif=';
+        query = (this.datosGenerales.fecha_nacimiento) ? query + '&fechanacimiento=' + moment(this.datosGenerales.fecha_nacimiento).format('DD-MM-YYYY') : query + '&fechanacimiento=';
+        query = (this.datosGenerales.fecha_defuncion) ? query + '&fechadefuncion=' + moment(this.datosGenerales.fecha_defuncion).format('DD-MM-YYYY') : query + '&fechadefuncion=';
+        query = (this.datosGenerales.celular) ? query + '&celular=' + this.datosGenerales.celular : query + '&celular=';
+        query = (this.datosGenerales.email) ? query + '&email=' + this.datosGenerales.email : query + '&email=';
+
+        query = (this.datosGenerales.actPreponderante) ? query + '&activprincip=' + this.datosGenerales.actPreponderante : query + '&activprincip=';
+        query = (this.datosGenerales.idTipoPersonaMoral) ? query + '&idtipomoral=' + this.datosGenerales.idTipoPersonaMoral : query + '&idtipomoral=';
+        query = (this.datosGenerales.idMotivo) ? query + '&idmotivosmoral=' + this.datosGenerales.idMotivo : query + '&idmotivosmoral=';
+        query = (this.datosGenerales.fechaInicioOperacion) ? query + '&fechainicioactiv=' + moment(this.datosGenerales.fechaInicioOperacion).format('DD-MM-YYYY') : query + '&fechainicioactiv=';
+        query = (this.datosGenerales.fechaCambio) ? query + '&fechacambiosituacion=' + moment(this.datosGenerales.fechaCambio).format('DD-MM-YYYY') : query + '&fechacambiosituacion=';
+
+        this.http.post(this.endpointEstados + 'cambioTipoPersona' + '?' + query, '', this.httpOptions)
         .subscribe(
             (res: any) => {
+                this.loading = false;
+                console.log("Cambio de persona");
                 console.log(res);
-                this.loadingDatosNotario = false;
-                this.snackBar.open('Datos de Notario actualizados correctamente', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
-                });
+                if(res){
+                    this.snackBar.open('Actualización correcta', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }else{
+                    this.snackBar.open('Se ha presentado un problema intente más tarde', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
             },
             (error) => {
-                this.loadingDatosNotario = false;
-                this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                this.loading = false;
+                this.snackBar.open('Se ha presentado un problema intente más tarde', 'Cerrar', {
                     duration: 10000,
                     horizontalPosition: 'end',
                     verticalPosition: 'top'
                 });
             }
         );
-  }
+    }
 
-  actualizarDatosGenerales(){
-    let query = '';
+    actualizaPersona(event){
+        console.log(event)
+        this.actCambioPersona = (event == this.cambioPersona) ? true : false;
+        console.log(this.actCambioPersona);
+        if(this.datosGenerales.tipoPersona == 'M'){
+            this.datosGenerales.nombre_moral = this.datosGenerales.apellido_paterno + ' ' + this.datosGenerales.apellido_materno + ' ' + this.datosGenerales.nombre;
+        }
+    }
 
-    query = 'codtipospersona=F';
-    query = (this.datosGenerales.nombre) ? query + '&nombre=' + this.datosGenerales.nombre : query + '&nombre=';
-    query = query + '&activprincip&idtipomoral&idmotivosmoral&fechainicioactiv&fechacambiosituacion&idExpediente';
-    query = (this.datosGenerales.rfc) ? query + '&rfc=' + this.datosGenerales.rfc : query + '&rfc=';
-    query = (this.datosGenerales.apellido_paterno) ? query + '&apellidopaterno=' + this.datosGenerales.apellido_paterno : query + '&apellidopaterno=';
-    query = (this.datosGenerales.apellido_materno) ? query + '&apellidomaterno=' + this.datosGenerales.apellido_materno : query + '&apellidomaterno=';
-    query = (this.datosGenerales.curp) ? query + '&curp=' + this.datosGenerales.curp : query + '&curp=';
-    query = (this.datosGenerales.ine) ? query + '&claveife=' + this.datosGenerales.ine : query + '&claveife=';
-    query = (this.datosGenerales.otro_documento) ? query + '&iddocidentif=' + this.datosGenerales.otro_documento : query + '&iddocidentif=';
-    query = (this.datosGenerales.numero_documento) ? query + '&valdocidentif=' + this.datosGenerales.numero_documento : query + '&valdocidentif=';
-    query = (this.datosGenerales.fecha_nacimiento) ? query + '&fechanacimiento=' + moment(this.datosGenerales.fecha_nacimiento).format('DD-MM-YYYY') : query + '&fechanacimiento=';
-    query = (this.datosGenerales.fecha_defuncion) ? query + '&fechadefuncion=' + moment(this.datosGenerales.fecha_defuncion).format('DD-MM-YYYY') : query + '&fechadefuncion=';
-    query = (this.datosGenerales.celular) ? query + '&celular=' + this.datosGenerales.celular : query + '&celular=';
-    query = (this.datosGenerales.email) ? query + '&email=' + this.datosGenerales.email : query + '&email=';
-    query = query + '&idExpediente&idpersona=' + this.idNotario;
-
-    this.http.post(this.endpointEstados + 'actualizaContribuyente?' + query, '', this.httpOptions)
-        .subscribe(
-            (res: any) => {
-                console.log(res);
-                this.loadingDatosGenerales = false;
-                this.snackBar.open('Datos de Notario actualizados correctamente', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
-                });
-            },
-            (error) => {
-                this.loadingDatosNotario = false;
-                this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
-                });
-            }
-        );  
-
-  }
-
-  addDomicilio(i = -1, dataDomicilio = null): void {
-    let codtiposdireccion = '';
+    addDomicilio(i = -1, dataDomicilio = null): void {
+        let codtiposdireccion = '';
         const dialogRef = this.dialog.open(DialogDomiciliosNotario, {
             width: '700px',
             data: {dataDomicilio:dataDomicilio, idNotario: this.idNotario,
@@ -389,42 +502,42 @@ export class EditarNotarioComponent implements OnInit {
         dialogRef.afterClosed().subscribe(result => {
                 this.getNotarioDirecciones();
         });
-  }
+    }
 
-  editDomicilio(dataDomicilioEspecifico): void {
-    let codtiposdireccion = '';
-        const dialogRef = this.dialog.open(DialogDomiciliosNotario, {
-            width: '700px',
-            data: {dataDomicilioEspecifico:dataDomicilioEspecifico, idNotario: this.idNotario},
-        });
-        dialogRef.afterClosed().subscribe(result => {
-                this.getNotarioDirecciones();
-        });
-  }
+    editDomicilio(dataDomicilioEspecifico): void {
+        let codtiposdireccion = '';
+            const dialogRef = this.dialog.open(DialogDomiciliosNotario, {
+                width: '700px',
+                data: {dataDomicilioEspecifico:dataDomicilioEspecifico, idNotario: this.idNotario},
+            });
+            dialogRef.afterClosed().subscribe(result => {
+                    this.getNotarioDirecciones();
+            });
+    }
 
-  viewHistoricoDomicilio(idDireccion): void {
-        const dialogRef = this.dialog.open(DialogDomicilioHistoricoNotario, {
-            width: '700px',
-            data: {idDireccion},
-        });
-        dialogRef.afterClosed().subscribe(result => {
-                // this.getNotarioDirecciones();
-        });
-  }
+    viewHistoricoDomicilio(idDireccion): void {
+            const dialogRef = this.dialog.open(DialogDomicilioHistoricoNotario, {
+                width: '700px',
+                data: {idDireccion},
+            });
+            dialogRef.afterClosed().subscribe(result => {
+                    // this.getNotarioDirecciones();
+            });
+    }
 
-  viewHistoricoDatosPersonales(idPersona): void {
-        const dialogRef = this.dialog.open(DialogPersonalesHistoricoNotario, {
-            width: '700px',
-            data: {idPersona},
-        });
-        dialogRef.afterClosed().subscribe(result => {
-                // this.getNotarioDirecciones();
-        });
-  }
+    viewHistoricoDatosPersonales(idPersona): void {
+            const dialogRef = this.dialog.open(DialogPersonalesHistoricoNotario, {
+                width: '700px',
+                data: {idPersona},
+            });
+            dialogRef.afterClosed().subscribe(result => {
+                    // this.getNotarioDirecciones();
+            });
+    }
 
-  removeDomicilio(i){
-		this.dataDomicilio.splice(i, 1);
-	}
+    removeDomicilio(i){
+            this.dataDomicilio.splice(i, 1);
+    }
 
 
 }
