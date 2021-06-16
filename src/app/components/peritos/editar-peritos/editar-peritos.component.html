@@ -205,7 +205,7 @@
             </div>
             <div class="col-md-2 offset-md-8" *ngIf="!actCambioPersona">
                 <div class="d-flex flex-row-reverse">
-                    <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Actualizar tipo persona" matTooltip="Actualizar tipo persona" (click)="cambiarTipoPersona()" *ngIf="!loading" [disabled]="(datoPeritos.tipoPersona == 'F' ? peritoPersonaFormGroup.invalid : moralFormGroup.invalid)">
+                    <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Actualizar tipo persona" matTooltip="Actualizar tipo persona" (click)="confirmaCambio()" *ngIf="!loading" [disabled]="(datoPeritos.tipoPersona == 'F' ? peritoPersonaFormGroup.invalid : moralFormGroup.invalid)">
                         Actualizar <mat-icon style="display: inherit; width: 15px;">update</mat-icon>
                     </button>
                 </div>

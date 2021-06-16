@@ -59,6 +59,7 @@ import { EditarContribuyenteComponent, DialogDomicilioContribuyente, DialogAsent
          DialogPersonalesHistoricoEspecificoContribuyente, DialogHistorialRepC, DialogHistorialRepDetalleC } from './components/contribuyentes/editar-contribuyente/editar-contribuyente.component';
 import { VerHistoricoDomicilioNotarioComponent } from './components/notarios/ver-historico-domicilio-notario/ver-historico-domicilio-notario.component';
 import { DialogDuplicadosComponent } from './components/dialog-duplicados/dialog-duplicados.component';
+import { DialogConfirmacionComponent } from './components/dialog-confirmacion/dialog-confirmacion.component';
 
 @NgModule({
   declarations: [
@@ -161,7 +162,8 @@ import { DialogDuplicadosComponent } from './components/dialog-duplicados/dialog
     DialogHistorialRepC,
     DialogHistorialRepDetalleS,
     DialogHistorialRepDetalleC,
-    DialogDuplicadosComponent
+    DialogDuplicadosComponent,
+    DialogConfirmacionComponent
   ],
   imports: [
     BrowserModule,

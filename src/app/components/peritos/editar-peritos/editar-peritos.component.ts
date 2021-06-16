@@ -9,7 +9,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import * as FileSaver from 'file-saver';
-
+import { DialogConfirmacionComponent } from '@comp/dialog-confirmacion/dialog-confirmacion.component';
 
 export interface DatosPeritos {
     apepaterno: string;
@@ -526,6 +526,17 @@ export class EditarPeritosComponent implements OnInit {
                     });
                 }
             );
+    }
+
+    confirmaCambio(): void {
+        const dialogRef = this.dialog.open(DialogConfirmacionComponent, {
+            width: '700px'
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                this.cambiarTipoPersona();
+            }
+        });
     }
 
     cambiarTipoPersona(){

@@ -12,6 +12,7 @@ import * as FileSaver from 'file-saver';
 import pdfMake from "pdfmake/build/pdfmake";  
 import pdfFonts from "pdfmake/build/vfs_fonts";  
 pdfMake.vfs = pdfFonts.pdfMake.vfs; 
+import { DialogConfirmacionComponent } from '@comp/dialog-confirmacion/dialog-confirmacion.component';
 
 export interface DatosContribuyente {
     tipoPersona: string;
@@ -430,6 +431,17 @@ export class EditarContribuyenteComponent implements OnInit {
             );
     }
 
+    confirmaCambio(): void {
+        const dialogRef = this.dialog.open(DialogConfirmacionComponent, {
+            width: '700px'
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                this.cambiarTipoPersona();
+            }
+        });
+    }
+    
     cambiarTipoPersona(){
         console.log("ACA ESTAMOS CAMBIANDO LA PERSONA");
         let query = 'idpersona=' + this.idContribuyente;

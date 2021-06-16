@@ -9,6 +9,7 @@ import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@ang
 import { MatPaginator } from '@angular/material/paginator';
 import * as moment from 'moment';
 import * as FileSaver from 'file-saver';
+import { DialogConfirmacionComponent } from '@comp/dialog-confirmacion/dialog-confirmacion.component';
 
 export interface DatosSociedad {
     razonSocial: string;
@@ -336,7 +337,18 @@ export class EditarSociedadComponent implements OnInit {
             );
     }
 
-cambiarTipoPersona(){
+    confirmaCambio(): void {
+        const dialogRef = this.dialog.open(DialogConfirmacionComponent, {
+            width: '700px'
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                this.cambiarTipoPersona();
+            }
+        });
+    }
+
+    cambiarTipoPersona(){
         let query = 'idpersona=' + this.idSociedad;
         this.loading = true;
         

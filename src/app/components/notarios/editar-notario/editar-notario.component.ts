@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import * as moment from 'moment';
+import { DialogConfirmacionComponent } from '@comp/dialog-confirmacion/dialog-confirmacion.component';
 
 export interface DatosNotario {
   no_notario: string;
@@ -284,7 +285,7 @@ export class EditarNotarioComponent implements OnInit {
         this.datosGenerales.fecha_defuncion = new Date(this.dataNotarioResultado[0].FECHADEFUNCION);
         this.datosGenerales.celular = this.dataNotarioResultado[0].CELULAR;
         this.datosGenerales.email = this.dataNotarioResultado[0].EMAIL;
-
+        this.datosGenerales.nombre_moral = this.dataNotarioResultado[0].APELLIDOPATERNO + ' ' + this.dataNotarioResultado[0].APELLIDOMATERNO + ' ' + this.dataNotarioResultado[0].NOMBRE; 
         console.log(this.datosGenerales.fecha_nacimiento);
         
     }
@@ -417,6 +418,17 @@ export class EditarNotarioComponent implements OnInit {
                 }
             );  
 
+    }
+
+    confirmaCambio(): void {
+        const dialogRef = this.dialog.open(DialogConfirmacionComponent, {
+            width: '700px'
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                this.cambiarTipoPersona();
+            }
+        });
     }
 
     cambiarTipoPersona(){
