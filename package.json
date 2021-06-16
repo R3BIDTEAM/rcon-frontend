@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "compodoc": "npx compodoc -p src/tsconfig.doc.json"
   },
   "private": true,
   "dependencies": {
@@ -28,6 +29,7 @@
     "html2canvas": "^1.0.0-rc.7",
     "js-sha1": "^0.6.0",
     "jspdf": "^2.3.1",
+    "lint-staged": "^11.0.0",
     "moment": "^2.29.1",
     "ngx-avatar": "^4.0.0",
     "ngx-mask": "^11.1.5",
@@ -42,6 +44,7 @@
     "@angular-devkit/build-angular": "^0.1101.4",
     "@angular/cli": "^11.1.4",
     "@angular/compiler-cli": "^11.1.2",
+    "@compodoc/compodoc": "^1.1.11",
     "@types/jasmine": "~3.6.0",
     "@types/jasminewd2": "~2.0.8",
     "@types/node": "^14.14.25",
@@ -57,5 +60,10 @@
     "ts-node": "~9.0.0",
     "tslint": "~6.1.0",
     "typescript": "^4.1.4"
+  },
+  "lint-staged": {
+    "linters": {
+        "*.ts": ["compodoc --coverageMinimumPerFile 25"]
+    }
   }
 }
