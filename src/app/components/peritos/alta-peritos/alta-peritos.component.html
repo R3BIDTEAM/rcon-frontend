@@ -46,8 +46,9 @@
                     </div>
                     <mat-form-field class="col-5">
                         <mat-label>RFC:</mat-label>
-                        <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.rfc" formControlName="rfc" [readonly]="inserto">
+                        <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.rfc" formControlName="rfc" [readonly]="inserto" pattern="^([A-Z,Ñ,&]{4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})$">
                         <mat-error *ngIf="peritoPersonaFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
+                        <mat-error *ngIf="peritoPersonaFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 4 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-5">
                         <mat-label>CURP:</mat-label>
