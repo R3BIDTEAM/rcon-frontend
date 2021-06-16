@@ -237,6 +237,7 @@ export class EditarSociedadComponent implements OnInit {
         if(this.datosSociedad.tipoPersona == 'M'){
             this.datosSociedad.razonSocial = this.datosSociedad.apaterno + ' ' + this.datosSociedad.amaterno + ' ' + this.datosSociedad.nombre;
         }
+        this.datosSociedad.rfc = null;
     }
 
     getSociedadDatos(){
@@ -344,11 +345,10 @@ cambiarTipoPersona(){
         if(this.datosSociedad.tipoPersona === 'F'){
             query = (this.datosSociedad.apaterno) ? query + '&apellidopaterno=' + this.datosSociedad.apaterno : query + '&apellidopaterno=';
             query = (this.datosSociedad.amaterno) ? query + '&apellidomaterno=' + this.datosSociedad.amaterno : query + '&apellidomaterno=';
-            query = (this.datosSociedad.nombre) ? query + '&nombre=' + this.datosSociedad.nombre : query + '&nombre=';
+            query = (this.datosSociedad.nombre) ? query + '&nombreF=' + this.datosSociedad.nombre : query + '&nombreF=';
             query = (this.datosSociedad.rfc) ? query + '&rfcF=' + this.datosSociedad.rfc : query + '&rfcF=';
         } else {
-            query = (this.datosSociedad.razonSocial) ? query + '&apellidopaterno=' + this.datosSociedad.razonSocial : query + '&apellidopaterno=';
-            query = (this.datosSociedad.nombre) ? query + '&nombreM=' + this.datosSociedad.nombre : query + '&nombreM=';
+            query = (this.datosSociedad.razonSocial) ? query + '&nombreM=' + this.datosSociedad.razonSocial : query + '&nombreM=';
             query = (this.datosSociedad.rfc) ? query + '&rfcM=' + this.datosSociedad.rfc : query + '&rfcM=';
         }
         

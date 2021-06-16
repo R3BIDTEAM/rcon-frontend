@@ -428,11 +428,10 @@ export class EditarNotarioComponent implements OnInit {
         if(this.datosGenerales.tipoPersona === 'F'){
             query = (this.datosGenerales.apellido_paterno) ? query + '&apellidopaterno=' + this.datosGenerales.apellido_paterno : query + '&apellidopaterno=';
             query = (this.datosGenerales.apellido_materno) ? query + '&apellidomaterno=' + this.datosGenerales.apellido_materno : query + '&apellidomaterno=';
-            query = (this.datosGenerales.nombre) ? query + '&nombre=' + this.datosGenerales.nombre : query + '&nombre=';
+            query = (this.datosGenerales.nombre) ? query + '&nombreF=' + this.datosGenerales.nombre : query + '&nombreF=';
             query = (this.datosGenerales.rfc) ? query + '&rfcF=' + this.datosGenerales.rfc : query + '&rfcF=';
         } else {
-            query = (this.datosGenerales.nombre_moral) ? query + '&apellidopaterno=' + this.datosGenerales.nombre_moral : query + '&apellidopaterno=';
-            query = (this.datosGenerales.nombre) ? query + '&nombreM=' + this.datosGenerales.nombre : query + '&nombreM=';
+            query = (this.datosGenerales.nombre_moral) ? query + '&nombreM=' + this.datosGenerales.nombre_moral : query + '&nombreM=';
             query = (this.datosGenerales.rfc) ? query + '&rfcM=' + this.datosGenerales.rfc : query + '&rfcM=';
         }
         
@@ -489,6 +488,7 @@ export class EditarNotarioComponent implements OnInit {
         if(this.datosGenerales.tipoPersona == 'M'){
             this.datosGenerales.nombre_moral = this.datosGenerales.apellido_paterno + ' ' + this.datosGenerales.apellido_materno + ' ' + this.datosGenerales.nombre;
         }
+        this.datosGenerales.rfc = null;
     }
 
     addDomicilio(i = -1, dataDomicilio = null): void {

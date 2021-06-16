@@ -339,6 +339,7 @@ export class EditarPeritosComponent implements OnInit {
         if(this.datoPeritos.tipoPersona == 'M'){
             this.datoPeritos.nombre_moral = this.datoPeritos.apepaterno + ' ' + this.datoPeritos.apematerno + ' ' + this.datoPeritos.nombre;
         }
+        this.datoPeritos.rfc = null;
     }
 
     /*PAGINADOS*/
@@ -536,7 +537,7 @@ export class EditarPeritosComponent implements OnInit {
         if(this.datoPeritos.tipoPersona === 'F'){
             query = (this.datoPeritos.apepaterno) ? query + '&apellidopaterno=' + this.datoPeritos.apepaterno : query + '&apellidopaterno=';
             query = (this.datoPeritos.apematerno) ? query + '&apellidomaterno=' + this.datoPeritos.apematerno : query + '&apellidomaterno=';
-            query = (this.datoPeritos.nombre) ? query + '&nombre=' + this.datoPeritos.nombre : query + '&nombre=';
+            query = (this.datoPeritos.nombre) ? query + '&nombreF=' + this.datoPeritos.nombre : query + '&nombreF=';
             query = (this.datoPeritos.rfc) ? query + '&rfcF=' + this.datoPeritos.rfc : query + '&rfcF=';
         } else {
             query = (this.datoPeritos.nombre_moral) ? query + '&apellidopaterno=' + this.datoPeritos.nombre_moral : query + '&apellidopaterno=';

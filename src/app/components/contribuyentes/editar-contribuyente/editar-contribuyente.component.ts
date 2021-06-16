@@ -267,6 +267,7 @@ export class EditarContribuyenteComponent implements OnInit {
         if(this.contribuyente.tipoPersona == 'M'){
             this.contribuyente.nombre_moral = this.contribuyente.apepaterno + ' ' + this.contribuyente.apematerno + ' ' + this.contribuyente.nombre;
         }
+        this.contribuyente.rfc = null;
     }
 
     changeRequired(): void {
@@ -443,8 +444,7 @@ export class EditarContribuyenteComponent implements OnInit {
             query = (this.contribuyente.nombre) ? query + '&nombreF=' + this.contribuyente.nombre : query + '&nombreF=';
             query = (this.contribuyente.rfc) ? query + '&rfcF=' + this.contribuyente.rfc : query + '&rfcF=';
         } else {
-            query = (this.contribuyente.nombre_moral) ? query + '&apellidopaterno=' + this.contribuyente.nombre_moral : query + '&apellidopaterno=';
-            query = (this.contribuyente.nombre) ? query + '&nombreM=' + this.contribuyente.nombre : query + '&nombreM=';
+            query = (this.contribuyente.nombre_moral) ? query + '&nombreM=' + this.contribuyente.nombre_moral : query + '&nombreM=';
             query = (this.contribuyente.rfc) ? query + '&rfcM=' + this.contribuyente.rfc : query + '&rfcM=';
         }
 
