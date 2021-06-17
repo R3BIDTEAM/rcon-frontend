@@ -63,7 +63,9 @@
   },
   "lint-staged": {
     "linters": {
-        "*.ts": ["compodoc --coverageMinimumPerFile 25"]
+      "*.ts": [
+        "compodoc --coverageMinimumPerFile 25"
+      ]
     }
   }
 }

@@ -521,6 +521,7 @@ import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from &#x27
 import { MatPaginator } from &#x27;@angular/material/paginator&#x27;;
 import * as moment from &#x27;moment&#x27;;
 import * as FileSaver from &#x27;file-saver&#x27;;
+import { DialogConfirmacionComponent } from &#x27;@comp/dialog-confirmacion/dialog-confirmacion.component&#x27;;
 
 export interface DatosSociedad {
     razonSocial: string;
@@ -749,6 +750,7 @@ export class EditarSociedadComponent implements OnInit {
         if(this.datosSociedad.tipoPersona &#x3D;&#x3D; &#x27;M&#x27;){
             this.datosSociedad.razonSocial &#x3D; this.datosSociedad.apaterno + &#x27; &#x27; + this.datosSociedad.amaterno + &#x27; &#x27; + this.datosSociedad.nombre;
         }
+        this.datosSociedad.rfc &#x3D; null;
     }
 
     getSociedadDatos(){
@@ -847,7 +849,18 @@ export class EditarSociedadComponent implements OnInit {
             );
     }
 
-cambiarTipoPersona(){
+    confirmaCambio(): void {
+        const dialogRef &#x3D; this.dialog.open(DialogConfirmacionComponent, {
+            width: &#x27;700px&#x27;
+        });
+        dialogRef.afterClosed().subscribe(result &#x3D;&gt; {
+            if(result){
+                this.cambiarTipoPersona();
+            }
+        });
+    }
+
+    cambiarTipoPersona(){
         let query &#x3D; &#x27;idpersona&#x3D;&#x27; + this.idSociedad;
         this.loading &#x3D; true;
         
@@ -856,11 +869,10 @@ cambiarTipoPersona(){
         if(this.datosSociedad.tipoPersona &#x3D;&#x3D;&#x3D; &#x27;F&#x27;){
             query &#x3D; (this.datosSociedad.apaterno) ? query + &#x27;&amp;apellidopaterno&#x3D;&#x27; + this.datosSociedad.apaterno : query + &#x27;&amp;apellidopaterno&#x3D;&#x27;;
             query &#x3D; (this.datosSociedad.amaterno) ? query + &#x27;&amp;apellidomaterno&#x3D;&#x27; + this.datosSociedad.amaterno : query + &#x27;&amp;apellidomaterno&#x3D;&#x27;;
-            query &#x3D; (this.datosSociedad.nombre) ? query + &#x27;&amp;nombre&#x3D;&#x27; + this.datosSociedad.nombre : query + &#x27;&amp;nombre&#x3D;&#x27;;
+            query &#x3D; (this.datosSociedad.nombre) ? query + &#x27;&amp;nombreF&#x3D;&#x27; + this.datosSociedad.nombre : query + &#x27;&amp;nombreF&#x3D;&#x27;;
             query &#x3D; (this.datosSociedad.rfc) ? query + &#x27;&amp;rfcF&#x3D;&#x27; + this.datosSociedad.rfc : query + &#x27;&amp;rfcF&#x3D;&#x27;;
         } else {
-            query &#x3D; (this.datosSociedad.razonSocial) ? query + &#x27;&amp;apellidopaterno&#x3D;&#x27; + this.datosSociedad.razonSocial : query + &#x27;&amp;apellidopaterno&#x3D;&#x27;;
-            query &#x3D; (this.datosSociedad.nombre) ? query + &#x27;&amp;nombreM&#x3D;&#x27; + this.datosSociedad.nombre : query + &#x27;&amp;nombreM&#x3D;&#x27;;
+            query &#x3D; (this.datosSociedad.razonSocial) ? query + &#x27;&amp;nombreM&#x3D;&#x27; + this.datosSociedad.razonSocial : query + &#x27;&amp;nombreM&#x3D;&#x27;;
             query &#x3D; (this.datosSociedad.rfc) ? query + &#x27;&amp;rfcM&#x3D;&#x27; + this.datosSociedad.rfc : query + &#x27;&amp;rfcM&#x3D;&#x27;;
         }
         

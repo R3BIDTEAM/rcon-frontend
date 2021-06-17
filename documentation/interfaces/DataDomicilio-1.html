@@ -1036,6 +1036,7 @@ import * as FileSaver from &#x27;file-saver&#x27;;
 import pdfMake from &quot;pdfmake/build/pdfmake&quot;;  
 import pdfFonts from &quot;pdfmake/build/vfs_fonts&quot;;  
 pdfMake.vfs &#x3D; pdfFonts.pdfMake.vfs; 
+import { DialogConfirmacionComponent } from &#x27;@comp/dialog-confirmacion/dialog-confirmacion.component&#x27;;
 
 export interface DatosContribuyente {
     tipoPersona: string;
@@ -1291,6 +1292,7 @@ export class EditarContribuyenteComponent implements OnInit {
         if(this.contribuyente.tipoPersona &#x3D;&#x3D; &#x27;M&#x27;){
             this.contribuyente.nombre_moral &#x3D; this.contribuyente.apepaterno + &#x27; &#x27; + this.contribuyente.apematerno + &#x27; &#x27; + this.contribuyente.nombre;
         }
+        this.contribuyente.rfc &#x3D; null;
     }
 
     changeRequired(): void {
@@ -1453,6 +1455,17 @@ export class EditarContribuyenteComponent implements OnInit {
             );
     }
 
+    confirmaCambio(): void {
+        const dialogRef &#x3D; this.dialog.open(DialogConfirmacionComponent, {
+            width: &#x27;700px&#x27;
+        });
+        dialogRef.afterClosed().subscribe(result &#x3D;&gt; {
+            if(result){
+                this.cambiarTipoPersona();
+            }
+        });
+    }
+    
     cambiarTipoPersona(){
         console.log(&quot;ACA ESTAMOS CAMBIANDO LA PERSONA&quot;);
         let query &#x3D; &#x27;idpersona&#x3D;&#x27; + this.idContribuyente;
@@ -1467,8 +1480,7 @@ export class EditarContribuyenteComponent implements OnInit {
             query &#x3D; (this.contribuyente.nombre) ? query + &#x27;&amp;nombreF&#x3D;&#x27; + this.contribuyente.nombre : query + &#x27;&amp;nombreF&#x3D;&#x27;;
             query &#x3D; (this.contribuyente.rfc) ? query + &#x27;&amp;rfcF&#x3D;&#x27; + this.contribuyente.rfc : query + &#x27;&amp;rfcF&#x3D;&#x27;;
         } else {
-            query &#x3D; (this.contribuyente.nombre_moral) ? query + &#x27;&amp;apellidopaterno&#x3D;&#x27; + this.contribuyente.nombre_moral : query + &#x27;&amp;apellidopaterno&#x3D;&#x27;;
-            query &#x3D; (this.contribuyente.nombre) ? query + &#x27;&amp;nombreM&#x3D;&#x27; + this.contribuyente.nombre : query + &#x27;&amp;nombreM&#x3D;&#x27;;
+            query &#x3D; (this.contribuyente.nombre_moral) ? query + &#x27;&amp;nombreM&#x3D;&#x27; + this.contribuyente.nombre_moral : query + &#x27;&amp;nombreM&#x3D;&#x27;;
             query &#x3D; (this.contribuyente.rfc) ? query + &#x27;&amp;rfcM&#x3D;&#x27; + this.contribuyente.rfc : query + &#x27;&amp;rfcM&#x3D;&#x27;;
         }
 

@@ -130,6 +130,12 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                <a href="#actCambioPersona">actCambioPersona</a>
+                            </li>
+                            <li>
+                                <a href="#cambioPersona">cambioPersona</a>
+                            </li>
+                            <li>
                                 <a href="#dataDomicilio">dataDomicilio</a>
                             </li>
                             <li>
@@ -191,6 +197,9 @@
                                 <a href="#idNotario">idNotario</a>
                             </li>
                             <li>
+                                <a href="#isRequired">isRequired</a>
+                            </li>
+                            <li>
                                 <a href="#loading">loading</a>
                             </li>
                             <li>
@@ -212,6 +221,9 @@
                                 <a href="#loadingEstados">loadingEstados</a>
                             </li>
                             <li>
+                                <a href="#moralFormGroup">moralFormGroup</a>
+                            </li>
+                            <li>
                                 <a href="#pageSize">pageSize</a>
                             </li>
                             <li>
@@ -222,6 +234,9 @@
                             </li>
                             <li>
                                 <a href="#paginator">paginator</a>
+                            </li>
+                            <li>
+                                <a href="#personaFormGroup">personaFormGroup</a>
                             </li>
                             <li>
                                 <a href="#query">query</a>
@@ -248,6 +263,9 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                <a href="#actualizaPersona">actualizaPersona</a>
+                            </li>
+                            <li>
                                 <a href="#actualizarDatosGenerales">actualizarDatosGenerales</a>
                             </li>
                             <li>
@@ -255,6 +273,12 @@
                             </li>
                             <li>
                                 <a href="#addDomicilio">addDomicilio</a>
+                            </li>
+                            <li>
+                                <a href="#cambiarTipoPersona">cambiarTipoPersona</a>
+                            </li>
+                            <li>
+                                <a href="#confirmaCambio">confirmaCambio</a>
                             </li>
                             <li>
                                 <a href="#datoDelNotario">datoDelNotario</a>
@@ -316,12 +340,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(http: <a href="https://angular.io/api/common/http/HttpClient" target="_blank">HttpClient</a>, snackBar: MatSnackBar, auth: <a href="../injectables/AuthService.html">AuthService</a>, route: <a href="https://angular.io/api/router/ActivatedRoute" target="_blank">ActivatedRoute</a>, dialog: MatDialog)</code>
+<code>constructor(http: <a href="https://angular.io/api/common/http/HttpClient" target="_blank">HttpClient</a>, _formBuilder: <a href="https://angular.io/api/forms/FormBuilder" target="_blank">FormBuilder</a>, snackBar: MatSnackBar, auth: <a href="../injectables/AuthService.html">AuthService</a>, route: <a href="https://angular.io/api/router/ActivatedRoute" target="_blank">ActivatedRoute</a>, dialog: MatDialog)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="146" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:146</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="159" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:159</a></div>
                             </td>
                         </tr>
 
@@ -343,6 +367,18 @@
                                                   
                                                         <td>
                                                                         <code><a href="https://angular.io/api/common/http/HttpClient" target="_blank" >HttpClient</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_formBuilder</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/forms/FormBuilder" target="_blank" >FormBuilder</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -420,6 +456,72 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="actualizaPersona"></a>
+                    <span class="name">
+                        <b>
+                            actualizaPersona
+                        </b>
+                        <a href="#actualizaPersona"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>actualizaPersona(event)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="496"
+                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:496</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>event</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="actualizarDatosGenerales"></a>
                     <span class="name">
                         <b>
@@ -438,8 +540,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="339"
-                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:339</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="381"
+                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:381</a></div>
                 </td>
             </tr>
 
@@ -477,8 +579,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="310"
-                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:310</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="352"
+                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:352</a></div>
                 </td>
             </tr>
 
@@ -516,8 +618,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="381"
-                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:381</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="506"
+                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:506</a></div>
                 </td>
             </tr>
 
@@ -586,6 +688,84 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="cambiarTipoPersona"></a>
+                    <span class="name">
+                        <b>
+                            cambiarTipoPersona
+                        </b>
+                        <a href="#cambiarTipoPersona"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>cambiarTipoPersona()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="434"
+                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:434</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="confirmaCambio"></a>
+                    <span class="name">
+                        <b>
+                            confirmaCambio
+                        </b>
+                        <a href="#confirmaCambio"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>confirmaCambio()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="423"
+                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:423</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="datoDelNotario"></a>
                     <span class="name">
                         <b>
@@ -604,8 +784,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="231"
-                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:231</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="271"
+                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:271</a></div>
                 </td>
             </tr>
 
@@ -643,8 +823,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="394"
-                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:394</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="519"
+                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:519</a></div>
                 </td>
             </tr>
 
@@ -709,8 +889,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="187"
-                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:187</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="227"
+                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:227</a></div>
                 </td>
             </tr>
 
@@ -748,8 +928,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="173"
-                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:173</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="213"
+                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:213</a></div>
                 </td>
             </tr>
 
@@ -787,8 +967,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="276"
-                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:276</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="318"
+                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:318</a></div>
                 </td>
             </tr>
 
@@ -853,8 +1033,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="207"
-                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:207</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="247"
+                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:247</a></div>
                 </td>
             </tr>
 
@@ -892,8 +1072,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="252"
-                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:252</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="294"
+                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:294</a></div>
                 </td>
             </tr>
 
@@ -931,8 +1111,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="156"
-                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:156</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="170"
+                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:170</a></div>
                 </td>
             </tr>
 
@@ -970,8 +1150,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="201"
-                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:201</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="241"
+                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:241</a></div>
                 </td>
             </tr>
 
@@ -1009,8 +1189,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="300"
-                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:300</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="342"
+                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:342</a></div>
                 </td>
             </tr>
 
@@ -1075,8 +1255,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="305"
-                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:305</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="347"
+                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:347</a></div>
                 </td>
             </tr>
 
@@ -1159,8 +1339,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="425"
-                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:425</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="550"
+                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:550</a></div>
                 </td>
             </tr>
 
@@ -1225,8 +1405,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="415"
-                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:415</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="540"
+                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:540</a></div>
                 </td>
             </tr>
 
@@ -1291,8 +1471,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="405"
-                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:405</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="530"
+                            class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:530</a></div>
                 </td>
             </tr>
 
@@ -1345,6 +1525,53 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
+                        <a name="actCambioPersona"></a>
+                        <span class="name">
+                            <b>
+                            actCambioPersona</b>
+                            <a href="#actCambioPersona"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>true</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="149" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:149</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="cambioPersona"></a>
+                        <span class="name">
+                            <b>
+                            cambioPersona</b>
+                            <a href="#cambioPersona"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="148" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:148</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
                         <a name="dataDomicilio"></a>
                         <span class="name">
                             <b>
@@ -1366,7 +1593,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="130" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:130</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="140" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:140</a></div>
                             </td>
                         </tr>
 
@@ -1398,7 +1625,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="131" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:131</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="141" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:141</a></div>
                             </td>
                         </tr>
 
@@ -1419,7 +1646,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="119" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:119</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="127" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:127</a></div>
                             </td>
                         </tr>
 
@@ -1440,7 +1667,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="118" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:118</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="126" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:126</a></div>
                             </td>
                         </tr>
 
@@ -1472,7 +1699,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="116" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:116</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="124" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:124</a></div>
                             </td>
                         </tr>
 
@@ -1493,7 +1720,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="143" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:143</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="156" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:156</a></div>
                             </td>
                         </tr>
 
@@ -1525,7 +1752,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="115" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:115</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="123" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:123</a></div>
                             </td>
                         </tr>
 
@@ -1557,7 +1784,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="140" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:140</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="153" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:153</a></div>
                             </td>
                         </tr>
 
@@ -1589,7 +1816,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="126" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:126</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="136" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:136</a></div>
                             </td>
                         </tr>
 
@@ -1621,7 +1848,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="125" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:125</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="135" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:135</a></div>
                             </td>
                         </tr>
 
@@ -1649,7 +1876,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="153" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:153</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="167" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:167</a></div>
                             </td>
                         </tr>
 
@@ -1681,7 +1908,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="127" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:127</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="137" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:137</a></div>
                             </td>
                         </tr>
 
@@ -1713,7 +1940,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="117" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:117</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="125" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:125</a></div>
                             </td>
                         </tr>
 
@@ -1745,7 +1972,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="129" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:129</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="139" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:139</a></div>
                             </td>
                         </tr>
 
@@ -1771,7 +1998,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="109" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:109</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="117" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:117</a></div>
                             </td>
                         </tr>
 
@@ -1797,7 +2024,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="110" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:110</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="118" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:118</a></div>
                             </td>
                         </tr>
 
@@ -1829,7 +2056,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="128" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:128</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="138" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:138</a></div>
                             </td>
                         </tr>
 
@@ -1850,7 +2077,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="120" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:120</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="128" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:128</a></div>
                             </td>
                         </tr>
 
@@ -1871,7 +2098,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="124" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:124</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="132" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:132</a></div>
                             </td>
                         </tr>
 
@@ -1892,7 +2119,33 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="123" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:123</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="131" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:131</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="isRequired"></a>
+                        <span class="name">
+                            <b>
+                            isRequired</b>
+                            <a href="#isRequired"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>true</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="150" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:150</a></div>
                             </td>
                         </tr>
 
@@ -1918,7 +2171,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="114" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:114</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="122" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:122</a></div>
                             </td>
                         </tr>
 
@@ -1944,7 +2197,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="135" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:135</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="145" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:145</a></div>
                             </td>
                         </tr>
 
@@ -1970,7 +2223,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="134" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:134</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="144" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:144</a></div>
                             </td>
                         </tr>
 
@@ -1996,7 +2249,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="137" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:137</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="147" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:147</a></div>
                             </td>
                         </tr>
 
@@ -2022,7 +2275,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="133" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:133</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="143" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:143</a></div>
                             </td>
                         </tr>
 
@@ -2048,7 +2301,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="136" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:136</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="146" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:146</a></div>
                             </td>
                         </tr>
 
@@ -2074,7 +2327,34 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="132" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:132</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="142" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:142</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="moralFormGroup"></a>
+                        <span class="name">
+                            <b>
+                            moralFormGroup</b>
+                            <a href="#moralFormGroup"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://angular.io/api/forms/FormGroup" target="_blank" >FormGroup</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="134" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:134</a></div>
                             </td>
                         </tr>
 
@@ -2106,7 +2386,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="113" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:113</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="121" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:121</a></div>
                             </td>
                         </tr>
 
@@ -2138,7 +2418,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="111" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:111</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="119" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:119</a></div>
                             </td>
                         </tr>
 
@@ -2170,7 +2450,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="142" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:142</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="155" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:155</a></div>
                             </td>
                         </tr>
 
@@ -2206,7 +2486,34 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="146" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:146</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="159" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:159</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="personaFormGroup"></a>
+                        <span class="name">
+                            <b>
+                            personaFormGroup</b>
+                            <a href="#personaFormGroup"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://angular.io/api/forms/FormGroup" target="_blank" >FormGroup</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="133" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:133</a></div>
                             </td>
                         </tr>
 
@@ -2227,7 +2534,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="122" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:122</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="130" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:130</a></div>
                             </td>
                         </tr>
 
@@ -2253,7 +2560,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="121" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:121</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="129" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:129</a></div>
                             </td>
                         </tr>
 
@@ -2285,7 +2592,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="112" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:112</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="120" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:120</a></div>
                             </td>
                         </tr>
 
@@ -2317,7 +2624,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="141" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:141</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="154" class="link-to-prism">src/app/components/notarios/editar-notario/editar-notario.component.ts:154</a></div>
                             </td>
                         </tr>
 
@@ -2340,6 +2647,7 @@ import { ActivatedRoute, Router } from &#x27;@angular/router&#x27;;
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from &#x27;@angular/forms&#x27;;
 import { MatPaginator } from &#x27;@angular/material/paginator&#x27;;
 import * as moment from &#x27;moment&#x27;;
+import { DialogConfirmacionComponent } from &#x27;@comp/dialog-confirmacion/dialog-confirmacion.component&#x27;;
 
 export interface DatosNotario {
   no_notario: string;
@@ -2347,18 +2655,25 @@ export interface DatosNotario {
 }
 
 export interface DatosGenerales {
-  nombre: string;
-  apellido_paterno: string;
-  apellido_materno: string;
-  rfc: string;
-  curp: string;
-  ine: string;
-  otro_documento: string;
-  numero_documento: string;
-  fecha_nacimiento: Date;
-  fecha_defuncion: Date;
-  celular: string;
-  email: string;
+    nombre: string;
+    apellido_paterno: string;
+    apellido_materno: string;
+    rfc: string;
+    curp: string;
+    ine: string;
+    otro_documento: string;
+    numero_documento: string;
+    fecha_nacimiento: Date;
+    fecha_defuncion: Date;
+    celular: string;
+    email: string;
+    actPreponderante: string;
+    idTipoPersonaMoral: number;
+    fechaInicioOperacion: Date;
+    idMotivo: number;
+    fechaCambio: Date;
+    nombre_moral: string;
+    tipoPersona: string;
 }
 
 export interface DireccionesNotario {
@@ -2438,147 +2753,181 @@ export interface DataDomicilio {
   styleUrls: [&#x27;./editar-notario.component.css&#x27;]
 })
 export class EditarNotarioComponent implements OnInit {
-  endpoint &#x3D; environment.endpoint + &#x27;registro/getInfoNotario&#x27;;
-  endpointEstados &#x3D; environment.endpoint + &#x27;registro/&#x27;;
-  pagina &#x3D; 1;
-  total &#x3D; 0;
-  pageSize &#x3D; 10;
-  loading &#x3D; false;
-  dataSource &#x3D; [];
-  dataPaginate &#x3D; [];
-  displayedColumnsDom: string[] &#x3D; [&#x27;direccion&#x27;, &#x27;historial&#x27;, &#x27;editar&#x27;];
-  dataNotarioResultado;
-  dataNotarioDireccionesResultado;
-  httpOptions;
-  search &#x3D; false;
-  query;
-  idNotario;
-  idDireccion;
-  datosNotario: DatosNotario &#x3D; {} as DatosNotario;
-  datosGenerales: DatosGenerales &#x3D; {} as DatosGenerales;
-  direccionesNotario: DireccionesNotario &#x3D; {} as DireccionesNotario;
-  estados: Estados[] &#x3D; [];
-  documentos: DocumentosIdentificativos[] &#x3D; [];
-  dataDomicilio: DataDomicilio[] &#x3D; [];
-  dataDomicilioEspecifico: DataDomicilio[] &#x3D; [];
-  loadingEstados &#x3D; false;
-  loadingDocumentosIdentificativos &#x3D; false;
-  loadingDatosNotario &#x3D; false;
-  loadingDatosGenerales &#x3D; false;
-  loadingDomicilios &#x3D; false;
-  loadingDireccionEspecifica &#x3D; false;
+    endpoint &#x3D; environment.endpoint + &#x27;registro/getInfoNotario&#x27;;
+    endpointEstados &#x3D; environment.endpoint + &#x27;registro/&#x27;;
+    pagina &#x3D; 1;
+    total &#x3D; 0;
+    pageSize &#x3D; 10;
+    loading &#x3D; false;
+    dataSource &#x3D; [];
+    dataPaginate &#x3D; [];
+    displayedColumnsDom: string[] &#x3D; [&#x27;direccion&#x27;, &#x27;historial&#x27;, &#x27;editar&#x27;];
+    dataNotarioResultado;
+    dataNotarioDireccionesResultado;
+    httpOptions;
+    search &#x3D; false;
+    query;
+    idNotario;
+    idDireccion;
+    personaFormGroup: FormGroup;
+    moralFormGroup: FormGroup;
+    datosNotario: DatosNotario &#x3D; {} as DatosNotario;
+    datosGenerales: DatosGenerales &#x3D; {} as DatosGenerales;
+    direccionesNotario: DireccionesNotario &#x3D; {} as DireccionesNotario;
+    estados: Estados[] &#x3D; [];
+    documentos: DocumentosIdentificativos[] &#x3D; [];
+    dataDomicilio: DataDomicilio[] &#x3D; [];
+    dataDomicilioEspecifico: DataDomicilio[] &#x3D; [];
+    loadingEstados &#x3D; false;
+    loadingDocumentosIdentificativos &#x3D; false;
+    loadingDatosNotario &#x3D; false;
+    loadingDatosGenerales &#x3D; false;
+    loadingDomicilios &#x3D; false;
+    loadingDireccionEspecifica &#x3D; false;
+    cambioPersona;
+    actCambioPersona &#x3D; true;
+    isRequired &#x3D; true;
 
-  /*PAGINADOS*/
-  dataSource1 &#x3D; [];
-  total1 &#x3D; 0;
-  pagina1&#x3D; 1;
-  dataPaginate1;
-  /*PAGINADOS*/
+    /*PAGINADOS*/
+    dataSource1 &#x3D; [];
+    total1 &#x3D; 0;
+    pagina1&#x3D; 1;
+    dataPaginate1;
+    /*PAGINADOS*/
 
-  @ViewChild(&#x27;paginator&#x27;) paginator: MatPaginator;
+    @ViewChild(&#x27;paginator&#x27;) paginator: MatPaginator;
 
-  constructor(
-    private http: HttpClient,
-    private snackBar: MatSnackBar,
-    private auth: AuthService,
-    private route: ActivatedRoute,
-    public dialog: MatDialog
-  ) { }
+    constructor(
+        private http: HttpClient,
+        private _formBuilder: FormBuilder,
+        private snackBar: MatSnackBar,
+        private auth: AuthService,
+        private route: ActivatedRoute,
+        public dialog: MatDialog
+    ) { }
 
-  ngOnInit(): void {
-    this.httpOptions &#x3D; {
-        headers: new HttpHeaders({
-          &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
-          Authorization: this.auth.getSession().token
-        })
-    };
-    this.idNotario &#x3D; this.route.snapshot.paramMap.get(&#x27;idnotario&#x27;);
-    this.idDireccion &#x3D; this.route.snapshot.paramMap.get(&#x27;iddireccion&#x27;);
-    console.log(this.idNotario);
-    console.log(this.idDireccion);
-    this.getNotarioDatos();
-    this.getNotarioDirecciones();
-    this.getDataEstados();
-    this.getDataDocumentosIdentificativos();
-  }
+    ngOnInit(): void {
+        this.httpOptions &#x3D; {
+            headers: new HttpHeaders({
+            &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+            Authorization: this.auth.getSession().token
+            })
+        };
 
-  getDataEstados(): void {
-    this.loadingEstados &#x3D; true;
-    this.http.post(this.endpointEstados + &#x27;getEstados&#x27;, &#x27;&#x27;, this.httpOptions).subscribe(
-      (res: any) &#x3D;&gt; {
-        this.loadingEstados &#x3D; false;
-        this.estados &#x3D; res;
-        console.log(this.estados);
-      },
-      (error) &#x3D;&gt; {
-        this.loadingEstados &#x3D; false;
-      }
-    );
-  }
+        this.personaFormGroup &#x3D; this._formBuilder.group({
+            apellidopaterno: [&#x27;&#x27;, Validators.required],
+            apellidomaterno: [&#x27;&#x27;, Validators.required],
+            nombre: [&#x27;&#x27;, Validators.required],
+            rfc: [&#x27;&#x27;, Validators.required],
+            curp: [&#x27;&#x27;, Validators.required],
+            ine: [&#x27;&#x27;, Validators.required],
+            identificacion: [null],
+            idedato: [null],
+            fechaNacimiento: [null],
+            fechaDefuncion: [null],
+            celular: [null],
+            email: [null],
+        });
 
-  getDataDocumentosIdentificativos(): void{
-    this.loadingDocumentosIdentificativos &#x3D; true;
-    this.http.post(this.endpointEstados + &#x27;getCatalogos&#x27;, &#x27;&#x27;, this.httpOptions).subscribe(
-      (res: any) &#x3D;&gt; {
-        this.loadingDocumentosIdentificativos &#x3D; false;
-        this.documentos &#x3D; res.CatDocIdentificativos;
-        console.log(this.documentos);
-      },
-      (error) &#x3D;&gt; {
-        this.loadingDocumentosIdentificativos &#x3D; false;
-      }
-    );
-  }
+        this.moralFormGroup &#x3D; this._formBuilder.group({
+            nombre_moral: [null, [Validators.required]],
+            rfc: [null, [Validators.required]],
+            actPreponderante: [null, []],
+            idTipoPersonaMoral: [&#x27;&#x27;, []],
+            fechaInicioOperacion: [null, []],
+            idMotivo: [&#x27;&#x27;, []],
+            fechaCambio: [null, []],
+        });
 
-  otroDocumento(){
-    if(this.datosGenerales.otro_documento &#x3D;&#x3D;&#x3D; null || this.datosGenerales.otro_documento &#x3D;&#x3D;&#x3D; &#x27;&#x27;){
-      this.datosGenerales.numero_documento &#x3D; &#x27;&#x27;;
+        this.idNotario &#x3D; this.route.snapshot.paramMap.get(&#x27;idnotario&#x27;);
+        this.idDireccion &#x3D; this.route.snapshot.paramMap.get(&#x27;iddireccion&#x27;);
+        console.log(this.idNotario);
+        console.log(this.idDireccion);
+        this.getNotarioDatos();
+        this.getNotarioDirecciones();
+        this.getDataEstados();
+        this.getDataDocumentosIdentificativos();
     }
-  }
 
-  getNotarioDatos(){
-      this.query &#x3D; &#x27;infoExtra&#x3D;true&amp;idPersona&#x3D;&#x27; + this.idNotario; 
-      this.loading &#x3D; true;
-      console.log(this.endpoint);
-      this.http.post(this.endpoint + &#x27;?&#x27; + this.query, &#x27;&#x27;, this.httpOptions)
-          .subscribe(
-              (res: any) &#x3D;&gt; {
-                  this.loading &#x3D; false;
-                  this.dataNotarioResultado &#x3D; res.notario;
-                  console.log(&quot;AQUI ENTRO EL RES&quot;);
-                  console.log(this.dataNotarioResultado);
-                  this.datoDelNotario();
-              },
-              (error) &#x3D;&gt; {
-                  this.loading &#x3D; false;
-                  this.snackBar.open(error.error.mensaje, &#x27;Cerrar&#x27;, {
-                      duration: 10000,
-                      horizontalPosition: &#x27;end&#x27;,
-                      verticalPosition: &#x27;top&#x27;
-                  });
-              }
-          );
-  }
+    getDataEstados(): void {
+        this.loadingEstados &#x3D; true;
+        this.http.post(this.endpointEstados + &#x27;getEstados&#x27;, &#x27;&#x27;, this.httpOptions).subscribe(
+        (res: any) &#x3D;&gt; {
+            this.loadingEstados &#x3D; false;
+            this.estados &#x3D; res;
+            console.log(this.estados);
+        },
+        (error) &#x3D;&gt; {
+            this.loadingEstados &#x3D; false;
+        }
+        );
+    }
 
-  datoDelNotario(){
-      this.datosNotario.no_notario &#x3D; this.dataNotarioResultado[0].NUMNOTARIO;
-      this.datosNotario.estado &#x3D; this.dataNotarioResultado[0].CODESTADO;
-      this.datosGenerales.nombre  &#x3D; this.dataNotarioResultado[0].NOMBRE;
-      this.datosGenerales.apellido_paterno &#x3D; this.dataNotarioResultado[0].APELLIDOPATERNO;
-      this.datosGenerales.apellido_materno &#x3D; this.dataNotarioResultado[0].APELLIDOMATERNO;
-      this.datosGenerales.rfc &#x3D; this.dataNotarioResultado[0].RFC;
-      this.datosGenerales.curp &#x3D; this.dataNotarioResultado[0].CURP;
-      this.datosGenerales.ine &#x3D; this.dataNotarioResultado[0].CLAVEIFE;
-      this.datosGenerales.otro_documento &#x3D; this.dataNotarioResultado[0].IDDOCIDENTIF;
-      this.datosGenerales.numero_documento &#x3D; this.dataNotarioResultado[0].VALDOCIDENTIF;
-      this.datosGenerales.fecha_nacimiento &#x3D; new Date(this.dataNotarioResultado[0].FECHANACIMIENTO);
-      this.datosGenerales.fecha_defuncion &#x3D; new Date(this.dataNotarioResultado[0].FECHADEFUNCION);
-      this.datosGenerales.celular &#x3D; this.dataNotarioResultado[0].CELULAR;
-      this.datosGenerales.email &#x3D; this.dataNotarioResultado[0].EMAIL;
+    getDataDocumentosIdentificativos(): void{
+        this.loadingDocumentosIdentificativos &#x3D; true;
+        this.http.post(this.endpointEstados + &#x27;getCatalogos&#x27;, &#x27;&#x27;, this.httpOptions).subscribe(
+        (res: any) &#x3D;&gt; {
+            this.loadingDocumentosIdentificativos &#x3D; false;
+            this.documentos &#x3D; res.CatDocIdentificativos;
+            console.log(this.documentos);
+        },
+        (error) &#x3D;&gt; {
+            this.loadingDocumentosIdentificativos &#x3D; false;
+        }
+        );
+    }
 
-      console.log(this.datosGenerales.fecha_nacimiento);
-      
-  }
+    otroDocumento(){
+        if(this.datosGenerales.otro_documento &#x3D;&#x3D;&#x3D; null || this.datosGenerales.otro_documento &#x3D;&#x3D;&#x3D; &#x27;&#x27;){
+        this.datosGenerales.numero_documento &#x3D; &#x27;&#x27;;
+        }
+    }
+
+    getNotarioDatos(){
+        this.query &#x3D; &#x27;infoExtra&#x3D;true&amp;idPersona&#x3D;&#x27; + this.idNotario; 
+        this.loading &#x3D; true;
+        console.log(this.endpoint);
+        this.http.post(this.endpoint + &#x27;?&#x27; + this.query, &#x27;&#x27;, this.httpOptions)
+            .subscribe(
+                (res: any) &#x3D;&gt; {
+                    this.loading &#x3D; false;
+                    this.dataNotarioResultado &#x3D; res.notario;
+                    console.log(&quot;AQUI ENTRO EL RES&quot;);
+                    console.log(this.dataNotarioResultado);
+                    this.datoDelNotario();
+                },
+                (error) &#x3D;&gt; {
+                    this.loading &#x3D; false;
+                    this.snackBar.open(error.error.mensaje, &#x27;Cerrar&#x27;, {
+                        duration: 10000,
+                        horizontalPosition: &#x27;end&#x27;,
+                        verticalPosition: &#x27;top&#x27;
+                    });
+                }
+            );
+    }
+
+    datoDelNotario(){
+        this.cambioPersona &#x3D; this.dataNotarioResultado[0].CODTIPOPERSONA;
+        this.datosGenerales.tipoPersona &#x3D; this.dataNotarioResultado[0].CODTIPOPERSONA;
+        this.datosNotario.no_notario &#x3D; this.dataNotarioResultado[0].NUMNOTARIO;
+        this.datosNotario.estado &#x3D; this.dataNotarioResultado[0].CODESTADO;
+        this.datosGenerales.nombre  &#x3D; this.dataNotarioResultado[0].NOMBRE;
+        this.datosGenerales.apellido_paterno &#x3D; this.dataNotarioResultado[0].APELLIDOPATERNO;
+        this.datosGenerales.apellido_materno &#x3D; this.dataNotarioResultado[0].APELLIDOMATERNO;
+        this.datosGenerales.rfc &#x3D; this.dataNotarioResultado[0].RFC;
+        this.datosGenerales.curp &#x3D; this.dataNotarioResultado[0].CURP;
+        this.datosGenerales.ine &#x3D; this.dataNotarioResultado[0].CLAVEIFE;
+        this.datosGenerales.otro_documento &#x3D; this.dataNotarioResultado[0].IDDOCIDENTIF;
+        this.datosGenerales.numero_documento &#x3D; this.dataNotarioResultado[0].VALDOCIDENTIF;
+        this.datosGenerales.fecha_nacimiento &#x3D; new Date(this.dataNotarioResultado[0].FECHANACIMIENTO);
+        this.datosGenerales.fecha_defuncion &#x3D; new Date(this.dataNotarioResultado[0].FECHADEFUNCION);
+        this.datosGenerales.celular &#x3D; this.dataNotarioResultado[0].CELULAR;
+        this.datosGenerales.email &#x3D; this.dataNotarioResultado[0].EMAIL;
+        this.datosGenerales.nombre_moral &#x3D; this.dataNotarioResultado[0].APELLIDOPATERNO + &#x27; &#x27; + this.dataNotarioResultado[0].APELLIDOMATERNO + &#x27; &#x27; + this.dataNotarioResultado[0].NOMBRE; 
+        console.log(this.datosGenerales.fecha_nacimiento);
+        
+    }
   
 
     getNotarioDirecciones(){
@@ -2639,79 +2988,162 @@ export class EditarNotarioComponent implements OnInit {
     }
 
 
-  actualizarDatosNotario(){
-    let query &#x3D; &#x27;&#x27;;
+    actualizarDatosNotario(){
+        let query &#x3D; &#x27;&#x27;;
 
-    query &#x3D; &#x27;idPersona&#x3D;&#x27; + this.idNotario;
-    query &#x3D; (this.datosNotario.no_notario) ? query + &#x27;&amp;numNotario&#x3D;&#x27; + this.datosNotario.no_notario : query + &#x27;&amp;numNotario&#x3D;&#x27;;
-    query &#x3D; (this.datosNotario.estado) ? query + &#x27;&amp;codEstado&#x3D;&#x27; + this.datosNotario.estado : query + &#x27;&amp;codEstado&#x3D;&#x27;;
+        query &#x3D; &#x27;idPersona&#x3D;&#x27; + this.idNotario;
+        query &#x3D; (this.datosNotario.no_notario) ? query + &#x27;&amp;numNotario&#x3D;&#x27; + this.datosNotario.no_notario : query + &#x27;&amp;numNotario&#x3D;&#x27;;
+        query &#x3D; (this.datosNotario.estado) ? query + &#x27;&amp;codEstado&#x3D;&#x27; + this.datosNotario.estado : query + &#x27;&amp;codEstado&#x3D;&#x27;;
 
-    this.http.post(this.endpointEstados + &#x27;actualizarNotario?&#x27; + query, &#x27;&#x27;, this.httpOptions)
+        this.http.post(this.endpointEstados + &#x27;actualizarNotario?&#x27; + query, &#x27;&#x27;, this.httpOptions)
+            .subscribe(
+                (res: any) &#x3D;&gt; {
+                    console.log(res);
+                    this.loadingDatosNotario &#x3D; false;
+                    this.snackBar.open(&#x27;Datos de Notario actualizados correctamente&#x27;, &#x27;Cerrar&#x27;, {
+                        duration: 10000,
+                        horizontalPosition: &#x27;end&#x27;,
+                        verticalPosition: &#x27;top&#x27;
+                    });
+                },
+                (error) &#x3D;&gt; {
+                    this.loadingDatosNotario &#x3D; false;
+                    this.snackBar.open(error.error.mensaje, &#x27;Cerrar&#x27;, {
+                        duration: 10000,
+                        horizontalPosition: &#x27;end&#x27;,
+                        verticalPosition: &#x27;top&#x27;
+                    });
+                }
+            );
+    }
+
+    actualizarDatosGenerales(){
+        let query &#x3D; &#x27;&#x27;;
+        this.loadingDatosNotario &#x3D; true;
+        query &#x3D; &#x27;codtipospersona&#x3D;F&#x27;;
+        query &#x3D; (this.datosGenerales.nombre) ? query + &#x27;&amp;nombre&#x3D;&#x27; + this.datosGenerales.nombre : query + &#x27;&amp;nombre&#x3D;&#x27;;
+        query &#x3D; query + &#x27;&amp;activprincip&amp;idtipomoral&amp;idmotivosmoral&amp;fechainicioactiv&amp;fechacambiosituacion&amp;idExpediente&#x27;;
+        query &#x3D; (this.datosGenerales.rfc) ? query + &#x27;&amp;rfc&#x3D;&#x27; + this.datosGenerales.rfc : query + &#x27;&amp;rfc&#x3D;&#x27;;
+        query &#x3D; (this.datosGenerales.apellido_paterno) ? query + &#x27;&amp;apellidopaterno&#x3D;&#x27; + this.datosGenerales.apellido_paterno : query + &#x27;&amp;apellidopaterno&#x3D;&#x27;;
+        query &#x3D; (this.datosGenerales.apellido_materno) ? query + &#x27;&amp;apellidomaterno&#x3D;&#x27; + this.datosGenerales.apellido_materno : query + &#x27;&amp;apellidomaterno&#x3D;&#x27;;
+        query &#x3D; (this.datosGenerales.curp) ? query + &#x27;&amp;curp&#x3D;&#x27; + this.datosGenerales.curp : query + &#x27;&amp;curp&#x3D;&#x27;;
+        query &#x3D; (this.datosGenerales.ine) ? query + &#x27;&amp;claveife&#x3D;&#x27; + this.datosGenerales.ine : query + &#x27;&amp;claveife&#x3D;&#x27;;
+        query &#x3D; (this.datosGenerales.otro_documento) ? query + &#x27;&amp;iddocidentif&#x3D;&#x27; + this.datosGenerales.otro_documento : query + &#x27;&amp;iddocidentif&#x3D;&#x27;;
+        query &#x3D; (this.datosGenerales.numero_documento) ? query + &#x27;&amp;valdocidentif&#x3D;&#x27; + this.datosGenerales.numero_documento : query + &#x27;&amp;valdocidentif&#x3D;&#x27;;
+        query &#x3D; (this.datosGenerales.fecha_nacimiento) ? query + &#x27;&amp;fechanacimiento&#x3D;&#x27; + moment(this.datosGenerales.fecha_nacimiento).format(&#x27;DD-MM-YYYY&#x27;) : query + &#x27;&amp;fechanacimiento&#x3D;&#x27;;
+        query &#x3D; (this.datosGenerales.fecha_defuncion) ? query + &#x27;&amp;fechadefuncion&#x3D;&#x27; + moment(this.datosGenerales.fecha_defuncion).format(&#x27;DD-MM-YYYY&#x27;) : query + &#x27;&amp;fechadefuncion&#x3D;&#x27;;
+        query &#x3D; (this.datosGenerales.celular) ? query + &#x27;&amp;celular&#x3D;&#x27; + this.datosGenerales.celular : query + &#x27;&amp;celular&#x3D;&#x27;;
+        query &#x3D; (this.datosGenerales.email) ? query + &#x27;&amp;email&#x3D;&#x27; + this.datosGenerales.email : query + &#x27;&amp;email&#x3D;&#x27;;
+        query &#x3D; query + &#x27;&amp;idExpediente&amp;idpersona&#x3D;&#x27; + this.idNotario;
+
+        this.http.post(this.endpointEstados + &#x27;actualizaContribuyente?&#x27; + query, &#x27;&#x27;, this.httpOptions)
+            .subscribe(
+                (res: any) &#x3D;&gt; {
+                    console.log(res);
+                    this.loadingDatosNotario &#x3D; false;
+                    this.snackBar.open(&#x27;Datos de Notario actualizados correctamente&#x27;, &#x27;Cerrar&#x27;, {
+                        duration: 10000,
+                        horizontalPosition: &#x27;end&#x27;,
+                        verticalPosition: &#x27;top&#x27;
+                    });
+                },
+                (error) &#x3D;&gt; {
+                    this.loadingDatosNotario &#x3D; false;
+                    this.snackBar.open(error.error.mensaje, &#x27;Cerrar&#x27;, {
+                        duration: 10000,
+                        horizontalPosition: &#x27;end&#x27;,
+                        verticalPosition: &#x27;top&#x27;
+                    });
+                }
+            );  
+
+    }
+
+    confirmaCambio(): void {
+        const dialogRef &#x3D; this.dialog.open(DialogConfirmacionComponent, {
+            width: &#x27;700px&#x27;
+        });
+        dialogRef.afterClosed().subscribe(result &#x3D;&gt; {
+            if(result){
+                this.cambiarTipoPersona();
+            }
+        });
+    }
+
+    cambiarTipoPersona(){
+        let query &#x3D; &#x27;idpersona&#x3D;&#x27; + this.idNotario;
+        this.loading &#x3D; true;
+
+        query &#x3D; (this.datosGenerales.tipoPersona) ? query + &#x27;&amp;codtipospersona&#x3D;&#x27; + this.datosGenerales.tipoPersona : query + &#x27;&amp;codtipospersona&#x3D;&#x27;;
+
+        if(this.datosGenerales.tipoPersona &#x3D;&#x3D;&#x3D; &#x27;F&#x27;){
+            query &#x3D; (this.datosGenerales.apellido_paterno) ? query + &#x27;&amp;apellidopaterno&#x3D;&#x27; + this.datosGenerales.apellido_paterno : query + &#x27;&amp;apellidopaterno&#x3D;&#x27;;
+            query &#x3D; (this.datosGenerales.apellido_materno) ? query + &#x27;&amp;apellidomaterno&#x3D;&#x27; + this.datosGenerales.apellido_materno : query + &#x27;&amp;apellidomaterno&#x3D;&#x27;;
+            query &#x3D; (this.datosGenerales.nombre) ? query + &#x27;&amp;nombreF&#x3D;&#x27; + this.datosGenerales.nombre : query + &#x27;&amp;nombreF&#x3D;&#x27;;
+            query &#x3D; (this.datosGenerales.rfc) ? query + &#x27;&amp;rfcF&#x3D;&#x27; + this.datosGenerales.rfc : query + &#x27;&amp;rfcF&#x3D;&#x27;;
+        } else {
+            query &#x3D; (this.datosGenerales.nombre_moral) ? query + &#x27;&amp;nombreM&#x3D;&#x27; + this.datosGenerales.nombre_moral : query + &#x27;&amp;nombreM&#x3D;&#x27;;
+            query &#x3D; (this.datosGenerales.rfc) ? query + &#x27;&amp;rfcM&#x3D;&#x27; + this.datosGenerales.rfc : query + &#x27;&amp;rfcM&#x3D;&#x27;;
+        }
+        
+        query &#x3D; (this.datosGenerales.curp) ? query + &#x27;&amp;curp&#x3D;&#x27; + this.datosGenerales.curp : query + &#x27;&amp;curp&#x3D;&#x27;;
+        query &#x3D; (this.datosGenerales.ine) ? query + &#x27;&amp;claveife&#x3D;&#x27; + this.datosGenerales.ine : query + &#x27;&amp;claveife&#x3D;&#x27;;
+        query &#x3D; (this.datosGenerales.otro_documento) ? query + &#x27;&amp;iddocidentif&#x3D;&#x27; + this.datosGenerales.otro_documento : query + &#x27;&amp;iddocidentif&#x3D;&#x27;;
+        query &#x3D; (this.datosGenerales.numero_documento) ? query + &#x27;&amp;valdocidentif&#x3D;&#x27; + this.datosGenerales.numero_documento : query + &#x27;&amp;valdocidentif&#x3D;&#x27;;
+        query &#x3D; (this.datosGenerales.fecha_nacimiento) ? query + &#x27;&amp;fechanacimiento&#x3D;&#x27; + moment(this.datosGenerales.fecha_nacimiento).format(&#x27;DD-MM-YYYY&#x27;) : query + &#x27;&amp;fechanacimiento&#x3D;&#x27;;
+        query &#x3D; (this.datosGenerales.fecha_defuncion) ? query + &#x27;&amp;fechadefuncion&#x3D;&#x27; + moment(this.datosGenerales.fecha_defuncion).format(&#x27;DD-MM-YYYY&#x27;) : query + &#x27;&amp;fechadefuncion&#x3D;&#x27;;
+        query &#x3D; (this.datosGenerales.celular) ? query + &#x27;&amp;celular&#x3D;&#x27; + this.datosGenerales.celular : query + &#x27;&amp;celular&#x3D;&#x27;;
+        query &#x3D; (this.datosGenerales.email) ? query + &#x27;&amp;email&#x3D;&#x27; + this.datosGenerales.email : query + &#x27;&amp;email&#x3D;&#x27;;
+
+        query &#x3D; (this.datosGenerales.actPreponderante) ? query + &#x27;&amp;activprincip&#x3D;&#x27; + this.datosGenerales.actPreponderante : query + &#x27;&amp;activprincip&#x3D;&#x27;;
+        query &#x3D; (this.datosGenerales.idTipoPersonaMoral) ? query + &#x27;&amp;idtipomoral&#x3D;&#x27; + this.datosGenerales.idTipoPersonaMoral : query + &#x27;&amp;idtipomoral&#x3D;&#x27;;
+        query &#x3D; (this.datosGenerales.idMotivo) ? query + &#x27;&amp;idmotivosmoral&#x3D;&#x27; + this.datosGenerales.idMotivo : query + &#x27;&amp;idmotivosmoral&#x3D;&#x27;;
+        query &#x3D; (this.datosGenerales.fechaInicioOperacion) ? query + &#x27;&amp;fechainicioactiv&#x3D;&#x27; + moment(this.datosGenerales.fechaInicioOperacion).format(&#x27;DD-MM-YYYY&#x27;) : query + &#x27;&amp;fechainicioactiv&#x3D;&#x27;;
+        query &#x3D; (this.datosGenerales.fechaCambio) ? query + &#x27;&amp;fechacambiosituacion&#x3D;&#x27; + moment(this.datosGenerales.fechaCambio).format(&#x27;DD-MM-YYYY&#x27;) : query + &#x27;&amp;fechacambiosituacion&#x3D;&#x27;;
+
+        this.http.post(this.endpointEstados + &#x27;cambioTipoPersona&#x27; + &#x27;?&#x27; + query, &#x27;&#x27;, this.httpOptions)
         .subscribe(
             (res: any) &#x3D;&gt; {
+                this.loading &#x3D; false;
+                console.log(&quot;Cambio de persona&quot;);
                 console.log(res);
-                this.loadingDatosNotario &#x3D; false;
-                this.snackBar.open(&#x27;Datos de Notario actualizados correctamente&#x27;, &#x27;Cerrar&#x27;, {
-                    duration: 10000,
-                    horizontalPosition: &#x27;end&#x27;,
-                    verticalPosition: &#x27;top&#x27;
-                });
+                if(res){
+                    this.snackBar.open(&#x27;Actualización correcta&#x27;, &#x27;Cerrar&#x27;, {
+                        duration: 10000,
+                        horizontalPosition: &#x27;end&#x27;,
+                        verticalPosition: &#x27;top&#x27;
+                    });
+                }else{
+                    this.snackBar.open(&#x27;Se ha presentado un problema intente más tarde&#x27;, &#x27;Cerrar&#x27;, {
+                        duration: 10000,
+                        horizontalPosition: &#x27;end&#x27;,
+                        verticalPosition: &#x27;top&#x27;
+                    });
+                }
             },
             (error) &#x3D;&gt; {
-                this.loadingDatosNotario &#x3D; false;
-                this.snackBar.open(error.error.mensaje, &#x27;Cerrar&#x27;, {
+                this.loading &#x3D; false;
+                this.snackBar.open(&#x27;Se ha presentado un problema intente más tarde&#x27;, &#x27;Cerrar&#x27;, {
                     duration: 10000,
                     horizontalPosition: &#x27;end&#x27;,
                     verticalPosition: &#x27;top&#x27;
                 });
             }
         );
-  }
+    }
 
-  actualizarDatosGenerales(){
-    let query &#x3D; &#x27;&#x27;;
+    actualizaPersona(event){
+        console.log(event)
+        this.actCambioPersona &#x3D; (event &#x3D;&#x3D; this.cambioPersona) ? true : false;
+        console.log(this.actCambioPersona);
+        if(this.datosGenerales.tipoPersona &#x3D;&#x3D; &#x27;M&#x27;){
+            this.datosGenerales.nombre_moral &#x3D; this.datosGenerales.apellido_paterno + &#x27; &#x27; + this.datosGenerales.apellido_materno + &#x27; &#x27; + this.datosGenerales.nombre;
+        }
+        this.datosGenerales.rfc &#x3D; null;
+    }
 
-    query &#x3D; &#x27;codtipospersona&#x3D;F&#x27;;
-    query &#x3D; (this.datosGenerales.nombre) ? query + &#x27;&amp;nombre&#x3D;&#x27; + this.datosGenerales.nombre : query + &#x27;&amp;nombre&#x3D;&#x27;;
-    query &#x3D; query + &#x27;&amp;activprincip&amp;idtipomoral&amp;idmotivosmoral&amp;fechainicioactiv&amp;fechacambiosituacion&amp;idExpediente&#x27;;
-    query &#x3D; (this.datosGenerales.rfc) ? query + &#x27;&amp;rfc&#x3D;&#x27; + this.datosGenerales.rfc : query + &#x27;&amp;rfc&#x3D;&#x27;;
-    query &#x3D; (this.datosGenerales.apellido_paterno) ? query + &#x27;&amp;apellidopaterno&#x3D;&#x27; + this.datosGenerales.apellido_paterno : query + &#x27;&amp;apellidopaterno&#x3D;&#x27;;
-    query &#x3D; (this.datosGenerales.apellido_materno) ? query + &#x27;&amp;apellidomaterno&#x3D;&#x27; + this.datosGenerales.apellido_materno : query + &#x27;&amp;apellidomaterno&#x3D;&#x27;;
-    query &#x3D; (this.datosGenerales.curp) ? query + &#x27;&amp;curp&#x3D;&#x27; + this.datosGenerales.curp : query + &#x27;&amp;curp&#x3D;&#x27;;
-    query &#x3D; (this.datosGenerales.ine) ? query + &#x27;&amp;claveife&#x3D;&#x27; + this.datosGenerales.ine : query + &#x27;&amp;claveife&#x3D;&#x27;;
-    query &#x3D; (this.datosGenerales.otro_documento) ? query + &#x27;&amp;iddocidentif&#x3D;&#x27; + this.datosGenerales.otro_documento : query + &#x27;&amp;iddocidentif&#x3D;&#x27;;
-    query &#x3D; (this.datosGenerales.numero_documento) ? query + &#x27;&amp;valdocidentif&#x3D;&#x27; + this.datosGenerales.numero_documento : query + &#x27;&amp;valdocidentif&#x3D;&#x27;;
-    query &#x3D; (this.datosGenerales.fecha_nacimiento) ? query + &#x27;&amp;fechanacimiento&#x3D;&#x27; + moment(this.datosGenerales.fecha_nacimiento).format(&#x27;DD-MM-YYYY&#x27;) : query + &#x27;&amp;fechanacimiento&#x3D;&#x27;;
-    query &#x3D; (this.datosGenerales.fecha_defuncion) ? query + &#x27;&amp;fechadefuncion&#x3D;&#x27; + moment(this.datosGenerales.fecha_defuncion).format(&#x27;DD-MM-YYYY&#x27;) : query + &#x27;&amp;fechadefuncion&#x3D;&#x27;;
-    query &#x3D; (this.datosGenerales.celular) ? query + &#x27;&amp;celular&#x3D;&#x27; + this.datosGenerales.celular : query + &#x27;&amp;celular&#x3D;&#x27;;
-    query &#x3D; (this.datosGenerales.email) ? query + &#x27;&amp;email&#x3D;&#x27; + this.datosGenerales.email : query + &#x27;&amp;email&#x3D;&#x27;;
-    query &#x3D; query + &#x27;&amp;idExpediente&amp;idpersona&#x3D;&#x27; + this.idNotario;
-
-    this.http.post(this.endpointEstados + &#x27;actualizaContribuyente?&#x27; + query, &#x27;&#x27;, this.httpOptions)
-        .subscribe(
-            (res: any) &#x3D;&gt; {
-                console.log(res);
-                this.loadingDatosGenerales &#x3D; false;
-                this.snackBar.open(&#x27;Datos de Notario actualizados correctamente&#x27;, &#x27;Cerrar&#x27;, {
-                    duration: 10000,
-                    horizontalPosition: &#x27;end&#x27;,
-                    verticalPosition: &#x27;top&#x27;
-                });
-            },
-            (error) &#x3D;&gt; {
-                this.loadingDatosNotario &#x3D; false;
-                this.snackBar.open(error.error.mensaje, &#x27;Cerrar&#x27;, {
-                    duration: 10000,
-                    horizontalPosition: &#x27;end&#x27;,
-                    verticalPosition: &#x27;top&#x27;
-                });
-            }
-        );  
-
-  }
-
-  addDomicilio(i &#x3D; -1, dataDomicilio &#x3D; null): void {
-    let codtiposdireccion &#x3D; &#x27;&#x27;;
+    addDomicilio(i &#x3D; -1, dataDomicilio &#x3D; null): void {
+        let codtiposdireccion &#x3D; &#x27;&#x27;;
         const dialogRef &#x3D; this.dialog.open(DialogDomiciliosNotario, {
             width: &#x27;700px&#x27;,
             data: {dataDomicilio:dataDomicilio, idNotario: this.idNotario,
@@ -2721,42 +3153,42 @@ export class EditarNotarioComponent implements OnInit {
         dialogRef.afterClosed().subscribe(result &#x3D;&gt; {
                 this.getNotarioDirecciones();
         });
-  }
+    }
 
-  editDomicilio(dataDomicilioEspecifico): void {
-    let codtiposdireccion &#x3D; &#x27;&#x27;;
-        const dialogRef &#x3D; this.dialog.open(DialogDomiciliosNotario, {
-            width: &#x27;700px&#x27;,
-            data: {dataDomicilioEspecifico:dataDomicilioEspecifico, idNotario: this.idNotario},
-        });
-        dialogRef.afterClosed().subscribe(result &#x3D;&gt; {
-                this.getNotarioDirecciones();
-        });
-  }
+    editDomicilio(dataDomicilioEspecifico): void {
+        let codtiposdireccion &#x3D; &#x27;&#x27;;
+            const dialogRef &#x3D; this.dialog.open(DialogDomiciliosNotario, {
+                width: &#x27;700px&#x27;,
+                data: {dataDomicilioEspecifico:dataDomicilioEspecifico, idNotario: this.idNotario},
+            });
+            dialogRef.afterClosed().subscribe(result &#x3D;&gt; {
+                    this.getNotarioDirecciones();
+            });
+    }
 
-  viewHistoricoDomicilio(idDireccion): void {
-        const dialogRef &#x3D; this.dialog.open(DialogDomicilioHistoricoNotario, {
-            width: &#x27;700px&#x27;,
-            data: {idDireccion},
-        });
-        dialogRef.afterClosed().subscribe(result &#x3D;&gt; {
-                // this.getNotarioDirecciones();
-        });
-  }
+    viewHistoricoDomicilio(idDireccion): void {
+            const dialogRef &#x3D; this.dialog.open(DialogDomicilioHistoricoNotario, {
+                width: &#x27;700px&#x27;,
+                data: {idDireccion},
+            });
+            dialogRef.afterClosed().subscribe(result &#x3D;&gt; {
+                    // this.getNotarioDirecciones();
+            });
+    }
 
-  viewHistoricoDatosPersonales(idPersona): void {
-        const dialogRef &#x3D; this.dialog.open(DialogPersonalesHistoricoNotario, {
-            width: &#x27;700px&#x27;,
-            data: {idPersona},
-        });
-        dialogRef.afterClosed().subscribe(result &#x3D;&gt; {
-                // this.getNotarioDirecciones();
-        });
-  }
+    viewHistoricoDatosPersonales(idPersona): void {
+            const dialogRef &#x3D; this.dialog.open(DialogPersonalesHistoricoNotario, {
+                width: &#x27;700px&#x27;,
+                data: {idPersona},
+            });
+            dialogRef.afterClosed().subscribe(result &#x3D;&gt; {
+                    // this.getNotarioDirecciones();
+            });
+    }
 
-  removeDomicilio(i){
-		this.dataDomicilio.splice(i, 1);
-	}
+    removeDomicilio(i){
+            this.dataDomicilio.splice(i, 1);
+    }
 
 
 }
@@ -4389,15 +4821,28 @@ export interface DataHistorico{
 
         &lt;!-- Datos del Notario --&gt;
         &lt;h3 style&#x3D;&quot;margin: 0 0 15px 0;&quot; class&#x3D;&quot;verde-cdmx&quot;&gt;Datos del Notario:&lt;/h3&gt;
-
+        &lt;div style&#x3D;&quot;padding: 30px; text-align: center;&quot; *ngIf&#x3D;&quot;loading&quot;&gt;
+            &lt;mat-spinner style&#x3D;&quot;margin:0 auto;&quot;&gt;&lt;/mat-spinner&gt;
+            &lt;p&gt;Cargando...&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;br&gt;
         &lt;div class&#x3D;&quot;row&quot;&gt;
-            &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
+            &lt;div *ngIf&#x3D;&quot;!loading&quot; class&#x3D;&quot;col-md-12&quot;&gt;
+                &lt;mat-form-field&gt;
+                    &lt;mat-label&gt;Tipo de persona:&lt;/mat-label&gt;
+                    &lt;mat-select [(ngModel)]&#x3D;&quot;datosGenerales.tipoPersona&quot; (selectionChange)&#x3D;&quot;actualizaPersona($event.value)&quot;&gt;
+                        &lt;mat-option value&#x3D;&quot;F&quot;&gt;Fisica&lt;/mat-option&gt;
+                        &lt;mat-option value&#x3D;&quot;M&quot;&gt;Moral&lt;/mat-option&gt;
+                    &lt;/mat-select&gt;
+                &lt;/mat-form-field&gt;
+            &lt;/div&gt;&lt;br&gt;&lt;br&gt;
+            &lt;div *ngIf&#x3D;&quot;datosGenerales.tipoPersona &#x3D;&#x3D; &#x27;F&#x27; &amp;&amp; !loading&quot; class&#x3D;&quot;col-md-4&quot;&gt;
                 &lt;mat-form-field appearance&#x3D;&quot;outline&quot; style&#x3D;&quot;width: 100%;&quot;&gt;
                     &lt;mat-label&gt;No. Notario&lt;/mat-label&gt;
                     &lt;input matInput placeholder&#x3D;&quot;Placeholder&quot; [(ngModel)]&#x3D;&quot;datosNotario.no_notario&quot;&gt;
                 &lt;/mat-form-field&gt;
             &lt;/div&gt;
-            &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
+            &lt;div *ngIf&#x3D;&quot;datosGenerales.tipoPersona &#x3D;&#x3D; &#x27;F&#x27; &amp;&amp; !loading&quot; class&#x3D;&quot;col-md-4&quot;&gt;
                 &lt;mat-form-field appearance&#x3D;&quot;fill&quot; style&#x3D;&quot;width: 100%;&quot;&gt;
                     &lt;mat-label&gt;Estado:&lt;/mat-label&gt;
                     &lt;mat-select #estado [(ngModel)]&#x3D;&quot;datosNotario.estado&quot;&gt;
@@ -4408,116 +4853,176 @@ export interface DataHistorico{
                     &lt;/mat-select&gt;
                 &lt;/mat-form-field&gt;
             &lt;/div&gt;
-                    &lt;!-- Actualizar --&gt;
-                    &lt;div class&#x3D;&quot;col-md-4&quot; style&#x3D;&quot;margin-top: 10px;&quot;&gt;
-                        &lt;div class&#x3D;&quot;d-flex flex-row-reverse&quot; style&#x3D;&quot;text-align: center;&quot;&gt;
-                            &lt;button mat-stroked-button class&#x3D;&quot;boton-n-representacion&quot; color&#x3D;&quot;primary&quot; aria-label&#x3D;&quot;Guardar&quot; style&#x3D;&quot;margin: auto;&quot; (click)&#x3D;&quot;actualizarDatosNotario()&quot;&gt;
-                                Actualizar &lt;mat-icon style&#x3D;&quot;display: inherit; width: 15px;&quot;&gt;update&lt;/mat-icon&gt;
-                            &lt;/button&gt;
-                        &lt;/div&gt;
+                &lt;!-- Actualizar --&gt;
+                &lt;div class&#x3D;&quot;col-md-4&quot; style&#x3D;&quot;margin-top: 10px;&quot; *ngIf&#x3D;&quot;datosGenerales.tipoPersona &#x3D;&#x3D; &#x27;F&#x27; &amp;&amp; !loading&quot;&gt;
+                    &lt;div class&#x3D;&quot;d-flex flex-row-reverse&quot; style&#x3D;&quot;text-align: center;&quot;&gt;
+                        &lt;button mat-stroked-button class&#x3D;&quot;boton-n-representacion&quot; color&#x3D;&quot;primary&quot; aria-label&#x3D;&quot;Guardar&quot; style&#x3D;&quot;margin: auto;&quot; (click)&#x3D;&quot;actualizarDatosNotario()&quot;&gt;
+                            Actualizar &lt;mat-icon style&#x3D;&quot;display: inherit; width: 15px;&quot;&gt;update&lt;/mat-icon&gt;
+                        &lt;/button&gt;
                     &lt;/div&gt;
+                &lt;/div&gt;
         &lt;/div&gt;
 
 
         &lt;!-- Datos Generales --&gt;
         &lt;h3 style&#x3D;&quot;margin: 30px 0 15px 0;&quot; class&#x3D;&quot;verde-cdmx&quot;&gt;Datos Generales:&lt;/h3&gt;
+        &lt;ng-container *ngIf&#x3D;&quot;datosGenerales.tipoPersona &#x3D;&#x3D; &#x27;F&#x27; &amp;&amp; !loading&quot;&gt;
+            &lt;form [formGroup]&#x3D;&quot;personaFormGroup&quot;&gt;
+                &lt;div class&#x3D;&quot;row&quot;&gt;
+                    &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
+                        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; style&#x3D;&quot;width: 100%;&quot;&gt;
+                            &lt;mat-label&gt;Nombre&lt;/mat-label&gt;
+                            &lt;input matInput formControlName&#x3D;&quot;nombre&quot; placeholder&#x3D;&quot;Placeholder&quot; [(ngModel)]&#x3D;&quot;datosGenerales.nombre&quot;&gt;
+                            &lt;mat-error *ngIf&#x3D;&quot;personaFormGroup.controls.nombre.errors?.required&quot;&gt;Requerido&lt;/mat-error&gt;
+                        &lt;/mat-form-field&gt;
+                    &lt;/div&gt;
+                    &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
+                        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; style&#x3D;&quot;width: 100%;&quot;&gt;
+                            &lt;mat-label&gt;Apellido Paterno&lt;/mat-label&gt;
+                            &lt;input matInput formControlName&#x3D;&quot;apellidopaterno&quot; placeholder&#x3D;&quot;Placeholder&quot; [(ngModel)]&#x3D;&quot;datosGenerales.apellido_paterno&quot;&gt;
+                            &lt;mat-error *ngIf&#x3D;&quot;personaFormGroup.controls.apellidopaterno.errors?.required&quot;&gt;Requerido&lt;/mat-error&gt;
+                        &lt;/mat-form-field&gt;
+                    &lt;/div&gt;
+                    &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
+                        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; style&#x3D;&quot;width: 100%;&quot;&gt;
+                            &lt;mat-label&gt;Apellido Materno&lt;/mat-label&gt;
+                            &lt;input matInput formControlName&#x3D;&quot;apellidomaterno&quot; placeholder&#x3D;&quot;Placeholder&quot; [(ngModel)]&#x3D;&quot;datosGenerales.apellido_materno&quot;&gt;
+                            &lt;mat-error *ngIf&#x3D;&quot;personaFormGroup.controls.apellidomaterno.errors?.required&quot;&gt;Requerido&lt;/mat-error&gt;
+                        &lt;/mat-form-field&gt;
+                    &lt;/div&gt; 
+                &lt;/div&gt;
 
-        &lt;div class&#x3D;&quot;row&quot;&gt;
-            &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
-                &lt;mat-form-field appearance&#x3D;&quot;outline&quot; style&#x3D;&quot;width: 100%;&quot;&gt;
-                    &lt;mat-label&gt;Nombre&lt;/mat-label&gt;
-                    &lt;input matInput placeholder&#x3D;&quot;Placeholder&quot; [(ngModel)]&#x3D;&quot;datosGenerales.nombre&quot;&gt;
-                &lt;/mat-form-field&gt;
-            &lt;/div&gt;
-            &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
-                &lt;mat-form-field appearance&#x3D;&quot;outline&quot; style&#x3D;&quot;width: 100%;&quot;&gt;
-                    &lt;mat-label&gt;Apellido Paterno&lt;/mat-label&gt;
-                    &lt;input matInput placeholder&#x3D;&quot;Placeholder&quot; [(ngModel)]&#x3D;&quot;datosGenerales.apellido_paterno&quot;&gt;
-                &lt;/mat-form-field&gt;
-            &lt;/div&gt;
-            &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
-                &lt;mat-form-field appearance&#x3D;&quot;outline&quot; style&#x3D;&quot;width: 100%;&quot;&gt;
-                    &lt;mat-label&gt;Apellido Materno&lt;/mat-label&gt;
-                    &lt;input matInput placeholder&#x3D;&quot;Placeholder&quot; [(ngModel)]&#x3D;&quot;datosGenerales.apellido_materno&quot;&gt;
-                &lt;/mat-form-field&gt;
-            &lt;/div&gt; 
-        &lt;/div&gt;
+                &lt;div class&#x3D;&quot;row&quot;&gt;
+                    &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
+                        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; style&#x3D;&quot;width: 100%;&quot;&gt;
+                            &lt;mat-label&gt;RFC*&lt;/mat-label&gt;
+                            &lt;input matInput formControlName&#x3D;&quot;rfc&quot; placeholder&#x3D;&quot;Placeholder&quot; [(ngModel)]&#x3D;&quot;datosGenerales.rfc&quot; pattern&#x3D;&quot;^([A-Z,Ñ,&amp;]{4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})$&quot;&gt;
+                            &lt;mat-error *ngIf&#x3D;&quot;personaFormGroup.controls.rfc.errors?.required&quot;&gt;Requerido&lt;/mat-error&gt;
+                            &lt;mat-error *ngIf&#x3D;&quot;personaFormGroup.controls.rfc.errors?.pattern&quot;&gt;El campo RFC debe contener 4 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.&lt;/mat-error&gt;
+                        &lt;/mat-form-field&gt;
+                    &lt;/div&gt;
+                    &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
+                        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; style&#x3D;&quot;width: 100%;&quot;&gt;
+                            &lt;mat-label&gt;CURP*&lt;/mat-label&gt;
+                            &lt;input matInput formControlName&#x3D;&quot;curp&quot; placeholder&#x3D;&quot;Placeholder&quot; [(ngModel)]&#x3D;&quot;datosGenerales.curp&quot;&gt;
+                            &lt;mat-error *ngIf&#x3D;&quot;personaFormGroup.controls.curp.errors?.required&quot;&gt;Requerido&lt;/mat-error&gt;
+                        &lt;/mat-form-field&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
 
-        &lt;div class&#x3D;&quot;row&quot;&gt;
-            &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
-                &lt;mat-form-field appearance&#x3D;&quot;outline&quot; style&#x3D;&quot;width: 100%;&quot;&gt;
-                    &lt;mat-label&gt;RFC*&lt;/mat-label&gt;
-                    &lt;input matInput placeholder&#x3D;&quot;Placeholder&quot; [(ngModel)]&#x3D;&quot;datosGenerales.rfc&quot;&gt;
-                &lt;/mat-form-field&gt;
-            &lt;/div&gt;
-            &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
-                &lt;mat-form-field appearance&#x3D;&quot;outline&quot; style&#x3D;&quot;width: 100%;&quot;&gt;
-                    &lt;mat-label&gt;CURP*&lt;/mat-label&gt;
-                    &lt;input matInput placeholder&#x3D;&quot;Placeholder&quot; [(ngModel)]&#x3D;&quot;datosGenerales.curp&quot;&gt;
-                &lt;/mat-form-field&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
+                &lt;div class&#x3D;&quot;row&quot;&gt;
+                    &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
+                        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; style&#x3D;&quot;width: 100%;&quot;&gt;
+                            &lt;mat-label&gt;INE&lt;/mat-label&gt;
+                            &lt;input matInput formControlName&#x3D;&quot;ine&quot; placeholder&#x3D;&quot;Placeholder&quot; [(ngModel)]&#x3D;&quot;datosGenerales.ine&quot;&gt;
+                            &lt;mat-error *ngIf&#x3D;&quot;personaFormGroup.controls.ine.errors?.required&quot;&gt;Requerido&lt;/mat-error&gt;
+                        &lt;/mat-form-field&gt;
+                    &lt;/div&gt;
+                    &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
+                        &lt;mat-form-field appearance&#x3D;&quot;fill&quot; style&#x3D;&quot;width: 100%;&quot;&gt;
+                            &lt;mat-label&gt;Otro Documento:&lt;/mat-label&gt;
+                            &lt;mat-select #otro_documento formControlName&#x3D;&quot;identificacion&quot; [(ngModel)]&#x3D;&quot;datosGenerales.otro_documento&quot; (ngModelChange)&#x3D;&quot;otroDocumento()&quot;&gt;
+                                &lt;mat-option value&#x3D;&quot;&quot;&gt;Seleccione...&lt;/mat-option&gt;
+                                &lt;mat-option *ngFor&#x3D;&quot;let documento of documentos&quot; [value]&#x3D;&quot;documento.IDDOCIDENTIF&quot;&gt;
+                                    {{ documento.DESCRIPCION }}
+                                &lt;/mat-option&gt;
+                            &lt;/mat-select&gt;
+                        &lt;/mat-form-field&gt;
+                    &lt;/div&gt;
+                    &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
+                        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; style&#x3D;&quot;width: 100%;&quot;&gt;
+                            &lt;mat-label&gt;Número Documento&lt;/mat-label&gt;
+                            &lt;input matInput formControlName&#x3D;&quot;idedato&quot; #numero_documento [(ngModel)]&#x3D;&quot;datosGenerales.numero_documento&quot; [disabled]&#x3D;&quot;datosGenerales.otro_documento &#x3D;&#x3D; &#x27;&#x27; || datosGenerales.otro_documento &#x3D;&#x3D; null&quot; placeholder&#x3D;&quot;Número documento&quot;&gt;
+                        &lt;/mat-form-field&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
 
-        &lt;div class&#x3D;&quot;row&quot;&gt;
-            &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
-                &lt;mat-form-field appearance&#x3D;&quot;outline&quot; style&#x3D;&quot;width: 100%;&quot;&gt;
-                    &lt;mat-label&gt;INE&lt;/mat-label&gt;
-                    &lt;input matInput placeholder&#x3D;&quot;Placeholder&quot; [(ngModel)]&#x3D;&quot;datosGenerales.ine&quot;&gt;
-                &lt;/mat-form-field&gt;
-            &lt;/div&gt;
-            &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
-                &lt;mat-form-field appearance&#x3D;&quot;fill&quot; style&#x3D;&quot;width: 100%;&quot;&gt;
-                    &lt;mat-label&gt;Otro Documento:&lt;/mat-label&gt;
-                    &lt;mat-select #otro_documento [(ngModel)]&#x3D;&quot;datosGenerales.otro_documento&quot; (ngModelChange)&#x3D;&quot;otroDocumento()&quot;&gt;
-                        &lt;mat-option value&#x3D;&quot;&quot;&gt;Seleccione...&lt;/mat-option&gt;
-                        &lt;mat-option *ngFor&#x3D;&quot;let documento of documentos&quot; [value]&#x3D;&quot;documento.IDDOCIDENTIF&quot;&gt;
-                            {{ documento.DESCRIPCION }}
-                        &lt;/mat-option&gt;
-                    &lt;/mat-select&gt;
-                &lt;/mat-form-field&gt;
-            &lt;/div&gt;
-            &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
-                &lt;mat-form-field appearance&#x3D;&quot;outline&quot; style&#x3D;&quot;width: 100%;&quot;&gt;
-                    &lt;mat-label&gt;Número Documento&lt;/mat-label&gt;
-                    &lt;input matInput #numero_documento [(ngModel)]&#x3D;&quot;datosGenerales.numero_documento&quot; [disabled]&#x3D;&quot;datosGenerales.otro_documento &#x3D;&#x3D; &#x27;&#x27; || datosGenerales.otro_documento &#x3D;&#x3D; null&quot; placeholder&#x3D;&quot;Número documento&quot;&gt;
-                &lt;/mat-form-field&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
+                &lt;div class&#x3D;&quot;row&quot;&gt;
+                    &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
+                        &lt;mat-form-field appearance&#x3D;&quot;fill&quot; style&#x3D;&quot;width: 100%;&quot;&gt;
+                            &lt;mat-label&gt;Fecha Nacimiento&lt;/mat-label&gt;
+                            &lt;input matInput formControlName&#x3D;&quot;fechaNacimiento&quot; [matDatepicker]&#x3D;&quot;picknacimiento&quot; [(ngModel)]&#x3D;&quot;datosGenerales.fecha_nacimiento&quot;&gt;
+                            &lt;mat-datepicker-toggle matSuffix [for]&#x3D;&quot;picknacimiento&quot;&gt;&lt;/mat-datepicker-toggle&gt;
+                            &lt;mat-datepicker #picknacimiento&gt;&lt;/mat-datepicker&gt;
+                        &lt;/mat-form-field&gt;
+                    &lt;/div&gt;
+                    &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
+                        &lt;mat-form-field appearance&#x3D;&quot;fill&quot; style&#x3D;&quot;width: 100%;&quot;&gt;
+                            &lt;mat-label&gt;Fecha Defunción&lt;/mat-label&gt;
+                            &lt;input matInput formControlName&#x3D;&quot;fechaDefuncion&quot; [matDatepicker]&#x3D;&quot;pickdefuncion&quot; [(ngModel)]&#x3D;&quot;datosGenerales.fecha_defuncion&quot;&gt;
+                            &lt;mat-datepicker-toggle matSuffix [for]&#x3D;&quot;pickdefuncion&quot;&gt;&lt;/mat-datepicker-toggle&gt;
+                            &lt;mat-datepicker #pickdefuncion&gt;&lt;/mat-datepicker&gt;
+                        &lt;/mat-form-field&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
 
-        &lt;div class&#x3D;&quot;row&quot;&gt;
-            &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
-                &lt;mat-form-field appearance&#x3D;&quot;fill&quot; style&#x3D;&quot;width: 100%;&quot;&gt;
-                    &lt;mat-label&gt;Fecha Nacimiento&lt;/mat-label&gt;
-                    &lt;input matInput [matDatepicker]&#x3D;&quot;picknacimiento&quot; [(ngModel)]&#x3D;&quot;datosGenerales.fecha_nacimiento&quot;&gt;
-                    &lt;mat-datepicker-toggle matSuffix [for]&#x3D;&quot;picknacimiento&quot;&gt;&lt;/mat-datepicker-toggle&gt;
-                    &lt;mat-datepicker #picknacimiento&gt;&lt;/mat-datepicker&gt;
-                &lt;/mat-form-field&gt;
-            &lt;/div&gt;
-            &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
-                &lt;mat-form-field appearance&#x3D;&quot;fill&quot; style&#x3D;&quot;width: 100%;&quot;&gt;
-                    &lt;mat-label&gt;Fecha Defunción&lt;/mat-label&gt;
-                    &lt;input matInput [matDatepicker]&#x3D;&quot;pickdefuncion&quot; [(ngModel)]&#x3D;&quot;datosGenerales.fecha_defuncion&quot;&gt;
-                    &lt;mat-datepicker-toggle matSuffix [for]&#x3D;&quot;pickdefuncion&quot;&gt;&lt;/mat-datepicker-toggle&gt;
-                    &lt;mat-datepicker #pickdefuncion&gt;&lt;/mat-datepicker&gt;
-                &lt;/mat-form-field&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-
-        &lt;div class&#x3D;&quot;row&quot;&gt;
-            &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
-                &lt;mat-form-field appearance&#x3D;&quot;outline&quot; style&#x3D;&quot;width: 100%;&quot;&gt;
-                    &lt;mat-label&gt;Celular&lt;/mat-label&gt;
-                    &lt;input matInput placeholder&#x3D;&quot;Placeholder&quot; [(ngModel)]&#x3D;&quot;datosGenerales.celular&quot;&gt;
-                &lt;/mat-form-field&gt;
-            &lt;/div&gt;
-            &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
-                &lt;mat-form-field appearance&#x3D;&quot;outline&quot; style&#x3D;&quot;width: 100%;&quot;&gt;
-                    &lt;mat-label&gt;E-Mail&lt;/mat-label&gt;
-                    &lt;input matInput placeholder&#x3D;&quot;Placeholder&quot; [(ngModel)]&#x3D;&quot;datosGenerales.email&quot;&gt;
-                &lt;/mat-form-field&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-
+                &lt;div class&#x3D;&quot;row&quot;&gt;
+                    &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
+                        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; style&#x3D;&quot;width: 100%;&quot;&gt;
+                            &lt;mat-label&gt;Celular&lt;/mat-label&gt;
+                            &lt;input matInput formControlName&#x3D;&quot;celular&quot; placeholder&#x3D;&quot;Placeholder&quot; [(ngModel)]&#x3D;&quot;datosGenerales.celular&quot;&gt;
+                        &lt;/mat-form-field&gt;
+                    &lt;/div&gt;
+                    &lt;div class&#x3D;&quot;col-md-4&quot;&gt;
+                        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; style&#x3D;&quot;width: 100%;&quot;&gt;
+                            &lt;mat-label&gt;E-Mail&lt;/mat-label&gt;
+                            &lt;input matInput formControlName&#x3D;&quot;email&quot; placeholder&#x3D;&quot;Placeholder&quot; [(ngModel)]&#x3D;&quot;datosGenerales.email&quot;&gt;
+                        &lt;/mat-form-field&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/form&gt;
+        &lt;/ng-container&gt;
+        &lt;ng-container *ngIf&#x3D;&quot;datosGenerales.tipoPersona &#x3D;&#x3D; &#x27;M&#x27;  &amp;&amp; !loading&quot;&gt;
+            &lt;form [formGroup]&#x3D;&quot;moralFormGroup&quot;&gt;
+                &lt;div class&#x3D;&quot;row&quot;&gt;
+                    &lt;mat-form-field class&#x3D;&quot;col-10&quot; appearance&#x3D;&quot;outline&quot;&gt;
+                        &lt;mat-label&gt;Nombre:&lt;/mat-label&gt;
+                        &lt;input matInput formControlName&#x3D;&quot;nombre_moral&quot; [(ngModel)]&#x3D;&quot;datosGenerales.nombre_moral&quot;&gt;
+                        &lt;mat-error *ngIf&#x3D;&quot;moralFormGroup.controls.nombre_moral.errors?.required&quot;&gt;Requerido&lt;/mat-error&gt;
+                    &lt;/mat-form-field&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;row&quot;&gt;
+                    &lt;mat-form-field class&#x3D;&quot;col-5&quot; appearance&#x3D;&quot;outline&quot;&gt;
+                        &lt;mat-label&gt;RFC:&lt;/mat-label&gt;
+                        &lt;input matInput formControlName&#x3D;&quot;rfc&quot; [(ngModel)]&#x3D;&quot;datosGenerales.rfc&quot; pattern&#x3D;&quot;^([A-ZÑ&amp;]{3})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$&quot; [required]&#x3D;&quot;isRequired&quot;&gt;
+                        &lt;mat-error *ngIf&#x3D;&quot;moralFormGroup.controls.rfc.errors?.required&quot;&gt;Requerido&lt;/mat-error&gt;
+                        &lt;mat-error *ngIf&#x3D;&quot;moralFormGroup.controls.rfc.errors?.pattern&quot;&gt;El campo RFC debe contener 3 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.&lt;/mat-error&gt;
+                    &lt;/mat-form-field&gt;
+                    &lt;mat-form-field class&#x3D;&quot;col-5&quot; appearance&#x3D;&quot;outline&quot;&gt;
+                        &lt;mat-label&gt;Act. preponderante:&lt;/mat-label&gt;
+                        &lt;input matInput formControlName&#x3D;&quot;actPreponderante&quot; [(ngModel)]&#x3D;&quot;datosGenerales.actPreponderante&quot;&gt;
+                    &lt;/mat-form-field&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;row&quot;&gt;
+                    &lt;mat-form-field class&#x3D;&quot;col-5&quot; appearance&#x3D;&quot;fill&quot;&gt;
+                        &lt;mat-label&gt;Tipo de persona moral&lt;/mat-label&gt;
+                        &lt;mat-select formControlName&#x3D;&quot;idTipoPersonaMoral&quot;&gt;
+                            &lt;mat-option value&#x3D;&quot;&quot;&gt;&lt;/mat-option&gt;
+                        &lt;/mat-select&gt;
+                    &lt;/mat-form-field&gt;
+                    &lt;mat-form-field class&#x3D;&quot;col-5&quot; appearance&#x3D;&quot;fill&quot;&gt;
+                        &lt;mat-label&gt;Fecha de inicio de operación:&lt;/mat-label&gt;
+                        &lt;input matInput readonly formControlName&#x3D;&quot;fechaInicioOperacion&quot; [matDatepicker]&#x3D;&quot;pickfechaInicioOperacion&quot; [(ngModel)]&#x3D;&quot;datosGenerales.fechaInicioOperacion&quot;&gt;
+                        &lt;mat-datepicker-toggle matSuffix [for]&#x3D;&quot;pickfechaInicioOperacion&quot;&gt;&lt;/mat-datepicker-toggle&gt;
+                        &lt;mat-datepicker #pickfechaInicioOperacion&gt;&lt;/mat-datepicker&gt;
+                    &lt;/mat-form-field&gt;                            
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;row&quot;&gt;
+                    &lt;mat-form-field class&#x3D;&quot;col-5&quot; appearance&#x3D;&quot;fill&quot;&gt;
+                        &lt;mat-label&gt;Motivo del cambio de situación&lt;/mat-label&gt;
+                        &lt;mat-select formControlName&#x3D;&quot;idMotivo&quot; &gt;
+                            &lt;mat-option value&#x3D;&quot;&quot;&gt;&lt;/mat-option&gt;
+                        &lt;/mat-select&gt;
+                    &lt;/mat-form-field&gt;
+                    &lt;mat-form-field class&#x3D;&quot;col-5&quot; appearance&#x3D;&quot;fill&quot;&gt;
+                        &lt;mat-label&gt;Fecha de cambio de situación:&lt;/mat-label&gt;
+                        &lt;input matInput readonly formControlName&#x3D;&quot;fechaCambio&quot; [matDatepicker]&#x3D;&quot;pickfechaCambio&quot; [(ngModel)]&#x3D;&quot;datosGenerales.fechaCambio&quot;&gt;
+                        &lt;mat-datepicker-toggle matSuffix [for]&#x3D;&quot;pickfechaCambio&quot;&gt;&lt;/mat-datepicker-toggle&gt;
+                        &lt;mat-datepicker #pickfechaCambio&gt;&lt;/mat-datepicker&gt;
+                    &lt;/mat-form-field&gt;                            
+                &lt;/div&gt;
+            &lt;/form&gt;
+        &lt;/ng-container&gt;
                 &lt;!-- Historial y Actualizar --&gt;
                 &lt;div class&#x3D;&quot;row&quot;&gt;
                     &lt;div class&#x3D;&quot;col-md-5&quot;&gt;
@@ -4527,9 +5032,16 @@ export interface DataHistorico{
                             &lt;/button&gt;
                         &lt;/div&gt; --&gt;
                     &lt;/div&gt;
-                    &lt;div class&#x3D;&quot;col-md-4 offset-md-3&quot;&gt;
+                    &lt;div class&#x3D;&quot;col-md-4 offset-md-3&quot; *ngIf&#x3D;&quot;actCambioPersona&quot;&gt;
                         &lt;div class&#x3D;&quot;d-flex flex-row-reverse&quot;&gt;
-                            &lt;button mat-stroked-button class&#x3D;&quot;boton-n-representacion&quot; color&#x3D;&quot;primary&quot; aria-label&#x3D;&quot;Guardar&quot; (click)&#x3D;&quot;actualizarDatosGenerales()&quot;&gt;
+                            &lt;button mat-stroked-button class&#x3D;&quot;boton-n-representacion&quot; color&#x3D;&quot;primary&quot; aria-label&#x3D;&quot;Actualizar&quot; (click)&#x3D;&quot;actualizarDatosGenerales()&quot; matTooltip&#x3D;&quot;Actualizar&quot; [disabled]&#x3D;&quot;(datosGenerales.tipoPersona &#x3D;&#x3D; &#x27;F&#x27; ? personaFormGroup.invalid : moralFormGroup.invalid)&quot;&gt;
+                                Actualizar &lt;mat-icon style&#x3D;&quot;display: inherit; width: 15px;&quot;&gt;update&lt;/mat-icon&gt;
+                            &lt;/button&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class&#x3D;&quot;col-md-4 offset-md-3&quot; *ngIf&#x3D;&quot;!actCambioPersona&quot;&gt;
+                        &lt;div class&#x3D;&quot;d-flex flex-row-reverse&quot;&gt;
+                            &lt;button mat-stroked-button class&#x3D;&quot;boton-n-representacion&quot; color&#x3D;&quot;primary&quot; aria-label&#x3D;&quot;Actualizar tipo persona&quot; matTooltip&#x3D;&quot;Actualizar tipo persona&quot; (click)&#x3D;&quot;confirmaCambio()&quot; *ngIf&#x3D;&quot;!loading&quot; [disabled]&#x3D;&quot;(datosGenerales.tipoPersona &#x3D;&#x3D; &#x27;F&#x27; ? personaFormGroup.invalid : moralFormGroup.invalid)&quot;&gt;
                                 Actualizar &lt;mat-icon style&#x3D;&quot;display: inherit; width: 15px;&quot;&gt;update&lt;/mat-icon&gt;
                             &lt;/button&gt;
                         &lt;/div&gt;
@@ -4635,8 +5147,8 @@ export interface DataHistorico{
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="row">    <div class="col-md-8 offset-md-2">        <!-- Datos del Notario -->        <h3 style="margin: 0 0 15px 0;" class="verde-cdmx">Datos del Notario:</h3>        <div class="row">            <div class="col-md-4">                <mat-form-field appearance="outline" style="width: 100%;">                    <mat-label>No. Notario</mat-label>                    <input matInput placeholder="Placeholder" [(ngModel)]="datosNotario.no_notario">                </mat-form-field>            </div>            <div class="col-md-4">                <mat-form-field appearance="fill" style="width: 100%;">                    <mat-label>Estado:</mat-label>                    <mat-select #estado [(ngModel)]="datosNotario.estado">                        <mat-option value="">Seleccione ...</mat-option>                        <mat-option *ngFor="let estado of estados" [value]="estado.CODESTADO">                            {{ estado.ESTADO }}                        </mat-option>                    </mat-select>                </mat-form-field>            </div>                    <!-- Actualizar -->                    <div class="col-md-4" style="margin-top: 10px;">                        <div class="d-flex flex-row-reverse" style="text-align: center;">                            <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" style="margin: auto;" (click)="actualizarDatosNotario()">                                Actualizar <mat-icon style="display: inherit; width: 15px;">update</mat-icon>                            </button>                        </div>                    </div>        </div>        <!-- Datos Generales -->        <h3 style="margin: 30px 0 15px 0;" class="verde-cdmx">Datos Generales:</h3>        <div class="row">            <div class="col-md-4">                <mat-form-field appearance="outline" style="width: 100%;">                    <mat-label>Nombre</mat-label>                    <input matInput placeholder="Placeholder" [(ngModel)]="datosGenerales.nombre">                </mat-form-field>            </div>            <div class="col-md-4">                <mat-form-field appearance="outline" style="width: 100%;">                    <mat-label>Apellido Paterno</mat-label>                    <input matInput placeholder="Placeholder" [(ngModel)]="datosGenerales.apellido_paterno">                </mat-form-field>            </div>            <div class="col-md-4">                <mat-form-field appearance="outline" style="width: 100%;">                    <mat-label>Apellido Materno</mat-label>                    <input matInput placeholder="Placeholder" [(ngModel)]="datosGenerales.apellido_materno">                </mat-form-field>            </div>         </div>        <div class="row">            <div class="col-md-4">                <mat-form-field appearance="outline" style="width: 100%;">                    <mat-label>RFC*</mat-label>                    <input matInput placeholder="Placeholder" [(ngModel)]="datosGenerales.rfc">                </mat-form-field>            </div>            <div class="col-md-4">                <mat-form-field appearance="outline" style="width: 100%;">                    <mat-label>CURP*</mat-label>                    <input matInput placeholder="Placeholder" [(ngModel)]="datosGenerales.curp">                </mat-form-field>            </div>        </div>        <div class="row">            <div class="col-md-4">                <mat-form-field appearance="outline" style="width: 100%;">                    <mat-label>INE</mat-label>                    <input matInput placeholder="Placeholder" [(ngModel)]="datosGenerales.ine">                </mat-form-field>            </div>            <div class="col-md-4">                <mat-form-field appearance="fill" style="width: 100%;">                    <mat-label>Otro Documento:</mat-label>                    <mat-select #otro_documento [(ngModel)]="datosGenerales.otro_documento" (ngModelChange)="otroDocumento()">                        <mat-option value="">Seleccione...</mat-option>                        <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF">                            {{ documento.DESCRIPCION }}                        </mat-option>                    </mat-select>                </mat-form-field>            </div>            <div class="col-md-4">                <mat-form-field appearance="outline" style="width: 100%;">                    <mat-label>Número Documento</mat-label>                    <input matInput #numero_documento [(ngModel)]="datosGenerales.numero_documento" [disabled]="datosGenerales.otro_documento == \'\' || datosGenerales.otro_documento == null" placeholder="Número documento">                </mat-form-field>            </div>        </div>        <div class="row">            <div class="col-md-4">                <mat-form-field appearance="fill" style="width: 100%;">                    <mat-label>Fecha Nacimiento</mat-label>                    <input matInput [matDatepicker]="picknacimiento" [(ngModel)]="datosGenerales.fecha_nacimiento">                    <mat-datepicker-toggle matSuffix [for]="picknacimiento"></mat-datepicker-toggle>                    <mat-datepicker #picknacimiento></mat-datepicker>                </mat-form-field>            </div>            <div class="col-md-4">                <mat-form-field appearance="fill" style="width: 100%;">                    <mat-label>Fecha Defunción</mat-label>                    <input matInput [matDatepicker]="pickdefuncion" [(ngModel)]="datosGenerales.fecha_defuncion">                    <mat-datepicker-toggle matSuffix [for]="pickdefuncion"></mat-datepicker-toggle>                    <mat-datepicker #pickdefuncion></mat-datepicker>                </mat-form-field>            </div>        </div>        <div class="row">            <div class="col-md-4">                <mat-form-field appearance="outline" style="width: 100%;">                    <mat-label>Celular</mat-label>                    <input matInput placeholder="Placeholder" [(ngModel)]="datosGenerales.celular">                </mat-form-field>            </div>            <div class="col-md-4">                <mat-form-field appearance="outline" style="width: 100%;">                    <mat-label>E-Mail</mat-label>                    <input matInput placeholder="Placeholder" [(ngModel)]="datosGenerales.email">                </mat-form-field>            </div>        </div>                <!-- Historial y Actualizar -->                <div class="row">                    <div class="col-md-5">                        <!-- <div class="d-flex flex-row-reverse" style="float: left;">                            <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Historial" style="margin: auto; font-size: 11px;" (click)="viewHistoricoDatosPersonales(this.idNotario)">                                Historial Datos Generales <mat-icon style="display: inherit; width: 11px;">list</mat-icon>                            </button>                        </div> -->                    </div>                    <div class="col-md-4 offset-md-3">                        <div class="d-flex flex-row-reverse">                            <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" (click)="actualizarDatosGenerales()">                                Actualizar <mat-icon style="display: inherit; width: 15px;">update</mat-icon>                            </button>                        </div>                    </div>                </div>        <!-- Datos de Contacto -->        <h3 class="verde-cdmx" style="margin: 45px 0 15px 0;">Datos de contacto:</h3>        <div class="row" style="margin-bottom: 15px;">            <div class="col-md-4">                <button mat-stroked-button aria-label="Domicilios" style="background-color: #00A447; color: #FFF!important;" (click)="addDomicilio()">                    Domicilios <mat-icon style="display: inherit; width: 15px;">add</mat-icon>                </button>            </div>        </div>        <div class="row">            <div class="col-md-12">                <ng-container>                    <div style="padding: 30px; text-align: center;" *ngIf="loadingDomicilios">                        <mat-spinner style="margin:0 auto;"></mat-spinner>                        <p>Cargando...</p>                    </div>                    <div class="alert alert-info" *ngIf="!loadingDomicilios && dataSource1.length == 0">                        No hay direcciones asociadas.                    </div>                     <table mat-table [dataSource]="dataSource1" *ngIf="!loadingDomicilios && dataSource1.length > 0" width="100%">                                                <ng-container matColumnDef="direccion">                            <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="70%"> Dirección </th>                            <td mat-cell *matCellDef="let element">                                {{ element.ABREVIATURAVIA }}, {{ element.VIA }} {{ element.NUMEROEXTERIOR }}, Col: {{ element.COLONIA}}                                C.P. {{ element.CODIGOPOSTAL}}, {{ element.DELEGACION}} ({{ element.ESTADO }})                            </td>                        </ng-container>                        <ng-container matColumnDef="historial">                            <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="15%"> Historial </th>                            <td mat-cell *matCellDef="let element">                                <button mat-icon-button type="button" color="primary" aria-label="Historial" matTooltip="Historial" (click)="viewHistoricoDomicilio(element.IDDIRECCION)">                                    <mat-icon>search</mat-icon>                                </button>                            </td>                        </ng-container>                        <ng-container matColumnDef="editar">                            <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="15%"> Editar </th>                            <td mat-cell *matCellDef="let element">                                <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar" (click)="editDomicilio(element.IDDIRECCION)">                                    <mat-icon>edit</mat-icon>                                </button>                            </td>                        </ng-container>                        <tr mat-header-row *matHeaderRowDef="displayedColumnsDom"></tr>                        <tr mat-row *matRowDef="let row; columns: displayedColumnsDom;"></tr>                    </table>                    <mat-paginator #paginator [length]="total1" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado1($event)">                    </mat-paginator>                </ng-container>            </div>        </div>    </div></div></div>'
-    var COMPONENTS = [{'name': 'AltaContribuyenteComponent', 'selector': 'app-alta-contribuyente'},{'name': 'AltaNotarioComponent', 'selector': 'app-alta-notario'},{'name': 'AltaPeritosComponent', 'selector': 'app-alta-peritos'},{'name': 'AltaSociedadComponent', 'selector': 'app-alta-sociedad'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ConsultaContribuyenteComponent', 'selector': 'app-consulta-contribuyente'},{'name': 'ConsultaNotarioComponent', 'selector': 'app-consulta-notario'},{'name': 'ConsultaPeritosComponent', 'selector': 'app-consulta-peritos'},{'name': 'ConsultaSociedadComponent', 'selector': 'app-consulta-sociedad'},{'name': 'DialogAltaBusca', 'selector': 'app-dialog-buscaPersona'},{'name': 'DialogAsentamiento', 'selector': 'app-dialog-asentamiento'},{'name': 'DialogAsentamientoAlta', 'selector': 'app-dialog-asentamiento'},{'name': 'DialogAsentamientoContribuyente', 'selector': 'app-dialog-asentamiento-contribuyente'},{'name': 'DialogAsentamientoNotario', 'selector': 'app-dialog-asentamiento-notario'},{'name': 'DialogAsentamientoSociedad', 'selector': 'app-dialog-asentamiento-sociedad'},{'name': 'DialogBuscaPerito', 'selector': 'app-dialog-buscaPerito'},{'name': 'DialogBuscarNotarioAlta', 'selector': 'app-dialog-buscar-notario-alta'},{'name': 'DialogBuscaSociedad', 'selector': 'app-dialog-buscaSociedad'},{'name': 'DialogCiudad', 'selector': 'app-dialog-ciudad'},{'name': 'DialogCiudadAlta', 'selector': 'app-dialog-ciudad'},{'name': 'DialogCiudadContribuyente', 'selector': 'app-dialog-ciudad-contribuyente'},{'name': 'DialogCiudadNotario', 'selector': 'app-dialog-ciudad-notario'},{'name': 'DialogCiudadSociedad', 'selector': 'app-dialog-ciudad-sociedad'},{'name': 'DialogDocumentoAltaC', 'selector': 'app-dialog-documento'},{'name': 'DialogDocumentoC', 'selector': 'app-dialog-documento'},{'name': 'DialogDocumentoPerito', 'selector': 'app-dialog-documento'},{'name': 'DialogDocumentoSociedad', 'selector': 'app-dialog-documento'},{'name': 'DialogDomicilioAlta', 'selector': 'app-dialog-domicilio'},{'name': 'DialogDomicilioContribuyente', 'selector': 'app-dialog-domicilio-contribuyente'},{'name': 'DialogDomicilioHistoricoContribuyente', 'selector': 'app-dialog-domicilio-historico-contribuyente'},{'name': 'DialogDomicilioHistoricoEspecificoContribuyente', 'selector': 'app-dialog-domicilio-historico-especifico-contribuyente'},{'name': 'DialogDomicilioHistoricoEspecificoNotario', 'selector': 'app-dialog-domicilio-historico-especifico-notario'},{'name': 'DialogDomicilioHistoricoEspecificoPerito', 'selector': 'app-dialog-domicilio-historico-especifico-perito'},{'name': 'DialogDomicilioHistoricoEspecificoSociedad', 'selector': 'app-dialog-domicilio-historico-especifico-sociedad'},{'name': 'DialogDomicilioHistoricoNotario', 'selector': 'app-dialog-domicilio-historico-notario'},{'name': 'DialogDomicilioHistoricoPerito', 'selector': 'app-dialog-domicilio-historico-perito'},{'name': 'DialogDomicilioHistoricoSociedad', 'selector': 'app-dialog-domicilio-historico-sociedad'},{'name': 'DialogDomicilioPerito', 'selector': 'app-dialog-domicilio'},{'name': 'DialogDomiciliosNotario', 'selector': 'app-dialog-domicilios-notario'},{'name': 'DialogDomicilioSociedad', 'selector': 'app-dialog-domicilio-sociedad'},{'name': 'DialogDuplicadosComponent', 'selector': 'app-dialog-duplicados'},{'name': 'DialogHistorialRep', 'selector': 'app-dialog-historialRep'},{'name': 'DialogHistorialRepC', 'selector': 'app-dialog-historialRep'},{'name': 'DialogHistorialRepDetalle', 'selector': 'app-dialog-historialRepDetalle'},{'name': 'DialogHistorialRepDetalleC', 'selector': 'app-dialog-historialRepDetalle'},{'name': 'DialogHistorialRepDetalleS', 'selector': 'app-dialog-historialRepDetalle'},{'name': 'DialogHistorialRepS', 'selector': 'app-dialog-historialRep'},{'name': 'DialogMunicipios', 'selector': 'app-dialog-municipios'},{'name': 'DialogMunicipiosAlta', 'selector': 'app-dialog-municipios'},{'name': 'DialogMunicipiosContribuyente', 'selector': 'app-dialog-municipios-contribuyente'},{'name': 'DialogMunicipiosNotario', 'selector': 'app-dialog-municipios-notario'},{'name': 'DialogMunicipiosSociedad', 'selector': 'app-dialog-municipios-sociedad'},{'name': 'DialogNotarioAltaC', 'selector': 'app-dialog-notario'},{'name': 'DialogNotarioC', 'selector': 'app-dialog-notario'},{'name': 'DialogNotarioPeritos', 'selector': 'app-dialog-notario'},{'name': 'DialogNotarioSociedad', 'selector': 'app-dialog-notario'},{'name': 'DialogPersonaAltaC', 'selector': 'app-dialog-persona'},{'name': 'DialogPersonaC', 'selector': 'app-dialog-persona'},{'name': 'DialogPersonalesHistoricoContribuyente', 'selector': 'app-dialog-personales-historico-contribuyente'},{'name': 'DialogPersonalesHistoricoEspecificoContribuyente', 'selector': 'app-dialog-personales-historico-especifico-contribuyente'},{'name': 'DialogPersonalesHistoricoEspecificoNotario', 'selector': 'app-dialog-personales-historico-especifico-notario'},{'name': 'DialogPersonalesHistoricoNotario', 'selector': 'app-dialog-personales-historico-notario'},{'name': 'DialogPersonaPeritos', 'selector': 'app-dialog-persona'},{'name': 'DialogPersonaSociedad', 'selector': 'app-dialog-persona'},{'name': 'DialogRepresentacionAltaC', 'selector': 'app-dialog-representacion'},{'name': 'DialogRepresentacionC', 'selector': 'app-dialog-representacion'},{'name': 'DialogRepresentacionPeritos', 'selector': 'app-dialog-representacion'},{'name': 'DialogRepresentacionSociedad', 'selector': 'app-dialog-representacion'},{'name': 'DialogRepresentadoAltaC', 'selector': 'app-dialog-representado'},{'name': 'DialogRepresentadoC', 'selector': 'app-dialog-representado'},{'name': 'DialogRepresentadoPeritos', 'selector': 'app-dialog-representado'},{'name': 'DialogRepresentadoSociedad', 'selector': 'app-dialog-representado'},{'name': 'DialogSociedad', 'selector': 'app-dialog-alta-sociedad'},{'name': 'DialogSociedadAsociada', 'selector': 'app-dialog-sociedadAsociada'},{'name': 'DialogSociedadPerito', 'selector': 'app-dialog-buscaPerito'},{'name': 'DialogVia', 'selector': 'app-dialog-via'},{'name': 'DialogViaAlta', 'selector': 'app-dialog-via'},{'name': 'DialogViaContribuyente', 'selector': 'app-dialog-via-contribuyente'},{'name': 'DialogViaNotario', 'selector': 'app-dialog-via-notario'},{'name': 'DialogViaSociedad', 'selector': 'app-dialog-via-sociedad'},{'name': 'EdicionContribuyenteComponent', 'selector': 'app-edicion-contribuyente'},{'name': 'EdicionNotarioComponent', 'selector': 'app-edicion-notario'},{'name': 'EdicionPeritosComponent', 'selector': 'app-edicion-peritos'},{'name': 'EdicionSociedadComponent', 'selector': 'app-edicion-sociedad'},{'name': 'EditarContribuyenteComponent', 'selector': 'app-editar-contribuyente'},{'name': 'EditarNotarioComponent', 'selector': 'app-editar-notario'},{'name': 'EditarPeritosComponent', 'selector': 'app-editar-peritos'},{'name': 'EditarSociedadComponent', 'selector': 'app-editar-sociedad'},{'name': 'FooterComponent', 'selector': 'app-footer'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LoginFirmaComponent', 'selector': 'app-login-firma'},{'name': 'MainComponent', 'selector': 'app-main'},{'name': 'MenuComponent', 'selector': 'app-menu'},{'name': 'VerContribuyenteComponent', 'selector': 'app-ver-contribuyente'},{'name': 'VerHistoricoDomicilioNotarioComponent', 'selector': 'app-ver-historico-domicilio-notario'},{'name': 'VerNotarioComponent', 'selector': 'app-ver-notario'},{'name': 'VerPeritosComponent', 'selector': 'app-ver-peritos'},{'name': 'VerSociedadComponent', 'selector': 'app-ver-sociedad'}];
+        var COMPONENT_TEMPLATE = '<div><div class="row">    <div class="col-md-8 offset-md-2">        <!-- Datos del Notario -->        <h3 style="margin: 0 0 15px 0;" class="verde-cdmx">Datos del Notario:</h3>        <div style="padding: 30px; text-align: center;" *ngIf="loading">            <mat-spinner style="margin:0 auto;"></mat-spinner>            <p>Cargando...</p>        </div>        <br>        <div class="row">            <div *ngIf="!loading" class="col-md-12">                <mat-form-field>                    <mat-label>Tipo de persona:</mat-label>                    <mat-select [(ngModel)]="datosGenerales.tipoPersona" (selectionChange)="actualizaPersona($event.value)">                        <mat-option value="F">Fisica</mat-option>                        <mat-option value="M">Moral</mat-option>                    </mat-select>                </mat-form-field>            </div><br><br>            <div *ngIf="datosGenerales.tipoPersona == \'F\' && !loading" class="col-md-4">                <mat-form-field appearance="outline" style="width: 100%;">                    <mat-label>No. Notario</mat-label>                    <input matInput placeholder="Placeholder" [(ngModel)]="datosNotario.no_notario">                </mat-form-field>            </div>            <div *ngIf="datosGenerales.tipoPersona == \'F\' && !loading" class="col-md-4">                <mat-form-field appearance="fill" style="width: 100%;">                    <mat-label>Estado:</mat-label>                    <mat-select #estado [(ngModel)]="datosNotario.estado">                        <mat-option value="">Seleccione ...</mat-option>                        <mat-option *ngFor="let estado of estados" [value]="estado.CODESTADO">                            {{ estado.ESTADO }}                        </mat-option>                    </mat-select>                </mat-form-field>            </div>                <!-- Actualizar -->                <div class="col-md-4" style="margin-top: 10px;" *ngIf="datosGenerales.tipoPersona == \'F\' && !loading">                    <div class="d-flex flex-row-reverse" style="text-align: center;">                        <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" style="margin: auto;" (click)="actualizarDatosNotario()">                            Actualizar <mat-icon style="display: inherit; width: 15px;">update</mat-icon>                        </button>                    </div>                </div>        </div>        <!-- Datos Generales -->        <h3 style="margin: 30px 0 15px 0;" class="verde-cdmx">Datos Generales:</h3>        <ng-container *ngIf="datosGenerales.tipoPersona == \'F\' && !loading">            <form [formGroup]="personaFormGroup">                <div class="row">                    <div class="col-md-4">                        <mat-form-field appearance="outline" style="width: 100%;">                            <mat-label>Nombre</mat-label>                            <input matInput formControlName="nombre" placeholder="Placeholder" [(ngModel)]="datosGenerales.nombre">                            <mat-error *ngIf="personaFormGroup.controls.nombre.errors?.required">Requerido</mat-error>                        </mat-form-field>                    </div>                    <div class="col-md-4">                        <mat-form-field appearance="outline" style="width: 100%;">                            <mat-label>Apellido Paterno</mat-label>                            <input matInput formControlName="apellidopaterno" placeholder="Placeholder" [(ngModel)]="datosGenerales.apellido_paterno">                            <mat-error *ngIf="personaFormGroup.controls.apellidopaterno.errors?.required">Requerido</mat-error>                        </mat-form-field>                    </div>                    <div class="col-md-4">                        <mat-form-field appearance="outline" style="width: 100%;">                            <mat-label>Apellido Materno</mat-label>                            <input matInput formControlName="apellidomaterno" placeholder="Placeholder" [(ngModel)]="datosGenerales.apellido_materno">                            <mat-error *ngIf="personaFormGroup.controls.apellidomaterno.errors?.required">Requerido</mat-error>                        </mat-form-field>                    </div>                 </div>                <div class="row">                    <div class="col-md-4">                        <mat-form-field appearance="outline" style="width: 100%;">                            <mat-label>RFC*</mat-label>                            <input matInput formControlName="rfc" placeholder="Placeholder" [(ngModel)]="datosGenerales.rfc" pattern="^([A-Z,Ñ,&]{4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})$">                            <mat-error *ngIf="personaFormGroup.controls.rfc.errors?.required">Requerido</mat-error>                            <mat-error *ngIf="personaFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 4 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>                        </mat-form-field>                    </div>                    <div class="col-md-4">                        <mat-form-field appearance="outline" style="width: 100%;">                            <mat-label>CURP*</mat-label>                            <input matInput formControlName="curp" placeholder="Placeholder" [(ngModel)]="datosGenerales.curp">                            <mat-error *ngIf="personaFormGroup.controls.curp.errors?.required">Requerido</mat-error>                        </mat-form-field>                    </div>                </div>                <div class="row">                    <div class="col-md-4">                        <mat-form-field appearance="outline" style="width: 100%;">                            <mat-label>INE</mat-label>                            <input matInput formControlName="ine" placeholder="Placeholder" [(ngModel)]="datosGenerales.ine">                            <mat-error *ngIf="personaFormGroup.controls.ine.errors?.required">Requerido</mat-error>                        </mat-form-field>                    </div>                    <div class="col-md-4">                        <mat-form-field appearance="fill" style="width: 100%;">                            <mat-label>Otro Documento:</mat-label>                            <mat-select #otro_documento formControlName="identificacion" [(ngModel)]="datosGenerales.otro_documento" (ngModelChange)="otroDocumento()">                                <mat-option value="">Seleccione...</mat-option>                                <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF">                                    {{ documento.DESCRIPCION }}                                </mat-option>                            </mat-select>                        </mat-form-field>                    </div>                    <div class="col-md-4">                        <mat-form-field appearance="outline" style="width: 100%;">                            <mat-label>Número Documento</mat-label>                            <input matInput formControlName="idedato" #numero_documento [(ngModel)]="datosGenerales.numero_documento" [disabled]="datosGenerales.otro_documento == \'\' || datosGenerales.otro_documento == null" placeholder="Número documento">                        </mat-form-field>                    </div>                </div>                <div class="row">                    <div class="col-md-4">                        <mat-form-field appearance="fill" style="width: 100%;">                            <mat-label>Fecha Nacimiento</mat-label>                            <input matInput formControlName="fechaNacimiento" [matDatepicker]="picknacimiento" [(ngModel)]="datosGenerales.fecha_nacimiento">                            <mat-datepicker-toggle matSuffix [for]="picknacimiento"></mat-datepicker-toggle>                            <mat-datepicker #picknacimiento></mat-datepicker>                        </mat-form-field>                    </div>                    <div class="col-md-4">                        <mat-form-field appearance="fill" style="width: 100%;">                            <mat-label>Fecha Defunción</mat-label>                            <input matInput formControlName="fechaDefuncion" [matDatepicker]="pickdefuncion" [(ngModel)]="datosGenerales.fecha_defuncion">                            <mat-datepicker-toggle matSuffix [for]="pickdefuncion"></mat-datepicker-toggle>                            <mat-datepicker #pickdefuncion></mat-datepicker>                        </mat-form-field>                    </div>                </div>                <div class="row">                    <div class="col-md-4">                        <mat-form-field appearance="outline" style="width: 100%;">                            <mat-label>Celular</mat-label>                            <input matInput formControlName="celular" placeholder="Placeholder" [(ngModel)]="datosGenerales.celular">                        </mat-form-field>                    </div>                    <div class="col-md-4">                        <mat-form-field appearance="outline" style="width: 100%;">                            <mat-label>E-Mail</mat-label>                            <input matInput formControlName="email" placeholder="Placeholder" [(ngModel)]="datosGenerales.email">                        </mat-form-field>                    </div>                </div>            </form>        </ng-container>        <ng-container *ngIf="datosGenerales.tipoPersona == \'M\'  && !loading">            <form [formGroup]="moralFormGroup">                <div class="row">                    <mat-form-field class="col-10" appearance="outline">                        <mat-label>Nombre:</mat-label>                        <input matInput formControlName="nombre_moral" [(ngModel)]="datosGenerales.nombre_moral">                        <mat-error *ngIf="moralFormGroup.controls.nombre_moral.errors?.required">Requerido</mat-error>                    </mat-form-field>                </div>                <div class="row">                    <mat-form-field class="col-5" appearance="outline">                        <mat-label>RFC:</mat-label>                        <input matInput formControlName="rfc" [(ngModel)]="datosGenerales.rfc" pattern="^([A-ZÑ&]{3})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" [required]="isRequired">                        <mat-error *ngIf="moralFormGroup.controls.rfc.errors?.required">Requerido</mat-error>                        <mat-error *ngIf="moralFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 3 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>                    </mat-form-field>                    <mat-form-field class="col-5" appearance="outline">                        <mat-label>Act. preponderante:</mat-label>                        <input matInput formControlName="actPreponderante" [(ngModel)]="datosGenerales.actPreponderante">                    </mat-form-field>                </div>                <div class="row">                    <mat-form-field class="col-5" appearance="fill">                        <mat-label>Tipo de persona moral</mat-label>                        <mat-select formControlName="idTipoPersonaMoral">                            <mat-option value=""></mat-option>                        </mat-select>                    </mat-form-field>                    <mat-form-field class="col-5" appearance="fill">                        <mat-label>Fecha de inicio de operación:</mat-label>                        <input matInput readonly formControlName="fechaInicioOperacion" [matDatepicker]="pickfechaInicioOperacion" [(ngModel)]="datosGenerales.fechaInicioOperacion">                        <mat-datepicker-toggle matSuffix [for]="pickfechaInicioOperacion"></mat-datepicker-toggle>                        <mat-datepicker #pickfechaInicioOperacion></mat-datepicker>                    </mat-form-field>                                            </div>                <div class="row">                    <mat-form-field class="col-5" appearance="fill">                        <mat-label>Motivo del cambio de situación</mat-label>                        <mat-select formControlName="idMotivo" >                            <mat-option value=""></mat-option>                        </mat-select>                    </mat-form-field>                    <mat-form-field class="col-5" appearance="fill">                        <mat-label>Fecha de cambio de situación:</mat-label>                        <input matInput readonly formControlName="fechaCambio" [matDatepicker]="pickfechaCambio" [(ngModel)]="datosGenerales.fechaCambio">                        <mat-datepicker-toggle matSuffix [for]="pickfechaCambio"></mat-datepicker-toggle>                        <mat-datepicker #pickfechaCambio></mat-datepicker>                    </mat-form-field>                                            </div>            </form>        </ng-container>                <!-- Historial y Actualizar -->                <div class="row">                    <div class="col-md-5">                        <!-- <div class="d-flex flex-row-reverse" style="float: left;">                            <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Historial" style="margin: auto; font-size: 11px;" (click)="viewHistoricoDatosPersonales(this.idNotario)">                                Historial Datos Generales <mat-icon style="display: inherit; width: 11px;">list</mat-icon>                            </button>                        </div> -->                    </div>                    <div class="col-md-4 offset-md-3" *ngIf="actCambioPersona">                        <div class="d-flex flex-row-reverse">                            <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Actualizar" (click)="actualizarDatosGenerales()" matTooltip="Actualizar" [disabled]="(datosGenerales.tipoPersona == \'F\' ? personaFormGroup.invalid : moralFormGroup.invalid)">                                Actualizar <mat-icon style="display: inherit; width: 15px;">update</mat-icon>                            </button>                        </div>                    </div>                    <div class="col-md-4 offset-md-3" *ngIf="!actCambioPersona">                        <div class="d-flex flex-row-reverse">                            <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Actualizar tipo persona" matTooltip="Actualizar tipo persona" (click)="confirmaCambio()" *ngIf="!loading" [disabled]="(datosGenerales.tipoPersona == \'F\' ? personaFormGroup.invalid : moralFormGroup.invalid)">                                Actualizar <mat-icon style="display: inherit; width: 15px;">update</mat-icon>                            </button>                        </div>                    </div>                </div>        <!-- Datos de Contacto -->        <h3 class="verde-cdmx" style="margin: 45px 0 15px 0;">Datos de contacto:</h3>        <div class="row" style="margin-bottom: 15px;">            <div class="col-md-4">                <button mat-stroked-button aria-label="Domicilios" style="background-color: #00A447; color: #FFF!important;" (click)="addDomicilio()">                    Domicilios <mat-icon style="display: inherit; width: 15px;">add</mat-icon>                </button>            </div>        </div>        <div class="row">            <div class="col-md-12">                <ng-container>                    <div style="padding: 30px; text-align: center;" *ngIf="loadingDomicilios">                        <mat-spinner style="margin:0 auto;"></mat-spinner>                        <p>Cargando...</p>                    </div>                    <div class="alert alert-info" *ngIf="!loadingDomicilios && dataSource1.length == 0">                        No hay direcciones asociadas.                    </div>                     <table mat-table [dataSource]="dataSource1" *ngIf="!loadingDomicilios && dataSource1.length > 0" width="100%">                                                <ng-container matColumnDef="direccion">                            <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="70%"> Dirección </th>                            <td mat-cell *matCellDef="let element">                                {{ element.ABREVIATURAVIA }}, {{ element.VIA }} {{ element.NUMEROEXTERIOR }}, Col: {{ element.COLONIA}}                                C.P. {{ element.CODIGOPOSTAL}}, {{ element.DELEGACION}} ({{ element.ESTADO }})                            </td>                        </ng-container>                        <ng-container matColumnDef="historial">                            <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="15%"> Historial </th>                            <td mat-cell *matCellDef="let element">                                <button mat-icon-button type="button" color="primary" aria-label="Historial" matTooltip="Historial" (click)="viewHistoricoDomicilio(element.IDDIRECCION)">                                    <mat-icon>search</mat-icon>                                </button>                            </td>                        </ng-container>                        <ng-container matColumnDef="editar">                            <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="15%"> Editar </th>                            <td mat-cell *matCellDef="let element">                                <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar" (click)="editDomicilio(element.IDDIRECCION)">                                    <mat-icon>edit</mat-icon>                                </button>                            </td>                        </ng-container>                        <tr mat-header-row *matHeaderRowDef="displayedColumnsDom"></tr>                        <tr mat-row *matRowDef="let row; columns: displayedColumnsDom;"></tr>                    </table>                    <mat-paginator #paginator [length]="total1" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado1($event)">                    </mat-paginator>                </ng-container>            </div>        </div>    </div></div></div>'
+    var COMPONENTS = [{'name': 'AltaContribuyenteComponent', 'selector': 'app-alta-contribuyente'},{'name': 'AltaNotarioComponent', 'selector': 'app-alta-notario'},{'name': 'AltaPeritosComponent', 'selector': 'app-alta-peritos'},{'name': 'AltaSociedadComponent', 'selector': 'app-alta-sociedad'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ConsultaContribuyenteComponent', 'selector': 'app-consulta-contribuyente'},{'name': 'ConsultaNotarioComponent', 'selector': 'app-consulta-notario'},{'name': 'ConsultaPeritosComponent', 'selector': 'app-consulta-peritos'},{'name': 'ConsultaSociedadComponent', 'selector': 'app-consulta-sociedad'},{'name': 'DialogAltaBusca', 'selector': 'app-dialog-buscaPersona'},{'name': 'DialogAsentamiento', 'selector': 'app-dialog-asentamiento'},{'name': 'DialogAsentamientoAlta', 'selector': 'app-dialog-asentamiento'},{'name': 'DialogAsentamientoContribuyente', 'selector': 'app-dialog-asentamiento-contribuyente'},{'name': 'DialogAsentamientoNotario', 'selector': 'app-dialog-asentamiento-notario'},{'name': 'DialogAsentamientoSociedad', 'selector': 'app-dialog-asentamiento-sociedad'},{'name': 'DialogBuscaPerito', 'selector': 'app-dialog-buscaPerito'},{'name': 'DialogBuscarNotarioAlta', 'selector': 'app-dialog-buscar-notario-alta'},{'name': 'DialogBuscaSociedad', 'selector': 'app-dialog-buscaSociedad'},{'name': 'DialogCiudad', 'selector': 'app-dialog-ciudad'},{'name': 'DialogCiudadAlta', 'selector': 'app-dialog-ciudad'},{'name': 'DialogCiudadContribuyente', 'selector': 'app-dialog-ciudad-contribuyente'},{'name': 'DialogCiudadNotario', 'selector': 'app-dialog-ciudad-notario'},{'name': 'DialogCiudadSociedad', 'selector': 'app-dialog-ciudad-sociedad'},{'name': 'DialogConfirmacionComponent', 'selector': 'app-dialog-confirmacion'},{'name': 'DialogDocumentoAltaC', 'selector': 'app-dialog-documento'},{'name': 'DialogDocumentoC', 'selector': 'app-dialog-documento'},{'name': 'DialogDocumentoPerito', 'selector': 'app-dialog-documento'},{'name': 'DialogDocumentoSociedad', 'selector': 'app-dialog-documento'},{'name': 'DialogDomicilioAlta', 'selector': 'app-dialog-domicilio'},{'name': 'DialogDomicilioContribuyente', 'selector': 'app-dialog-domicilio-contribuyente'},{'name': 'DialogDomicilioHistoricoContribuyente', 'selector': 'app-dialog-domicilio-historico-contribuyente'},{'name': 'DialogDomicilioHistoricoEspecificoContribuyente', 'selector': 'app-dialog-domicilio-historico-especifico-contribuyente'},{'name': 'DialogDomicilioHistoricoEspecificoNotario', 'selector': 'app-dialog-domicilio-historico-especifico-notario'},{'name': 'DialogDomicilioHistoricoEspecificoPerito', 'selector': 'app-dialog-domicilio-historico-especifico-perito'},{'name': 'DialogDomicilioHistoricoEspecificoSociedad', 'selector': 'app-dialog-domicilio-historico-especifico-sociedad'},{'name': 'DialogDomicilioHistoricoNotario', 'selector': 'app-dialog-domicilio-historico-notario'},{'name': 'DialogDomicilioHistoricoPerito', 'selector': 'app-dialog-domicilio-historico-perito'},{'name': 'DialogDomicilioHistoricoSociedad', 'selector': 'app-dialog-domicilio-historico-sociedad'},{'name': 'DialogDomicilioPerito', 'selector': 'app-dialog-domicilio'},{'name': 'DialogDomiciliosNotario', 'selector': 'app-dialog-domicilios-notario'},{'name': 'DialogDomicilioSociedad', 'selector': 'app-dialog-domicilio-sociedad'},{'name': 'DialogDuplicadosComponent', 'selector': 'app-dialog-duplicados'},{'name': 'DialogHistorialRep', 'selector': 'app-dialog-historialRep'},{'name': 'DialogHistorialRepC', 'selector': 'app-dialog-historialRep'},{'name': 'DialogHistorialRepDetalle', 'selector': 'app-dialog-historialRepDetalle'},{'name': 'DialogHistorialRepDetalleC', 'selector': 'app-dialog-historialRepDetalle'},{'name': 'DialogHistorialRepDetalleS', 'selector': 'app-dialog-historialRepDetalle'},{'name': 'DialogHistorialRepS', 'selector': 'app-dialog-historialRep'},{'name': 'DialogMunicipios', 'selector': 'app-dialog-municipios'},{'name': 'DialogMunicipiosAlta', 'selector': 'app-dialog-municipios'},{'name': 'DialogMunicipiosContribuyente', 'selector': 'app-dialog-municipios-contribuyente'},{'name': 'DialogMunicipiosNotario', 'selector': 'app-dialog-municipios-notario'},{'name': 'DialogMunicipiosSociedad', 'selector': 'app-dialog-municipios-sociedad'},{'name': 'DialogNotarioAltaC', 'selector': 'app-dialog-notario'},{'name': 'DialogNotarioC', 'selector': 'app-dialog-notario'},{'name': 'DialogNotarioPeritos', 'selector': 'app-dialog-notario'},{'name': 'DialogNotarioSociedad', 'selector': 'app-dialog-notario'},{'name': 'DialogPersonaAltaC', 'selector': 'app-dialog-persona'},{'name': 'DialogPersonaC', 'selector': 'app-dialog-persona'},{'name': 'DialogPersonalesHistoricoContribuyente', 'selector': 'app-dialog-personales-historico-contribuyente'},{'name': 'DialogPersonalesHistoricoEspecificoContribuyente', 'selector': 'app-dialog-personales-historico-especifico-contribuyente'},{'name': 'DialogPersonalesHistoricoEspecificoNotario', 'selector': 'app-dialog-personales-historico-especifico-notario'},{'name': 'DialogPersonalesHistoricoNotario', 'selector': 'app-dialog-personales-historico-notario'},{'name': 'DialogPersonaPeritos', 'selector': 'app-dialog-persona'},{'name': 'DialogPersonaSociedad', 'selector': 'app-dialog-persona'},{'name': 'DialogRepresentacionAltaC', 'selector': 'app-dialog-representacion'},{'name': 'DialogRepresentacionC', 'selector': 'app-dialog-representacion'},{'name': 'DialogRepresentacionPeritos', 'selector': 'app-dialog-representacion'},{'name': 'DialogRepresentacionSociedad', 'selector': 'app-dialog-representacion'},{'name': 'DialogRepresentadoAltaC', 'selector': 'app-dialog-representado'},{'name': 'DialogRepresentadoC', 'selector': 'app-dialog-representado'},{'name': 'DialogRepresentadoPeritos', 'selector': 'app-dialog-representado'},{'name': 'DialogRepresentadoSociedad', 'selector': 'app-dialog-representado'},{'name': 'DialogSociedad', 'selector': 'app-dialog-alta-sociedad'},{'name': 'DialogSociedadAsociada', 'selector': 'app-dialog-sociedadAsociada'},{'name': 'DialogSociedadPerito', 'selector': 'app-dialog-buscaPerito'},{'name': 'DialogVia', 'selector': 'app-dialog-via'},{'name': 'DialogViaAlta', 'selector': 'app-dialog-via'},{'name': 'DialogViaContribuyente', 'selector': 'app-dialog-via-contribuyente'},{'name': 'DialogViaNotario', 'selector': 'app-dialog-via-notario'},{'name': 'DialogViaSociedad', 'selector': 'app-dialog-via-sociedad'},{'name': 'EdicionContribuyenteComponent', 'selector': 'app-edicion-contribuyente'},{'name': 'EdicionNotarioComponent', 'selector': 'app-edicion-notario'},{'name': 'EdicionPeritosComponent', 'selector': 'app-edicion-peritos'},{'name': 'EdicionSociedadComponent', 'selector': 'app-edicion-sociedad'},{'name': 'EditarContribuyenteComponent', 'selector': 'app-editar-contribuyente'},{'name': 'EditarNotarioComponent', 'selector': 'app-editar-notario'},{'name': 'EditarPeritosComponent', 'selector': 'app-editar-peritos'},{'name': 'EditarSociedadComponent', 'selector': 'app-editar-sociedad'},{'name': 'FooterComponent', 'selector': 'app-footer'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LoginFirmaComponent', 'selector': 'app-login-firma'},{'name': 'MainComponent', 'selector': 'app-main'},{'name': 'MenuComponent', 'selector': 'app-menu'},{'name': 'VerContribuyenteComponent', 'selector': 'app-ver-contribuyente'},{'name': 'VerHistoricoDomicilioNotarioComponent', 'selector': 'app-ver-historico-domicilio-notario'},{'name': 'VerNotarioComponent', 'selector': 'app-ver-notario'},{'name': 'VerPeritosComponent', 'selector': 'app-ver-peritos'},{'name': 'VerSociedadComponent', 'selector': 'app-ver-sociedad'}];
     var DIRECTIVES = [{'name': 'CardElevationDirective', 'selector': '[appCardElevation]'}];
     var ACTUAL_COMPONENT = {'name': 'EditarNotarioComponent'};
 </script>

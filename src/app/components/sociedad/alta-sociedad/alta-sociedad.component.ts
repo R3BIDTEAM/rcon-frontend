@@ -44,6 +44,11 @@ export class AltaSociedadComponent implements OnInit {
         private route: ActivatedRoute,
     ) { }
 
+/**
+ * ACA LA DOCUMENTACIÓN
+ * @param httpOptions No se que hace la neta
+ * @return no regresa nada
+ */
     ngOnInit(): void {
         this.httpOptions = {
             headers: new HttpHeaders({

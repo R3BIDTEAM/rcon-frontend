@@ -55,13 +55,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/AppModule.html" data-type="entity-link">AppModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-AppModule-f8b2b24274c070a9779d2a5f2cc1ed0a"' : 'data-target="#xs-components-links-module-AppModule-f8b2b24274c070a9779d2a5f2cc1ed0a"' }>
+                                            'data-target="#components-links-module-AppModule-e54b0d8dfe700a8eb139516624860b0b"' : 'data-target="#xs-components-links-module-AppModule-e54b0d8dfe700a8eb139516624860b0b"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-AppModule-f8b2b24274c070a9779d2a5f2cc1ed0a"' :
-                                            'id="xs-components-links-module-AppModule-f8b2b24274c070a9779d2a5f2cc1ed0a"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-AppModule-e54b0d8dfe700a8eb139516624860b0b"' :
+                                            'id="xs-components-links-module-AppModule-e54b0d8dfe700a8eb139516624860b0b"' }>
                                             <li class="link">
                                                 <a href="components/AltaContribuyenteComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">AltaContribuyenteComponent</a>
@@ -153,6 +153,10 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                             <li class="link">
                                                 <a href="components/DialogCiudadSociedad.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">DialogCiudadSociedad</a>
+                                            </li>
+                                            <li class="link">
+                                                <a href="components/DialogConfirmacionComponent.html"
+                                                    data-type="entity-link" data-context="sub-entity" data-context-id="modules">DialogConfirmacionComponent</a>
                                             </li>
                                             <li class="link">
                                                 <a href="components/DialogDocumentoAltaC.html"
@@ -462,13 +466,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     </li>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#directives-links-module-AppModule-f8b2b24274c070a9779d2a5f2cc1ed0a"' : 'data-target="#xs-directives-links-module-AppModule-f8b2b24274c070a9779d2a5f2cc1ed0a"' }>
+                                        'data-target="#directives-links-module-AppModule-e54b0d8dfe700a8eb139516624860b0b"' : 'data-target="#xs-directives-links-module-AppModule-e54b0d8dfe700a8eb139516624860b0b"' }>
                                         <span class="icon ion-md-code-working"></span>
                                         <span>Directives</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-AppModule-f8b2b24274c070a9779d2a5f2cc1ed0a"' :
-                                        'id="xs-directives-links-module-AppModule-f8b2b24274c070a9779d2a5f2cc1ed0a"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="directives-links-module-AppModule-e54b0d8dfe700a8eb139516624860b0b"' :
+                                        'id="xs-directives-links-module-AppModule-e54b0d8dfe700a8eb139516624860b0b"' }>
                                         <li class="link">
                                             <a href="directives/CardElevationDirective.html"
                                                 data-type="entity-link" data-context="sub-entity" data-context-id="modules">CardElevationDirective</a>

@@ -521,7 +521,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from &#x27;@angular/material
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from &#x27;@angular/forms&#x27;;
 import * as moment from &#x27;moment&#x27;;
 import * as FileSaver from &#x27;file-saver&#x27;;
-
+import { DialogConfirmacionComponent } from &#x27;@comp/dialog-confirmacion/dialog-confirmacion.component&#x27;;
 
 export interface DatosPeritos {
     apepaterno: string;
@@ -851,6 +851,7 @@ export class EditarPeritosComponent implements OnInit {
         if(this.datoPeritos.tipoPersona &#x3D;&#x3D; &#x27;M&#x27;){
             this.datoPeritos.nombre_moral &#x3D; this.datoPeritos.apepaterno + &#x27; &#x27; + this.datoPeritos.apematerno + &#x27; &#x27; + this.datoPeritos.nombre;
         }
+        this.datoPeritos.rfc &#x3D; null;
     }
 
     /*PAGINADOS*/
@@ -1039,6 +1040,17 @@ export class EditarPeritosComponent implements OnInit {
             );
     }
 
+    confirmaCambio(): void {
+        const dialogRef &#x3D; this.dialog.open(DialogConfirmacionComponent, {
+            width: &#x27;700px&#x27;
+        });
+        dialogRef.afterClosed().subscribe(result &#x3D;&gt; {
+            if(result){
+                this.cambiarTipoPersona();
+            }
+        });
+    }
+
     cambiarTipoPersona(){
         let query &#x3D; &#x27;idpersona&#x3D;&#x27; + this.idPerito;
         this.loadingDatosPerito &#x3D; true;
@@ -1048,7 +1060,7 @@ export class EditarPeritosComponent implements OnInit {
         if(this.datoPeritos.tipoPersona &#x3D;&#x3D;&#x3D; &#x27;F&#x27;){
             query &#x3D; (this.datoPeritos.apepaterno) ? query + &#x27;&amp;apellidopaterno&#x3D;&#x27; + this.datoPeritos.apepaterno : query + &#x27;&amp;apellidopaterno&#x3D;&#x27;;
             query &#x3D; (this.datoPeritos.apematerno) ? query + &#x27;&amp;apellidomaterno&#x3D;&#x27; + this.datoPeritos.apematerno : query + &#x27;&amp;apellidomaterno&#x3D;&#x27;;
-            query &#x3D; (this.datoPeritos.nombre) ? query + &#x27;&amp;nombre&#x3D;&#x27; + this.datoPeritos.nombre : query + &#x27;&amp;nombre&#x3D;&#x27;;
+            query &#x3D; (this.datoPeritos.nombre) ? query + &#x27;&amp;nombreF&#x3D;&#x27; + this.datoPeritos.nombre : query + &#x27;&amp;nombreF&#x3D;&#x27;;
             query &#x3D; (this.datoPeritos.rfc) ? query + &#x27;&amp;rfcF&#x3D;&#x27; + this.datoPeritos.rfc : query + &#x27;&amp;rfcF&#x3D;&#x27;;
         } else {
             query &#x3D; (this.datoPeritos.nombre_moral) ? query + &#x27;&amp;apellidopaterno&#x3D;&#x27; + this.datoPeritos.nombre_moral : query + &#x27;&amp;apellidopaterno&#x3D;&#x27;;
