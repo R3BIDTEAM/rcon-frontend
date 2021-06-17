@@ -61,7 +61,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/app/components/contribuyentes/edicion-contribuyente/edicion-contribuyente.component.ts</code>
+            <code>src/app/components/contribuyentes/consulta-contribuyente/consulta-contribuyente.component.ts</code>
         </p>
 
 
@@ -174,11 +174,11 @@ export interface DocumentosIdentificativos{
 }
 
 @Component({
-  selector: &#x27;app-edicion-contribuyente&#x27;,
-  templateUrl: &#x27;./edicion-contribuyente.component.html&#x27;,
-  styleUrls: [&#x27;./edicion-contribuyente.component.css&#x27;]
+  selector: &#x27;app-consulta-contribuyente&#x27;,
+  templateUrl: &#x27;./consulta-contribuyente.component.html&#x27;,
+  styleUrls: [&#x27;./consulta-contribuyente.component.css&#x27;]
 })
-export class EdicionContribuyenteComponent implements OnInit {
+export class ConsultaContribuyenteComponent implements OnInit {
   endpoint &#x3D; environment.endpoint + &#x27;registro/&#x27;;
   pageSize &#x3D; 15;
   pagina &#x3D; 1;
@@ -368,8 +368,6 @@ export class EdicionContribuyenteComponent implements OnInit {
         this.dataSource &#x3D; this.paginate(this.data, this.pageSize, this.pagina);
         this.total &#x3D; this.data.length;
         this.paginator.pageIndex &#x3D; 0;
-        console.log(&quot;ACA EL RESULTADO&quot;);
-        console.log(res);
       },
       (error) &#x3D;&gt; {
         this.loadingResponse &#x3D; false;
@@ -386,7 +384,6 @@ export class EdicionContribuyenteComponent implements OnInit {
   paginate(array, page_size, page_number) {
     return array.slice((page_number - 1) * page_size, page_number * page_size);
   }
-
 }
 </code></pre>
     </div>

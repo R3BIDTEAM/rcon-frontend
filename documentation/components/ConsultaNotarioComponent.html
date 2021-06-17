@@ -356,8 +356,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="111"
-                            class="link-to-prism">src/app/components/notarios/consulta-notario/consulta-notario.component.ts:111</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="114"
+                            class="link-to-prism">src/app/components/notarios/consulta-notario/consulta-notario.component.ts:114</a></div>
                 </td>
             </tr>
 
@@ -372,6 +372,7 @@
                                 <tr>
                                     <td>Name</td>
                                     <td>Optional</td>
+                                    <td>Description</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -383,6 +384,10 @@
                                     </td>
 
 
+                                    <td>
+                                        <p>Indica si la búsqueda se está realizando por Datos Identificativos o Personales</p>
+
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -422,8 +427,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="146"
-                            class="link-to-prism">src/app/components/notarios/consulta-notario/consulta-notario.component.ts:146</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="149"
+                            class="link-to-prism">src/app/components/notarios/consulta-notario/consulta-notario.component.ts:149</a></div>
                 </td>
             </tr>
 
@@ -578,8 +583,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="140"
-                            class="link-to-prism">src/app/components/notarios/consulta-notario/consulta-notario.component.ts:140</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="143"
+                            class="link-to-prism">src/app/components/notarios/consulta-notario/consulta-notario.component.ts:143</a></div>
                 </td>
             </tr>
 
@@ -617,8 +622,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="214"
-                            class="link-to-prism">src/app/components/notarios/consulta-notario/consulta-notario.component.ts:214</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="217"
+                            class="link-to-prism">src/app/components/notarios/consulta-notario/consulta-notario.component.ts:217</a></div>
                 </td>
             </tr>
 
@@ -683,8 +688,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="219"
-                            class="link-to-prism">src/app/components/notarios/consulta-notario/consulta-notario.component.ts:219</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="222"
+                            class="link-to-prism">src/app/components/notarios/consulta-notario/consulta-notario.component.ts:222</a></div>
                 </td>
             </tr>
 
@@ -767,8 +772,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="128"
-                            class="link-to-prism">src/app/components/notarios/consulta-notario/consulta-notario.component.ts:128</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="131"
+                            class="link-to-prism">src/app/components/notarios/consulta-notario/consulta-notario.component.ts:131</a></div>
                 </td>
             </tr>
 
@@ -1465,6 +1470,9 @@ export class ConsultaNotarioComponent implements OnInit {
     );
   }
 
+  /** 
+  * @param isIdentificativo Indica si la búsqueda se está realizando por Datos Identificativos o Personales
+  */
   clearInputsIdentNoIdent(isIdentificativo): void {
       this.isIdentificativo &#x3D; isIdentificativo;
           if(isIdentificativo){

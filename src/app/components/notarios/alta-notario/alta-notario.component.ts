@@ -185,6 +185,9 @@ export class AltaNotarioComponent implements OnInit {
             );
     }
 
+    /**
+    * @param res Es el json que regresa la respuesta una vez guardado el dato
+    */
     validaDialog(res){
         const dialogRef = this.dialog.open(DialogDuplicadosComponent, {
             width: '850px',
@@ -340,6 +343,9 @@ export class DialogBuscarNotarioAlta {
     );
   }
 
+    /** 
+    * @param isIdentificativo Indica si la búsqueda se está realizando por Datos Identificativos o Personales
+    */
   clearInputsIdentNoIdent(isIdentificativo): void {
       this.isIdentificativo = isIdentificativo;
       if(isIdentificativo){

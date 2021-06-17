@@ -108,6 +108,9 @@ export class ConsultaNotarioComponent implements OnInit {
     );
   }
 
+  /** 
+  * @param isIdentificativo Indica si la búsqueda se está realizando por Datos Identificativos o Personales
+  */
   clearInputsIdentNoIdent(isIdentificativo): void {
       this.isIdentificativo = isIdentificativo;
           if(isIdentificativo){

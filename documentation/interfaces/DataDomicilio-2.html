@@ -1339,6 +1339,9 @@ export class EditarNotarioComponent implements OnInit {
             );
     }
 
+    /** 
+    * @param iddireccion Es el identificador de la dirección seleccionada en la tabla de direcciones agregadas
+    */
     getDireccionEspecifica(iddireccion){
         this.loadingDireccionEspecifica &#x3D; true;
         let metodo &#x3D; &#x27;getDireccionById&#x27;;
@@ -1540,6 +1543,9 @@ export class EditarNotarioComponent implements OnInit {
         });
     }
 
+    /** 
+    * @param dataDomicilioEspecifico Recibe la información del domicilio seleccionado
+    */
     editDomicilio(dataDomicilioEspecifico): void {
         let codtiposdireccion &#x3D; &#x27;&#x27;;
             const dialogRef &#x3D; this.dialog.open(DialogDomiciliosNotario, {
