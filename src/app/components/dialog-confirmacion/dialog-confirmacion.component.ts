@@ -7,6 +7,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
     styleUrls: ['./dialog-confirmacion.component.css']
 })
 export class DialogConfirmacionComponent implements OnInit {
+    mensajeConfirma;
 
     constructor(
         public dialog: MatDialog,
@@ -14,6 +15,8 @@ export class DialogConfirmacionComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
         dialogRef.disableClose = true;
+        this.mensajeConfirma = data;
+        console.log(this.mensajeConfirma);
     }
 
     ngOnInit(): void {

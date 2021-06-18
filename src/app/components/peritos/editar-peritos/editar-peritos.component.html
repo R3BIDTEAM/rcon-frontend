@@ -469,7 +469,7 @@
                                     <ng-container matColumnDef="eliminar">
                                         <th mat-header-cell *matHeaderCellDef> Eliminar </th>
                                         <td mat-cell *matCellDef="let element">
-                                            <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar" (click)="eliminarRepresentacion(element,1)">
+                                            <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar" (click)="confirmaCambio(4,element,1)">
                                                 <mat-icon>delete</mat-icon>
                                             </button>
                                         </td>
@@ -549,7 +549,7 @@
                                     <ng-container matColumnDef="eliminar">
                                         <th mat-header-cell *matHeaderCellDef> Eliminar </th>
                                         <td mat-cell *matCellDef="let element">
-                                            <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar" (click)="eliminarRepresentacion(element,2)">
+                                            <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar" (click)="confirmaCambio(4,element,2)">
                                                 <mat-icon>delete</mat-icon>
                                             </button>
                                         </td>
@@ -660,7 +660,7 @@
                         <button mat-icon-button color="primary" aria-label="Buscar Sociedad" matTooltip="Buscar Sociedad" (click)="agregaSociedadEditar()">
                             <mat-icon>add_box</mat-icon>
                         </button>
-                        <button mat-icon-button color="primary" aria-label="Eliminar Datos" matTooltip="Eliminar Datos" (click)="eliminarPeritoSoicedadTodos()">
+                        <button mat-icon-button color="primary" aria-label="Eliminar Datos" matTooltip="Eliminar Datos" (click)="confirmaCambio(3)">
                             <mat-icon>delete</mat-icon>
                         </button>
                         <ng-container>
@@ -687,7 +687,7 @@
                                 <ng-container matColumnDef="elimina">
                                     <th mat-header-cell *matHeaderCellDef> Eliminar </th>
                                     <td mat-cell *matCellDef="let element">
-                                        <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar" (click)="eliminarPeritoSoicedad(element)">
+                                        <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar" (click)="confirmaCambio(2,element)">
                                             <mat-icon>delete</mat-icon>
                                         </button>
                                     </td>
@@ -695,19 +695,7 @@
                                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                             </table>
-                            <!-- <table *ngIf="dataSociedadAsociada.length > 0">
-                                <tr *ngFor="let sociedadAsociada of dataSociedadAsociada; let i = index;">
-                                    <td width="65%">{{sociedadAsociada.razonSocial}}</td>
-                                    <td>{{sociedadAsociada.registro}}</td>
-                                    <td width="30%">{{sociedadAsociada.rfc}}</td>
-                                    <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar">
-                                        <mat-icon>delete</mat-icon>
-                                    </button>
-                                </tr>
-                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                            </table> -->
-                            <mat-paginator #paginator [length]="total" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado($event)">
+                 <mat-paginator #paginator [length]="total" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado($event)">
                             </mat-paginator>
                         </ng-container>
                     </div>

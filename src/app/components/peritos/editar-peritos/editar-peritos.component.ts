@@ -173,6 +173,7 @@ export class EditarPeritosComponent implements OnInit {
     cambioPersona;
     actCambioPersona = true;
     isRequired = true;
+    mensajeConfirma;
 
     /*PAGINADOS*/
     dataSource1 = [];
@@ -528,13 +529,31 @@ export class EditarPeritosComponent implements OnInit {
             );
     }
 
-    confirmaCambio(): void {
+    confirmaCambio(evento = null, element = null, tipo = null): void {
+        this.mensajeConfirma = evento;
+        console.log(this.mensajeConfirma);
         const dialogRef = this.dialog.open(DialogConfirmacionComponent, {
-            width: '700px'
+            width: '700px',
+            data: this.mensajeConfirma
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
-                this.cambiarTipoPersona();
+                switch (this.mensajeConfirma) {
+                    case 1:
+                        this.cambiarTipoPersona();                        
+                        break;
+                    case 2:
+                        this.eliminarPeritoSoicedad(element);
+                        break;
+                    case 3:
+                        this.eliminarPeritoSoicedadTodos();
+                        break;
+                    case 4:
+                        this.eliminarRepresentacion(element, tipo);
+                        break;
+                    default:
+                        break;
+                }
             }
         });
     }
@@ -921,7 +940,7 @@ export class EditarPeritosComponent implements OnInit {
                     this.getPeritoDatos();
                 },
                 (error) => {
-                    this.loading = false;
+                    this.loadingDatosPerito = false;
                 }
             );
     }
@@ -937,7 +956,7 @@ export class EditarPeritosComponent implements OnInit {
                     this.getPeritoDatos();
                 },
                 (error) => {
-                    this.loading = false;
+                    this.loadingDatosPerito = false;
                 }
             );
     }

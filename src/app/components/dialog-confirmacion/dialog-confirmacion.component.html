@@ -1,9 +1,27 @@
 <h1 mat-dialog-title>¡ATENCIÓN!</h1>
 <div mat-dialog-content>
-    <div class="row">
+    <div class="row" *ngIf="mensajeConfirma == 1">
         <div class="col-md-1"></div>
         <div class="col-md-8">
             <h3>¿Está seguro que desea cambiar el tipo de persona?</h3>
+        </div>
+    </div>
+    <div class="row" *ngIf="mensajeConfirma == 2">
+        <div class="col-md-1"></div>
+        <div class="col-md-8">
+            <h3>¿Está seguro que desea eliminar el registro?</h3>
+        </div>
+    </div>
+    <div class="row" *ngIf="mensajeConfirma == 3">
+        <div class="col-md-1"></div>
+        <div class="col-md-8">
+            <h3>¿Está seguro que desea eliminar todos los registros?</h3>
+        </div>
+    </div>
+    <div class="row" *ngIf="mensajeConfirma == 4">
+        <div class="col-md-1"></div>
+        <div class="col-md-8">
+            <h3>¿Está seguro que desea eliminar la representación?</h3>
         </div>
     </div>
 </div>
