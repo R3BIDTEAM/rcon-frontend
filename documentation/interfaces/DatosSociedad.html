@@ -961,6 +961,7 @@ export class EditarSociedadComponent implements OnInit {
     isRequired &#x3D; true;
     fisicaFormGroup: FormGroup;
     moralFormGroup: FormGroup;
+    mensajeConfirma;
 
     /*Paginado*/
     dataSource1 &#x3D; [];
@@ -1031,6 +1032,10 @@ export class EditarSociedadComponent implements OnInit {
         this.getRepresentado();
     }
 
+    /** 
+    * @param event El el parametro que se recibe para evaluar si se ha realizado un cambio en el tipo de la persona,
+    *  el valor puede ser F de Física o M de moral.
+    */    
     actualizaPersona(event){
         console.log(event)
         this.actCambioPersona &#x3D; (event &#x3D;&#x3D; this.cambioPersona) ? true : false;
@@ -1137,13 +1142,34 @@ export class EditarSociedadComponent implements OnInit {
             );
     }
 
-    confirmaCambio(): void {
+    /** 
+    * @param evento Es el parametro que recibe el método para elegir en el switch que acción realizar 
+    */ 
+    confirmaCambio(evento &#x3D; null, element &#x3D; null, tipo &#x3D; null): void {
+        this.mensajeConfirma &#x3D; evento;
+        console.log(this.mensajeConfirma);
         const dialogRef &#x3D; this.dialog.open(DialogConfirmacionComponent, {
-            width: &#x27;700px&#x27;
+            width: &#x27;700px&#x27;,
+            data: this.mensajeConfirma
         });
         dialogRef.afterClosed().subscribe(result &#x3D;&gt; {
             if(result){
-                this.cambiarTipoPersona();
+                switch (this.mensajeConfirma) {
+                    case 1:
+                        this.cambiarTipoPersona();                        
+                        break;
+                    case 2:
+                        this.eliminarPeritoSoicedad(element);
+                        break;
+                    case 3:
+                        this.eliminarPeritoSoicedadTodos();
+                        break;
+                    case 4:
+                        this.eliminarRepresentacion(element,tipo);
+                        break;
+                    default:
+                        break;
+                }
             }
         });
     }
@@ -1611,7 +1637,7 @@ export class EditarSociedadComponent implements OnInit {
             .subscribe(
                 (res: any) &#x3D;&gt; {
                     if(res){
-                        this.snackBar.open(&quot;Se ha registrado correctamente&quot;, &#x27;Cerrar&#x27;, {
+                        this.snackBar.open(&quot;Se ha eliminado correctamente&quot;, &#x27;Cerrar&#x27;, {
                             duration: 10000,
                             horizontalPosition: &#x27;end&#x27;,
                             verticalPosition: &#x27;top&#x27;
@@ -1642,7 +1668,7 @@ export class EditarSociedadComponent implements OnInit {
                     //this.getPeritoDatos();
                 },
                 (error) &#x3D;&gt; {
-                    this.loading &#x3D; false;
+                    this.loadingDatosPerito &#x3D; false;
                 }
             );
     }

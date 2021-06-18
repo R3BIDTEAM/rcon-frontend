@@ -61,7 +61,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/app/components/notarios/edicion-notario/edicion-notario.component.ts</code>
+            <code>src/app/components/notarios/consulta-notario/consulta-notario.component.ts</code>
         </p>
 
 
@@ -192,11 +192,11 @@ export interface DocumentosIdentificativos{
 }
 
 @Component({
-  selector: &#x27;app-edicion-notario&#x27;,
-  templateUrl: &#x27;./edicion-notario.component.html&#x27;,
-  styleUrls: [&#x27;./edicion-notario.component.css&#x27;]
+  selector: &#x27;app-consulta-notario&#x27;,
+  templateUrl: &#x27;./consulta-notario.component.html&#x27;,
+  styleUrls: [&#x27;./consulta-notario.component.css&#x27;]
 })
-export class EdicionNotarioComponent implements OnInit {
+export class ConsultaNotarioComponent implements OnInit {
   endpoint &#x3D; environment.endpoint + &#x27;registro/&#x27;;
   pagina &#x3D; 1;
   total &#x3D; 0;
@@ -253,7 +253,7 @@ export class EdicionNotarioComponent implements OnInit {
       }
     );
   }
-  
+
   getDataDocumentosIdentificativos(): void{
     this.loadingDocumentosIdentificativos &#x3D; true;
     this.http.post(this.endpoint + &#x27;getCatalogos&#x27;, &#x27;&#x27;, this.httpOptions).subscribe(

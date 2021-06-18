@@ -397,6 +397,7 @@ export class EditarPeritosComponent implements OnInit {
     cambioPersona;
     actCambioPersona &#x3D; true;
     isRequired &#x3D; true;
+    mensajeConfirma;
 
     /*PAGINADOS*/
     dataSource1 &#x3D; [];
@@ -752,13 +753,31 @@ export class EditarPeritosComponent implements OnInit {
             );
     }
 
-    confirmaCambio(): void {
+    confirmaCambio(evento &#x3D; null, element &#x3D; null, tipo &#x3D; null): void {
+        this.mensajeConfirma &#x3D; evento;
+        console.log(this.mensajeConfirma);
         const dialogRef &#x3D; this.dialog.open(DialogConfirmacionComponent, {
-            width: &#x27;700px&#x27;
+            width: &#x27;700px&#x27;,
+            data: this.mensajeConfirma
         });
         dialogRef.afterClosed().subscribe(result &#x3D;&gt; {
             if(result){
-                this.cambiarTipoPersona();
+                switch (this.mensajeConfirma) {
+                    case 1:
+                        this.cambiarTipoPersona();                        
+                        break;
+                    case 2:
+                        this.eliminarPeritoSoicedad(element);
+                        break;
+                    case 3:
+                        this.eliminarPeritoSoicedadTodos();
+                        break;
+                    case 4:
+                        this.eliminarRepresentacion(element, tipo);
+                        break;
+                    default:
+                        break;
+                }
             }
         });
     }
@@ -1145,7 +1164,7 @@ export class EditarPeritosComponent implements OnInit {
                     this.getPeritoDatos();
                 },
                 (error) &#x3D;&gt; {
-                    this.loading &#x3D; false;
+                    this.loadingDatosPerito &#x3D; false;
                 }
             );
     }
@@ -1161,7 +1180,7 @@ export class EditarPeritosComponent implements OnInit {
                     this.getPeritoDatos();
                 },
                 (error) &#x3D;&gt; {
-                    this.loading &#x3D; false;
+                    this.loadingDatosPerito &#x3D; false;
                 }
             );
     }
