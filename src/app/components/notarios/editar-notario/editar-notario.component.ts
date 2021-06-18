@@ -210,6 +210,9 @@ export class EditarNotarioComponent implements OnInit {
         this.getDataDocumentosIdentificativos();
     }
 
+    /** 
+    * @example obtiene los nombres de los estados
+    */
     getDataEstados(): void {
         this.loadingEstados = true;
         this.http.post(this.endpointEstados + 'getEstados', '', this.httpOptions).subscribe(
@@ -224,6 +227,9 @@ export class EditarNotarioComponent implements OnInit {
         );
     }
 
+    /**
+    * Esta funcion sirve para traer los docuemntos que llenan el select de otro Documento identificativo
+    */
     getDataDocumentosIdentificativos(): void{
         this.loadingDocumentosIdentificativos = true;
         this.http.post(this.endpointEstados + 'getCatalogos', '', this.httpOptions).subscribe(
@@ -238,12 +244,18 @@ export class EditarNotarioComponent implements OnInit {
         );
     }
 
+    /**
+    * Habilita el campo cuando se selecciona otro Documento identificativo, si se quita alguna opciín se vuelve a deshabilitar
+    */
     otroDocumento(){
         if(this.datosGenerales.otro_documento === null || this.datosGenerales.otro_documento === ''){
         this.datosGenerales.numero_documento = '';
         }
     }
 
+    /**
+    * Trae la información guardada del notario seleccionado (Datos personales, direcciones, etc..)
+    */
     getNotarioDatos(){
         this.query = 'infoExtra=true&idPersona=' + this.idNotario; 
         this.loading = true;
@@ -268,6 +280,10 @@ export class EditarNotarioComponent implements OnInit {
             );
     }
 
+    
+    /**
+    * Setea los valores encontrado en getDatosDelNotario en los campos del formulario
+    */
     datoDelNotario(){
         this.cambioPersona = this.dataNotarioResultado[0].CODTIPOPERSONA;
         this.datosGenerales.tipoPersona = this.dataNotarioResultado[0].CODTIPOPERSONA;
@@ -291,6 +307,9 @@ export class EditarNotarioComponent implements OnInit {
     }
   
 
+    /**
+    * Trae la información guardada de las direcciones que están dadas de alta para éste notario
+    */
     getNotarioDirecciones(){
         this.loadingDomicilios = true;
         let metodo = 'getDireccionesContribuyente';
@@ -351,7 +370,10 @@ export class EditarNotarioComponent implements OnInit {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
 
-
+    
+    /**
+    * Actualiza la información del notario que fue cambiada en Datos del Notario (Estado, Número notario)
+    */
     actualizarDatosNotario(){
         let query = '';
 
@@ -381,6 +403,10 @@ export class EditarNotarioComponent implements OnInit {
             );
     }
 
+
+    /**
+    * Actualiza la información del notario que fue cambiada en Datos Personales del Notario (Nombre, apellidos, teléfono, RFC, etc...)
+    */
     actualizarDatosGenerales(){
         let query = '';
         this.loadingDatosNotario = true;
@@ -423,6 +449,10 @@ export class EditarNotarioComponent implements OnInit {
 
     }
 
+
+    /**
+    * Activa el Dialogo de Confirmación de Cambio
+    */
     confirmaCambio(): void {
         const dialogRef = this.dialog.open(DialogConfirmacionComponent, {
             width: '700px'
@@ -434,6 +464,10 @@ export class EditarNotarioComponent implements OnInit {
         });
     }
 
+
+    /**
+    * Cambia el Tipo de Persona de Moral a Física o visceversa
+    */
     cambiarTipoPersona(){
         let query = 'idpersona=' + this.idNotario;
         this.loading = true;
@@ -496,6 +530,12 @@ export class EditarNotarioComponent implements OnInit {
         );
     }
 
+
+    /**
+    * @param event Es el parametro que recibe el método para elegir en el switch que acción realizar.
+    * @todo algo
+    * @bussineslogic 0 y 1
+    */
     actualizaPersona(event){
         console.log(event)
         this.actCambioPersona = (event == this.cambioPersona) ? true : false;

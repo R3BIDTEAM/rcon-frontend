@@ -10,7 +10,7 @@
 # dependencies
 /node_modules
 
-#documentation
+# documentation
 /documentation
 
 # profiling files
