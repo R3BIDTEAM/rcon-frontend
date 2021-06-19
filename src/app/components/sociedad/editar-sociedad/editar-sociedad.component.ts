@@ -191,6 +191,10 @@ export class EditarSociedadComponent implements OnInit {
         private route: ActivatedRoute
     ) { }
 
+    /**
+     * Se define las valdiciones del formulario, valida la sesión del usuario y llama a los metodos
+     * necesarios para mostrar en la pantalla.
+     */
     ngOnInit(): void {
         this.httpOptions = {
             headers: new HttpHeaders({
@@ -246,6 +250,9 @@ export class EditarSociedadComponent implements OnInit {
         this.datosSociedad.rfc = null;
     }
 
+    /**
+     * Obtiene los datos identificativos y personales de la sociedad.
+     */
     getSociedadDatos(){
         this.query = 'idSociedad=' + this.idSociedad; 
         this.loading = true;
@@ -270,6 +277,9 @@ export class EditarSociedadComponent implements OnInit {
             );
     }
 
+    /**
+     * Obtiene la información de los peritos asociados a la sociedad.
+     */
     getPeritosSociedad(){
         this.http.post(this.endpointTable + '?' + 'idSociedad=' + this.idSociedad + '&idPerito', '', this.httpOptions)
             .subscribe(
@@ -294,11 +304,13 @@ export class EditarSociedadComponent implements OnInit {
             );
     }
 
+    /**
+     * Guarda la nueva información de la sociedad ya sean sus datos personales o identificativos.
+     */
     guardaSociedad(){
         let query = 'codtipospersona=M&nombre=';
         this.loading = true;
         
-        //codtipospersona=M&nombre=&activprincip=diez&idtipomoral&idmotivosmoral&fechainicioactiv=22-01-2000&fechacambiosituacion=22-02-2002&rfc=RUFV891129R1&apellidopaterno=Veracruzana II&apellidomaterno=&curp=&claveife=&iddocidentif=&valdocidentif=&fechanacimiento=&fechadefuncion=&celular=&email=&idExpediente&idpersona=4485346
         query = (this.datosSociedad.acta) ? query + '&activprincip=' + this.datosSociedad.acta : query + '&activprincip=';
 
         query = (this.datosSociedad.tipoMoral) ? query + '&idtipomoral=' + this.datosSociedad.tipoMoral : query + '&idtipomoral=';
@@ -316,9 +328,8 @@ export class EditarSociedadComponent implements OnInit {
         query = query + '&apellidomaterno=&curp=&claveife=&iddocidentif=&valdocidentif=&fechanacimiento=&fechadefuncion=&celular=&email=&idExpediente';
 
         query = query + '&idpersona=' + this.idSociedad;
-        //this.datoPeritos.independiente
+
         console.log(this.endpointActualiza + 'actualizaContribuyente' + '?' + query);
-        //return;
         this.http.post(this.endpointActualiza + 'actualizaContribuyente' + '?' + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
@@ -377,6 +388,9 @@ export class EditarSociedadComponent implements OnInit {
         });
     }
 
+    /**
+     * Cambia el tipo de persona de Físca a Moral o viceversa.
+     */
     cambiarTipoPersona(){
         let query = 'idpersona=' + this.idSociedad;
         this.loading = true;
@@ -439,6 +453,9 @@ export class EditarSociedadComponent implements OnInit {
         );
     }
 
+    /**
+     * Almacena los valores recibidos de la consulta realizada.
+     */
     datosDeLaSociedad(){
         this.cambioPersona = this.dataSocedadResultado.CODTIPOSPERSONA;
         this.datosSociedad.tipoPersona = this.dataSocedadResultado.CODTIPOSPERSONA;
@@ -475,6 +492,9 @@ export class EditarSociedadComponent implements OnInit {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
 
+    /**
+     * Actualiza los datos correspondientes a la Sociedad.
+     */
     actualizaSociedad(){
         let query = '';
 
@@ -510,7 +530,9 @@ export class EditarSociedadComponent implements OnInit {
             );
     }
 
-
+    /**
+     * Obtiene los domicilios registrados de la sociedad domicilios particulares y para recibir notificaciones.
+     */
     getDomicilioSociedad(){
         this.loadingDomicilios = true;
         let metodo = 'getDireccionesContribuyente';
@@ -583,6 +605,9 @@ export class EditarSociedadComponent implements OnInit {
         this.dataSource1 = this.paginate(this.dataSource1, 15, this.pagina1);
     }
 
+    /**
+     * Agrega un nuevo registro de domicilio
+     */
     addDomicilio(): void {
       let codtiposdireccion = '';
       const dialogRef = this.dialog.open(DialogDomicilioSociedad, {
@@ -1401,23 +1426,17 @@ export class DialogDomicilioSociedad {
         }
 
 
-            // alert(this.dataDomicilio.id_direccion);
-            if(this.domicilioFormGroup.value.id_direccion == null){
-                // alert('guardar');
-                 this.guardaDomicilio();
-            } else{
-                // alert('actualizar');
-                 this.actualizarDomicilio();
-            }
+        if(this.domicilioFormGroup.value.id_direccion == null){
+                this.guardaDomicilio();
+        } else{
+                this.actualizarDomicilio();
+        }
 
-       
-    
-
-        //console.log('AQUEI EL FORM VALID');
-        // console.log(this.domicilioFormGroup);
-        ///retu
     }
-        
+
+    /**
+     * Guarda el registro del nuevo domicilio.
+     */
     guardaDomicilio(){
         
         let query = 'insertarDireccion?idPersona=' + this.data.idSociedad;
@@ -1456,21 +1475,13 @@ export class DialogDomicilioSociedad {
         
         console.log('EL SUPER QUERY!!!!!!');
         console.log(query);
-        //insertarDireccion?idPersona=4485239&codtiposvia=1&idvia=686&via=DR LAVISTA&numeroexterior=144&entrecalle1&entrecalle2&andador&edificio&seccion&entrada
-            //&codtiposlocalidad=1&codtiposasentamiento=9&idcolonia=8&codasentamiento=&colonia=DOCTORES&codigopostal=06720
-            //&codciudad=&ciudad&iddelegacion=5&codmunicipio=15&delegacion=CUAUHTEMOC&telefono&codestado=9&codtiposdireccion=N&indicacionesadicionales&numerointerior=
+
         this.http.post(this.endpointCatalogos + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
                     console.log(res);
-                    if(res.length > 0){
+                    if(res){
                       this.snackBar.open('Registro exitoso', 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
-                        });
-                    }else{
-                        this.snackBar.open('Ocurrio un error al Insertar la dirección, intente nuevemente', 'Cerrar', {
                             duration: 10000,
                             horizontalPosition: 'end',
                             verticalPosition: 'top'
@@ -1479,10 +1490,18 @@ export class DialogDomicilioSociedad {
                     //this.dialogRef.close();
                 },
                 (error) => {
+                    this.snackBar.open('Ocurrio un error al Insertar la dirección, intente nuevemente', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
                 }
             );
     }
 
+    /**
+     * Actualiza el domicilio seleccionado.
+     */
     actualizarDomicilio(){
         
         let query = 'actualizarDireccion?idPersona=' + this.data.idNotario + '&idDireccion=' + this.iddireccion;
@@ -1517,7 +1536,6 @@ export class DialogDomicilioSociedad {
         console.log('Actualizacion de Direcciones...');
         console.log(query);
         
-        //localhost:8000/api/v1/registro/actualizarDireccion?idPersona=4353312&idDireccion=3597172&codtiposvia=1&idvia=2568&via=ABRAHAM SANCHEZ&numeroexterior=21&entrecalle1&entrecalle2&andador&edificio&seccion&entrada&codtiposlocalidad=1&numerointerior=&codtiposasentamiento=9&idcolonia=8&codasentamiento=&colonia=DOCTORES&codigopostal=06720&codciudad&ciudad&iddelegacion=5&codmunicipio=15&delegacion=CUAUHTEMOC&telefono&codestado=9&codtiposdireccion=&indicacionesadicionales
 
         this.http.post(this.endpointCatalogos + query, '', this.httpOptions)
             .subscribe(
@@ -1547,8 +1565,6 @@ export class DialogDomicilioSociedad {
     setDataDomicilio(data): void {
         console.log("ACA EL COD DATA ESPE");
         console.log(data);
-        // console.log("ACA EL COD ESTADO SETEADO"+data.dataDomicilioEspecifico.CODESTADO);
-        //this.domicilioFormGroup.controls['idtipodireccion'].setValue(dataDomicilio.idtipodireccion);
        
         this.domicilioFormGroup.controls['idestado'].setValue(data.CODESTADO);
         this.getDataMunicipios({value: this.domicilioFormGroup.value.idestado});
@@ -1573,7 +1589,6 @@ export class DialogDomicilioSociedad {
         this.domicilioFormGroup.controls['id_direccion'].setValue(data.IDDIRECCION);
     
         if(data.CODESTADO == 9){
-            // alert('funciona');
             this.domicilioFormGroup.controls['idmunicipio'].setValue(data.IDDELEGACION);
         } else {
             this.domicilioFormGroup.controls['idmunicipio2'].setValue(data.CODMUNICIPIO);
@@ -1582,7 +1597,11 @@ export class DialogDomicilioSociedad {
             this.domicilioFormGroup.controls['idciudad'].setValue(data.CODCIUDAD);
         }
     }
-  
+
+    /**
+     * Abre el dialogo que muestra los municipios de acuerdo al estado,
+     * con opción para búsqueda especifica.
+     */
     getMunicipios(){
         this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
         const dialogRef = this.dialog.open(DialogMunicipiosSociedad, {
@@ -1601,6 +1620,10 @@ export class DialogDomicilioSociedad {
         });
     }
   
+    /**
+     * Abre el dialogo que muestra las localidades (ciudades) ligadas al municipio seleccionado previamente,
+     * con opción a búsqueda especifica.
+     */
     getCiudad(){
         this.dataDomicilio.idmunicipio2 = this.domicilioFormGroup.value.idmunicipio2;
         const dialogRef = this.dialog.open(DialogCiudadSociedad, {
@@ -1619,7 +1642,10 @@ export class DialogDomicilioSociedad {
             }
         });
     }
-  
+
+    /**
+     * Abre el dialogo que muestra los asentamientos ligados a la ciudad
+     */
     getAsentamiento(){
         this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
         this.dataDomicilio.idmunicipio = this.domicilioFormGroup.value.idmunicipio;
@@ -1645,7 +1671,10 @@ export class DialogDomicilioSociedad {
             }
         });
     }
-  
+
+    /**
+     * Abre el dialogo que muestra las vías ligadas al asentamiento
+     */
     getVia(){
         this.dataDomicilio.codasentamiento =  this.domicilioFormGroup.value.codasentamiento;
         const dialogRef = this.dialog.open(DialogViaSociedad, {
@@ -1711,6 +1740,9 @@ export interface DataMunicipios{
         console.log(data);
     }
   
+    /**
+     * Limpia los registros de la búsqueda especifica realizada y llama al metodo para obtener todos los municipios
+     */
     cleanAsentamiento(){
         this.pagina = 1;
         this.total = 0;
@@ -1719,7 +1751,10 @@ export interface DataMunicipios{
         this.dataPaginate;
         this.obtenerMunicipios();
     }
-  
+
+    /**
+     * Obtiene los municipios de acuerdo al estado seleccionado.
+     */
     obtenerMunicipios(){
         this.loadingBuscaMun = true;
         let criterio = '';
@@ -1771,6 +1806,10 @@ export interface DataMunicipios{
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
   
+    /**
+     * Se almacena los datos del municipio seleccionado que se motraran en el formulario.
+     * @param element Arreglo de los datos del municipio seleccionado
+     */
     selectMunicipios(element){
         console.log(element);
         this.dataMunicipios.codestado = element.CODESTADO;
@@ -1778,6 +1817,9 @@ export interface DataMunicipios{
         this.dataMunicipios.municipio = element.MUNICIPIO;
     }
   
+    /**
+     * Obtiene el municipio deseado por el criterio del nombre.
+     */
     obtenerMunicipiosPorNombre(){
         this.loadingBuscaMun = true;
         let criterio = '';
@@ -1854,8 +1896,11 @@ export class DialogCiudadSociedad {
         this.obtenerCiudad();
         console.log(data);
     }
-  
-    cleanAsentamiento(){
+
+    /**
+     * Limpia la búsqueda especifica realizada y llama al método que obtiene todos los registros previamente mostrados.
+     */
+    cleanCiudad(){
         this.pagina = 1;
         this.total = 0;
         this.dataSource = [];
@@ -1863,7 +1908,10 @@ export class DialogCiudadSociedad {
         this.dataPaginate;
         this.obtenerCiudad();
     }
-  
+
+    /**
+     * Obtiene las localidades de acuerdo al estado y municipio seleccionado previamente.
+     */
     obtenerCiudad(){
         this.loadingBuscaCiudad = true;
         let criterio = '';
@@ -1979,6 +2027,9 @@ export class DialogAsentamientoSociedad {
         console.log(data);
     }
   
+     /**
+     * Limpia la búsqueda especifica realizada y llama al método que obtiene todos los registros previamente mostrados.
+     */
     cleanAsentamiento(){
         this.pagina = 1;
         this.total = 0;
@@ -1988,6 +2039,9 @@ export class DialogAsentamientoSociedad {
         this.obtenerAsentamiento();
     }
   
+    /**
+     * Obtiene el asenteamiento de acuerdo al estado, municipio o ciudad.
+     */
     obtenerAsentamiento(){
         this.loading = true;
         let criterio = '';
@@ -2043,7 +2097,11 @@ export class DialogAsentamientoSociedad {
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
-  
+ 
+    /**
+     * 
+     * @param element Arreglo de los datos del asentamiento.
+     */
     selectAsentamiento(element){
         console.log(element);
         if(element.IDDELEGACION){
@@ -2105,8 +2163,11 @@ export class DialogViaSociedad {
         this.obtenerVia();
         console.log(data);
     }
-  
-    cleanAsentamiento(){
+
+    /**
+     * Limpia los registros de la búsqueda especifica realizada y llama al metodo para obtener todos los municipios
+     */
+    cleanVia(){
         this.pagina = 1;
         this.total = 0;
         this.dataSource = [];
@@ -2114,7 +2175,10 @@ export class DialogViaSociedad {
         this.dataPaginate;
         this.obtenerVia();
     }
-  
+
+    /**
+     * Obtiene las vías de acuerdo al criterio del nombre o por el id de la colonia previamente seleccionada
+     */
     obtenerVia(){
         this.loadingBuscaVia = true;
         let criterio = 'getViasByIdColonia';
@@ -2179,37 +2243,6 @@ export class DialogViaSociedad {
         this.dataVia.codtiposvia = element.codtiposvia;
         this.dataVia.idvia = element.idvia;
         this.dataVia.via = element.via;
-    }
-  
-    obtenerAsentamientoPorNombre(){
-        this.loadingBuscaVia = true;
-        let criterio = '';
-        let query = '';
-  
-        if(this.data.codEstado != 9){
-            criterio = criterio + 'getMunicipiosByEstado';
-            query = query + 'codEstado=' + this.data.codEstado;
-        }else{
-            criterio = '';
-            query = '';
-        }
-  
-        console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
-        this.loadingBuscaVia = true;
-        this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
-            .subscribe(
-                (res: any) => {
-                    this.loadingBuscaVia = false;
-                    this.dataSource = res;
-                    this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-                    this.total = this.dataSource.length; 
-                    this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
-                },
-                (error) => {
-                    this.loadingBuscaVia = false;
-                }
-            );
     }
 }
 
@@ -2304,7 +2337,11 @@ export class DialogRepresentacionSociedad {
         this.fisicaFormGroup.markAsUntouched();
         this.fisicaFormGroup.updateValueAndValidity();
     }
-  
+
+    /**
+     * Abre el dialogo para obtener un contribuyente previamente registrado, al cerrar se obtienen su información
+     * para ser registrado en la representación.
+     */
     addPersona(): void {
         const dialogRef = this.dialog.open(DialogPersonaSociedad, {
             width: '700px',
@@ -2331,6 +2368,9 @@ export class DialogRepresentacionSociedad {
         });
     }
   
+    /**
+     * Abre el dialogo para agregar los ficheros y datos relacionados su registro.
+     */
     addDocumento(dataDocumento = null): void {
         const dialogRef = this.dialog.open(DialogDocumentoSociedad, {
             width: '700px',
@@ -2345,10 +2385,18 @@ export class DialogRepresentacionSociedad {
         });
     }
   
+    /**
+     * Retira el registro del documento antes de guardar
+     */
     removeDocumento(){
           this.dataRepresentacion.documentoRepresentacion = undefined;
-      }
+    }
   
+    /**
+     *  Obtiene los datos que se registraron en el formulario y guarda la representación junto a todos los datos del documento,
+     * representante y representado.
+     * @returns Regresa el arreglo de los datos que fueron registrados en el formulario de la representación.
+     */
     getDataRepresentacion(): DataRepresentacion {
         this.dataRepresentacion.tipoPersona = this.tipoPersona;
         if(this.tipoPersona == 'F'){
@@ -2470,6 +2518,9 @@ export class DialogRepresentacionSociedad {
         return this.dataRepresentacion;
     }
 
+    /**
+     * Actualiza la información de la representación seleccionada.
+     */
     updateRepresentacion(){
         console.log("ACTUALIZA");
         let queryActRep = '';
@@ -2480,10 +2531,8 @@ export class DialogRepresentacionSociedad {
 
         queryActRep = queryActRep + '&idRepresentacion=' + this.idRepresentacion + '&idDocumentoDigital=' + this.idDocumento;
 
-        //actualizarRepresentaciontextorepresentacion=Texto Representacion Prueba 33&fechacaducidad=Fri Dec 31 2021 00:00:00 GMT-0600 (hora estándar central)&idRepresentacion=14&idDocumentoDigital=17646226
         console.log("QUERY ACTUALIZA");
         console.log(queryActRep);
-        //return;
         this.http.post(this.endpoint + 'actualizarRepresentacion?' + queryActRep, '', this.httpOptions).subscribe(
             (res: any) => {
                 this.snackBar.open('SE HA ACTUALIZADO EL REPRESENTADO', 'Cerrar', {
@@ -2539,8 +2588,6 @@ export class DialogRepresentacionSociedad {
             this.moralFormGroup.controls['texto'].setValue(dataRepresentacion.TEXTOREPRESENTACION);
             this.moralFormGroup.controls['fechaCaducidad'].setValue((dataRepresentacion.FECHACADUCIDAD) ? new Date(dataRepresentacion.FECHACADUCIDAD) : null);
         }
-        
-        //this.dataRepresentacion.documentoRepresentacion = dataRepresentacion.documentoRepresentacion;
     }
 }
 
@@ -2634,6 +2681,10 @@ export class DialogRepresentadoSociedad {
         this.fisicaFormGroup.updateValueAndValidity();
     }
   
+    /**
+     * Abre el dialogo para obtener un contribuyente previamente registrado, al cerrar se obtienen su información
+     * para ser registrado en la representación.
+     */
     addPersona(): void {
         const dialogRef = this.dialog.open(DialogPersonaSociedad, {
             width: '700px',
@@ -2660,6 +2711,9 @@ export class DialogRepresentadoSociedad {
         });
     }
   
+     /**
+     * Abre el dialogo para agregar los ficheros y datos relacionados su registro.
+     */
     addDocumento(dataDocumento = null): void {
         const dialogRef = this.dialog.open(DialogDocumentoSociedad, {
             width: '700px',
@@ -2674,10 +2728,18 @@ export class DialogRepresentadoSociedad {
         });
     }
   
+    /**
+     * Retira el registro del documento antes de guardar
+     */
     removeDocumento(){
           this.dataRepresentacion.documentoRepresentacion = undefined;
-      }
+    }
   
+    /**
+     *  Obtiene los datos que se registraron en el formulario y guarda la representación junto a todos los datos del documento,
+     * representante y representado.
+     * @returns Regresa el arreglo de los datos que fueron registrados en el formulario de la representación.
+     */
     getDataRepresentacion(): DataRepresentacion {
         this.dataRepresentacion.tipoPersona = this.tipoPersona;
         if(this.tipoPersona == 'F'){
@@ -2801,6 +2863,9 @@ export class DialogRepresentadoSociedad {
         return this.dataRepresentacion;
     }
   
+    /**
+     * Actualiza la información de la representación seleccionada.
+     */
     updateRepresentacion(){
         console.log("ACTUALIZA");
         let queryActRep = '';
@@ -2964,31 +3029,31 @@ export class DialogDocumentoSociedad {
         console.log(data);
     }
   
-    getDataTiposDocumentoDigital(): void {
-        this.loadingTiposDocumentoDigital = true;
-        this.http.get(this.endpoint, this.httpOptions).subscribe(
-            (res: any) => {
-                this.loadingTiposDocumentoDigital = false;
-                this.tiposDocumentoDigital = res;
-            },
-            (error) => {
-                this.loadingTiposDocumentoDigital = false;
-            }
-        );
-    }
+    // getDataTiposDocumentoDigital(): void {
+    //     this.loadingTiposDocumentoDigital = true;
+    //     this.http.get(this.endpoint, this.httpOptions).subscribe(
+    //         (res: any) => {
+    //             this.loadingTiposDocumentoDigital = false;
+    //             this.tiposDocumentoDigital = res;
+    //         },
+    //         (error) => {
+    //             this.loadingTiposDocumentoDigital = false;
+    //         }
+    //     );
+    // }
   
-    getDataTiposDocumentoJuridico(): void {
-        this.loadingTiposDocumentoJuridico = true;
-        this.http.get(this.endpoint, this.httpOptions).subscribe(
-            (res: any) => {
-                this.loadingTiposDocumentoJuridico = false;
-                this.tiposDocumentoJuridico = res;
-            },
-            (error) => {
-                this.loadingTiposDocumentoJuridico = false;
-            }
-        );
-    }
+    // getDataTiposDocumentoJuridico(): void {
+    //     this.loadingTiposDocumentoJuridico = true;
+    //     this.http.get(this.endpoint, this.httpOptions).subscribe(
+    //         (res: any) => {
+    //             this.loadingTiposDocumentoJuridico = false;
+    //             this.tiposDocumentoJuridico = res;
+    //         },
+    //         (error) => {
+    //             this.loadingTiposDocumentoJuridico = false;
+    //         }
+    //     );
+    // }
 
     /**
      * 
@@ -2998,6 +3063,9 @@ export class DialogDocumentoSociedad {
         this.dataDocumento.nombreTipoDocumentoJuridico = event.source.triggerValue;
     }
   
+    /**
+     * Abre el dialogo para registrar al notario en caso de ser un Poder notarial el documento.
+     */
     addNotario(): void {
         const dialogRef = this.dialog.open(DialogNotarioSociedad, {
             width: '700px',
@@ -3052,7 +3120,11 @@ export class DialogDocumentoSociedad {
             }
         }
     }
-  
+
+    /**
+     * Se almacenan los datos del registro del documento de acuerdo al seleccionado (Carta poder o Poder notarial),
+     * en caso de ser una actualización llamara al método correspondiente.
+     */
     getDataDocumento(): void {
         this.dataDocumento.codtipodocumento = this.tiposDocumentoFormGroup.value.codtipodocumento;
         this.dataDocumento.codtipodocumentojuridico = this.tiposDocumentoFormGroup.value.codtipodocumentojuridico;
@@ -3097,6 +3169,9 @@ export class DialogDocumentoSociedad {
             });
     }
 
+    /**
+     * Se almacenan los datos relacionados con el documento cuando se ha seleccionado la opción de editar documento.
+     */
     setDoc(){
         console.log("LA FECHA NO SE DEJA");
         console.log(this.fechaDocto);
@@ -3120,7 +3195,7 @@ export class DialogDocumentoSociedad {
     }
 
     /**
-     * 
+     * Realiza la consulta del fichero previamente guardado.
      * @param element Arreglo de los datos del registro seleccionado.
      */
     descargarDoc(element){
@@ -3145,6 +3220,9 @@ export class DialogDocumentoSociedad {
             });
     }
 
+    /**
+     * Convierte el base 64 del fichero guardado para su descarga en PDF.
+     */
     convertirDoc(){
         let dataFichero = this.descargaFichero[0].binariodatos;
         dataFichero = dataFichero.split("data:application/pdf;base64,");
@@ -3154,6 +3232,13 @@ export class DialogDocumentoSociedad {
         FileSaver.saveAs(blob, this.descargaFichero[0].nombre);
     }
 
+    /**
+     * 
+     * @param b64Data El fichero en base 64.
+     * @param contentType Tipo de fichero.
+     * @param sliceSize 
+     * @returns Regresa el fichero a descargar
+     */
     b64toBlob(b64Data, contentType = '', sliceSize = 512): Blob {
         const byteCharacters = atob(b64Data);
         const byteArrays = [];
@@ -3199,6 +3284,9 @@ export class DialogDocumentoSociedad {
             });
     }
 
+    /**
+     * Actualiza los datos relacionados con el documento.
+     */
     updateDocto(){
         this.canSend = true;
         const payload = {
