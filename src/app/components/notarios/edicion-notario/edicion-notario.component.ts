@@ -80,6 +80,9 @@ export class EdicionNotarioComponent implements OnInit {
     this.getDataDocumentosIdentificativos();
   }
 
+  /** 
+  * Obtiene el nombre de los Estados para llenar el el Select de Estados
+  */
   getDataEstados(): void {
     this.loadingEstados = true;
     this.http.post(this.endpoint + 'getEstados', '', this.httpOptions).subscribe(
@@ -94,6 +97,9 @@ export class EdicionNotarioComponent implements OnInit {
     );
   }
   
+  /** 
+  * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
+  */
   getDataDocumentosIdentificativos(): void{
     this.loadingDocumentosIdentificativos = true;
     this.http.post(this.endpoint + 'getCatalogos', '', this.httpOptions).subscribe(
@@ -128,6 +134,9 @@ export class EdicionNotarioComponent implements OnInit {
           }
   }
 
+  /** 
+  * Verifica que haya campos llenos para habilitar el botón de búsqueda
+  */
   validateSearch(){
     this.search = (
             this.filtros.apellido_paterno ||
@@ -140,12 +149,18 @@ export class EdicionNotarioComponent implements OnInit {
         ) ? true : false;
   }
 
+  /** 
+  * Verifica que esté seleccionado un elemento en el Select de Otro Documento Identificativo para poder capturar su información, de lo contrario lo bloquea
+  */
   otroDocumento(){
     if(this.filtros.otro_documento === null || this.filtros.otro_documento === ''){
       this.filtros.numero_documento = '';
     }
   }
 
+  /** 
+  * Obtiene la información una vez llenados los filtros y realizado la búsqueda
+  */
   getData(): void {
       let query = '';
       let busquedaDatos = '';

@@ -559,6 +559,7 @@ export class EditarNotarioComponent implements OnInit {
         });
     }
 
+
     /** 
     * @param dataDomicilioEspecifico Recibe la información del domicilio seleccionado
     */
@@ -573,6 +574,10 @@ export class EditarNotarioComponent implements OnInit {
             });
     }
 
+
+    /** 
+    * @param idDireccion Identificador único de la dirección especifica guardada para éste notario
+    */
     viewHistoricoDomicilio(idDireccion): void {
             const dialogRef = this.dialog.open(DialogDomicilioHistoricoNotario, {
                 width: '700px',
@@ -583,6 +588,10 @@ export class EditarNotarioComponent implements OnInit {
             });
     }
 
+
+    /** 
+    * @param idPersona Identificador único del Notario
+    */
     viewHistoricoDatosPersonales(idPersona): void {
             const dialogRef = this.dialog.open(DialogPersonalesHistoricoNotario, {
                 width: '700px',
@@ -739,6 +748,10 @@ export class DialogDomiciliosNotario {
 
     }
 
+
+    /** 
+    * Obtiene la dirección especifica guardada para éste notario
+    */
     getDireccionEspecifica(){
         this.loadingDireccionEspecifica = true;
         let metodo = 'getDireccionById';
@@ -767,6 +780,9 @@ export class DialogDomiciliosNotario {
         this.botonAsentamiento = false;
     }
 
+    /** 
+    * Obtiene los nombres de los Estados para el select de Selección de estado
+    */
     getDataEstados(): void {
         this.loadingEstados = true;
         this.http.post(this.endpointCatalogos + 'getEstados', '', this.httpOptions).subscribe(
@@ -891,6 +907,9 @@ export class DialogDomiciliosNotario {
     
     }
         
+    /** 
+    * Guarda un domicilio dado de alta
+    */
     guardaDomicilio(){
         
         let query = 'insertarDireccion?idPersona=' + this.data.idNotario;
@@ -954,6 +973,10 @@ export class DialogDomiciliosNotario {
             );
     }
 
+
+    /** 
+    * Actualiza un domicilio que ya se encuentra dado de alta
+    */
     actualizarDomicilio(){
         
         let query = 'actualizarDireccion?idPersona=' + this.data.idNotario + '&idDireccion=' + this.iddireccion;
@@ -1011,6 +1034,10 @@ export class DialogDomiciliosNotario {
             );
     }
   
+
+    /** 
+    * @param data Utiliza el arreglo de data para pasar los valores al formulario 
+    */
     setDataDomicilio(data): void {
         console.log("ACA EL COD DATA ESPE");
         console.log(data);
@@ -1049,6 +1076,9 @@ export class DialogDomiciliosNotario {
         }
     }
 
+    /** 
+    * Obtiene los municipios
+    */
     getMunicipios(){
         this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
         const dialogRef = this.dialog.open(DialogMunicipiosNotario, {
@@ -1067,6 +1097,9 @@ export class DialogDomiciliosNotario {
         });
     }
 
+    /** 
+    * Obtiene las ciudades 
+    */
     getCiudad(){
         this.dataDomicilio.idmunicipio2 = this.domicilioFormGroup.value.idmunicipio2;
         const dialogRef = this.dialog.open(DialogCiudadNotario, {
@@ -1086,6 +1119,9 @@ export class DialogDomiciliosNotario {
         });
     }
 
+    /** 
+    * Obtiene las colonias 
+    */
     getAsentamiento(){
         this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
         this.dataDomicilio.idmunicipio = this.domicilioFormGroup.value.idmunicipio;
@@ -1112,6 +1148,9 @@ export class DialogDomiciliosNotario {
         });
     }
 
+    /** 
+    * Obtiene las calles
+    */
     getVia(){
         this.dataDomicilio.codasentamiento =  this.domicilioFormGroup.value.codasentamiento;
         const dialogRef = this.dialog.open(DialogViaNotario, {
@@ -1189,6 +1228,9 @@ export class DialogMunicipiosNotario {
         this.obtenerMunicipios();
     }
 
+    /** 
+    * Obtiene los municipios 
+    */
     obtenerMunicipios(){
         this.loadingBuscaMun = true;
         let criterio = '';
@@ -1237,6 +1279,9 @@ export class DialogMunicipiosNotario {
         this.dataMunicipios.municipio = element.MUNICIPIO;
     }
 
+    /** 
+    * Obtiene los municipios según el estado seleccionado
+    */
     obtenerMunicipiosPorNombre(){
         this.loadingBuscaMun = true;
         let criterio = '';
@@ -1324,6 +1369,9 @@ export class DialogCiudadNotario {
         this.obtenerCiudad();
     }
 
+    /** 
+    * Obtiene la ciudad según el estado seleccionado
+    */
     obtenerCiudad(){
         this.loadingBuscaCiudad = true;
         let criterio = '';
@@ -1433,6 +1481,9 @@ export class DialogAsentamientoNotario {
         this.obtenerAsentamiento();
     }
 
+    /** 
+    * Obtiene la colonia según el estado seleccionado
+    */
     obtenerAsentamiento(){
         this.loading = true;
         let criterio = '';
@@ -1550,6 +1601,9 @@ export class DialogViaNotario {
         this.obtenerVia();
     }
 
+    /** 
+    * Obtiene la calle según la colonia seleccionada 
+    */
     obtenerVia(){
         this.loadingBuscaVia = true;
         let criterio = 'getViasByIdColonia';
@@ -1680,6 +1734,9 @@ export interface DataHistorico{
     
         }
 
+    /** 
+    * Obtiene todas las modificaciones que se han hecho sobre un domicilio registrado
+    */
     getHistoricoModificaciones(){
         let query = '';
       
@@ -1877,6 +1934,10 @@ export interface DataHistorico{
                     this.getDataTiposLocalidad();
         }
 
+    
+    /** 
+    * Obtiene la dirección especifica seleccionada
+    */
     getDireccionEspecifica(){
         console.log('entro');
         this.loadingDireccionEspecifica = true;
@@ -1908,6 +1969,9 @@ export interface DataHistorico{
         
     }
 
+    /** 
+    * Obtiene el nombre de los estados
+    */
     getDataEstados(): void {
         this.loadingEstados = true;
         this.http.post(this.endpointCatalogos + 'getEstados', '', this.httpOptions).subscribe(
@@ -1921,6 +1985,9 @@ export interface DataHistorico{
         );
     }
 
+    /** 
+    * Obtiene el nombre de los muncipios de cada estado o alcaldías en caso de la Ciudad de México
+    */
     getDataMunicipios(event): void {
         this.botonMunicipio = false;
         let busquedaMunCol = '';
@@ -1940,6 +2007,9 @@ export interface DataHistorico{
         );
     }
     
+    /** 
+    * Obtiene las colonias de los estados y/o delegaciones
+    */
     getDataTiposAsentamiento(): void {
         this.loadingTiposAsentamiento = true;
         this.http.post(this.endpointCatalogos + 'getTiposAsentamiento', '', this.httpOptions).subscribe(
@@ -1955,6 +2025,9 @@ export interface DataHistorico{
         );
     }
     
+    /** 
+    * Obtiene las calles de las colonias
+    */
     getDataTiposVia(): void {
         this.loadingTiposVia = true;
         this.http.post(this.endpointCatalogos + 'getTiposVia', '', this.httpOptions).subscribe(
@@ -1971,6 +2044,9 @@ export interface DataHistorico{
         );
     }
     
+    /** 
+    * Obtiene los tipos de localidad
+    */
     getDataTiposLocalidad(): void {
         this.loadingTiposLocalidad = true;
         this.http.post(this.endpointCatalogos + 'getTiposLocalidad', '', this.httpOptions).subscribe(
@@ -1986,6 +2062,9 @@ export interface DataHistorico{
         );
     }
 
+    /** 
+    * Setea los datos del domicilio seleccionado en el formulario
+    */
     setDataDomicilio(data): void {
         console.log("ACA EL COD DATA ESPE");
         console.log(data);
@@ -2158,6 +2237,9 @@ export interface DataHistorico{
     
         }
 
+    /** 
+    * Obtiene todas las modificaciones que se han hecho sobre un domicilio registrado
+    */
     getHistoricoModificaciones(){
         let query = '';
       
@@ -2198,6 +2280,9 @@ export interface DataHistorico{
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
 
+    /** 
+    * @param dataPersonalesEspecifico abre el Dialog con la infirmación del cambio seleccionado
+    */
     viewHistoricoPersonalesEspecifico(dataPersonalesEspecifico): void {
         const dialogRef = this.dialog.open(DialogPersonalesHistoricoEspecificoNotario, {
             width: '700px',

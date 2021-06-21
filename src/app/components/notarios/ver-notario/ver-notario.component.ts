@@ -115,6 +115,9 @@ export class VerNotarioComponent implements OnInit {
     this.getDataDocumentosIdentificativos();
   }
 
+  /** 
+  * Obtiene el nombre de los Estados para llenar el el Select de Estados
+  */
   getDataEstados(): void {
     this.loadingEstados = true;
     this.http.post(this.endpointEstados + 'getEstados', '', this.httpOptions).subscribe(
@@ -129,6 +132,9 @@ export class VerNotarioComponent implements OnInit {
     );
   }
 
+  /** 
+  * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
+  */
   getDataDocumentosIdentificativos(): void{
     this.loadingDocumentosIdentificativos = true;
     this.http.post(this.endpointEstados + 'getCatalogos', '', this.httpOptions).subscribe(
@@ -143,6 +149,9 @@ export class VerNotarioComponent implements OnInit {
     );
   }
 
+  /**
+  * Trae la información guardada del notario seleccionado (Datos personales, direcciones, etc..)
+  */
   getNotarioDatos(){
       this.query = 'infoExtra=true&idPersona=' + this.idNotario; 
       this.loading = true;
@@ -171,6 +180,9 @@ export class VerNotarioComponent implements OnInit {
           );
   }
 
+  /**
+  * Setea los valores encontrado en getDatosDelNotario en los campos del formulario
+  */
   datoDelNotario(){
       this.datosNotario.no_notario = this.dataNotarioResultado[0].NUMNOTARIO;
       this.datosNotario.estado = this.dataNotarioResultado[0].CODESTADO;
@@ -200,6 +212,9 @@ export class VerNotarioComponent implements OnInit {
   // }
 
 
+  /**
+  * Trae la información guardada de las direcciones que están dadas de alta para éste notario
+  */
   getNotarioDirecciones(){
       this.query = '&idPersona=' + this.idNotario; 
       this.loading = true;
