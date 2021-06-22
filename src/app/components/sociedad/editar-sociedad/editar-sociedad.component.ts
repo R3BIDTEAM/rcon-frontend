@@ -140,7 +140,6 @@ export class EditarSociedadComponent implements OnInit {
     dataDomicilios: DataDomicilio[] = [];
     dataDomicilioEspecifico: DataDomicilio[] = [];
     displayedColumnsDom: string[] = ['tipoDir', 'direccion', 'historial', 'editar'];
-    // displayedColumnsDom: string[] = ['tipoDir','direccion', 'historial'];
     displayedColumnsRepdo: string[] = ['representacion','texto','caducidad','editar','eliminar'];
     loadingDomicilios = false;
     loadingDireccionEspecifica = false;
@@ -354,6 +353,7 @@ export class EditarSociedadComponent implements OnInit {
     }
 
     /** 
+    * Abre el dialogo que mostrarrá un mensaje de confirmación según sea el caso
     * @param evento Es el parametro que recibe el método para elegir en el switch que acción realizar.
     * @param element Pude ser un solo dato o un array dependiendo el metodo del swtich.
     * @param tipo Utilizado en el método de eliminarRepresentación para diferenciar entre un representante o representado
@@ -473,7 +473,7 @@ export class EditarSociedadComponent implements OnInit {
     }
 
     /**
-     * 
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
      * @param evt Nos da la referencia de la pagina en la que se encuentra
      */
     paginado(evt): void{
@@ -482,7 +482,7 @@ export class EditarSociedadComponent implements OnInit {
     }
     
     /**
-     * 
+     * Regresa la posición del paginado de acuerdo a los parámetro enviados
      * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
      * @param page_size Valor de la cantidad de registros que se pintaran por página.
      * @param page_number Valor de la página en la cual se encuentra el paginado.
@@ -569,7 +569,6 @@ export class EditarSociedadComponent implements OnInit {
         this.http.post(this.endpointActualiza + metodo + '?idDireccion='+ iddireccion, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
-                    // alert('entro');
                     this.loadingDireccionEspecifica = false;
                     this.dataDomicilioEspecifico = res;
                     this.editDomicilio(this.dataDomicilioEspecifico);
@@ -588,7 +587,7 @@ export class EditarSociedadComponent implements OnInit {
     }
 
     /**
-     * 
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
      * @param evt Nos da la referencia de la pagina en la que se encuentra
      */
     paginado1(evt): void{
@@ -597,7 +596,7 @@ export class EditarSociedadComponent implements OnInit {
     }
 
     /**
-     * 
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
      * @param evt Nos da la referencia de la pagina en la que se encuentra
      */
     paginado2(evt): void{
@@ -606,7 +605,7 @@ export class EditarSociedadComponent implements OnInit {
     }
 
     /**
-     * Agrega un nuevo registro de domicilio
+     * Abre el dialogo que registrara un nuevo domicilio
      */
     addDomicilio(): void {
       let codtiposdireccion = '';
@@ -622,7 +621,7 @@ export class EditarSociedadComponent implements OnInit {
     }
 
     /**
-     * 
+     * Abre el dialogo que nos permitira ver el historial de los domicilios
      * @param idDireccion Valor del idDirección de la cual se obtendran los registros de los domicilios de la representación
      */
     viewHistoricoDomicilio(idDireccion): void {
@@ -631,10 +630,13 @@ export class EditarSociedadComponent implements OnInit {
             data: {idDireccion},
         });
         dialogRef.afterClosed().subscribe(result => {
-                // this.getNotarioDirecciones();
+
         });
     }
 
+    /**
+     * Abre el dialogo que registrara un nuevo domicilio con notificación
+     */
     addDomicilioBoleta(): void {
         let codtiposdireccion = 'N';
         const dialogRef = this.dialog.open(DialogDomicilioSociedad, {
@@ -661,8 +663,11 @@ export class EditarSociedadComponent implements OnInit {
             dialogRef.afterClosed().subscribe(result => {
                     this.getDomicilioSociedad();
             });
-      }
+    }
 
+    /**
+     * Abre el dialog que realizará la busqueda de la sociedad existente
+     */
     buscarSociedadPersona(){
         const dialogRef = this.dialog.open(DialogBuscaSociedad, {
             width: '700px',
@@ -687,7 +692,9 @@ export class EditarSociedadComponent implements OnInit {
             }
         });
     }
-
+    /**
+     * Limpia los datos de la sociedad consultada
+     */
     cleanSociedad(){
         this.datosSociedad.razonSocial = null;
         this.datosSociedad.rfc = null;
@@ -813,7 +820,7 @@ export class EditarSociedadComponent implements OnInit {
     }
 
     /**
-     * 
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
      * @param evt Nos da la referencia de la pagina en la que se encuentra
      */
     paginado4(evt): void{
@@ -847,7 +854,7 @@ export class EditarSociedadComponent implements OnInit {
     }
 
     /**
-     * 
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
      * @param evt Nos da la referencia de la pagina en la que se encuentra
      */
     paginado5(evt): void{
@@ -1100,7 +1107,7 @@ export class DialogBuscaSociedad {
     }
 
     /**
-     * 
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
      * @param evt Nos da la referencia de la pagina en la que se encuentra
      */
     paginado(evt): void{
@@ -1309,6 +1316,9 @@ export class DialogDomicilioSociedad {
         this.botonAsentamiento = false;
     }
   
+    /**
+     * Obtiene el catálogo de estados de la república mexicana. 
+     */
     getDataEstados(): void {
         this.loadingEstados = true;
         this.http.post(this.endpointCatalogos + 'getEstados', '', this.httpOptions).subscribe(
@@ -1787,7 +1797,7 @@ export interface DataMunicipios{
     }
 
     /**
-     * 
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
      * @param evt Nos da la referencia de la pagina en la que se encuentra
      */
     paginado(evt): void{
@@ -1948,7 +1958,7 @@ export class DialogCiudadSociedad {
     }
 
     /**
-     * 
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
      * @param evt Nos da la referencia de la pagina en la que se encuentra
      */
     paginado(evt): void{
@@ -2079,7 +2089,7 @@ export class DialogAsentamientoSociedad {
     }
 
     /**
-     * 
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
      * @param evt Nos da la referencia de la pagina en la que se encuentra
      */
     paginado(evt): void{
@@ -2099,7 +2109,7 @@ export class DialogAsentamientoSociedad {
     }
  
     /**
-     * 
+     * Se almacenan los valores del registro seleccionado.
      * @param element Arreglo de los datos del asentamiento.
      */
     selectAsentamiento(element){
@@ -2215,7 +2225,7 @@ export class DialogViaSociedad {
     }
 
     /**
-     * 
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
      * @param evt Nos da la referencia de la pagina en la que se encuentra
      */
     paginado(evt): void{
@@ -3456,7 +3466,7 @@ export class DialogNotarioSociedad {
     }
     
     /**
-     * 
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
      * @param evt Nos da la referencia de la pagina en la que se encuentra
      */
     paginado(evt): void{
@@ -3474,7 +3484,8 @@ export class DialogNotarioSociedad {
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
-      
+
+    
     clean(): void {
         this.pagina = 1;
         this.total = 0;
@@ -3643,7 +3654,7 @@ export class DialogPersonaSociedad {
     }
   
     /**
-     * 
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
      * @param evt Nos da la referencia de la pagina en la que se encuentra
      */
     paginado(evt): void{
@@ -3845,7 +3856,7 @@ export class DialogSociedadPerito {
     }
 
     /**
-     * 
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
      * @param evt Nos da la referencia de la pagina en la que se encuentra
      */
     paginado(evt): void{
@@ -3965,7 +3976,7 @@ export class DialogHistorialRepS {
     }
 
     /**
-     * 
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
      * @param evt Nos da la referencia de la pagina en la que se encuentra
      */
     paginado(evt): void{
@@ -4265,7 +4276,7 @@ export interface DataHistorico{
     }
 
     /**
-     * 
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
      * @param evt Nos da la referencia de la pagina en la que se encuentra
      */
     paginado(evt): void{

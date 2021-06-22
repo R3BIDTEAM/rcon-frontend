@@ -234,6 +234,9 @@ export class EditarPeritosComponent implements OnInit {
         });
     }
 
+     /**
+     * Valida la sesión del usuario y llama a los metodos necesarios para mostrar en la pantalla la información.
+     */
     ngOnInit(): void {
         this.httpOptions = {
             headers: new HttpHeaders({
@@ -250,6 +253,9 @@ export class EditarPeritosComponent implements OnInit {
         this.getRepresentado();
     }
 
+    /**
+     * Borra de los inputs de los datos del perito y activa el boton de busqueda de contribuyente
+     */
     cleanPerito(){
         this.datoPeritos.apepaterno = null;
         this.datoPeritos.apematerno = null;
@@ -266,6 +272,9 @@ export class EditarPeritosComponent implements OnInit {
         this.botonEdit = true;
     }
 
+    /**
+     * Obtiene los datos del perito consultado.
+     */
     getPeritoDatos(){
         this.query = 'obtenerSociedades=1&idPerito=' + this.idPerito; 
         this.loadingDatosPerito = true;
@@ -320,6 +329,10 @@ export class EditarPeritosComponent implements OnInit {
         }
     }
 
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
         this.dataSource = this.paginate(this.dataSource, this.pageSize, this.pagina);
@@ -394,21 +407,40 @@ export class EditarPeritosComponent implements OnInit {
             );
     }
 
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
     paginado1(evt): void{
         this.pagina1 = evt.pageIndex + 1;
         this.dataSource1 = this.paginate(this.dataSource1, 15, this.pagina1);
     }
 
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
     paginado2(evt): void{
         this.pagina2 = evt.pageIndex + 1;
         this.dataSource2 = this.paginate(this.dataSource2, 15, this.pagina2);
     }
 
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
     paginado3(evt): void{
         this.pagina3 = evt.pageIndex + 1;
         this.dataSource3 = this.paginate(this.dataSource3, 15, this.pagina3);
     }
     
+    /**
+     * Regresa la posición del paginado de acuerdo a los parámetro enviados
+     * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+     * @param page_size Valor de la cantidad de registros que se pintaran por página.
+     * @param page_number Valor de la página en la cual se encuentra el paginado.
+     * @returns 
+     */
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
@@ -501,11 +533,7 @@ export class EditarPeritosComponent implements OnInit {
 
         query = query + '&idExpediente&idpersona=' + this.idPerito;
 
-        //http://localhost:8000/api/v1/registro/actualizaContribuyente?codtipospersona=F&nombre=ERIK&activprincip&idtipomoral&idmotivosmoral&fechainicioactiv&fechacambiosituacion&rfc=RUFV891129R15&apellidopaterno=MORALES&apellidomaterno=MESSIE&curp=PAGJ830626HMCLMN11&claveife=&iddocidentif=&valdocidentif=&fechanacimiento=&fechadefuncion&celular=&email=erik@mail.com&idExpediente&idpersona=4485256
-        //http://localhost:8000/api/v1/registro/actualizaContribuyente?codtipospersona=F&nombre=ERIK&activprincip&idtipomoral&idmotivosmoral&fechainicioactiv&fechacambiosituacion&rfc=RUFV891129R15&apellidopaterno=MORALES&apellidomaterno=MESSIE&curp=PAGJ830626HMCLMN11&claveife=&iddocidentif=&valdocidentif=&fechanacimiento=&fechadefuncion=&celular=&email=erik@mail.com1211515&idExpediente&idpersona=4485256
-        //http://localhost:8000/api/v1/registro/actualizaContribuyente?codtipospersona=F&nombre=ARMA&activprincip&idtipomoral&idmotivosmoral&fechainicioactiv&fechacambiosituacion&rfc=PARA741106NR3&apellidopaterno=PAZ1454&apellidomaterno=ROCHAS&curp=PARA741106HDRZCR08&claveife=&iddocidentif=&valdocidentif=&fechanacimiento=&fechadefuncion=&celular=&email=armandopaz@gmail.com&idExpediente&idpersona=4315306
         this.query = 'codtipospersona=F&' + this.idPerito; 
-        // this.loadingDatosPerito2 = true;
         this.loadingDatosPerito = true;
         console.log(this.endpointActualiza);
         this.http.post(this.endpointActualiza + 'actualizaContribuyente?' + query, '', this.httpOptions)
@@ -642,8 +670,8 @@ export class EditarPeritosComponent implements OnInit {
         }else{
             checkIndi = 'N';
         }
+
         console.log(checkIndi);
-        //return;
         queryAcPeritoEsp = queryAcPeritoEsp + 'idPerito=' + this.idPerito;
 
         queryAcPeritoEsp = (this.datoPeritos.registro) ? queryAcPeritoEsp + '&registro=' + this.datoPeritos.registro : queryAcPeritoEsp + '&registro=';
@@ -670,6 +698,9 @@ export class EditarPeritosComponent implements OnInit {
             );
     }
 
+    /**
+     * Abre el dialogo que registrara un nuevo domicilio
+     */
     addDomicilio(i = -1, dataDomicilio = null): void {
         let codtiposdireccion = '';
         const dialogRef = this.dialog.open(DialogDomicilioPerito, {
@@ -683,6 +714,10 @@ export class EditarPeritosComponent implements OnInit {
         });
     }
 
+    /**
+     * 
+     * @param dataDomicilioEspecifico Valor que se enviará para la obtención del registro a editar.
+     */
     editDomicilio(dataDomicilioEspecifico): void {
         let codtiposdireccion = '';
             const dialogRef = this.dialog.open(DialogDomicilioPerito, {
@@ -694,6 +729,10 @@ export class EditarPeritosComponent implements OnInit {
             });
       }
 
+      /**
+     * Abre el dialogo que nos permitira ver el historial de los domicilios
+     * @param idDireccion Valor del idDirección de la cual se obtendran los registros de los domicilios de la representación
+     */
     viewHistoricoDomicilio(idDireccion): void {
         const dialogRef = this.dialog.open(DialogDomicilioHistoricoPerito, {
             width: '700px',
@@ -704,6 +743,9 @@ export class EditarPeritosComponent implements OnInit {
         });
     }
 
+    /**
+     * Abre el dialogo que registrara un nuevo domicilio con notificación
+     */
     addDomicilioBoleta(i = -1, dataDomicilio = null): void {
         let codtiposdireccion = 'N';
         const dialogRef = this.dialog.open(DialogDomicilioPerito, {
@@ -841,6 +883,10 @@ export class EditarPeritosComponent implements OnInit {
             );
     }
 
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
     paginado4(evt): void{
         this.pagina4 = evt.pageIndex + 1;
         this.dataSource4 = this.paginate(this.dataSource4, 15, this.pagina4);
@@ -871,6 +917,10 @@ export class EditarPeritosComponent implements OnInit {
             );
     }
 
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
     paginado5(evt): void{
         this.pagina5 = evt.pageIndex + 1;
         this.dataSource5 = this.paginate(this.dataSource5, 15, this.pagina5);
@@ -1119,11 +1169,22 @@ export class DialogBuscaPerito {
             );
     }
 
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
         this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
     }
     
+    /**
+     * Regresa la posición del paginado de acuerdo a los parámetro enviados
+     * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+     * @param page_size Valor de la cantidad de registros que se pintaran por página.
+     * @param page_number Valor de la página en la cual se encuentra el paginado.
+     * @returns 
+     */
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
@@ -1205,7 +1266,6 @@ export class DialogDomicilioPerito {
             this.getDireccionEspecifica();
             
             this.domicilioFormGroup = this._formBuilder.group({
-                //idtipodireccion: ['', Validators.required],
                 idestado: ['', Validators.required],
                 delegacion: [null],
                 idmunicipio: [null],
@@ -1250,33 +1310,15 @@ export class DialogDomicilioPerito {
                 this.domicilioFormGroup.updateValueAndValidity();
             });
         
-            // if(data){
-            //     this.setDataDomicilio(data);
-            // }
             if(data){
                 console.log(data.dataDomicilioEspecifico);
                 console.log("recibimos data seteado1");
-                //console.log(data.dataDomicilioEspecifico[0]);
-                // this.domicilioFormGroup.controls['cp'].val('11111');
             }
             this.getDataTiposAsentamiento();
             this.getDataTiposVia();
             this.getDataTiposLocalidad();
         }
     
-    /*getDataTiposDireccion(): void {
-        this.loadingTiposDireccion = true;
-        this.http.get(this.endpointCatalogos, this.httpOptions).subscribe(
-            (res: any) => {
-                this.loadingTiposDireccion = false;
-                this.tiposDireccion = res;
-            },
-            (error) => {
-                this.loadingTiposDireccion = false;
-            }
-        );
-    }*/
-
     getDireccionEspecifica(){
         this.loadingDireccionEspecifica = true;
         let metodo = 'getDireccionById';
@@ -1383,7 +1425,6 @@ export class DialogDomicilioPerito {
     }
   
     getDataDomicilio(): void {
-        //this.dataDomicilio.idtipodireccion = this.domicilioFormGroup.value.idtipodireccion;
         this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
         this.dataDomicilio.codasentamiento = this.domicilioFormGroup.value.codasentamiento;
         this.dataDomicilio.idtipoasentamiento = this.domicilioFormGroup.value.idtipoasentamiento;
@@ -1408,8 +1449,6 @@ export class DialogDomicilioPerito {
         
         if(this.domicilioFormGroup.value.idestado == 9){
             this.dataDomicilio.idmunicipio = this.domicilioFormGroup.value.idmunicipio;
-            // alert(this.dataDomicilio.idmunicipio);
-            //this.dataDomicilio.delegacion = this.domicilioFormGroup.value.delegacion;
         } else {
             this.dataDomicilio.idmunicipio2 = this.domicilioFormGroup.value.idmunicipio2;
             this.dataDomicilio.municipio = (this.domicilioFormGroup.value.municipio) ? this.domicilioFormGroup.value.municipio : null;
@@ -1417,23 +1456,12 @@ export class DialogDomicilioPerito {
             this.dataDomicilio.idciudad = (this.domicilioFormGroup.value.idciudad) ? this.domicilioFormGroup.value.idciudad : null;
         }
 
-
-            // alert(this.dataDomicilio.id_direccion);
             if(this.domicilioFormGroup.value.id_direccion == null){
-                // alert('guardar');
                  this.guardaDomicilio();
             } else{
-                // alert('actualizar');
                  this.actualizarDomicilio();
             }
-
-       
-    
-
-        //console.log('AQUEI EL FORM VALID');
-        // console.log(this.domicilioFormGroup);
-        ///retu
-    }
+   }
         
     guardaDomicilio(){
         
@@ -1782,11 +1810,22 @@ export class DialogMunicipios {
             );
     }
 
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
         this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
     }
     
+    /**
+     * Regresa la posición del paginado de acuerdo a los parámetro enviados
+     * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+     * @param page_size Valor de la cantidad de registros que se pintaran por página.
+     * @param page_number Valor de la página en la cual se encuentra el paginado.
+     * @returns 
+     */
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
@@ -1919,11 +1958,22 @@ export class DialogCiudad {
             );
     }
 
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
         this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
     }
     
+    /**
+     * Regresa la posición del paginado de acuerdo a los parámetro enviados
+     * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+     * @param page_size Valor de la cantidad de registros que se pintaran por página.
+     * @param page_number Valor de la página en la cual se encuentra el paginado.
+     * @returns 
+     */
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
@@ -2029,11 +2079,22 @@ export class DialogAsentamiento {
             );
     }
 
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
         this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
     }
     
+    /**
+     * Regresa la posición del paginado de acuerdo a los parámetro enviados
+     * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+     * @param page_size Valor de la cantidad de registros que se pintaran por página.
+     * @param page_number Valor de la página en la cual se encuentra el paginado.
+     * @returns 
+     */
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
@@ -2145,11 +2206,22 @@ export class DialogVia {
             );
     }
 
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
         this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
     }
     
+    /**
+     * Regresa la posición del paginado de acuerdo a los parámetro enviados
+     * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+     * @param page_size Valor de la cantidad de registros que se pintaran por página.
+     * @param page_number Valor de la página en la cual se encuentra el paginado.
+     * @returns 
+     */
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
@@ -3310,11 +3382,22 @@ export class DialogNotarioPeritos {
             });
     }
   
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
         this.dataSource = this.paginate(this.dataNotarios, this.pageSize, this.pagina);
     }
   
+    /**
+     * Regresa la posición del paginado de acuerdo a los parámetro enviados
+     * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+     * @param page_size Valor de la cantidad de registros que se pintaran por página.
+     * @param page_number Valor de la página en la cual se encuentra el paginado.
+     * @returns 
+     */
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
@@ -3478,11 +3561,22 @@ export class DialogPersonaPeritos {
         );
     }
   
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
         this.dataSource = this.paginate(this.dataPersonas, this.pageSize, this.pagina);
     }
   
+    /**
+     * Regresa la posición del paginado de acuerdo a los parámetro enviados
+     * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+     * @param page_size Valor de la cantidad de registros que se pintaran por página.
+     * @param page_number Valor de la página en la cual se encuentra el paginado.
+     * @returns 
+     */
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
@@ -3630,11 +3724,22 @@ export class DialogSociedadAsociada {
             );
     }
 
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
         this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
     }
     
+    /**
+     * Regresa la posición del paginado de acuerdo a los parámetro enviados
+     * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+     * @param page_size Valor de la cantidad de registros que se pintaran por página.
+     * @param page_number Valor de la página en la cual se encuentra el paginado.
+     * @returns 
+     */
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
@@ -3733,11 +3838,22 @@ export class DialogHistorialRep {
             );
     }
 
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
         this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
     }
     
+    /**
+     * Regresa la posición del paginado de acuerdo a los parámetro enviados
+     * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+     * @param page_size Valor de la cantidad de registros que se pintaran por página.
+     * @param page_number Valor de la página en la cual se encuentra el paginado.
+     * @returns 
+     */
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
@@ -4021,11 +4137,22 @@ export interface DataHistorico{
             );
     }
 
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
         this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
     }
     
+    /**
+     * Regresa la posición del paginado de acuerdo a los parámetro enviados
+     * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+     * @param page_size Valor de la cantidad de registros que se pintaran por página.
+     * @param page_number Valor de la página en la cual se encuentra el paginado.
+     * @returns 
+     */
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
