@@ -559,32 +559,28 @@ export class EditarSociedadComponent implements OnInit {
             );
     }
 
-    /**
-     * 
-     * @param iddireccion Valor del id para obtener el registro del domicilio registrado
-     */
-    getDireccionEspecifica(iddireccion){
-        this.loadingDireccionEspecifica = true;
-        let metodo = 'getDireccionById';
-        this.http.post(this.endpointActualiza + metodo + '?idDireccion='+ iddireccion, '', this.httpOptions)
-            .subscribe(
-                (res: any) => {
-                    this.loadingDireccionEspecifica = false;
-                    this.dataDomicilioEspecifico = res;
-                    this.editDomicilio(this.dataDomicilioEspecifico);
-                    console.log('domicilio único encontrado');
-                    console.log(this.dataDomicilioEspecifico);
-                },
-                (error) => {
-                    this.loadingDireccionEspecifica = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
-                }
-            );
-    }
+    // getDireccionEspecifica(iddireccion){
+    //     this.loadingDireccionEspecifica = true;
+    //     let metodo = 'getDireccionById';
+    //     this.http.post(this.endpointActualiza + metodo + '?idDireccion='+ iddireccion, '', this.httpOptions)
+    //         .subscribe(
+    //             (res: any) => {
+    //                 this.loadingDireccionEspecifica = false;
+    //                 this.dataDomicilioEspecifico = res;
+    //                 this.editDomicilio(this.dataDomicilioEspecifico);
+    //                 console.log('domicilio único encontrado 319');
+    //                 console.log(this.dataDomicilioEspecifico);
+    //             },
+    //             (error) => {
+    //                 this.loadingDireccionEspecifica = false;
+    //                 this.snackBar.open(error.error.mensaje, 'Cerrar', {
+    //                     duration: 10000,
+    //                     horizontalPosition: 'end',
+    //                     verticalPosition: 'top'
+    //                 });
+    //             }
+    //         );
+    // }
 
     /**
      * Método del paginado que nos dira la posición del paginado y los datos a mostrar
@@ -651,7 +647,7 @@ export class EditarSociedadComponent implements OnInit {
     }
 
     /**
-     * 
+     * Recibe el id dirección que enviará al dialog para realizar la búsqueda del domicilio.
      * @param dataDomicilioEspecifico Valor que se enviará para la obtención del registro a editar.
      */
     editDomicilio(dataDomicilioEspecifico): void {
@@ -710,7 +706,7 @@ export class EditarSociedadComponent implements OnInit {
     }
 
     /**
-     * 
+     * Abre el dialogo para relizar el registro de la representación o edición de la misma.
      * @param dataRepresentante Arreglo de los datos de la representación seleccionada
      */
     addRepresentante(dataRepresentante = null): void {
@@ -732,7 +728,7 @@ export class EditarSociedadComponent implements OnInit {
     }
 
     /**
-     * 
+     * Abre el dialogo para relizar el registro de la representación o edición de la misma.
      * @param dataRepresentante Arreglo de los datos de la representación seleccionada
      */
     addRepresentado(dataRepresentante = null): void {
@@ -754,7 +750,7 @@ export class EditarSociedadComponent implements OnInit {
     }
 
     /**
-     * 
+     * Elimina la representación seleccionada
      * @param element Datos de la representación a eliminar
      * @param tipo Valor del tipo de representación de acuerdo al valor seleccionara el método correspondiente.
      */
@@ -797,6 +793,9 @@ export class EditarSociedadComponent implements OnInit {
             );
     }
 
+    /**
+     * Obtiene las representaciónes de la sociedad.
+     */
     getRepresentacion(){
         this.loadingRepresentante = true;
         let queryRep = 'rep=Representantes&idPersona=' + this.idSociedad;
@@ -828,6 +827,9 @@ export class EditarSociedadComponent implements OnInit {
         this.dataSource4 = this.paginate(this.dataSource4, 15, this.pagina4);
     }
 
+    /**
+     * Obtienen los representados de la sociedad.
+     */
     getRepresentado(){
         this.loadingRepresentado = true;
         let queryRepdo = 'rep=Representado&idPersona=' + this.idSociedad;
@@ -863,6 +865,9 @@ export class EditarSociedadComponent implements OnInit {
     }
 
     ///////////////////////////// DATOS PERITOS - SOCIEDAD //////////////////////////
+    /**
+     * Abre el dialog d
+     */
     buscarPeritoPersona(){
         const dialogRef = this.dialog.open(DialogSociedadPerito, {
             width: '700px',
@@ -913,7 +918,7 @@ export class EditarSociedadComponent implements OnInit {
     }
 
     /**
-     * 
+     * Elimina la asociación del perito con la sociedad.
      * @param element Datos del registro seleccionado.
      */
     eliminarPeritoSoicedad(element){
@@ -945,6 +950,9 @@ export class EditarSociedadComponent implements OnInit {
             );
     }
 
+    /**
+     * Elimina todas las asociaciones de los peritos con la sociedad.
+     */
     eliminarPeritoSoicedadTodos(){
         this.loadingDatosPerito = true;
         let queryEPS = 'idPersona=' + this.idSociedad;
@@ -961,6 +969,9 @@ export class EditarSociedadComponent implements OnInit {
             );
     }
 
+    /**
+     * Abre el dialogo que nos mostrará el historial de las representaciones.
+     */
     historialRepresentacion(){
         const dialogRef = this.dialog.open(DialogHistorialRepS, {
             width: '700px',
@@ -1031,6 +1042,9 @@ export class DialogBuscaSociedad {
             };
     }
 
+    /**
+     * Reinicia los valores del paginado y la búsqueda.
+     */
     cleanBusca(): void{
         this.loading = false;
         this.pagina = 1;
@@ -1040,6 +1054,9 @@ export class DialogBuscaSociedad {
         this.dataPaginate;
     }
 
+    /**
+     * Valida que exista un dato para activar el bóton de búsqueda.
+     */
     validateSearch(){
         this.search = (
             this.razonSocial ||
@@ -1049,7 +1066,7 @@ export class DialogBuscaSociedad {
     }
 
     /**
-     * 
+     * De acuerdo al valor del dato limpiara los campos identificativos o personales.
      * @param isIdentificativo Valor que nos indica que campos utilizaremos para realizar la busqueda
      */
     clearInputsIdentNoIdent(isIdentificativo): void {
@@ -1062,6 +1079,9 @@ export class DialogBuscaSociedad {
         }
     }
 
+    /**
+     * Obtiene la sociedad de acuerdo por el dato ya sea identificativo o personal.
+     */
     getSociedad(){
         let query = '';
         let busquedaDatos = '';
@@ -1284,6 +1304,9 @@ export class DialogDomicilioSociedad {
             this.getDataTiposLocalidad();
         }
 
+    /** 
+     * Realiza la búsqueda del domicilio por el id Dirección
+     * */        
     getDireccionEspecifica(){
         this.loadingDireccionEspecifica = true;
         let metodo = 'getDireccionById';
@@ -1308,8 +1331,8 @@ export class DialogDomicilioSociedad {
     }
     
     /**
-     * 
-     * @param event Obtiene el nombre de acuerdo al valor seleccionado en el select
+     * Obtiene el nombre de acuerdo al valor seleccionado en el select.
+     * @param event Obtiene el valor y nombre de la etiqueta option en el select
      */
     getNombreDel(event): void {
         this.dataDomicilio.delegacion = event.source.triggerValue;
@@ -1333,7 +1356,7 @@ export class DialogDomicilioSociedad {
     }
 
     /**
-     * 
+     * Obtiene los municipios de acuerdo al estado seleccionado
      * @param event Valor que se recibe para la obtención de las alcaldias o municipios.
      */
     getDataMunicipios(event): void {
@@ -1354,6 +1377,9 @@ export class DialogDomicilioSociedad {
         );
     }
     
+    /**
+     * Obtiene el catálogo de los asentamientos.
+     */
     getDataTiposAsentamiento(): void {
         this.loadingTiposAsentamiento = true;
         this.http.post(this.endpointCatalogos + 'getTiposAsentamiento', '', this.httpOptions).subscribe(
@@ -1369,6 +1395,9 @@ export class DialogDomicilioSociedad {
         );
     }
   
+    /**
+     * Obtiene el catálogo de las vías
+     */
     getDataTiposVia(): void {
         this.loadingTiposVia = true;
         this.http.post(this.endpointCatalogos + 'getTiposVia', '', this.httpOptions).subscribe(
@@ -1385,6 +1414,9 @@ export class DialogDomicilioSociedad {
         );
     }
   
+    /**
+     * Obtiene el catálogo de los tipos de localidad
+     */
     getDataTiposLocalidad(): void {
         this.loadingTiposLocalidad = true;
         this.http.post(this.endpointCatalogos + 'getTiposLocalidad', '', this.httpOptions).subscribe(
@@ -1399,9 +1431,11 @@ export class DialogDomicilioSociedad {
             }
         );
     }
-  
+
+    /**
+     * Almacena los datos del formulario del domicilio y de acuerdo al valor inserta o actualiza
+     */
     getDataDomicilio(): void {
-        //this.dataDomicilio.idtipodireccion = this.domicilioFormGroup.value.idtipodireccion;
         this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
         this.dataDomicilio.codasentamiento = this.domicilioFormGroup.value.codasentamiento;
         this.dataDomicilio.idtipoasentamiento = this.domicilioFormGroup.value.idtipoasentamiento;
@@ -1426,15 +1460,12 @@ export class DialogDomicilioSociedad {
         
         if(this.domicilioFormGroup.value.idestado == 9){
             this.dataDomicilio.idmunicipio = this.domicilioFormGroup.value.idmunicipio;
-            // alert(this.dataDomicilio.idmunicipio);
-            //this.dataDomicilio.delegacion = this.domicilioFormGroup.value.delegacion;
         } else {
             this.dataDomicilio.idmunicipio2 = this.domicilioFormGroup.value.idmunicipio2;
             this.dataDomicilio.municipio = (this.domicilioFormGroup.value.municipio) ? this.domicilioFormGroup.value.municipio : null;
             this.dataDomicilio.ciudad = (this.domicilioFormGroup.value.ciudad) ? this.domicilioFormGroup.value.ciudad : null;
             this.dataDomicilio.idciudad = (this.domicilioFormGroup.value.idciudad) ? this.domicilioFormGroup.value.idciudad : null;
         }
-
 
         if(this.domicilioFormGroup.value.id_direccion == null){
                 this.guardaDomicilio();
@@ -1497,7 +1528,6 @@ export class DialogDomicilioSociedad {
                             verticalPosition: 'top'
                         });
                     }
-                    //this.dialogRef.close();
                 },
                 (error) => {
                     this.snackBar.open('Ocurrio un error al Insertar la dirección, intente nuevemente', 'Cerrar', {
@@ -1569,7 +1599,7 @@ export class DialogDomicilioSociedad {
     }
 
     /**
-     * 
+     * Recibe los datos del domicilio previamente seleccionado para su edición
      * @param data Arreglo con los datos del registro seleccionado.
      */
     setDataDomicilio(data): void {
@@ -1967,7 +1997,7 @@ export class DialogCiudadSociedad {
     }
     
     /**
-     * 
+     * Regresa la posición del paginado de acuerdo a los parámetro enviados
      * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
      * @param page_size Valor de la cantidad de registros que se pintaran por página.
      * @param page_number Valor de la página en la cual se encuentra el paginado.
@@ -1978,7 +2008,7 @@ export class DialogCiudadSociedad {
     }
 
     /**
-     * 
+     * Obtiene el arreglo de la ciudad seleccionada y almacena los datos para utilizarlos en el registro del domicilio.
      * @param element Arreglo de los datos del registro seleccionado
      */
     selectCiudad(element){
@@ -2037,7 +2067,7 @@ export class DialogAsentamientoSociedad {
         console.log(data);
     }
   
-     /**
+    /**
      * Limpia la búsqueda especifica realizada y llama al método que obtiene todos los registros previamente mostrados.
      */
     cleanAsentamiento(){
@@ -2098,7 +2128,7 @@ export class DialogAsentamientoSociedad {
     }
     
     /**
-     * 
+     * Regresa la posición del paginado de acuerdo a los parámetro enviados
      * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
      * @param page_size Valor de la cantidad de registros que se pintaran por página.
      * @param page_number Valor de la página en la cual se encuentra el paginado.
@@ -2234,7 +2264,7 @@ export class DialogViaSociedad {
     }
     
     /**
-     * 
+     * Regresa la posición del paginado de acuerdo a los parámetro enviados
      * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
      * @param page_size Valor de la cantidad de registros que se pintaran por página.
      * @param page_number Valor de la página en la cual se encuentra el paginado.
@@ -2245,8 +2275,8 @@ export class DialogViaSociedad {
     }
 
     /**
-     * 
-     * @param element Arreglo de los datos del registro seleccionado.
+     * Obtiene los datos y almacena los datos de la vía seleccionada.
+     * @param element Arreglo de los datos del registro seleccionado
      */
     selectVia(element){
         console.log(element);
@@ -2336,7 +2366,7 @@ export class DialogRepresentacionSociedad {
     }
     
     /**
-     * 
+     * Al cambio en el llenado de curp o rfc se activará o desactivará uno de los dos validadores de requerido.
      * @param remove Valor del campo que se le retirara la validación, puede ser CURP o RFC
      * @param add  Valor del campo que se le agregara a la validación, puede ser CURP o RFC
      */
@@ -2563,7 +2593,7 @@ export class DialogRepresentacionSociedad {
     }
 
     /**
-     * 
+     * Obtiene el arreglo de los datos  de la representación seleccionada para editar.
      * @param dataRepresentacion Arreglo con los datos del registro seleccionado.
      */
     setDataRepresentacion(dataRepresentacion): void {
@@ -2679,7 +2709,7 @@ export class DialogRepresentadoSociedad {
     }
 
     /**
-     * 
+     * * Al cambio en el llenado de curp o rfc se activará o desactivará uno de los dos validadores de requerido.
      * @param remove Valor del campo que se le retirara la validación, puede ser CURP o RFC
      * @param add  Valor del campo que se le agregara a la validación, puede ser CURP o RFC
      */
@@ -2721,7 +2751,7 @@ export class DialogRepresentadoSociedad {
         });
     }
   
-     /**
+    /**
      * Abre el dialogo para agregar los ficheros y datos relacionados su registro.
      */
     addDocumento(dataDocumento = null): void {
@@ -2782,7 +2812,6 @@ export class DialogRepresentadoSociedad {
         this.idPersonaRepresentacion = (this.idPersonaRepresentacion) ? this.idPersonaRepresentacion : null;
         console.log('AQUIII EL JSON DEL REPRESENTADO');
         console.log(this.dataRepresentacion);
-        //console.log(JSON.stringify(this.dataRepresentacion));
 
         if(this.insertOrUpdate == 2){
             this.updateRepresentacion();            
@@ -2886,10 +2915,9 @@ export class DialogRepresentadoSociedad {
 
         queryActRep = queryActRep + '&idRepresentacion=' + this.idRepresentacion + '&idDocumentoDigital=' + this.idDocumento;
 
-        //actualizarRepresentaciontextorepresentacion=Texto Representacion Prueba 33&fechacaducidad=Fri Dec 31 2021 00:00:00 GMT-0600 (hora estándar central)&idRepresentacion=14&idDocumentoDigital=17646226
         console.log("QUERY ACTUALIZA");
         console.log(queryActRep);
-        //return;
+
         this.http.post(this.endpoint + 'actualizarRepresentacion?' + queryActRep, '', this.httpOptions).subscribe(
             (res: any) => {
                 this.snackBar.open('SE HA ACTUALIZADO EL REPRESENTADO', 'Cerrar', {
@@ -2910,7 +2938,7 @@ export class DialogRepresentadoSociedad {
     }
 
     /**
-     * 
+     * Obtiene el arreglo de los datos  de la representación seleccionada para editar.
      * @param dataRepresentacion Arreglo con los datos del registro seleccionado.
      */
     setDataRepresentacion(dataRepresentacion): void {
@@ -3039,34 +3067,8 @@ export class DialogDocumentoSociedad {
         console.log(data);
     }
   
-    // getDataTiposDocumentoDigital(): void {
-    //     this.loadingTiposDocumentoDigital = true;
-    //     this.http.get(this.endpoint, this.httpOptions).subscribe(
-    //         (res: any) => {
-    //             this.loadingTiposDocumentoDigital = false;
-    //             this.tiposDocumentoDigital = res;
-    //         },
-    //         (error) => {
-    //             this.loadingTiposDocumentoDigital = false;
-    //         }
-    //     );
-    // }
-  
-    // getDataTiposDocumentoJuridico(): void {
-    //     this.loadingTiposDocumentoJuridico = true;
-    //     this.http.get(this.endpoint, this.httpOptions).subscribe(
-    //         (res: any) => {
-    //             this.loadingTiposDocumentoJuridico = false;
-    //             this.tiposDocumentoJuridico = res;
-    //         },
-    //         (error) => {
-    //             this.loadingTiposDocumentoJuridico = false;
-    //         }
-    //     );
-    // }
-
     /**
-     * 
+     * Obtiene el valor y nombre de acuerdo al valor de la etiqueta option seleccionada.
      * @param event Contiene el nombre de la etiqueta option de acuerdo al valor de este en el select.
      */
     getTipoDocJuridico(event): void {
@@ -3091,7 +3093,7 @@ export class DialogDocumentoSociedad {
     }
   
     /**
-     * 
+     * Activa la validación del fomulario ya agrega el fichero.
      * @param data Datos de los ficheros que activan la validación del mismo en el formulario.
      * @returns 
      */
@@ -3100,7 +3102,7 @@ export class DialogDocumentoSociedad {
     }
   
     /**
-     * 
+     * Remueve el fichero agregado
      * @param i Número del index del registro seleccionado.
      */
     removeItem(i) {
@@ -3157,7 +3159,7 @@ export class DialogDocumentoSociedad {
     }
 
     /**
-     * 
+     * Obtiene la información del documento y el fichero.
      * @param idDocumento2 Valor del idDocumento utilizado para la búsqueda del mismo
      */
     setDataDocumento(idDocumento2): void {
@@ -3266,7 +3268,7 @@ export class DialogDocumentoSociedad {
     }
 
     /**
-     * 
+     * Elimina el fichero seleccionado
      * @param element Arreglo con los datos seleccionados del registro.
      * @param i Valor del index del registro seleccionado.
      */
@@ -3406,6 +3408,9 @@ export class DialogNotarioSociedad {
         this.getDataEstados();
     }
 
+    /**
+     * Obtiene el catálogo de los estados de la república Mexicana.
+     */
     getDataEstados(): void {
         this.loadingEstados = true;
         this.http.post(this.endpointCatalogos + 'getEstados', '', this.httpOptions).subscribe(
@@ -3419,6 +3424,9 @@ export class DialogNotarioSociedad {
         );
     }
 
+    /**
+     * Obtiene los datos del notario de acuerdo a los parametros dados en la búsqueda.
+     */
     getDataNotarios(): void {
         this.loading = true;
         this.isBusqueda = true;
@@ -3485,7 +3493,9 @@ export class DialogNotarioSociedad {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
 
-    
+    /**
+     * Limpia los datos de la búsqueda y valores previamente definidos.
+     */
     clean(): void {
         this.pagina = 1;
         this.total = 0;
@@ -3497,7 +3507,7 @@ export class DialogNotarioSociedad {
     }
 
     /**
-     * 
+     * Obtiene y almacena el arreglo del norario seleccionado.
      * @param element Arreglo de los datos del registro seleccionado.
      */
     notarioSelected(element) {
@@ -3799,6 +3809,9 @@ export class DialogSociedadPerito {
         this.dataPaginate;
     }
 
+    /**
+     * Realiza la búsqueda del perito a asociar con la sociedad.
+     */
     getPerito2(){
         let query = '';
         let busquedaDatos = '';
@@ -3875,6 +3888,10 @@ export class DialogSociedadPerito {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
 
+    /**
+     * Recibe el arreglo del perito seleccionado y los almacena para poder utilizarlos al cerrar el dialogo.
+     * @param element Arreglo de los datos del perito
+     */
     peritoPersonaSelected(element){
         console.log(element);
         this.datoPeritoPersona.idperito = element.IDPERITO;
