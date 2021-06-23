@@ -54,9 +54,11 @@ export class AltaPeritosComponent implements OnInit {
         public dialog: MatDialog,
         private auth: AuthService,
         private route: ActivatedRoute,
-    ) {
-    }
+    ) {}
 
+    /**
+     * Valida la sesión del usuario
+     */
     ngOnInit(): void {
         this.httpOptions = {
             headers: new HttpHeaders({
@@ -85,6 +87,9 @@ export class AltaPeritosComponent implements OnInit {
           this.datoPeritos.independiente = 'N';
     }
 
+    /**
+     * Limpia los campos del formulario.
+     */
     clean(){
         this.peritoPersonaFormGroup.controls['apepaterno'].setValue(null);
         this.peritoPersonaFormGroup.controls['apematerno'].setValue(null);
@@ -105,6 +110,10 @@ export class AltaPeritosComponent implements OnInit {
         this.inserto = false;
     }
 
+    /**
+     * Obtiene el dato del checbox para definir la variable independiente sea S en caso de estar seleccionado o N de no ser así.
+     * @param dato Valor true o false del check
+     */
     isIndependiente(dato){
         if(dato.checked){
             this.datoPeritos.independiente = 'S';
@@ -113,6 +122,11 @@ export class AltaPeritosComponent implements OnInit {
         }
     }
 
+    /**
+     * Consulta si existe un registro con los mismos datos que se están ingresando para evitar la duplicidad,
+     * de coincidir los datos con un registro existente nos mostrará un dialogo con los datos existentes,
+     * de no existir coincidencias registrará el nuevo perito.
+     */
     consulta_previa(){
         this.datoPeritos.registro = this.peritoPersonaFormGroup.value.registro;
         this.datoPeritos.fecha_alta = this.peritoPersonaFormGroup.value.fecha_alta;
@@ -132,13 +146,10 @@ export class AltaPeritosComponent implements OnInit {
         let query = '';
         let busquedaDatos = 'getContribuyentesSimilares';
 
-        //query = (this.datoPeritos.nombre) ? query + 'nombre=' + this.datoPeritos.nombre + '&filtroNombre=' : query + 'nombre=&filtroNombre=';
         query = query + 'nombre=&filtroNombre=';
 
-        //query = (this.datoPeritos.apepaterno) ? query + '&apellidoPaterno=' + this.datoPeritos.apepaterno + '&filtroApellidoPaterno=' : query + '&apellidoPaterno=&filtroApellidoPaterno=';
         query = query + '&apellidoPaterno=&filtroApellidoPaterno=';
 
-        //query = (this.datoPeritos.apematerno) ? query + '&apellidoMaterno=' + this.datoPeritos.apematerno + '&filtroApellidoMaterno=' : query + '&apellidoMaterno=&filtroApellidoMaterno=';
         query = query + '&apellidoMaterno=&filtroApellidoMaterno=';
 
         query = (this.datoPeritos.curp) ? query + '&curp=' + this.datoPeritos.curp : query + '&curp=';
@@ -174,6 +185,9 @@ export class AltaPeritosComponent implements OnInit {
             );
     }
 
+    /**
+     * Abre el dialogo que nos muestra los registros existentes para editar o confirmar si queremos continuar con el registro.
+     */
     validaDialog(res){
         const dialogRef = this.dialog.open(DialogDuplicadosComponent, {
             width: '850px',
@@ -190,14 +204,14 @@ export class AltaPeritosComponent implements OnInit {
         });
     }
 
+    /**
+     * Registra el nuevo perito.
+     */
     guardaPerito(){
         let metodo = 'insertarPerito';
         let query = 'idPersona';
         this.loading = true;
         
-        //http://localhost:8000/api/v1/registro/insertarPerito?idPersona&registro=v-9999-99&fechaAlta=10-05-2021&fechaBaja&independiente=N&nombre=Omar Isaias&apellidoPaterno=Vidal&apellidoMaterno=Perez&rfc=VIP900629MG5&curp&ife=PLGMJN83062615H500&iddocIdentif=1&valdocIdentif&fechaNacimiento&fechaDefuncion&email=ividal@mail.com&celular&codtiposPersona=F&persona&idExpediente=347418
-        //http://localhost:8000/api/v1/registro/insertarPerito?idPersona&registro=V-9988-48&fechaAlta=&fechaBaja=&independiente=N&nombre=VIVIANA&apellidopaterno=CHAVEZ&apellidomaterno=ROSAS&rfc=PIPO900929FA0&curp=PIPO900929HASDER08&claveife=DA181F&iddocidentif=&valdocidentif=&fechanacimiento=&fechadefuncion=&email=lli@gmail.com&celular=&codtiposPersona=F&persona&idExpediente=347418
-
         query = (this.datoPeritos.registro) ? query + '&registro=' + this.datoPeritos.registro : query + '&registro=';
         
         query = (this.datoPeritos.fecha_alta) ? query + '&fechaAlta=' + moment(this.datoPeritos.fecha_alta).format('DD-MM-YYYY') : query + '&fechaAlta=';
@@ -233,9 +247,7 @@ export class AltaPeritosComponent implements OnInit {
 
         query = (this.datoPeritos.login) ? query + '&login=' + this.datoPeritos.login : query + '&login=';
 
-        //this.datoPeritos.independiente
         console.log(this.datoPeritos.independiente);
-        //return;
         this.http.post(this.endpoint + metodo + '?' + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
@@ -260,6 +272,9 @@ export class AltaPeritosComponent implements OnInit {
             );
     }
 
+    /**
+     * Abre el dialogo para realizar la búsqueda de un contribuyente existente.
+     */
     openDialogPerito(){
         const dialogRef = this.dialog.open(DialogAltaBusca, {
             width: '700px',
@@ -351,6 +366,9 @@ export class DialogAltaBusca {
             };
         }
 
+    /**
+     * Valida que exista un dato para activar el bóton de búsqueda.
+     */
     validateSearchBuscaP(){
         this.search = (
             this.appaterno ||
@@ -365,6 +383,10 @@ export class DialogAltaBusca {
         ) ? true : false;
     }
 
+    /**
+     * De acuerdo al parametro sea identificativo o personal se limpiaran los otros campos.
+     * @param isIdentificativo Valor que nos indica que campos utilizaremos para realizar la busqueda
+     */
     clearInputsIdentNoIdent2(isIdentificativo): void {
         this.isIdentificativo = isIdentificativo;
         if(this.isIdentificativo){
@@ -381,6 +403,9 @@ export class DialogAltaBusca {
         }
     }
 
+    /**
+     * Reinicia los valores del paginado.
+     */
     cleanBusca(): void{
         this.pagina = 1;
         this.total = 0;
@@ -389,6 +414,9 @@ export class DialogAltaBusca {
         this.dataPaginate;
     }
 
+    /**
+     * Obtiene el o los registros de los contribuyentes existentes.
+     */
     getPerito2(){
         let query = '';
         let busquedaDatos = '';
@@ -445,15 +473,30 @@ export class DialogAltaBusca {
             );
     }
 
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
         this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
     }
     
+    /**
+     * Regresa la posición del paginado de acuerdo a los parámetro enviados
+     * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+     * @param page_size Valor de la cantidad de registros que se pintaran por página.
+     * @param page_number Valor de la página en la cual se encuentra el paginado.
+     * @returns 
+     */
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
 
+    /**
+     * Obtiene y almacena los fato del perito seleccionado, la cual se mostrará en el formulario.
+     * @param element Arreglo de los datos del perito seleccionado
+     */
     peritoPersonaSelected(element){
         console.log(element);
         this.idperito = element.IDPERITO;

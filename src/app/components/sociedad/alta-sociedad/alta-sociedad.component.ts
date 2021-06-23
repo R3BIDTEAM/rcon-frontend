@@ -44,11 +44,11 @@ export class AltaSociedadComponent implements OnInit {
         private route: ActivatedRoute,
     ) { }
 
-/**
- * ACA LA DOCUMENTACIÓN
- * @param httpOptions No se que hace la neta
- * @return no regresa nada
- */
+    /**
+     * ACA LA DOCUMENTACIÓN
+     * @param httpOptions No se que hace la neta
+     * @return no regresa nada
+     */
     ngOnInit(): void {
         this.httpOptions = {
             headers: new HttpHeaders({
@@ -68,6 +68,9 @@ export class AltaSociedadComponent implements OnInit {
           });
     }
 
+    /**
+     * Reinicia los valores del paginado.
+     */
     clean(): void{
         this.sociedadFormGroup.controls['razonSocial'].setValue(null);
         this.sociedadFormGroup.controls['rfc'].setValue(null);
@@ -79,6 +82,11 @@ export class AltaSociedadComponent implements OnInit {
         this.inserto = false;
     }
 
+    /**
+     * Consulta si existe un registro con los mismos datos que se están ingresando para evitar la duplicidad,
+     * de coincidir los datos con un registro existente nos mostrará un dialogo con los datos existentes,
+     * de no existir coincidencias registrará la nueva sociedad.
+     */
     consulta_previa(){
         this.razonSocial = this.sociedadFormGroup.value.razonSocial;
         this.rfc = this.sociedadFormGroup.value.rfc;
@@ -93,9 +101,6 @@ export class AltaSociedadComponent implements OnInit {
         
         query = query + 'nombre=&filtroNombre=';
 
-        // if(this.razonSocial){
-        //     query = query + '&apellidoPaterno='+ this.razonSocial + '&filtroApellidoPaterno=';
-        // }
         query = query + '&apellidoPaterno=&filtroApellidoPaterno=';
         
         query = query + '&apellidoMaterno=&filtroApellidoMaterno=&curp=';
@@ -105,7 +110,6 @@ export class AltaSociedadComponent implements OnInit {
         }
 
         query = query + '&claveife&actividadPrincip=';
-        //http://localhost:8000/api/v1/registro/getContribuyentesSimilares?nombre=&filtroNombre=&apellidoPaterno=&filtroApellidoPaterno=&apellidoMaterno=&filtroApellidoMaterno=&curp=VIPI900629HDFDRS08&rfc=VIPI900629MG5&claveife&actividadPrincip=
         this.loading = true;
         console.log("RESULTADO DE LA BUSQUEDA");
         console.log(this.endpoint);
@@ -132,6 +136,9 @@ export class AltaSociedadComponent implements OnInit {
             );
     }
 
+    /**
+     * Abre el dialogo que nos muestra los registros existentes para editar o confirmar si queremos continuar con el registro.
+     */
     validaDialog(res): void {
         //this.dataSource = res;
         const dialogRef = this.dialog.open(DialogDuplicadosComponent, {
@@ -149,14 +156,14 @@ export class AltaSociedadComponent implements OnInit {
         });
     }
 
+    /**
+     * Registra los datos de la nueva sociedad.
+     */
     guardaSociedad(){
 
         let query = 'idPersona';
         this.loading = true;
         
-        //http://localhost:8000/api/v1/registro/insertarSociedad?idPersona&registro=S-9999-99&fechaAlta=14-05-2021&fechaBaja&nombre=CHAI S.A484&rfc=VIP900629MG5&email=ivl@mail.com&login&codtiposPersona=M&persona&idExpediente=347418
-        //http://localhost:8000/api/v1/registro/insertarSociedad?idPersona&registro=S-0012-99&fechaAlta=21-05-2021&fechaBaja=&nombre=PEKAS DOGS&rfc=PKAS900629D4&email=pks@dogs.com&login=&codtiposPersona=M&persona&idExpediente
-
         query = (this.registro) ? query + '&registro=' + this.registro : query + '&registro=';
         
         query = (this.fecha_alta) ? query + '&fechaAlta=' + moment(this.fecha_alta).format('DD-MM-YYYY') : query + '&fechaAlta=';
@@ -173,9 +180,7 @@ export class AltaSociedadComponent implements OnInit {
 
         query = query + '&codtiposPersona=M&persona&idExpediente';
 
-        //this.datoPeritos.independiente
         console.log(this.endpoint + '?' + query);
-        //return;
         this.http.post(this.endpoint + '?' + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
@@ -201,6 +206,9 @@ export class AltaSociedadComponent implements OnInit {
             );
     }
 
+    /**
+     * Abre el dialogo para realizar la búsqueda de una sociedad existente.
+     */
     openDialogSociedad(): void {
         const dialogRef = this.dialog.open(DialogSociedad, {
             width: '850px',
@@ -253,6 +261,9 @@ export class DialogSociedad {
         ) {
     }
 
+    /**
+     * Valida la sesión del usuario
+     */
     ngOnInit(): void {
         this.httpOptions = {
             headers: new HttpHeaders({
@@ -262,10 +273,16 @@ export class DialogSociedad {
         };
     }
 
+    /**
+     * Cierra el dialogo
+     */
     onNoClick(): void {
         this.dialogRef.close();
     }
 
+    /**
+     * Reinicia los valores del paginado.
+     */
     clean(): void{
         this.loading = false;
         this.pagina = 1;
@@ -275,6 +292,9 @@ export class DialogSociedad {
         this.dataPaginate;
     }
 
+    /**
+     * Valida que exista un dato para activar el bóton de búsqueda.
+     */
     validateSearch(){
         this.search = (
             this.razonSocial ||
@@ -283,6 +303,10 @@ export class DialogSociedad {
         ) ? true : false;
     }
 
+    /**
+     * De acuerdo al parametro sea identificativo o personal se limpiaran los otros campos.
+     * @param isIdentificativo Valor que nos indica que campos utilizaremos para realizar la busqueda
+     */
     clearInputsIdentNoIdent(isIdentificativo): void {
         this.isIdentificativo = isIdentificativo;
         if(this.isIdentificativo){
@@ -293,6 +317,9 @@ export class DialogSociedad {
         }
     }
 
+    /**
+     * Realiza la búsqueda de una sociedad existente de acuerdo a los críterios que pueden ser datos identificativos o personales.
+     */
     getSociedad(){
         let query = '';
         let busquedaDatos = '';
@@ -334,15 +361,30 @@ export class DialogSociedad {
             );
     }
 
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
         this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
     }
     
+    /**
+     * Regresa la posición del paginado de acuerdo a los parámetro enviados
+     * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+     * @param page_size Valor de la cantidad de registros que se pintaran por página.
+     * @param page_number Valor de la página en la cual se encuentra el paginado.
+     * @returns 
+     */
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
 
+    /**
+     * Obtiene y almacea los datos de la sociedad seleccionada, la cual se mostrará en el formulario.
+     * @param element Arreglo de los datos de la sociedad seleccionada
+     */
     sociedadSelected(element){
         console.log(element);
         this.sociedadDialog.razonSocial = element.APELLIDOPATERNO;

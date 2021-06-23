@@ -46,6 +46,9 @@ export class EdicionPeritosComponent implements OnInit {
         private route: ActivatedRoute
     ) { }
 
+    /**
+     * Valida la sesión del usuario
+     */
     ngOnInit(): void {
         this.httpOptions = {
             headers: new HttpHeaders({
@@ -55,6 +58,10 @@ export class EdicionPeritosComponent implements OnInit {
         };
     }
 
+    /**
+     * De acuerdo al parametro sea identificativo o personal se limpiaran los otros campos.
+     * @param isIdentificativo Valor que nos indica que campos utilizaremos para realizar la busqueda
+     */
     clearInputsIdentNoIdent(isIdentificativo): void {
         this.isIdentificativo = isIdentificativo;
         if(this.isIdentificativo){
@@ -71,6 +78,9 @@ export class EdicionPeritosComponent implements OnInit {
         }
     }
 
+    /**
+     * Reinicia los valores del paginado.
+     */
     clean(): void{
         this.pagina = 1;
         this.total = 0;
@@ -79,6 +89,9 @@ export class EdicionPeritosComponent implements OnInit {
         this.dataPaginate;
     }
 
+    /**
+     * Valida que exista un dato para activar el bóton de búsqueda.
+     */
     validateSearch(){
         this.search = (
                 this.appaterno ||
@@ -93,6 +106,9 @@ export class EdicionPeritosComponent implements OnInit {
             ) ? true : false;
     }
 
+    /**
+     * Obtiene el o los registros del perito de acuerdo al críterio de búsqueda que pueden ser datos identificativos o personales.
+     */
     getPerito(){
         let query = '';
         let busquedaDatos = '';
@@ -153,11 +169,22 @@ export class EdicionPeritosComponent implements OnInit {
             );
     }
 
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
         this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
     }
     
+    /**
+     * Regresa la posición del paginado de acuerdo a los parámetro enviados
+     * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+     * @param page_size Valor de la cantidad de registros que se pintaran por página.
+     * @param page_number Valor de la página en la cual se encuentra el paginado.
+     * @returns 
+     */
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }

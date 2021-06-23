@@ -1170,7 +1170,7 @@ export class DialogBuscaPerito {
     }
 
     /**
-     * 
+     * Realiza la búsqueda del perito a asociar con la sociedad.
      */
     getPerito2(){
         let query = '';
@@ -3670,6 +3670,10 @@ export class DialogPersonaPeritos {
         console.log(this.tipoPersona);
       }
   
+    /**
+     * De acuerdo al parametro sea identificativo o personal se limpiaran los otros campos.
+     * @param isIdentificativo Valor que nos indica que campos utilizaremos para realizar la busqueda
+     */
     clearInputsIdentNoIdent(isIdentificativo): void {
         this.isIdentificativo = isIdentificativo;
         if(this.isIdentificativo){
@@ -3685,6 +3689,9 @@ export class DialogPersonaPeritos {
         }
     }
   
+    /**
+     * Obtiene a la persona sea física o moral por datos identificativos o personales.
+     */
     getDataPersonas(): void {
         this.loading = true;
         this.isBusqueda = true;
@@ -3764,6 +3771,9 @@ export class DialogPersonaPeritos {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
   
+    /**
+     * Reinicia los valores del paginado y la búsqueda.
+     */
     clean(): void {
         this.pagina = 1;
         this.total = 0;
@@ -3774,6 +3784,10 @@ export class DialogPersonaPeritos {
         this.isBusqueda = false;
     }
   
+    /**
+     * Obtiene y almacena los datos de la persona moral o físca seleccinada.
+     * @param element Arreglo de los datos de la persona seleccionada
+     */
     personaSelected(element) {
         this.persona.tipoPersona = this.tipoPersona;
         this.persona.id = element.IDPERSONA;
@@ -3840,6 +3854,9 @@ export class DialogSociedadAsociada {
 
     }
 
+    /**
+     * Reinicia los valores del paginado y búsqueda.
+     */
     clean(): void{
         this.loading = false;
         this.pagina = 1;
@@ -3850,6 +3867,9 @@ export class DialogSociedadAsociada {
         this.optionSociedad = undefined;
     }
 
+    /**
+     * Valida que exista un dato para activar el bóton de búsqueda.
+     */
     validateSearch(){
         this.search = (
             this.razonSocial ||
@@ -3858,6 +3878,10 @@ export class DialogSociedadAsociada {
         ) ? true : false;
     }
 
+    /**
+     * De acuerdo al parametro sea identificativo o personal se limpiaran los otros campos.
+     * @param isIdentificativo Valor que nos indica que campos utilizaremos para realizar la busqueda
+     */
     clearInputsIdentNoIdent(isIdentificativo): void {
         this.isIdentificativo = isIdentificativo;
         if(this.isIdentificativo){
@@ -3868,6 +3892,9 @@ export class DialogSociedadAsociada {
         }
     }
 
+    /**
+     * Obtiene la sociedad de acuerdo al críterio de búsqueda que puede ser datos identificativos o personales.
+     */
     getSociedad(){
         let query = '';
         let busquedaDatos = '';
@@ -3927,13 +3954,17 @@ export class DialogSociedadAsociada {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
 
+    /**
+     * Obtiene y almacena los datos de la sociedad seleccionada.
+     * @param element Arreglo de los datos de la sociedad seleccionada
+     * @returns Regresa el arreglo de la sociedad.
+     */
     sociedadSelected(element): DataSociedadAsociadaDialog {
         console.log(element);
         this.dataSociedadAsociadaDialog.rfc = element.RFC;
         this.dataSociedadAsociadaDialog.registro = element.REGISTRO;
         this.dataSociedadAsociadaDialog.razonSocial = element.RAZONSOCIAL;
         this.dataSociedadAsociadaDialog.idsociedad = element.IDSOCIEDAD;
-        //console.log(this.dataSociedadAsociadaDialog);
         return;
     }
 
@@ -3990,6 +4021,9 @@ export class DialogHistorialRep {
         this.getHistorialRepresentacion();
     }
 
+    /**
+     * Obtiene el historial de las representaciones ligadas al perito.
+     */
     getHistorialRepresentacion(){
         let query = '';
       
@@ -4041,6 +4075,10 @@ export class DialogHistorialRep {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
 
+    /**
+     * Recibe el id de la representación y abre el dialogo que mostrará el resultado de la búsqueda solicitada.
+     * @param element Id de la representcación con la cual se realizará la búsqueda.
+     */
     historicoDetalle(element){
         console.log("ACA EL IDCSH");
         console.log(element);
@@ -4142,6 +4180,9 @@ export class DialogHistorialRepDetalle {
         this.getHistorialRepresentacionDetalle();
     }
 
+     /**
+     * Obtiene la información de la representación solicitada.
+     */
     getHistorialRepresentacionDetalle(){
         let query = '';
 
@@ -4171,6 +4212,9 @@ export class DialogHistorialRepDetalle {
             );
     }
 
+    /**
+     * Almacena los datos de la búsqueda realizada para mostrar en el formulario.
+     */
     setDetalle(){
             console.log("ACA ENTRO EL SLECCIONADO REPRESENTACION");
             console.log(this.dataRepresentacion.infoRepresentante[0]);
@@ -4237,11 +4281,7 @@ export class DialogHistorialRepDetalle {
                 this.idMotivoRdo = this.dataRepresentacion.infoRepresentado[0].IDMOTIVOSMORAL;
                 this.fechaCambioRdo = ((this.dataRepresentacion.infoRepresentado[0].FECHACAMBIOSITUACION) ? new Date(this.dataRepresentacion.infoRepresentado[0].FECHACAMBIOSITUACION) : null);
             }
-            
-            
     }
-
-  
 }
 
 /////////////// DOMICILIOS HISTORICO ////////////////
@@ -4289,6 +4329,9 @@ export interface DataHistorico{
     
         }
 
+    /**
+     * Obtiene el historial de las modificaciones que han recibido los domicilios.
+     */
     getHistoricoModificaciones(){
         let query = '';
       
@@ -4340,6 +4383,10 @@ export interface DataHistorico{
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
 
+    /**
+     * Abre el dialogo que mostrará el domicilio especifico.
+     * @param dataDomicilioEspecifico Valor del registro seleccionado.
+     */
     viewHistoricoDomicilioEspecifico(dataDomicilioEspecifico): void {
         const dialogRef = this.dialog.open(DialogDomicilioHistoricoEspecificoPerito, {
             width: '700px',
@@ -4497,6 +4544,9 @@ export interface DataHistorico{
                     this.getDataTiposLocalidad();
         }
 
+    /**
+     * Obtiene el domicilio seleccionado.
+     */
     getDireccionEspecifica(){
         console.log('entro');
         this.loadingDireccionEspecifica = true;
@@ -4522,12 +4572,19 @@ export interface DataHistorico{
             );
     }
 
+    /**
+     * Obtiene el valor y nombre de la etiqueta option seleccionado.
+     * @param event Contiene el nombre de la etiqueta option de acuerdo al valor de este en el select.
+     */
     getNombreDel(event): void {
         this.dataDomicilio.delegacion = event.source.triggerValue;
         this.botonAsentamiento = false;
         
     }
 
+    /**
+     * Obtiene el catálogo de los estados de la república Mexicana.
+     */
     getDataEstados(): void {
         this.loadingEstados = true;
         this.http.post(this.endpointCatalogos + 'getEstados', '', this.httpOptions).subscribe(
@@ -4541,10 +4598,13 @@ export interface DataHistorico{
         );
     }
 
+    /**
+     * Obtiene los municipios de acuerdo al estado seleccionado
+     * @param event Valor que se recibe para la obtención de las alcaldias o municipios.
+     */
     getDataMunicipios(event): void {
         this.botonMunicipio = false;
         let busquedaMunCol = '';
-        // busquedaMunCol = 'getDelegaciones';
         busquedaMunCol = (event.value == 9) ? 'getDelegaciones' : 'getMunicipiosByEstado?codEstado=' + event.value;
         this.loadingMunicipios = true;
         this.http.post(this.endpointCatalogos + busquedaMunCol, '', this.httpOptions).subscribe(
@@ -4560,6 +4620,9 @@ export interface DataHistorico{
         );
     }
     
+    /**
+     * Obtiene el catálogo de los asentamientos.
+     */
     getDataTiposAsentamiento(): void {
         this.loadingTiposAsentamiento = true;
         this.http.post(this.endpointCatalogos + 'getTiposAsentamiento', '', this.httpOptions).subscribe(
@@ -4575,6 +4638,9 @@ export interface DataHistorico{
         );
     }
     
+    /**
+     * Obtiene el catálogo de las vías
+     */
     getDataTiposVia(): void {
         this.loadingTiposVia = true;
         this.http.post(this.endpointCatalogos + 'getTiposVia', '', this.httpOptions).subscribe(
@@ -4591,6 +4657,9 @@ export interface DataHistorico{
         );
     }
     
+    /**
+     * Obtiene el catálogo de los tipos de localidad
+     */
     getDataTiposLocalidad(): void {
         this.loadingTiposLocalidad = true;
         this.http.post(this.endpointCatalogos + 'getTiposLocalidad', '', this.httpOptions).subscribe(
@@ -4606,6 +4675,10 @@ export interface DataHistorico{
         );
     }
 
+    /**
+     * Obtiene el arreglo del domicilio previamente seleccionado y lo muestra en sus respectivos campos del fomulario.
+     * @param data Arreglo con los datos del registro seleccionado.
+     */
     setDataDomicilio(data): void {
         console.log("ACA EL COD DATA ESPE");
         console.log(data);
@@ -4644,6 +4717,10 @@ export interface DataHistorico{
         }
     }
 
+    /**
+     * Abre el dialogo que muestra los municipios de acuerdo al estado,
+     * con opción para búsqueda especifica.
+     */
     getMunicipios(){
         this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
         const dialogRef = this.dialog.open(DialogMunicipios, {
@@ -4662,6 +4739,10 @@ export interface DataHistorico{
         });
     }
 
+    /**
+     * Abre el dialogo que muestra las localidades (ciudades) ligadas al municipio seleccionado previamente,
+     * con opción a búsqueda especifica.
+     */
     getCiudad(){
         this.dataDomicilio.idmunicipio2 = this.domicilioFormGroup.value.idmunicipio2;
         const dialogRef = this.dialog.open(DialogCiudad, {
@@ -4681,6 +4762,9 @@ export interface DataHistorico{
         });
     }
 
+    /**
+     * Abre el dialogo que muestra los asentamientos ligados a la ciudad
+     */
     getAsentamiento(){
         this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
         this.dataDomicilio.idmunicipio = this.domicilioFormGroup.value.idmunicipio;
@@ -4707,6 +4791,9 @@ export interface DataHistorico{
         });
     }
 
+    /**
+     * Abre el dialogo que muestra las vías ligadas al asentamiento
+     */
     getVia(){
         this.dataDomicilio.codasentamiento =  this.domicilioFormGroup.value.codasentamiento;
         const dialogRef = this.dialog.open(DialogVia, {
