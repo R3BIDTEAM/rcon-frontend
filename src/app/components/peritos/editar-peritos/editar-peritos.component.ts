@@ -116,6 +116,11 @@ export interface DataSociedadAsociada{
     idsociedad: number;
 }
 
+export interface DocumentosIdentificativos{
+    id_documento: number;
+    documento: string;
+}
+
 @Component({
     selector: 'app-editar-peritos',
     templateUrl: './editar-peritos.component.html',
@@ -174,6 +179,8 @@ export class EditarPeritosComponent implements OnInit {
     actCambioPersona = true;
     isRequired = true;
     mensajeConfirma;
+    documentos: DocumentosIdentificativos[] = [];
+    loadingDocumentosIdentificativos = false;
 
     /*PAGINADOS*/
     dataSource1 = [];
@@ -246,11 +253,28 @@ export class EditarPeritosComponent implements OnInit {
         };
         this.idPerito = this.route.snapshot.paramMap.get('idperito');
         console.log(this.idPerito);
+        this.getDataDocumentosIdentificativos();
         this.getPeritoDatos();
         this.getDomicilioPerito();
         this.getidInmuebles();
         this.getRepresentacion();
         this.getRepresentado();
+    }
+
+    /** 
+    * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
+    */
+     getDataDocumentosIdentificativos(): void{
+        this.loadingDocumentosIdentificativos = true;
+        this.http.post(this.endpointActualiza + 'getCatalogos', '', this.httpOptions).subscribe(
+            (res: any) => {
+                this.loadingDocumentosIdentificativos = false;
+                this.documentos = res.CatDocIdentificativos;
+            },
+            (error) => {
+                this.loadingDocumentosIdentificativos = false;
+            }
+        );
     }
 
     /**

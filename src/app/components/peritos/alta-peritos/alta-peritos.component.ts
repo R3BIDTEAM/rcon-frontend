@@ -30,6 +30,12 @@ export interface DatosPeritos {
     fecha_baja: Date;
     login: string;
 }
+
+export interface DocumentosIdentificativos{
+    id_documento: number;
+    documento: string;
+}
+
 @Component({
     selector: 'app-alta-peritos',
     templateUrl: './alta-peritos.component.html',
@@ -45,6 +51,8 @@ export class AltaPeritosComponent implements OnInit {
     search = false;
     inserto = false;
     isIdentificativo;
+    documentos: DocumentosIdentificativos[] = [];
+    loadingDocumentosIdentificativos = false;
     @ViewChild('paginator') paginator: MatPaginator;
 
     constructor(
@@ -83,8 +91,26 @@ export class AltaPeritosComponent implements OnInit {
             fechaInicio: [null, []],
             fechaFin: [null, []],
             login: ['', Validators.required]
-          });
-          this.datoPeritos.independiente = 'N';
+        });
+        this.datoPeritos.independiente = 'N';
+        this.getDataDocumentosIdentificativos();
+    }
+
+    /** 
+    * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
+    */
+    getDataDocumentosIdentificativos(): void{
+        this.loadingDocumentosIdentificativos = true;
+        this.http.post(this.endpoint + 'getCatalogos', '', this.httpOptions).subscribe(
+            (res: any) => {
+                this.loadingDocumentosIdentificativos = false;
+                this.documentos = res.CatDocIdentificativos;
+                // console.log(this.documentos);
+            },
+            (error) => {
+                this.loadingDocumentosIdentificativos = false;
+            }
+        );
     }
 
     /**

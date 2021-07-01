@@ -6,6 +6,11 @@ import { environment } from '@env/environment'
 import { AuthService } from '@serv/auth.service';
 import { ActivatedRoute } from '@angular/router';
 
+export interface DocumentosIdentificativos{
+    id_documento: number;
+    documento: string;
+}
+
 @Component({
     selector: 'app-edicion-peritos',
     templateUrl: './edicion-peritos.component.html',
@@ -37,6 +42,8 @@ export class EdicionPeritosComponent implements OnInit {
     panelDomicilio = false;
     panelDomPredial = false;
     panelBienes = false;
+    documentos: DocumentosIdentificativos[] = [];
+    loadingDocumentosIdentificativos = false;
     @ViewChild('paginator') paginator: MatPaginator;
 
     constructor(
@@ -56,6 +63,24 @@ export class EdicionPeritosComponent implements OnInit {
               Authorization: this.auth.getSession().token
             })
         };
+
+        this.getDataDocumentosIdentificativos();
+    }
+
+    /** 
+    * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
+    */
+     getDataDocumentosIdentificativos(): void{
+        this.loadingDocumentosIdentificativos = true;
+        this.http.post(this.endpoint + 'getCatalogos', '', this.httpOptions).subscribe(
+            (res: any) => {
+                this.loadingDocumentosIdentificativos = false;
+                this.documentos = res.CatDocIdentificativos;
+            },
+            (error) => {
+                this.loadingDocumentosIdentificativos = false;
+            }
+        );
     }
 
     /**
