@@ -89,6 +89,9 @@ export class ConsultaContribuyenteComponent implements OnInit {
     });
   }
 
+  /** 
+  * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
+  */
   getDataDocumentosIdentificativos(): void{
     this.loadingDocumentosIdentificativos = true;
     this.http.post(this.endpoint + 'getCatalogos', '', this.httpOptions).subscribe(
@@ -103,6 +106,9 @@ export class ConsultaContribuyenteComponent implements OnInit {
     );
   }
 
+  /** 
+  * @param event detecta cuando se presiona una tecla, esta funcion sólo permite que se tecleen valores alfanuméricos, los demás son bloqueados
+  */
   keyPressAlphaNumeric(event) {
     var inp = String.fromCharCode(event.keyCode);
     if (/[a-zA-Z0-9]/.test(inp)) {
@@ -113,12 +119,18 @@ export class ConsultaContribuyenteComponent implements OnInit {
     }
   }
 
+  /** 
+  * Genera un salto automático de un input al siguiente una vez que la longitud máxima del input ha sido alcanzada
+  */
   focusNextInput(event, input) {
     if(event.srcElement.value.length === event.srcElement.maxLength){
       input.focus();
     }
   }
 
+  /**
+  * De acuerdo al valor del dato limpiara los campos identificativos o personales.
+  */
   clearInputsContribuyente(): void {
     this.contribuyenteFormGroup.controls['nombre'].setValue(null);
     this.contribuyenteFormGroup.controls['rfc'].setValue(null);
@@ -126,6 +138,10 @@ export class ConsultaContribuyenteComponent implements OnInit {
     this.contribuyenteFormGroup.updateValueAndValidity();
   }
 
+  /**
+  * De acuerdo al valor del dato limpiara los campos identificativos o personales.
+  * @param isIdentificativo Valor que nos indica que campos utilizaremos para realizar la busqueda
+  */
   clearInputsIdentNoIdent(isIdentificativo): void {
     this.isIdentificativo = isIdentificativo;
 
@@ -146,6 +162,9 @@ export class ConsultaContribuyenteComponent implements OnInit {
     }
   }
 
+  /**
+  * Obtiene los valores de la consulta
+  */
   getData(): void { 
     this.loadingResponse = true;
     this.busqueda = true;
@@ -216,11 +235,22 @@ export class ConsultaContribuyenteComponent implements OnInit {
     );
   }
 
+  /**
+  * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+  * @param evt Nos da la referencia de la pagina en la que se encuentra
+  */
   paginado(evt): void{
     this.pagina = evt.pageIndex + 1;
     this.dataSource = this.paginate(this.data, this.pageSize, this.pagina);
   }
 
+  /**
+  * 
+  * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+  * @param page_size Valor de la cantidad de registros que se pintaran por página.
+  * @param page_number Valor de la página en la cual se encuentra el paginado.
+  * @returns 
+  */
   paginate(array, page_size, page_number) {
     return array.slice((page_number - 1) * page_size, page_number * page_size);
   }

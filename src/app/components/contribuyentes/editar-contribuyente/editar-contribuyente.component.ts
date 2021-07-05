@@ -285,6 +285,9 @@ export class EditarContribuyenteComponent implements OnInit {
         }
     }
 
+    /** 
+    * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
+    */
     getDataDocumentos(): void{
         this.loadingDocumentos = true;
         this.http.post(this.endpoint + 'getCatalogos', '', this.httpOptions).subscribe(
@@ -299,6 +302,9 @@ export class EditarContribuyenteComponent implements OnInit {
         );
     }
 
+    /** 
+    * Obtiene los Datos del Contribuyente
+    */
     getContribuyenteDatos(){
         this.query = '&idPersona=' + this.idContribuyente; 
         this.loading = true;
@@ -323,6 +329,9 @@ export class EditarContribuyenteComponent implements OnInit {
             );
     }
 
+    /** 
+    * Asigna los valores de la consulta a las variables del formulario
+    */
     datoDelContribuyente(){
         this.cambioPersona = this.dataContribuyenteResultado[0].CODTIPOPERSONA;
         this.contribuyente.tipoPersona = this.dataContribuyenteResultado[0].CODTIPOPERSONA;
@@ -349,7 +358,9 @@ export class EditarContribuyenteComponent implements OnInit {
         
     }
 
-
+    /** 
+    * Actualiza los datos del contribuyente
+    */
     actualizarContribuyente(){
         //registro/actualizaContribuyente?codtipospersona=F&nombre=Jose Albert&activprincip&idtipomoral&idmotivosmoral&fechainicioactiv&fechacambiosituacion&rfc=RUFV891129R15&apellidopaterno=Hernandez&apellidomaterno=MESSIE&curp=PAGJ830626HMCLMN11&claveife=mmmmmm&iddocidentif=1&valdocidentif=888&fechanacimiento=02-02-1989&fechadefuncion=02-02-2020&celular=5555555&email=nuevo_mail@mail.com&idExpediente&idpersona=4485307
         console.log('Preparando actualización...');
@@ -432,6 +443,13 @@ export class EditarContribuyenteComponent implements OnInit {
             );
     }
 
+    /** 
+    * Abre el dialogo que mostrarrá un mensaje de confirmación según sea el caso
+    * @param evento Es el parametro que recibe el método para elegir en el switch que acción realizar.
+    * @param element Pude ser un solo dato o un array dependiendo el metodo del swtich.
+    * @param tipo Utilizado en el método de eliminarRepresentación para diferenciar entre un representante o representado
+    * con valor de 1 y 2 respectivamente.
+    */
     confirmaCambio(evento = null, element = null, tipo = null): void {
         this.mensajeConfirma = evento;
         console.log(this.mensajeConfirma);
@@ -455,6 +473,9 @@ export class EditarContribuyenteComponent implements OnInit {
         });
     }
     
+    /**
+     * Cambia el tipo de persona de Físca a Moral o viceversa.
+     */
     cambiarTipoPersona(){
         console.log("ACA ESTAMOS CAMBIANDO LA PERSONA");
         let query = 'idpersona=' + this.idContribuyente;
@@ -520,6 +541,9 @@ export class EditarContribuyenteComponent implements OnInit {
         );
     }
 
+      /**
+      * Genera el PDF de cambio de datos personales
+      */
       async generatePDF() {
         let docDefinition = {
           content: [
@@ -797,6 +821,9 @@ export class EditarContribuyenteComponent implements OnInit {
         pdfMake.createPdf(docDefinition).open();
       }
 
+      /**
+      * Genera el PDF de cambio de Domicilio
+      */
       async generatePDFDomicilio() {
         let docDefinition = {
           content: [
@@ -945,7 +972,9 @@ export class EditarContribuyenteComponent implements OnInit {
         pdfMake.createPdf(docDefinition).open();
       }
 
-
+      /**
+     * Convierte la imagen para que pueda ser visualizada en el PDF
+     */
       getBase64ImageFromURL(url) {
         return new Promise((resolve, reject) => {
           var img = new Image();
@@ -972,7 +1001,9 @@ export class EditarContribuyenteComponent implements OnInit {
         });
       }
     
-
+    /**
+     * Obtiene los domicilios registrados de la sociedad domicilios particulares y para recibir notificaciones.
+     */
     getDomicilioContribuyente(){
         this.loadingDomicilios = true;
         let metodo = 'getDireccionesContribuyente';
@@ -999,6 +1030,9 @@ export class EditarContribuyenteComponent implements OnInit {
             );
     }
 
+    /**
+     * @param iddireccion obtiene la direccion especifica con el id que recibe
+     */
     getDireccionEspecifica(iddireccion){
         this.loadingDireccionEspecifica = true;
         let metodo = 'getDireccionById';
@@ -1023,21 +1057,36 @@ export class EditarContribuyenteComponent implements OnInit {
             );
     }
 
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
     paginado1(evt): void{
         this.pagina1 = evt.pageIndex + 1;
         this.dataSource1 = this.paginate(this.dataSource1, 15, this.pagina1);
     }
 
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
     paginado2(evt): void{
         this.pagina1 = evt.pageIndex + 1;
         this.dataSource1 = this.paginate(this.dataSource1, 15, this.pagina1);
     }
 
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
     paginate(array, page_size, page_number) {
       return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
 
 
+    /**
+     * Abre el dialogo que registrara un nuevo domicilio
+     */
     addDomicilio(i = -1, dataDomicilio = null): void {
         let codtiposdireccion = '';
         const dialogRef = this.dialog.open(DialogDomicilioContribuyente, {
@@ -1078,7 +1127,9 @@ export class EditarContribuyenteComponent implements OnInit {
         });
     }
 
-
+    /**
+     * Abre el dialogo que registrara un nuevo domicilio con notificación
+     */
     addDomicilioBoleta(i = -1, dataDomicilio = null): void {
         let codtiposdireccion = 'N';
         const dialogRef = this.dialog.open(DialogDomicilioContribuyente, {
@@ -1119,7 +1170,10 @@ export class EditarContribuyenteComponent implements OnInit {
         });
     }
 
-
+    /**
+     * Recibe el id dirección que enviará al dialog para realizar la búsqueda del domicilio.
+     * @param dataDomicilioEspecifico Valor que se enviará para la obtención del registro a editar.
+     */
     editDomicilio(dataDomicilioEspecifico): void {
         const dialogRef = this.dialog.open(DialogDomicilioContribuyente, {
             width: '700px',
@@ -1159,7 +1213,10 @@ export class EditarContribuyenteComponent implements OnInit {
         });
     }
 
-
+    /**
+     * Recibe el id dirección que enviará al dialog para realizar la búsqueda del domicilio.
+     * @param dataDomicilioEspecifico Valor que se enviará para la obtención del registro a editar.
+     */
     editDomicilioBoleta(dataDomicilioEspecifico): void {
         let codtiposdireccion = 'N';
         const dialogRef = this.dialog.open(DialogDomicilioContribuyente, {
@@ -1200,7 +1257,9 @@ export class EditarContribuyenteComponent implements OnInit {
         });
     }
 
-
+    /**
+     * @param idDireccion Valor que se enviará para la obtención de los movimientos sobre ese domicilio
+     */
     viewHistoricoDomicilio(idDireccion): void {
         const dialogRef = this.dialog.open(DialogDomicilioHistoricoContribuyente, {
             width: '700px',
@@ -1211,6 +1270,9 @@ export class EditarContribuyenteComponent implements OnInit {
         });
     }
 
+    /**
+     * @param idPersona Valor que se enviará para la obtención de los movimientos sobre esa persona
+     */
     viewHistoricoDatosPersonales(idPersona): void {
         const dialogRef = this.dialog.open(DialogPersonalesHistoricoContribuyente, {
             width: '700px',
@@ -1221,6 +1283,10 @@ export class EditarContribuyenteComponent implements OnInit {
         });
     }
 
+    /**
+     * Abre el dialogo para relizar el registro de la representación o edición de la misma.
+     * @param dataRepresentante Arreglo de los datos de la representación seleccionada
+     */
     addRepresentante(i = -1, dataRepresentante = null): void {
         const dialogRef = this.dialog.open(DialogRepresentacionC, {
             width: '700px',
@@ -1239,6 +1305,10 @@ export class EditarContribuyenteComponent implements OnInit {
         });
     }
 
+    /**
+     * Abre el dialogo para relizar el registro de la representación o edición de la misma.
+     * @param dataRepresentante Arreglo de los datos de la representación seleccionada
+     */
     addRepresentado(i = -1, dataRepresentante = null): void {
         const dialogRef = this.dialog.open(DialogRepresentadoC, {
             width: '700px',
@@ -1257,6 +1327,11 @@ export class EditarContribuyenteComponent implements OnInit {
         });
     }
 
+    /**
+     * Elimina la representación seleccionada
+     * @param element Datos de la representación a eliminar
+     * @param tipo Valor del tipo de representación de acuerdo al valor seleccionara el método correspondiente.
+     */
     eliminarRepresentacion(element,tipo){
         let queryDelRep = 'idRepresentacion=' + element.IDREPRESENTACION;
         console.log(element);
@@ -1296,6 +1371,9 @@ export class EditarContribuyenteComponent implements OnInit {
             );
     }
 
+    /**
+     * Obtiene las representaciónes del contribuyente
+     */
     getRepresentacion(){
         this.loadingRepresentante = true;
         let queryRep = 'rep=Representantes&idPersona=' + this.idContribuyente;
@@ -1318,11 +1396,18 @@ export class EditarContribuyenteComponent implements OnInit {
             );
     }
 
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
     paginado4(evt): void{
         this.pagina4 = evt.pageIndex + 1;
         this.dataSource4 = this.paginate(this.dataSource4, 15, this.pagina4);
     }
 
+    /**
+     * Obtienen los representados de la sociedad.
+     */
     getRepresentado(){
         this.loadingRepresentado = true;
         let queryRepdo = 'rep=Representado&idPersona=' + this.idContribuyente;
@@ -1348,11 +1433,18 @@ export class EditarContribuyenteComponent implements OnInit {
             );
     }
 
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
     paginado5(evt): void{
         this.pagina5 = evt.pageIndex + 1;
         this.dataSource5 = this.paginate(this.dataSource5, 15, this.pagina5);
     }
 
+    /**
+     * Abre el dialogo que nos mostrará el historial de las representaciones.
+     */
     historialRepresentacion(){
         const dialogRef = this.dialog.open(DialogHistorialRepC, {
             width: '700px',
@@ -1535,6 +1627,9 @@ export class DialogDomicilioContribuyente {
             this.getDataTiposLocalidad();
         }
   
+    /** 
+     * Realiza la búsqueda del domicilio por el id Dirección
+     * */  
     getDireccionEspecifica(){
         this.loadingDireccionEspecifica = true;
         let metodo = 'getDireccionById';
@@ -1558,11 +1653,18 @@ export class DialogDomicilioContribuyente {
             );
     }
 
+    /**
+     * Obtiene el nombre de acuerdo al valor seleccionado en el select.
+     * @param event Obtiene el valor y nombre de la etiqueta option en el select
+     */
     getNombreDel(event): void {
         this.dataDomicilio.delegacion = event.source.triggerValue;
         this.botonAsentamiento = false;
     }
 
+    /**
+     * Obtiene el catálogo de estados de la república mexicana. 
+     */
     getDataEstados(): void {
         this.loadingEstados = true;
         this.http.post(this.endpointCatalogos + 'getEstados', '', this.httpOptions).subscribe(
@@ -1576,6 +1678,10 @@ export class DialogDomicilioContribuyente {
         );
     }
 
+    /**
+     * Obtiene los municipios de acuerdo al estado seleccionado
+     * @param event Valor que se recibe para la obtención de las alcaldias o municipios.
+     */
     getDataMunicipios(event): void {
         this.botonMunicipio = false;
         let busquedaMunCol = '';
@@ -1594,6 +1700,9 @@ export class DialogDomicilioContribuyente {
         );
     }
     
+    /**
+     * Obtiene el catálogo de los asentamientos.
+     */
     getDataTiposAsentamiento(): void {
         this.loadingTiposAsentamiento = true;
         this.http.post(this.endpointCatalogos + 'getTiposAsentamiento', '', this.httpOptions).subscribe(
@@ -1609,6 +1718,9 @@ export class DialogDomicilioContribuyente {
         );
     }
 
+    /**
+     * Obtiene el catálogo de las vías
+     */
     getDataTiposVia(): void {
         this.loadingTiposVia = true;
         this.http.post(this.endpointCatalogos + 'getTiposVia', '', this.httpOptions).subscribe(
@@ -1625,6 +1737,9 @@ export class DialogDomicilioContribuyente {
         );
     }
 
+    /**
+     * Obtiene el catálogo de los tipos de localidad
+     */
     getDataTiposLocalidad(): void {
         this.loadingTiposLocalidad = true;
         this.http.post(this.endpointCatalogos + 'getTiposLocalidad', '', this.httpOptions).subscribe(
@@ -1640,6 +1755,9 @@ export class DialogDomicilioContribuyente {
         );
     }
 
+    /**
+     * Almacena los datos del formulario del domicilio y de acuerdo al valor inserta o actualiza
+     */
     getDataDomicilio(): void {
         //this.dataDomicilio.idtipodireccion = this.domicilioFormGroup.value.idtipodireccion;
         this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
@@ -1693,7 +1811,9 @@ export class DialogDomicilioContribuyente {
         ///retu
     }
       
-
+    /**
+     * Guarda el registro del nuevo domicilio.
+     */
     guardaDomicilio(){
       
         let query = 'insertarDireccion?idPersona=' + this.data.idContribuyente;
@@ -1772,7 +1892,9 @@ export class DialogDomicilioContribuyente {
             );
     }
 
-
+    /**
+     * Actualiza el domicilio seleccionado.
+     */
     actualizarDomicilio(){
         
         let query = 'actualizarDireccion?idPersona=' + this.data.idContribuyente + '&idDireccion=' + this.iddireccion;
@@ -1853,126 +1975,144 @@ export class DialogDomicilioContribuyente {
             );
     }
 
-  setDataDomicilio(data): void {
-    console.log("ACA EL COD DATA ESPE");
-    console.log(data);
-    // console.log("ACA EL COD ESTADO SETEADO"+data.dataDomicilioEspecifico.CODESTADO);
-    //this.domicilioFormGroup.controls['idtipodireccion'].setValue(dataDomicilio.idtipodireccion);
-   
-    this.domicilioFormGroup.controls['idestado'].setValue(data.CODESTADO);
-    this.getDataMunicipios({value: this.domicilioFormGroup.value.idestado});
-    this.domicilioFormGroup.controls['codasentamiento'].setValue(data.IDCOLONIA);
-    this.domicilioFormGroup.controls['idtipoasentamiento'].setValue(data.CODTIPOSASENTAMIENTO);
-    this.domicilioFormGroup.controls['asentamiento'].setValue(data.COLONIA);
-    this.domicilioFormGroup.controls['codtiposvia'].setValue(data.CODTIPOSVIA);
-    this.domicilioFormGroup.controls['idtipovia'].setValue(data.IDVIA);
-    this.domicilioFormGroup.controls['via'].setValue(data.VIA);
-    this.domicilioFormGroup.controls['idtipolocalidad'].setValue(data.CODTIPOSLOCALIDAD);
-    this.domicilioFormGroup.controls['cp'].setValue(data.CODIGOPOSTAL);
-    this.domicilioFormGroup.controls['nexterior'].setValue(data.NUMEROEXTERIOR);
-    this.domicilioFormGroup.controls['entrecalle1'].setValue(data.ENTRECALLE1);
-    this.domicilioFormGroup.controls['entrecalle2'].setValue(data.ENTRECALLE2);
-    this.domicilioFormGroup.controls['andador'].setValue(data.ANDADOR);
-    this.domicilioFormGroup.controls['edificio'].setValue(data.EDIFICIO);
-    this.domicilioFormGroup.controls['seccion'].setValue(data.SECCION);
-    this.domicilioFormGroup.controls['entrada'].setValue(data.ENTRADA);
-    this.domicilioFormGroup.controls['ninterior'].setValue(data.NUMEROINTERIOR);
-    this.domicilioFormGroup.controls['telefono'].setValue(data.TELEFONO);
-    this.domicilioFormGroup.controls['adicional'].setValue(data.INDICACIONESADICIONALES);
-    this.domicilioFormGroup.controls['id_direccion'].setValue(data.IDDIRECCION);
+    /**
+     * Recibe los datos del domicilio previamente seleccionado para su edición
+     * @param data Arreglo con los datos del registro seleccionado.
+     */
+    setDataDomicilio(data): void {
+        console.log("ACA EL COD DATA ESPE");
+        console.log(data);
+        // console.log("ACA EL COD ESTADO SETEADO"+data.dataDomicilioEspecifico.CODESTADO);
+        //this.domicilioFormGroup.controls['idtipodireccion'].setValue(dataDomicilio.idtipodireccion);
+    
+        this.domicilioFormGroup.controls['idestado'].setValue(data.CODESTADO);
+        this.getDataMunicipios({value: this.domicilioFormGroup.value.idestado});
+        this.domicilioFormGroup.controls['codasentamiento'].setValue(data.IDCOLONIA);
+        this.domicilioFormGroup.controls['idtipoasentamiento'].setValue(data.CODTIPOSASENTAMIENTO);
+        this.domicilioFormGroup.controls['asentamiento'].setValue(data.COLONIA);
+        this.domicilioFormGroup.controls['codtiposvia'].setValue(data.CODTIPOSVIA);
+        this.domicilioFormGroup.controls['idtipovia'].setValue(data.IDVIA);
+        this.domicilioFormGroup.controls['via'].setValue(data.VIA);
+        this.domicilioFormGroup.controls['idtipolocalidad'].setValue(data.CODTIPOSLOCALIDAD);
+        this.domicilioFormGroup.controls['cp'].setValue(data.CODIGOPOSTAL);
+        this.domicilioFormGroup.controls['nexterior'].setValue(data.NUMEROEXTERIOR);
+        this.domicilioFormGroup.controls['entrecalle1'].setValue(data.ENTRECALLE1);
+        this.domicilioFormGroup.controls['entrecalle2'].setValue(data.ENTRECALLE2);
+        this.domicilioFormGroup.controls['andador'].setValue(data.ANDADOR);
+        this.domicilioFormGroup.controls['edificio'].setValue(data.EDIFICIO);
+        this.domicilioFormGroup.controls['seccion'].setValue(data.SECCION);
+        this.domicilioFormGroup.controls['entrada'].setValue(data.ENTRADA);
+        this.domicilioFormGroup.controls['ninterior'].setValue(data.NUMEROINTERIOR);
+        this.domicilioFormGroup.controls['telefono'].setValue(data.TELEFONO);
+        this.domicilioFormGroup.controls['adicional'].setValue(data.INDICACIONESADICIONALES);
+        this.domicilioFormGroup.controls['id_direccion'].setValue(data.IDDIRECCION);
 
-    if(data.CODESTADO == 9){
-        // alert('funciona');
-        this.domicilioFormGroup.controls['idmunicipio'].setValue(data.IDDELEGACION);
-    } else {
-        this.domicilioFormGroup.controls['idmunicipio2'].setValue(data.CODMUNICIPIO);
-        this.domicilioFormGroup.controls['municipio'].setValue(data.DELEGACION);
-        this.domicilioFormGroup.controls['ciudad'].setValue(data.CIUDAD);
-        this.domicilioFormGroup.controls['idciudad'].setValue(data.CODCIUDAD);
+        if(data.CODESTADO == 9){
+            // alert('funciona');
+            this.domicilioFormGroup.controls['idmunicipio'].setValue(data.IDDELEGACION);
+        } else {
+            this.domicilioFormGroup.controls['idmunicipio2'].setValue(data.CODMUNICIPIO);
+            this.domicilioFormGroup.controls['municipio'].setValue(data.DELEGACION);
+            this.domicilioFormGroup.controls['ciudad'].setValue(data.CIUDAD);
+            this.domicilioFormGroup.controls['idciudad'].setValue(data.CODCIUDAD);
+        }
     }
-  }
 
-  getMunicipios(){
-      this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
-      const dialogRef = this.dialog.open(DialogMunicipiosContribuyente, {
-          width: '700px',
-          data: {codEstado : this.dataDomicilio.idestado
-          }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-          if(result){
-              console.log("MUNICIPIOS!!!!!!!");
-              console.log(result);
-              this.domicilioFormGroup.controls['idmunicipio2'].setValue(result.codmunicipio);
-              this.domicilioFormGroup.controls['municipio'].setValue(result.municipio);
-              this.botonCiudad = false;
-          }
-      });
-  }
+    /**
+     * Abre el dialogo que muestra los municipios de acuerdo al estado,
+     * con opción para búsqueda especifica.
+     */
+    getMunicipios(){
+        this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
+        const dialogRef = this.dialog.open(DialogMunicipiosContribuyente, {
+            width: '700px',
+            data: {codEstado : this.dataDomicilio.idestado
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                console.log("MUNICIPIOS!!!!!!!");
+                console.log(result);
+                this.domicilioFormGroup.controls['idmunicipio2'].setValue(result.codmunicipio);
+                this.domicilioFormGroup.controls['municipio'].setValue(result.municipio);
+                this.botonCiudad = false;
+            }
+        });
+    }
 
-  getCiudad(){
-      this.dataDomicilio.idmunicipio2 = this.domicilioFormGroup.value.idmunicipio2;
-      const dialogRef = this.dialog.open(DialogCiudadContribuyente, {
-          width: '700px',
-          data: {codEstado : this.dataDomicilio.idestado,
-                  codMunicipio : this.dataDomicilio.idmunicipio2
-          }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-          if(result){
-              this.botonAsentamiento = false;
-              console.log("CIUDAD!!!!!!!");
-              console.log(result);
-              this.domicilioFormGroup.controls['idciudad'].setValue(result.codciudad);
-              this.domicilioFormGroup.controls['ciudad'].setValue(result.ciudad);
-          }
-      });
-  }
+    /**
+     * Abre el dialogo que muestra las localidades (ciudades) ligadas al municipio seleccionado previamente,
+     * con opción a búsqueda especifica.
+     */
+    getCiudad(){
+        this.dataDomicilio.idmunicipio2 = this.domicilioFormGroup.value.idmunicipio2;
+        const dialogRef = this.dialog.open(DialogCiudadContribuyente, {
+            width: '700px',
+            data: {codEstado : this.dataDomicilio.idestado,
+                    codMunicipio : this.dataDomicilio.idmunicipio2
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                this.botonAsentamiento = false;
+                console.log("CIUDAD!!!!!!!");
+                console.log(result);
+                this.domicilioFormGroup.controls['idciudad'].setValue(result.codciudad);
+                this.domicilioFormGroup.controls['ciudad'].setValue(result.ciudad);
+            }
+        });
+    }
 
-  getAsentamiento(){
-      this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
-      this.dataDomicilio.idmunicipio = this.domicilioFormGroup.value.idmunicipio;
-      this.dataDomicilio.idmunicipio2 = this.domicilioFormGroup.value.idmunicipio2;
-      this.dataDomicilio.idciudad = (this.domicilioFormGroup.value.idciudad) ? this.domicilioFormGroup.value.idciudad : null;
-      const dialogRef = this.dialog.open(DialogAsentamientoContribuyente, {
-          width: '700px',
-          data: {codEstado : this.dataDomicilio.idestado,
-                  codMunicipio : this.dataDomicilio.idmunicipio,
-                  codMunicipio2 : this.dataDomicilio.idmunicipio2,
-                  codCiudad : this.dataDomicilio.idciudad
-          }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-          if(result){
-              this.botonVia = false;
-              console.log("ASENTAMIENTO!!!!!!!");
-              console.log(result);
-              this.domicilioFormGroup.controls['codasentamiento'].setValue(result.codasentamiento);
-              this.domicilioFormGroup.controls['asentamiento'].setValue(result.asentamiento);
-              this.domicilioFormGroup.controls['idtipoasentamiento'].setValue(result.codtiposasentamiento);
-              this.domicilioFormGroup.controls['cp'].setValue(result.codigopostal);
-          }
-      });
-  }
+    /**
+     * Abre el dialogo que muestra los asentamientos ligados a la ciudad
+     */
+    getAsentamiento(){
+        this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
+        this.dataDomicilio.idmunicipio = this.domicilioFormGroup.value.idmunicipio;
+        this.dataDomicilio.idmunicipio2 = this.domicilioFormGroup.value.idmunicipio2;
+        this.dataDomicilio.idciudad = (this.domicilioFormGroup.value.idciudad) ? this.domicilioFormGroup.value.idciudad : null;
+        const dialogRef = this.dialog.open(DialogAsentamientoContribuyente, {
+            width: '700px',
+            data: {codEstado : this.dataDomicilio.idestado,
+                    codMunicipio : this.dataDomicilio.idmunicipio,
+                    codMunicipio2 : this.dataDomicilio.idmunicipio2,
+                    codCiudad : this.dataDomicilio.idciudad
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                this.botonVia = false;
+                console.log("ASENTAMIENTO!!!!!!!");
+                console.log(result);
+                this.domicilioFormGroup.controls['codasentamiento'].setValue(result.codasentamiento);
+                this.domicilioFormGroup.controls['asentamiento'].setValue(result.asentamiento);
+                this.domicilioFormGroup.controls['idtipoasentamiento'].setValue(result.codtiposasentamiento);
+                this.domicilioFormGroup.controls['cp'].setValue(result.codigopostal);
+            }
+        });
+    }
 
-  getVia(){
-      this.dataDomicilio.codasentamiento =  this.domicilioFormGroup.value.codasentamiento;
-      const dialogRef = this.dialog.open(DialogViaContribuyente, {
-          width: '700px',
-          data: {codEstado : this.dataDomicilio.idestado,
-                  codAsentamiento : this.dataDomicilio.codasentamiento
-          }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-          if(result){
-              console.log("VIA!!!!!!!");
-              console.log(result);
-              this.domicilioFormGroup.controls['codtiposvia'].setValue(result.codtiposvia);
-              this.domicilioFormGroup.controls['idtipovia'].setValue(result.idvia);
-              this.domicilioFormGroup.controls['via'].setValue(result.via);
-          }
-      });
-  }
+    /**
+     * Abre el dialogo que muestra las vías ligadas al asentamiento
+     */
+    getVia(){
+        this.dataDomicilio.codasentamiento =  this.domicilioFormGroup.value.codasentamiento;
+        const dialogRef = this.dialog.open(DialogViaContribuyente, {
+            width: '700px',
+            data: {codEstado : this.dataDomicilio.idestado,
+                    codAsentamiento : this.dataDomicilio.codasentamiento
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                console.log("VIA!!!!!!!");
+                console.log(result);
+                this.domicilioFormGroup.controls['codtiposvia'].setValue(result.codtiposvia);
+                this.domicilioFormGroup.controls['idtipovia'].setValue(result.idvia);
+                this.domicilioFormGroup.controls['via'].setValue(result.via);
+            }
+        });
+    }
 }
 
 ///////////////MUNICIPIOS//////////////////
@@ -2020,6 +2160,9 @@ export class DialogMunicipiosContribuyente {
       console.log(data);
   }
 
+  /**
+     * Limpia los registros de la búsqueda especifica realizada y llama al metodo para obtener todos los municipios
+     */
   cleanAsentamiento(){
       this.pagina = 1;
       this.total = 0;
@@ -2029,6 +2172,9 @@ export class DialogMunicipiosContribuyente {
       this.obtenerMunicipios();
   }
 
+  /**
+     * Obtiene los municipios de acuerdo al estado seleccionado.
+     */
   obtenerMunicipios(){
       this.loadingBuscaMun = true;
       let criterio = '';
@@ -2060,52 +2206,70 @@ export class DialogMunicipiosContribuyente {
           );
   }
 
-  paginado(evt): void{
-      this.pagina = evt.pageIndex + 1;
-      this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-  }
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
+    paginado(evt): void{
+        this.pagina = evt.pageIndex + 1;
+        this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+    }
   
-  paginate(array, page_size, page_number) {
-      return array.slice((page_number - 1) * page_size, page_number * page_size);
-  }
+    /**
+     * 
+     * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+     * @param page_size Valor de la cantidad de registros que se pintaran por página.
+     * @param page_number Valor de la página en la cual se encuentra el paginado.
+     * @returns 
+     */
+    paginate(array, page_size, page_number) {
+        return array.slice((page_number - 1) * page_size, page_number * page_size);
+    }
 
-  selectMunicipios(element){
-      console.log(element);
-      this.dataMunicipios.codestado = element.CODESTADO;
-      this.dataMunicipios.codmunicipio = element.CODMUNICIPIO;
-      this.dataMunicipios.municipio = element.MUNICIPIO;
-  }
+    /**
+     * Se almacena los datos del municipio seleccionado que se motraran en el formulario.
+     * @param element Arreglo de los datos del municipio seleccionado
+     */
+    selectMunicipios(element){
+        console.log(element);
+        this.dataMunicipios.codestado = element.CODESTADO;
+        this.dataMunicipios.codmunicipio = element.CODMUNICIPIO;
+        this.dataMunicipios.municipio = element.MUNICIPIO;
+    }
 
-  obtenerMunicipiosPorNombre(){
-      this.loadingBuscaMun = true;
-      let criterio = '';
-      let query = '';
-      console.log(this.buscaMunicipios);
-      if(this.data.codEstado != 9){
-          criterio = criterio + 'getMunicipiosByNombre';
-          query = query + 'codEstado=' + this.data.codEstado + '&municipio=' + this.buscaMunicipios;
-      }else{
-          criterio = '';
-          query = '';
-      }
+    /**
+     * Obtiene el municipio deseado por el criterio del nombre.
+     */
+    obtenerMunicipiosPorNombre(){
+        this.loadingBuscaMun = true;
+        let criterio = '';
+        let query = '';
+        console.log(this.buscaMunicipios);
+        if(this.data.codEstado != 9){
+            criterio = criterio + 'getMunicipiosByNombre';
+            query = query + 'codEstado=' + this.data.codEstado + '&municipio=' + this.buscaMunicipios;
+        }else{
+            criterio = '';
+            query = '';
+        }
 
-      console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
-      this.loadingBuscaMun = true;
-      this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
-          .subscribe(
-              (res: any) => {
-                  this.loadingBuscaMun = false;
-                  this.dataSource = res;
-                  this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-                  this.total = this.dataSource.length; 
-                  this.paginator.pageIndex = 0;
-                  console.log(this.dataSource);
-              },
-              (error) => {
-                  this.loadingBuscaMun = false;
-              }
-          );
-  }
+        console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
+        this.loadingBuscaMun = true;
+        this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loadingBuscaMun = false;
+                    this.dataSource = res;
+                    this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                    this.total = this.dataSource.length; 
+                    this.paginator.pageIndex = 0;
+                    console.log(this.dataSource);
+                },
+                (error) => {
+                    this.loadingBuscaMun = false;
+                }
+            );
+    }
 }
 
 ///////////////CIUDAD//////////////////
@@ -2153,65 +2317,86 @@ export class DialogCiudadContribuyente {
       console.log(data);
   }
 
-  cleanAsentamiento(){
-      this.pagina = 1;
-      this.total = 0;
-      this.dataSource = [];
-      this.loadingBuscaCiudad = false;
-      this.dataPaginate;
-      this.obtenerCiudad();
-  }
+    /**
+     * Limpia la búsqueda especifica realizada y llama al método que obtiene todos los registros previamente mostrados.
+     */
+    cleanAsentamiento(){
+        this.pagina = 1;
+        this.total = 0;
+        this.dataSource = [];
+        this.loadingBuscaCiudad = false;
+        this.dataPaginate;
+        this.obtenerCiudad();
+    }
 
-  obtenerCiudad(){
-      this.loadingBuscaCiudad = true;
-      let criterio = '';
-      let query = '';
+    /**
+     * Obtiene las localidades de acuerdo al estado y municipio seleccionado previamente.
+     */
+    obtenerCiudad(){
+        this.loadingBuscaCiudad = true;
+        let criterio = '';
+        let query = '';
 
-      if(this.data.codEstado != 9){
-          criterio = criterio + 'getCiudadesByNombre';
-          query = query + 'codEstado=' + this.data.codEstado + '&codMunicipio=' + this.data.codMunicipio;
-      }else{
-          criterio = '';
-          query = '';
-      }
+        if(this.data.codEstado != 9){
+            criterio = criterio + 'getCiudadesByNombre';
+            query = query + 'codEstado=' + this.data.codEstado + '&codMunicipio=' + this.data.codMunicipio;
+        }else{
+            criterio = '';
+            query = '';
+        }
 
-      if(this.buscaCiudad){
-          query = query + '&nombre=' + this.buscaCiudad;
-      }
+        if(this.buscaCiudad){
+            query = query + '&nombre=' + this.buscaCiudad;
+        }
 
-      console.log('CIUDAD!!!!!'+this.endpoint + '?' + query);
-      this.loadingBuscaCiudad = true;
-      this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
-          .subscribe(
-              (res: any) => {
-                  this.loadingBuscaCiudad = false;
-                  this.dataSource = res;
-                  this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-                  this.total = this.dataSource.length; 
-                  this.paginator.pageIndex = 0;
-                  console.log(this.dataSource);
-              },
-              (error) => {
-                  this.loadingBuscaCiudad = false;
-              }
-          );
-  }
+        console.log('CIUDAD!!!!!'+this.endpoint + '?' + query);
+        this.loadingBuscaCiudad = true;
+        this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loadingBuscaCiudad = false;
+                    this.dataSource = res;
+                    this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                    this.total = this.dataSource.length; 
+                    this.paginator.pageIndex = 0;
+                    console.log(this.dataSource);
+                },
+                (error) => {
+                    this.loadingBuscaCiudad = false;
+                }
+            );
+    }
 
-  paginado(evt): void{
-      this.pagina = evt.pageIndex + 1;
-      this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-  }
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
+    paginado(evt): void{
+        this.pagina = evt.pageIndex + 1;
+        this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+    }
   
-  paginate(array, page_size, page_number) {
-      return array.slice((page_number - 1) * page_size, page_number * page_size);
-  }
+    /**
+     * Regresa la posición del paginado de acuerdo a los parámetro enviados
+     * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+     * @param page_size Valor de la cantidad de registros que se pintaran por página.
+     * @param page_number Valor de la página en la cual se encuentra el paginado.
+     * @returns 
+     */
+    paginate(array, page_size, page_number) {
+        return array.slice((page_number - 1) * page_size, page_number * page_size);
+    }
 
-  selectCiudad(element){
-      console.log(element);
-      this.dataCiudad.ciudad = element.CIUDAD;
-      this.dataCiudad.codciudad = element.CODCIUDAD;
-      this.dataCiudad.codestado = element.CODESTADO;
-  }
+    /**
+     * Obtiene el arreglo de la ciudad seleccionada y almacena los datos para utilizarlos en el registro del domicilio.
+     * @param element Arreglo de los datos del registro seleccionado
+     */
+    selectCiudad(element){
+        console.log(element);
+        this.dataCiudad.ciudad = element.CIUDAD;
+        this.dataCiudad.codciudad = element.CODCIUDAD;
+        this.dataCiudad.codestado = element.CODESTADO;
+    }
 
   // obtenerAsentamientoPorNombre(){
   //     this.loadingBuscaCiudad = true;
@@ -2291,74 +2476,95 @@ export class DialogAsentamientoContribuyente {
       console.log(data);
   }
 
-  cleanAsentamiento(){
-      this.pagina = 1;
-      this.total = 0;
-      this.dataSource = [];
-      this.loading = false;
-      this.dataPaginate;
-      this.obtenerAsentamiento();
-  }
+    /**
+     * Limpia la búsqueda especifica realizada y llama al método que obtiene todos los registros previamente mostrados.
+     */
+    cleanAsentamiento(){
+        this.pagina = 1;
+        this.total = 0;
+        this.dataSource = [];
+        this.loading = false;
+        this.dataPaginate;
+        this.obtenerAsentamiento();
+    }
 
-  obtenerAsentamiento(){
-      this.loading = true;
-      let criterio = '';
-      let query = '';
+    /**
+     * Obtiene el asenteamiento de acuerdo al estado, municipio o ciudad.
+     */
+    obtenerAsentamiento(){
+        this.loading = true;
+        let criterio = '';
+        let query = '';
 
-      if(this.data.codEstado == 9){
-          criterio = criterio + 'getColAsentByDelegacion';
-          query = query + 'idDelegacion=' + this.data.codMunicipio;
-      }else{
-          criterio = criterio + 'getAsentamientoByEstado';
-          query = 'codEstado=' + this.data.codEstado + '&codMunicipio=' + this.data.codMunicipio2;
-          query = (this.data.codCiudad) ? query + '&codCiudad=' + this.data.codCiudad : query + '&codCiudad=';
-      }
+        if(this.data.codEstado == 9){
+            criterio = criterio + 'getColAsentByDelegacion';
+            query = query + 'idDelegacion=' + this.data.codMunicipio;
+        }else{
+            criterio = criterio + 'getAsentamientoByEstado';
+            query = 'codEstado=' + this.data.codEstado + '&codMunicipio=' + this.data.codMunicipio2;
+            query = (this.data.codCiudad) ? query + '&codCiudad=' + this.data.codCiudad : query + '&codCiudad=';
+        }
 
-      if(this.buscaAsentamiento){
-          query = query + '&nombre=' + this.buscaAsentamiento;
-      }
+        if(this.buscaAsentamiento){
+            query = query + '&nombre=' + this.buscaAsentamiento;
+        }
 
-      console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
-      this.loading = true;
-      this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
-          .subscribe(
-              (res: any) => {
-                  this.loading = false;
-                  this.dataSource = res;
-                  this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-                  this.total = this.dataSource.length; 
-                  this.paginator.pageIndex = 0;
-                  console.log(this.dataSource);
-              },
-              (error) => {
-                  this.loading = false;
-              }
-          );
-  }
+        console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
+        this.loading = true;
+        this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loading = false;
+                    this.dataSource = res;
+                    this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                    this.total = this.dataSource.length; 
+                    this.paginator.pageIndex = 0;
+                    console.log(this.dataSource);
+                },
+                (error) => {
+                    this.loading = false;
+                }
+            );
+    }
 
-  paginado(evt): void{
-      this.pagina = evt.pageIndex + 1;
-      this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-  }
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
+    paginado(evt): void{
+        this.pagina = evt.pageIndex + 1;
+        this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+    }
   
-  paginate(array, page_size, page_number) {
-      return array.slice((page_number - 1) * page_size, page_number * page_size);
-  }
+    /**
+     * Regresa la posición del paginado de acuerdo a los parámetro enviados
+     * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+     * @param page_size Valor de la cantidad de registros que se pintaran por página.
+     * @param page_number Valor de la página en la cual se encuentra el paginado.
+     * @returns 
+     */
+    paginate(array, page_size, page_number) {
+        return array.slice((page_number - 1) * page_size, page_number * page_size);
+    }
 
-  selectAsentamiento(element){
-      console.log(element);
-      if(element.IDDELEGACION){
-          this.dataAsentamiento.codasentamiento = element.CODIGO;
-          this.dataAsentamiento.asentamiento = element.DESCRIPCION;
-          this.dataAsentamiento.codigopostal = element.CODIGOPOSTAL;
-          this.dataAsentamiento.codtiposasentamiento = element.CODTIPOSASENTAMIENTO;
-      }else{
-          this.dataAsentamiento.codasentamiento = element.codasentamiento;
-          this.dataAsentamiento.asentamiento = element.asentamiento;
-          this.dataAsentamiento.codigopostal = element.codigopostal;
-          this.dataAsentamiento.codtiposasentamiento = element.codtiposasentamiento;
-      }
-  }
+    /**
+     * Se almacenan los valores del registro seleccionado.
+     * @param element Arreglo de los datos del asentamiento.
+     */
+    selectAsentamiento(element){
+        console.log(element);
+        if(element.IDDELEGACION){
+            this.dataAsentamiento.codasentamiento = element.CODIGO;
+            this.dataAsentamiento.asentamiento = element.DESCRIPCION;
+            this.dataAsentamiento.codigopostal = element.CODIGOPOSTAL;
+            this.dataAsentamiento.codtiposasentamiento = element.CODTIPOSASENTAMIENTO;
+        }else{
+            this.dataAsentamiento.codasentamiento = element.codasentamiento;
+            this.dataAsentamiento.asentamiento = element.asentamiento;
+            this.dataAsentamiento.codigopostal = element.codigopostal;
+            this.dataAsentamiento.codtiposasentamiento = element.codtiposasentamiento;
+        }
+    }
 
   // obtenerAsentamientoPorNombre(){
   //     this.loading = true;
@@ -2433,96 +2639,120 @@ export class DialogViaContribuyente {
       console.log(data);
   }
 
-  cleanAsentamiento(){
-      this.pagina = 1;
-      this.total = 0;
-      this.dataSource = [];
-      this.loadingBuscaVia = false;
-      this.dataPaginate;
-      this.obtenerVia();
-  }
+    /**
+     * Limpia los registros de la búsqueda especifica realizada y llama al metodo para obtener todos los municipios
+     */
+    cleanAsentamiento(){
+        this.pagina = 1;
+        this.total = 0;
+        this.dataSource = [];
+        this.loadingBuscaVia = false;
+        this.dataPaginate;
+        this.obtenerVia();
+    }
 
-  obtenerVia(){
-      this.loadingBuscaVia = true;
-      let criterio = 'getViasByIdColonia';
-      let query = '';
+    /**
+     * Obtiene las vías de acuerdo al criterio del nombre o por el id de la colonia previamente seleccionada
+     */
+    obtenerVia(){
+        this.loadingBuscaVia = true;
+        let criterio = 'getViasByIdColonia';
+        let query = '';
 
-      if(this.buscaVia){
-          query = query + 'nombre=' + this.buscaVia;
-      }else{
-          query = query + 'nombre';
-      }
+        if(this.buscaVia){
+            query = query + 'nombre=' + this.buscaVia;
+        }else{
+            query = query + 'nombre';
+        }
 
-      if(this.data.codEstado != 9){
-          query = query + '&idColonia=' + this.data.codAsentamiento;
-      }else{
-          query = query + '&idColonia=' + this.data.codAsentamiento;
-      }
+        if(this.data.codEstado != 9){
+            query = query + '&idColonia=' + this.data.codAsentamiento;
+        }else{
+            query = query + '&idColonia=' + this.data.codAsentamiento;
+        }
 
-      console.log('VIA!!!!!'+this.endpoint + '?' + query);
-      this.loadingBuscaVia = true;
-      this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
-          .subscribe(
-              (res: any) => {
-                  this.loadingBuscaVia = false;
-                  this.dataSource = res;
-                  this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-                  this.total = this.dataSource.length; 
-                  this.paginator.pageIndex = 0;
-                  console.log(this.dataSource);
-              },
-              (error) => {
-                  this.loadingBuscaVia = false;
-              }
-          );
-  }
+        console.log('VIA!!!!!'+this.endpoint + '?' + query);
+        this.loadingBuscaVia = true;
+        this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loadingBuscaVia = false;
+                    this.dataSource = res;
+                    this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                    this.total = this.dataSource.length; 
+                    this.paginator.pageIndex = 0;
+                    console.log(this.dataSource);
+                },
+                (error) => {
+                    this.loadingBuscaVia = false;
+                }
+            );
+    }
 
-  paginado(evt): void{
-      this.pagina = evt.pageIndex + 1;
-      this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-  }
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
+    paginado(evt): void{
+        this.pagina = evt.pageIndex + 1;
+        this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+    }
   
-  paginate(array, page_size, page_number) {
-      return array.slice((page_number - 1) * page_size, page_number * page_size);
-  }
+    /**
+     * Regresa la posición del paginado de acuerdo a los parámetro enviados
+     * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+     * @param page_size Valor de la cantidad de registros que se pintaran por página.
+     * @param page_number Valor de la página en la cual se encuentra el paginado.
+     * @returns 
+     */
+    paginate(array, page_size, page_number) {
+        return array.slice((page_number - 1) * page_size, page_number * page_size);
+    }
 
-  selectVia(element){
-      console.log(element);
-      this.dataVia.codtiposvia = element.codtiposvia;
-      this.dataVia.idvia = element.idvia;
-      this.dataVia.via = element.via;
-  }
+    /**
+     * Obtiene los datos y almacena los datos de la vía seleccionada.
+     * @param element Arreglo de los datos del registro seleccionado
+     */
+    selectVia(element){
+        console.log(element);
+        this.dataVia.codtiposvia = element.codtiposvia;
+        this.dataVia.idvia = element.idvia;
+        this.dataVia.via = element.via;
+    }
 
-  obtenerAsentamientoPorNombre(){
-      this.loadingBuscaVia = true;
-      let criterio = '';
-      let query = '';
+    /**
+     * Obtiene los asentamientos por nombre
+     */
+    obtenerAsentamientoPorNombre(){
+        this.loadingBuscaVia = true;
+        let criterio = '';
+        let query = '';
 
-      if(this.data.codEstado != 9){
-          criterio = criterio + 'getMunicipiosByEstado';
-          query = query + 'codEstado=' + this.data.codEstado;
-      }else{
-          criterio = '';
-          query = '';
-      }
+        if(this.data.codEstado != 9){
+            criterio = criterio + 'getMunicipiosByEstado';
+            query = query + 'codEstado=' + this.data.codEstado;
+        }else{
+            criterio = '';
+            query = '';
+        }
 
-      console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
-      this.loadingBuscaVia = true;
-      this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
-          .subscribe(
-              (res: any) => {
-                  this.loadingBuscaVia = false;
-                  this.dataSource = res;
-                  this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-                  this.total = this.dataSource.length; 
-                  this.paginator.pageIndex = 0;
-                  console.log(this.dataSource);
-              },
-              (error) => {
-                  this.loadingBuscaVia = false;
-              }
-          );
-  }
+        console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
+        this.loadingBuscaVia = true;
+        this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loadingBuscaVia = false;
+                    this.dataSource = res;
+                    this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                    this.total = this.dataSource.length; 
+                    this.paginator.pageIndex = 0;
+                    console.log(this.dataSource);
+                },
+                (error) => {
+                    this.loadingBuscaVia = false;
+                }
+            );
+    }
 }
 
 ///////////////REPRESENTACION////////////////
@@ -2602,6 +2832,11 @@ export class DialogRepresentacionC {
         };
     }
 
+    /**
+     * Al cambio en el llenado de curp o rfc se activará o desactivará uno de los dos validadores de requerido.
+     * @param remove Valor del campo que se le retirara la validación, puede ser CURP o RFC
+     * @param add  Valor del campo que se le agregara a la validación, puede ser CURP o RFC
+     */
     changeRequired(remove, add): void {
         this.fisicaFormGroup.controls[remove].setValue(null);
         this.fisicaFormGroup.controls[remove].clearValidators();
@@ -2610,6 +2845,10 @@ export class DialogRepresentacionC {
         this.fisicaFormGroup.updateValueAndValidity();
     }
   
+    /**
+     * Abre el dialogo para obtener un contribuyente previamente registrado, al cerrar se obtienen su información
+     * para ser registrado en la representación.
+     */
     addPersona(): void {
         const dialogRef = this.dialog.open(DialogPersonaC, {
             width: '700px',
@@ -2636,6 +2875,9 @@ export class DialogRepresentacionC {
         });
     }
   
+    /**
+     * Abre el dialogo para agregar los ficheros y datos relacionados su registro.
+     */
     addDocumento(dataDocumento = null): void {
         const dialogRef = this.dialog.open(DialogDocumentoC, {
             width: '700px',
@@ -2650,10 +2892,18 @@ export class DialogRepresentacionC {
         });
     }
   
+    /**
+     * Retira el registro del documento antes de guardar
+     */
     removeDocumento(){
           this.dataRepresentacion.documentoRepresentacion = undefined;
       }
   
+    /**
+     *  Obtiene los datos que se registraron en el formulario y guarda la representación junto a todos los datos del documento,
+     * representante y representado.
+     * @returns Regresa el arreglo de los datos que fueron registrados en el formulario de la representación.
+     */
     getDataRepresentacion(): DataRepresentacion {
         this.dataRepresentacion.tipoPersona = this.tipoPersona;
         if(this.tipoPersona == 'F'){
@@ -2775,6 +3025,9 @@ export class DialogRepresentacionC {
         return this.dataRepresentacion;
     }
 
+    /**
+     * Actualiza la información de la representación seleccionada.
+     */
     updateRepresentacion(){
         console.log("ACTUALIZA");
         let queryActRep = '';
@@ -2808,6 +3061,10 @@ export class DialogRepresentacionC {
             });
     }
 
+    /**
+     * Obtiene el arreglo de los datos  de la representación seleccionada para editar.
+     * @param dataRepresentacion Arreglo con los datos del registro seleccionado.
+     */
     setDataRepresentacion(dataRepresentacion): void {
         console.log("ACA ENTRO EL SLECCIONADO REPRESENTACION");
         console.log(dataRepresentacion);
@@ -2922,6 +3179,11 @@ export class DialogRepresentadoC {
         }
     }
       
+    /**
+     * * Al cambio en el llenado de curp o rfc se activará o desactivará uno de los dos validadores de requerido.
+     * @param remove Valor del campo que se le retirara la validación, puede ser CURP o RFC
+     * @param add  Valor del campo que se le agregara a la validación, puede ser CURP o RFC
+     */
     changeRequired(remove, add): void {
         this.fisicaFormGroup.controls[remove].setValue(null);
         this.fisicaFormGroup.controls[remove].clearValidators();
@@ -2930,6 +3192,10 @@ export class DialogRepresentadoC {
         this.fisicaFormGroup.updateValueAndValidity();
     }
   
+    /**
+     * Abre el dialogo para obtener un contribuyente previamente registrado, al cerrar se obtienen su información
+     * para ser registrado en la representación.
+     */
     addPersona(): void {
         const dialogRef = this.dialog.open(DialogPersonaC, {
             width: '700px',
@@ -2956,6 +3222,9 @@ export class DialogRepresentadoC {
         });
     }
   
+    /**
+     * Abre el dialogo para agregar los ficheros y datos relacionados su registro.
+     */
     addDocumento(dataDocumento = null): void {
         const dialogRef = this.dialog.open(DialogDocumentoC, {
             width: '700px',
@@ -2970,10 +3239,18 @@ export class DialogRepresentadoC {
         });
     }
   
+    /**
+     * Retira el registro del documento antes de guardar
+     */
     removeDocumento(){
           this.dataRepresentacion.documentoRepresentacion = undefined;
     }
   
+    /**
+     *  Obtiene los datos que se registraron en el formulario y guarda la representación junto a todos los datos del documento,
+     * representante y representado.
+     * @returns Regresa el arreglo de los datos que fueron registrados en el formulario de la representación.
+     */
     getDataRepresentacion(): DataRepresentacion {
         this.dataRepresentacion.tipoPersona = this.tipoPersona;
         if(this.tipoPersona == 'F'){
@@ -3098,6 +3375,9 @@ export class DialogRepresentadoC {
         return this.dataRepresentacion;
     }
 
+    /**
+     * Actualiza la información de la representación seleccionada.
+     */
     updateRepresentacion(){
         console.log("ACTUALIZA");
         let queryActRep = '';
@@ -3131,6 +3411,10 @@ export class DialogRepresentadoC {
             });
     }
 
+    /**
+     * Obtiene el arreglo de los datos  de la representación seleccionada para editar.
+     * @param dataRepresentacion Arreglo con los datos del registro seleccionado.
+     */
     setDataRepresentacion(dataRepresentacion): void {
         console.log("ACA ENTRO EL SLECCIONADO REPRESENTACION");
         console.log(dataRepresentacion);
@@ -3257,6 +3541,9 @@ export class DialogDocumentoC {
         console.log(data);
     }
   
+    /**
+     * Obtiene los tipos de Documentos Digitales
+     */
     getDataTiposDocumentoDigital(): void {
         this.loadingTiposDocumentoDigital = true;
         this.http.get(this.endpoint, this.httpOptions).subscribe(
@@ -3270,6 +3557,10 @@ export class DialogDocumentoC {
         );
     }
   
+    /**
+     * Obtiene el valor y nombre de acuerdo al valor de la etiqueta option seleccionada.
+     * @param event Contiene el nombre de la etiqueta option de acuerdo al valor de este en el select.
+     */
     getDataTiposDocumentoJuridico(): void {
         this.loadingTiposDocumentoJuridico = true;
         this.http.get(this.endpoint, this.httpOptions).subscribe(
@@ -3283,10 +3574,17 @@ export class DialogDocumentoC {
         );
     }
   
+    /**
+     * Obtiene el valor y nombre de acuerdo al valor de la etiqueta option seleccionada.
+     * @param event Contiene el nombre de la etiqueta option de acuerdo al valor de este en el select.
+     */
     getTipoDocJuridico(event): void {
         this.dataDocumento.nombreTipoDocumentoJuridico = event.source.triggerValue;
     }
   
+    /**
+     * Abre el dialogo para registrar al notario en caso de ser un Poder notarial el documento.
+     */
     addNotario(): void {
         const dialogRef = this.dialog.open(DialogNotarioC, {
             width: '700px',
@@ -3301,10 +3599,19 @@ export class DialogDocumentoC {
         });
     }
   
+    /**
+     * Activa la validación del fomulario ya agrega el fichero.
+     * @param data Datos de los ficheros que activan la validación del mismo en el formulario.
+     * @returns 
+     */
     createItem(data): FormGroup {
         return this._formBuilder.group(data);
     }
   
+    /**
+     * Remueve el fichero agregado
+     * @param i Número del index del registro seleccionado.
+     */
     removeItem(i) {
         this.archivos.removeAt(i);
       }
@@ -3313,6 +3620,10 @@ export class DialogDocumentoC {
         return this.archivosDocumentoFormGroup.get('archivos') as FormArray;
     };
   
+    /**
+     * 
+     * @param event Arreglo de los ficheros seleccionados para su envío.
+     */
     getArchivos(event) {
         let files = event.target.files;
         if(files){
@@ -3329,6 +3640,10 @@ export class DialogDocumentoC {
         }
     }
   
+    /**
+     * Se almacenan los datos del registro del documento de acuerdo al seleccionado (Carta poder o Poder notarial),
+     * en caso de ser una actualización llamara al método correspondiente.
+     */
     getDataDocumento(): void {
         this.dataDocumento.codtipodocumento = this.tiposDocumentoFormGroup.value.codtipodocumento;
         this.dataDocumento.codtipodocumentojuridico = this.tiposDocumentoFormGroup.value.codtipodocumentojuridico;
@@ -3350,6 +3665,10 @@ export class DialogDocumentoC {
         }
     }
   
+    /**
+     * Obtiene la información del documento y el fichero.
+     * @param idDocumento2 Valor del idDocumento utilizado para la búsqueda del mismo
+     */
     setDataDocumento(idDocumento2): void {
 
         this.http.post(this.endpoint + 'infoDocumentos?idDocumentoDigital=' + idDocumento2, '', this.httpOptions).subscribe(
@@ -3369,6 +3688,9 @@ export class DialogDocumentoC {
             });
     }
 
+    /**
+     * Se almacenan los datos relacionados con el documento cuando se ha seleccionado la opción de editar documento.
+     */
     setDoc(){
         console.log("LA FECHA NO SE DEJA");
         console.log(this.fechaDocto);
@@ -3391,6 +3713,10 @@ export class DialogDocumentoC {
         this.dataDoc = this.dataDocumentoSet.infoFicheros;
     }
 
+    /**
+     * Realiza la consulta del fichero previamente guardado.
+     * @param element Arreglo de los datos del registro seleccionado.
+     */
     descargarDoc(element){
 
         console.log("ACA EL DESCARGAR FICHERO");
@@ -3413,6 +3739,9 @@ export class DialogDocumentoC {
             });
     }
 
+    /**
+     * Convierte el base 64 del fichero guardado para su descarga en PDF.
+     */
     convertirDoc(){
         let dataFichero = this.descargaFichero[0].binariodatos;
         dataFichero = dataFichero.split("data:application/pdf;base64,");
@@ -3423,6 +3752,13 @@ export class DialogDocumentoC {
         FileSaver.saveAs(blob, this.descargaFichero[0].nombre);
     }
 
+    /**
+     * 
+     * @param b64Data El fichero en base 64.
+     * @param contentType Tipo de fichero.
+     * @param sliceSize 
+     * @returns Regresa el fichero a descargar
+     */
     b64toBlob(b64Data, contentType = '', sliceSize = 512): Blob {
         const byteCharacters = atob(b64Data);
         const byteArrays = [];
@@ -3439,6 +3775,11 @@ export class DialogDocumentoC {
         return blob;
     }
 
+    /**
+     * Elimina el fichero seleccionado
+     * @param element Arreglo con los datos seleccionados del registro.
+     * @param i Valor del index del registro seleccionado.
+     */
     eliminarDoc(element, i){
         console.log("ACA EL ELIMINAR FICHERO");
         console.log(element);
@@ -3465,6 +3806,9 @@ export class DialogDocumentoC {
             });
     }
 
+    /**
+     * Actualiza los datos relacionados con el documento.
+     */
     updateDocto(){
         this.canSend = true;
         const payload = {
@@ -3574,6 +3918,9 @@ export class DialogNotarioC {
         this.getDataEstados();
     }
 
+    /**
+     * Obtiene el catálogo de los estados de la república Mexicana.
+     */
     getDataEstados(): void {
         this.loadingEstados = true;
         this.http.post(this.endpointCatalogos + 'getEstados', '', this.httpOptions).subscribe(
@@ -3587,6 +3934,9 @@ export class DialogNotarioC {
         );
     }
 
+    /**
+     * Obtiene los datos del notario de acuerdo a los parametros dados en la búsqueda.
+     */
     getDataNotarios(): void {
         this.loading = true;
         this.isBusqueda = true;
@@ -3633,15 +3983,29 @@ export class DialogNotarioC {
             });
     }
   
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
         this.dataSource = this.paginate(this.dataNotarios, this.pageSize, this.pagina);
     }
   
+    /**
+     * 
+     * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+     * @param page_size Valor de la cantidad de registros que se pintaran por página.
+     * @param page_number Valor de la página en la cual se encuentra el paginado.
+     * @returns 
+     */
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
       
+    /**
+     * Limpia los datos de la búsqueda y valores previamente definidos.
+     */
     clean(): void {
         this.pagina = 1;
         this.total = 0;
@@ -3652,6 +4016,10 @@ export class DialogNotarioC {
         this.isBusqueda = false;
     }
   
+    /**
+     * Obtiene y almacena el arreglo del norario seleccionado.
+     * @param element Arreglo de los datos del registro seleccionado.
+     */
     notarioSelected(element) {
         this.notario.id = element.IDPERSONA;
         this.notario.numero = element.NUMNOTARIO;
@@ -3727,6 +4095,10 @@ export class DialogPersonaC {
         console.log(this.tipoPersona);
       }
   
+    /**
+     * De acuerdo al parametro sea identificativo o personal se limpiaran los otros campos.
+     * @param isIdentificativo Valor booleano
+     */
     clearInputsIdentNoIdent(isIdentificativo): void {
         this.isIdentificativo = isIdentificativo;
         if(this.isIdentificativo){
@@ -3742,6 +4114,9 @@ export class DialogPersonaC {
         }
     }
   
+    /**
+     * Obtiene a la persona sea física o moral por datos identificativos o personales.
+     */
     getDataPersonas(): void {
         this.loading = true;
         this.isBusqueda = true;
@@ -3801,15 +4176,29 @@ export class DialogPersonaC {
         );
     }
   
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
         this.dataSource = this.paginate(this.dataPersonas, this.pageSize, this.pagina);
     }
   
+    /**
+     * 
+     * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+     * @param page_size Valor de la cantidad de registros que se pintaran por página.
+     * @param page_number Valor de la página en la cual se encuentra el paginado.
+     * @returns 
+     */
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
   
+    /**
+     * Reinicia los valores del paginado y la búsqueda.
+     */
     clean(): void {
         this.pagina = 1;
         this.total = 0;
@@ -3820,6 +4209,10 @@ export class DialogPersonaC {
         this.isBusqueda = false;
     }
   
+    /**
+     * Obtiene y almacena los datos de la persona moral o físca seleccinada.
+     * @param element Arreglo de los datos de la persona seleccionada
+     */
     personaSelected(element) {
         this.persona.tipoPersona = this.tipoPersona;
         this.persona.id = element.IDPERSONA;
@@ -3882,6 +4275,9 @@ export interface DataHistorico{
     
         }
 
+    /**
+     * Obtiene el historial de las modificaciones que han recibido los domicilios.
+     */
     getHistoricoModificaciones(){
         let query = '';
       
@@ -3913,15 +4309,30 @@ export interface DataHistorico{
             );
     }
 
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
         this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
     }
     
+    /**
+     * Regresa la posición del paginado de acuerdo a los parámetro enviados
+     * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+     * @param page_size Valor de la cantidad de registros que se pintaran por página.
+     * @param page_number Valor de la página en la cual se encuentra el paginado.
+     * @returns 
+     */
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
 
+    /**
+     * Abre el dialogo que mostrará el domicilio especifico.
+     * @param dataDomicilioEspecifico Valor del registro seleccionado.
+     */
     viewHistoricoDomicilioEspecifico(dataDomicilioEspecifico): void {
         const dialogRef = this.dialog.open(DialogDomicilioHistoricoEspecificoContribuyente, {
             width: '700px',
@@ -4078,6 +4489,9 @@ export interface DataHistorico{
                     this.getDataTiposLocalidad();
         }
 
+    /**
+     * Obtiene el domicilio seleccionado.
+     */  
     getDireccionEspecifica(){
         console.log('entro');
         this.loadingDireccionEspecifica = true;
@@ -4103,12 +4517,19 @@ export interface DataHistorico{
             );
     }
 
+    /**
+     * Obtiene el valor y nombre de la etiqueta option seleccionado.
+     * @param event Contiene el nombre de la etiqueta option de acuerdo al valor de este en el select.
+     */
     getNombreDel(event): void {
         this.dataDomicilio.delegacion = event.source.triggerValue;
         this.botonAsentamiento = false;
         
     }
 
+    /**
+     * Obtiene el catálogo de los estados de la república Mexicana.
+     */
     getDataEstados(): void {
         this.loadingEstados = true;
         this.http.post(this.endpointCatalogos + 'getEstados', '', this.httpOptions).subscribe(
@@ -4122,6 +4543,10 @@ export interface DataHistorico{
         );
     }
 
+    /**
+     * Obtiene los municipios de acuerdo al estado seleccionado
+     * @param event Valor que se recibe para la obtención de las alcaldias o municipios.
+     */
     getDataMunicipios(event): void {
         this.botonMunicipio = false;
         let busquedaMunCol = '';
@@ -4141,6 +4566,9 @@ export interface DataHistorico{
         );
     }
     
+    /**
+     * Obtiene el catálogo de los asentamientos.
+     */
     getDataTiposAsentamiento(): void {
         this.loadingTiposAsentamiento = true;
         this.http.post(this.endpointCatalogos + 'getTiposAsentamiento', '', this.httpOptions).subscribe(
@@ -4156,6 +4584,9 @@ export interface DataHistorico{
         );
     }
     
+    /**
+     * Obtiene el catálogo de las vías
+     */
     getDataTiposVia(): void {
         this.loadingTiposVia = true;
         this.http.post(this.endpointCatalogos + 'getTiposVia', '', this.httpOptions).subscribe(
@@ -4172,6 +4603,9 @@ export interface DataHistorico{
         );
     }
     
+    /**
+     * Obtiene el catálogo de los tipos de localidad
+     */
     getDataTiposLocalidad(): void {
         this.loadingTiposLocalidad = true;
         this.http.post(this.endpointCatalogos + 'getTiposLocalidad', '', this.httpOptions).subscribe(
@@ -4187,6 +4621,10 @@ export interface DataHistorico{
         );
     }
 
+    /**
+     * Obtiene el arreglo del domicilio previamente seleccionado y lo muestra en sus respectivos campos del fomulario.
+     * @param data Arreglo con los datos del registro seleccionado.
+     */
     setDataDomicilio(data): void {
         console.log("ACA EL COD DATA ESPE");
         console.log(data);
@@ -4225,6 +4663,10 @@ export interface DataHistorico{
         }
     }
 
+    /**
+     * Abre el dialogo que muestra los municipios de acuerdo al estado,
+     * con opción para búsqueda especifica.
+     */
     getMunicipios(){
         this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
         const dialogRef = this.dialog.open(DialogMunicipiosContribuyente, {
@@ -4243,6 +4685,10 @@ export interface DataHistorico{
         });
     }
 
+    /**
+     * Abre el dialogo que muestra las localidades (ciudades) ligadas al municipio seleccionado previamente,
+     * con opción a búsqueda especifica.
+     */
     getCiudad(){
         this.dataDomicilio.idmunicipio2 = this.domicilioFormGroup.value.idmunicipio2;
         const dialogRef = this.dialog.open(DialogCiudadContribuyente, {
@@ -4262,6 +4708,9 @@ export interface DataHistorico{
         });
     }
 
+    /**
+     * Abre el dialogo que muestra los asentamientos ligados a la ciudad
+     */
     getAsentamiento(){
         this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
         this.dataDomicilio.idmunicipio = this.domicilioFormGroup.value.idmunicipio;
@@ -4288,6 +4737,9 @@ export interface DataHistorico{
         });
     }
 
+    /**
+     * Abre el dialogo que muestra las vías ligadas al asentamiento
+     */
     getVia(){
         this.dataDomicilio.codasentamiento =  this.domicilioFormGroup.value.codasentamiento;
         const dialogRef = this.dialog.open(DialogViaContribuyente, {
@@ -4353,6 +4805,9 @@ export interface DataHistorico{
     
         }
 
+    /**
+     * Obtiene el histórico de mofificaciones
+     */
     getHistoricoModificaciones(){
         let query = '';
       
@@ -4384,15 +4839,29 @@ export interface DataHistorico{
             );
     }
 
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
         this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
     }
     
+    /**
+     * Regresa la posición del paginado de acuerdo a los parámetro enviados
+     * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+     * @param page_size Valor de la cantidad de registros que se pintaran por página.
+     * @param page_number Valor de la página en la cual se encuentra el paginado.
+     * @returns 
+     */
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
 
+    /**
+     * @param dataPersonalesEspecifico abre el modal que muestra como se veían la información antes de ser modificada
+     */
     viewHistoricoPersonalesEspecifico(dataPersonalesEspecifico): void {
         const dialogRef = this.dialog.open(DialogPersonalesHistoricoEspecificoContribuyente, {
             width: '700px',
@@ -4480,7 +4949,9 @@ export interface DataHistorico{
         this.getContribuyenteDatos();
     }
 
-
+    /**
+     * Obtiene los documentos identificativos
+     */
     getDataDocumentos(): void{
         this.loadingDocumentos = true;
         this.http.post(this.endpoint + 'getCatalogos', '', this.httpOptions).subscribe(
@@ -4495,6 +4966,9 @@ export interface DataHistorico{
         );
     }
 
+    /**
+     * Obtiene los datos del contribuyente
+     */
     getContribuyenteDatos(){
         this.query = '&idPersona=' + this.idPersona + '&idChs=' + this.idChs; 
         this.loading = true;
@@ -4519,6 +4993,9 @@ export interface DataHistorico{
             );
     }
 
+    /**
+     * Asigna los datos de la consulta a variables
+     */
     datoDelContribuyente(){
         this.contribuyente.tipoPersona = this.dataContribuyenteResultado[0].CODTIPOSPERSONA;
         this.contribuyente.nombre  = this.dataContribuyenteResultado[0].NOMBRE;
@@ -4597,6 +5074,9 @@ export class DialogHistorialRepC {
         this.getHistorialRepresentacion();
     }
 
+    /**
+     * Obtiene el historial de las representaciones ligadas a la sociedad.
+     */
     getHistorialRepresentacion(){
         let query = '';
       
@@ -4628,15 +5108,30 @@ export class DialogHistorialRepC {
             );
     }
 
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
         this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
     }
     
+    /**
+     * 
+     * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+     * @param page_size Valor de la cantidad de registros que se pintaran por página.
+     * @param page_number Valor de la página en la cual se encuentra el paginado.
+     * @returns 
+     */
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
 
+    /**
+     * Recibe el id de la representación y abre el dialogo que mostrará el resultado de la búsqueda solicitada.
+     * @param element Id de la representcación con la cual se realizará la búsqueda.
+     */
     historicoDetalle(element){
         console.log("ACA EL IDCSH");
         console.log(element);
@@ -4738,6 +5233,9 @@ export class DialogHistorialRepDetalleC {
         this.getHistorialRepresentacionDetalle();
     }
 
+    /**
+     * Obtiene la información de la representación solicitada.
+     */
     getHistorialRepresentacionDetalle(){
         let query = '';
 
@@ -4767,6 +5265,9 @@ export class DialogHistorialRepDetalleC {
             );
     }
 
+    /**
+     * Almacena los datos de la búsqueda realizada para mostrar en el formulario.
+     */
     setDetalle(){
             console.log("ACA ENTRO EL SLECCIONADO REPRESENTACION");
             console.log(this.dataRepresentacion.infoDocumento.infoDocumento[0].codtipodocumentojuridico);

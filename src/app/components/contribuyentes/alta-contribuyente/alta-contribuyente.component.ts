@@ -261,6 +261,9 @@ export class AltaContribuyenteComponent implements OnInit {
         console.log("hola");
     }
 
+    /** 
+    * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
+    */
     getDataDocumentos(): void{
         this.loadingDocumentos = true;
         this.http.post(this.endpoint + 'getCatalogos', '', this.httpOptions).subscribe(
@@ -398,6 +401,9 @@ export class AltaContribuyenteComponent implements OnInit {
         
     }
 
+    /** 
+    * Genera el comprobante de algún movimiento realizado
+    */
     printComprobante(){
         let query = '';
         this.loading = true;
@@ -428,6 +434,9 @@ export class AltaContribuyenteComponent implements OnInit {
             );
     }
 
+    /**
+    * Setea los valores encontrados en los campos del formulario
+    */
     setDatosContribuyente(){
         this.datosContribuyente.nombre = this.resultadoAlta[0].nombre;
         this.datosContribuyente.apepaterno = this.resultadoAlta[0].apellidopaterno;
@@ -504,16 +513,31 @@ export class AltaContribuyenteComponent implements OnInit {
             );
     }
 
+    /**
+    * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+    * @param evt Nos da la referencia de la pagina en la que se encuentra
+    */
     paginado1(evt): void{
         this.pagina1 = evt.pageIndex + 1;
         this.dataSource1 = this.paginate(this.dataSource1, 15, this.pagina1);
     }
 
+    /**
+    * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+    * @param evt Nos da la referencia de la pagina en la que se encuentra
+    */
     paginado2(evt): void{
         this.pagina2 = evt.pageIndex + 1;
         this.dataSource2 = this.paginate(this.dataSource2, 15, this.pagina2);
     }
 
+    /**
+    * Regresa la posición del paginado de acuerdo a los parámetro enviados
+    * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+    * @param page_size Valor de la cantidad de registros que se pintaran por página.
+    * @param page_number Valor de la página en la cual se encuentra el paginado.
+    * @returns 
+    */
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
@@ -675,6 +699,9 @@ export class DialogDomicilioAlta {
         this.botonAsentamiento = false;
     }
 
+    /** 
+    * Obtiene el nombre de los Estados para llenar el el Select de Estados
+    */
     getDataEstados(): void {
         this.loadingEstados = true;
         this.http.post(this.endpointCatalogos + 'getEstados', '', this.httpOptions).subscribe(
@@ -688,6 +715,9 @@ export class DialogDomicilioAlta {
         );
     }
 
+    /** 
+    * Obtiene el nombre de los Municipios de cada estado, o los de las delegaciones si es la CDMX
+    */
     getDataMunicipios(event): void {
         this.botonMunicipio = false;
         let busquedaMunCol = '';
@@ -706,6 +736,9 @@ export class DialogDomicilioAlta {
         );
     }
 
+    /** 
+    * Obtiene el nombre de las colonias dependiendo de la delegación o municipio
+    */
     getDataTiposAsentamiento(): void {
         this.loadingTiposAsentamiento = true;
         this.http.post(this.endpointCatalogos + 'getTiposAsentamiento', '', this.httpOptions).subscribe(
@@ -721,6 +754,9 @@ export class DialogDomicilioAlta {
         );
     }
 
+    /** 
+    * Obtiene el nombre de las calles dependiendo la colonia seleccionada
+    */
     getDataTiposVia(): void {
         this.loadingTiposVia = true;
         this.http.post(this.endpointCatalogos + 'getTiposVia', '', this.httpOptions).subscribe(
@@ -737,6 +773,9 @@ export class DialogDomicilioAlta {
         );
     }
   
+    /** 
+    * Obtiene el tipo de localidades que existen para llenar el combo select
+    */
     getDataTiposLocalidad(): void {
         this.loadingTiposLocalidad = true;
         this.http.post(this.endpointCatalogos + 'getTiposLocalidad', '', this.httpOptions).subscribe(
@@ -752,6 +791,9 @@ export class DialogDomicilioAlta {
         );
     }
 
+    /** 
+    * Obtiene la información de los domicilios
+    */
     getDataDomicilio(): void {
         //this.dataDomicilio.idtipodireccion = this.domicilioFormGroup.value.idtipodireccion;
         this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
@@ -789,6 +831,9 @@ export class DialogDomicilioAlta {
         ///retu
     }
 
+    /** 
+    * Guarda el domicilio que se agrega
+    */
     guardaDomicilio(){
         
         let query = 'insertarDireccion?idPersona=' + this.data.idPerito;
@@ -854,6 +899,9 @@ export class DialogDomicilioAlta {
             );
     }
 
+    /** 
+    * @param dataDomicilio setea los valores encontrados en la consulta en el formulario
+    */
     setDataDomicilio(dataDomicilio): void {
         //this.domicilioFormGroup.controls['idtipodireccion'].setValue(dataDomicilio.idtipodireccion);
         this.domicilioFormGroup.controls['idestado'].setValue(dataDomicilio.idestado);
@@ -886,6 +934,9 @@ export class DialogDomicilioAlta {
         }
     }
 
+    /** 
+    * Obtiene los municipios
+    */
     getMunicipios(){
         this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
         const dialogRef = this.dialog.open(DialogMunicipiosAlta, {
@@ -904,6 +955,9 @@ export class DialogDomicilioAlta {
         });
     }
 
+    /** 
+    * Obtiene las ciudades dependiendo del municipio seleccionado
+    */
     getCiudad(){
         this.dataDomicilio.idmunicipio2 = this.domicilioFormGroup.value.idmunicipio2;
         const dialogRef = this.dialog.open(DialogCiudadAlta, {
@@ -923,6 +977,9 @@ export class DialogDomicilioAlta {
         });
     }
 
+    /** 
+    * Obtiene las colonias dependiendo de la ciudad seleccionada
+    */
     getAsentamiento(){
         this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
         this.dataDomicilio.idmunicipio = this.domicilioFormGroup.value.idmunicipio;
@@ -949,6 +1006,9 @@ export class DialogDomicilioAlta {
         });
     }
 
+    /** 
+    * Obtiene las calles dependiendo la colonia seleccionada
+    */
     getVia(){
         this.dataDomicilio.codasentamiento =  this.domicilioFormGroup.value.codasentamiento;
         const dialogRef = this.dialog.open(DialogViaAlta, {
@@ -1024,6 +1084,9 @@ export class DialogMunicipiosAlta {
         this.obtenerMunicipios();
     }
 
+    /** 
+    * Obtiene los municipios
+    */
     obtenerMunicipios(){
         this.loadingBuscaMun = true;
         let criterio = '';
@@ -1055,15 +1118,29 @@ export class DialogMunicipiosAlta {
             );
     }
 
+    /**
+    * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+    * @param evt Nos da la referencia de la pagina en la que se encuentra
+    */
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
         this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
     }
     
+    /**
+    * Regresa la posición del paginado de acuerdo a los parámetro enviados
+    * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+    * @param page_size Valor de la cantidad de registros que se pintaran por página.
+    * @param page_number Valor de la página en la cual se encuentra el paginado.
+    * @returns 
+    */
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
 
+    /**
+    * @param element despliega los municipios dependiendo el estado seleccionado
+    */
     selectMunicipios(element){
         console.log(element);
         this.dataMunicipios.codestado = element.CODESTADO;
@@ -1071,6 +1148,9 @@ export class DialogMunicipiosAlta {
         this.dataMunicipios.municipio = element.MUNICIPIO;
     }
 
+    /**
+    * Obtiene los nombres de los municipios
+    */
     obtenerMunicipiosPorNombre(){
         this.loadingBuscaMun = true;
         let criterio = '';
@@ -1157,6 +1237,9 @@ export class DialogCiudadAlta {
         this.obtenerCiudad();
     }
 
+    /**
+    * Obtiene las sociedades
+    */
     obtenerCiudad(){
         this.loadingBuscaCiudad = true;
         let criterio = '';
@@ -1192,15 +1275,29 @@ export class DialogCiudadAlta {
             );
     }
 
+    /**
+    * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+    * @param evt Nos da la referencia de la pagina en la que se encuentra
+    */
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
         this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
     }
     
+    /**
+    * Regresa la posición del paginado de acuerdo a los parámetro enviados
+    * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+    * @param page_size Valor de la cantidad de registros que se pintaran por página.
+    * @param page_number Valor de la página en la cual se encuentra el paginado.
+    * @returns 
+    */
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
 
+    /**
+    * @element despliega las ciudades segun el municpio seleccionado
+    */
     selectCiudad(element){
         console.log(element);
         this.dataCiudad.ciudad = element.CIUDAD;
@@ -1265,6 +1362,9 @@ export class DialogAsentamientoAlta {
         this.obtenerAsentamiento();
     }
 
+    /**
+    * Obtiene las colonias
+    */
     obtenerAsentamiento(){
         this.loading = true;
         let criterio = '';
@@ -1301,15 +1401,29 @@ export class DialogAsentamientoAlta {
             );
     }
 
+    /**
+    * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+    * @param evt Nos da la referencia de la pagina en la que se encuentra
+    */
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
         this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
     }
     
+    /**
+    * Regresa la posición del paginado de acuerdo a los parámetro enviados
+    * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+    * @param page_size Valor de la cantidad de registros que se pintaran por página.
+    * @param page_number Valor de la página en la cual se encuentra el paginado.
+    * @returns 
+    */
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
 
+    /**
+    * Obtiene las colonias segun el municipio seleccionado
+    */
     selectAsentamiento(element){
         console.log(element);
         if(element.IDDELEGACION){
@@ -1382,6 +1496,9 @@ export class DialogViaAlta {
         this.obtenerVia();
     }
 
+    /**
+    * Obtiene las calles
+    */
     obtenerVia(){
         this.loadingBuscaVia = true;
         let criterio = 'getViasByIdColonia';
@@ -1417,15 +1534,29 @@ export class DialogViaAlta {
             );
     }
 
+    /**
+    * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+    * @param evt Nos da la referencia de la pagina en la que se encuentra
+    */
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
         this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
     }
     
+    /**
+    * Regresa la posición del paginado de acuerdo a los parámetro enviados
+    * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+    * @param page_size Valor de la cantidad de registros que se pintaran por página.
+    * @param page_number Valor de la página en la cual se encuentra el paginado.
+    * @returns 
+    */
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
 
+    /**
+    * Obtiene las calles segun la colonia seleccionada
+    */
     selectVia(element){
         console.log(element);
         this.dataVia.codtiposvia = element.codtiposvia;
@@ -1433,6 +1564,9 @@ export class DialogViaAlta {
         this.dataVia.via = element.via;
     }
 
+    /**
+    * Obtiene las colonias por nombre
+    */
     obtenerAsentamientoPorNombre(){
         this.loadingBuscaVia = true;
         let criterio = '';
@@ -1536,6 +1670,11 @@ export class DialogRepresentacionAltaC {
         };
     }
 
+    /**
+    * Al cambio en el llenado de curp o rfc se activará o desactivará uno de los dos validadores de requerido.
+    * @param remove Valor del campo que se le retirara la validación, puede ser CURP o RFC
+    * @param add  Valor del campo que se le agregara a la validación, puede ser CURP o RFC
+    */
     changeRequired(remove, add): void {
         this.fisicaFormGroup.controls[remove].setValue(null);
         this.fisicaFormGroup.controls[remove].clearValidators();
@@ -1544,6 +1683,9 @@ export class DialogRepresentacionAltaC {
         this.fisicaFormGroup.updateValueAndValidity();
     }
   
+    /**
+    * Abre el dialogo para obtener un contribuyente previamente registrado, al cerrar se obtienen su información para ser registrado en la representación.
+    */
     addPersona(): void {
         const dialogRef = this.dialog.open(DialogPersonaAltaC, {
             width: '700px',
@@ -1570,6 +1712,9 @@ export class DialogRepresentacionAltaC {
         });
     }
   
+    /**
+    * Abre el dialogo para agregar los ficheros y datos relacionados su registro.
+    */
     addDocumento(dataDocumento = null): void {
         const dialogRef = this.dialog.open(DialogDocumentoAltaC, {
             width: '700px',
@@ -1582,10 +1727,18 @@ export class DialogRepresentacionAltaC {
         });
     }
   
+    /**
+    * Retira el registro del documento antes de guardar
+    */
     removeDocumento(){
-          this.dataRepresentacion.documentoRepresentacion = undefined;
-      }
+        this.dataRepresentacion.documentoRepresentacion = undefined;
+    }
   
+    /**
+    *  Obtiene los datos que se registraron en el formulario y guarda la representación junto a todos los datos del documento,
+    * representante y representado.
+    * @returns Regresa el arreglo de los datos que fueron registrados en el formulario de la representación.
+    */
     getDataRepresentacion(): DataRepresentacion {
         this.dataRepresentacion.tipoPersona = this.tipoPersona;
         if(this.tipoPersona == 'F'){
@@ -1704,6 +1857,10 @@ export class DialogRepresentacionAltaC {
         return this.dataRepresentacion;
     }
   
+    /**
+    * Obtiene el arreglo de los datos  de la representación seleccionada para editar.
+    * @param dataRepresentacion Arreglo con los datos del registro seleccionado.
+    */
     setDataRepresentacion(dataRepresentacion): void {
         this.tipoPersona = dataRepresentacion.tipoPersona;
         if(this.tipoPersona == 'F'){
@@ -1809,6 +1966,11 @@ export class DialogRepresentadoAltaC {
         }
     }
       
+    /**
+     * * Al cambio en el llenado de curp o rfc se activará o desactivará uno de los dos validadores de requerido.
+     * @param remove Valor del campo que se le retirara la validación, puede ser CURP o RFC
+     * @param add  Valor del campo que se le agregara a la validación, puede ser CURP o RFC
+     */
     changeRequired(remove, add): void {
         this.fisicaFormGroup.controls[remove].setValue(null);
         this.fisicaFormGroup.controls[remove].clearValidators();
@@ -1817,6 +1979,9 @@ export class DialogRepresentadoAltaC {
         this.fisicaFormGroup.updateValueAndValidity();
     }
   
+    /**
+     * Abre el dialogo para obtener un contribuyente previamente registrado, al cerrar se obtienen su información para ser registrado en la representación.
+     */
     addPersona(): void {
         const dialogRef = this.dialog.open(DialogPersonaAltaC, {
             width: '700px',
@@ -1843,6 +2008,9 @@ export class DialogRepresentadoAltaC {
         });
     }
   
+    /**
+     * Abre el dialogo para agregar los ficheros y datos relacionados su registro.
+     */
     addDocumento(dataDocumento = null): void {
         const dialogRef = this.dialog.open(DialogDocumentoAltaC, {
             width: '700px',
@@ -1855,10 +2023,18 @@ export class DialogRepresentadoAltaC {
         });
     }
   
+    /**
+     * Retira el registro del documento antes de guardar
+     */
     removeDocumento(){
-          this.dataRepresentacion.documentoRepresentacion = undefined;
-      }
+        this.dataRepresentacion.documentoRepresentacion = undefined;
+    }
   
+    /**
+     *  Obtiene los datos que se registraron en el formulario y guarda la representación junto a todos los datos del documento,
+     * representante y representado.
+     * @returns Regresa el arreglo de los datos que fueron registrados en el formulario de la representación.
+     */
     getDataRepresentacion(): DataRepresentacion {
         this.dataRepresentacion.tipoPersona = this.tipoPersona;
         if(this.tipoPersona == 'F'){
@@ -1981,6 +2157,9 @@ export class DialogRepresentadoAltaC {
         return this.dataRepresentacion;
     }
 
+    /**
+     * Inserta un registro de representación.
+     */
     insertRepresentacion(payload){
         
         console.log(payload);
@@ -2005,6 +2184,9 @@ export class DialogRepresentadoAltaC {
             });
     }
   
+    /**
+     * Actualiza la información de la representación seleccionada.
+     */
     updateRepresentacion(payload){
         console.log("ACTUALIZA");
         return;
@@ -2028,6 +2210,10 @@ export class DialogRepresentadoAltaC {
             });
     }
 
+    /**
+     * Obtiene el arreglo de los datos  de la representación seleccionada para editar.
+     * @param dataRepresentacion Arreglo con los datos del registro seleccionado.
+     */
     setDataRepresentacion(dataRepresentacion): void {
         console.log("ACA ENTRO EL SLECCIONADO REPRESENTACION");
         console.log(dataRepresentacion);
@@ -2172,10 +2358,17 @@ export class DialogDocumentoAltaC {
         );
     }
   
+    /**
+     * Obtiene el valor y nombre de acuerdo al valor de la etiqueta option seleccionada.
+     * @param event Contiene el nombre de la etiqueta option de acuerdo al valor de este en el select.
+     */
     getTipoDocJuridico(event): void {
         this.dataDocumento.nombreTipoDocumentoJuridico = event.source.triggerValue;
     }
   
+    /**
+     * Abre el dialogo para registrar al notario en caso de ser un Poder notarial el documento.
+     */
     addNotario(): void {
         const dialogRef = this.dialog.open(DialogNotarioAltaC, {
             width: '700px',
@@ -2190,10 +2383,19 @@ export class DialogDocumentoAltaC {
         });
     }
   
+    /**
+     * Activa la validación del fomulario ya agrega el fichero.
+     * @param data Datos de los ficheros que activan la validación del mismo en el formulario.
+     * @returns 
+     */
     createItem(data): FormGroup {
         return this._formBuilder.group(data);
     }
   
+    /**
+     * Remueve el fichero agregado
+     * @param i Número del index del registro seleccionado.
+     */
     removeItem(i) {
         this.archivos.removeAt(i);
       }
@@ -2202,6 +2404,10 @@ export class DialogDocumentoAltaC {
         return this.archivosDocumentoFormGroup.get('archivos') as FormArray;
     };
   
+    /**
+     * 
+     * @param event Arreglo de los ficheros seleccionados para su envío.
+     */
     getArchivos(event) {
         let files = event.target.files;
         if(files){
@@ -2218,6 +2424,10 @@ export class DialogDocumentoAltaC {
         }
     }
   
+    /**
+     * Se almacenan los datos del registro del documento de acuerdo al seleccionado (Carta poder o Poder notarial),
+     * en caso de ser una actualización llamara al método correspondiente.
+     */
     getDataDocumento(): void {
         this.dataDocumento.codtipodocumento = this.tiposDocumentoFormGroup.value.codtipodocumento;
         this.dataDocumento.codtipodocumentojuridico = this.tiposDocumentoFormGroup.value.codtipodocumentojuridico;
@@ -2235,6 +2445,10 @@ export class DialogDocumentoAltaC {
         this.canSend = true;
     }
   
+    /**
+     * Obtiene la información del documento y el fichero.
+     * @param idDocumento Valor del idDocumento utilizado para la búsqueda del mismo
+     */
     setDataDocumento(idDocumento): void {
 
         this.http.post(this.endpoint + 'infoDocumentos?idDocumentoDigital=' + idDocumento, '', this.httpOptions).subscribe(
@@ -2256,6 +2470,9 @@ export class DialogDocumentoAltaC {
 
     }
 
+    /**
+     * Se almacenan los datos relacionados con el documento cuando se ha seleccionado la opción de editar documento.
+     */
     setDoc(){
         console.log("LA FECHA NO SE DEJA");
         console.log(this.fechaDocto);
@@ -2353,6 +2570,9 @@ export class DialogNotarioAltaC {
         this.getDataEstados();
     }
 
+    /**
+     * Obtiene el catálogo de los estados de la república Mexicana.
+     */
     getDataEstados(): void {
         this.loadingEstados = true;
         this.http.post(this.endpointCatalogos + 'getEstados', '', this.httpOptions).subscribe(
@@ -2366,6 +2586,9 @@ export class DialogNotarioAltaC {
         );
     }
 
+    /**
+     * Obtiene los datos del notario de acuerdo a los parametros dados en la búsqueda.
+     */
     getDataNotarios(): void {
         this.loading = true;
         this.isBusqueda = true;
@@ -2506,6 +2729,10 @@ export class DialogPersonaAltaC {
         console.log(this.tipoPersona);
       }
   
+    /**
+     * De acuerdo al parametro sea identificativo o personal se limpiaran los otros campos.
+     * @param isIdentificativo Valor booleano
+     */
     clearInputsIdentNoIdent(isIdentificativo): void {
         this.isIdentificativo = isIdentificativo;
         if(this.isIdentificativo){
@@ -2521,6 +2748,9 @@ export class DialogPersonaAltaC {
         }
     }
   
+    /**
+     * Obtiene a la persona sea física o moral por datos identificativos o personales.
+     */
     getDataPersonas(): void {
         this.loading = true;
         this.isBusqueda = true;
@@ -2580,15 +2810,29 @@ export class DialogPersonaAltaC {
         );
     }
   
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
         this.dataSource = this.paginate(this.dataPersonas, this.pageSize, this.pagina);
     }
   
+    /**
+     * 
+     * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+     * @param page_size Valor de la cantidad de registros que se pintaran por página.
+     * @param page_number Valor de la página en la cual se encuentra el paginado.
+     * @returns 
+     */
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
   
+    /**
+     * Reinicia los valores del paginado y la búsqueda.
+     */
     clean(): void {
         this.pagina = 1;
         this.total = 0;
@@ -2599,6 +2843,10 @@ export class DialogPersonaAltaC {
         this.isBusqueda = false;
     }
   
+    /**
+     * Obtiene y almacena los datos de la persona moral o físca seleccinada.
+     * @param element Arreglo de los datos de la persona seleccionada
+     */
     personaSelected(element) {
         this.persona.tipoPersona = this.tipoPersona;
         this.persona.id = element.IDPERSONA;

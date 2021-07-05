@@ -128,6 +128,11 @@ export class VerContribuyenteComponent implements OnInit {
     this.getContribuyenteDatos();
   }
 
+  /**
+     * Al cambio en el llenado de curp o rfc se activará o desactivará uno de los dos validadores de requerido.
+     * @param remove Valor del campo que se le retirara la validación, puede ser CURP o RFC
+     * @param add  Valor del campo que se le agregara a la validación, puede ser CURP o RFC
+     */
   changeRequired(remove, add): void {
     this.fisicaFormGroup.controls[remove].setValue(null);
     this.fisicaFormGroup.controls[remove].clearValidators();
@@ -136,6 +141,9 @@ export class VerContribuyenteComponent implements OnInit {
     this.fisicaFormGroup.updateValueAndValidity();
   }
 
+  /** 
+    * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
+    */
   getDataDocumentos(): void{
     this.loadingDocumentos = true;
     this.http.post(this.endpoint + 'getCatalogos', '', this.httpOptions).subscribe(
@@ -150,6 +158,9 @@ export class VerContribuyenteComponent implements OnInit {
     );
   }
 
+  /** 
+    * Obtiene los Datos del Contribuyente
+    */
   getContribuyenteDatos(){
     this.query = '&idPersona=' + this.idContribuyente; 
     this.loading = true;
@@ -174,6 +185,9 @@ export class VerContribuyenteComponent implements OnInit {
         );
   }
 
+  /** 
+    * Asigna los valores de la consulta a las variables del formulario
+    */
   datoDelContribuyente(){
     this.contribuyente.tipoPersona = this.dataContribuyenteResultado[0].CODTIPOPERSONA;
     this.contribuyente.nombre  = this.dataContribuyenteResultado[0].NOMBRE;
