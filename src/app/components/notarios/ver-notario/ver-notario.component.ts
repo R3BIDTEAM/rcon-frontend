@@ -120,7 +120,7 @@ export class VerNotarioComponent implements OnInit {
   */
   getDataEstados(): void {
     this.loadingEstados = true;
-    this.http.post(this.endpointEstados + 'getEstados', '', this.httpOptions).subscribe(
+    this.http.get(this.endpointEstados + 'getEstados', this.httpOptions).subscribe(
       (res: any) => {
         this.loadingEstados = false;
         this.estados = res;
@@ -137,7 +137,7 @@ export class VerNotarioComponent implements OnInit {
   */
   getDataDocumentosIdentificativos(): void{
     this.loadingDocumentosIdentificativos = true;
-    this.http.post(this.endpointEstados + 'getCatalogos', '', this.httpOptions).subscribe(
+    this.http.get(this.endpointEstados + 'getCatalogos', this.httpOptions).subscribe(
       (res: any) => {
         this.loadingDocumentosIdentificativos = false;
         this.documentos = res.CatDocIdentificativos;
@@ -156,7 +156,7 @@ export class VerNotarioComponent implements OnInit {
       this.query = 'infoExtra=true&idPersona=' + this.idNotario; 
       this.loading = true;
       console.log(this.endpoint);
-      this.http.post(this.endpoint + '?' + this.query, '', this.httpOptions)
+      this.http.get(this.endpoint + '?' + this.query, this.httpOptions)
           .subscribe(
               (res: any) => {
                   this.loading = false;
@@ -219,7 +219,7 @@ export class VerNotarioComponent implements OnInit {
       this.query = '&idPersona=' + this.idNotario; 
       this.loading = true;
       console.log(this.endpoint);
-      this.http.post(this.endpointEstados + 'getDireccionesContribuyente?' + this.query, '', this.httpOptions)
+      this.http.get(this.endpointEstados + 'getDireccionesContribuyente?' + this.query, this.httpOptions)
           .subscribe(
               (res: any) => {
                   this.loading = false;

@@ -215,7 +215,7 @@ export class EditarNotarioComponent implements OnInit {
     */
     getDataEstados(): void {
         this.loadingEstados = true;
-        this.http.post(this.endpointEstados + 'getEstados', '', this.httpOptions).subscribe(
+        this.http.get(this.endpointEstados + 'getEstados', this.httpOptions).subscribe(
         (res: any) => {
             this.loadingEstados = false;
             this.estados = res;
@@ -232,7 +232,7 @@ export class EditarNotarioComponent implements OnInit {
     */
     getDataDocumentosIdentificativos(): void{
         this.loadingDocumentosIdentificativos = true;
-        this.http.post(this.endpointEstados + 'getCatalogos', '', this.httpOptions).subscribe(
+        this.http.get(this.endpointEstados + 'getCatalogos', this.httpOptions).subscribe(
         (res: any) => {
             this.loadingDocumentosIdentificativos = false;
             this.documentos = res.CatDocIdentificativos;
@@ -313,7 +313,7 @@ export class EditarNotarioComponent implements OnInit {
     getNotarioDirecciones(){
         this.loadingDomicilios = true;
         let metodo = 'getDireccionesContribuyente';
-        this.http.post(this.endpointEstados + metodo + '?idPersona='+ this.idNotario, '', this.httpOptions)
+        this.http.get(this.endpointEstados + metodo + '?idPersona='+ this.idNotario, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingDomicilios = false;
@@ -340,7 +340,7 @@ export class EditarNotarioComponent implements OnInit {
     getDireccionEspecifica(iddireccion){
         this.loadingDireccionEspecifica = true;
         let metodo = 'getDireccionById';
-        this.http.post(this.endpointEstados + metodo + '?idDireccion='+ iddireccion, '', this.httpOptions)
+        this.http.get(this.endpointEstados + metodo + '?idDireccion='+ iddireccion, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     // alert('entro');
@@ -755,7 +755,7 @@ export class DialogDomiciliosNotario {
     getDireccionEspecifica(){
         this.loadingDireccionEspecifica = true;
         let metodo = 'getDireccionById';
-        this.http.post(this.endpointCatalogos + metodo + '?idDireccion='+ this.iddireccion, '', this.httpOptions)
+        this.http.get(this.endpointCatalogos + metodo + '?idDireccion='+ this.iddireccion, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingDireccionEspecifica = false;
@@ -785,7 +785,7 @@ export class DialogDomiciliosNotario {
     */
     getDataEstados(): void {
         this.loadingEstados = true;
-        this.http.post(this.endpointCatalogos + 'getEstados', '', this.httpOptions).subscribe(
+        this.http.get(this.endpointCatalogos + 'getEstados', this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingEstados = false;
                 this.estados = res;
@@ -801,7 +801,7 @@ export class DialogDomiciliosNotario {
         let busquedaMunCol = '';
         busquedaMunCol = (event.value == 9) ? 'getDelegaciones' : 'getMunicipiosByEstado?codEstado=' + event.value;
         this.loadingMunicipios = true;
-        this.http.post(this.endpointCatalogos + busquedaMunCol, '', this.httpOptions).subscribe(
+        this.http.get(this.endpointCatalogos + busquedaMunCol, this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingMunicipios = false;
                 this.municipios = res;
@@ -1247,7 +1247,7 @@ export class DialogMunicipiosNotario {
 
         console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
         this.loadingBuscaMun = true;
-        this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
+        this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingBuscaMun = false;
@@ -1297,7 +1297,7 @@ export class DialogMunicipiosNotario {
 
         console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
         this.loadingBuscaMun = true;
-        this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
+        this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingBuscaMun = false;
@@ -1391,7 +1391,7 @@ export class DialogCiudadNotario {
 
         console.log('CIUDAD!!!!!'+this.endpoint + '?' + query);
         this.loadingBuscaCiudad = true;
-        this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
+        this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingBuscaCiudad = false;
@@ -1504,7 +1504,7 @@ export class DialogAsentamientoNotario {
 
         console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
         this.loading = true;
-        this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
+        this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
@@ -1670,7 +1670,7 @@ export class DialogViaNotario {
 
         console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
         this.loadingBuscaVia = true;
-        this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
+        this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingBuscaVia = false;
@@ -1974,7 +1974,7 @@ export interface DataHistorico{
     */
     getDataEstados(): void {
         this.loadingEstados = true;
-        this.http.post(this.endpointCatalogos + 'getEstados', '', this.httpOptions).subscribe(
+        this.http.get(this.endpointCatalogos + 'getEstados', this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingEstados = false;
                 this.estados = res;
@@ -1994,7 +1994,7 @@ export interface DataHistorico{
         // busquedaMunCol = 'getDelegaciones';
         busquedaMunCol = (event.value == 9) ? 'getDelegaciones' : 'getMunicipiosByEstado?codEstado=' + event.value;
         this.loadingMunicipios = true;
-        this.http.post(this.endpointCatalogos + busquedaMunCol, '', this.httpOptions).subscribe(
+        this.http.get(this.endpointCatalogos + busquedaMunCol, this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingMunicipios = false;
                 this.municipios = res;

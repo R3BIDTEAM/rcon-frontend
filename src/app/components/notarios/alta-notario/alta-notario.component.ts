@@ -95,7 +95,7 @@ export class AltaNotarioComponent implements OnInit {
     */
     getDataEstados(): void {
         this.loadingEstados = true;
-        this.http.post(this.endpoint + 'getEstados', '', this.httpOptions).subscribe(
+        this.http.get(this.endpoint + 'getEstados', this.httpOptions).subscribe(
         (res: any) => {
             this.loadingEstados = false;
             this.estados = res;
@@ -112,7 +112,7 @@ export class AltaNotarioComponent implements OnInit {
     */
     getDataDocumentosIdentificativos(): void{
         this.loadingDocumentosIdentificativos = true;
-        this.http.post(this.endpoint + 'getCatalogos', '', this.httpOptions).subscribe(
+        this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
         (res: any) => {
             this.loadingDocumentosIdentificativos = false;
             this.documentos = res.CatDocIdentificativos;
@@ -172,7 +172,7 @@ export class AltaNotarioComponent implements OnInit {
 
         console.log(this.endpoint + busquedaDatos + '?' + query);
         this.loading = true;
-        this.http.post(this.endpoint + busquedaDatos + '?' + query, '', this.httpOptions)
+        this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
@@ -347,7 +347,7 @@ export class DialogBuscarNotarioAlta {
     */
     getDataDocumentosIdentificativos(): void{
         this.loadingDocumentosIdentificativos = true;
-        this.http.post(this.endpoint + 'getCatalogos', '', this.httpOptions).subscribe(
+        this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingDocumentosIdentificativos = false;
                 this.documentos = res.CatDocIdentificativos;
@@ -449,7 +449,7 @@ export class DialogBuscarNotarioAlta {
 
         this.loading = true;
             // console.log(this.endpoint + busquedaDatos + '?' + query);
-            this.http.post(this.endpoint + busquedaDatos + '?' + query, '', this.httpOptions)
+            this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
                 .subscribe(
                     (res: any) => {
                         this.loading = false;
