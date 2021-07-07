@@ -94,7 +94,7 @@ export class EdicionContribuyenteComponent implements OnInit {
   */
   getDataDocumentosIdentificativos(): void{
     this.loadingDocumentosIdentificativos = true;
-    this.http.post(this.endpoint + 'getCatalogos', '', this.httpOptions).subscribe(
+    this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
       (res: any) => {
         this.loadingDocumentosIdentificativos = false;
         this.documentos = res.CatDocIdentificativos;
@@ -220,7 +220,7 @@ export class EdicionContribuyenteComponent implements OnInit {
       }
     }
 
-    this.http.post(this.endpointBusqueda + '?' + this.queryParamFiltros, '', this.httpOptions).subscribe(
+    this.http.get(this.endpointBusqueda + '?' + this.queryParamFiltros, this.httpOptions).subscribe(
       (res: any) => {
         this.loadingResponse = false;
         this.data = res;

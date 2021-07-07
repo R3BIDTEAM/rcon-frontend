@@ -146,7 +146,7 @@ export class VerContribuyenteComponent implements OnInit {
     */
   getDataDocumentos(): void{
     this.loadingDocumentos = true;
-    this.http.post(this.endpoint + 'getCatalogos', '', this.httpOptions).subscribe(
+    this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
       (res: any) => {
         this.loadingDocumentos = false;
         this.dataDocumentos = res.CatDocIdentificativos;
@@ -165,7 +165,7 @@ export class VerContribuyenteComponent implements OnInit {
     this.query = '&idPersona=' + this.idContribuyente; 
     this.loading = true;
     console.log(this.endpoint);
-    this.http.post(this.endpoint + 'getInfoContribuyente?' + this.query, '', this.httpOptions)
+    this.http.get(this.endpoint + 'getInfoContribuyente?' + this.query, this.httpOptions)
         .subscribe(
             (res: any) => {
                 this.loading = false;
