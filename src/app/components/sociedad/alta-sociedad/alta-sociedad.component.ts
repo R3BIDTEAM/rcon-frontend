@@ -113,7 +113,7 @@ export class AltaSociedadComponent implements OnInit {
         this.loading = true;
         console.log("RESULTADO DE LA BUSQUEDA");
         console.log(this.endpoint);
-        this.http.post(this.endpointPrevia + busquedaDatos + '?' + query, '', this.httpOptions)
+        this.http.get(this.endpointPrevia + busquedaDatos + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
@@ -340,7 +340,7 @@ export class DialogSociedad {
 
         this.loading = true;
         console.log(this.endpoint);
-        this.http.post(this.endpoint + busquedaDatos + '?' + query, '', this.httpOptions)
+        this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;

@@ -72,7 +72,7 @@ export class EdicionPeritosComponent implements OnInit {
     */
      getDataDocumentosIdentificativos(): void{
         this.loadingDocumentosIdentificativos = true;
-        this.http.post(this.endpoint + 'getCatalogos', '', this.httpOptions).subscribe(
+        this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingDocumentosIdentificativos = false;
                 this.documentos = res.CatDocIdentificativos;

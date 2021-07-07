@@ -266,7 +266,7 @@ export class EditarPeritosComponent implements OnInit {
     */
      getDataDocumentosIdentificativos(): void{
         this.loadingDocumentosIdentificativos = true;
-        this.http.post(this.endpointActualiza + 'getCatalogos', '', this.httpOptions).subscribe(
+        this.http.get(this.endpointActualiza + 'getCatalogos', this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingDocumentosIdentificativos = false;
                 this.documentos = res.CatDocIdentificativos;
@@ -387,7 +387,7 @@ export class EditarPeritosComponent implements OnInit {
     getDomicilioPerito(){
         this.loadingDomicilios = true;
         let metodo = 'getDireccionesContribuyente';
-        this.http.post(this.endpointActualiza + metodo + '?idPersona='+ this.idPerito, '', this.httpOptions)
+        this.http.get(this.endpointActualiza + metodo + '?idPersona='+ this.idPerito, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingDomicilios = false;
@@ -417,7 +417,7 @@ export class EditarPeritosComponent implements OnInit {
     // getDireccionEspecifica(iddireccion){
     //     this.loadingDireccionEspecifica = true;
     //     let metodo = 'getDireccionById';
-    //     this.http.post(this.endpointActualiza + metodo + '?idDireccion='+ iddireccion, '', this.httpOptions)
+    //     this.http.get(this.endpointActualiza + metodo + '?idDireccion='+ iddireccion, this.httpOptions)
     //         .subscribe(
     //             (res: any) => {
     //                 // alert('entro');
@@ -479,7 +479,7 @@ export class EditarPeritosComponent implements OnInit {
 
     getidInmuebles(){
         let metodo = 'getDireccionesInmueble';
-        this.http.post(this.endpointActualiza + 'getIdInmuebleByIdPersona' + '?idPersona='+ this.idPerito, '', this.httpOptions)
+        this.http.get(this.endpointActualiza + 'getIdInmuebleByIdPersona' + '?idPersona='+ this.idPerito, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingInmuebles = false;
@@ -505,7 +505,7 @@ export class EditarPeritosComponent implements OnInit {
     }
 
     getInmuebles(){
-        this.http.post(this.endpointActualiza + 'getDireccionesInmueble?' + 'idInmueble='+ this.idInmueble, '', this.httpOptions)
+        this.http.get(this.endpointActualiza + 'getDireccionesInmueble?' + 'idInmueble='+ this.idInmueble, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingDomicilios = false;
@@ -915,7 +915,7 @@ export class EditarPeritosComponent implements OnInit {
     getRepresentacion(){
         this.loadingRepresentante = true;
         let queryRep = 'rep=Representantes&idPersona=' + this.idPerito;
-        this.http.post(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRep, '', this.httpOptions)
+        this.http.get(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRep, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingRepresentante = false;
@@ -950,7 +950,7 @@ export class EditarPeritosComponent implements OnInit {
         this.loadingRepresentado = true;
         let queryRepdo = 'rep=Representado&idPersona=' + this.idPerito;
         console.log(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRepdo);
-        this.http.post(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRepdo, '', this.httpOptions)
+        this.http.get(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRepdo, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingRepresentado = false;
@@ -1236,7 +1236,7 @@ export class DialogBuscaPerito {
 
         console.log(this.endpoint + busquedaDatos + '?' + query);
         this.loading = true;
-        this.http.post(this.endpoint + busquedaDatos + '?' + query, '', this.httpOptions)
+        this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
@@ -1412,7 +1412,7 @@ export class DialogDomicilioPerito {
     getDireccionEspecifica(){
         this.loadingDireccionEspecifica = true;
         let metodo = 'getDireccionById';
-        this.http.post(this.endpointCatalogos + metodo + '?idDireccion='+ this.iddireccion, '', this.httpOptions)
+        this.http.get(this.endpointCatalogos + metodo + '?idDireccion='+ this.iddireccion, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingDireccionEspecifica = false;
@@ -1446,7 +1446,7 @@ export class DialogDomicilioPerito {
      */
     getDataEstados(): void {
         this.loadingEstados = true;
-        this.http.post(this.endpointCatalogos + 'getEstados', '', this.httpOptions).subscribe(
+        this.http.get(this.endpointCatalogos + 'getEstados', this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingEstados = false;
                 this.estados = res;
@@ -1466,7 +1466,7 @@ export class DialogDomicilioPerito {
         let busquedaMunCol = '';
         busquedaMunCol = (event.value == 9) ? 'getDelegaciones' : 'getMunicipiosByEstado?codEstado=' + event.value;
         this.loadingMunicipios = true;
-        this.http.post(this.endpointCatalogos + busquedaMunCol, '', this.httpOptions).subscribe(
+        this.http.get(this.endpointCatalogos + busquedaMunCol, this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingMunicipios = false;
                 this.municipios = res;
@@ -1914,7 +1914,7 @@ export class DialogMunicipios {
 
         console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
         this.loadingBuscaMun = true;
-        this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
+        this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingBuscaMun = false;
@@ -1979,7 +1979,7 @@ export class DialogMunicipios {
 
         console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
         this.loadingBuscaMun = true;
-        this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
+        this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingBuscaMun = false;
@@ -2075,7 +2075,7 @@ export class DialogCiudad {
 
         console.log('CIUDAD!!!!!'+this.endpoint + '?' + query);
         this.loadingBuscaCiudad = true;
-        this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
+        this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingBuscaCiudad = false;
@@ -2206,7 +2206,7 @@ export class DialogAsentamiento {
 
         console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
         this.loading = true;
-        this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
+        this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
@@ -3522,7 +3522,7 @@ export class DialogNotarioPeritos {
      */
     getDataEstados(): void {
         this.loadingEstados = true;
-        this.http.post(this.endpointCatalogos + 'getEstados', '', this.httpOptions).subscribe(
+        this.http.get(this.endpointCatalogos + 'getEstados', this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingEstados = false;
                 this.estados = res;
@@ -3568,7 +3568,7 @@ export class DialogNotarioPeritos {
             this.queryParamFiltros = this.queryParamFiltros + '&apellidoMaterno=' + this.filtros.apellidoMaterno + '&filtroApellidoMaterno=0';
         }
         
-        this.http.post(this.endpoint + '?' + this.queryParamFiltros, '', this.httpOptions).subscribe(
+        this.http.get(this.endpoint + '?' + this.queryParamFiltros, this.httpOptions).subscribe(
             (res: any) => {
                 this.loading = false;
                 this.dataNotarios = res;
@@ -3760,7 +3760,7 @@ export class DialogPersonaPeritos {
             }
         }
   
-        this.http.post(this.endpointBusqueda + '?' + this.queryParamFiltros, '', this.httpOptions).subscribe(
+        this.http.get(this.endpointBusqueda + '?' + this.queryParamFiltros, this.httpOptions).subscribe(
             (res: any) => {
                 this.loading = false;
                 this.dataPersonas = res;
@@ -4611,7 +4611,7 @@ export interface DataHistorico{
      */
     getDataEstados(): void {
         this.loadingEstados = true;
-        this.http.post(this.endpointCatalogos + 'getEstados', '', this.httpOptions).subscribe(
+        this.http.get(this.endpointCatalogos + 'getEstados', this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingEstados = false;
                 this.estados = res;
@@ -4631,7 +4631,7 @@ export interface DataHistorico{
         let busquedaMunCol = '';
         busquedaMunCol = (event.value == 9) ? 'getDelegaciones' : 'getMunicipiosByEstado?codEstado=' + event.value;
         this.loadingMunicipios = true;
-        this.http.post(this.endpointCatalogos + busquedaMunCol, '', this.httpOptions).subscribe(
+        this.http.get(this.endpointCatalogos + busquedaMunCol, this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingMunicipios = false;
                 this.municipios = res;

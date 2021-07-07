@@ -101,7 +101,7 @@ export class AltaPeritosComponent implements OnInit {
     */
     getDataDocumentosIdentificativos(): void{
         this.loadingDocumentosIdentificativos = true;
-        this.http.post(this.endpoint + 'getCatalogos', '', this.httpOptions).subscribe(
+        this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingDocumentosIdentificativos = false;
                 this.documentos = res.CatDocIdentificativos;
@@ -188,7 +188,7 @@ export class AltaPeritosComponent implements OnInit {
 
         console.log(this.endpoint + busquedaDatos + '?' + query);
         this.loading = true;
-        this.http.post(this.endpoint + busquedaDatos + '?' + query, '', this.httpOptions)
+        this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
@@ -483,7 +483,7 @@ export class DialogAltaBusca {
 
         console.log(this.endpoint + busquedaDatos + '?' + query);
         this.loading = true;
-        this.http.post(this.endpoint + busquedaDatos + '?' + query, '', this.httpOptions)
+        this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
