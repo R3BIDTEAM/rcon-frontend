@@ -410,7 +410,7 @@ export class AltaContribuyenteComponent implements OnInit {
 
         query = '&idPersona=' + this.idPersona + '&idChs=' + this.idChs;
 
-        this.http.post(this.endpoint + 'infoComprobante' + '?' + query, '', this.httpOptions)
+        this.http.get(this.endpoint + 'infoComprobante' + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
@@ -741,7 +741,7 @@ export class DialogDomicilioAlta {
     */
     getDataTiposAsentamiento(): void {
         this.loadingTiposAsentamiento = true;
-        this.http.post(this.endpointCatalogos + 'getTiposAsentamiento', '', this.httpOptions).subscribe(
+        this.http.get(this.endpointCatalogos + 'getTiposAsentamiento', this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingTiposAsentamiento = false;
                 this.tiposAsentamiento = res;
@@ -759,7 +759,7 @@ export class DialogDomicilioAlta {
     */
     getDataTiposVia(): void {
         this.loadingTiposVia = true;
-        this.http.post(this.endpointCatalogos + 'getTiposVia', '', this.httpOptions).subscribe(
+        this.http.get(this.endpointCatalogos + 'getTiposVia', this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingTiposVia = false;
                 this.tiposVia = res;
@@ -778,7 +778,7 @@ export class DialogDomicilioAlta {
     */
     getDataTiposLocalidad(): void {
         this.loadingTiposLocalidad = true;
-        this.http.post(this.endpointCatalogos + 'getTiposLocalidad', '', this.httpOptions).subscribe(
+        this.http.get(this.endpointCatalogos + 'getTiposLocalidad', this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingTiposLocalidad = false;
                 this.tiposLocalidad = res;
@@ -1518,7 +1518,7 @@ export class DialogViaAlta {
 
         console.log('VIA!!!!!'+this.endpoint + '?' + query);
         this.loadingBuscaVia = true;
-        this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
+        this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingBuscaVia = false;
