@@ -847,7 +847,7 @@ export class DialogDomiciliosNotario {
   
     getDataTiposLocalidad(): void {
         this.loadingTiposLocalidad = true;
-        this.http.post(this.endpointCatalogos + 'getTiposLocalidad', '', this.httpOptions).subscribe(
+        this.http.get(this.endpointCatalogos + 'getTiposLocalidad', this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingTiposLocalidad = false;
                 this.tiposLocalidad = res;
@@ -2046,7 +2046,7 @@ export interface DataHistorico{
     */
     getDataTiposLocalidad(): void {
         this.loadingTiposLocalidad = true;
-        this.http.post(this.endpointCatalogos + 'getTiposLocalidad', '', this.httpOptions).subscribe(
+        this.http.get(this.endpointCatalogos + 'getTiposLocalidad', this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingTiposLocalidad = false;
                 this.tiposLocalidad = res;
