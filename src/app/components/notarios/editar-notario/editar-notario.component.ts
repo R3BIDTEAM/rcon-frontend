@@ -816,7 +816,7 @@ export class DialogDomiciliosNotario {
     
     getDataTiposAsentamiento(): void {
         this.loadingTiposAsentamiento = true;
-        this.http.post(this.endpointCatalogos + 'getTiposAsentamiento', '', this.httpOptions).subscribe(
+        this.http.get(this.endpointCatalogos + 'getTiposAsentamiento', this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingTiposAsentamiento = false;
                 this.tiposAsentamiento = res;
@@ -831,7 +831,7 @@ export class DialogDomiciliosNotario {
   
     getDataTiposVia(): void {
         this.loadingTiposVia = true;
-        this.http.post(this.endpointCatalogos + 'getTiposVia', '', this.httpOptions).subscribe(
+        this.http.get(this.endpointCatalogos + 'getTiposVia', this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingTiposVia = false;
                 this.tiposVia = res;
@@ -1620,7 +1620,7 @@ export class DialogViaNotario {
 
         console.log('VIA!!!!!'+this.endpoint + '?' + query);
         this.loadingBuscaVia = true;
-        this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
+        this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingBuscaVia = false;
@@ -1745,7 +1745,7 @@ export interface DataHistorico{
 
         this.loading = true;
         let metodo = 'getHistoricosDireccion';
-        this.http.post(this.endpoint + metodo + '?' + query, '', this.httpOptions)
+        this.http.get(this.endpoint + metodo + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
@@ -1939,7 +1939,7 @@ export interface DataHistorico{
         console.log('entro');
         this.loadingDireccionEspecifica = true;
         let metodo = 'getHistoricosDireccionDetalle';
-        this.http.post(this.endpointCatalogos + metodo + '?idChs=' + this.idChs + '&idDireccion=' + this.idDireccion, '', this.httpOptions)
+        this.http.get(this.endpointCatalogos + metodo + '?idChs=' + this.idChs + '&idDireccion=' + this.idDireccion, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingDireccionEspecifica = false;
@@ -2009,7 +2009,7 @@ export interface DataHistorico{
     */
     getDataTiposAsentamiento(): void {
         this.loadingTiposAsentamiento = true;
-        this.http.post(this.endpointCatalogos + 'getTiposAsentamiento', '', this.httpOptions).subscribe(
+        this.http.get(this.endpointCatalogos + 'getTiposAsentamiento', this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingTiposAsentamiento = false;
                 this.tiposAsentamiento = res;
@@ -2027,7 +2027,7 @@ export interface DataHistorico{
     */
     getDataTiposVia(): void {
         this.loadingTiposVia = true;
-        this.http.post(this.endpointCatalogos + 'getTiposVia', '', this.httpOptions).subscribe(
+        this.http.get(this.endpointCatalogos + 'getTiposVia', this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingTiposVia = false;
                 this.tiposVia = res;
@@ -2248,7 +2248,7 @@ export interface DataHistorico{
 
         this.loading = true;
         let metodo = 'getHistoricosPersona';
-        this.http.post(this.endpoint + metodo + '?' + query, '', this.httpOptions)
+        this.http.get(this.endpoint + metodo + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
