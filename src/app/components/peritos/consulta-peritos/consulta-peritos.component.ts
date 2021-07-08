@@ -171,7 +171,7 @@ export class ConsultaPeritosComponent implements OnInit {
 
         this.loading = true;
         console.log(this.endpoint + busquedaDatos + '?' + query);
-        this.http.post(this.endpoint + busquedaDatos + '?' + query, '', this.httpOptions)
+        this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;

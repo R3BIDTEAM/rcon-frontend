@@ -71,7 +71,7 @@ export class VerPeritosComponent implements OnInit {
         this.query = 'obtenerSociedades=1&idPerito=' + this.idPerito; 
         this.loading = true;
         console.log(this.endpoint);
-        this.http.post(this.endpoint + '?' + this.query, '', this.httpOptions)
+        this.http.get(this.endpoint + '?' + this.query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
