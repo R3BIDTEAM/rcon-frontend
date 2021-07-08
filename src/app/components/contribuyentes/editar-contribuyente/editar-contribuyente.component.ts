@@ -4161,7 +4161,7 @@ export class DialogPersonaC {
             }
         }
   
-        this.http.post(this.endpointBusqueda + '?' + this.queryParamFiltros, '', this.httpOptions).subscribe(
+        this.http.get(this.endpointBusqueda + '?' + this.queryParamFiltros, this.httpOptions).subscribe(
             (res: any) => {
                 this.loading = false;
                 this.dataPersonas = res;
