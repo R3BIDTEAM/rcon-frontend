@@ -834,7 +834,7 @@ export class EditarSociedadComponent implements OnInit {
         this.loadingRepresentado = true;
         let queryRepdo = 'rep=Representado&idPersona=' + this.idSociedad;
         console.log(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRepdo);
-        this.http.post(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRepdo, '', this.httpOptions)
+        this.http.get(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRepdo, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingRepresentado = false;
