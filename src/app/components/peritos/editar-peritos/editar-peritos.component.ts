@@ -479,7 +479,7 @@ export class EditarPeritosComponent implements OnInit {
 
     getidInmuebles(){
         let metodo = 'getDireccionesInmueble';
-        this.http.get(this.endpointActualiza + 'getIdInmuebleByIdPersona' + '?idPersona='+ this.idPerito, this.httpOptions)
+        this.http.post(this.endpointActualiza + 'getIdInmuebleByIdPersona' + '?idPersona='+ this.idPerito, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingInmuebles = false;
