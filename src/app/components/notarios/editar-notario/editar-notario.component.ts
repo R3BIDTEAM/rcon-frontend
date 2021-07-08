@@ -260,7 +260,7 @@ export class EditarNotarioComponent implements OnInit {
         this.query = 'infoExtra=true&idPersona=' + this.idNotario; 
         this.loading = true;
         console.log(this.endpoint);
-        this.http.post(this.endpoint + '?' + this.query, '', this.httpOptions)
+        this.http.get(this.endpoint + '?' + this.query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
@@ -953,22 +953,19 @@ export class DialogDomiciliosNotario {
             .subscribe(
                 (res: any) => {
                     console.log(res);
-                    if(res.length > 0){
-                        this.snackBar.open('Registro exitoso', 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
-                        });                        
-                    }else{
-                        this.snackBar.open('Ocurrio un error al Insertar la dirección, intente nuevemente', 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
-                        });
-                    }
+                    this.snackBar.open('Registro exitoso', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
                     //this.dialogRef.close();
                 },
                 (error) => {
+                    this.snackBar.open('Ocurrio un error al Insertar la dirección, intente nuevemente', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
                 }
             );
     }
