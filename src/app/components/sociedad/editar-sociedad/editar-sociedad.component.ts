@@ -256,7 +256,7 @@ export class EditarSociedadComponent implements OnInit {
         this.query = 'idSociedad=' + this.idSociedad; 
         this.loading = true;
         console.log(this.endpoint);
-        this.http.post(this.endpoint + '?' + this.query, '', this.httpOptions)
+        this.http.get(this.endpoint + '?' + this.query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     //this.loading = false;
@@ -280,7 +280,7 @@ export class EditarSociedadComponent implements OnInit {
      * Obtiene la información de los peritos asociados a la sociedad.
      */
     getPeritosSociedad(){
-        this.http.post(this.endpointTable + '?' + 'idSociedad=' + this.idSociedad + '&idPerito', '', this.httpOptions)
+        this.http.get(this.endpointTable + '?' + 'idSociedad=' + this.idSociedad + '&idPerito', this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
@@ -1105,7 +1105,7 @@ export class DialogBuscaSociedad {
 
         this.loading = true;
         console.log(this.endpoint);
-        this.http.post(this.endpoint + busquedaDatos + '?' + query, '', this.httpOptions)
+        this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
@@ -1382,7 +1382,7 @@ export class DialogDomicilioSociedad {
      */
     getDataTiposAsentamiento(): void {
         this.loadingTiposAsentamiento = true;
-        this.http.post(this.endpointCatalogos + 'getTiposAsentamiento', '', this.httpOptions).subscribe(
+        this.http.get(this.endpointCatalogos + 'getTiposAsentamiento', this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingTiposAsentamiento = false;
                 this.tiposAsentamiento = res;
@@ -1400,7 +1400,7 @@ export class DialogDomicilioSociedad {
      */
     getDataTiposVia(): void {
         this.loadingTiposVia = true;
-        this.http.post(this.endpointCatalogos + 'getTiposVia', '', this.httpOptions).subscribe(
+        this.http.get(this.endpointCatalogos + 'getTiposVia', this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingTiposVia = false;
                 this.tiposVia = res;
@@ -1419,7 +1419,7 @@ export class DialogDomicilioSociedad {
      */
     getDataTiposLocalidad(): void {
         this.loadingTiposLocalidad = true;
-        this.http.post(this.endpointCatalogos + 'getTiposLocalidad', '', this.httpOptions).subscribe(
+        this.http.get(this.endpointCatalogos + 'getTiposLocalidad', this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingTiposLocalidad = false;
                 this.tiposLocalidad = res;
@@ -2238,7 +2238,7 @@ export class DialogViaSociedad {
   
         console.log('VIA!!!!!'+this.endpoint + '?' + query);
         this.loadingBuscaVia = true;
-        this.http.post(this.endpoint + criterio + '?' + query, '', this.httpOptions)
+        this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingBuscaVia = false;
@@ -3215,7 +3215,7 @@ export class DialogDocumentoSociedad {
         console.log("ACA EL DESCARGAR FICHERO");
         console.log(element);
 
-        this.http.post( this.endpoint + 'getFichero?idFichero=' + element.idficherodocumento, '', this.httpOptions ). subscribe (
+        this.http.get( this.endpoint + 'getFichero?idFichero=' + element.idficherodocumento, this.httpOptions ). subscribe (
             (res: any) => {
                 this.descargaFichero = res;
                 console.log("EL RES DEL FICHERO");
@@ -3872,7 +3872,7 @@ export class DialogSociedadPerito {
 
         console.log(this.endpoint + busquedaDatos + '?' + query);
         this.loading = true;
-        this.http.post(this.endpoint + busquedaDatos + '?' + query, '', this.httpOptions)
+        this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
@@ -3995,7 +3995,7 @@ export class DialogHistorialRepS {
 
         this.loadingH = true;
         let metodo = 'getHistoricosRepresentacion';
-        this.http.post(this.endpoint + metodo + '?' + query, '', this.httpOptions)
+        this.http.get(this.endpoint + metodo + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingH = false;
@@ -4150,7 +4150,7 @@ export class DialogHistorialRepDetalleS {
 
         this.loadingH = true;
         let metodo = 'getHistoricosRepresentacionDetalle';
-        this.http.post(this.endpoint + metodo + '?' + query, '', this.httpOptions)
+        this.http.get(this.endpoint + metodo + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingH = false;
@@ -4304,7 +4304,7 @@ export interface DataHistorico{
 
         this.loading = true;
         let metodo = 'getHistoricosDireccion';
-        this.http.post(this.endpoint + metodo + '?' + query, '', this.httpOptions)
+        this.http.get(this.endpoint + metodo + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
@@ -4512,7 +4512,7 @@ export interface DataHistorico{
         console.log('entro');
         this.loadingDireccionEspecifica = true;
         let metodo = 'getHistoricosDireccionDetalle';
-        this.http.post(this.endpointCatalogos + metodo + '?idChs=' + this.idChs + '&idDireccion=' + this.idDireccion, '', this.httpOptions)
+        this.http.get(this.endpointCatalogos + metodo + '?idChs=' + this.idChs + '&idDireccion=' + this.idDireccion, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingDireccionEspecifica = false;
@@ -4586,7 +4586,7 @@ export interface DataHistorico{
      */
     getDataTiposAsentamiento(): void {
         this.loadingTiposAsentamiento = true;
-        this.http.post(this.endpointCatalogos + 'getTiposAsentamiento', '', this.httpOptions).subscribe(
+        this.http.get(this.endpointCatalogos + 'getTiposAsentamiento', this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingTiposAsentamiento = false;
                 this.tiposAsentamiento = res;
@@ -4604,7 +4604,7 @@ export interface DataHistorico{
      */
     getDataTiposVia(): void {
         this.loadingTiposVia = true;
-        this.http.post(this.endpointCatalogos + 'getTiposVia', '', this.httpOptions).subscribe(
+        this.http.get(this.endpointCatalogos + 'getTiposVia', this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingTiposVia = false;
                 this.tiposVia = res;
@@ -4623,7 +4623,7 @@ export interface DataHistorico{
      */
     getDataTiposLocalidad(): void {
         this.loadingTiposLocalidad = true;
-        this.http.post(this.endpointCatalogos + 'getTiposLocalidad', '', this.httpOptions).subscribe(
+        this.http.get(this.endpointCatalogos + 'getTiposLocalidad', this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingTiposLocalidad = false;
                 this.tiposLocalidad = res;

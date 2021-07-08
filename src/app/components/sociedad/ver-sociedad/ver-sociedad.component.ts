@@ -61,7 +61,7 @@ export class VerSociedadComponent implements OnInit {
         this.query = 'idSociedad=' + this.idSociedad; 
         this.loading = true;
         console.log(this.endpoint);
-        this.http.post(this.endpoint + '?' + this.query, '', this.httpOptions)
+        this.http.get(this.endpoint + '?' + this.query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     //this.loading = false;
@@ -82,7 +82,7 @@ export class VerSociedadComponent implements OnInit {
     }
 
     getPeritosSociedad(){
-        this.http.post(this.endpointTable + '?' + 'idSociedad=' + this.idSociedad + '&idPerito', '', this.httpOptions)
+        this.http.get(this.endpointTable + '?' + 'idSociedad=' + this.idSociedad + '&idPerito', this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
