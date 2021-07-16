@@ -351,14 +351,16 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="131"
-                            class="link-to-prism">src/app/components/contribuyentes/ver-contribuyente/ver-contribuyente.component.ts:131</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="136"
+                            class="link-to-prism">src/app/components/contribuyentes/ver-contribuyente/ver-contribuyente.component.ts:136</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                    <div class="io-description"><p>Al cambio en el llenado de curp o rfc se activará o desactivará uno de los dos validadores de requerido.</p>
+</div>
 
                     <div class="io-description">
                         <b>Parameters :</b>
@@ -367,6 +369,7 @@
                                 <tr>
                                     <td>Name</td>
                                     <td>Optional</td>
+                                    <td>Description</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -378,6 +381,10 @@
                                     </td>
 
 
+                                    <td>
+                                        <p>Valor del campo que se le retirara la validación, puede ser CURP o RFC</p>
+
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>add</td>
@@ -387,6 +394,10 @@
                                     </td>
 
 
+                                    <td>
+                                        <p>Valor del campo que se le agregara a la validación, puede ser CURP o RFC</p>
+
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -426,14 +437,16 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="177"
-                            class="link-to-prism">src/app/components/contribuyentes/ver-contribuyente/ver-contribuyente.component.ts:177</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="191"
+                            class="link-to-prism">src/app/components/contribuyentes/ver-contribuyente/ver-contribuyente.component.ts:191</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                    <div class="io-description"><p>Asigna los valores de la consulta a las variables del formulario</p>
+</div>
 
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -465,14 +478,16 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="153"
-                            class="link-to-prism">src/app/components/contribuyentes/ver-contribuyente/ver-contribuyente.component.ts:153</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="164"
+                            class="link-to-prism">src/app/components/contribuyentes/ver-contribuyente/ver-contribuyente.component.ts:164</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                    <div class="io-description"><p>Obtiene los Datos del Contribuyente</p>
+</div>
 
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -504,14 +519,16 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="139"
-                            class="link-to-prism">src/app/components/contribuyentes/ver-contribuyente/ver-contribuyente.component.ts:139</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="147"
+                            class="link-to-prism">src/app/components/contribuyentes/ver-contribuyente/ver-contribuyente.component.ts:147</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                    <div class="io-description"><p>Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos</p>
+</div>
 
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -1074,6 +1091,11 @@ export class VerContribuyenteComponent implements OnInit {
     this.getContribuyenteDatos();
   }
 
+  /**
+     * Al cambio en el llenado de curp o rfc se activará o desactivará uno de los dos validadores de requerido.
+     * @param remove Valor del campo que se le retirara la validación, puede ser CURP o RFC
+     * @param add  Valor del campo que se le agregara a la validación, puede ser CURP o RFC
+     */
   changeRequired(remove, add): void {
     this.fisicaFormGroup.controls[remove].setValue(null);
     this.fisicaFormGroup.controls[remove].clearValidators();
@@ -1082,9 +1104,12 @@ export class VerContribuyenteComponent implements OnInit {
     this.fisicaFormGroup.updateValueAndValidity();
   }
 
+  /** 
+    * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
+    */
   getDataDocumentos(): void{
     this.loadingDocumentos &#x3D; true;
-    this.http.post(this.endpoint + &#x27;getCatalogos&#x27;, &#x27;&#x27;, this.httpOptions).subscribe(
+    this.http.get(this.endpoint + &#x27;getCatalogos&#x27;, this.httpOptions).subscribe(
       (res: any) &#x3D;&gt; {
         this.loadingDocumentos &#x3D; false;
         this.dataDocumentos &#x3D; res.CatDocIdentificativos;
@@ -1096,11 +1121,14 @@ export class VerContribuyenteComponent implements OnInit {
     );
   }
 
+  /** 
+    * Obtiene los Datos del Contribuyente
+    */
   getContribuyenteDatos(){
     this.query &#x3D; &#x27;&amp;idPersona&#x3D;&#x27; + this.idContribuyente; 
     this.loading &#x3D; true;
     console.log(this.endpoint);
-    this.http.post(this.endpoint + &#x27;getInfoContribuyente?&#x27; + this.query, &#x27;&#x27;, this.httpOptions)
+    this.http.get(this.endpoint + &#x27;getInfoContribuyente?&#x27; + this.query, this.httpOptions)
         .subscribe(
             (res: any) &#x3D;&gt; {
                 this.loading &#x3D; false;
@@ -1120,6 +1148,9 @@ export class VerContribuyenteComponent implements OnInit {
         );
   }
 
+  /** 
+    * Asigna los valores de la consulta a las variables del formulario
+    */
   datoDelContribuyente(){
     this.contribuyente.tipoPersona &#x3D; this.dataContribuyenteResultado[0].CODTIPOPERSONA;
     this.contribuyente.nombre  &#x3D; this.dataContribuyenteResultado[0].NOMBRE;

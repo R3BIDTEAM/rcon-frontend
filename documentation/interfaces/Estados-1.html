@@ -61,7 +61,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/app/components/notarios/edicion-notario/edicion-notario.component.ts</code>
+            <code>src/app/components/notarios/alta-notario/alta-notario.component.ts</code>
         </p>
 
 
@@ -164,218 +164,185 @@ import { HttpClient, HttpHeaders } from &#x27;@angular/common/http&#x27;;
 import { environment } from &#x27;@env/environment&#x27;;
 import { AuthService } from &#x27;@serv/auth.service&#x27;;
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from &#x27;@angular/material/dialog&#x27;;
-import { Router } from &#x27;@angular/router&#x27;;
+import { ActivatedRoute, Router } from &#x27;@angular/router&#x27;;
+import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from &#x27;@angular/forms&#x27;;
 import { MatPaginator } from &#x27;@angular/material/paginator&#x27;;
 import * as moment from &#x27;moment&#x27;;
+import { DialogDuplicadosComponent } from &#x27;@comp/dialog-duplicados/dialog-duplicados.component&#x27;;
 
 export interface Filtros {
-  apellido_paterno: string;
-  apellido_materno: string;
-  nombre: string;
-  rfc: string;
-  curp: string;
-  ine: string;
-  otro_documento: string;
-  numero_documento: string;
-  no_notario: string;
-  estado: string;
+    no_notario: string;
+    estado: string;
+    nombre: string;
+    apellido_paterno: string;
+    apellido_materno: string;
+    rfc: string;
+    curp: string;
+    ine: string;
+    otro_documento: string;
+    numero_documento: string;
+    fecha_nacimiento: Date;
+    fecha_defuncion: Date;
+    celular: string;
+    email: string;
 }
 
 export interface Estados{
-  idestado: number;
-  estado: string;
+    idestado: number;
+    estado: string;
 }
 
 export interface DocumentosIdentificativos{
-  id_documento: number;
-  documento: string;
+    id_documento: number;
+    documento: string;
 }
 
+
 @Component({
-  selector: &#x27;app-edicion-notario&#x27;,
-  templateUrl: &#x27;./edicion-notario.component.html&#x27;,
-  styleUrls: [&#x27;./edicion-notario.component.css&#x27;]
+    selector: &#x27;app-alta-notario&#x27;,
+    templateUrl: &#x27;./alta-notario.component.html&#x27;,
+    styleUrls: [&#x27;./alta-notario.component.css&#x27;]
 })
-export class EdicionNotarioComponent implements OnInit {
-  endpoint &#x3D; environment.endpoint + &#x27;registro/&#x27;;
-  pagina &#x3D; 1;
-  total &#x3D; 0;
-  pageSize &#x3D; 15;
-  loading &#x3D; false;
-  dataSource &#x3D; [];
-  dataPaginate &#x3D; [];
-  displayedColumns: string[] &#x3D; [&#x27;nombre&#x27;,&#x27;numero_notario&#x27;,&#x27;datos_identificativos&#x27;,&#x27;seleccionar&#x27;];
-  httpOptions;
-  filtros: Filtros &#x3D; {} as Filtros;
-  estados: Estados[] &#x3D; [];
-  documentos: DocumentosIdentificativos[] &#x3D; [];
-  loadingEstados &#x3D; false;
-  loadingDocumentosIdentificativos &#x3D; false;
-  isIdentificativo;
-  search &#x3D; false;
-  isBusqueda;
-  queryParamFiltros;
-  endpointBusqueda;
-  @ViewChild(&#x27;paginator&#x27;) paginator: MatPaginator;
 
-
-  constructor(
-    private http: HttpClient,
-    private snackBar: MatSnackBar,
-    private auth: AuthService,
-    private router: Router,
-  ) { 
-    
-  }
-
-  ngOnInit(): void {
-    this.isBusqueda &#x3D; false;
-    this.httpOptions &#x3D; {
-      headers: new HttpHeaders({
-        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
-        Authorization: this.auth.getSession().token
-      })
-    };
-    this.getDataEstados();
-    this.getDataDocumentosIdentificativos();
-  }
-
-  /** 
-  * Obtiene el nombre de los Estados para llenar el el Select de Estados
-  */
-  getDataEstados(): void {
-    this.loadingEstados &#x3D; true;
-    this.http.post(this.endpoint + &#x27;getEstados&#x27;, &#x27;&#x27;, this.httpOptions).subscribe(
-      (res: any) &#x3D;&gt; {
-        this.loadingEstados &#x3D; false;
-        this.estados &#x3D; res;
-        // console.log(this.estados);
-      },
-      (error) &#x3D;&gt; {
-        this.loadingEstados &#x3D; false;
-      }
-    );
-  }
+export class AltaNotarioComponent implements OnInit {
+    endpoint &#x3D; environment.endpoint + &#x27;registro/&#x27;;
+    httpOptions;
+    filtros: Filtros &#x3D; {} as Filtros;
+    estados: Estados[] &#x3D; [];
+    documentos: DocumentosIdentificativos[] &#x3D; [];
+    loading &#x3D; false;
+    loadingEstados &#x3D; false;
+    loadingDocumentosIdentificativos &#x3D; false;
   
-  /** 
-  * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
-  */
-  getDataDocumentosIdentificativos(): void{
-    this.loadingDocumentosIdentificativos &#x3D; true;
-    this.http.post(this.endpoint + &#x27;getCatalogos&#x27;, &#x27;&#x27;, this.httpOptions).subscribe(
-      (res: any) &#x3D;&gt; {
-        this.loadingDocumentosIdentificativos &#x3D; false;
-        this.documentos &#x3D; res.CatDocIdentificativos;
-        // console.log(this.documentos);
-      },
-      (error) &#x3D;&gt; {
-        this.loadingDocumentosIdentificativos &#x3D; false;
-      }
-    );
-  }
+    constructor(
+        private http: HttpClient,
+        private auth: AuthService,
+        private _formBuilder: FormBuilder,
+        private snackBar: MatSnackBar,
+        public dialog: MatDialog,
+    ) { }
 
-  /** 
-  * @param isIdentificativo Indica si la búsqueda se está realizando por Datos Identificativos o Personales
-  */
-  clearInputsIdentNoIdent(isIdentificativo): void {
-      this.isIdentificativo &#x3D; isIdentificativo;
-          if(isIdentificativo){
-            this.filtros.apellido_paterno &#x3D; null;
-            this.filtros.apellido_materno &#x3D; null;
-            this.filtros.nombre &#x3D; null;
-          } else {
-            this.filtros.rfc &#x3D; null;
-            this.filtros.curp &#x3D; null;
-            this.filtros.ine &#x3D; null;
-            this.filtros.otro_documento &#x3D; null;
-            this.filtros.numero_documento &#x3D; null;
-            this.filtros.no_notario &#x3D; null;
-            this.filtros.estado &#x3D; null;
-          }
-  }
-
-  /** 
-  * Verifica que haya campos llenos para habilitar el botón de búsqueda
-  */
-  validateSearch(){
-    this.search &#x3D; (
-            this.filtros.apellido_paterno ||
-            this.filtros.apellido_materno ||
-            this.filtros.nombre ||
-            this.filtros.rfc ||
-            this.filtros.curp ||
-            this.filtros.no_notario ||
-            this.filtros.estado
-        ) ? true : false;
-  }
-
-  /** 
-  * Verifica que esté seleccionado un elemento en el Select de Otro Documento Identificativo para poder capturar su información, de lo contrario lo bloquea
-  */
-  otroDocumento(){
-    if(this.filtros.otro_documento &#x3D;&#x3D;&#x3D; null || this.filtros.otro_documento &#x3D;&#x3D;&#x3D; &#x27;&#x27;){
-      this.filtros.numero_documento &#x3D; &#x27;&#x27;;
+    ngOnInit(): void {
+        this.httpOptions &#x3D; {
+        headers: new HttpHeaders({
+            &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+            Authorization: this.auth.getSession().token
+        })  
+        };
+        this.getDataEstados();
+        this.getDataDocumentosIdentificativos();
     }
-  }
 
-  /** 
-  * Obtiene la información una vez llenados los filtros y realizado la búsqueda
-  */
-  getData(): void {
-      let query &#x3D; &#x27;&#x27;;
-      let busquedaDatos &#x3D; &#x27;&#x27;;
+    clean(){
+        this.filtros.no_notario &#x3D; null;
+        this.filtros.estado &#x3D; null;
+        this.filtros.nombre &#x3D; null;
+        this.filtros.apellido_paterno &#x3D; null;
+        this.filtros.apellido_materno &#x3D; null;
+        this.filtros.rfc &#x3D; null;
+        this.filtros.curp &#x3D; null;
+        this.filtros.ine &#x3D; null;
+        this.filtros.otro_documento &#x3D; null;
+        this.filtros.numero_documento &#x3D; null;
+        this.filtros.fecha_nacimiento &#x3D; null;
+        this.filtros.fecha_defuncion &#x3D; null;
+        this.filtros.email &#x3D; null;
+        this.filtros.celular &#x3D; null;
+    }
 
-      if(this.filtros.nombre){
-        query &#x3D; query + &#x27;&amp;nombre&#x3D;&#x27; + this.filtros.nombre + &#x27;&amp;filtroNombre&#x3D;0&#x27;;
-      }
-      if(this.filtros.apellido_paterno){
-          query &#x3D; query + &#x27;&amp;apellidoPaterno&#x3D;&#x27; + this.filtros.apellido_paterno + &#x27;&amp;filtroApellidoPaterno&#x3D;0&#x27;;
-      }
-      if(this.filtros.apellido_materno){
-          query &#x3D; query + &#x27;&amp;apellidoMaterno&#x3D;&#x27; + this.filtros.apellido_materno + &#x27;&amp;filtroApellidoMaterno&#x3D;0&#x27;;
-      }
-      if(this.filtros.rfc){
-          query &#x3D; query + &#x27;&amp;rfc&#x3D;&#x27; + this.filtros.rfc;
-      }
-      if(this.filtros.curp){
-          query &#x3D; query + &#x27;&amp;curp&#x3D;&#x27; + this.filtros.curp;
-      }
-      if(this.filtros.ine){
-          query &#x3D; query + &#x27;&amp;ine&#x3D;&#x27; + this.filtros.ine;
-      }
-      if(this.filtros.otro_documento){
-          query &#x3D; query + &#x27;&amp;iddocidentif&#x3D;&#x27; + this.filtros.otro_documento;
-      }
-      if(this.filtros.numero_documento){
-          query &#x3D; query + &#x27;&amp;valdocidentif&#x3D;&#x27; + this.filtros.numero_documento;
-      }
-      if(this.filtros.no_notario){
-          query &#x3D; query + &#x27;&amp;numnotario&#x3D;&#x27; + this.filtros.no_notario;
-      }
-      if(this.filtros.estado){
-          query &#x3D; query + &#x27;&amp;estado&#x3D;&#x27; + this.filtros.estado;
-      }
-    
+    /** 
+    * Obtiene el nombre de los Estados para llenar el el Select de Estados
+    */
+    getDataEstados(): void {
+        this.loadingEstados &#x3D; true;
+        this.http.get(this.endpoint + &#x27;getEstados&#x27;, this.httpOptions).subscribe(
+        (res: any) &#x3D;&gt; {
+            this.loadingEstados &#x3D; false;
+            this.estados &#x3D; res;
+            // console.log(this.estados);
+        },
+        (error) &#x3D;&gt; {
+            this.loadingEstados &#x3D; false;
+        }
+        );
+    }
 
-      if( this.isIdentificativo ){
-          busquedaDatos &#x3D; busquedaDatos + &#x27;getNotariosByDatosIdentificativos&#x27;;
-      }else{
-          busquedaDatos &#x3D; busquedaDatos + &#x27;getNotariosByDatosPersonales&#x27;;
-      }
+    /** 
+    * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
+    */
+    getDataDocumentosIdentificativos(): void{
+        this.loadingDocumentosIdentificativos &#x3D; true;
+        this.http.get(this.endpoint + &#x27;getCatalogos&#x27;, this.httpOptions).subscribe(
+        (res: any) &#x3D;&gt; {
+            this.loadingDocumentosIdentificativos &#x3D; false;
+            this.documentos &#x3D; res.CatDocIdentificativos;
+            // console.log(this.documentos);
+        },
+        (error) &#x3D;&gt; {
+            this.loadingDocumentosIdentificativos &#x3D; false;
+        }
+        );
+    }
 
-      query &#x3D; query.substr(1);
+    /** 
+    * Realiza la búsqueda de un notario con los datos que se ingresaron en el modal de búsqueda
+    */
+    searchNotario(): void {
+        const dialogRef &#x3D; this.dialog.open(DialogBuscarNotarioAlta, {
+        width: &#x27;700px&#x27;,
+        });
+        dialogRef.afterClosed().subscribe(result &#x3D;&gt; {
+        this.filtros.no_notario &#x3D; result.no_notario;
+        this.filtros.estado &#x3D; result.estado;
+        this.filtros.nombre &#x3D; result.nombre;
+        this.filtros.apellido_paterno &#x3D; result.apellido_paterno;
+        this.filtros.apellido_materno &#x3D; result.apellido_materno;
+        this.filtros.rfc &#x3D; result.rfc;
+        this.filtros.curp &#x3D; result.curp;
+        this.filtros.ine &#x3D; result.ine;
+        this.filtros.celular &#x3D; result.celular;
+        this.filtros.email &#x3D; result.email;
+        });
+    }
 
-      this.loading &#x3D; true;
-        // console.log(this.endpoint + busquedaDatos + &#x27;?&#x27; + query);
-        this.http.post(this.endpoint + busquedaDatos + &#x27;?&#x27; + query, &#x27;&#x27;, this.httpOptions)
+    /** 
+    * Consulta que se realiza antes de realizar el alta de un notario para verificar si éste ya existe en base de datos
+    */
+    consulta_previa(){
+
+        let query &#x3D; &#x27;&#x27;;
+        let busquedaDatos &#x3D; &#x27;getContribuyentesSimilares&#x27;;
+
+        //query &#x3D; (this.filtros.nombre) ? query + &#x27;nombre&#x3D;&#x27; + this.filtros.nombre  + &#x27;&amp;filtroNombre&#x3D;&#x27; : query +  &#x27;nombre&#x3D;&amp;filtroNombre&#x3D;&#x27;;
+        query &#x3D; query + &#x27;nombre&#x3D;&amp;filtroNombre&#x3D;&#x27;;
+
+        //query &#x3D; (this.filtros.apellido_paterno) ? query + &#x27;&amp;apellidoPaterno&#x3D;&#x27; + this.filtros.apellido_paterno : query + &#x27;&amp;apellidoPaterno&#x3D;&#x27;;
+        query &#x3D; query + &#x27;&amp;apellidopaterno&#x3D;&amp;filtroApellidoPaterno&#x3D;&#x27;;
+
+        //query &#x3D; (this.filtros.apellido_materno) ? query + &#x27;&amp;apellidoMaterno&#x3D;&#x27; + this.filtros.apellido_materno : query + &#x27;&amp;apellidoMaterno&#x3D;&#x27;;
+        query &#x3D; query + &#x27;&amp;apellidomaterno&#x3D;&amp;filtroApellidoMaterno&#x3D;&#x27;;
+
+        query &#x3D; (this.filtros.curp) ? query + &#x27;&amp;curp&#x3D;&#x27; + this.filtros.curp : query + &#x27;&amp;curp&#x3D;&#x27;;
+
+        query &#x3D; (this.filtros.rfc) ? query + &#x27;&amp;rfc&#x3D;&#x27; + this.filtros.rfc : query + &#x27;&amp;rfc&#x3D;&#x27;;
+
+        query &#x3D; (this.filtros.ine) ? query + &#x27;&amp;claveife&#x3D;&#x27; + this.filtros.ine : query + &#x27;&amp;claveife&#x3D;&#x27;;
+
+        query &#x3D; query + &#x27;&amp;actividadPrincip&#x3D;&#x27;;
+
+        console.log(this.endpoint + busquedaDatos + &#x27;?&#x27; + query);
+        this.loading &#x3D; true;
+        this.http.get(this.endpoint + busquedaDatos + &#x27;?&#x27; + query, this.httpOptions)
             .subscribe(
                 (res: any) &#x3D;&gt; {
                     this.loading &#x3D; false;
-                    this.dataSource &#x3D; res;
-                    this.dataPaginate &#x3D; this.paginate(this.dataSource, this.pageSize, this.pagina);
-                    this.total &#x3D; this.dataSource.length; 
-                    // this.paginator.pageIndex &#x3D; 0;
-                    // console.log(this.dataSource);
+                    console.log(res);
+                    console.log(&quot;CON&quot;);
+                    if(res.length &gt; 0){
+                        this.validaDialog(res);
+                    }else{
+                        this.guardarNotario();
+                    }
                 },
                 (error) &#x3D;&gt; {
                     this.loading &#x3D; false;
@@ -386,20 +353,313 @@ export class EdicionNotarioComponent implements OnInit {
                     });
                 }
             );
-    
-  }
+    }
 
-  paginado(evt): void{
-      this.pagina &#x3D; evt.pageIndex + 1;
-      this.dataPaginate &#x3D; this.paginate(this.dataSource, this.pageSize, this.pagina);
-  }
+    /**
+    * @param res Es el json que regresa la respuesta una vez guardado el dato
+    */
+    validaDialog(res){
+        const dialogRef &#x3D; this.dialog.open(DialogDuplicadosComponent, {
+            width: &#x27;850px&#x27;,
+            data: {
+                dataSource: res,
+                bandeja: 2
+            }
+        });
+        dialogRef.afterClosed().subscribe(result &#x3D;&gt; {
+            if(result){
+                console.log(result);
+                this.guardarNotario();
+            }
+        });
+    }
 
-  paginate(array, page_size, page_number) {
-      return array.slice((page_number - 1) * page_size, page_number * page_size);
-  }
+    /** 
+    * Guarda la información del Notario que se está dando de alta
+    */
+    guardarNotario(){
+        let query &#x3D; &#x27;idPersona&#x27;;
+        this.loading &#x3D; true;
+
+        //registro/insertarNotario?numNotario&#x3D;666&amp;codEstado&#x3D;9&amp;nombre&#x3D;Omar Donchai&amp;apellidoPaterno&#x3D;Vidal&amp;apellidoMaterno&#x3D;Perez&amp;rfc&#x3D;VIP900629MG5&amp;curp&amp;ife&#x3D;PLGMJN83062615H500&amp;iddocIdentif&#x3D;1&amp;valdocIdentif&amp;fechaNacimiento&amp;fechaDefuncion&amp;email&#x3D;ividal@mail.com&amp;celular&amp;codtiposPersona&#x3D;F&amp;persona
+
+        query &#x3D; (this.filtros.no_notario) ? query + &#x27;&amp;numNotario&#x3D;&#x27; + this.filtros.no_notario : query + &#x27;&amp;numNotario&#x3D;&#x27;;
+        query &#x3D; (this.filtros.estado) ? query + &#x27;&amp;codEstado&#x3D;&#x27; + this.filtros.estado : query + &#x27;&amp;codEstado&#x3D;&#x27;;
+        query &#x3D; (this.filtros.nombre) ? query + &#x27;&amp;nombre&#x3D;&#x27; + this.filtros.nombre : query + &#x27;&amp;nombre&#x3D;&#x27;;
+        query &#x3D; (this.filtros.apellido_paterno) ? query + &#x27;&amp;apellidoPaterno&#x3D;&#x27; + this.filtros.apellido_paterno : query + &#x27;&amp;apellidoPaterno&#x3D;&#x27;;
+        query &#x3D; (this.filtros.apellido_materno) ? query + &#x27;&amp;apellidoMaterno&#x3D;&#x27; + this.filtros.apellido_materno : query + &#x27;&amp;apellidoMaterno&#x3D;&#x27;;
+        query &#x3D; (this.filtros.rfc) ? query + &#x27;&amp;rfc&#x3D;&#x27; + this.filtros.rfc : query + &#x27;&amp;rfc&#x3D;&#x27;;
+        query &#x3D; (this.filtros.curp) ? query + &#x27;&amp;curp&#x3D;&#x27; + this.filtros.curp : query + &#x27;&amp;curp&#x3D;&#x27;;
+        query &#x3D; (this.filtros.ine) ? query + &#x27;&amp;ife&#x3D;&#x27; + this.filtros.ine : query + &#x27;&amp;ife&#x3D;&#x27;;
+        query &#x3D; (this.filtros.otro_documento) ? query + &#x27;&amp;iddocIdentif&#x3D;&#x27; + this.filtros.otro_documento : query + &#x27;&amp;iddocIdentif&#x3D;&#x27;;
+        query &#x3D; (this.filtros.numero_documento) ? query + &#x27;&amp;valdocIdentif&#x3D;&#x27; + this.filtros.numero_documento : query + &#x27;&amp;valdocIdentif&#x3D;&#x27;;
+        query &#x3D; (this.filtros.fecha_nacimiento) ? query + &#x27;&amp;fechaNacimiento&#x3D;&#x27; + moment(this.filtros.fecha_nacimiento).format(&#x27;DD-MM-YYYY&#x27;) : query + &#x27;&amp;fechaNacimiento&#x3D;&#x27;;
+        query &#x3D; (this.filtros.fecha_defuncion) ? query + &#x27;&amp;fechaDefuncion&#x3D;&#x27; + moment(this.filtros.fecha_defuncion).format(&#x27;DD-MM-YYYY&#x27;) : query + &#x27;&amp;fechaDefuncion&#x3D;&#x27;;
+        query &#x3D; (this.filtros.email) ? query + &#x27;&amp;email&#x3D;&#x27; + this.filtros.email : query + &#x27;&amp;email&#x3D;&#x27;;
+        query &#x3D; (this.filtros.celular) ? query + &#x27;&amp;celular&#x3D;&#x27; + this.filtros.celular : query + &#x27;&amp;celular&#x3D;&#x27;;
+        query &#x3D; query + &#x27;&amp;codtiposPersona&#x3D;F&amp;persona&#x27;;
+
+        this.http.post(this.endpoint + &#x27;insertarNotario&#x27; + &#x27;?&#x27; + query, &#x27;&#x27;, this.httpOptions)
+            .subscribe(
+                (res: any) &#x3D;&gt; {
+                    this.loading &#x3D; false;
+                    // console.log(&quot;NOTARIO GUARDADO&quot;);
+                    // console.log(res);
+                    this.snackBar.open(&#x27;Notario Dado de Alta Correctamente&#x27;, &#x27;Cerrar&#x27;, {
+                        duration: 10000,
+                        horizontalPosition: &#x27;end&#x27;,
+                        verticalPosition: &#x27;top&#x27;
+                    });
+                },
+                (error) &#x3D;&gt; {
+                    this.loading &#x3D; false;
+                    this.snackBar.open(error.error.mensaje, &#x27;Cerrar&#x27;, {
+                        duration: 10000,
+                        horizontalPosition: &#x27;end&#x27;,
+                        verticalPosition: &#x27;top&#x27;
+                    });
+                }
+            );
+
+    }
 
 
 }
+
+
+///////////////BUSCAR NOTARIO////////////////
+export interface DataNotarioSeleccionado {
+  no_notario: string;
+  estado: string;
+  nombre: string;
+  apellido_paterno: string;
+  apellido_materno: string;
+  rfc: string;
+  curp: string;
+  ine: string;
+  otro_documento: string;
+  numero_documento: string;
+  fecha_nacimiento: string;
+  fecha_defuncion: string;
+  celular: string;
+  email: string;
+}
+
+export interface DocumentosIdentificativos{
+  id_documento: number;
+  documento: string;
+}
+
+
+@Component({
+  selector: &#x27;app-dialog-buscar-notario-alta&#x27;,
+  templateUrl: &#x27;app-dialog-buscar-notario-alta.html&#x27;,
+  styleUrls: [&#x27;./alta-notario.component.css&#x27;]
+})
+
+export class DialogBuscarNotarioAlta {
+  endpoint &#x3D; environment.endpoint + &#x27;registro/&#x27;;
+  displayedColumns: string[] &#x3D; [&#x27;nombre&#x27;,&#x27;datos_identificativos&#x27;,&#x27;seleccionar&#x27;];
+  pagina &#x3D; 1;
+  total &#x3D; 0;
+  pageSize &#x3D; 5;
+  loading &#x3D; false;
+  dataSource &#x3D; [];
+  dataPaginate &#x3D; [];
+  httpOptions;
+  nombre;
+  apellido_paterno;
+  apellido_materno;
+  rfc;
+  curp;
+  ine;
+  otro_documento;
+  numero_documento;
+  search &#x3D; false;
+  isIdentificativo;
+  notarioSeleccionado;
+  dataNotarioSeleccionado: DataNotarioSeleccionado &#x3D; {} as DataNotarioSeleccionado;
+  // documentos: DocumentosIdentificativos &#x3D; {} as DocumentosIdentificativos;
+  documentos: DocumentosIdentificativos[] &#x3D; [];
+  loadingDocumentosIdentificativos &#x3D; false;
+  @ViewChild(&#x27;paginator&#x27;) paginator: MatPaginator;
+
+  constructor(
+    private http: HttpClient,
+    private auth: AuthService,
+    private route: ActivatedRoute,
+    private snackBar: MatSnackBar,
+    public dialog: MatDialog,
+  ) { }
+
+    ngOnInit(): void {
+        this.httpOptions &#x3D; {
+            headers: new HttpHeaders({
+                &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+                Authorization: this.auth.getSession().token
+            })
+        };
+        this.getDataDocumentosIdentificativos();
+    }
+
+    /** 
+    * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
+    */
+    getDataDocumentosIdentificativos(): void{
+        this.loadingDocumentosIdentificativos &#x3D; true;
+        this.http.get(this.endpoint + &#x27;getCatalogos&#x27;, this.httpOptions).subscribe(
+            (res: any) &#x3D;&gt; {
+                this.loadingDocumentosIdentificativos &#x3D; false;
+                this.documentos &#x3D; res.CatDocIdentificativos;
+                // console.log(this.documentos);
+            },
+            (error) &#x3D;&gt; {
+                this.loadingDocumentosIdentificativos &#x3D; false;
+            }
+        );
+    }
+
+    /** 
+    * @param isIdentificativo Indica si la búsqueda se está realizando por Datos Identificativos o Personales
+    */
+    clearInputsIdentNoIdent(isIdentificativo): void {
+        this.isIdentificativo &#x3D; isIdentificativo;
+        if(isIdentificativo){
+            this.apellido_paterno &#x3D; null;
+            this.apellido_materno &#x3D; null;
+            this.nombre &#x3D; null;
+        } else {
+            this.rfc &#x3D; null;
+            this.curp &#x3D; null;
+            this.ine &#x3D; null;
+            this.otro_documento &#x3D; null;
+            this.numero_documento &#x3D; null;
+        }
+    }
+
+    clean(): void{
+        this.pagina &#x3D; 1;
+        this.total &#x3D; 0;
+        this.dataSource &#x3D; [];
+        this.loading &#x3D; false;
+        this.dataPaginate;
+        this.nombre &#x3D; &#x27;&#x27;;
+        this.apellido_paterno &#x3D; &#x27;&#x27;;
+        this.apellido_materno &#x3D; &#x27;&#x27;;
+        this.rfc &#x3D; &#x27;&#x27;;
+        this.curp &#x3D; &#x27;&#x27;;
+        this.ine &#x3D; &#x27;&#x27;;
+        this.otro_documento &#x3D; &#x27;&#x27;;
+        this.numero_documento &#x3D; &#x27;&#x27;;
+        this.search &#x3D; false;
+        this.dataNotarioSeleccionado &#x3D; {} as DataNotarioSeleccionado;
+    }
+
+    /** 
+    * Verifica que haya campos llenos para habilitar el botón de búsqueda
+    */
+    validateSearch(){
+        this.search &#x3D; (
+                this.apellido_paterno ||
+                this.apellido_materno ||
+                this.nombre ||
+                this.rfc ||
+                this.curp ||
+                this.ine ||
+                this.otro_documento ||
+                this.numero_documento
+            ) ? true : false;
+    }
+
+    /** 
+    * Obtiene la información una vez llenados los filtros y realizado la búsqueda
+    */
+    getData(): void {
+        let query &#x3D; &#x27;&#x27;;
+        let busquedaDatos &#x3D; &#x27;&#x27;;
+        this.notarioSeleccionado &#x3D; false;
+
+        if(this.nombre){
+            query &#x3D; query + &#x27;&amp;nombre&#x3D;&#x27; + this.nombre + &#x27;&amp;filtroNombre&#x3D;0&#x27;;
+        }
+        if(this.apellido_paterno){
+            query &#x3D; query + &#x27;&amp;apellidoPaterno&#x3D;&#x27; + this.apellido_paterno + &#x27;&amp;filtroApellidoPaterno&#x3D;0&#x27;;
+        }
+        if(this.apellido_materno){
+            query &#x3D; query + &#x27;&amp;apellidoMaterno&#x3D;&#x27; + this.apellido_materno + &#x27;&amp;filtroApellidoMaterno&#x3D;0&#x27;;
+        }
+        if(this.rfc){
+            query &#x3D; query + &#x27;&amp;rfc&#x3D;&#x27; + this.rfc;
+        }
+        if(this.curp){
+            query &#x3D; query + &#x27;&amp;curp&#x3D;&#x27; + this.curp;
+        }
+        if(this.ine){
+            query &#x3D; query + &#x27;&amp;ine&#x3D;&#x27; + this.ine;
+        }
+        
+
+        if( this.isIdentificativo ){
+            busquedaDatos &#x3D; busquedaDatos + &#x27;getNotariosByDatosIdentificativos&#x27;;
+        }else{
+            busquedaDatos &#x3D; busquedaDatos + &#x27;getNotariosByDatosPersonales&#x27;;
+        }
+
+        query &#x3D; query.substr(1);
+
+        this.loading &#x3D; true;
+            // console.log(this.endpoint + busquedaDatos + &#x27;?&#x27; + query);
+            this.http.get(this.endpoint + busquedaDatos + &#x27;?&#x27; + query, this.httpOptions)
+                .subscribe(
+                    (res: any) &#x3D;&gt; {
+                        this.loading &#x3D; false;
+                        this.dataSource &#x3D; res;
+                        this.dataPaginate &#x3D; this.paginate(this.dataSource, this.pageSize, this.pagina);
+                        this.total &#x3D; this.dataSource.length; 
+                        this.paginator.pageIndex &#x3D; 0;
+                        // console.log(this.dataSource);
+                    },
+                    (error) &#x3D;&gt; {
+                        this.loading &#x3D; false;
+                        this.snackBar.open(error.error.mensaje, &#x27;Cerrar&#x27;, {
+                            duration: 10000,
+                            horizontalPosition: &#x27;end&#x27;,
+                            verticalPosition: &#x27;top&#x27;
+                        });
+                    }
+                );
+        
+    }
+
+  
+    paginado(evt): void{
+        this.pagina &#x3D; evt.pageIndex + 1;
+        this.dataPaginate &#x3D; this.paginate(this.dataSource, this.pageSize, this.pagina);
+    }
+
+    paginate(array, page_size, page_number) {
+        return array.slice((page_number - 1) * page_size, page_number * page_size);
+    }
+
+    /** 
+    * @param element es el idPersona del notario seleccionado, el cual al ser seleccionado vacía la información de éste en el formulario de inserción
+    */
+    RegistroSelect(element) {
+        this.dataNotarioSeleccionado.no_notario &#x3D; element.NUMNOTARIO;
+        this.dataNotarioSeleccionado.estado &#x3D; element.CODESTADO;
+        this.dataNotarioSeleccionado.nombre &#x3D; element.NOMBRE;
+        this.dataNotarioSeleccionado.apellido_paterno &#x3D; element.APELLIDOPATERNO;
+        this.dataNotarioSeleccionado.apellido_materno &#x3D; element.APELLIDOMATERNO;
+        this.dataNotarioSeleccionado.rfc &#x3D; element.RFC;
+        this.dataNotarioSeleccionado.curp &#x3D; element.CURP;
+        this.dataNotarioSeleccionado.ine &#x3D; element.CLAVEIFE;
+        this.dataNotarioSeleccionado.celular &#x3D; element.CELULAR;
+        this.dataNotarioSeleccionado.email &#x3D; element.EMAIL;
+        // console.log(this.dataNotarioSeleccionado.email);
+    }
+
+}
+
 </code></pre>
     </div>
 </div>

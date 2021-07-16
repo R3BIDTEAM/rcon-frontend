@@ -61,7 +61,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/app/components/peritos/consulta-peritos/consulta-peritos.component.ts</code>
+            <code>src/app/components/peritos/edicion-peritos/edicion-peritos.component.ts</code>
         </p>
 
 
@@ -172,11 +172,11 @@ export interface DocumentosIdentificativos{
 }
 
 @Component({
-    selector: &#x27;app-consulta-peritos&#x27;,
-    templateUrl: &#x27;./consulta-peritos.component.html&#x27;,
-    styleUrls: [&#x27;./consulta-peritos.component.css&#x27;]
+    selector: &#x27;app-edicion-peritos&#x27;,
+    templateUrl: &#x27;./edicion-peritos.component.html&#x27;,
+    styleUrls: [&#x27;./edicion-peritos.component.css&#x27;]
 })
-export class ConsultaPeritosComponent implements OnInit {
+export class EdicionPeritosComponent implements OnInit {
     endpoint &#x3D; environment.endpoint + &#x27;registro/&#x27;;
     displayedColumns: string[] &#x3D; [&#x27;registro&#x27;,&#x27;nombre&#x27;, &#x27;datos&#x27;, &#x27;select&#x27;];
     pagina &#x3D; 1;
@@ -184,7 +184,7 @@ export class ConsultaPeritosComponent implements OnInit {
     pageSize &#x3D; 15;
     loading &#x3D; false;
     dataSource &#x3D; [];
-    dataPaginate &#x3D; [];
+    dataPaginate;
     httpOptions;
     nombrePerito;
     filtroNombre;
@@ -199,6 +199,9 @@ export class ConsultaPeritosComponent implements OnInit {
     identificacion;
     idedato;
     isIdentificativo;
+    panelDomicilio &#x3D; false;
+    panelDomPredial &#x3D; false;
+    panelBienes &#x3D; false;
     documentos: DocumentosIdentificativos[] &#x3D; [];
     loadingDocumentosIdentificativos &#x3D; false;
     @ViewChild(&#x27;paginator&#x27;) paginator: MatPaginator;
@@ -211,8 +214,7 @@ export class ConsultaPeritosComponent implements OnInit {
     ) { }
 
     /**
-     * @param httpOptions No se que hace la neta
-     * @return no regresa nada
+     * Valida la sesión del usuario
      */
     ngOnInit(): void {
         this.httpOptions &#x3D; {
@@ -290,7 +292,7 @@ export class ConsultaPeritosComponent implements OnInit {
     }
 
     /**
-     * Realiza la búsqueda del o de los peritos existentes.
+     * Obtiene el o los registros del perito de acuerdo al críterio de búsqueda que pueden ser datos identificativos o personales.
      */
     getPerito(){
         let query &#x3D; &#x27;&#x27;;
@@ -329,8 +331,8 @@ export class ConsultaPeritosComponent implements OnInit {
 
         query &#x3D; query.substr(1);
 
-        this.loading &#x3D; true;
         console.log(this.endpoint + busquedaDatos + &#x27;?&#x27; + query);
+        this.loading &#x3D; true;
         this.http.get(this.endpoint + busquedaDatos + &#x27;?&#x27; + query, this.httpOptions)
             .subscribe(
                 (res: any) &#x3D;&gt; {
@@ -360,7 +362,7 @@ export class ConsultaPeritosComponent implements OnInit {
         this.pagina &#x3D; evt.pageIndex + 1;
         this.dataPaginate &#x3D; this.paginate(this.dataSource, this.pageSize, this.pagina);
     }
- 
+    
     /**
      * Regresa la posición del paginado de acuerdo a los parámetro enviados
      * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
@@ -371,7 +373,6 @@ export class ConsultaPeritosComponent implements OnInit {
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
-
 }
 </code></pre>
     </div>
@@ -400,7 +401,7 @@ export class ConsultaPeritosComponent implements OnInit {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
-            var COMPODOC_CURRENT_PAGE_URL = 'DocumentosIdentificativos-5.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'DocumentosIdentificativos-14.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 

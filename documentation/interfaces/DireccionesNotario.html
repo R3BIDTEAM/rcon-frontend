@@ -1048,7 +1048,7 @@ export class VerNotarioComponent implements OnInit {
   */
   getDataEstados(): void {
     this.loadingEstados &#x3D; true;
-    this.http.post(this.endpointEstados + &#x27;getEstados&#x27;, &#x27;&#x27;, this.httpOptions).subscribe(
+    this.http.get(this.endpointEstados + &#x27;getEstados&#x27;, this.httpOptions).subscribe(
       (res: any) &#x3D;&gt; {
         this.loadingEstados &#x3D; false;
         this.estados &#x3D; res;
@@ -1065,7 +1065,7 @@ export class VerNotarioComponent implements OnInit {
   */
   getDataDocumentosIdentificativos(): void{
     this.loadingDocumentosIdentificativos &#x3D; true;
-    this.http.post(this.endpointEstados + &#x27;getCatalogos&#x27;, &#x27;&#x27;, this.httpOptions).subscribe(
+    this.http.get(this.endpointEstados + &#x27;getCatalogos&#x27;, this.httpOptions).subscribe(
       (res: any) &#x3D;&gt; {
         this.loadingDocumentosIdentificativos &#x3D; false;
         this.documentos &#x3D; res.CatDocIdentificativos;
@@ -1084,7 +1084,7 @@ export class VerNotarioComponent implements OnInit {
       this.query &#x3D; &#x27;infoExtra&#x3D;true&amp;idPersona&#x3D;&#x27; + this.idNotario; 
       this.loading &#x3D; true;
       console.log(this.endpoint);
-      this.http.post(this.endpoint + &#x27;?&#x27; + this.query, &#x27;&#x27;, this.httpOptions)
+      this.http.get(this.endpoint + &#x27;?&#x27; + this.query, this.httpOptions)
           .subscribe(
               (res: any) &#x3D;&gt; {
                   this.loading &#x3D; false;
@@ -1147,7 +1147,7 @@ export class VerNotarioComponent implements OnInit {
       this.query &#x3D; &#x27;&amp;idPersona&#x3D;&#x27; + this.idNotario; 
       this.loading &#x3D; true;
       console.log(this.endpoint);
-      this.http.post(this.endpointEstados + &#x27;getDireccionesContribuyente?&#x27; + this.query, &#x27;&#x27;, this.httpOptions)
+      this.http.get(this.endpointEstados + &#x27;getDireccionesContribuyente?&#x27; + this.query, this.httpOptions)
           .subscribe(
               (res: any) &#x3D;&gt; {
                   this.loading &#x3D; false;

@@ -679,7 +679,7 @@ export class VerPeritosComponent implements OnInit {
         this.query &#x3D; &#x27;obtenerSociedades&#x3D;1&amp;idPerito&#x3D;&#x27; + this.idPerito; 
         this.loading &#x3D; true;
         console.log(this.endpoint);
-        this.http.post(this.endpoint + &#x27;?&#x27; + this.query, &#x27;&#x27;, this.httpOptions)
+        this.http.get(this.endpoint + &#x27;?&#x27; + this.query, this.httpOptions)
             .subscribe(
                 (res: any) &#x3D;&gt; {
                     this.loading &#x3D; false;

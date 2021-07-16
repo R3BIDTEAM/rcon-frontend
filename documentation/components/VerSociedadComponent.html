@@ -1120,7 +1120,7 @@ export class VerSociedadComponent implements OnInit {
         this.query &#x3D; &#x27;idSociedad&#x3D;&#x27; + this.idSociedad; 
         this.loading &#x3D; true;
         console.log(this.endpoint);
-        this.http.post(this.endpoint + &#x27;?&#x27; + this.query, &#x27;&#x27;, this.httpOptions)
+        this.http.get(this.endpoint + &#x27;?&#x27; + this.query, this.httpOptions)
             .subscribe(
                 (res: any) &#x3D;&gt; {
                     //this.loading &#x3D; false;
@@ -1141,7 +1141,7 @@ export class VerSociedadComponent implements OnInit {
     }
 
     getPeritosSociedad(){
-        this.http.post(this.endpointTable + &#x27;?&#x27; + &#x27;idSociedad&#x3D;&#x27; + this.idSociedad + &#x27;&amp;idPerito&#x27;, &#x27;&#x27;, this.httpOptions)
+        this.http.get(this.endpointTable + &#x27;?&#x27; + &#x27;idSociedad&#x3D;&#x27; + this.idSociedad + &#x27;&amp;idPerito&#x27;, this.httpOptions)
             .subscribe(
                 (res: any) &#x3D;&gt; {
                     this.loading &#x3D; false;

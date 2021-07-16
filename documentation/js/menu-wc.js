@@ -760,6 +760,18 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="interfaces/DocumentosIdentificativos-10.html" data-type="entity-link">DocumentosIdentificativos</a>
                             </li>
                             <li class="link">
+                                <a href="interfaces/DocumentosIdentificativos-11.html" data-type="entity-link">DocumentosIdentificativos</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/DocumentosIdentificativos-12.html" data-type="entity-link">DocumentosIdentificativos</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/DocumentosIdentificativos-13.html" data-type="entity-link">DocumentosIdentificativos</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/DocumentosIdentificativos-14.html" data-type="entity-link">DocumentosIdentificativos</a>
+                            </li>
+                            <li class="link">
                                 <a href="interfaces/Estados.html" data-type="entity-link">Estados</a>
                             </li>
                             <li class="link">

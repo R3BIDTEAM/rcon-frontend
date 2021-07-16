@@ -61,7 +61,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/app/components/notarios/consulta-notario/consulta-notario.component.ts</code>
+            <code>src/app/components/notarios/edicion-notario/edicion-notario.component.ts</code>
         </p>
 
 
@@ -192,11 +192,11 @@ export interface DocumentosIdentificativos{
 }
 
 @Component({
-  selector: &#x27;app-consulta-notario&#x27;,
-  templateUrl: &#x27;./consulta-notario.component.html&#x27;,
-  styleUrls: [&#x27;./consulta-notario.component.css&#x27;]
+  selector: &#x27;app-edicion-notario&#x27;,
+  templateUrl: &#x27;./edicion-notario.component.html&#x27;,
+  styleUrls: [&#x27;./edicion-notario.component.css&#x27;]
 })
-export class ConsultaNotarioComponent implements OnInit {
+export class EdicionNotarioComponent implements OnInit {
   endpoint &#x3D; environment.endpoint + &#x27;registro/&#x27;;
   pagina &#x3D; 1;
   total &#x3D; 0;
@@ -245,7 +245,7 @@ export class ConsultaNotarioComponent implements OnInit {
   */
   getDataEstados(): void {
     this.loadingEstados &#x3D; true;
-    this.http.post(this.endpoint + &#x27;getEstados&#x27;, &#x27;&#x27;, this.httpOptions).subscribe(
+    this.http.get(this.endpoint + &#x27;getEstados&#x27;, this.httpOptions).subscribe(
       (res: any) &#x3D;&gt; {
         this.loadingEstados &#x3D; false;
         this.estados &#x3D; res;
@@ -256,13 +256,13 @@ export class ConsultaNotarioComponent implements OnInit {
       }
     );
   }
-
+  
   /** 
   * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
   */
   getDataDocumentosIdentificativos(): void{
     this.loadingDocumentosIdentificativos &#x3D; true;
-    this.http.post(this.endpoint + &#x27;getCatalogos&#x27;, &#x27;&#x27;, this.httpOptions).subscribe(
+    this.http.get(this.endpoint + &#x27;getCatalogos&#x27;, this.httpOptions).subscribe(
       (res: any) &#x3D;&gt; {
         this.loadingDocumentosIdentificativos &#x3D; false;
         this.documentos &#x3D; res.CatDocIdentificativos;
@@ -367,7 +367,7 @@ export class ConsultaNotarioComponent implements OnInit {
 
       this.loading &#x3D; true;
         // console.log(this.endpoint + busquedaDatos + &#x27;?&#x27; + query);
-        this.http.post(this.endpoint + busquedaDatos + &#x27;?&#x27; + query, &#x27;&#x27;, this.httpOptions)
+        this.http.get(this.endpoint + busquedaDatos + &#x27;?&#x27; + query, this.httpOptions)
             .subscribe(
                 (res: any) &#x3D;&gt; {
                     this.loading &#x3D; false;

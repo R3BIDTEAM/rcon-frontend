@@ -639,7 +639,7 @@ export class AltaNotarioComponent implements OnInit {
     */
     getDataEstados(): void {
         this.loadingEstados &#x3D; true;
-        this.http.post(this.endpoint + &#x27;getEstados&#x27;, &#x27;&#x27;, this.httpOptions).subscribe(
+        this.http.get(this.endpoint + &#x27;getEstados&#x27;, this.httpOptions).subscribe(
         (res: any) &#x3D;&gt; {
             this.loadingEstados &#x3D; false;
             this.estados &#x3D; res;
@@ -656,7 +656,7 @@ export class AltaNotarioComponent implements OnInit {
     */
     getDataDocumentosIdentificativos(): void{
         this.loadingDocumentosIdentificativos &#x3D; true;
-        this.http.post(this.endpoint + &#x27;getCatalogos&#x27;, &#x27;&#x27;, this.httpOptions).subscribe(
+        this.http.get(this.endpoint + &#x27;getCatalogos&#x27;, this.httpOptions).subscribe(
         (res: any) &#x3D;&gt; {
             this.loadingDocumentosIdentificativos &#x3D; false;
             this.documentos &#x3D; res.CatDocIdentificativos;
@@ -716,7 +716,7 @@ export class AltaNotarioComponent implements OnInit {
 
         console.log(this.endpoint + busquedaDatos + &#x27;?&#x27; + query);
         this.loading &#x3D; true;
-        this.http.post(this.endpoint + busquedaDatos + &#x27;?&#x27; + query, &#x27;&#x27;, this.httpOptions)
+        this.http.get(this.endpoint + busquedaDatos + &#x27;?&#x27; + query, this.httpOptions)
             .subscribe(
                 (res: any) &#x3D;&gt; {
                     this.loading &#x3D; false;
@@ -891,7 +891,7 @@ export class DialogBuscarNotarioAlta {
     */
     getDataDocumentosIdentificativos(): void{
         this.loadingDocumentosIdentificativos &#x3D; true;
-        this.http.post(this.endpoint + &#x27;getCatalogos&#x27;, &#x27;&#x27;, this.httpOptions).subscribe(
+        this.http.get(this.endpoint + &#x27;getCatalogos&#x27;, this.httpOptions).subscribe(
             (res: any) &#x3D;&gt; {
                 this.loadingDocumentosIdentificativos &#x3D; false;
                 this.documentos &#x3D; res.CatDocIdentificativos;
@@ -993,7 +993,7 @@ export class DialogBuscarNotarioAlta {
 
         this.loading &#x3D; true;
             // console.log(this.endpoint + busquedaDatos + &#x27;?&#x27; + query);
-            this.http.post(this.endpoint + busquedaDatos + &#x27;?&#x27; + query, &#x27;&#x27;, this.httpOptions)
+            this.http.get(this.endpoint + busquedaDatos + &#x27;?&#x27; + query, this.httpOptions)
                 .subscribe(
                     (res: any) &#x3D;&gt; {
                         this.loading &#x3D; false;
