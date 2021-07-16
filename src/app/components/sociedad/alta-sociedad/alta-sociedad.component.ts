@@ -45,9 +45,9 @@ export class AltaSociedadComponent implements OnInit {
     ) { }
 
     /**
-     * ACA LA DOCUMENTACIÓN
-     * @param httpOptions No se que hace la neta
-     * @return no regresa nada
+     * 
+     *Metodo que autentica la sesión y define grupo de campos requeridos
+     *
      */
     ngOnInit(): void {
         this.httpOptions = {
