@@ -1,0 +1,447 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>base documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">base documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Interfaces</li>
+  <li>DocumentosIdentificativos</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/components/contribuyentes/consulta-contribuyente/consulta-contribuyente.component.ts</code>
+        </p>
+
+
+
+        <section>
+            <h3 id="index">Index</h3>
+            <table class="table table-sm table-bordered index-table">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Properties</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                        <a href="#documento">documento</a>
+                                </li>
+                                <li>
+                                        <a href="#id_documento">id_documento</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+
+
+            <section>
+                <h3 id="inputs">Properties</h3>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="documento"></a>
+                                        <span class="name"><b>documento</b><a href="#documento"><span class="icon ion-ios-link"></span></a></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>documento:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="id_documento"></a>
+                                        <span class="name"><b>id_documento</b><a href="#id_documento"><span class="icon ion-ios-link"></span></a></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>id_documento:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+            </section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, Inject, ViewChild } from &#x27;@angular/core&#x27;;
+import { MatSnackBar } from &#x27;@angular/material/snack-bar&#x27;;
+import { HttpClient, HttpHeaders } from &#x27;@angular/common/http&#x27;;
+import { environment } from &#x27;@env/environment&#x27;;
+import { AuthService } from &#x27;@serv/auth.service&#x27;;
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from &#x27;@angular/material/dialog&#x27;;
+import { ActivatedRoute, Router } from &#x27;@angular/router&#x27;;
+import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from &#x27;@angular/forms&#x27;;
+import { MatPaginator } from &#x27;@angular/material/paginator&#x27;;
+
+export interface DocumentosIdentificativos{
+  id_documento: number;
+  documento: string;
+}
+
+@Component({
+  selector: &#x27;app-consulta-contribuyente&#x27;,
+  templateUrl: &#x27;./consulta-contribuyente.component.html&#x27;,
+  styleUrls: [&#x27;./consulta-contribuyente.component.css&#x27;]
+})
+export class ConsultaContribuyenteComponent implements OnInit {
+  endpoint &#x3D; environment.endpoint + &#x27;registro/&#x27;;
+  pageSize &#x3D; 15;
+  pagina &#x3D; 1;
+  total &#x3D; 0;
+  loadingResponse &#x3D; false;
+  dataSource &#x3D; [];
+  data &#x3D; [];
+  displayedColumns: string[] &#x3D; [&#x27;nombre&#x27;, &#x27;datos_identificativos&#x27;, &#x27;seleccionar&#x27;];
+  documentos: DocumentosIdentificativos[] &#x3D; [];
+  httpOptions;
+  cuentaFormGroup: FormGroup;
+  contribuyenteFormGroup: FormGroup;
+  tipoBusqueda;
+  isIdentificativo: boolean;
+  busqueda &#x3D; false;
+  queryParamFiltros;
+  endpointBusqueda;
+  loadingDocumentosIdentificativos &#x3D; false;
+  @ViewChild(&#x27;paginator&#x27;) paginator: MatPaginator;
+
+  constructor(
+    private auth: AuthService,
+    private http: HttpClient,
+    private _formBuilder: FormBuilder,
+    private snackBar: MatSnackBar,
+  ) { }
+
+  ngOnInit(): void {
+    this.httpOptions &#x3D; {
+      headers: new HttpHeaders({
+        &#x27;Content-Type&#x27;: &#x27;application/json&#x27;,
+        Authorization: this.auth.getSession().token
+      })
+    };
+
+    this.getDataDocumentosIdentificativos();
+
+    this.cuentaFormGroup &#x3D; this._formBuilder.group({
+      region: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
+      manzana: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
+      lote: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(2)]],
+      unidad: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
+    });
+
+    this.contribuyenteFormGroup &#x3D; this._formBuilder.group({
+      tipo_persona: [&#x27;M&#x27;, Validators.required],
+      nombre: [null],
+      rfc: [null],
+    });
+
+    this.contribuyenteFormGroup.controls.tipo_persona.valueChanges.subscribe(tipo_persona &#x3D;&gt; {
+      if(tipo_persona &#x3D;&#x3D; &#x27;F&#x27;) {
+        this.contribuyenteFormGroup.addControl(&#x27;apaterno&#x27;, new FormControl(null));
+        this.contribuyenteFormGroup.addControl(&#x27;amaterno&#x27;, new FormControl(null));
+        this.contribuyenteFormGroup.addControl(&#x27;curp&#x27;, new FormControl(null));
+        this.contribuyenteFormGroup.addControl(&#x27;ine&#x27;, new FormControl(null));
+        this.contribuyenteFormGroup.addControl(&#x27;iddocumentoidentificativo&#x27;, new FormControl(&#x27;&#x27;));
+        this.contribuyenteFormGroup.addControl(&#x27;documentoidentificativo&#x27;, new FormControl(null));
+      } else {
+        this.contribuyenteFormGroup.removeControl(&#x27;apaterno&#x27;);
+        this.contribuyenteFormGroup.removeControl(&#x27;amaterno&#x27;);
+        this.contribuyenteFormGroup.removeControl(&#x27;curp&#x27;);
+        this.contribuyenteFormGroup.removeControl(&#x27;ine&#x27;);
+        this.contribuyenteFormGroup.removeControl(&#x27;iddocumentoidentificativo&#x27;);
+        this.contribuyenteFormGroup.removeControl(&#x27;documentoidentificativo&#x27;);
+      }
+      this.contribuyenteFormGroup.updateValueAndValidity();
+    });
+  }
+
+  getDataDocumentosIdentificativos(): void{
+    this.loadingDocumentosIdentificativos &#x3D; true;
+    this.http.post(this.endpoint + &#x27;getCatalogos&#x27;, &#x27;&#x27;, this.httpOptions).subscribe(
+      (res: any) &#x3D;&gt; {
+        this.loadingDocumentosIdentificativos &#x3D; false;
+        this.documentos &#x3D; res.CatDocIdentificativos;
+        // console.log(this.documentos);
+      },
+      (error) &#x3D;&gt; {
+        this.loadingDocumentosIdentificativos &#x3D; false;
+      }
+    );
+  }
+
+  keyPressAlphaNumeric(event) {
+    var inp &#x3D; String.fromCharCode(event.keyCode);
+    if (/[a-zA-Z0-9]/.test(inp)) {
+      return true;
+    } else {
+      event.preventDefault();
+      return false;
+    }
+  }
+
+  focusNextInput(event, input) {
+    if(event.srcElement.value.length &#x3D;&#x3D;&#x3D; event.srcElement.maxLength){
+      input.focus();
+    }
+  }
+
+  clearInputsContribuyente(): void {
+    this.contribuyenteFormGroup.controls[&#x27;nombre&#x27;].setValue(null);
+    this.contribuyenteFormGroup.controls[&#x27;rfc&#x27;].setValue(null);
+    this.contribuyenteFormGroup.markAsUntouched();
+    this.contribuyenteFormGroup.updateValueAndValidity();
+  }
+
+  clearInputsIdentNoIdent(isIdentificativo): void {
+    this.isIdentificativo &#x3D; isIdentificativo;
+
+    if(isIdentificativo){
+      this.contribuyenteFormGroup.controls[&#x27;nombre&#x27;].setValue(null);
+      if(this.contribuyenteFormGroup.value.tipo_persona &#x3D;&#x3D; &#x27;F&#x27;){
+        this.contribuyenteFormGroup.controls[&#x27;apaterno&#x27;].setValue(null);
+        this.contribuyenteFormGroup.controls[&#x27;amaterno&#x27;].setValue(null);
+      }
+    } else {
+      this.contribuyenteFormGroup.controls[&#x27;rfc&#x27;].setValue(null);
+      if(this.contribuyenteFormGroup.value.tipo_persona &#x3D;&#x3D; &#x27;F&#x27;){
+        this.contribuyenteFormGroup.controls[&#x27;curp&#x27;].setValue(null);
+        this.contribuyenteFormGroup.controls[&#x27;ine&#x27;].setValue(null);
+        this.contribuyenteFormGroup.controls[&#x27;iddocumentoidentificativo&#x27;].setValue(&#x27;&#x27;);
+        this.contribuyenteFormGroup.controls[&#x27;documentoidentificativo&#x27;].setValue(null);
+      }
+    }
+  }
+
+  getData(): void { 
+    this.loadingResponse &#x3D; true;
+    this.busqueda &#x3D; true;
+    this.pagina &#x3D; 1;
+    this.queryParamFiltros &#x3D; &#x27;&#x27;;
+    this.endpointBusqueda &#x3D; &#x27;&#x27;;
+    
+    if(this.tipoBusqueda &#x3D;&#x3D; &#x27;cuenta&#x27;){
+      this.endpointBusqueda &#x3D; this.endpoint + &#x27;getContribuyenteByCuenta&#x27;;
+        if(this.cuentaFormGroup.value.region)
+          this.queryParamFiltros &#x3D; this.queryParamFiltros + &#x27;&amp;region&#x3D;&#x27; + this.cuentaFormGroup.value.region;
+        if(this.cuentaFormGroup.value.manzana)
+          this.queryParamFiltros &#x3D; this.queryParamFiltros + &#x27;&amp;manzana&#x3D;&#x27; + this.cuentaFormGroup.value.manzana;
+        if(this.cuentaFormGroup.value.lote)
+          this.queryParamFiltros &#x3D; this.queryParamFiltros + &#x27;&amp;lote&#x3D;&#x27; + this.cuentaFormGroup.value.lote;
+        if(this.cuentaFormGroup.value.unidad)
+          this.queryParamFiltros &#x3D; this.queryParamFiltros + &#x27;&amp;unidadPrivativa&#x3D;&#x27; + this.cuentaFormGroup.value.unidad;
+    } else {
+      if(this.contribuyenteFormGroup.value.tipo_persona &#x3D;&#x3D; &#x27;M&#x27;){
+        if(this.isIdentificativo){
+          this.endpointBusqueda &#x3D; this.endpoint + &#x27;getMoralIdentificativos&#x27;;
+          if(this.contribuyenteFormGroup.value.rfc)
+            this.queryParamFiltros &#x3D; this.queryParamFiltros + &#x27;&amp;rfc&#x3D;&#x27; + this.contribuyenteFormGroup.value.rfc;
+        } else {
+          this.endpointBusqueda &#x3D; this.endpoint + &#x27;getPersonaMoral&#x27;;
+          if(this.contribuyenteFormGroup.value.nombre)
+            this.queryParamFiltros &#x3D; this.queryParamFiltros + &#x27;&amp;razonSocial&#x3D;&#x27; + this.contribuyenteFormGroup.value.nombre + &#x27;&amp;filtroApellidoPaterno&#x3D;0&#x27;;
+        }
+      } else {
+        if(this.isIdentificativo){
+          this.endpointBusqueda &#x3D; this.endpoint + &#x27;getIdentificativos&#x27;;
+          if(this.contribuyenteFormGroup.value.curp)
+            this.queryParamFiltros &#x3D; this.queryParamFiltros + &#x27;&amp;curp&#x3D;&#x27; + this.contribuyenteFormGroup.value.curp;
+          if(this.contribuyenteFormGroup.value.rfc)
+            this.queryParamFiltros &#x3D; this.queryParamFiltros + &#x27;&amp;rfc&#x3D;&#x27; + this.contribuyenteFormGroup.value.rfc;
+          if(this.contribuyenteFormGroup.value.ine)
+            this.queryParamFiltros &#x3D; this.queryParamFiltros + &#x27;&amp;claveife&#x3D;&#x27; + this.contribuyenteFormGroup.value.ine;
+          if(this.contribuyenteFormGroup.value.iddocumentoidentificativo !&#x3D; &#x27;&#x27;)
+            this.queryParamFiltros &#x3D; this.queryParamFiltros + &#x27;&amp;iddocidentif&#x3D;&#x27; + this.contribuyenteFormGroup.value.iddocumentoidentificativo;
+          if(this.contribuyenteFormGroup.value.documentoidentificativo)
+            this.queryParamFiltros &#x3D; this.queryParamFiltros + &#x27;&amp;valdocidentif&#x3D;&#x27; + this.contribuyenteFormGroup.value.documentoidentificativo;
+
+          this.queryParamFiltros &#x3D; this.queryParamFiltros + &#x27;&amp;coincidenTodos&#x3D;false&#x27;;        
+        } else {
+          this.endpointBusqueda &#x3D; this.endpoint + &#x27;getContribuyente&#x27;;
+          if(this.contribuyenteFormGroup.value.nombre)
+            this.queryParamFiltros &#x3D; this.queryParamFiltros + &#x27;&amp;nombre&#x3D;&#x27; + this.contribuyenteFormGroup.value.nombre + &#x27;&amp;filtroNombre&#x3D;0&#x27;;
+          if(this.contribuyenteFormGroup.value.apaterno)
+            this.queryParamFiltros &#x3D; this.queryParamFiltros + &#x27;&amp;apellidoPaterno&#x3D;&#x27; + this.contribuyenteFormGroup.value.apaterno + &#x27;&amp;filtroApellidoPaterno&#x3D;0&#x27;;
+          if(this.contribuyenteFormGroup.value.amaterno)
+            this.queryParamFiltros &#x3D; this.queryParamFiltros + &#x27;&amp;apellidoMaterno&#x3D;&#x27; + this.contribuyenteFormGroup.value.amaterno + &#x27;&amp;filtroApellidoMaterno&#x3D;0&#x27;;
+        }
+      }
+    }
+
+    this.http.post(this.endpointBusqueda + &#x27;?&#x27; + this.queryParamFiltros, &#x27;&#x27;, this.httpOptions).subscribe(
+      (res: any) &#x3D;&gt; {
+        this.loadingResponse &#x3D; false;
+        this.data &#x3D; res;
+        this.dataSource &#x3D; this.paginate(this.data, this.pageSize, this.pagina);
+        this.total &#x3D; this.data.length;
+        this.paginator.pageIndex &#x3D; 0;
+      },
+      (error) &#x3D;&gt; {
+        this.loadingResponse &#x3D; false;
+        this.dataSource &#x3D; [];
+      }
+    );
+  }
+
+  paginado(evt): void{
+    this.pagina &#x3D; evt.pageIndex + 1;
+    this.dataSource &#x3D; this.paginate(this.data, this.pageSize, this.pagina);
+  }
+
+  paginate(array, page_size, page_number) {
+    return array.slice((page_number - 1) * page_size, page_number * page_size);
+  }
+}
+</code></pre>
+    </div>
+</div>
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'DocumentosIdentificativos-1.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
