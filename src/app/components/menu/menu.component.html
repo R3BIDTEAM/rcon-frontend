@@ -6,22 +6,22 @@
         </mat-list-option>
         <ng-container *ngIf="menu.ruta === '/contribuyentes'">
             <mat-nav-list style="margin-left: 45px;">
-                <a mat-list-item *ngFor="let opcion of contribuyentes" [routerLink]="opcion.ruta"><mat-icon>{{opcion.icono}}</mat-icon> {{opcion.nombre}} </a>
+                <a mat-list-item *ngFor="let opcion of contribuyentes" [routerLink]="opcion.ruta" routerLinkActive="active-list-item"><mat-icon>{{opcion.icono}}</mat-icon> {{opcion.nombre}} </a>
             </mat-nav-list>
         </ng-container>
         <ng-container *ngIf="menu.ruta === '/notarios'">
             <mat-nav-list style="margin-left: 45px;">
-                <a mat-list-item *ngFor="let opcion of notarios" [routerLink]="opcion.ruta"><mat-icon>{{opcion.icono}}</mat-icon> {{opcion.nombre}} </a>
+                <a mat-list-item *ngFor="let opcion of notarios" [routerLink]="opcion.ruta" routerLinkActive="active-list-item"><mat-icon>{{opcion.icono}}</mat-icon> {{opcion.nombre}} </a>
             </mat-nav-list>
         </ng-container>
         <ng-container *ngIf="menu.ruta === '/peritos'">
             <mat-nav-list style="margin-left: 45px;">
-                <a mat-list-item *ngFor="let opcion of peritos" [routerLink]="opcion.ruta"><mat-icon>{{opcion.icono}}</mat-icon> {{opcion.nombre}} </a>
+                <a mat-list-item *ngFor="let opcion of peritos" [routerLink]="opcion.ruta" routerLinkActive="active-list-item"><mat-icon>{{opcion.icono}}</mat-icon> {{opcion.nombre}} </a>
             </mat-nav-list>
         </ng-container>
         <ng-container *ngIf="menu.ruta === '/sociedad'">
             <mat-nav-list style="margin-left: 45px;">
-                <a mat-list-item *ngFor="let opcion of sociedad" [routerLink]="opcion.ruta"><mat-icon>{{opcion.icono}}</mat-icon> {{opcion.nombre}} </a>
+                <a mat-list-item *ngFor="let opcion of sociedad" [routerLink]="opcion.ruta" routerLinkActive="active-list-item"><mat-icon>{{opcion.icono}}</mat-icon> {{opcion.nombre}} </a>
             </mat-nav-list>
         </ng-container>
     </ng-container>

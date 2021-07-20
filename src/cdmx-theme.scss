@@ -20,3 +20,12 @@ $cdmx-app-theme: mat-light-theme($cdmx-app-primary, $cdmx-app-accent, $cdmx-app-
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
     top: 0.8em!important;
 }
+
+.mat-list-item-content:hover{
+    color: #00A447;
+}
+
+.active-list-item {
+    background-color: #00A447!important;
+    color: #FFF !important;
+}
