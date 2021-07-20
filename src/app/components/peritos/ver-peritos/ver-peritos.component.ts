@@ -55,6 +55,9 @@ export class VerPeritosComponent implements OnInit {
         private route: ActivatedRoute
     ) { }
 
+    /**
+     * Valida la sesión del usuario y llama a los metodos necesarios para mostrar en la pantalla la información.
+     */
     ngOnInit(): void {
         this.httpOptions = {
             headers: new HttpHeaders({
@@ -67,6 +70,9 @@ export class VerPeritosComponent implements OnInit {
         this.getPeritoDatos();
     }
 
+    /**
+     * Obtiene los datos del perito consultado.
+     */
     getPeritoDatos(){
         this.query = 'obtenerSociedades=1&idPerito=' + this.idPerito; 
         this.loading = true;
@@ -95,6 +101,9 @@ export class VerPeritosComponent implements OnInit {
             );
     }
 
+    /**
+     * Almacena los valores recibidos de la consulta realizada.
+     */
     datoDelPerito(){
         this.datoPeritos.apepaterno = this.dataPeritoResultado.APELLIDOPATERNO;
         this.datoPeritos.apematerno = this.dataPeritoResultado.APELLIDOMATERNO;
@@ -118,11 +127,23 @@ export class VerPeritosComponent implements OnInit {
             this.datoPeritos.independiente = false;
         }
     }
+
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
         this.dataSource = this.paginate(this.dataSource, this.pageSize, this.pagina);
     }
     
+    /**
+     * Regresa la posición del paginado de acuerdo a los parámetro enviados
+     * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+     * @param page_size Valor de la cantidad de registros que se pintaran por página.
+     * @param page_number Valor de la página en la cual se encuentra el paginado.
+     * @returns 
+     */
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
