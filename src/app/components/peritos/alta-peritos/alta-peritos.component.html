@@ -162,15 +162,15 @@
             <div class="row">
                 <div class="col-md-2 offset-md-8">
                     <div class="d-flex flex-row-reverse">
-                        <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" (click)="consulta_previa()" [disabled]="peritoPersonaFormGroup.invalid">
-                            Guardar
+                        <button mat-stroked-button class="boton-n-representacion" color="warn" aria-label="Cancelar" (click)="clean()">
+                            Cancelar
                         </button>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="d-flex flex-row-reverse">
-                        <button mat-stroked-button class="boton-n-representacion" color="warn" aria-label="Cancelar" (click)="clean()">
-                            Cancelar
+                        <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" (click)="consulta_previa()" [disabled]="peritoPersonaFormGroup.invalid">
+                            Guardar
                         </button>
                     </div>
                 </div>
