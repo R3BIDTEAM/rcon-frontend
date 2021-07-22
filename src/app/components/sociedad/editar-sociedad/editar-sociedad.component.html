@@ -190,24 +190,24 @@
             </div>
         </div>
         <div class="row" *ngIf="!loading">
-            <div class="col-md-2 offset-md-6" *ngIf="actCambioPersona">
+            <div class="col-md-2 offset-md-6">
+                <div class="d-flex flex-row-reverse">
+                    <button mat-stroked-button class="boton-n-representacion" color="warn" aria-label="Cancelar" [routerLink]="['/main/edicion-sociedad']">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-2" *ngIf="actCambioPersona">
                 <div class="d-flex flex-row-reverse">
                     <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" (click)="guardaSociedad()" [disabled]="(datosSociedad.tipoPersona == 'F' ? fisicaFormGroup.invalid : moralFormGroup.invalid)">
                         Guardar
                     </button>
                 </div>
             </div>
-            <div class="col-md-2 offset-md-6" *ngIf="!actCambioPersona">
+            <div class="col-md-2" *ngIf="!actCambioPersona">
                 <div class="d-flex flex-row-reverse">
                     <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Actualizar tipo persona" matTooltip="Actualizar tipo persona" (click)="confirmaCambio(1)" *ngIf="!loading" [disabled]="(datosSociedad.tipoPersona == 'F' ? fisicaFormGroup.invalid : moralFormGroup.invalid)">
                         Actualizar <mat-icon style="display: inherit; width: 15px;">update</mat-icon>
-                    </button>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="d-flex flex-row-reverse">
-                    <button mat-stroked-button class="boton-n-representacion" color="warn" aria-label="Cancelar" [routerLink]="['/main/edicion-sociedad']">
-                        Cancelar
                     </button>
                 </div>
             </div>
@@ -575,15 +575,15 @@
                 <div class="row">
                     <div class="col-md-2 offset-md-6">
                         <div class="d-flex flex-row-reverse">
-                            <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" (click)="actualizaSociedad()">
-                                Guardar
+                            <button mat-stroked-button class="boton-n-representacion" color="warn" aria-label="Cancelar">
+                                Cancelar
                             </button>
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="d-flex flex-row-reverse">
-                            <button mat-stroked-button class="boton-n-representacion" color="warn" aria-label="Cancelar">
-                                Cancelar
+                            <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" (click)="actualizaSociedad()">
+                                Guardar
                             </button>
                         </div>
                     </div>

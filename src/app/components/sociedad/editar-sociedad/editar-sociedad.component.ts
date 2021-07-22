@@ -884,6 +884,9 @@ export class EditarSociedadComponent implements OnInit {
         });
     }
 
+    /**
+     * Inserta el registro del perito ligado a la sociedad.
+     */
     insertaPeritoSociedad(){
         this.loading = true;
         let queryPS = 'idPersona=' + this.idPeritoD + '&idSociedad=' + this.idSociedad;
@@ -1189,7 +1192,7 @@ export class DialogDomicilioSociedad {
     tiposLocalidad;
     optionCiudad;
     codtiposdireccion;
-    idestadoNg
+    idestadoNg = '9';
     idmunicipioNg
     idmunicipio2Ng
     municipioNg
@@ -1335,6 +1338,14 @@ export class DialogDomicilioSociedad {
      * @param event Obtiene el valor y nombre de la etiqueta option en el select
      */
     getNombreDel(event): void {
+        this.domicilioFormGroup.controls['codasentamiento'].setValue('');
+        this.domicilioFormGroup.controls['asentamiento'].setValue('');
+        this.domicilioFormGroup.controls['idtipoasentamiento'].setValue('');
+        this.domicilioFormGroup.controls['cp'].setValue('');
+        this.domicilioFormGroup.controls['idtipovia'].setValue('');
+        this.domicilioFormGroup.controls['via'].setValue('');
+        this.domicilioFormGroup.controls['codtiposvia'].setValue('');
+
         this.dataDomicilio.delegacion = event.source.triggerValue;
         this.botonAsentamiento = false;
     }
@@ -1348,9 +1359,29 @@ export class DialogDomicilioSociedad {
             (res: any) => {
                 this.loadingEstados = false;
                 this.estados = res;
+                this.getAlcaldia();
             },
             (error) => {
                 this.loadingEstados = false;
+            }
+        );
+    }
+
+    /**
+     * Obtiene el catálogo de la alcaldia.
+     */
+    getAlcaldia(){
+        let busquedaMunCol = 'getDelegaciones';
+        this.loadingMunicipios = true;
+        this.http.get(this.endpointCatalogos + busquedaMunCol, this.httpOptions).subscribe(
+            (res: any) => {
+                this.loadingMunicipios = false;
+                this.municipios = res;
+                console.log('GETDELEG');
+                console.log(res);
+            },
+            (error) => {
+                this.loadingMunicipios = false;
             }
         );
     }
@@ -1360,6 +1391,23 @@ export class DialogDomicilioSociedad {
      * @param event Valor que se recibe para la obtención de las alcaldias o municipios.
      */
     getDataMunicipios(event): void {
+        if(event.value != 9){
+            this.domicilioFormGroup.controls['idmunicipio2'].setValue('');
+            this.domicilioFormGroup.controls['municipio'].setValue('');
+            this.domicilioFormGroup.controls['idciudad'].setValue('');
+            this.domicilioFormGroup.controls['ciudad'].setValue('');
+            
+        }
+
+        this.domicilioFormGroup.controls['codasentamiento'].setValue('');
+        this.domicilioFormGroup.controls['asentamiento'].setValue('');
+        this.domicilioFormGroup.controls['idtipoasentamiento'].setValue('');
+        this.domicilioFormGroup.controls['cp'].setValue('');
+        this.domicilioFormGroup.controls['idtipovia'].setValue('');
+        this.domicilioFormGroup.controls['via'].setValue('');
+        this.domicilioFormGroup.controls['codtiposvia'].setValue('');
+        
+        
         this.botonMunicipio = false;
         let busquedaMunCol = '';
         busquedaMunCol = (event.value == 9) ? 'getDelegaciones' : 'getMunicipiosByEstado?codEstado=' + event.value;
@@ -1643,6 +1691,16 @@ export class DialogDomicilioSociedad {
      * con opción para búsqueda especifica.
      */
     getMunicipios(){
+        this.domicilioFormGroup.controls['idciudad'].setValue('');
+        this.domicilioFormGroup.controls['ciudad'].setValue('');
+        this.domicilioFormGroup.controls['codasentamiento'].setValue('');
+        this.domicilioFormGroup.controls['asentamiento'].setValue('');
+        this.domicilioFormGroup.controls['idtipoasentamiento'].setValue('');
+        this.domicilioFormGroup.controls['cp'].setValue('');
+        this.domicilioFormGroup.controls['idtipovia'].setValue('');
+        this.domicilioFormGroup.controls['via'].setValue('');
+        this.domicilioFormGroup.controls['codtiposvia'].setValue('');
+
         this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
         const dialogRef = this.dialog.open(DialogMunicipiosSociedad, {
             width: '700px',
@@ -1665,6 +1723,14 @@ export class DialogDomicilioSociedad {
      * con opción a búsqueda especifica.
      */
     getCiudad(){
+        this.domicilioFormGroup.controls['codasentamiento'].setValue('');
+        this.domicilioFormGroup.controls['asentamiento'].setValue('');
+        this.domicilioFormGroup.controls['idtipoasentamiento'].setValue('');
+        this.domicilioFormGroup.controls['cp'].setValue('');
+        this.domicilioFormGroup.controls['idtipovia'].setValue('');
+        this.domicilioFormGroup.controls['via'].setValue('');
+        this.domicilioFormGroup.controls['codtiposvia'].setValue('');
+
         this.dataDomicilio.idmunicipio2 = this.domicilioFormGroup.value.idmunicipio2;
         const dialogRef = this.dialog.open(DialogCiudadSociedad, {
             width: '700px',
@@ -1687,6 +1753,11 @@ export class DialogDomicilioSociedad {
      * Abre el dialogo que muestra los asentamientos ligados a la ciudad
      */
     getAsentamiento(){
+        this.domicilioFormGroup.controls['cp'].setValue('');
+        this.domicilioFormGroup.controls['idtipovia'].setValue('');
+        this.domicilioFormGroup.controls['via'].setValue('');
+        this.domicilioFormGroup.controls['codtiposvia'].setValue('');
+
         this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
         this.dataDomicilio.idmunicipio = this.domicilioFormGroup.value.idmunicipio;
         this.dataDomicilio.idmunicipio2 = this.domicilioFormGroup.value.idmunicipio2;
@@ -1758,6 +1829,7 @@ export interface DataMunicipios{
     dataPaginate;
     httpOptions;
     buscaMunicipios;
+    btnAceptar = true;
     dataMunicipios: DataMunicipios = {} as DataMunicipios;
     @ViewChild('paginator') paginator: MatPaginator;
   
@@ -1783,12 +1855,13 @@ export interface DataMunicipios{
     /**
      * Limpia los registros de la búsqueda especifica realizada y llama al metodo para obtener todos los municipios
      */
-    cleanAsentamiento(){
+    cleanMunicipio(){
         this.pagina = 1;
         this.total = 0;
         this.dataSource = [];
         this.loadingBuscaMun = false;
         this.dataPaginate;
+        this.buscaMunicipios = null;
         this.obtenerMunicipios();
     }
 
@@ -1852,6 +1925,7 @@ export interface DataMunicipios{
      */
     selectMunicipios(element){
         console.log(element);
+        this.btnAceptar = false;
         this.dataMunicipios.codestado = element.CODESTADO;
         this.dataMunicipios.codmunicipio = element.CODMUNICIPIO;
         this.dataMunicipios.municipio = element.MUNICIPIO;
@@ -1915,6 +1989,7 @@ export class DialogCiudadSociedad {
     dataPaginate;
     httpOptions;
     buscaCiudad;
+    btnAceptar = true;
     dataCiudad: DataCiudad = {} as DataCiudad;
     @ViewChild('paginator') paginator: MatPaginator;
   
@@ -1946,6 +2021,7 @@ export class DialogCiudadSociedad {
         this.dataSource = [];
         this.loadingBuscaCiudad = false;
         this.dataPaginate;
+        this.buscaCiudad = null;
         this.obtenerCiudad();
     }
 
@@ -2013,6 +2089,7 @@ export class DialogCiudadSociedad {
      */
     selectCiudad(element){
         console.log(element);
+        this.btnAceptar = false;
         this.dataCiudad.ciudad = element.CIUDAD;
         this.dataCiudad.codciudad = element.CODCIUDAD;
         this.dataCiudad.codestado = element.CODESTADO;
@@ -2045,6 +2122,7 @@ export class DialogAsentamientoSociedad {
     dataPaginate;
     httpOptions;
     buscaAsentamiento;
+    btnAceptar = true;
     dataAsentamiento: DataAsentamiento = {} as DataAsentamiento;
     @ViewChild('paginator') paginator: MatPaginator;
   
@@ -2076,6 +2154,7 @@ export class DialogAsentamientoSociedad {
         this.dataSource = [];
         this.loading = false;
         this.dataPaginate;
+        this.buscaAsentamiento = null;
         this.obtenerAsentamiento();
     }
   
@@ -2144,6 +2223,7 @@ export class DialogAsentamientoSociedad {
      */
     selectAsentamiento(element){
         console.log(element);
+        this.btnAceptar = false;
         if(element.IDDELEGACION){
             this.dataAsentamiento.codasentamiento = element.CODIGO;
             this.dataAsentamiento.asentamiento = element.DESCRIPCION;
@@ -2182,6 +2262,7 @@ export class DialogViaSociedad {
     dataPaginate;
     httpOptions;
     buscaVia;
+    btnAceptar = true;
     dataVia: dataVia = {} as dataVia;
     @ViewChild('paginator') paginator: MatPaginator;
   
@@ -2213,6 +2294,7 @@ export class DialogViaSociedad {
         this.dataSource = [];
         this.loadingBuscaVia = false;
         this.dataPaginate;
+        this.buscaVia = null;
         this.obtenerVia();
     }
 
@@ -2280,6 +2362,7 @@ export class DialogViaSociedad {
      */
     selectVia(element){
         console.log(element);
+        this.btnAceptar = false;
         this.dataVia.codtiposvia = element.codtiposvia;
         this.dataVia.idvia = element.idvia;
         this.dataVia.via = element.via;
@@ -4388,30 +4471,30 @@ export interface DataHistorico{
     tiposLocalidad;
     optionCiudad;
     codtiposdireccion;
-    idestadoNg
-    idmunicipioNg
-    idmunicipio2Ng
-    municipioNg
-    idciudadNg
-    ciudadNg
-    codasentamientoNg
-    asentamientoNg
-    idtipoasentamientoNg
-    cpNg
-    codtiposviaNg
-    idtipoviaNg
-    viaNg
-    idtipolocalidadNg
-    nexteriorNg
-    entrecalle1Ng
-    entrecalle2Ng
-    andadorNg
-    edificioNg
-    seccionNg
-    entradaNg
-    ninteriorNg
-    telefonoNg
-    adicionalNg
+    idestadoNg = '9';
+    idmunicipioNg;
+    idmunicipio2Ng;
+    municipioNg;
+    idciudadNg;
+    ciudadNg;
+    codasentamientoNg;
+    asentamientoNg;
+    idtipoasentamientoNg;
+    cpNg;
+    codtiposviaNg;
+    idtipoviaNg;
+    viaNg;
+    idtipolocalidadNg;
+    nexteriorNg;
+    entrecalle1Ng;
+    entrecalle2Ng;
+    andadorNg;
+    edificioNg;
+    seccionNg;
+    entradaNg;
+    ninteriorNg;
+    telefonoNg;
+    adicionalNg;
     botonAsentamiento = true;
     botonCiudad = true;
     botonMunicipio = true;
@@ -4540,7 +4623,6 @@ export interface DataHistorico{
     getNombreDel(event): void {
         this.dataDomicilio.delegacion = event.source.triggerValue;
         this.botonAsentamiento = false;
-        
     }
 
     /**
@@ -4552,6 +4634,7 @@ export interface DataHistorico{
             (res: any) => {
                 this.loadingEstados = false;
                 this.estados = res;
+                this.getAlcaldia();
             },
             (error) => {
                 this.loadingEstados = false;
@@ -4559,6 +4642,25 @@ export interface DataHistorico{
         );
     }
 
+    /**
+     * Obtiene el catálogo de la alcaldia.
+     */
+     getAlcaldia(){
+        let busquedaMunCol = 'getDelegaciones';
+        this.loadingMunicipios = true;
+        this.http.get(this.endpointCatalogos + busquedaMunCol, this.httpOptions).subscribe(
+            (res: any) => {
+                this.loadingMunicipios = false;
+                this.municipios = res;
+                console.log('GETDELEG');
+                console.log(res);
+            },
+            (error) => {
+                this.loadingMunicipios = false;
+            }
+        );
+    }
+    
     /**
      * Obtiene los municipios de acuerdo al estado seleccionado
      * @param event Valor que se recibe para la obtención de las alcaldias o municipios.
