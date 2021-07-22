@@ -8,13 +8,14 @@
     <ng-container *ngIf="!loading">
 
         <div class="borde">
-            <mat-card-header>
+            <!-- <mat-card-header>
                 <mat-card-title>Datos Generales</mat-card-title>
-            </mat-card-header>
+            </mat-card-header> -->
+            <h1 class="titulo-cdmx">Alta de Contribuyentes</h1>
             <mat-card-content>
                 <br>
                 <div class="row">
-                    <mat-form-field class="col-4">
+                    <mat-form-field appearance="fill" class="col-4 offset-md-4">
                         <mat-label>Tipo de persona:</mat-label>
                         <mat-select [(ngModel)]="contribuyente.tipoPersona" [disabled]="inserto">
                             <mat-option value="F">Fisica</mat-option>
@@ -26,45 +27,45 @@
                 <ng-container *ngIf="contribuyente.tipoPersona == 'F'">
                     <form [formGroup]="fisicaFormGroup">
                         <div class="row">
-                            <mat-form-field class="col-10">
+                            <mat-form-field appearance="outline" class="col-10 offset-1">
                                 <mat-label>Nombre:</mat-label>
-                                <input matInput formControlName="nombre" [(ngModel)]="contribuyente.nombre" [readonly]="inserto">
+                                <input matInput formControlName="nombre" [(ngModel)]="contribuyente.nombre" [readonly]="inserto" maxlength="50">
                                 <mat-error *ngIf="fisicaFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
-                            <mat-form-field class="col-5">
+                            <mat-form-field appearance="outline"  class="col-5 offset-1">
                                 <mat-label>Apellido Paterno:</mat-label>
-                                <input matInput formControlName="apaterno" [(ngModel)]="contribuyente.apaterno" [readonly]="inserto">
+                                <input matInput formControlName="apaterno" [(ngModel)]="contribuyente.apaterno" [readonly]="inserto" maxlength="50">
                                 <mat-error *ngIf="fisicaFormGroup.controls.apaterno.errors?.required">Requerido</mat-error>
                             </mat-form-field>
-                            <mat-form-field class="col-5">
+                            <mat-form-field appearance="outline"  class="col-5">
                                 <mat-label>Apellido Materno:</mat-label>
-                                <input matInput formControlName="amaterno" [(ngModel)]="contribuyente.amaterno" [readonly]="inserto">
+                                <input matInput formControlName="amaterno" [(ngModel)]="contribuyente.amaterno" [readonly]="inserto" maxlength="50">
                             </mat-form-field>
                         </div>
                         <div class="row">
-                            <mat-form-field class="col-5">
+                            <mat-form-field appearance="outline"  class="col-5 offset-1">
                                 <mat-label>RFC:</mat-label>
-                                <input matInput formControlName="rfc" [(ngModel)]="contribuyente.rfc" [readonly]="inserto" pattern="^([A-ZÑ&]{4})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$">
+                                <input matInput formControlName="rfc" [(ngModel)]="contribuyente.rfc" [readonly]="inserto" pattern="^([A-ZÑ&]{4})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" maxlength="50">
                                 <mat-error *ngIf="fisicaFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="fisicaFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 4 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
                             </mat-form-field>
-                            <mat-form-field class="col-5">
+                            <mat-form-field appearance="outline"  class="col-5">
                                 <mat-label>CURP:</mat-label>
                                 <!-- <input matInput formControlName="curp" (keyup)="changeRequired('rfc', 'curp')" [(ngModel)]="contribuyente.curp" [readonly]="inserto"> -->
-                                <input matInput formControlName="curp" [(ngModel)]="contribuyente.curp" [readonly]="inserto">
+                                <input matInput formControlName="curp" [(ngModel)]="contribuyente.curp" [readonly]="inserto" maxlength="50">
                                 <mat-error *ngIf="fisicaFormGroup.controls.curp.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
-                            <mat-form-field class="col-5">
+                            <mat-form-field appearance="outline"  class="col-5 offset-1">
                                 <mat-label>Clave INE:</mat-label>
-                                <input matInput formControlName="ine" [(ngModel)]="contribuyente.ine" [readonly]="inserto">
+                                <input matInput formControlName="ine" [(ngModel)]="contribuyente.ine" [readonly]="inserto" maxlength="50">
                             </mat-form-field>
                         </div>
                         <div class="row">
-                            <mat-form-field class="col-5">
+                            <mat-form-field appearance="fill"  class="col-5 offset-1">
                                 <mat-label>Otro Documento:</mat-label>
                                 <mat-select formControlName="idDocIdent" [(ngModel)]="contribuyente.idDocIdent" [disabled]="inserto">
                                     <mat-option value="">Seleccione...</mat-option>
@@ -73,19 +74,19 @@
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
-                            <mat-form-field class="col-5">
+                            <mat-form-field appearance="outline"  class="col-5">
                                 <mat-label>Número Documento</mat-label>
-                                <input matInput formControlName="docIdent" [(ngModel)]="contribuyente.docIdent" [disabled]="inserto">
+                                <input matInput formControlName="docIdent" [(ngModel)]="contribuyente.docIdent" [disabled]="inserto" maxlength="50">
                             </mat-form-field>
                         </div>
                         <div class="row">
-                            <mat-form-field class="col-5">
+                            <mat-form-field appearance="fill"  class="col-5 offset-1">
                                 <mat-label>Fecha Nacimiento:</mat-label>
                                 <input matInput readonly formControlName="fechaNacimiento" [matDatepicker]="pickfechaNacimiento" [(ngModel)]="contribuyente.fechaNacimiento" [disabled]="inserto">
                                 <mat-datepicker-toggle matSuffix [for]="pickfechaNacimiento"></mat-datepicker-toggle>
                                 <mat-datepicker #pickfechaNacimiento></mat-datepicker>
                             </mat-form-field>
-                            <mat-form-field class="col-5">
+                            <mat-form-field appearance="fill"  class="col-5">
                                 <mat-label>Fecha Defunción:</mat-label>
                                 <input matInput readonly formControlName="fechaDefuncion" [matDatepicker]="pickfechaDefuncion" [(ngModel)]="contribuyente.fechaDefuncion" [disabled]="inserto">
                                 <mat-datepicker-toggle matSuffix [for]="pickfechaDefuncion"></mat-datepicker-toggle>
@@ -93,13 +94,13 @@
                             </mat-form-field>
                         </div>
                         <div class="row">
-                            <mat-form-field class="col-5">
+                            <mat-form-field appearance="outline"  class="col-5 offset-1">
                                 <mat-label>Celular:</mat-label>
-                                <input matInput formControlName="celular" [(ngModel)]="contribuyente.celular" [readonly]="inserto">
+                                <input matInput formControlName="celular" [(ngModel)]="contribuyente.celular" [readonly]="inserto" maxlength="50">
                             </mat-form-field>
-                            <mat-form-field class="col-5">
+                            <mat-form-field appearance="outline"  class="col-5">
                                 <mat-label>E-mail:</mat-label>
-                                <input matInput formControlName="email" [(ngModel)]="contribuyente.email" [readonly]="inserto">
+                                <input matInput formControlName="email" [(ngModel)]="contribuyente.email" [readonly]="inserto" maxlength="50">
                             </mat-form-field>
                         </div>
                     </form>
@@ -107,32 +108,32 @@
                 <ng-container *ngIf="contribuyente.tipoPersona == 'M'">
                     <form [formGroup]="moralFormGroup">
                         <div class="row">
-                            <mat-form-field class="col-10">
+                            <mat-form-field appearance="outline" class="col-10 offset-1">
                                 <mat-label>Nombre:</mat-label>
-                                <input matInput formControlName="nombre" [(ngModel)]="contribuyente.nombre_moral" [readonly]="inserto">
+                                <input matInput formControlName="nombre" [(ngModel)]="contribuyente.nombre_moral" [readonly]="inserto" maxlength="50">
                                 <mat-error *ngIf="moralFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
-                            <mat-form-field class="col-5">
+                            <mat-form-field appearance="outline" class="col-5 offset-1">
                                 <mat-label>RFC:</mat-label>
-                                <input matInput formControlName="rfc" [(ngModel)]="contribuyente.rfc" [readonly]="inserto" pattern="^([A-ZÑ&]{3})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$">
+                                <input matInput formControlName="rfc" [(ngModel)]="contribuyente.rfc" [readonly]="inserto" pattern="^([A-ZÑ&]{3})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" maxlength="50">
                                 <mat-error *ngIf="moralFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="moralFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 3 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
                             </mat-form-field>
-                            <mat-form-field class="col-5">
+                            <mat-form-field appearance="outline" class="col-5">
                                 <mat-label>Act. preponderante:</mat-label>
-                                <input matInput formControlName="actPreponderante" [(ngModel)]="contribuyente.actPreponderante" [readonly]="inserto">
+                                <input matInput formControlName="actPreponderante" [(ngModel)]="contribuyente.actPreponderante" [readonly]="inserto" maxlength="50">
                             </mat-form-field>
                         </div>
                         <div class="row">
-                            <mat-form-field class="col-5">
+                            <mat-form-field appearance="fill" class="col-5 offset-1">
                                 <mat-label>Tipo de persona moral</mat-label>
                                 <mat-select formControlName="idTipoPersonaMoral" [disabled]="inserto">
                                     <mat-option value=""></mat-option>
                                 </mat-select>
                             </mat-form-field>
-                            <mat-form-field class="col-5">
+                            <mat-form-field appearance="fill" class="col-5">
                                 <mat-label>Fecha de inicio de operación:</mat-label>
                                 <input matInput readonly formControlName="fechaInicioOperacion" [matDatepicker]="pickfechaInicioOperacion" [(ngModel)]="contribuyente.fechaInicioOperacion" [disabled]="inserto">
                                 <mat-datepicker-toggle matSuffix [for]="pickfechaInicioOperacion"></mat-datepicker-toggle>
@@ -140,13 +141,13 @@
                             </mat-form-field>                            
                         </div>
                         <div class="row">
-                            <mat-form-field class="col-5">
+                            <mat-form-field appearance="fill" class="col-5 offset-1">
                                 <mat-label>Motivo del cambio de situación</mat-label>
                                 <mat-select formControlName="idMotivo" [disabled]="inserto">
                                     <mat-option value=""></mat-option>
                                 </mat-select>
                             </mat-form-field>
-                            <mat-form-field class="col-5">
+                            <mat-form-field appearance="fill" class="col-5">
                                 <mat-label>Fecha de cambio de situación:</mat-label>
                                 <input matInput readonly formControlName="fechaCambio" [matDatepicker]="pickfechaCambio" [(ngModel)]="contribuyente.fechaCambio" [disabled]="inserto">
                                 <mat-datepicker-toggle matSuffix [for]="pickfechaCambio"></mat-datepicker-toggle>
@@ -164,7 +165,7 @@
                             </button> -->
                         </div>
                     </div>
-                    <div class="col-md-3 offset-md-4">
+                    <div class="col-md-3 offset-md-5">
                         <div class="d-flex flex-row-reverse">
                             <button mat-stroked-button class="boton-n-representacion" color="warn" aria-label="Cancelar" (click)="clean()">
                                 Cancelar

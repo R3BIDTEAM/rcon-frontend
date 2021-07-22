@@ -6,14 +6,15 @@
     </div>
     
     <ng-container *ngIf="true">
-        <mat-card-header>
+        <h1 class="titulo-cdmx">Edición de Contribuyentes</h1>
+        <!-- <mat-card-header>
             <mat-card-title>Edición Contribuyente</mat-card-title>
-        </mat-card-header>
+        </mat-card-header> -->
         <mat-card-content>
             <div class="row">
                 <div class="col-4">
                 </div>
-                <mat-form-field class="col-4">
+                <mat-form-field appearance="fill" class="col-4">
                     <mat-label>Tipo de busqueda:</mat-label>
                     <mat-select [(ngModel)]="tipoBusqueda">
                         <mat-option value="">Seleccione ...</mat-option>
@@ -28,28 +29,28 @@
             <ng-container *ngIf="tipoBusqueda == 'cuenta'">
                 <form [formGroup]="cuentaFormGroup">
                     <div class="row">
-                        <mat-form-field class="col-2">
+                        <mat-form-field appearance="outline" class="col-2 offset-md-2">
                             <mat-label>Región:</mat-label>
                             <input matInput #region formControlName="region" minlength="3" maxlength="3" (keypress)="keyPressAlphaNumeric($event)" (keyup)="focusNextInput($event, manzana)">
                             <mat-error *ngIf="cuentaFormGroup.controls.region.errors?.required">Requerido</mat-error>
                             <mat-error *ngIf="cuentaFormGroup.controls.region.errors?.minlength">El valor debe de tener 3 alfanúmericos</mat-error>
                             <mat-error *ngIf="cuentaFormGroup.controls.region.errors?.maxlength">El valor debe de tener 3 alfanúmericos</mat-error>
                         </mat-form-field>
-                        <mat-form-field class="col-2">
+                        <mat-form-field appearance="outline" class="col-2">
                             <mat-label>Manzana:</mat-label>
                             <input matInput #manzana formControlName="manzana" minlength="3" maxlength="3" (keypress)="keyPressAlphaNumeric($event)" (keyup)="focusNextInput($event, lote)">
                             <mat-error *ngIf="cuentaFormGroup.controls.manzana.errors?.required">Requerido</mat-error>
                             <mat-error *ngIf="cuentaFormGroup.controls.manzana.errors?.minlength">El valor debe de tener 3 alfanúmericos</mat-error>
                             <mat-error *ngIf="cuentaFormGroup.controls.manzana.errors?.maxlength">El valor debe de tener 3 alfanúmericos</mat-error>
                         </mat-form-field>
-                        <mat-form-field class="col-2">
+                        <mat-form-field appearance="outline" class="col-2">
                             <mat-label>Lote:</mat-label>
                             <input matInput #lote formControlName="lote" minlength="2" maxlength="2" (keypress)="keyPressAlphaNumeric($event)" (keyup)="focusNextInput($event, unidad)">
                             <mat-error *ngIf="cuentaFormGroup.controls.lote.errors?.required">Requerido</mat-error>
                             <mat-error *ngIf="cuentaFormGroup.controls.lote.errors?.minlength">El valor debe de tener 2 alfanúmericos</mat-error>
                             <mat-error *ngIf="cuentaFormGroup.controls.lote.errors?.maxlength">El valor debe de tener 2 alfanúmericos</mat-error>
                         </mat-form-field>
-                        <mat-form-field class="col-2">
+                        <mat-form-field appearance="outline" class="col-2">
                             <mat-label>Unidad Privativa:</mat-label>
                             <input matInput #unidad formControlName="unidad" minlength="3" maxlength="3" (keypress)="keyPressAlphaNumeric($event)">
                             <mat-error *ngIf="cuentaFormGroup.controls.unidad.errors?.required">Requerido</mat-error>
@@ -62,69 +63,65 @@
             <ng-container *ngIf="tipoBusqueda == 'contribuyente'">
                 <form [formGroup]="contribuyenteFormGroup">
                     <div class="row">
-                        <div class="col-4">
-                        </div>
-                        <mat-form-field class="col-4">
+                        <mat-form-field appearance="fill" class="col-4 offset-md-4">
                             <mat-label>Tipo de persona:</mat-label>
                             <mat-select formControlName="tipo_persona" (selectionChange)="clearInputsContribuyente()">
                                 <mat-option value="F">Fisica</mat-option>
                                 <mat-option value="M">Moral</mat-option>
                             </mat-select>
                         </mat-form-field>
-                        <div class="col-4">
-                        </div>
                     </div>
                     <ng-container *ngIf="contribuyenteFormGroup.controls.tipo_persona.value == 'M'">
                         <div class="row">
-                            <mat-form-field class="col-6">
+                            <mat-form-field appearance="outline" class="col-6">
                                 <mat-label>Razón social:</mat-label>
-                                <input matInput formControlName="nombre" (keyup)="clearInputsIdentNoIdent(false)">
+                                <input matInput formControlName="nombre" (keyup)="clearInputsIdentNoIdent(false)" maxlength="250">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                             </mat-form-field>
-                            <mat-form-field class="col-6">
+                            <mat-form-field appearance="outline" class="col-6">
                                 <mat-label>RFC:</mat-label>
-                                <input matInput formControlName="rfc" (keyup)="clearInputsIdentNoIdent(true)">
+                                <input matInput formControlName="rfc" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
                     </ng-container>
                     <ng-container *ngIf="contribuyenteFormGroup.controls.tipo_persona.value == 'F'">
                         <div class="row">
-                            <mat-form-field class="col-4">
+                            <mat-form-field appearance="outline" class="col-4">
                                 <mat-label>Apellido paterno:</mat-label>
-                                <input matInput formControlName="apaterno" (keyup)="clearInputsIdentNoIdent(false)">
+                                <input matInput formControlName="apaterno" (keyup)="clearInputsIdentNoIdent(false)" maxlength="250">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.apaterno.errors?.required">Requerido</mat-error>
                             </mat-form-field>
-                            <mat-form-field class="col-4">
+                            <mat-form-field appearance="outline" class="col-4">
                                 <mat-label>Apellido materno:</mat-label>
-                                <input matInput formControlName="amaterno" (keyup)="clearInputsIdentNoIdent(false)">
+                                <input matInput formControlName="amaterno" (keyup)="clearInputsIdentNoIdent(false)" maxlength="250">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.amaterno.errors?.required">Requerido</mat-error>
                             </mat-form-field>
-                            <mat-form-field class="col-4">
+                            <mat-form-field appearance="outline" class="col-4">
                                 <mat-label>Nombre:</mat-label>
-                                <input matInput formControlName="nombre" (keyup)="clearInputsIdentNoIdent(false)">
+                                <input matInput formControlName="nombre" (keyup)="clearInputsIdentNoIdent(false)" maxlength="250">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
-                            <mat-form-field class="col-4">
+                            <mat-form-field appearance="outline" class="col-4">
                                 <mat-label>RFC:</mat-label>
-                                <input matInput formControlName="rfc" (keyup)="clearInputsIdentNoIdent(true)">
+                                <input matInput formControlName="rfc" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                             </mat-form-field>
-                            <mat-form-field class="col-4">
+                            <mat-form-field appearance="outline" class="col-4">
                                 <mat-label>CURP:</mat-label>
-                                <input matInput formControlName="curp" (keyup)="clearInputsIdentNoIdent(true)">
+                                <input matInput formControlName="curp" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.curp.errors?.required">Requerido</mat-error>
                             </mat-form-field>
-                            <mat-form-field class="col-4">
+                            <mat-form-field appearance="outline" class="col-4">
                                 <mat-label>Clave INE:</mat-label>
-                                <input matInput formControlName="ine" (keyup)="clearInputsIdentNoIdent(true)">
+                                <input matInput formControlName="ine" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.ine.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
-                            <mat-form-field class="col-4">
+                            <mat-form-field appearance="fill" class="col-4">
                                 <mat-label>Otro documento identificativo:</mat-label>
                                 <mat-select formControlName="iddocumentoidentificativo" (selectionChange)="clearInputsIdentNoIdent(true)">
                                     <mat-option value="">Seleccione...</mat-option>
@@ -134,9 +131,9 @@
                                 </mat-select>
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.iddocumentoidentificativo.errors?.required">Requerido</mat-error>
                             </mat-form-field>
-                            <mat-form-field class="col-4">
+                            <mat-form-field appearance="outline" class="col-4">
                                 <mat-label></mat-label>
-                                <input matInput placeholder="" formControlName="documentoidentificativo" (keyup)="clearInputsIdentNoIdent(true)">
+                                <input matInput placeholder="" formControlName="documentoidentificativo" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.documentoidentificativo.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
@@ -144,16 +141,12 @@
                 </form>
             </ng-container>
             <div class="row">
-                <div class="col-2">
-                </div>
-                <div class="col">
+                <div class="col-md-2 offset-md-5" style="text-align: center;">
                     <div class="d-flex flex-row-reverse">
-                        <button mat-icon-button color="primary" aria-label="Buscar" matTooltip="Buscar" [disabled]="(tipoBusqueda) ? ((tipoBusqueda == 'cuenta') ? cuentaFormGroup.invalid : contribuyenteFormGroup.invalid) : true" (click)="getData()">
+                        <button mat-icon-button color="primary" aria-label="Buscar" matTooltip="Buscar" [disabled]="(tipoBusqueda) ? ((tipoBusqueda == 'cuenta') ? cuentaFormGroup.invalid : contribuyenteFormGroup.invalid) : true" (click)="getData()" style="margin: auto;">
                             <mat-icon>search</mat-icon>
                         </button>
                     </div>
-                </div>
-                <div class="col-6">
                 </div>
             </div>
             <ng-container *ngIf="busqueda">
