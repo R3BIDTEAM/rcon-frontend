@@ -776,6 +776,14 @@ export class DialogDomiciliosNotario {
     }
 
     getNombreDel(event): void {
+        this.domicilioFormGroup.controls['codasentamiento'].setValue('');
+        this.domicilioFormGroup.controls['asentamiento'].setValue('');
+        this.domicilioFormGroup.controls['idtipoasentamiento'].setValue('');
+        this.domicilioFormGroup.controls['cp'].setValue('');
+        this.domicilioFormGroup.controls['idtipovia'].setValue('');
+        this.domicilioFormGroup.controls['via'].setValue('');
+        this.domicilioFormGroup.controls['codtiposvia'].setValue('');
+
         this.dataDomicilio.delegacion = event.source.triggerValue;
         this.botonAsentamiento = false;
     }
@@ -796,7 +804,47 @@ export class DialogDomiciliosNotario {
         );
     }
 
-    getDataMunicipios(event): void {
+    /**
+     * Obtiene el catálogo de la alcaldia.
+     */
+     getAlcaldia(){
+        let busquedaMunCol = 'getDelegaciones';
+        this.loadingMunicipios = true;
+        this.http.get(this.endpointCatalogos + busquedaMunCol, this.httpOptions).subscribe(
+            (res: any) => {
+                this.loadingMunicipios = false;
+                this.municipios = res;
+                console.log('GETDELEG');
+                console.log(res);
+            },
+            (error) => {
+                this.loadingMunicipios = false;
+            }
+        );
+    }
+
+    /**
+     * Obtiene los municipios de acuerdo al estado seleccionado
+     * @param event Valor que se recibe para la obtención de las alcaldias o municipios.
+     */
+     getDataMunicipios(event): void {
+        if(event.value != 9){
+            this.domicilioFormGroup.controls['idmunicipio2'].setValue('');
+            this.domicilioFormGroup.controls['municipio'].setValue('');
+            this.domicilioFormGroup.controls['idciudad'].setValue('');
+            this.domicilioFormGroup.controls['ciudad'].setValue('');
+            
+        }
+
+        this.domicilioFormGroup.controls['codasentamiento'].setValue('');
+        this.domicilioFormGroup.controls['asentamiento'].setValue('');
+        this.domicilioFormGroup.controls['idtipoasentamiento'].setValue('');
+        this.domicilioFormGroup.controls['cp'].setValue('');
+        this.domicilioFormGroup.controls['idtipovia'].setValue('');
+        this.domicilioFormGroup.controls['via'].setValue('');
+        this.domicilioFormGroup.controls['codtiposvia'].setValue('');
+        
+        
         this.botonMunicipio = false;
         let busquedaMunCol = '';
         busquedaMunCol = (event.value == 9) ? 'getDelegaciones' : 'getMunicipiosByEstado?codEstado=' + event.value;
@@ -814,6 +862,9 @@ export class DialogDomiciliosNotario {
         );
     }
     
+    /**
+     * Obtiene el catálogo de los asentamientos.
+     */
     getDataTiposAsentamiento(): void {
         this.loadingTiposAsentamiento = true;
         this.http.get(this.endpointCatalogos + 'getTiposAsentamiento', this.httpOptions).subscribe(
@@ -829,6 +880,9 @@ export class DialogDomiciliosNotario {
         );
     }
   
+    /**
+     * Obtiene el catálogo de las vías
+     */
     getDataTiposVia(): void {
         this.loadingTiposVia = true;
         this.http.get(this.endpointCatalogos + 'getTiposVia', this.httpOptions).subscribe(
@@ -845,6 +899,9 @@ export class DialogDomiciliosNotario {
         );
     }
   
+    /**
+     * Obtiene el catálogo de los tipos de localidad
+     */
     getDataTiposLocalidad(): void {
         this.loadingTiposLocalidad = true;
         this.http.get(this.endpointCatalogos + 'getTiposLocalidad', this.httpOptions).subscribe(
@@ -860,6 +917,9 @@ export class DialogDomiciliosNotario {
         );
     }
   
+    /**
+     * Almacena los datos del formulario del domicilio y de acuerdo al valor inserta o actualiza
+     */
     getDataDomicilio(): void {
         //this.dataDomicilio.idtipodireccion = this.domicilioFormGroup.value.idtipodireccion;
         this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
@@ -1077,6 +1137,16 @@ export class DialogDomiciliosNotario {
     * Obtiene los municipios
     */
     getMunicipios(){
+        this.domicilioFormGroup.controls['idciudad'].setValue('');
+        this.domicilioFormGroup.controls['ciudad'].setValue('');
+        this.domicilioFormGroup.controls['codasentamiento'].setValue('');
+        this.domicilioFormGroup.controls['asentamiento'].setValue('');
+        this.domicilioFormGroup.controls['idtipoasentamiento'].setValue('');
+        this.domicilioFormGroup.controls['cp'].setValue('');
+        this.domicilioFormGroup.controls['idtipovia'].setValue('');
+        this.domicilioFormGroup.controls['via'].setValue('');
+        this.domicilioFormGroup.controls['codtiposvia'].setValue('');
+
         this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
         const dialogRef = this.dialog.open(DialogMunicipiosNotario, {
             width: '700px',
@@ -1098,6 +1168,14 @@ export class DialogDomiciliosNotario {
     * Obtiene las ciudades 
     */
     getCiudad(){
+        this.domicilioFormGroup.controls['codasentamiento'].setValue('');
+        this.domicilioFormGroup.controls['asentamiento'].setValue('');
+        this.domicilioFormGroup.controls['idtipoasentamiento'].setValue('');
+        this.domicilioFormGroup.controls['cp'].setValue('');
+        this.domicilioFormGroup.controls['idtipovia'].setValue('');
+        this.domicilioFormGroup.controls['via'].setValue('');
+        this.domicilioFormGroup.controls['codtiposvia'].setValue('');
+
         this.dataDomicilio.idmunicipio2 = this.domicilioFormGroup.value.idmunicipio2;
         const dialogRef = this.dialog.open(DialogCiudadNotario, {
             width: '700px',
@@ -1120,6 +1198,11 @@ export class DialogDomiciliosNotario {
     * Obtiene las colonias 
     */
     getAsentamiento(){
+        this.domicilioFormGroup.controls['cp'].setValue('');
+        this.domicilioFormGroup.controls['idtipovia'].setValue('');
+        this.domicilioFormGroup.controls['via'].setValue('');
+        this.domicilioFormGroup.controls['codtiposvia'].setValue('');
+
         this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
         this.dataDomicilio.idmunicipio = this.domicilioFormGroup.value.idmunicipio;
         this.dataDomicilio.idmunicipio2 = this.domicilioFormGroup.value.idmunicipio2;
@@ -1222,6 +1305,7 @@ export class DialogMunicipiosNotario {
         this.dataSource = [];
         this.loadingBuscaMun = false;
         this.dataPaginate;
+        this.buscaMunicipios = null;
         this.obtenerMunicipios();
     }
 
@@ -1363,6 +1447,7 @@ export class DialogCiudadNotario {
         this.dataSource = [];
         this.loadingBuscaCiudad = false;
         this.dataPaginate;
+        this.buscaCiudad = null;
         this.obtenerCiudad();
     }
 
@@ -1475,6 +1560,7 @@ export class DialogAsentamientoNotario {
         this.dataSource = [];
         this.loading = false;
         this.dataPaginate;
+        this.buscaAsentamiento = null;
         this.obtenerAsentamiento();
     }
 
@@ -1595,6 +1681,7 @@ export class DialogViaNotario {
         this.dataSource = [];
         this.loadingBuscaVia = false;
         this.dataPaginate;
+        this.buscaVia = null;
         this.obtenerVia();
     }
 
