@@ -1658,6 +1658,14 @@ export class DialogDomicilioContribuyente {
      * @param event Obtiene el valor y nombre de la etiqueta option en el select
      */
     getNombreDel(event): void {
+        this.domicilioFormGroup.controls['codasentamiento'].setValue('');
+        this.domicilioFormGroup.controls['asentamiento'].setValue('');
+        this.domicilioFormGroup.controls['idtipoasentamiento'].setValue('');
+        this.domicilioFormGroup.controls['cp'].setValue('');
+        this.domicilioFormGroup.controls['idtipovia'].setValue('');
+        this.domicilioFormGroup.controls['via'].setValue('');
+        this.domicilioFormGroup.controls['codtiposvia'].setValue('');
+
         this.dataDomicilio.delegacion = event.source.triggerValue;
         this.botonAsentamiento = false;
     }
@@ -1679,10 +1687,46 @@ export class DialogDomicilioContribuyente {
     }
 
     /**
+     * Obtiene el catálogo de la alcaldia.
+     */
+     getAlcaldia(){
+        let busquedaMunCol = 'getDelegaciones';
+        this.loadingMunicipios = true;
+        this.http.get(this.endpointCatalogos + busquedaMunCol, this.httpOptions).subscribe(
+            (res: any) => {
+                this.loadingMunicipios = false;
+                this.municipios = res;
+                console.log('GETDELEG');
+                console.log(res);
+            },
+            (error) => {
+                this.loadingMunicipios = false;
+            }
+        );
+    }
+
+    /**
      * Obtiene los municipios de acuerdo al estado seleccionado
      * @param event Valor que se recibe para la obtención de las alcaldias o municipios.
      */
-    getDataMunicipios(event): void {
+     getDataMunicipios(event): void {
+        if(event.value != 9){
+            this.domicilioFormGroup.controls['idmunicipio2'].setValue('');
+            this.domicilioFormGroup.controls['municipio'].setValue('');
+            this.domicilioFormGroup.controls['idciudad'].setValue('');
+            this.domicilioFormGroup.controls['ciudad'].setValue('');
+            
+        }
+
+        this.domicilioFormGroup.controls['codasentamiento'].setValue('');
+        this.domicilioFormGroup.controls['asentamiento'].setValue('');
+        this.domicilioFormGroup.controls['idtipoasentamiento'].setValue('');
+        this.domicilioFormGroup.controls['cp'].setValue('');
+        this.domicilioFormGroup.controls['idtipovia'].setValue('');
+        this.domicilioFormGroup.controls['via'].setValue('');
+        this.domicilioFormGroup.controls['codtiposvia'].setValue('');
+        
+        
         this.botonMunicipio = false;
         let busquedaMunCol = '';
         busquedaMunCol = (event.value == 9) ? 'getDelegaciones' : 'getMunicipiosByEstado?codEstado=' + event.value;
@@ -2023,6 +2067,16 @@ export class DialogDomicilioContribuyente {
      * con opción para búsqueda especifica.
      */
     getMunicipios(){
+        this.domicilioFormGroup.controls['idciudad'].setValue('');
+        this.domicilioFormGroup.controls['ciudad'].setValue('');
+        this.domicilioFormGroup.controls['codasentamiento'].setValue('');
+        this.domicilioFormGroup.controls['asentamiento'].setValue('');
+        this.domicilioFormGroup.controls['idtipoasentamiento'].setValue('');
+        this.domicilioFormGroup.controls['cp'].setValue('');
+        this.domicilioFormGroup.controls['idtipovia'].setValue('');
+        this.domicilioFormGroup.controls['via'].setValue('');
+        this.domicilioFormGroup.controls['codtiposvia'].setValue('');
+
         this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
         const dialogRef = this.dialog.open(DialogMunicipiosContribuyente, {
             width: '700px',
@@ -2045,6 +2099,14 @@ export class DialogDomicilioContribuyente {
      * con opción a búsqueda especifica.
      */
     getCiudad(){
+        this.domicilioFormGroup.controls['codasentamiento'].setValue('');
+        this.domicilioFormGroup.controls['asentamiento'].setValue('');
+        this.domicilioFormGroup.controls['idtipoasentamiento'].setValue('');
+        this.domicilioFormGroup.controls['cp'].setValue('');
+        this.domicilioFormGroup.controls['idtipovia'].setValue('');
+        this.domicilioFormGroup.controls['via'].setValue('');
+        this.domicilioFormGroup.controls['codtiposvia'].setValue('');
+
         this.dataDomicilio.idmunicipio2 = this.domicilioFormGroup.value.idmunicipio2;
         const dialogRef = this.dialog.open(DialogCiudadContribuyente, {
             width: '700px',
@@ -2067,6 +2129,11 @@ export class DialogDomicilioContribuyente {
      * Abre el dialogo que muestra los asentamientos ligados a la ciudad
      */
     getAsentamiento(){
+        this.domicilioFormGroup.controls['cp'].setValue('');
+        this.domicilioFormGroup.controls['idtipovia'].setValue('');
+        this.domicilioFormGroup.controls['via'].setValue('');
+        this.domicilioFormGroup.controls['codtiposvia'].setValue('');
+
         this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
         this.dataDomicilio.idmunicipio = this.domicilioFormGroup.value.idmunicipio;
         this.dataDomicilio.idmunicipio2 = this.domicilioFormGroup.value.idmunicipio2;
@@ -2169,6 +2236,7 @@ export class DialogMunicipiosContribuyente {
       this.dataSource = [];
       this.loadingBuscaMun = false;
       this.dataPaginate;
+      this.buscaMunicipios = null;
       this.obtenerMunicipios();
   }
 
@@ -2326,6 +2394,7 @@ export class DialogCiudadContribuyente {
         this.dataSource = [];
         this.loadingBuscaCiudad = false;
         this.dataPaginate;
+        this.buscaCiudad = null;
         this.obtenerCiudad();
     }
 
@@ -2485,6 +2554,7 @@ export class DialogAsentamientoContribuyente {
         this.dataSource = [];
         this.loading = false;
         this.dataPaginate;
+        this.buscaAsentamiento = null;
         this.obtenerAsentamiento();
     }
 
@@ -2648,6 +2718,7 @@ export class DialogViaContribuyente {
         this.dataSource = [];
         this.loadingBuscaVia = false;
         this.dataPaginate;
+        this.buscaVia = null;
         this.obtenerVia();
     }
 
