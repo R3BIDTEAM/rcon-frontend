@@ -2388,7 +2388,9 @@ export class DialogRepresentacionSociedad {
     fisicaFormGroup: FormGroup;
     moralFormGroup: FormGroup;
     dataRepresentacion: DataRepresentacion = {} as DataRepresentacion;
-  
+    // isRequiredRfc = true;
+    // isRequiredCurp = true;
+    isRequired = true;
   
     constructor(
         private http: HttpClient,
@@ -2405,8 +2407,8 @@ export class DialogRepresentacionSociedad {
             nombre: [null, [Validators.required]],
             apaterno: [null, [Validators.required]],
             amaterno: [null, []],
-            rfc: [null, [Validators.required]],
-            curp: [null, [Validators.required]],
+            rfc: [null, []],
+            curp: [null, []],
             ine: [null, []],
             idDocIdent: ['', []],
             docIdent: [null, []],
@@ -2454,10 +2456,35 @@ export class DialogRepresentacionSociedad {
      * @param add  Valor del campo que se le agregara a la validación, puede ser CURP o RFC
      */
     changeRequired(remove, add): void {
-        this.fisicaFormGroup.controls[remove].setValue(null);
-        this.fisicaFormGroup.controls[remove].clearValidators();
-        this.fisicaFormGroup.controls[add].setValidators(Validators.required);
-        this.fisicaFormGroup.markAsUntouched();
+        //console.log(remove);
+        if((this.fisicaFormGroup.value.rfc === null && this.fisicaFormGroup.value.curp === null) || (this.fisicaFormGroup.value.rfc === '' && this.fisicaFormGroup.value.curp === '')){​​​​​​​​
+            this.isRequired = true;
+        }​​​​​​​​ else {​​​​​​​​
+            this.isRequired = false;
+        }​​​​​​​​
+
+
+        // if(this.fisicaFormGroup.value.rfc !== ''){
+        //     this.isRequiredCurp = false;
+        // } else if(this.fisicaFormGroup.value.curp !== '') {
+        //     this.isRequiredRfc = false;
+        // }else if(this.fisicaFormGroup.value.curp === ''){
+        //     this.isRequiredCurp = true;
+        // }else if(this.fisicaFormGroup.value.rfc === ''){
+        //     this.isRequiredRfc = true;
+        // }
+        console.log(this.fisicaFormGroup.value.rfc);
+        // if(this.fisicaFormGroup.value.rfc){
+        //     this.fisicaFormGroup.controls['curp'].clearValidators();
+        //     console.log("ENTRO");
+        // }else{
+        //     this.fisicaFormGroup.controls['rfc'].clearValidators();
+        //     console.log("NO ENTRO");
+        // }
+        //this.fisicaFormGroup.controls[remove].setValue(null);
+        //this.fisicaFormGroup.controls[remove].clearValidators();
+        //this.fisicaFormGroup.controls[add].setValidators(Validators.required);
+        this.fisicaFormGroup.markAsTouched();
         this.fisicaFormGroup.updateValueAndValidity();
     }
 
@@ -2614,7 +2641,7 @@ export class DialogRepresentacionSociedad {
                     codTipoDocumentoJuridico: this.dataRepresentacion.documentoRepresentacion.codtipodocumentojuridico,        
                     lugar: this.dataRepresentacion.documentoRepresentacion.lugar,
                     idNotario: this.dataRepresentacion.documentoRepresentacion.idnotario,
-                    noEscritura: this.dataRepresentacion.documentoRepresentacion.noNotario,
+                    noEscritura: this.dataRepresentacion.documentoRepresentacion.num_escritura,
                     documentos: this.dataRepresentacion.documentoRepresentacion.archivos
                 }
             };
@@ -2957,7 +2984,7 @@ export class DialogRepresentadoSociedad {
                     codTipoDocumentoJuridico: this.dataRepresentacion.documentoRepresentacion.codtipodocumentojuridico,        
                     lugar: this.dataRepresentacion.documentoRepresentacion.lugar,
                     idNotario: this.dataRepresentacion.documentoRepresentacion.idnotario,
-                    noEscritura: this.dataRepresentacion.documentoRepresentacion.noNotario,
+                    noEscritura: this.dataRepresentacion.documentoRepresentacion.num_escritura,
                     documentos: this.dataRepresentacion.documentoRepresentacion.archivos
                 }
             };
@@ -3278,7 +3305,7 @@ export class DialogDocumentoSociedad {
             this.infoDocumentoFormGroup.controls['noNotario'].setValue(this.dataDocumentoSet.infoNotario[0].numnotario);
             this.infoDocumentoFormGroup.controls['ciudadNotario'].setValue(this.dataDocumentoSet.infoNotario[0].codestado);
             this.infoDocumentoFormGroup.controls['nombreNotario'].setValue(this.dataDocumentoSet.infoNotario[0].nombre);
-            this.infoDocumentoFormGroup.controls['num_escritura'].setValue('');
+            this.infoDocumentoFormGroup.controls['num_escritura'].setValue(this.dataDocumentoSet.infoDocumentoNotario[0].numprotocolo);
         }
 
         this.infoDocumentoFormGroup.controls['fecha'].setValue(new Date(this.dataDocumentoSet.infoDocumento[0].fecha));

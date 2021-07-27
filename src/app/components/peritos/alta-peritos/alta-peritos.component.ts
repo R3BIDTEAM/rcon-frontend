@@ -9,7 +9,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox'; 
 import * as moment from 'moment';
-import { DialogDuplicadosComponent } from '@comp/dialog-duplicados/dialog-duplicados.component';
+import { DialogDuplicadosComponent, DialogsMensaje } from '@comp/dialog-duplicados/dialog-duplicados.component';
 
 export interface DatosPeritos {
     apepaterno: string;
@@ -170,21 +170,23 @@ export class AltaPeritosComponent implements OnInit {
         this.datoPeritos.login = this.peritoPersonaFormGroup.value.login;
         
         let query = '';
-        let busquedaDatos = 'getContribuyentesSimilares';
+        let busquedaDatos = 'getPeritosByDatosIdentificativos';
 
-        query = query + 'nombre=&filtroNombre=';
+        // query = query + 'nombre=&filtroNombre=';
 
-        query = query + '&apellidoPaterno=&filtroApellidoPaterno=';
+        // query = query + '&apellidoPaterno=&filtroApellidoPaterno=';
 
-        query = query + '&apellidoMaterno=&filtroApellidoMaterno=';
-
-        query = (this.datoPeritos.curp) ? query + '&curp=' + this.datoPeritos.curp : query + '&curp=';
+        // query = query + '&apellidoMaterno=&filtroApellidoMaterno=';
 
         query = (this.datoPeritos.rfc) ? query + '&rfc=' + this.datoPeritos.rfc : query + '&rfc=';
 
-        query = (this.datoPeritos.ine) ? query + '&claveife=' + this.datoPeritos.ine : query + '&claveife=';
+        query = (this.datoPeritos.curp) ? query + '&curp=' + this.datoPeritos.curp : query + '&curp=';
 
-        query = query + '&actividadPrincip=';
+        //query = (this.datoPeritos.ine) ? query + '&claveife=' + this.datoPeritos.ine : query + '&claveife=';
+
+        query = query.substr(1);
+
+        //query = query + '&actividadPrincip=';
 
         console.log(this.endpoint + busquedaDatos + '?' + query);
         this.loading = true;
@@ -215,7 +217,7 @@ export class AltaPeritosComponent implements OnInit {
      * Abre el dialogo que nos muestra los registros existentes para editar o confirmar si queremos continuar con el registro.
      */
     validaDialog(res){
-        const dialogRef = this.dialog.open(DialogDuplicadosComponent, {
+        const dialogRef = this.dialog.open(DialogsMensaje, {
             width: '850px',
             data: {
                 dataSource: res,
@@ -310,21 +312,37 @@ export class AltaPeritosComponent implements OnInit {
                 console.log("RESULTADO DEL NUEVO NOMBRE");
                 console.log(result);
                 console.log(result.apepaterno);
-                this.datoPeritos.apepaterno = result.apepaterno;
-                this.datoPeritos.apematerno = result.apematerno;
-                this.datoPeritos.nombre  = result.nombre;
-                this.datoPeritos.rfc = result.rfc;
-                this.datoPeritos.curp = result.curp;
-                this.datoPeritos.ine = result.ine;
-                this.datoPeritos.identificacion = result.identificacion;
-                this.datoPeritos.idedato = result.idedato;
-                this.datoPeritos.fecha_naci = result.fecha_naci;
-                this.datoPeritos.fecha_def = result.fecha_def;
-                this.datoPeritos.celular = result.celular;
-                this.datoPeritos.email = result.email;
-                this.botonEdit = false;
+                this.puebaform(result);
             }
         });
+    }
+
+    puebaform(result){
+        
+        this.datoPeritos.fecha_naci = (result.fecha_naci) ? new Date(result.fecha_naci) : null;
+        this.datoPeritos.fecha_def = (result.fecha_def) ? new Date(result.fecha_def) : null;
+        
+        // if(this.datoPeritos.fecha_naci){
+        //     this.peritoPersonaFormGroup.controls['fechaNacimiento'].clearValidators();
+        // }
+        // if(this.datoPeritos.fecha_def){
+        //     this.peritoPersonaFormGroup.controls['fechaDefuncion'].clearValidators();
+        // }
+
+        this.peritoPersonaFormGroup.controls['apepaterno'].setValue(result.apepaterno);
+        this.peritoPersonaFormGroup.controls['apematerno'].setValue(result.apematerno);
+        this.peritoPersonaFormGroup.controls['nombre'].setValue(result.nombre);
+        this.peritoPersonaFormGroup.controls['rfc'].setValue(result.rfc);
+        this.peritoPersonaFormGroup.controls['curp'].setValue(result.curp);
+        this.peritoPersonaFormGroup.controls['ine'].setValue(result.ine);
+        this.peritoPersonaFormGroup.controls['identificacion'].setValue(result.identificacion);
+        this.peritoPersonaFormGroup.controls['idedato'].setValue(result.identificacion);
+        this.peritoPersonaFormGroup.controls['fechaNacimiento'].setValue(this.datoPeritos.fecha_naci);
+        this.peritoPersonaFormGroup.controls['fechaDefuncion'].setValue(this.datoPeritos.fecha_def);
+        this.peritoPersonaFormGroup.controls['celular'].setValue(result.celular);
+        this.peritoPersonaFormGroup.controls['email'].setValue(result.email);
+        this.peritoPersonaFormGroup.markAsUntouched();
+        this.peritoPersonaFormGroup.updateValueAndValidity();
     }
     
 }

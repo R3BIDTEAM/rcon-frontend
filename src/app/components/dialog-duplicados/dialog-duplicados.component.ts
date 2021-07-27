@@ -60,3 +60,26 @@ export class DialogDuplicadosComponent implements OnInit {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
 }
+
+@Component({
+    selector: 'dialog-mensaje',
+    templateUrl: 'dialog-mensaje.html',
+})
+export class DialogsMensaje {
+    registro;
+
+    constructor(
+        public dialog: MatDialog,
+        public dialogRef: MatDialogRef<DialogsMensaje>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) { 
+        dialogRef.disableClose = true;
+        console.log(data);
+        console.log(data.dataSource.registro);
+        this.registro = data.dataSource[0].registro;
+    }
+
+    ngOnInit(): void {
+    }
+
+}

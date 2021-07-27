@@ -52,12 +52,15 @@ export class ConsultaSociedadComponent implements OnInit {
      * Reinicia los valores del paginado.
      */
     clean(): void{
-        this.loading = false;
-        this.pagina = 1;
-        this.total = 0;
-        this.pageSize = 15;
-        this.dataSource = [];
-        this.dataPaginate;
+        // this.loading = false;
+        // this.pagina = 1;
+        // this.total = 0;
+        // this.pageSize = 15;
+        // this.dataSource = [];
+        // this.dataPaginate;
+        this.razonSocial = null;
+        this.rfc = null;
+        this.registro = null;
     }
 
     /**
