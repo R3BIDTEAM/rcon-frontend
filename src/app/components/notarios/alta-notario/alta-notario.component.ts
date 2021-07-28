@@ -57,7 +57,8 @@ export class AltaNotarioComponent implements OnInit {
     loadingDocumentosIdentificativos = false;
     btnDisabled = true;
     selectDisabled = true;
-  
+    isRequired = true;
+
     constructor(
         private http: HttpClient,
         private auth: AuthService,
@@ -80,8 +81,8 @@ export class AltaNotarioComponent implements OnInit {
             apellido_paterno: ['', Validators.required],
             apellido_materno: [null, []],
             nombre: ['', Validators.required],
-            rfc: ['', Validators.required],
-            curp: ['', Validators.required],
+            rfc: [null, []],
+            curp: [null, []],
             ine: [null, []],
             otro_documento: [null, []],
             numero_documento: [null, []],
@@ -94,6 +95,22 @@ export class AltaNotarioComponent implements OnInit {
         this.getDataEstados();
         this.getDataDocumentosIdentificativos();
         
+    }
+
+    /**
+     * De acuerdo al campo seleccionado será requerido el RFC, el CURP o ambos.
+     */
+     changeRequired(): void {
+        if((this.notarioFormGroup.value.rfc === null && this.notarioFormGroup.value.curp === null) || (this.notarioFormGroup.value.rfc === '' && this.notarioFormGroup.value.curp === '')
+            || (this.filtros.rfc === null && this.filtros.curp === null) || (this.filtros.rfc === '' && this.filtros.curp === '')){​​​​​​​​
+            this.isRequired = true;
+        }​​​​​​​​ else {​​​​​​​​
+            this.isRequired = false;
+        }​​​​​​​​
+
+        console.log(this.notarioFormGroup.value.rfc);
+        this.notarioFormGroup.markAsTouched();
+        this.notarioFormGroup.updateValueAndValidity();
     }
 
     clean(){
