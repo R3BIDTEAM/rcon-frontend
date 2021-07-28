@@ -46,6 +46,8 @@ export interface DocumentosIdentificativos{
 
 export class AltaNotarioComponent implements OnInit {
     endpoint = environment.endpoint + 'registro/';
+    notarioFormGroup: FormGroup;
+    idestadoNg = '9';
     httpOptions;
     filtros: Filtros = {} as Filtros;
     estados: Estados[] = [];
@@ -53,6 +55,8 @@ export class AltaNotarioComponent implements OnInit {
     loading = false;
     loadingEstados = false;
     loadingDocumentosIdentificativos = false;
+    btnDisabled = true;
+    selectDisabled = true;
   
     constructor(
         private http: HttpClient,
@@ -69,8 +73,27 @@ export class AltaNotarioComponent implements OnInit {
             Authorization: this.auth.getSession().token
         })  
         };
+
+        this.notarioFormGroup = this._formBuilder.group({
+            no_notario: ['', Validators.required],
+            estado: [null, []],
+            apellido_paterno: ['', Validators.required],
+            apellido_materno: [null, []],
+            nombre: ['', Validators.required],
+            rfc: ['', Validators.required],
+            curp: ['', Validators.required],
+            ine: [null, []],
+            otro_documento: [null, []],
+            numero_documento: [null, []],
+            fecha_nacimiento: [null, []],
+            fecha_defuncion: [null, []],
+            celular: [null, []],
+            email: ['', Validators.email]
+        });
+        
         this.getDataEstados();
         this.getDataDocumentosIdentificativos();
+        
     }
 
     clean(){
@@ -88,6 +111,8 @@ export class AltaNotarioComponent implements OnInit {
         this.filtros.fecha_defuncion = null;
         this.filtros.email = null;
         this.filtros.celular = null;
+        this.btnDisabled = true;
+        this.selectDisabled = true;
     }
 
     /** 
@@ -105,6 +130,14 @@ export class AltaNotarioComponent implements OnInit {
             this.loadingEstados = false;
         }
         );
+    }
+
+    /**
+     *  Si se selecciona alguna opción desbloqueará el input del número del documento.
+     * @param event Valor del option
+     */
+    seleccionaDocto(event){
+        this.selectDisabled = false;
     }
 
     /** 
@@ -193,7 +226,7 @@ export class AltaNotarioComponent implements OnInit {
                     });
                 }
             );
-    }
+    }//NO SE USA
 
     /**
     * @param res Es el json que regresa la respuesta una vez guardado el dato
@@ -212,7 +245,7 @@ export class AltaNotarioComponent implements OnInit {
                 this.guardarNotario();
             }
         });
-    }
+    }//NO SE USA
 
     /** 
     * Guarda la información del Notario que se está dando de alta
@@ -250,6 +283,7 @@ export class AltaNotarioComponent implements OnInit {
                         horizontalPosition: 'end',
                         verticalPosition: 'top'
                     });
+                    this.btnDisabled = false;
                 },
                 (error) => {
                     this.loading = false;

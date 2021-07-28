@@ -14,7 +14,6 @@
                 <mat-form-field class="col-6">
                     <mat-label>Estado:</mat-label>
                     <mat-select formControlName="idestado" (selectionChange)="getDataMunicipios($event)" [(ngModel)]="idestadoNg">
-                        <mat-option value="">Seleccione ...</mat-option>
                         <mat-option *ngFor="let estado of estados" [value]="estado.CODESTADO">
                             {{ estado.ESTADO }}
                         </mat-option>

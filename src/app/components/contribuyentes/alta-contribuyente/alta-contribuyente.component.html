@@ -47,15 +47,15 @@
                         <div class="row">
                             <mat-form-field appearance="outline"  class="col-5 offset-1">
                                 <mat-label>RFC:</mat-label>
-                                <input matInput formControlName="rfc" [(ngModel)]="contribuyente.rfc" [readonly]="inserto" pattern="^([A-ZÑ&]{4})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" maxlength="50">
+                                <input matInput formControlName="rfc" [(ngModel)]="contribuyente.rfc" [readonly]="inserto" (keyup)="changeRequired()"  [required]="isRequired" pattern="^([A-ZÑ&]{4})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" maxlength="13">
                                 <mat-error *ngIf="fisicaFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="fisicaFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 4 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline"  class="col-5">
                                 <mat-label>CURP:</mat-label>
-                                <!-- <input matInput formControlName="curp" (keyup)="changeRequired('rfc', 'curp')" [(ngModel)]="contribuyente.curp" [readonly]="inserto"> -->
-                                <input matInput formControlName="curp" [(ngModel)]="contribuyente.curp" [readonly]="inserto" maxlength="50">
+                                <input matInput formControlName="curp" [(ngModel)]="contribuyente.curp" [readonly]="inserto" (keyup)="changeRequired()"  [required]="isRequired" pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$" maxlength="18">
                                 <mat-error *ngIf="fisicaFormGroup.controls.curp.errors?.required">Requerido</mat-error>
+                                <mat-error *ngIf="fisicaFormGroup.controls.curp.errors?.pattern">CURP no valido</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
@@ -101,6 +101,7 @@
                             <mat-form-field appearance="outline"  class="col-5">
                                 <mat-label>E-mail:</mat-label>
                                 <input matInput formControlName="email" [(ngModel)]="contribuyente.email" [readonly]="inserto" maxlength="50">
+                                <mat-error *ngIf="fisicaFormGroup.hasError('email', 'email') && fisicaFormGroup.get('email').touched">Correo invalido</mat-error>
                             </mat-form-field>
                         </div>
                     </form>

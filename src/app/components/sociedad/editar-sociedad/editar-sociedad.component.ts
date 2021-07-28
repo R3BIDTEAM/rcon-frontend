@@ -2451,39 +2451,18 @@ export class DialogRepresentacionSociedad {
     }
     
     /**
-     * Al cambio en el llenado de curp o rfc se activará o desactivará uno de los dos validadores de requerido.
+     * De acuerdo al campo seleccionado será requerido el RFC, el CURP o ambos.
      * @param remove Valor del campo que se le retirara la validación, puede ser CURP o RFC
      * @param add  Valor del campo que se le agregara a la validación, puede ser CURP o RFC
      */
     changeRequired(remove, add): void {
-        //console.log(remove);
         if((this.fisicaFormGroup.value.rfc === null && this.fisicaFormGroup.value.curp === null) || (this.fisicaFormGroup.value.rfc === '' && this.fisicaFormGroup.value.curp === '')){​​​​​​​​
             this.isRequired = true;
         }​​​​​​​​ else {​​​​​​​​
             this.isRequired = false;
         }​​​​​​​​
 
-
-        // if(this.fisicaFormGroup.value.rfc !== ''){
-        //     this.isRequiredCurp = false;
-        // } else if(this.fisicaFormGroup.value.curp !== '') {
-        //     this.isRequiredRfc = false;
-        // }else if(this.fisicaFormGroup.value.curp === ''){
-        //     this.isRequiredCurp = true;
-        // }else if(this.fisicaFormGroup.value.rfc === ''){
-        //     this.isRequiredRfc = true;
-        // }
         console.log(this.fisicaFormGroup.value.rfc);
-        // if(this.fisicaFormGroup.value.rfc){
-        //     this.fisicaFormGroup.controls['curp'].clearValidators();
-        //     console.log("ENTRO");
-        // }else{
-        //     this.fisicaFormGroup.controls['rfc'].clearValidators();
-        //     console.log("NO ENTRO");
-        // }
-        //this.fisicaFormGroup.controls[remove].setValue(null);
-        //this.fisicaFormGroup.controls[remove].clearValidators();
-        //this.fisicaFormGroup.controls[add].setValidators(Validators.required);
         this.fisicaFormGroup.markAsTouched();
         this.fisicaFormGroup.updateValueAndValidity();
     }
@@ -2819,7 +2798,7 @@ export class DialogRepresentadoSociedad {
     }
 
     /**
-     * * Al cambio en el llenado de curp o rfc se activará o desactivará uno de los dos validadores de requerido.
+     * * De acuerdo al campo seleccionado será requerido el RFC, el CURP o ambos.
      * @param remove Valor del campo que se le retirara la validación, puede ser CURP o RFC
      * @param add  Valor del campo que se le agregara a la validación, puede ser CURP o RFC
      */

@@ -182,36 +182,36 @@ export class AltaContribuyenteComponent implements OnInit {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
             Authorization: this.auth.getSession().token
-        })
-    };
+            })
+        };
     
-    this.fisicaFormGroup = this._formBuilder.group({
-        nombre: [null, [Validators.required]],
-        apaterno: [null, [Validators.required]],
-        amaterno: [null, []],
-        rfc: [null, [Validators.required]],
-        curp: [null, [Validators.required]],
-        ine: [null, []],
-        idDocIdent: ['', []],
-        docIdent: [null, []],
-        fechaNacimiento: [null, []],
-        fechaDefuncion: [null, []],
-        celular: [null, []],
-        email: [null, []],
-    });
+        this.fisicaFormGroup = this._formBuilder.group({
+            nombre: [null, [Validators.required]],
+            apaterno: [null, [Validators.required]],
+            amaterno: [null, []],
+            rfc: [null, []],
+            curp: [null, []],
+            ine: [null, []],
+            idDocIdent: ['', []],
+            docIdent: [null, []],
+            fechaNacimiento: [null, []],
+            fechaDefuncion: [null, []],
+            celular: [null, []],
+            email: ['', Validators.email],
+        });
 
-    this.moralFormGroup = this._formBuilder.group({
-        nombre: [null, [Validators.required]],
-        rfc: [null, [Validators.required]],
-        actPreponderante: [null, []],
-        idTipoPersonaMoral: ['', []],
-        fechaInicioOperacion: [null, []],
-        idMotivo: ['', []],
-        fechaCambio: [null, []],
-    });
+        this.moralFormGroup = this._formBuilder.group({
+            nombre: [null, [Validators.required]],
+            rfc: [null, [Validators.required]],
+            actPreponderante: [null, []],
+            idTipoPersonaMoral: ['', []],
+            fechaInicioOperacion: [null, []],
+            idMotivo: ['', []],
+            fechaCambio: [null, []],
+        });
 
-    this.getDataDocumentos();
-}
+        this.getDataDocumentos();
+    }
 
     clean(){
         this.fisicaFormGroup.controls['nombre'].setValue(null);
@@ -236,29 +236,19 @@ export class AltaContribuyenteComponent implements OnInit {
         this.inserto = false;
     }
 
-    // checkRequired(){
-    //     if(this.fisicaFormGroup.value.rfc === '' && this.fisicaFormGroup.value.curp === ''){
-    //         this.isRequired = true;
-    //     } else {
-    //         this.isRequired = false;
-    //     }
-    // }
-
-    changeRequired(remove, add): void {
-        this.fisicaFormGroup.controls[remove].setValue(null);
-        this.fisicaFormGroup.controls[remove].clearValidators();
-        this.fisicaFormGroup.controls[add].setValidators(Validators.required);
-        this.fisicaFormGroup.markAsUntouched();
-        this.fisicaFormGroup.updateValueAndValidity();
-        if(this.fisicaFormGroup.value.add === ''){
+    /**
+     * De acuerdo al campo seleccionado será requerido el RFC, el CURP o ambos.
+     */
+    changeRequired(): void {
+        if((this.fisicaFormGroup.value.rfc === null && this.fisicaFormGroup.value.curp === null) || (this.fisicaFormGroup.value.rfc === '' && this.fisicaFormGroup.value.curp === '')){​​​​​​​​
             this.isRequired = true;
-        } else {
+        }​​​​​​​​ else {​​​​​​​​
             this.isRequired = false;
-        }
-    }
+        }​​​​​​​​
 
-    getHistorialDatosGenerales(): void {
-        console.log("hola");
+        console.log(this.fisicaFormGroup.value.rfc);
+        this.fisicaFormGroup.markAsTouched();
+        this.fisicaFormGroup.updateValueAndValidity();
     }
 
     /** 
