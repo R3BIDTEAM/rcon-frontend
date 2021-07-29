@@ -221,6 +221,6 @@
 
 </div>
 <mat-dialog-actions align="end">
-    <button mat-flat-button color="primary" [disabled]="(tipoPersona == 'F' ? fisicaFormGroup.invalid : moralFormGroup.invalid)" [mat-dialog-close]="true" (click)="getDataRepresentacion()" *ngIf="noHistorico">Aceptar</button>
     <button mat-button [mat-dialog-close]="false">Cerrar</button>
+    <button mat-flat-button color="primary" [disabled]="(tipoPersona == 'F' ? fisicaFormGroup.invalid : moralFormGroup.invalid)" [mat-dialog-close]="true" (click)="getDataRepresentacion()" *ngIf="noHistorico">Aceptar</button>
 </mat-dialog-actions>
