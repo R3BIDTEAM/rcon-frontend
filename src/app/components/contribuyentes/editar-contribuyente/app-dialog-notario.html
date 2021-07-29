@@ -19,7 +19,6 @@
                 <mat-form-field class="col-6">
                     <mat-label>Estado:</mat-label>
                     <mat-select [(value)]="filtros.estado">
-                        <mat-option value="">Seleccione Estado ...</mat-option>
                         <mat-option *ngFor="let estado of estados" [value]="estado.CODESTADO">
                             {{ estado.ESTADO }}
                         </mat-option>
@@ -84,15 +83,15 @@
         <table mat-table [dataSource]="dataSource" *ngIf="dataSource.length > 0 && !loading">
             <ng-container matColumnDef="numero">
                 <th mat-header-cell *matHeaderCellDef> Número </th>
-                <td mat-cell *matCellDef="let element"> {{(element.NUMNOTARIO)}} </td>
+                <td mat-cell *matCellDef="let element"> {{(element.numnotario)}} </td>
             </ng-container>
             <ng-container matColumnDef="datos_personales">
                 <th mat-header-cell *matHeaderCellDef> Datos Personales </th>
-                <td mat-cell *matCellDef="let element"> {{element.NOMBRE}} {{(element.APELLIDOPATERNO) ? element.APELLIDOPATERNO : ''}} {{(element.APELLIDOMATERNO) ? element.APELLIDOMATERNO : ''}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.nombre}} {{(element.apellidopaterno) ? element.apellidopaterno : ''}} {{(element.apellidomaterno) ? element.apellidomaterno : ''}} </td>
             </ng-container>
             <ng-container matColumnDef="datos_identificativos">
                 <th mat-header-cell *matHeaderCellDef> Datos Identificativos </th>
-                <td mat-cell *matCellDef="let element"> {{(element.RFC) ? ( element.RFC) : ''}} {{(element.CURP) ? ( element.CURP) : ''}} {{(element.CLAVEIFE) ? (element.CLAVEIFE) : ''}} </td>
+                <td mat-cell *matCellDef="let element"> {{(element.rfc) ? ( element.rfc) : ''}} {{(element.curp) ? ( element.curp) : ''}} {{(element.claveife) ? (element.claveife) : ''}} </td>
             </ng-container>
             <ng-container matColumnDef="select">
                 <th mat-header-cell *matHeaderCellDef> Seleccionar </th>

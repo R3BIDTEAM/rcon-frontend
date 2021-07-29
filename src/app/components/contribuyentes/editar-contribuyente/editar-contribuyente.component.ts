@@ -158,6 +158,7 @@ export class EditarContribuyenteComponent implements OnInit {
     idChs;
     panelDomicilio = false;
     panelDomPredial = false;
+    panelBienes = false;
     dataRepresentantes: DataRepresentacion[] = [];
     dataRepresentados: DataRepresentacion[] = [];
     dataActualizacion: DataActualizacion = {} as DataActualizacion;
@@ -167,7 +168,9 @@ export class EditarContribuyenteComponent implements OnInit {
     dataDomicilioEspecifico: DataDomicilio[] = [];
     displayedColumnsDom: string[] = ['tipoDir','direccion', 'historial', 'editar'];
     displayedColumnsRepdo: string[] = ['representacion','texto','caducidad','editar','eliminar'];
+    displayedColumnsInm: string[] = ['direccion'];
     loadingDomicilios = false;
+    loadingInmuebles = false;
     paginaDom = 1;
     totalDom = 0;
     pageSizeDom = 15;
@@ -190,6 +193,7 @@ export class EditarContribuyenteComponent implements OnInit {
     actCambioPersona = true;
     isRequired = true;
     mensajeConfirma;
+    @ViewChild('paginator') paginator: MatPaginator;
 
     /*Paginado*/
     dataSource1 = [];
@@ -200,6 +204,10 @@ export class EditarContribuyenteComponent implements OnInit {
     total2 = 0;
     pagina2 = 1;
     dataPaginate2;
+    dataSource3 = [];
+    total3 = 0;
+    pagina3= 1;
+    dataPaginate3;
     dataSource4 = [];
     total4 = 0;
     pagina4 = 1;
@@ -258,6 +266,7 @@ export class EditarContribuyenteComponent implements OnInit {
         this.getDataDocumentos();
         this.getContribuyenteDatos();
         this.getDomicilioContribuyente();
+        this.getidInmuebles();
         this.getRepresentacion();
         this.getRepresentado();
     }
@@ -1051,6 +1060,69 @@ export class EditarContribuyenteComponent implements OnInit {
             );
     }
 
+    getidInmuebles(){
+        this.http.get(this.endpointActualiza + 'getIdInmuebleByIdPersona' + '?idPersona='+ this.idContribuyente, this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loadingInmuebles = false;
+                    console.log("AQUI ENTRO IDINMUEBLE!!!");
+                    console.log(res);
+                    //console.log(res[0].idinmueble);
+                    if(res.length > 0){
+                        this.idInmueble = res[0].idinmueble;
+                    }else{
+                        this.idInmueble = null;
+                    }
+                    this.getInmuebles();
+                },
+                (error) => {
+                    this.loadingInmuebles = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
+
+    getInmuebles(){
+        this.http.get(this.endpointActualiza + 'getDireccionesInmueble?' + 'idInmueble='+ this.idInmueble, this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loadingDomicilios = false;
+                    console.log("AQUI ENTRO EL INMUEBLE!!!");
+                    console.log(res);
+                    
+                    this.dataSource3 = res;
+                    console.log(res.length);
+                    console.log(this.dataSource3);
+                    this.dataPaginate3 = this.paginate(this.dataSource3, 15, this.paginaDom);
+                    this.total3 = this.dataPaginate3.length; 
+                    this.paginator.pageIndex = 0;
+                    console.log("AQUI ENTRO EL RES WEE");
+                    console.log(this.dataSource3);
+                },
+                (error) => {
+                    this.loadingDomicilios = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
+
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
+     paginado3(evt): void{
+        this.pagina3 = evt.pageIndex + 1;
+        this.dataSource3 = this.paginate(this.dataSource3, 15, this.pagina3);
+    }
+
     /**
      * @param iddireccion obtiene la direccion especifica con el id que recibe
      */
@@ -1527,7 +1599,7 @@ export class DialogDomicilioContribuyente {
   tiposLocalidad;
   optionCiudad;
   codtiposdireccion;
-  idestadoNg
+  idestadoNg = '9';
   idmunicipioNg
   idmunicipio2Ng
   municipioNg
@@ -1700,6 +1772,7 @@ export class DialogDomicilioContribuyente {
             (res: any) => {
                 this.loadingEstados = false;
                 this.estados = res;
+                this.getAlcaldia();
             },
             (error) => {
                 this.loadingEstados = false;
@@ -3982,7 +4055,7 @@ export interface Notario {
     styleUrls: ['./editar-contribuyente.component.css']
 })
 export class DialogNotarioC {
-    endpoint = environment.endpoint + 'registro/getNotariosByDatosIdentificativos';
+    endpoint = environment.endpoint + 'registro/';
     endpointCatalogos = environment.endpoint + 'registro/';
     pageSize = 15;
     pagina = 1;
@@ -4045,6 +4118,7 @@ export class DialogNotarioC {
         this.optionNotario = undefined;
         this.pagina = 1;
         this.queryParamFiltros = '';
+        let metodoN = '';
         
         if(this.filtros.numnotario){
             this.queryParamFiltros = this.queryParamFiltros + '&numnotario=' + this.filtros.numnotario;
@@ -4071,7 +4145,13 @@ export class DialogNotarioC {
             this.queryParamFiltros = this.queryParamFiltros + '&apellidoMaterno=' + this.filtros.apellidoMaterno + '&filtroApellidoMaterno=0';
         }
         
-        this.http.get(this.endpoint + '?' + this.queryParamFiltros, this.httpOptions).subscribe(
+        if(this.filtros.nombre || this.filtros.apellidoPaterno || this.filtros.apellidoMaterno){
+            metodoN = 'getNotariosByDatosPersonales';
+        }else{
+            metodoN = 'getNotariosByDatosIdentificativos';
+        }
+        
+        this.http.get(this.endpoint + metodoN + '?' + this.queryParamFiltros, this.httpOptions).subscribe(
             (res: any) => {
                 this.loading = false;
                 this.dataNotarios = res;

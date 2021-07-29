@@ -280,76 +280,114 @@
                     </mat-expansion-panel>
                 </mat-accordion>
                 <br><hr><br>
-            <mat-accordion>
-                <mat-expansion-panel (opened)="panelDomPredial = true" (closed)="panelDomPredial = false">
-                    <mat-expansion-panel-header>
+                <mat-accordion>
+                    <mat-expansion-panel (opened)="panelDomPredial = true" (closed)="panelDomPredial = false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Gestión de Domicilios para Recibir Boletas Prediales
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                {{panelDomPredial ? 'Cerrar' : 'Ver'}} los datos de los Domicilios
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <div class="row" style="margin-bottom: 15px;">
+                            <div class="col-md-4">
+                                <button mat-stroked-button aria-label="Domicilios" style="background-color: #00A447; color: #FFF!important;" (click)="addDomicilioBoleta()">
+                                    Domicilios <mat-icon style="display: inherit; width: 15px;">add</mat-icon>
+                                </button>
+                            </div>
+                            <div class="col-md-4 offset-md-2" style="text-align: right;">
+                                <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Imprimir" style="font-size: 11px; margin: auto;" (click)="generatePDFDomicilio()" *ngIf="!loading && accionDomicilioBoletas">
+                                    Imprimir Comprobante <mat-icon style="display: inherit; width: 15px;">print</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ng-container>
+                                    <div style="padding: 30px; text-align: center;" *ngIf="loadingDomicilios">
+                                        <mat-spinner style="margin:0 auto;"></mat-spinner>
+                                        <p>Cargando...</p>
+                                    </div>
+                                    <div class="alert alert-info" *ngIf="!loadingDomicilios && dataSource2.length == 0">
+                                        No hay direcciones asociadas.
+                                    </div> 
+                                    <table mat-table [dataSource]="dataSource2" *ngIf="!loadingDomicilios && dataSource2.length > 0" width="100%">
+                                        <ng-container matColumnDef="tipoDir">
+                                            <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="10%" style="text-align: center; font-size: 14px;"> Tipo Dirección </th>
+                                            <td mat-cell *matCellDef="let element" style="text-align: center; font-size: 14px;"> {{ element.CODTIPOSDIRECCION }}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="direccion">
+                                            <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="70%"> Dirección </th>
+                                            <td mat-cell *matCellDef="let element">
+                                                {{ element.ABREVIATURAVIA }}, {{ element.VIA }} {{ element.NUMEROEXTERIOR }}, Col: {{ element.COLONIA}}
+                                                C.P. {{ element.CODIGOPOSTAL}}, {{ element.DELEGACION}} ({{ element.ESTADO }})
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="historial">
+                                            <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="10%" style="text-align: center; font-size: 14px;"> Historial </th>
+                                            <td mat-cell *matCellDef="let element" style="text-align: center;">
+                                                <button mat-icon-button type="button" color="primary" aria-label="Historial" matTooltip="Historial" (click)="viewHistoricoDomicilio(element.IDDIRECCION)">
+                                                    <mat-icon>search</mat-icon>
+                                                </button>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="editar">
+                                            <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="10%" style="text-align: center; font-size: 14px;"> Editar </th>
+                                            <td mat-cell *matCellDef="let element" style="text-align: center;">
+                                                <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar" (click)="editDomicilioBoleta(element.IDDIRECCION)">
+                                                <mat-icon>edit</mat-icon>
+                                                </button>
+                                            </td>
+                                        </ng-container>
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumnsDom"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumnsDom;"></tr>
+                                    </table>
+                                    <mat-paginator #paginator [length]="total2" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado2($event)">
+                                    </mat-paginator>
+                                </ng-container>                    
+                            </div>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+                <br><hr><br>
+                <mat-accordion>
+                    <mat-expansion-panel (opened)="panelBienes = true" (closed)="panelBienes = false">
+                        <mat-expansion-panel-header>
                         <mat-panel-title>
-                            Gestión de Domicilios para Recibir Boletas Prediales
+                            Datos de bienes
                         </mat-panel-title>
                         <mat-panel-description>
-                            {{panelDomPredial ? 'Cerrar' : 'Ver'}} los datos de los Domicilios
+                            {{panelBienes ? 'Cerrar' : 'Ver'}} datos de bienes
                         </mat-panel-description>
-                    </mat-expansion-panel-header>
-                    <div class="row" style="margin-bottom: 15px;">
-                        <div class="col-md-4">
-                            <button mat-stroked-button aria-label="Domicilios" style="background-color: #00A447; color: #FFF!important;" (click)="addDomicilioBoleta()">
-                                Domicilios <mat-icon style="display: inherit; width: 15px;">add</mat-icon>
-                            </button>
+                        </mat-expansion-panel-header>
+                        <div class="row">
+                            <div class="col-md-9 offset-md-1">
+                                <ng-container>
+                                    <div style="padding: 30px; text-align: center;" *ngIf="loadingInmuebles">
+                                        <mat-spinner style="margin:0 auto;"></mat-spinner>
+                                        <p>Cargando...</p>
+                                    </div>
+                                    <div class="alert alert-info" *ngIf="!loadingInmuebles && dataSource3.length == 0">
+                                        No hay inmuebles asociados.
+                                    </div> 
+                                    <table mat-table [dataSource]="dataSource3" *ngIf="!loadingInmuebles && dataSource3.length > 0" width="100%">
+                                        <ng-container matColumnDef="direccion">
+                                            <th mat-header-cell *matHeaderCellDef width="75%"> Dirección </th>
+                                            <td mat-cell *matCellDef="let element" width="75%">
+                                                {{ element.DIRECCIONINMUEBLE }}
+                                            </td>
+                                        </ng-container>
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumnsInm"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumnsInm;"></tr>
+                                    </table>
+                                    <mat-paginator #paginator [length]="total3" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado3($event)">
+                                    </mat-paginator>
+                                </ng-container>                    
+                            </div>
                         </div>
-                        <div class="col-md-4 offset-md-2" style="text-align: right;">
-                            <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Imprimir" style="font-size: 11px; margin: auto;" (click)="generatePDFDomicilio()" *ngIf="!loading && accionDomicilioBoletas">
-                                Imprimir Comprobante <mat-icon style="display: inherit; width: 15px;">print</mat-icon>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <ng-container>
-                                <div style="padding: 30px; text-align: center;" *ngIf="loadingDomicilios">
-                                    <mat-spinner style="margin:0 auto;"></mat-spinner>
-                                    <p>Cargando...</p>
-                                </div>
-                                <div class="alert alert-info" *ngIf="!loadingDomicilios && dataSource2.length == 0">
-                                    No hay direcciones asociadas.
-                                </div> 
-                                <table mat-table [dataSource]="dataSource2" *ngIf="!loadingDomicilios && dataSource2.length > 0" width="100%">
-                                    <ng-container matColumnDef="tipoDir">
-                                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="10%" style="text-align: center; font-size: 14px;"> Tipo Dirección </th>
-                                        <td mat-cell *matCellDef="let element" style="text-align: center; font-size: 14px;"> {{ element.CODTIPOSDIRECCION }}</td>
-                                    </ng-container>
-                                    <ng-container matColumnDef="direccion">
-                                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="70%"> Dirección </th>
-                                        <td mat-cell *matCellDef="let element">
-                                            {{ element.ABREVIATURAVIA }}, {{ element.VIA }} {{ element.NUMEROEXTERIOR }}, Col: {{ element.COLONIA}}
-                                            C.P. {{ element.CODIGOPOSTAL}}, {{ element.DELEGACION}} ({{ element.ESTADO }})
-                                        </td>
-                                    </ng-container>
-                                    <ng-container matColumnDef="historial">
-                                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="10%" style="text-align: center; font-size: 14px;"> Historial </th>
-                                        <td mat-cell *matCellDef="let element" style="text-align: center;">
-                                            <button mat-icon-button type="button" color="primary" aria-label="Historial" matTooltip="Historial" (click)="viewHistoricoDomicilio(element.IDDIRECCION)">
-                                                <mat-icon>search</mat-icon>
-                                            </button>
-                                        </td>
-                                    </ng-container>
-                                    <ng-container matColumnDef="editar">
-                                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="10%" style="text-align: center; font-size: 14px;"> Editar </th>
-                                        <td mat-cell *matCellDef="let element" style="text-align: center;">
-                                            <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar" (click)="editDomicilioBoleta(element.IDDIRECCION)">
-                                               <mat-icon>edit</mat-icon>
-                                            </button>
-                                        </td>
-                                    </ng-container>
-                                    <tr mat-header-row *matHeaderRowDef="displayedColumnsDom"></tr>
-                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsDom;"></tr>
-                                </table>
-                                <mat-paginator #paginator [length]="total2" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado2($event)">
-                                </mat-paginator>
-                            </ng-container>                    
-                        </div>
-                    </div>
-                </mat-expansion-panel>
-            </mat-accordion>
+                    </mat-expansion-panel>
+                </mat-accordion>
             </mat-card-content>
         </div>
         
