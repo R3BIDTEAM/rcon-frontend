@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Datos del Representado</h1>
+<h1 mat-dialog-title class="verde-cdmx">Datos del Representado</h1>
 <div mat-dialog-content>
 
     <div style="padding: 30px; text-align: center;" *ngIf="false">
@@ -8,7 +8,7 @@
 
     <ng-container *ngIf="true">
         <div class="row">
-            <mat-form-field class="col-6">
+            <mat-form-field appearance="fill" class="col-6">
                 <mat-label>Tipo de persona:</mat-label>
                 <mat-select [(ngModel)]="tipoPersona">
                     <mat-option value="F">Fisica</mat-option>
