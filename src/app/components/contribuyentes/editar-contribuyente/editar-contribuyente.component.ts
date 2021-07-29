@@ -3190,7 +3190,7 @@ export class DialogRepresentacionC {
             console.log(JSON.stringify(payload));
             this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
                 (res: any) => {
-                    this.snackBar.open('SE HA INSERTADO TODO', 'Cerrar', {
+                    this.snackBar.open('REGISTRO EXITOSO', 'Cerrar', {
                         duration: 10000,
                         horizontalPosition: 'end',
                         verticalPosition: 'top'
