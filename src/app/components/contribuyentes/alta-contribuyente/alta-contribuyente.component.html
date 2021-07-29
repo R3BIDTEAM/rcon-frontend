@@ -173,10 +173,17 @@
                             </button>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3" *ngIf="btnDisabled">
                         <div class="d-flex flex-row-reverse">
                             <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" (click)="consulta_previa()" [disabled]="(contribuyente.tipoPersona == 'F' ? fisicaFormGroup.invalid : moralFormGroup.invalid)">
                                 Guardar <mat-icon style="display: inherit; width: 15px;">save</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-3" *ngIf="!btnDisabled">
+                        <div class="d-flex flex-row-reverse">
+                            <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Nuevo" (click)="clean()">
+                                Nuevo
                             </button>
                         </div>
                     </div>
@@ -185,7 +192,7 @@
             </mat-card-content>
         </div>
         <br>
-        <div class="borde" *ngIf="domInsertCont">
+        <div class="borde" *ngIf="domInsertCont && !btnDisabled">
             <mat-card-header>
                 <mat-card-title>Datos de contacto</mat-card-title>
             </mat-card-header>
@@ -313,7 +320,7 @@
             </mat-card-content>
         </div>
         <br>
-        <div class="borde" *ngIf="domInsertCont">
+        <div class="borde" *ngIf="domInsertCont && !btnDisabled">
             <mat-card-header>
                 <mat-card-title>Datos de representación</mat-card-title>
             </mat-card-header>

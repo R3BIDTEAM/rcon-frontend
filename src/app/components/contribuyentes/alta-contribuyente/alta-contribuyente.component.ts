@@ -140,6 +140,7 @@ export class AltaContribuyenteComponent implements OnInit {
     resultadoAlta;
     inserto = false;
     isRequired = true;
+    btnDisabled = true;
 
     /*PAGINADOS*/
     dataSource1 = [];
@@ -234,6 +235,7 @@ export class AltaContribuyenteComponent implements OnInit {
         this.moralFormGroup.controls['idMotivo'].setValue(null);
         this.moralFormGroup.controls['fechaCambio'].setValue(null);
         this.inserto = false;
+        this.btnDisabled = true;
     }
 
     /**
@@ -363,6 +365,7 @@ export class AltaContribuyenteComponent implements OnInit {
             .subscribe(
                 (res: any) => {
                     this.loading = false;
+                    this.btnDisabled = false;
                     console.log("CONTRIBUYENTE GUARDADO");
                     console.log(res);
                     this.domInsertCont = true;
@@ -589,6 +592,7 @@ export class AltaContribuyenteComponent implements OnInit {
 })
 export class DialogDomicilioAlta {
     endpointCatalogos = environment.endpoint + 'registro/';
+    idestadoNg = '9';
     //loadingTiposDireccion = false;
     loadingEstados = false;
     loadingMunicipios = false;
@@ -698,9 +702,29 @@ export class DialogDomicilioAlta {
             (res: any) => {
                 this.loadingEstados = false;
                 this.estados = res;
+                this.getAlcaldia();
             },
             (error) => {
                 this.loadingEstados = false;
+            }
+        );
+    }
+
+    /**
+     * Obtiene el catálogo de la alcaldia.
+     */
+     getAlcaldia(){
+        let busquedaMunCol = 'getDelegaciones';
+        this.loadingMunicipios = true;
+        this.http.get(this.endpointCatalogos + busquedaMunCol, this.httpOptions).subscribe(
+            (res: any) => {
+                this.loadingMunicipios = false;
+                this.municipios = res;
+                console.log('GETDELEG');
+                console.log(res);
+            },
+            (error) => {
+                this.loadingMunicipios = false;
             }
         );
     }
@@ -709,6 +733,22 @@ export class DialogDomicilioAlta {
     * Obtiene el nombre de los Municipios de cada estado, o los de las delegaciones si es la CDMX
     */
     getDataMunicipios(event): void {
+        if(event.value != 9){
+            this.domicilioFormGroup.controls['idmunicipio2'].setValue('');
+            this.domicilioFormGroup.controls['municipio'].setValue('');
+            this.domicilioFormGroup.controls['idciudad'].setValue('');
+            this.domicilioFormGroup.controls['ciudad'].setValue('');
+            
+        }
+
+        this.domicilioFormGroup.controls['codasentamiento'].setValue('');
+        this.domicilioFormGroup.controls['asentamiento'].setValue('');
+        this.domicilioFormGroup.controls['idtipoasentamiento'].setValue('');
+        this.domicilioFormGroup.controls['cp'].setValue('');
+        this.domicilioFormGroup.controls['idtipovia'].setValue('');
+        this.domicilioFormGroup.controls['via'].setValue('');
+        this.domicilioFormGroup.controls['codtiposvia'].setValue('');
+
         this.botonMunicipio = false;
         let busquedaMunCol = '';
         busquedaMunCol = (event.value == 9) ? 'getDelegaciones' : 'getMunicipiosByEstado?codEstado=' + event.value;
@@ -928,6 +968,16 @@ export class DialogDomicilioAlta {
     * Obtiene los municipios
     */
     getMunicipios(){
+        this.domicilioFormGroup.controls['idciudad'].setValue('');
+        this.domicilioFormGroup.controls['ciudad'].setValue('');
+        this.domicilioFormGroup.controls['codasentamiento'].setValue('');
+        this.domicilioFormGroup.controls['asentamiento'].setValue('');
+        this.domicilioFormGroup.controls['idtipoasentamiento'].setValue('');
+        this.domicilioFormGroup.controls['cp'].setValue('');
+        this.domicilioFormGroup.controls['idtipovia'].setValue('');
+        this.domicilioFormGroup.controls['via'].setValue('');
+        this.domicilioFormGroup.controls['codtiposvia'].setValue('');
+
         this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
         const dialogRef = this.dialog.open(DialogMunicipiosAlta, {
             width: '700px',
@@ -949,6 +999,14 @@ export class DialogDomicilioAlta {
     * Obtiene las ciudades dependiendo del municipio seleccionado
     */
     getCiudad(){
+        this.domicilioFormGroup.controls['codasentamiento'].setValue('');
+        this.domicilioFormGroup.controls['asentamiento'].setValue('');
+        this.domicilioFormGroup.controls['idtipoasentamiento'].setValue('');
+        this.domicilioFormGroup.controls['cp'].setValue('');
+        this.domicilioFormGroup.controls['idtipovia'].setValue('');
+        this.domicilioFormGroup.controls['via'].setValue('');
+        this.domicilioFormGroup.controls['codtiposvia'].setValue('');
+
         this.dataDomicilio.idmunicipio2 = this.domicilioFormGroup.value.idmunicipio2;
         const dialogRef = this.dialog.open(DialogCiudadAlta, {
             width: '700px',
@@ -971,6 +1029,11 @@ export class DialogDomicilioAlta {
     * Obtiene las colonias dependiendo de la ciudad seleccionada
     */
     getAsentamiento(){
+        this.domicilioFormGroup.controls['cp'].setValue('');
+        this.domicilioFormGroup.controls['idtipovia'].setValue('');
+        this.domicilioFormGroup.controls['via'].setValue('');
+        this.domicilioFormGroup.controls['codtiposvia'].setValue('');
+
         this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
         this.dataDomicilio.idmunicipio = this.domicilioFormGroup.value.idmunicipio;
         this.dataDomicilio.idmunicipio2 = this.domicilioFormGroup.value.idmunicipio2;
@@ -1065,12 +1128,13 @@ export class DialogMunicipiosAlta {
         console.log(data);
     }
 
-    cleanAsentamiento(){
+    cleanMunicipio(){
         this.pagina = 1;
         this.total = 0;
         this.dataSource = [];
         this.loadingBuscaMun = false;
         this.dataPaginate;
+        this.buscaMunicipios = null;
         this.obtenerMunicipios();
     }
 
@@ -1218,12 +1282,13 @@ export class DialogCiudadAlta {
         console.log(data);
     }
 
-    cleanAsentamiento(){
+    cleanCiudad(){
         this.pagina = 1;
         this.total = 0;
         this.dataSource = [];
         this.loadingBuscaCiudad = false;
         this.dataPaginate;
+        this.buscaCiudad = null;
         this.obtenerCiudad();
     }
 
@@ -1349,6 +1414,7 @@ export class DialogAsentamientoAlta {
         this.dataSource = [];
         this.loading = false;
         this.dataPaginate;
+        this.buscaAsentamiento = null;
         this.obtenerAsentamiento();
     }
 
@@ -1455,6 +1521,7 @@ export class DialogViaAlta {
     dataPaginate;
     httpOptions;
     buscaVia;
+    btnAceptar = true;
     dataVia: dataVia = {} as dataVia;
     @ViewChild('paginator') paginator: MatPaginator;
 
@@ -1477,12 +1544,13 @@ export class DialogViaAlta {
         console.log(data);
     }
 
-    cleanAsentamiento(){
+    cleanVia(){
         this.pagina = 1;
         this.total = 0;
         this.dataSource = [];
         this.loadingBuscaVia = false;
         this.dataPaginate;
+        this.buscaVia = null;
         this.obtenerVia();
     }
 
@@ -1549,6 +1617,7 @@ export class DialogViaAlta {
     */
     selectVia(element){
         console.log(element);
+        this.btnAceptar = false;
         this.dataVia.codtiposvia = element.codtiposvia;
         this.dataVia.idvia = element.idvia;
         this.dataVia.via = element.via;
@@ -1606,6 +1675,7 @@ export class DialogRepresentacionAltaC {
     fisicaFormGroup: FormGroup;
     moralFormGroup: FormGroup;
     dataRepresentacion: DataRepresentacion = {} as DataRepresentacion;
+    isRequired = true;
   
     constructor(
         private http: HttpClient,
@@ -1622,15 +1692,15 @@ export class DialogRepresentacionAltaC {
             nombre: [null, [Validators.required]],
             apaterno: [null, [Validators.required]],
             amaterno: [null, []],
-            rfc: [null, [Validators.required]],
-            curp: [null, [Validators.required]],
+            rfc: [null, []],
+            curp: [null, []],
             ine: [null, []],
             idDocIdent: ['', []],
             docIdent: [null, []],
             fechaNacimiento: [null, []],
             fechaDefuncion: [null, []],
             celular: [null, []],
-            email: [null, []],
+            email: ['', Validators.email],
             texto: [null, []],
             fechaCaducidad: [null, []],
         });
@@ -1661,15 +1731,17 @@ export class DialogRepresentacionAltaC {
     }
 
     /**
-    * Al cambio en el llenado de curp o rfc se activará o desactivará uno de los dos validadores de requerido.
-    * @param remove Valor del campo que se le retirara la validación, puede ser CURP o RFC
-    * @param add  Valor del campo que se le agregara a la validación, puede ser CURP o RFC
+    * De acuerdo al campo seleccionado será requerido el RFC, el CURP o ambos.
     */
-    changeRequired(remove, add): void {
-        this.fisicaFormGroup.controls[remove].setValue(null);
-        this.fisicaFormGroup.controls[remove].clearValidators();
-        this.fisicaFormGroup.controls[add].setValidators(Validators.required);
-        this.fisicaFormGroup.markAsUntouched();
+    changeRequired(): void {
+        if((this.fisicaFormGroup.value.rfc === null && this.fisicaFormGroup.value.curp === null) || (this.fisicaFormGroup.value.rfc === '' && this.fisicaFormGroup.value.curp === '')){​​​​​​​​
+            this.isRequired = true;
+        }​​​​​​​​ else {​​​​​​​​
+            this.isRequired = false;
+        }​​​​​​​​
+
+        console.log(this.fisicaFormGroup.value.rfc);
+        this.fisicaFormGroup.markAsTouched();
         this.fisicaFormGroup.updateValueAndValidity();
     }
   
@@ -1902,6 +1974,7 @@ export class DialogRepresentadoAltaC {
     idDocumento;
     insertOrUpdate = null;
     dataRepresentacion: DataRepresentacion = {} as DataRepresentacion;
+    isRequired = true;
 
     constructor(
         private http: HttpClient,
@@ -1924,8 +1997,8 @@ export class DialogRepresentadoAltaC {
             nombre: [null, [Validators.required]],
             apaterno: [null, [Validators.required]],
             amaterno: [null, []],
-            rfc: [null, [Validators.required]],
-            curp: [null, [Validators.required]],
+            rfc: [null, []],
+            curp: [null, []],
             ine: [null, []],
             idDocIdent: ['', []],
             docIdent: [null, []],
@@ -1957,15 +2030,17 @@ export class DialogRepresentadoAltaC {
     }
       
     /**
-     * * Al cambio en el llenado de curp o rfc se activará o desactivará uno de los dos validadores de requerido.
-     * @param remove Valor del campo que se le retirara la validación, puede ser CURP o RFC
-     * @param add  Valor del campo que se le agregara a la validación, puede ser CURP o RFC
-     */
-    changeRequired(remove, add): void {
-        this.fisicaFormGroup.controls[remove].setValue(null);
-        this.fisicaFormGroup.controls[remove].clearValidators();
-        this.fisicaFormGroup.controls[add].setValidators(Validators.required);
-        this.fisicaFormGroup.markAsUntouched();
+    * De acuerdo al campo seleccionado será requerido el RFC, el CURP o ambos.
+    */
+    changeRequired(): void {
+        if((this.fisicaFormGroup.value.rfc === null && this.fisicaFormGroup.value.curp === null) || (this.fisicaFormGroup.value.rfc === '' && this.fisicaFormGroup.value.curp === '')){​​​​​​​​
+            this.isRequired = true;
+        }​​​​​​​​ else {​​​​​​​​
+            this.isRequired = false;
+        }​​​​​​​​
+
+        console.log(this.fisicaFormGroup.value.rfc);
+        this.fisicaFormGroup.markAsTouched();
         this.fisicaFormGroup.updateValueAndValidity();
     }
   
