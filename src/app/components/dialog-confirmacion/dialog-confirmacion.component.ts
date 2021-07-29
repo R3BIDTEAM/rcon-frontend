@@ -23,3 +23,25 @@ export class DialogConfirmacionComponent implements OnInit {
     }
 
 }
+
+@Component({
+    selector: 'dialog-confirmaTipoPersona',
+    templateUrl: 'dialog-confirmaTipoPersona.html',
+})
+export class DialogsCambiaPersona {
+    registro;
+
+    constructor(
+        public dialog: MatDialog,
+        public dialogRef: MatDialogRef<DialogsCambiaPersona>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) { 
+        dialogRef.disableClose = true;
+        console.log(data);
+        
+    }
+
+    ngOnInit(): void {
+    }
+
+}

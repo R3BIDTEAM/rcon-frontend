@@ -64,11 +64,18 @@ export class EdicionContribuyenteComponent implements OnInit {
     });
 
     this.contribuyenteFormGroup = this._formBuilder.group({
-      tipo_persona: ['M', Validators.required],
+      tipo_persona: ['F', Validators.required],
       nombre: [null],
       rfc: [null],
+      apaterno: [null],
+      amaterno: [null],
+      curp: [null],
+      ine: [null],
+      iddocumentoidentificativo: [null],
+      documentoidentificativo: [null]
     });
 
+    this.contribuyenteFormGroup.value.tipo_persona = 'F';
     this.contribuyenteFormGroup.controls.tipo_persona.valueChanges.subscribe(tipo_persona => {
       if(tipo_persona == 'F') {
         this.contribuyenteFormGroup.addControl('apaterno', new FormControl(null));

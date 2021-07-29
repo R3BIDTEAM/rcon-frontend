@@ -62,7 +62,7 @@
             </ng-container>
             <ng-container *ngIf="tipoBusqueda == 'contribuyente'">
                 <form [formGroup]="contribuyenteFormGroup">
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col-4">
                         </div>
                         <mat-form-field appearance="fill"  class="col-4">
@@ -88,7 +88,7 @@
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
-                    </ng-container>
+                    </ng-container> -->
                     <ng-container *ngIf="contribuyenteFormGroup.controls.tipo_persona.value == 'F'">
                         <div class="row">
                             <mat-form-field appearance="outline"  class="col-4">

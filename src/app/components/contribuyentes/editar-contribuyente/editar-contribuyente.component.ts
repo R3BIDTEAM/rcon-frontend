@@ -12,7 +12,7 @@ import * as FileSaver from 'file-saver';
 import pdfMake from "pdfmake/build/pdfmake";  
 import pdfFonts from "pdfmake/build/vfs_fonts";  
 pdfMake.vfs = pdfFonts.pdfMake.vfs; 
-import { DialogConfirmacionComponent } from '@comp/dialog-confirmacion/dialog-confirmacion.component';
+import { DialogConfirmacionComponent, DialogsCambiaPersona } from '@comp/dialog-confirmacion/dialog-confirmacion.component';
 
 export interface DatosContribuyente {
     tipoPersona: string;
@@ -265,9 +265,30 @@ export class EditarContribuyenteComponent implements OnInit {
     actualizaPersona(event){
         console.log(event)
         this.actCambioPersona = (event == this.cambioPersona) ? true : false;
-        console.log(this.actCambioPersona);
+        const dialogRef = this.dialog.open(DialogsCambiaPersona, {
+            width: '700px',
+            data: this.actCambioPersona
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result === true){
+                this.confirmaCambiaPersona();
+            }else{
+                this.contribuyente.tipoPersona = this.cambioPersona;
+                console.log("ACA EL ACT CAMBIO PERSONA")
+                console.log(this.contribuyente.tipoPersona);
+            }
+        });
+        
+        
+    }
+
+    confirmaCambiaPersona(){
         if(this.contribuyente.tipoPersona == 'M'){
-            this.contribuyente.nombre_moral = this.contribuyente.apepaterno + ' ' + this.contribuyente.apematerno + ' ' + this.contribuyente.nombre;
+            this.contribuyente.nombre_moral = (this.contribuyente.apepaterno !== null) ? this.contribuyente.apepaterno : '' 
+                                                + ' ' + 
+                                                (this.contribuyente.apematerno !== null) ?  this.contribuyente.apematerno : ''
+                                                + ' ' + 
+                                                (this.contribuyente.nombre !== null) ? this.contribuyente.nombre : '';
         }
         this.contribuyente.rfc = null;
     }
