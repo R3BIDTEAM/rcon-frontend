@@ -131,6 +131,7 @@ export class EditarSociedadComponent implements OnInit {
     idPeritoD;
     panelDomicilio = false;
     panelDomPredial = false;
+    panelBienes = false;
     panelEspecifico = false;
     panelSociedades = false;
     panelRepresentantes = false;
@@ -140,12 +141,14 @@ export class EditarSociedadComponent implements OnInit {
     dataDomicilios: DataDomicilio[] = [];
     dataDomicilioEspecifico: DataDomicilio[] = [];
     displayedColumnsDom: string[] = ['tipoDir', 'direccion', 'historial', 'editar'];
+    displayedColumnsInm: string[] = ['inmueble','direccion','domicilio','descripcion','sujeto'];
     displayedColumnsRepdo: string[] = ['representacion','texto','caducidad','editar','eliminar'];
     loadingDomicilios = false;
     loadingDireccionEspecifica = false;
     loadingRepresentante = false;
     loadingRepresentado = false;
     loadingDatosPerito = false;
+    loadingInmuebles = false;
     paginaDom = 1;
     totalDom = 0;
     pageSizeDom = 15;
@@ -171,6 +174,10 @@ export class EditarSociedadComponent implements OnInit {
     total2 = 0;
     pagina2= 1;
     dataPaginate2;
+    dataSource3 = [];
+    total3 = 0;
+    pagina3= 1;
+    dataPaginate3;
     dataSource4 = [];
     total4 = 0;
     pagina4= 1;
@@ -599,6 +606,82 @@ export class EditarSociedadComponent implements OnInit {
         this.pagina1 = evt.pageIndex + 1;
         this.dataSource1 = this.paginate(this.dataSource1, 15, this.pagina1);
     }
+
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
+     paginado3(evt): void{
+        this.pagina3 = evt.pageIndex + 1;
+        this.dataSource3 = this.paginate(this.dataSource3, 15, this.pagina3);
+    }
+
+
+    getidInmuebles(){
+        let metodo = 'getDireccionesInmueble';
+        this.http.get(this.endpointActualiza + 'getInmuebles' + '?idPersona='+ this.idSociedad, this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    console.log("AQUI ENTRO EL INMUEBLE!!!");
+                    console.log(res);
+                    
+                    this.dataSource3 = res;
+                    console.log(res.length);
+                    console.log(this.dataSource3);
+                    this.dataPaginate3 = this.paginate(this.dataSource3, 15, this.paginaDom);
+                    this.total = this.dataPaginate3.length; 
+                    this.paginator.pageIndex = 0;
+                    console.log("AQUI ENTRO EL RES WEE");
+                    console.log(this.dataSource3);
+                    // this.loadingInmuebles = false;
+                    // console.log("AQUI ENTRO IDINMUEBLE!!!");
+                    // console.log(res);
+                    // //console.log(res[0].idinmueble);
+                    // if(res.length > 0){
+                    //     this.idInmueble = res[0].idinmueble;
+                    // }else{
+                    //     this.idInmueble = null;
+                    // }
+                    // this.getInmuebles();
+                },
+                (error) => {
+                    this.loadingInmuebles = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
+
+    // getInmuebles(){
+    //     this.http.get(this.endpointActualiza + 'getDireccionesInmueble?' + 'idInmueble='+ this.idInmueble, this.httpOptions)
+    //         .subscribe(
+    //             (res: any) => {
+    //                 this.loadingDomicilios = false;
+    //                 console.log("AQUI ENTRO EL INMUEBLE!!!");
+    //                 console.log(res);
+                    
+    //                 this.dataSource3 = res;
+    //                 console.log(res.length);
+    //                 console.log(this.dataSource3);
+    //                 this.dataPaginate3 = this.paginate(this.dataSource3, 15, this.paginaDom);
+    //                 this.total = this.dataPaginate3.length; 
+    //                 this.paginator.pageIndex = 0;
+    //                 console.log("AQUI ENTRO EL RES WEE");
+    //             },
+    //             (error) => {
+    //                 this.loadingDomicilios = false;
+    //                 this.snackBar.open(error.error.mensaje, 'Cerrar', {
+    //                     duration: 10000,
+    //                     horizontalPosition: 'end',
+    //                     verticalPosition: 'top'
+    //                 });
+    //             }
+    //         );
+    // }
+
 
     /**
      * Abre el dialogo que registrara un nuevo domicilio
