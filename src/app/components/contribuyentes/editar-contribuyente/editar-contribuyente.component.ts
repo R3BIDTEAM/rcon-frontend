@@ -2845,6 +2845,7 @@ export class DialogRepresentacionC {
     fisicaFormGroup: FormGroup;
     moralFormGroup: FormGroup;
     dataRepresentacion: DataRepresentacion = {} as DataRepresentacion;
+    isRequired = true;
   
     constructor(
         private http: HttpClient,
@@ -2861,8 +2862,8 @@ export class DialogRepresentacionC {
             nombre: [null, [Validators.required]],
             apaterno: [null, [Validators.required]],
             amaterno: [null, []],
-            rfc: [null, [Validators.required]],
-            curp: [null, [Validators.required]],
+            rfc: [null, []],
+            curp: [null, []],
             ine: [null, []],
             idDocIdent: ['', []],
             docIdent: [null, []],
@@ -2904,15 +2905,19 @@ export class DialogRepresentacionC {
     }
 
     /**
-     * Al cambio en el llenado de curp o rfc se activará o desactivará uno de los dos validadores de requerido.
+     * De acuerdo al campo seleccionado será requerido el RFC, el CURP o ambos.
      * @param remove Valor del campo que se le retirara la validación, puede ser CURP o RFC
      * @param add  Valor del campo que se le agregara a la validación, puede ser CURP o RFC
      */
     changeRequired(remove, add): void {
-        this.fisicaFormGroup.controls[remove].setValue(null);
-        this.fisicaFormGroup.controls[remove].clearValidators();
-        this.fisicaFormGroup.controls[add].setValidators(Validators.required);
-        this.fisicaFormGroup.markAsUntouched();
+        if((this.fisicaFormGroup.value.rfc === null && this.fisicaFormGroup.value.curp === null) || (this.fisicaFormGroup.value.rfc === '' && this.fisicaFormGroup.value.curp === '')){​​​​​​​​
+            this.isRequired = true;
+        }​​​​​​​​ else {​​​​​​​​
+            this.isRequired = false;
+        }​​​​​​​​
+
+        console.log(this.fisicaFormGroup.value.rfc);
+        this.fisicaFormGroup.markAsTouched();
         this.fisicaFormGroup.updateValueAndValidity();
     }
   
@@ -3194,6 +3199,7 @@ export class DialogRepresentadoC {
     insertOrUpdate = null;
     insUp = false;
     dataRepresentacion: DataRepresentacion = {} as DataRepresentacion;
+    isRequired = true;
 
     constructor(
         private http: HttpClient,
@@ -3216,8 +3222,8 @@ export class DialogRepresentadoC {
             nombre: [null, [Validators.required]],
             apaterno: [null, [Validators.required]],
             amaterno: [null, []],
-            rfc: [null, [Validators.required]],
-            curp: [null, [Validators.required]],
+            rfc: [null, []],
+            curp: [null, []],
             ine: [null, []],
             idDocIdent: ['', []],
             docIdent: [null, []],
@@ -3251,15 +3257,19 @@ export class DialogRepresentadoC {
     }
       
     /**
-     * * Al cambio en el llenado de curp o rfc se activará o desactivará uno de los dos validadores de requerido.
+     * De acuerdo al campo seleccionado será requerido el RFC, el CURP o ambos.
      * @param remove Valor del campo que se le retirara la validación, puede ser CURP o RFC
      * @param add  Valor del campo que se le agregara a la validación, puede ser CURP o RFC
      */
     changeRequired(remove, add): void {
-        this.fisicaFormGroup.controls[remove].setValue(null);
-        this.fisicaFormGroup.controls[remove].clearValidators();
-        this.fisicaFormGroup.controls[add].setValidators(Validators.required);
-        this.fisicaFormGroup.markAsUntouched();
+        if((this.fisicaFormGroup.value.rfc === null && this.fisicaFormGroup.value.curp === null) || (this.fisicaFormGroup.value.rfc === '' && this.fisicaFormGroup.value.curp === '')){​​​​​​​​
+            this.isRequired = true;
+        }​​​​​​​​ else {​​​​​​​​
+            this.isRequired = false;
+        }​​​​​​​​
+
+        console.log(this.fisicaFormGroup.value.rfc);
+        this.fisicaFormGroup.markAsTouched();
         this.fisicaFormGroup.updateValueAndValidity();
     }
   
