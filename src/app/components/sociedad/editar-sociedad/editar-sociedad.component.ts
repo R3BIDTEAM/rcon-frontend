@@ -3548,7 +3548,7 @@ export interface Notario {
     styleUrls: ['./editar-sociedad.component.css']
 })
 export class DialogNotarioSociedad {
-    endpoint = environment.endpoint + 'registro/getNotariosByDatosIdentificativos';
+    endpoint = environment.endpoint + 'registro/';
     endpointCatalogos = environment.endpoint + 'registro/';
     pageSize = 15;
     pagina = 1;
@@ -3611,6 +3611,7 @@ export class DialogNotarioSociedad {
         this.optionNotario = undefined;
         this.pagina = 1;
         this.queryParamFiltros = '';
+        let metodoN = '';
         
         if(this.filtros.numnotario){
             this.queryParamFiltros = this.queryParamFiltros + '&numnotario=' + this.filtros.numnotario;
@@ -3636,8 +3637,14 @@ export class DialogNotarioSociedad {
         if(this.filtros.apellidoMaterno){
             this.queryParamFiltros = this.queryParamFiltros + '&apellidoMaterno=' + this.filtros.apellidoMaterno + '&filtroApellidoMaterno=0';
         }
+
+        if(this.filtros.nombre || this.filtros.apellidoPaterno || this.filtros.apellidoMaterno){
+            metodoN = 'getNotariosByDatosPersonales';
+        }else{
+            metodoN = 'getNotariosByDatosIdentificativos';
+        }
         
-        this.http.get(this.endpoint + '?' + this.queryParamFiltros, this.httpOptions).subscribe(
+        this.http.get(this.endpoint + metodoN + '?' + this.queryParamFiltros, this.httpOptions).subscribe(
             (res: any) => {
                 this.loading = false;
                 this.dataNotarios = res;
