@@ -4,15 +4,15 @@
         <p>Cargando...</p>
     </div>
     <div class="borde" *ngIf="!loading">
-        <mat-card-header>
-            <mat-card-title>Datos perito</mat-card-title>
+        <mat-card-header style="padding-left: 7%;">
+            <mat-card-title style="margin-top: 10px;">Datos perito</mat-card-title>
             <button mat-icon-button color="primary" (click)="openDialogPerito()" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente" [disabled]="inserto">
                 <mat-icon>search</mat-icon>
             </button>
         </mat-card-header>
         <hr>
         <br>
-        <mat-card-header>
+        <mat-card-header style="padding-left: 7%;">
             <mat-card-title>Datos persona física</mat-card-title>
         </mat-card-header>
         <mat-card-content>
@@ -21,7 +21,7 @@
                 <div class="row">
                     <div class="col-1 text-center">
                     </div>
-                    <mat-form-field class="col-10">
+                    <mat-form-field appearance="outline" class="col-10">
                         <mat-label>Nombre:</mat-label>
                         <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.nombre" formControlName="nombre" [readonly]="inserto" maxlength="250">
                         <mat-error *ngIf="peritoPersonaFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
@@ -30,12 +30,12 @@
                 <div class="row">
                     <div class="col-1 text-center">
                     </div>
-                    <mat-form-field class="col-5">
+                    <mat-form-field appearance="outline" class="col-5">
                         <mat-label>Apellido Paterno:</mat-label>
                         <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.apepaterno" formControlName="apepaterno" [readonly]="inserto" maxlength="250">
                         <mat-error *ngIf="peritoPersonaFormGroup.controls.apepaterno.errors?.required">Requerido</mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col-5">
+                    <mat-form-field appearance="outline" class="col-5">
                         <mat-label>Apellido Materno:</mat-label>
                         <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.apematerno" formControlName="apematerno" [readonly]="inserto" maxlength="250">
                         <mat-error *ngIf="peritoPersonaFormGroup.controls.apematerno.errors?.required">Requerido</mat-error>
@@ -44,13 +44,13 @@
                 <div class="row">
                     <div class="col-1 text-center">
                     </div>
-                    <mat-form-field class="col-5">
+                    <mat-form-field appearance="outline" class="col-5">
                         <mat-label>RFC:</mat-label>
                         <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.rfc" formControlName="rfc" [readonly]="inserto" pattern="^([A-Z,Ñ,&]{4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})$" maxlength="13">
                         <mat-error *ngIf="peritoPersonaFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                         <mat-error *ngIf="peritoPersonaFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 4 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col-5">
+                    <mat-form-field appearance="outline" class="col-5">
                         <mat-label>CURP:</mat-label>
                         <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.curp" formControlName="curp" [readonly]="inserto" maxlength="18">
                         <mat-error *ngIf="peritoPersonaFormGroup.controls.curp.errors?.required">Requerido</mat-error>
@@ -59,7 +59,7 @@
                 <div class="row">
                     <div class="col-1 text-center">
                     </div>
-                    <mat-form-field class="col-5">
+                    <mat-form-field appearance="outline" class="col-5">
                         <mat-label>INE:</mat-label>
                         <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.ine" formControlName="ine" [readonly]="inserto" maxlength="30">
                         <mat-error *ngIf="peritoPersonaFormGroup.controls.ine.errors?.required">Requerido</mat-error>
@@ -68,7 +68,7 @@
                 <div class="row">
                     <div class="col-1 text-center">
                     </div>
-                    <mat-form-field class="col-5">
+                    <mat-form-field appearance="fill" class="col-5">
                         <mat-label>Identificación</mat-label>
                         <mat-select formControlName="identificacion" [(ngModel)]="datoPeritos.identificacion" [disabled]="inserto">
                             <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF">
@@ -76,7 +76,7 @@
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field class="col-5">
+                    <mat-form-field appearance="outline" class="col-5">
                         <mat-label></mat-label>
                         <input matInput placeholder="Dato de la Identificación" [(ngModel)]="datoPeritos.idedato" formControlName="idedato" [readonly]="inserto" maxlength="250">
                     </mat-form-field>
@@ -84,13 +84,13 @@
                 <div class="row">
                     <div class="col-1 text-center">
                     </div>
-                    <mat-form-field class="col-5">
+                    <mat-form-field appearance="fill" class="col-5">
                         <mat-label>Fecha Nacimiento:</mat-label>
                         <input matInput [matDatepicker]="fechaNacimiento" [(ngModel)]="datoPeritos.fecha_naci" formControlName="fechaNacimiento" [disabled]="inserto">
                                 <mat-datepicker-toggle matSuffix [for]="fechaNacimiento"></mat-datepicker-toggle>
                                 <mat-datepicker #fechaNacimiento></mat-datepicker>
                     </mat-form-field>
-                    <mat-form-field class="col-5">
+                    <mat-form-field appearance="fill" class="col-5">
                         <mat-label>Fecha Defunción:</mat-label>
                         <input matInput [matDatepicker]="fechaDefuncion" [(ngModel)]="datoPeritos.fecha_def" formControlName="fechaDefuncion" [disabled]="inserto">
                         <mat-datepicker-toggle matSuffix [for]="fechaDefuncion"></mat-datepicker-toggle>
@@ -100,11 +100,11 @@
                 <div class="row">
                     <div class="col-1 text-center">
                     </div>
-                    <mat-form-field class="col-5">
+                    <mat-form-field appearance="outline" class="col-5">
                         <mat-label>Celular:</mat-label>
                         <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.celular" formControlName="celular" [readonly]="inserto" maxlength="10">
                     </mat-form-field>
-                    <mat-form-field class="col-5">
+                    <mat-form-field appearance="outline" class="col-5">
                         <mat-label>E-mail:</mat-label>
                         <input matInput type="email" [email]="true" placeholder="E-mail" [(ngModel)]="datoPeritos.email" formControlName="email" [readonly]="inserto" maxlength="250">
                         <mat-error *ngIf="peritoPersonaFormGroup.hasError('email', 'email') && peritoPersonaFormGroup.get('email').touched">Correo invalido</mat-error>
@@ -113,30 +113,30 @@
                 </div>
                 <!-- Fin de nombre -->
                 <br>
-                <mat-card-header>
+                <mat-card-header style="padding-left: 7%;">
                     <mat-card-title>Datos especificos del perito</mat-card-title>
                 </mat-card-header>
                 <div class="row">
                     <div class="col-1 text-center">
                     </div>
-                    <mat-form-field class="col-5">
+                    <mat-form-field appearance="outline" class="col-5">
                         <mat-label>Registro:</mat-label>
                         <input matInput formControlName="registro" [(ngModel)]="datoPeritos.registro" [readonly]="inserto" maxlength="250">
                     </mat-form-field>
                     <!-- <mat-form-field class="col-5"> -->
-                        <mat-checkbox (change)="isIndependiente($event)" [disabled]="inserto">Independiente</mat-checkbox>
+                        <mat-checkbox (change)="isIndependiente($event)" [disabled]="inserto" style="margin-top: 15px; margin-left: 20px;">Independiente</mat-checkbox>
                     <!-- </mat-form-field> -->
                 </div>
                 <div class="row">
                     <div class="col-1 text-center">
                     </div>
-                    <mat-form-field class="col-5">
+                    <mat-form-field appearance="fill" class="col-5">
                         <mat-label>Fecha Inicio:</mat-label>
                         <input matInput formControlName="fechaInicio" [matDatepicker]="pickfechaInicio" [(ngModel)]="datoPeritos.fecha_alta" [disabled]="inserto">
                         <mat-datepicker-toggle matSuffix [for]="pickfechaInicio"></mat-datepicker-toggle>
                         <mat-datepicker #pickfechaInicio></mat-datepicker>
                     </mat-form-field>
-                    <mat-form-field class="col-5">
+                    <mat-form-field appearance="fill" class="col-5">
                         <mat-label>Fecha Fin:</mat-label>
                         <input matInput formControlName="fechaFin" [matDatepicker]="pickfechaFin" [(ngModel)]="datoPeritos.fecha_baja" [disabled]="inserto">
                         <mat-datepicker-toggle matSuffix [for]="pickfechaFin"></mat-datepicker-toggle>
@@ -146,7 +146,7 @@
                 <div class="row">
                     <div class="col-1 text-center">
                     </div>
-                    <mat-form-field class="col-5">
+                    <mat-form-field appearance="outline" class="col-5">
                         <mat-label>Login:</mat-label>
                         <input matInput formControlName="login" [readonly]="inserto">
                         <mat-error *ngIf="peritoPersonaFormGroup.controls.login.errors?.required">Requerido</mat-error>
@@ -160,7 +160,7 @@
             <br>
 
             <div class="row">
-                <div class="col-md-2 offset-md-8">
+                <div class="col-md-2 offset-md-7">
                     <div class="d-flex flex-row-reverse">
                         <button mat-stroked-button class="boton-n-representacion" color="warn" aria-label="Cancelar" (click)="clean()">
                             Cancelar

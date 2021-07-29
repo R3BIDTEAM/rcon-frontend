@@ -1,13 +1,14 @@
 <mat-card>
     <div class="borde">
-        <mat-card-header>
+        <h1 class="titulo-cdmx" style="margin-top: 15px;">Datos del Perito</h1>
+        <!-- <mat-card-header>
             <mat-card-title>Datos Perito</mat-card-title>
-        </mat-card-header>
-        <mat-card-header>
-            <mat-card-title>Datos de persona física</mat-card-title>
+        </mat-card-header> -->
+        <mat-card-header style="padding-left: 7%;">
+            <mat-card-title style="font-size: 17px;">Datos de persona física</mat-card-title>
         </mat-card-header>
         <div class="row">
-            <div class="col-md-8 offset-md-2">
+            <div class="col-md-10 offset-md-1">
                 <ng-container *ngIf="!loading">
                     <div class="row">
                         <div class="col-md-4">
@@ -106,21 +107,21 @@
                     </div>
 
                     <mat-card-header>
-                        <mat-card-title>Datos especifícos del perito</mat-card-title>
+                        <mat-card-title style="font-size: 17px;">Datos especifícos del perito</mat-card-title>
                     </mat-card-header>
                     <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>Registro*</mat-label>
                                 <input matInput placeholder="Placeholder" [disabled]="true" [(ngModel)]="datoPeritos.registro">
                             </mat-form-field>
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-md-6" style="padding-top: 15px;">
                                 <mat-checkbox [disabled]="true" [disabled]="true" [checked]="datoPeritos.independiente">Independiente</mat-checkbox>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                             <mat-form-field appearance="fill" style="width: 100%;">
                                 <mat-label>Fecha Alta</mat-label>
                                 <input matInput [matDatepicker]="fechaAlta" [disabled]="true" [(ngModel)]="datoPeritos.fecha_alta">
@@ -128,7 +129,7 @@
                                 <mat-datepicker #fechaAlta></mat-datepicker>
                             </mat-form-field>
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                             <mat-form-field appearance="fill" style="width: 100%;">
                                 <mat-label>Fecha Baja</mat-label>
                                 <input matInput [matDatepicker]="fechaBaja" [disabled]="true" [(ngModel)]="datoPeritos.fecha_baja">
@@ -170,7 +171,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-2 offset-md-8">
+            <div class="col-md-2 offset-md-9">
                 <div class="d-flex flex-row-reverse">
                     <button mat-stroked-button class="boton-n-representacion" color="warn" aria-label="Cancelar" [routerLink]="['/main/consulta-peritos']">
                         Cancelar
