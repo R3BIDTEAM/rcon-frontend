@@ -585,132 +585,138 @@
     </div>
     <br>
     <div class="borde">
-        <mat-card-header>
+        <mat-card-header style="padding-left: 7%;">
             <mat-card-title>Datos especifícos del perito</mat-card-title>
         </mat-card-header>
-        <mat-accordion>
-            <mat-expansion-panel (opened)="panelEspecifico = true" (closed)="panelEspecifico = false">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        Información
-                    </mat-panel-title>
-                    <mat-panel-description>
-                        {{panelEspecifico ? 'Cerrar' : 'Ver'}} datos especifícos
-                    </mat-panel-description>
-                </mat-expansion-panel-header>
-                <div class="row">
-                    <div class="col-md-8 offset-md-2">
-                        <ng-container *ngIf="!loading">
+        <div class="row">
+            <div class="col-md-10 offset-md-1">   
+                <mat-card-content>
+                    <mat-accordion>
+                        <mat-expansion-panel (opened)="panelEspecifico = true" (closed)="panelEspecifico = false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Información
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                    {{panelEspecifico ? 'Cerrar' : 'Ver'}} datos especifícos
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
                             <div class="row">
-                                <div class="col-md-5">
-                                    <mat-form-field appearance="outline" style="width: 100%;">
-                                        <mat-label>Registro*</mat-label>
-                                        <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.registro">
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-md-5">
-                                        <mat-checkbox [checked]="datoPeritos.independiente" (change)="isIndependiente($event)" [(ngModel)]="datoPeritos.independiente">Independiente</mat-checkbox>
+                                <div class="col-md-11">
+                                    <ng-container *ngIf="!loading">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <mat-form-field appearance="outline" style="width: 100%;">
+                                                    <mat-label>Registro*</mat-label>
+                                                    <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.registro">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-5" style="padding-top: 15px;">
+                                                    <mat-checkbox [checked]="datoPeritos.independiente" (change)="isIndependiente($event)" [(ngModel)]="datoPeritos.independiente" >Independiente</mat-checkbox>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <mat-form-field appearance="fill" style="width: 100%;">
+                                                    <mat-label>Fecha Alta</mat-label>
+                                                    <input matInput [matDatepicker]="fechaAlta" [disabled]="true" [(ngModel)]="datoPeritos.fecha_alta">
+                                                    <mat-datepicker-toggle matSuffix [for]="fechaAlta"></mat-datepicker-toggle>
+                                                    <mat-datepicker #fechaAlta></mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <mat-form-field appearance="fill" style="width: 100%;">
+                                                    <mat-label>Fecha Baja</mat-label>
+                                                    <input matInput [matDatepicker]="fechaBaja" [(ngModel)]="datoPeritos.fecha_baja">
+                                                    <mat-datepicker-toggle matSuffix [for]="fechaBaja"></mat-datepicker-toggle>
+                                                    <mat-datepicker #fechaBaja></mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </ng-container>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-5">
-                                    <mat-form-field appearance="fill" style="width: 100%;">
-                                        <mat-label>Fecha Alta</mat-label>
-                                        <input matInput [matDatepicker]="fechaAlta" [disabled]="true" [(ngModel)]="datoPeritos.fecha_alta">
-                                        <mat-datepicker-toggle matSuffix [for]="fechaAlta"></mat-datepicker-toggle>
-                                        <mat-datepicker #fechaAlta></mat-datepicker>
-                                    </mat-form-field>
+                                <div class="col-md-2 offset-md-6">
+                                    <div class="d-flex flex-row-reverse">
+                                        <button mat-stroked-button class="boton-n-representacion" color="warn" aria-label="Cancelar">
+                                            Cancelar
+                                        </button>                            
+                                    </div>
                                 </div>
-                                <div class="col-md-5">
-                                    <mat-form-field appearance="fill" style="width: 100%;">
-                                        <mat-label>Fecha Baja</mat-label>
-                                        <input matInput [matDatepicker]="fechaBaja" [(ngModel)]="datoPeritos.fecha_baja">
-                                        <mat-datepicker-toggle matSuffix [for]="fechaBaja"></mat-datepicker-toggle>
-                                        <mat-datepicker #fechaBaja></mat-datepicker>
-                                    </mat-form-field>
-                                </div>
-                            </div>
-                        </ng-container>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-2 offset-md-6">
-                        <div class="d-flex flex-row-reverse">
-                            <button mat-stroked-button class="boton-n-representacion" color="warn" aria-label="Cancelar">
-                                Cancelar
-                            </button>                            
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="d-flex flex-row-reverse">
-                            <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" (click)="actualizaPeritoEspecifico()">
-                                Guardar
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </mat-expansion-panel>
-        </mat-accordion>
-        <br><hr><br>
-        <mat-card-header>
-            <mat-card-title>Sociedades Asociadas</mat-card-title>
-        </mat-card-header>
-        <mat-accordion>
-            <mat-expansion-panel (opened)="panelSociedades = true" (closed)="panelSociedades = false">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        Información
-                    </mat-panel-title>
-                    <mat-panel-description>
-                        {{panelSociedades ? 'Cerrar' : 'Ver'}} datos de las Sociedades Asociadas
-                    </mat-panel-description>
-                </mat-expansion-panel-header>
-                <div class="row">
-                    <div class="col-md-8 offset-md-2">
-                        <button mat-icon-button color="primary" aria-label="Buscar Sociedad" matTooltip="Buscar Sociedad" (click)="agregaSociedadEditar()">
-                            <mat-icon>add_box</mat-icon>
-                        </button>
-                        <button mat-icon-button color="primary" aria-label="Eliminar Datos" matTooltip="Eliminar Datos" (click)="confirmaCambio(3)">
-                            <mat-icon>delete</mat-icon>
-                        </button>
-                        <ng-container>
-                            <div style="padding: 30px; text-align: center;" *ngIf="loadingDatosPerito">
-                                <mat-spinner style="margin:0 auto;"></mat-spinner>
-                                <p>Cargando...</p>
-                            </div>
-                            <div class="alert alert-info" *ngIf="!loadingDatosPerito && dataSource.length == 0">
-                                No hay registros para el filtro seleccionado
-                            </div> 
-                            <table mat-table [dataSource]="dataSource" *ngIf="!loadingDatosPerito && dataSource.length > 0" width="100%">
-                                <ng-container matColumnDef="nombre">
-                                    <th mat-header-cell *matHeaderCellDef width="65%" > Razón social </th>
-                                    <td mat-cell *matCellDef="let element" width="65%"> {{ element.razonsocial }}</td>
-                                </ng-container>
-                                <ng-container matColumnDef="registro">
-                                    <th mat-header-cell *matHeaderCellDef> Registro </th>
-                                    <td mat-cell *matCellDef="let element" > {{element.registro}}</td>
-                                </ng-container>
-                                <ng-container matColumnDef="rfc">
-                                    <th mat-header-cell *matHeaderCellDef width="30%"> RFC </th>
-                                    <td mat-cell *matCellDef="let element" width="30%"> {{ element.rfc }}</td>
-                                </ng-container>
-                                <ng-container matColumnDef="elimina">
-                                    <th mat-header-cell *matHeaderCellDef> Eliminar </th>
-                                    <td mat-cell *matCellDef="let element">
-                                        <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar" (click)="confirmaCambio(2,element)">
-                                            <mat-icon>delete</mat-icon>
+                                <div class="col-md-2">
+                                    <div class="d-flex flex-row-reverse">
+                                        <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" (click)="actualizaPeritoEspecifico()">
+                                            Guardar
                                         </button>
-                                    </td>
-                                </ng-container>
-                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                            </table>
-                 <mat-paginator #paginator [length]="total" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado($event)">
-                            </mat-paginator>
-                        </ng-container>
-                    </div>
-                </div>
-            </mat-expansion-panel>
-        </mat-accordion><br>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                    <br><hr><br>
+                    <mat-card-header>
+                        <mat-card-title>Sociedades Asociadas</mat-card-title>
+                    </mat-card-header>
+                    <mat-accordion>
+                        <mat-expansion-panel (opened)="panelSociedades = true" (closed)="panelSociedades = false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Información
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                    {{panelSociedades ? 'Cerrar' : 'Ver'}} datos de las Sociedades Asociadas
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <div class="row">
+                                <div class="col-md-11">
+                                    <button mat-icon-button color="primary" aria-label="Buscar Sociedad" matTooltip="Buscar Sociedad" (click)="agregaSociedadEditar()">
+                                        <mat-icon>add_box</mat-icon>
+                                    </button>
+                                    <button mat-icon-button color="primary" aria-label="Eliminar Datos" matTooltip="Eliminar Datos" (click)="confirmaCambio(3)">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                    <ng-container>
+                                        <div style="padding: 30px; text-align: center;" *ngIf="loadingDatosPerito">
+                                            <mat-spinner style="margin:0 auto;"></mat-spinner>
+                                            <p>Cargando...</p>
+                                        </div>
+                                        <div class="alert alert-info" *ngIf="!loadingDatosPerito && dataSource.length == 0">
+                                            No hay registros para el filtro seleccionado
+                                        </div> 
+                                        <table mat-table [dataSource]="dataSource" *ngIf="!loadingDatosPerito && dataSource.length > 0" width="100%">
+                                            <ng-container matColumnDef="nombre">
+                                                <th mat-header-cell *matHeaderCellDef width="65%" > Razón social </th>
+                                                <td mat-cell *matCellDef="let element" width="65%"> {{ element.razonsocial }}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="registro">
+                                                <th mat-header-cell *matHeaderCellDef> Registro </th>
+                                                <td mat-cell *matCellDef="let element" > {{element.registro}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="rfc">
+                                                <th mat-header-cell *matHeaderCellDef width="30%"> RFC </th>
+                                                <td mat-cell *matCellDef="let element" width="30%"> {{ element.rfc }}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="elimina">
+                                                <th mat-header-cell *matHeaderCellDef> Eliminar </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar" (click)="confirmaCambio(2,element)">
+                                                        <mat-icon>delete</mat-icon>
+                                                    </button>
+                                                </td>
+                                            </ng-container>
+                                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                        </table>
+                            <mat-paginator #paginator [length]="total" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado($event)">
+                                        </mat-paginator>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion><br>
+                </mat-card-content>
+            </div>
+        </div>
     </div>
 </mat-card>
