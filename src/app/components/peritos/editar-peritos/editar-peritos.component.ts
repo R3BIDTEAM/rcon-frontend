@@ -164,7 +164,7 @@ export class EditarPeritosComponent implements OnInit {
     loadingInmuebles = false;
     loadingDireccionEspecifica = false;
     displayedColumnsDom: string[] = ['tipoDir','direccion', 'historial', 'modificar'];
-    displayedColumnsInm: string[] = ['direccion'];
+    displayedColumnsInm: string[] = ['inmueble','direccion','domicilio','descripcion','sujeto'];
     displayedColumnsRepdo: string[] = ['representacion','texto','caducidad','editar','eliminar'];
     paginaDom = 1;
     totalDom = 0;
@@ -477,21 +477,34 @@ export class EditarPeritosComponent implements OnInit {
     }
     /*PAGINADOS*/
 
+    /**
+     * Obtiene los inmuebles de la persona
+     */
     getidInmuebles(){
-        let metodo = 'getDireccionesInmueble';
-        this.http.get(this.endpointActualiza + 'getIdInmuebleByIdPersona' + '?idPersona='+ this.idPerito, this.httpOptions)
+        this.loadingInmuebles = true;
+        this.http.get(this.endpointActualiza + 'getInmuebles' + '?idPersona='+ this.idPerito, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingInmuebles = false;
                     console.log("AQUI ENTRO IDINMUEBLE!!!");
                     console.log(res);
+
+                    this.dataSource3 = res;
+                    console.log(res.length);
+                    console.log(this.dataSource3);
+                    this.dataPaginate3 = this.paginate(this.dataSource3, 15, this.paginaDom);
+                    this.total = this.dataPaginate3.length; 
+                    this.paginator.pageIndex = 0;
+                    console.log("AQUI ENTRO EL RES DEL INMUEBLE!");
+                    console.log(this.dataSource3);
+
                     //console.log(res[0].idinmueble);
-                    if(res.length > 0){
-                        this.idInmueble = res[0].idinmueble;
-                    }else{
-                        this.idInmueble = null;
-                    }
-                    this.getInmuebles();
+                    // if(res.length > 0){
+                    //     this.idInmueble = res[0].idinmueble;
+                    // }else{
+                    //     this.idInmueble = null;
+                    // }
+                    // this.getInmuebles();
                 },
                 (error) => {
                     this.loadingInmuebles = false;
@@ -504,33 +517,33 @@ export class EditarPeritosComponent implements OnInit {
             );
     }
 
-    getInmuebles(){
-        this.http.get(this.endpointActualiza + 'getDireccionesInmueble?' + 'idInmueble='+ this.idInmueble, this.httpOptions)
-            .subscribe(
-                (res: any) => {
-                    this.loadingDomicilios = false;
-                    console.log("AQUI ENTRO EL INMUEBLE!!!");
-                    console.log(res);
+    // getInmuebles(){
+    //     this.http.get(this.endpointActualiza + 'getDireccionesInmueble?' + 'idInmueble='+ this.idInmueble, this.httpOptions)
+    //         .subscribe(
+    //             (res: any) => {
+    //                 this.loadingDomicilios = false;
+    //                 console.log("AQUI ENTRO EL INMUEBLE!!!");
+    //                 console.log(res);
                     
-                    this.dataSource3 = res;
-                    console.log(res.length);
-                    console.log(this.dataSource3);
-                    this.dataPaginate3 = this.paginate(this.dataSource3, 15, this.paginaDom);
-                    this.total = this.dataPaginate3.length; 
-                    this.paginator.pageIndex = 0;
-                    console.log("AQUI ENTRO EL RES WEE");
-                    console.log(this.dataPeritoResultado);
-                },
-                (error) => {
-                    this.loadingDomicilios = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
-                }
-            );
-    }
+    //                 this.dataSource3 = res;
+    //                 console.log(res.length);
+    //                 console.log(this.dataSource3);
+    //                 this.dataPaginate3 = this.paginate(this.dataSource3, 15, this.paginaDom);
+    //                 this.total = this.dataPaginate3.length; 
+    //                 this.paginator.pageIndex = 0;
+    //                 console.log("AQUI ENTRO EL RES WEE");
+    //                 console.log(this.dataSource3);
+    //             },
+    //             (error) => {
+    //                 this.loadingDomicilios = false;
+    //                 this.snackBar.open(error.error.mensaje, 'Cerrar', {
+    //                     duration: 10000,
+    //                     horizontalPosition: 'end',
+    //                     verticalPosition: 'top'
+    //                 });
+    //             }
+    //         );
+    // }
 
     actualizarPerito(){
         let query = '';
