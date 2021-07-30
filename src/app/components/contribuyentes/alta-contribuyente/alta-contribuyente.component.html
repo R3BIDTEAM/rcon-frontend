@@ -29,31 +29,31 @@
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-10 offset-1">
                                 <mat-label>Nombre:</mat-label>
-                                <input matInput formControlName="nombre" [(ngModel)]="contribuyente.nombre" [readonly]="inserto" maxlength="50">
+                                <input matInput formControlName="nombre" [(ngModel)]="contribuyente.nombre" [readonly]="inserto" maxlength="50" placeholder="Ingrese el nombre">
                                 <mat-error *ngIf="fisicaFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
                             <mat-form-field appearance="outline"  class="col-5 offset-1">
                                 <mat-label>Apellido Paterno:</mat-label>
-                                <input matInput formControlName="apaterno" [(ngModel)]="contribuyente.apaterno" [readonly]="inserto" maxlength="50">
+                                <input matInput formControlName="apaterno" [(ngModel)]="contribuyente.apaterno" [readonly]="inserto" maxlength="50" placeholder="Ingrese el apellido paterno">
                                 <mat-error *ngIf="fisicaFormGroup.controls.apaterno.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline"  class="col-5">
                                 <mat-label>Apellido Materno:</mat-label>
-                                <input matInput formControlName="amaterno" [(ngModel)]="contribuyente.amaterno" [readonly]="inserto" maxlength="50">
+                                <input matInput formControlName="amaterno" [(ngModel)]="contribuyente.amaterno" [readonly]="inserto" maxlength="50" placeholder="Ingrese el apellido materno">
                             </mat-form-field>
                         </div>
                         <div class="row">
                             <mat-form-field appearance="outline"  class="col-5 offset-1">
                                 <mat-label>RFC:</mat-label>
-                                <input matInput formControlName="rfc" [(ngModel)]="contribuyente.rfc" [readonly]="inserto" (keyup)="changeRequired()" [required]="isRequired" pattern="^([A-ZÑ&]{4})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" maxlength="13">
+                                <input matInput formControlName="rfc" [(ngModel)]="contribuyente.rfc" [readonly]="inserto" (keyup)="changeRequired()" [required]="isRequired" pattern="^([A-ZÑ&]{4})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" maxlength="13" placeholder="Ingrese el RFC">
                                 <mat-error *ngIf="fisicaFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="fisicaFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 4 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline"  class="col-5">
                                 <mat-label>CURP:</mat-label>
-                                <input matInput formControlName="curp" [(ngModel)]="contribuyente.curp" [readonly]="inserto" (keyup)="changeRequired()" [required]="isRequired" pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$" maxlength="18">
+                                <input matInput formControlName="curp" [(ngModel)]="contribuyente.curp" [readonly]="inserto" (keyup)="changeRequired()" [required]="isRequired" pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$" maxlength="18"  placeholder="Ingrese el CURP">
                                 <mat-error *ngIf="fisicaFormGroup.controls.curp.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="fisicaFormGroup.controls.curp.errors?.pattern">CURP no valido</mat-error>
                             </mat-form-field>
@@ -61,7 +61,7 @@
                         <div class="row">
                             <mat-form-field appearance="outline"  class="col-5 offset-1">
                                 <mat-label>Clave INE:</mat-label>
-                                <input matInput formControlName="ine" [(ngModel)]="contribuyente.ine" [readonly]="inserto" maxlength="50">
+                                <input matInput formControlName="ine" [(ngModel)]="contribuyente.ine" [readonly]="inserto" maxlength="50"  placeholder="Ingrese el INE">
                             </mat-form-field>
                         </div>
                         <div class="row">
@@ -76,7 +76,7 @@
                             </mat-form-field>
                             <mat-form-field appearance="outline"  class="col-5">
                                 <mat-label>Número Documento</mat-label>
-                                <input matInput formControlName="docIdent" [(ngModel)]="contribuyente.docIdent" [disabled]="inserto" maxlength="50">
+                                <input matInput formControlName="docIdent" [(ngModel)]="contribuyente.docIdent" [disabled]="inserto" maxlength="50"  placeholder="Ingrese el número de documento">
                             </mat-form-field>
                         </div>
                         <div class="row">
@@ -96,11 +96,11 @@
                         <div class="row">
                             <mat-form-field appearance="outline"  class="col-5 offset-1">
                                 <mat-label>Celular:</mat-label>
-                                <input matInput formControlName="celular" [(ngModel)]="contribuyente.celular" [readonly]="inserto" maxlength="50">
+                                <input matInput formControlName="celular" [(ngModel)]="contribuyente.celular" [readonly]="inserto" maxlength="50"  placeholder="Ingrese el número de celular">
                             </mat-form-field>
                             <mat-form-field appearance="outline"  class="col-5">
                                 <mat-label>E-mail:</mat-label>
-                                <input matInput formControlName="email" [(ngModel)]="contribuyente.email" [readonly]="inserto" maxlength="50">
+                                <input matInput formControlName="email" [(ngModel)]="contribuyente.email" [readonly]="inserto" maxlength="50"  placeholder="Ingrese el email">
                                 <mat-error *ngIf="fisicaFormGroup.hasError('email', 'email') && fisicaFormGroup.get('email').touched">Correo invalido</mat-error>
                             </mat-form-field>
                         </div>
@@ -111,20 +111,20 @@
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-10 offset-1">
                                 <mat-label>Nombre:</mat-label>
-                                <input matInput formControlName="nombre" [(ngModel)]="contribuyente.nombre_moral" [readonly]="inserto" maxlength="50">
+                                <input matInput formControlName="nombre" [(ngModel)]="contribuyente.nombre_moral" [readonly]="inserto" maxlength="50"  placeholder="Ingrese el nombre">
                                 <mat-error *ngIf="moralFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-5 offset-1">
                                 <mat-label>RFC:</mat-label>
-                                <input matInput formControlName="rfc" [(ngModel)]="contribuyente.rfc" [readonly]="inserto" pattern="^([A-ZÑ&]{3})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" maxlength="50">
+                                <input matInput formControlName="rfc" [(ngModel)]="contribuyente.rfc" [readonly]="inserto" pattern="^([A-ZÑ&]{3})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" maxlength="50"  placeholder="Ingrese el RFC">
                                 <mat-error *ngIf="moralFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="moralFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 3 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-5">
                                 <mat-label>Act. preponderante:</mat-label>
-                                <input matInput formControlName="actPreponderante" [(ngModel)]="contribuyente.actPreponderante" [readonly]="inserto" maxlength="50">
+                                <input matInput formControlName="actPreponderante" [(ngModel)]="contribuyente.actPreponderante" [readonly]="inserto" maxlength="50"  placeholder="Ingrese la actividad preponderante">
                             </mat-form-field>
                         </div>
                         <div class="row">
