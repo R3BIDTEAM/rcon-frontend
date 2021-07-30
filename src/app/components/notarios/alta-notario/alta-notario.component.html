@@ -24,7 +24,7 @@
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>No. Notario</mat-label>
-                            <input matInput #no_notario formControlName="no_notario" [(ngModel)]="filtros.no_notario" placeholder="Placeholder">
+                            <input matInput #no_notario formControlName="no_notario" [(ngModel)]="filtros.no_notario" placeholder="Ingrese número de notario">
                             <mat-error *ngIf="notarioFormGroup.controls.no_notario.errors?.required">Requerido</mat-error>
                         </mat-form-field>
                     </div>
@@ -44,21 +44,21 @@
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>Nombre</mat-label>
-                            <input matInput #nombre formControlName="nombre" [(ngModel)]="filtros.nombre" placeholder="Placeholder">
+                            <input matInput #nombre formControlName="nombre" [(ngModel)]="filtros.nombre" placeholder="Ingrese nombre">
                             <mat-error *ngIf="notarioFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>Apellido Paterno</mat-label>
-                            <input matInput #apellido_paterno formControlName="apellido_paterno" [(ngModel)]="filtros.apellido_paterno" placeholder="Placeholder">
+                            <input matInput #apellido_paterno formControlName="apellido_paterno" [(ngModel)]="filtros.apellido_paterno" placeholder="Ingrese apellido paterno">
                             <mat-error *ngIf="notarioFormGroup.controls.apellido_paterno.errors?.required">Requerido</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>Apellido Materno</mat-label>
-                            <input matInput #apellido_materno formControlName="apellido_materno" [(ngModel)]="filtros.apellido_materno" placeholder="Placeholder">
+                            <input matInput #apellido_materno formControlName="apellido_materno" [(ngModel)]="filtros.apellido_materno" placeholder="Ingrese apellido materno">
                         </mat-form-field>
                     </div> 
                 </div>
@@ -67,7 +67,7 @@
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>RFC*</mat-label>
-                            <input matInput #rfc formControlName="rfc" [(ngModel)]="filtros.rfc" (keyup)="changeRequired()"  [required]="isRequired" placeholder="Placeholder" pattern="^([A-Z,Ñ,&]{4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})$">
+                            <input matInput #rfc formControlName="rfc" [(ngModel)]="filtros.rfc" (keyup)="changeRequired()"  [required]="isRequired" placeholder="Ingrese RFC" pattern="^([A-Z,Ñ,&]{4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})$">
                             <mat-error *ngIf="notarioFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                             <mat-error *ngIf="notarioFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 4 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
                         </mat-form-field>
@@ -75,7 +75,7 @@
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>CURP*</mat-label>
-                            <input matInput #curp formControlName="curp" [(ngModel)]="filtros.curp" (keyup)="changeRequired()"  [required]="isRequired" placeholder="Placeholder" pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$" maxlength="18">
+                            <input matInput #curp formControlName="curp" [(ngModel)]="filtros.curp" (keyup)="changeRequired()"  [required]="isRequired" placeholder="Ingrese CURP" pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$" maxlength="18">
                             <mat-error *ngIf="notarioFormGroup.controls.curp.errors?.required">Se han de llenar algunos de los campos de RFC o CURP</mat-error>
                             <mat-error *ngIf="notarioFormGroup.controls.curp.errors?.pattern">CURP NO VALIDO.</mat-error>
                         </mat-form-field>
@@ -86,7 +86,7 @@
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>INE</mat-label>
-                            <input matInput #ine formControlName="ine" [(ngModel)]="filtros.ine" placeholder="Placeholder">
+                            <input matInput #ine formControlName="ine" [(ngModel)]="filtros.ine" placeholder="Ingrese INE">
                         </mat-form-field>
                     </div>
                     <div class="col-md-4">
@@ -102,7 +102,7 @@
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>Número Documento</mat-label>
-                            <input matInput #numero_documento formControlName="numero_documento" [(ngModel)]="filtros.numero_documento" placeholder="Número documento" [readonly]="selectDisabled">
+                            <input matInput #numero_documento formControlName="numero_documento" [(ngModel)]="filtros.numero_documento" placeholder="Ingrese número documento" [readonly]="selectDisabled">
                         </mat-form-field>
                     </div>
                 </div>
@@ -130,13 +130,13 @@
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>Celular</mat-label>
-                            <input matInput #celular formControlName="celular" [(ngModel)]="filtros.celular" placeholder="Placeholder">
+                            <input matInput #celular formControlName="celular" [(ngModel)]="filtros.celular" placeholder="Ingrese celular">
                         </mat-form-field>
                     </div>
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>E-Mail</mat-label>
-                            <input matInput #email type="email" [email]="true" placeholder="E-mail" formControlName="email" [(ngModel)]="filtros.email" placeholder="Placeholder">
+                            <input matInput #email type="email" [email]="true" placeholder="Ingrese e-mail" formControlName="email" [(ngModel)]="filtros.email" placeholder="Placeholder">
                             <mat-error *ngIf="notarioFormGroup.hasError('email', 'email') && notarioFormGroup.get('email').touched">Correo invalido</mat-error>
                         </mat-form-field>
                     </div>
