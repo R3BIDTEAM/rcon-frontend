@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Datos del Representado</h1>
+<h1 mat-dialog-title class="verde-cdmx">Datos del Representado</h1>
 <div mat-dialog-content>
 
     <div style="padding: 30px; text-align: center;" *ngIf="false">
@@ -8,14 +8,14 @@
 
     <ng-container *ngIf="true">
         <div class="row">
-            <mat-form-field class="col-6">
+            <mat-form-field appearance="fill" class="col-6">
                 <mat-label>Tipo de persona:</mat-label>
                 <mat-select [(ngModel)]="tipoPersona">
                     <mat-option value="F">Fisica</mat-option>
                     <mat-option value="M">Moral</mat-option>
                 </mat-select>
             </mat-form-field>
-            <div class="col-6">
+            <div class="col-6" style="padding-top: 15px;">
                 <button mat-flat-button type="button" color="primary" aria-label="Buscar Persona" matTooltip="Buscar Persona" class="little-button" (click)="addPersona()">
                     <mat-icon>search</mat-icon>
                 </button>
@@ -25,31 +25,31 @@
         <ng-container *ngIf="tipoPersona == 'F'">
             <form [formGroup]="fisicaFormGroup">
                 <div class="row">
-                    <mat-form-field class="col-12">
+                    <mat-form-field appearance="outline" class="col-12">
                         <mat-label>Nombre:</mat-label>
                         <input matInput formControlName="nombre" [readonly]="insUp">
                         <mat-error *ngIf="fisicaFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="row">
-                    <mat-form-field class="col-6">
+                    <mat-form-field appearance="outline" class="col-6">
                         <mat-label>Apellido Paterno:</mat-label>
                         <input matInput formControlName="apaterno" [readonly]="insUp">
                         <mat-error *ngIf="fisicaFormGroup.controls.apaterno.errors?.required">Requerido</mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col-6">
+                    <mat-form-field appearance="outline" class="col-6" style="margin-left: 0px!important;">
                         <mat-label>Apellido Materno:</mat-label>
                         <input matInput formControlName="amaterno" [readonly]="insUp">
                     </mat-form-field>
                 </div>
                 <div class="row">
-                    <mat-form-field class="col-6">
+                    <mat-form-field appearance="outline" class="col-6">
                         <mat-label>RFC:</mat-label>
                         <input matInput formControlName="rfc" (keyup)="changeRequired()" [readonly]="insUp" [required]="isRequired" pattern="^([A-Z,Ñ,&]{4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})$" maxlength="13">
                         <mat-error *ngIf="fisicaFormGroup.controls.rfc.errors?.required">Se han de llenar algunos de los campos de RFC o CURP</mat-error>
                         <mat-error *ngIf="fisicaFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 4 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col-6">
+                    <mat-form-field appearance="outline" class="col-6" style="margin-left: 0px!important;">
                         <mat-label>CURP:</mat-label>
                         <input matInput formControlName="curp" (keyup)="changeRequired()" [readonly]="insUp" [required]="isRequired" pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$" maxlength="18">
                         <mat-error *ngIf="fisicaFormGroup.controls.curp.errors?.required">Se han de llenar algunos de los campos de RFC o CURP</mat-error>
@@ -57,13 +57,13 @@
                     </mat-form-field>
                 </div>
                 <div class="row">
-                    <mat-form-field class="col-6">
+                    <mat-form-field appearance="outline" class="col-6">
                         <mat-label>Clave INE:</mat-label>
                         <input matInput formControlName="ine" [readonly]="insUp">
                     </mat-form-field>
                 </div>
                 <div class="row">
-                    <mat-form-field class="col-6">
+                    <mat-form-field appearance="fill" class="col-6">
                         <mat-label></mat-label>
                         <mat-select formControlName="idDocIdent" [disabled]="insUp">
                             <mat-option value="">Seleccionar</mat-option>
@@ -73,19 +73,19 @@
                             <mat-option value="4">Número de seguro social</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field class="col-6">
+                    <mat-form-field appearance="outline" class="col-6" style="margin-left: 0px!important;">
                         <mat-label></mat-label>
                         <input matInput formControlName="docIdent" [readonly]="insUp">
                     </mat-form-field>
                 </div>
                 <div class="row">
-                    <mat-form-field class="col-6">
+                    <mat-form-field appearance="fill" class="col-6">
                         <mat-label>Fecha Nacimiento:</mat-label>
                         <input matInput readonly formControlName="fechaNacimiento" [matDatepicker]="pickfechaNacimiento" [disabled]="insUp">
                         <mat-datepicker-toggle matSuffix [for]="pickfechaNacimiento"></mat-datepicker-toggle>
                         <mat-datepicker #pickfechaNacimiento></mat-datepicker>
                     </mat-form-field>
-                    <mat-form-field class="col-6">
+                    <mat-form-field appearance="fill" class="col-6" style="margin-left: 0px!important;">
                         <mat-label>Fecha Defunción:</mat-label>
                         <input matInput readonly formControlName="fechaDefuncion" [matDatepicker]="pickfechaDefuncion" [disabled]="insUp">
                         <mat-datepicker-toggle matSuffix [for]="pickfechaDefuncion"></mat-datepicker-toggle>
@@ -93,23 +93,23 @@
                     </mat-form-field>
                 </div>
                 <div class="row">
-                    <mat-form-field class="col-6">
+                    <mat-form-field appearance="outline" class="col-6">
                         <mat-label>Celular:</mat-label>
                         <input matInput formControlName="celular" [readonly]="insUp">
                     </mat-form-field>
-                    <mat-form-field class="col-6">
+                    <mat-form-field appearance="outline" class="col-6" style="margin-left: 0px!important;">
                         <mat-label>E-mail:</mat-label>
                         <input matInput formControlName="email" [readonly]="insUp">
                     </mat-form-field>
                 </div>
                 <div class="row">
-                    <mat-form-field class="col-12">
+                    <mat-form-field appearance="outline" class="col-12">
                         <mat-label>Texto de representación:</mat-label>
                         <textarea matInput formControlName="texto" rows="5"></textarea>
                     </mat-form-field>
                 </div>
                 <div class="row">
-                    <mat-form-field class="col-6">
+                    <mat-form-field appearance="fill" class="col-6">
                         <mat-label>Fecha Caducidad:</mat-label>
                         <input matInput readonly formControlName="fechaCaducidad" [matDatepicker]="pickfechaCaducidad">
                         <mat-datepicker-toggle matSuffix [for]="pickfechaCaducidad"></mat-datepicker-toggle>
@@ -122,32 +122,32 @@
         <ng-container *ngIf="tipoPersona == 'M'">
             <form [formGroup]="moralFormGroup">
                 <div class="row">
-                    <mat-form-field class="col-12">
+                    <mat-form-field appearance="outline" class="col-12">
                         <mat-label>Nombre:</mat-label>
                         <input matInput formControlName="nombre" [readonly]="insUp">
                         <mat-error *ngIf="moralFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="row">
-                    <mat-form-field class="col-6">
+                    <mat-form-field appearance="outline" class="col-6">
                         <mat-label>RFC:</mat-label>
                         <input matInput formControlName="rfc" [readonly]="insUp">
                         <mat-error *ngIf="moralFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col-6">
+                    <mat-form-field appearance="outline" class="col-6" style="margin-left: 0px!important;">
                         <mat-label>Act. preponderante:</mat-label>
                         <input matInput formControlName="actPreponderante" [readonly]="insUp">
                     </mat-form-field>
                 </div>
                 <div class="row">
-                    <mat-form-field class="col-6">
+                    <mat-form-field appearance="fill" class="col-6">
                         <mat-label>Tipo de persona moral</mat-label>
                         <mat-select formControlName="idTipoPersonaMoral" [disabled]="insUp">
                             <mat-option value=""></mat-option>
                             <mat-option value="1">Test</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field class="col-6">
+                    <mat-form-field appearance="fill" class="col-6" style="margin-left: 0px!important;">
                         <mat-label>Fecha de inicio de operación:</mat-label>
                         <input matInput readonly formControlName="fechaInicioOperacion" [matDatepicker]="pickfechaInicioOperacion" [disabled]="insUp">
                         <mat-datepicker-toggle matSuffix [for]="pickfechaInicioOperacion"></mat-datepicker-toggle>
@@ -155,14 +155,14 @@
                     </mat-form-field>                            
                 </div>
                 <div class="row">
-                    <mat-form-field class="col-6">
+                    <mat-form-field appearance="fill" class="col-6">
                         <mat-label>Motivo del cambio de situación</mat-label>
                         <mat-select formControlName="idMotivo" [disabled]="insUp">
                             <mat-option value=""></mat-option>
                             <mat-option value="1">Test</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field class="col-6">
+                    <mat-form-field appearance="fill" class="col-6" style="margin-left: 0px!important;">
                         <mat-label>Fecha de cambio de situación:</mat-label>
                         <input matInput readonly formControlName="fechaCambio" [matDatepicker]="pickfechaCambio" [disabled]="insUp">
                         <mat-datepicker-toggle matSuffix [for]="pickfechaCambio"></mat-datepicker-toggle>
@@ -170,13 +170,13 @@
                     </mat-form-field>                            
                 </div>
                 <div class="row">
-                    <mat-form-field class="col-12">
+                    <mat-form-field appearance="outline" class="col-12">
                         <mat-label>Texto de representación:</mat-label>
                         <textarea matInput formControlName="texto" rows="5"></textarea>
                     </mat-form-field>
                 </div>
                 <div class="row">
-                    <mat-form-field class="col-6">
+                    <mat-form-field appearance="fill" class="col-6">
                         <mat-label>Fecha Caducidad:</mat-label>
                         <input matInput readonly formControlName="fechaCaducidad" [matDatepicker]="pickfechaCaducidad">
                         <mat-datepicker-toggle matSuffix [for]="pickfechaCaducidad"></mat-datepicker-toggle>
