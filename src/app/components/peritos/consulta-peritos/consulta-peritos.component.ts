@@ -102,14 +102,23 @@ export class ConsultaPeritosComponent implements OnInit {
     }
 
     /**
-     * Reinicia los valores del paginado.
+     * Reinicia los valores del paginado y los campos del formulario.
      */
-    clean(): void{
-        this.pagina = 1;
-        this.total = 0;
-        this.dataSource = [];
-        this.loading = false;
-        this.dataPaginate;
+     clean(): void{
+        // this.pagina = 1;
+        // this.total = 0;
+        // this.dataSource = [];
+        // this.loading = false;
+        // this.dataPaginate;
+        this.appaterno = null;
+        this.apmaterno = null;
+        this.nombre = null;
+        this.rfc = null;
+        this.curp = null;
+        this.ine = null;
+        this.registro = null;
+        this.identificacion = null;
+        this.idedato = null;
     }
 
     /**
