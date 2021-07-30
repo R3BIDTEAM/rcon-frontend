@@ -154,6 +154,7 @@ export class EditarPeritosComponent implements OnInit {
     panelRepresentados = false;
     panelEspecifico = false;
     panelSociedades = false;
+    panelDatosRepre = false;
     botonEdit = false;
     peritoPersonaFormGroup: FormGroup;
     moralFormGroup: FormGroup;
@@ -166,6 +167,7 @@ export class EditarPeritosComponent implements OnInit {
     displayedColumnsDom: string[] = ['tipoDir','direccion', 'historial', 'modificar'];
     displayedColumnsInm: string[] = ['inmueble','direccion','domicilio','descripcion','sujeto'];
     displayedColumnsRepdo: string[] = ['representacion','texto','caducidad','editar','eliminar'];
+    displayedColumnsDataRep: string[] = ['fechaCaducidad','texto','caducidad'];
     paginaDom = 1;
     totalDom = 0;
     pageSizeDom = 15;
@@ -203,6 +205,12 @@ export class EditarPeritosComponent implements OnInit {
     total5 = 0;
     pagina5= 1;
     dataPaginate5;
+    total6 = 0;
+    pagina6= 1;
+    dataPaginate6;
+    total7 = 0;
+    pagina7= 1;
+    dataPaginate7;
     /*PAGINADOS*/
 
     @ViewChild('paginator') paginator: MatPaginator;
@@ -989,6 +997,15 @@ export class EditarPeritosComponent implements OnInit {
      * @param evt Nos da la referencia de la pagina en la que se encuentra
      */
     paginado5(evt): void{
+        this.pagina5 = evt.pageIndex + 1;
+        this.dataSource5 = this.paginate(this.dataSource5, 15, this.pagina5);
+    }
+
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
+     paginado6(evt): void{
         this.pagina5 = evt.pageIndex + 1;
         this.dataSource5 = this.paginate(this.dataSource5, 15, this.pagina5);
     }
