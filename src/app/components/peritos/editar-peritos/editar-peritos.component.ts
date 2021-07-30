@@ -1013,6 +1013,15 @@ export class EditarPeritosComponent implements OnInit {
     }
 
     /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
+     paginado7(evt): void{
+        this.pagina5 = evt.pageIndex + 1;
+        this.dataSource5 = this.paginate(this.dataSource5, 15, this.pagina5);
+    }
+
+    /**
      * Abre el dialogo que nos mostrará el historial de las representaciones.
      */
     historialRepresentacion(){
