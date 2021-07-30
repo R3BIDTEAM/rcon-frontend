@@ -27,7 +27,7 @@
                     <p>Cargando...</p>
                 </div>
                 <br>
-                <div class="row" *ngIf="!loadingDatosPerito">
+                <!-- <div class="row" *ngIf="!loadingDatosPerito">
                     <mat-form-field appearance="fill" class="col-4">
                         <mat-label>Tipo de persona:</mat-label>
                         <mat-select [(ngModel)]="datoPeritos.tipoPersona" (selectionChange)="actualizaPersona($event.value)">
@@ -35,7 +35,7 @@
                             <mat-option value="M">Moral</mat-option>
                         </mat-select>
                     </mat-form-field>
-                </div>
+                </div> -->
                 <ng-container *ngIf="datoPeritos.tipoPersona == 'F' && !loadingDatosPerito">
                     <form [formGroup]="peritoPersonaFormGroup">
                     <div class="row">
