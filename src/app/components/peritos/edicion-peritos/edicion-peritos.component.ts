@@ -144,63 +144,65 @@ export class EdicionPeritosComponent implements OnInit {
      * Obtiene el o los registros del perito de acuerdo al críterio de búsqueda que pueden ser datos identificativos o personales.
      */
     getPerito(){
-        let query = '';
-        let busquedaDatos = '';
+        if(this.search){
+            let query = '';
+            let busquedaDatos = '';
 
-        if(this.nombre){
-            query = query + '&nombre=' + this.nombre + '&filtroNombre=0';
-        }
-        if(this.appaterno){
-            query = query + '&apellidoPaterno=' + this.appaterno + '&filtroApellidoPaterno=0';
-        }
-        if(this.apmaterno){
-            query = query + '&apellidoMaterno=' + this.apmaterno + '&filtroApellidoMaterno=0';
-        }
-        if(this.rfc){
-            query = query + '&rfc=' + this.rfc;
-        }
-        if(this.curp){
-            query = query + '&curp=' + this.curp;
-        }
-        if(this.ine){
-            query = query + '&ine=' + this.ine;
-        }
-        if(this.registro){
-            query = query + '&registro=' + this.registro;
-        }
-        if(this.identificacion && this.idedato){
-            query = query + '&idOtroDocumento=' + this.identificacion + '&valorOtroDocumento=' + this.idedato;
-        }
+            if(this.nombre){
+                query = query + '&nombre=' + this.nombre + '&filtroNombre=0';
+            }
+            if(this.appaterno){
+                query = query + '&apellidoPaterno=' + this.appaterno + '&filtroApellidoPaterno=0';
+            }
+            if(this.apmaterno){
+                query = query + '&apellidoMaterno=' + this.apmaterno + '&filtroApellidoMaterno=0';
+            }
+            if(this.rfc){
+                query = query + '&rfc=' + this.rfc;
+            }
+            if(this.curp){
+                query = query + '&curp=' + this.curp;
+            }
+            if(this.ine){
+                query = query + '&ine=' + this.ine;
+            }
+            if(this.registro){
+                query = query + '&registro=' + this.registro;
+            }
+            if(this.identificacion && this.idedato){
+                query = query + '&idOtroDocumento=' + this.identificacion + '&valorOtroDocumento=' + this.idedato;
+            }
 
-        if( this.isIdentificativo ){
-            busquedaDatos = busquedaDatos + 'getPeritosByDatosIdentificativos';
-        }else{
-            busquedaDatos = busquedaDatos + 'getPeritosByDatosPersonales';
+            if( this.isIdentificativo ){
+                busquedaDatos = busquedaDatos + 'getPeritosByDatosIdentificativos';
+            }else{
+                busquedaDatos = busquedaDatos + 'getPeritosByDatosPersonales';
+            }
+
+            query = query.substr(1);
+
+            console.log(this.endpoint + busquedaDatos + '?' + query);
+            this.loading = true;
+            this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
+                .subscribe(
+                    (res: any) => {
+                        this.loading = false;
+                        this.dataSource = res;
+                        this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                        this.total = this.dataSource.length; 
+                        this.paginator.pageIndex = 0;
+                        console.log(this.dataSource);
+                    },
+                    (error) => {
+                        this.loading = false;
+                        this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                            duration: 10000,
+                            horizontalPosition: 'end',
+                            verticalPosition: 'top'
+                        });
+                    }
+                );
         }
-
-        query = query.substr(1);
-
-        console.log(this.endpoint + busquedaDatos + '?' + query);
-        this.loading = true;
-        this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
-            .subscribe(
-                (res: any) => {
-                    this.loading = false;
-                    this.dataSource = res;
-                    this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-                    this.total = this.dataSource.length; 
-                    this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
-                },
-                (error) => {
-                    this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
-                }
-            );
     }
 
     /**

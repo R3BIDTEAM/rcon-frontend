@@ -197,7 +197,7 @@ export class EditarPeritosComponent implements OnInit {
     total3 = 0;
     pagina3= 1;
     dataPaginate3;
-    dataSource4 = [];
+    dataSource4;
     total4 = 0;
     pagina4= 1;
     dataPaginate4;
@@ -941,6 +941,8 @@ export class EditarPeritosComponent implements OnInit {
                 (res: any) => {
                     this.loadingRepresentante = false;
                     this.dataSource4 = res;
+                    console.log("RES REPRESNTADO!!!!!!!!!");
+                    console.log(res);
                     this.total4 = this.dataSource4.length;
                     this.dataPaginate4 = this.paginate(this.dataSource4, 15, this.pagina4);
                 },

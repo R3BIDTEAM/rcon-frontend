@@ -11,7 +11,7 @@
                     </div>
                         <mat-form-field appearance="outline" class="col-5">
                             <mat-label>Apellido Paterno</mat-label>
-                            <input matInput [(ngModel)]="appaterno" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)">
+                            <input matInput [(ngModel)]="appaterno" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)" (keydown.enter)="getPerito()">
                             <mat-error></mat-error>
                         </mat-form-field>
                 </div>
@@ -20,7 +20,7 @@
                     </div>
                         <mat-form-field appearance="outline" class="col-5">
                             <mat-label>Apellido Materno</mat-label>
-                            <input matInput [(ngModel)]="apmaterno" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)">
+                            <input matInput [(ngModel)]="apmaterno" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)" (keydown.enter)="getPerito()">
                             <mat-error></mat-error>
                         </mat-form-field>
                 </div>
@@ -29,7 +29,7 @@
                     </div>
                         <mat-form-field appearance="outline" class="col-5">
                             <mat-label>Nombre</mat-label>
-                            <input matInput [(ngModel)]="nombre" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)">
+                            <input matInput [(ngModel)]="nombre" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)" (keydown.enter)="getPerito()">
                             <mat-error></mat-error>
                         </mat-form-field>
                 </div>
@@ -41,12 +41,12 @@
                     </div>
                         <mat-form-field appearance="outline" class="col-5">
                             <mat-label>RFC</mat-label>
-                            <input matInput [(ngModel)]="rfc" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)">
+                            <input matInput [(ngModel)]="rfc" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" (keydown.enter)="getPerito()">
                             <mat-error></mat-error>
                         </mat-form-field>
                         <mat-form-field appearance="outline" class="col-5">
                             <mat-label>CURP</mat-label>
-                            <input matInput [(ngModel)]="curp" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)">
+                            <input matInput [(ngModel)]="curp" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" (keydown.enter)="getPerito()">
                             <mat-error></mat-error>
                         </mat-form-field>
                 </div>
@@ -58,12 +58,12 @@
                     </div>
                         <mat-form-field appearance="outline" class="col-5">
                             <mat-label>INE</mat-label>
-                            <input matInput [(ngModel)]="ine" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)">
+                            <input matInput [(ngModel)]="ine" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" (keydown.enter)="getPerito()">
                             <mat-error></mat-error>
                         </mat-form-field>
                         <mat-form-field appearance="outline" class="col-5">
                             <mat-label>Registro</mat-label>
-                            <input matInput [(ngModel)]="registro" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)">
+                            <input matInput [(ngModel)]="registro" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" (keydown.enter)="getPerito()">
                             <mat-error></mat-error>
                         </mat-form-field>                    
                 </div>
@@ -82,7 +82,7 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-5">
                         <mat-label></mat-label>
-                        <input matInput [(ngModel)]="idedato" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)">
+                        <input matInput [(ngModel)]="idedato" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" (keydown.enter)="getPerito()">
                     </mat-form-field>
                 </div>
 
