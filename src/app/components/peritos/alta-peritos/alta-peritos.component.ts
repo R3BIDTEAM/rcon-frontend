@@ -51,6 +51,7 @@ export class AltaPeritosComponent implements OnInit {
     search = false;
     inserto = false;
     isIdentificativo;
+    isRequired = true;
     documentos: DocumentosIdentificativos[] = [];
     loadingDocumentosIdentificativos = false;
     @ViewChild('paginator') paginator: MatPaginator;
@@ -76,10 +77,10 @@ export class AltaPeritosComponent implements OnInit {
         };
         this.peritoPersonaFormGroup = this._formBuilder.group({
             apepaterno: ['', Validators.required],
-            apematerno: ['', Validators.required],
+            apematerno: [null, []],
             nombre: ['', Validators.required],
-            rfc: ['', Validators.required],
-            curp: ['', Validators.required],
+            rfc: [null, []],
+            curp: [null, []],
             ine: [null],
             identificacion: [null],
             idedato: [null],
@@ -134,6 +135,22 @@ export class AltaPeritosComponent implements OnInit {
         this.peritoPersonaFormGroup.controls['fechaFin'].setValue(null);
         this.peritoPersonaFormGroup.controls['login'].setValue(null);
         this.inserto = false;
+    }
+
+    /**
+     * De acuerdo al campo seleccionado será requerido el RFC, el CURP o ambos.
+     */
+     changeRequired(): void {
+        if((this.peritoPersonaFormGroup.value.rfc === null && this.peritoPersonaFormGroup.value.curp === null) || (this.peritoPersonaFormGroup.value.rfc === '' && this.peritoPersonaFormGroup.value.curp === '')
+            || (this.datoPeritos.rfc === null && this.datoPeritos.curp === null) || (this.datoPeritos.rfc === '' && this.datoPeritos.curp === '')){​​​​​​​​
+            this.isRequired = true;
+        }​​​​​​​​ else {​​​​​​​​
+            this.isRequired = false;
+        }​​​​​​​​
+
+        console.log(this.peritoPersonaFormGroup.value.rfc);
+        this.peritoPersonaFormGroup.markAsTouched();
+        this.peritoPersonaFormGroup.updateValueAndValidity();
     }
 
     /**
@@ -283,7 +300,7 @@ export class AltaPeritosComponent implements OnInit {
                     this.inserto = true;
                     console.log("AQUI ENTRO EL RES DEL NUEVO PERITO");
                     console.log(res);
-                    this.snackBar.open('guardado correcto', 'Cerrar', {
+                    this.snackBar.open('guardado correcto - ' + res.mensaje, 'Cerrar', {
                         duration: 10000,
                         horizontalPosition: 'end',
                         verticalPosition: 'top'
@@ -392,6 +409,7 @@ export class DialogAltaBusca {
     isIdentificativo;
     optionPeritoPersona;
     idperito: number;
+    btnDisabled = true;
     datoPeritoPersona: DatosPeritoPersona = {} as DatosPeritoPersona;
     @ViewChild('paginator') paginator: MatPaginator;
 
@@ -456,6 +474,7 @@ export class DialogAltaBusca {
         this.dataSource = [];
         this.loading = false;
         this.dataPaginate;
+        this.btnDisabled = true;
     }
 
     /**
@@ -556,5 +575,6 @@ export class DialogAltaBusca {
         this.datoPeritoPersona.fecha_def = element.FECHADEFUNCION;
         this.datoPeritoPersona.celular = element.CELULAR;
         this.datoPeritoPersona.email = element.EMAIL;
+        this.btnDisabled = false;
     }
 }

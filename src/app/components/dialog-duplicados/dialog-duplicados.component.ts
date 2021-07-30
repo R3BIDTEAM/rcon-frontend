@@ -67,6 +67,7 @@ export class DialogDuplicadosComponent implements OnInit {
 })
 export class DialogsMensaje {
     registro;
+    bandeja;
 
     constructor(
         public dialog: MatDialog,
@@ -76,7 +77,14 @@ export class DialogsMensaje {
         dialogRef.disableClose = true;
         console.log(data);
         console.log(data.dataSource.registro);
-        this.registro = data.dataSource[0].registro;
+        this.bandeja = data.bandeja;
+
+        if(data.bandeja == 3){
+            this.registro = data.dataSource[0].registro;
+        }else{
+            this.registro = data.dataSource[0].REGISTRO;
+        }
+        
     }
 
     ngOnInit(): void {

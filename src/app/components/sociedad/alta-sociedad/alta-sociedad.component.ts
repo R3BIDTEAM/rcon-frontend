@@ -9,7 +9,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox'; 
 import * as moment from 'moment';
-import { DialogDuplicadosComponent } from '@comp/dialog-duplicados/dialog-duplicados.component';
+import { DialogDuplicadosComponent, DialogsMensaje } from '@comp/dialog-duplicados/dialog-duplicados.component';
 
 @Component({
     selector: 'app-alta-sociedad',
@@ -97,19 +97,19 @@ export class AltaSociedadComponent implements OnInit {
         this.login = this.sociedadFormGroup.value.login;
 
         let query = '';
-        let busquedaDatos = 'getContribuyentesSimilares';
+        let busquedaDatos = 'getSocValuacionByDatosIdentificativos';
         
-        query = query + 'nombre=&filtroNombre=';
+        // query = query + 'nombre=&filtroNombre=';
 
-        query = query + '&apellidoPaterno=&filtroApellidoPaterno=';
+        // query = query + '&apellidoPaterno=&filtroApellidoPaterno=';
         
-        query = query + '&apellidoMaterno=&filtroApellidoMaterno=&curp=';
+        // query = query + '&apellidoMaterno=&filtroApellidoMaterno=&curp=';
 
         if(this.rfc){
             query = query + '&rfc=' + this.rfc;
         }
 
-        query = query + '&claveife&actividadPrincip=';
+        //query = query + '&claveife&actividadPrincip=';
         this.loading = true;
         console.log("RESULTADO DE LA BUSQUEDA");
         console.log(this.endpoint);
@@ -118,8 +118,8 @@ export class AltaSociedadComponent implements OnInit {
                 (res: any) => {
                     this.loading = false;
                     if(res.length > 0){
+                        console.log("RES SOCIEDAD");
                         console.log(res);
-                        console.log("CON");
                         this.validaDialog(res);
                     }else{
                         this.guardaSociedad();
@@ -134,14 +134,14 @@ export class AltaSociedadComponent implements OnInit {
                     });
                 }
             );
-    }
+    }//YA NO SE USA
 
     /**
      * Abre el dialogo que nos muestra los registros existentes para editar o confirmar si queremos continuar con el registro.
      */
     validaDialog(res): void {
         //this.dataSource = res;
-        const dialogRef = this.dialog.open(DialogDuplicadosComponent, {
+        const dialogRef = this.dialog.open(DialogsMensaje, {
             width: '850px',
             data: {
                 dataSource: res,
@@ -188,7 +188,7 @@ export class AltaSociedadComponent implements OnInit {
                     this.inserto = true;
                     console.log("AQUI ENTRO EL RES DEL NUEVO PERITO");
                     console.log(res);
-                    this.snackBar.open('guardado correcto', 'Cerrar', {
+                    this.snackBar.open('guardado correcto - ' + res.mensaje, 'Cerrar', {
                         duration: 10000,
                         horizontalPosition: 'end',
                         verticalPosition: 'top'
@@ -215,8 +215,8 @@ export class AltaSociedadComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
-                this.razonSocial = result.razonSocial;
-                this.rfc = result.rfc;
+                this.sociedadFormGroup.controls['razonSocial'].setValue(result.razonSocial);
+                this.sociedadFormGroup.controls['rfc'].setValue(result.rfc);
                 console.log(result);
             }
         });
