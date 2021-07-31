@@ -1,115 +1,108 @@
 <mat-card>
+
     <div style="padding: 30px; text-align: center;" *ngIf="loading">
         <mat-spinner style="margin:0 auto;"></mat-spinner>
         <p>Cargando...</p>
     </div>
+
     <div class="borde" *ngIf="!loading">
-        <mat-card-header>
-            <mat-card-title>Datos Sociedad</mat-card-title>
-            <button mat-icon-button color="primary" (click)="openDialogSociedad()" aria-label="Buscar Persona Moral" matTooltip="Buscar Persona Moral" [disabled]="inserto">
-                <mat-icon>search</mat-icon>
-            </button>
-        </mat-card-header>
-        <hr><br>
-        <mat-card-header>
-            <mat-card-title>Datos persona moral</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <form [formGroup]="sociedadFormGroup">
-                <!-- Búsqueda por nombre -->
-                <div class="row">
-                    <div class="col-1 text-center">
-                    </div>
-                    <mat-form-field class="col-10">
-                        <mat-label>Razón Social</mat-label>
-                        <input matInput  [readonly]="inserto" formControlName="razonSocial" maxlength="250">
-                        <mat-error *ngIf="sociedadFormGroup.controls.razonSocial.errors?.required">Requerido</mat-error>
-                    </mat-form-field>
-                </div>
-                <div class="row">
-                    <div class="col-1 text-center">
-                    </div>
-                        <mat-form-field class="col-4">
-                            <mat-label>RFC</mat-label>
-                            <input matInput  [readonly]="inserto" formControlName="rfc" pattern="^([A-ZÑ&]{3})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" maxlength="12">
-                            <mat-error *ngIf="sociedadFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
-                            <mat-error *ngIf="sociedadFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 3 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
-                        </mat-form-field>
-                </div>
-                <!-- Fin de nombre -->
-
-                <br>
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <h1 class="titulo-cdmx">Alta de Sociedades</h1>
                 <mat-card-header>
-                    <mat-card-title>Datos especificos de la sociedad</mat-card-title>
+                    <mat-card-title>Datos Sociedad</mat-card-title>
+                    <button mat-icon-button color="primary" (click)="openDialogSociedad()" aria-label="Buscar Persona Moral" matTooltip="Buscar Persona Moral" [disabled]="inserto">
+                        <mat-icon>search</mat-icon>
+                    </button>
                 </mat-card-header>
-                <div class="row">
-                    <div class="col-1 text-center">
-                    </div>
-                    <mat-form-field class="col-4">
-                        <mat-label>Registro</mat-label>
-                        <input matInput  [readonly]="inserto" formControlName="registro" maxlength="250">
-                        <mat-error *ngIf="sociedadFormGroup.controls.registro.errors?.required">Requerido</mat-error>
-                    </mat-form-field>
-                </div>
+                <hr><br>
+                <mat-card-header>
+                    <mat-card-title>Datos persona moral</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <form [formGroup]="sociedadFormGroup">
+                        <!-- Búsqueda por nombre -->
+                        <div class="row">
+                            <mat-form-field appearance="outline" class="col-12">
+                                <mat-label>Razón Social</mat-label>
+                                <input matInput  [readonly]="inserto" formControlName="razonSocial" maxlength="250" placeholder="Ingrese la razón social">
+                                <mat-error *ngIf="sociedadFormGroup.controls.razonSocial.errors?.required">Requerido</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="row">
+                            <mat-form-field appearance="outline" class="col-6">
+                                <mat-label>RFC</mat-label>
+                                <input matInput  [readonly]="inserto" formControlName="rfc" pattern="^([A-ZÑ&]{3})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" maxlength="12" placeholder="Ingrese el RFC">
+                                <mat-error *ngIf="sociedadFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
+                                <mat-error *ngIf="sociedadFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 3 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <!-- Fin de nombre -->
 
-                <div class="row">
-                    <div class="col-1 text-center">
-                    </div>
-                        <mat-form-field class="col-4">
-                            <mat-label>Fecha Alta</mat-label>
-                            <input matInput readonly [matDatepicker]="pickini"  [disabled]="inserto" formControlName="fecha_alta">
-                            <mat-datepicker-toggle matSuffix [for]="pickini"></mat-datepicker-toggle>
-                            <mat-datepicker #pickini></mat-datepicker>
-                        </mat-form-field>
-                    <div class="col-1 text-center">
-                    </div>
-                        <mat-form-field class="col-4">
-                            <mat-label>Fecha Baja</mat-label>
-                            <input matInput readonly [matDatepicker]="pickfin"  [disabled]="inserto" formControlName="fecha_baja">
-                            <mat-datepicker-toggle matSuffix [for]="pickfin"></mat-datepicker-toggle>
-                            <mat-datepicker #pickfin></mat-datepicker>
-                            <mat-error></mat-error>
-                        </mat-form-field>
-                </div>
+                        <br>
+                        <mat-card-header>
+                            <mat-card-title>Datos especificos de la sociedad</mat-card-title>
+                        </mat-card-header>
+                        <div class="row">
+                            <mat-form-field appearance="outline" class="col-6">
+                                <mat-label>Registro</mat-label>
+                                <input matInput  [readonly]="inserto" formControlName="registro" maxlength="250">
+                                <mat-error *ngIf="sociedadFormGroup.controls.registro.errors?.required">Requerido</mat-error>
+                            </mat-form-field>
+                        </div>
 
-                <div class="row">
-                    <div class="col-1 text-center">
-                    </div>
-                        <mat-form-field class="col-4">
-                            <mat-label>E-Mail</mat-label>
-                            <input matInput type="email" [email]="true" [disabled]="inserto" formControlName="email" maxlength="250">
-                            <mat-error *ngIf="sociedadFormGroup.hasError('email', 'email') && sociedadFormGroup.get('email').touched">Correo invalido</mat-error>
-                        </mat-form-field>
-                </div>
+                        <div class="row">
+                                <mat-form-field appearance="fill" class="col-6">
+                                    <mat-label>Fecha Alta</mat-label>
+                                    <input matInput readonly [matDatepicker]="pickini"  [disabled]="inserto" formControlName="fecha_alta">
+                                    <mat-datepicker-toggle matSuffix [for]="pickini"></mat-datepicker-toggle>
+                                    <mat-datepicker #pickini></mat-datepicker>
+                                </mat-form-field>
+                                <mat-form-field appearance="fill" class="col-6">
+                                    <mat-label>Fecha Baja</mat-label>
+                                    <input matInput readonly [matDatepicker]="pickfin"  [disabled]="inserto" formControlName="fecha_baja">
+                                    <mat-datepicker-toggle matSuffix [for]="pickfin"></mat-datepicker-toggle>
+                                    <mat-datepicker #pickfin></mat-datepicker>
+                                    <mat-error></mat-error>
+                                </mat-form-field>
+                        </div>
 
-                <div class="row">
-                    <div class="col-1 text-center">
-                    </div>
-                        <mat-form-field class="col-4">
-                            <mat-label>Login</mat-label>
-                            <input matInput [disabled]="inserto" formControlName="login" maxlength="250">
-                            <mat-error *ngIf="sociedadFormGroup.controls.login.errors?.required">Requerido</mat-error>
-                        </mat-form-field>
-                </div>
-            </form>
-            <br>
+                        <div class="row">
+                            <mat-form-field appearance="outline" class="col-6">
+                                <mat-label>E-Mail</mat-label>
+                                <input matInput type="email" [email]="true" [disabled]="inserto" formControlName="email" maxlength="250" placeholder="Ingrese el email">
+                                <mat-error *ngIf="sociedadFormGroup.hasError('email', 'email') && sociedadFormGroup.get('email').touched">Correo invalido</mat-error>
+                            </mat-form-field>
+                        </div>
 
-            <div class="row">
-                <div class="col-md-2 offset-md-6">
-                    <div class="d-flex flex-row-reverse">
-                        <button mat-stroked-button class="boton-n-representacion" color="warn" aria-label="Cancelar" [routerLink]="['/main/consulta-sociedad']">
-                            Cancelar
-                        </button>
+                        <div class="row">
+                            <mat-form-field appearance="outline" class="col-6">
+                                <mat-label>Login</mat-label>
+                                <input matInput [disabled]="inserto" formControlName="login" maxlength="250" placeholder="Ingrese el login">
+                                <mat-error *ngIf="sociedadFormGroup.controls.login.errors?.required">Requerido</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </form>
+                    <br>
+
+                    <div class="row">
+                        <div class="col-md-2 offset-md-8">
+                            <div class="d-flex flex-row-reverse">
+                                <button mat-stroked-button class="boton-n-representacion" color="warn" aria-label="Cancelar" [routerLink]="['/main/consulta-sociedad']">
+                                    Cancelar
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="d-flex flex-row-reverse">
+                                <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" (click)="consulta_previa()" [disabled]="sociedadFormGroup.invalid">
+                                    Guardar
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="d-flex flex-row-reverse">
-                        <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" (click)="consulta_previa()" [disabled]="sociedadFormGroup.invalid">
-                            Guardar
-                        </button>
-                    </div>
-                </div>
+                </mat-card-content>
             </div>
-        </mat-card-content>
+        </div>
     </div>
 </mat-card>

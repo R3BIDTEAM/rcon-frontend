@@ -1,97 +1,90 @@
 <mat-card>
     <div class="borde">
-        <mat-card-header>
+        <h1 class="titulo-cdmx" style="margin-top: 15px; margin-bottom: 20px;">Búsqueda de sociedad (Consulta)</h1>
+        <!-- <mat-card-header>
             <mat-card-title>Búsqueda de sociedad (Consulta)</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-                <!-- Búsqueda por nombre -->
-                <div class="row">
-                    <div class="col-1 text-center">
-                    </div>
-                        <mat-form-field class="col-4">
-                            <mat-label>Razón Social</mat-label>
-                            <input matInput [(ngModel)]="razonSocial" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)">
-                            <mat-error></mat-error>
-                        </mat-form-field>
-                </div>
-                
-                <!-- Fin de nombre -->
-
-                <!-- Búsqueda por RFC CRUP -->
-                <div class="row">
-                    <div class="col-1 text-center">
-                    </div>
-                        <mat-form-field class="col-4">
-                            <mat-label>RFC</mat-label>
-                            <input matInput [(ngModel)]="rfc" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)">
-                            <mat-error></mat-error>
-                        </mat-form-field>
-                    <div class="col-1 text-center">
-                    </div>
-                        <mat-form-field class="col-4">
-                            <mat-label>Registro</mat-label>
-                            <input matInput [(ngModel)]="registro" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)">
-                            <mat-error></mat-error>
-                        </mat-form-field>
-                </div>
-                <!-- Fin de RFC CRUP -->
-
-            <div class="row">
-                <div class="col-2">
-
-                </div>
-                <div class="col">
-                    <div class="d-flex flex-row-reverse">
+        </mat-card-header> -->
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <mat-card-content>
+                        <!-- Búsqueda por nombre -->
+                        <div class="row">
+                            <mat-form-field appearance="outline" class="col-12">
+                                <mat-label>Razón Social</mat-label>
+                                <input matInput [(ngModel)]="razonSocial" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)">
+                                <mat-error></mat-error>
+                            </mat-form-field>
+                        </div>
                         
-                        <button mat-icon-button color="primary" aria-label="Limpiar Filtros" matTooltip="Limpiar Filtros" (click)="clean()">
-                            <mat-icon>clear</mat-icon>
-                        </button>
-                        <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getSociedad()" [disabled]="!search">
-                            <mat-icon>search</mat-icon>
-                        </button>
-                    </div>
-                </div>
-                <div class="col-6">
-                </div>
-            </div>
+                        <!-- Fin de nombre -->
 
-        
-            <br>
-            <ng-container>
-                <div style="padding: 30px; text-align: center;" *ngIf="loading">
-                    <mat-spinner style="margin:0 auto;"></mat-spinner>
-                    <p>Cargando...</p>
-                </div>
-                <div class="alert alert-info" *ngIf="dataSource.length == 0 && !loading">
-                    No hay registros para el filtro seleccionado
-                </div> 
-                <table mat-table [dataSource]="dataPaginate" *ngIf="!loading && dataSource.length > 0">
-                    <ng-container matColumnDef="razon">
-                        <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                        <td mat-cell *matCellDef="let element">{{ element.RAZONSOCIAL }}</td>
+                        <!-- Búsqueda por RFC CRUP -->
+                        <div class="row">
+                            <mat-form-field appearance="outline" class="col-6">
+                                <mat-label>RFC</mat-label>
+                                <input matInput [(ngModel)]="rfc" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)">
+                                <mat-error></mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-6">
+                                <mat-label>Registro</mat-label>
+                                <input matInput [(ngModel)]="registro" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)">
+                                <mat-error></mat-error>
+                            </mat-form-field>
+                        </div>
+                        <!-- Fin de RFC CRUP -->
+
+                    <div class="row">
+                        <div class="col-md-2 offset-md-5">
+                            <div class="d-flex flex-row-reverse">
+                                <button mat-icon-button color="primary" aria-label="Limpiar Filtros" matTooltip="Limpiar Filtros" (click)="clean()">
+                                    <mat-icon>clear</mat-icon>
+                                </button>
+                                <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getSociedad()" [disabled]="!search">
+                                    <mat-icon>search</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                
+                    <br>
+                    <ng-container>
+                        <div style="padding: 30px; text-align: center;" *ngIf="loading">
+                            <mat-spinner style="margin:0 auto;"></mat-spinner>
+                            <p>Cargando...</p>
+                        </div>
+                        <div class="alert alert-info" *ngIf="dataSource.length == 0 && !loading">
+                            No hay registros para el filtro seleccionado
+                        </div> 
+                        <table mat-table [dataSource]="dataPaginate" *ngIf="!loading && dataSource.length > 0">
+                            <ng-container matColumnDef="razon">
+                                <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="font-size: 15px; font-weight: 600;"> Nombre </th>
+                                <td mat-cell *matCellDef="let element">{{ element.RAZONSOCIAL }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="registro">
+                                <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="padding-left: 8px!important; font-size: 15px; font-weight: 600;"> Registro </th>
+                                <td mat-cell *matCellDef="let element" style="padding-left: 8px!important;"> {{ element.REGISTRO }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="rfc">
+                                <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="padding-left: 8px!important; font-size: 15px; font-weight: 600;"> RFC </th>
+                                <td mat-cell *matCellDef="let element" style="padding-left: 8px!important;">{{ element.RFC }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="select">
+                                <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="text-align: center; font-size: 15px; font-weight: 600;"> Seleccionar </th>
+                                <td mat-cell *matCellDef="let element" style="text-align: center;">
+                                    <button mat-stroked-button color="primary" aria-label="Ver sociedad" matTooltip="Ver Sociedad" [routerLink]="['/main/ver-sociedad', element.IDSOCIEDAD]">
+                                        Ver
+                                    </button>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                        <mat-paginator #paginator [length]="total" [pageSize]="pageSize" [pageSizeOptions]="[pageSize]" [showFirstLastButtons]="true" (page)="paginado($event)">
+                        </mat-paginator>
                     </ng-container>
-                    <ng-container matColumnDef="registro">
-                        <th mat-header-cell *matHeaderCellDef> Registro </th>
-                        <td mat-cell *matCellDef="let element"> {{ element.REGISTRO }}</td>
-                    </ng-container>
-                    <ng-container matColumnDef="rfc">
-                        <th mat-header-cell *matHeaderCellDef> RFC </th>
-                        <td mat-cell *matCellDef="let element">{{ element.RFC }}</td>
-                    </ng-container>
-                    <ng-container matColumnDef="select">
-                        <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
-                        <td mat-cell *matCellDef="let element">
-                            <button mat-stroked-button color="primary" aria-label="Ver sociedad" matTooltip="Ver Sociedad" [routerLink]="['/main/ver-sociedad', element.IDSOCIEDAD]">
-                                Ver
-                            </button>
-                        </td>
-                    </ng-container>
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table>
-                <mat-paginator #paginator [length]="total" [pageSize]="pageSize" [pageSizeOptions]="[pageSize]" [showFirstLastButtons]="true" (page)="paginado($event)">
-                </mat-paginator>
-            </ng-container>
-        </mat-card-content>
+                </mat-card-content>
+            </div>
+        </div>
     </div>
 </mat-card>

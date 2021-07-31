@@ -1,28 +1,29 @@
 <mat-card>
     <div class="borde">
-        <mat-card-header>
+        <h1 class="titulo-cdmx" style="margin-top: 15px; margin-bottom: 20px;">Datos de la Sociedad</h1>
+        <!-- <mat-card-header>
             <mat-card-title>Datos Sociedad</mat-card-title>
-        </mat-card-header>
-        <mat-card-header>
+        </mat-card-header> -->
+        <mat-card-header style="padding-left: 8%;">
             <mat-card-title>Datos de persona moral</mat-card-title>
         </mat-card-header>
         <div class="row">
-            <div class="col-md-8 offset-md-2">
+            <div class="col-md-10 offset-md-1">
                 <ng-container *ngIf="!loading">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>Razón social</mat-label>
-                                <input matInput placeholder="Placeholder" [(ngModel)]="datosSociedad.razonSocial" [readonly]="true">
+                                <input matInput placeholder="Placeholder" [(ngModel)]="datosSociedad.razonSocial" [disabled]="true" [readonly]="true">
                             </mat-form-field>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>RFC*</mat-label>
-                                <input matInput placeholder="Placeholder" [(ngModel)]="datosSociedad.rfc" [readonly]="true">
+                                <input matInput placeholder="Placeholder" [(ngModel)]="datosSociedad.rfc" [disabled]="true" [readonly]="true">
                             </mat-form-field>
                         </div>
                     </div>
@@ -31,17 +32,17 @@
                         <mat-card-title>Datos especifícos de la sociedad</mat-card-title>
                     </mat-card-header>
                     <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>Registro*</mat-label>
-                                <input matInput placeholder="Placeholder" [(ngModel)]="datosSociedad.registro" [readonly]="true">
+                                <input matInput placeholder="Placeholder" [(ngModel)]="datosSociedad.registro" [disabled]="true" [readonly]="true">
                             </mat-form-field>
                         </div>
                         <div class="col-md-5">
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                             <mat-form-field appearance="fill" style="width: 100%;">
                                 <mat-label>Fecha Alta</mat-label>
                                 <input matInput [matDatepicker]="fechaAlta" [(ngModel)]="datosSociedad.fecha_alta" [disabled]="true">
@@ -49,7 +50,7 @@
                                 <mat-datepicker #fechaAlta></mat-datepicker>
                             </mat-form-field>
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                             <mat-form-field appearance="fill" style="width: 100%;">
                                 <mat-label>Fecha Baja</mat-label>
                                 <input matInput [matDatepicker]="fechaBaja" [(ngModel)]="datosSociedad.fecha_baja" [disabled]="true">

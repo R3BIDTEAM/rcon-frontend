@@ -1,22 +1,19 @@
-<h1 mat-dialog-title>Búsqueda de personas morales</h1>
+<h1 mat-dialog-title class="verde-cdmx">Búsqueda de personas morales</h1>
+<br>
 <div mat-dialog-content>
     <mat-card-content>
         <!-- Búsqueda por nombre -->
         <div class="row">
-            <div class="col-1 text-center">
-            </div>
-            <mat-form-field class="col-4">
+            <mat-form-field appearance="outline" class="col-6">
                 <mat-label>Razón Social</mat-label>
-                <input matInput [(ngModel)]="razonSocial" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)">
+                <input matInput [(ngModel)]="razonSocial" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)" placeholder="Ingrese la razón social">
                 <mat-error></mat-error>
             </mat-form-field>
-            <div class="col-1 text-center">
-            </div>
-                <mat-form-field class="col-4">
-                    <mat-label>RFC</mat-label>
-                    <input matInput [(ngModel)]="rfc" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)">
-                    <mat-error></mat-error>
-                </mat-form-field>
+            <mat-form-field appearance="outline" class="col-6">
+                <mat-label>RFC</mat-label>
+                <input matInput [(ngModel)]="rfc" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" placeholder="Ingrese el RFC">
+                <mat-error></mat-error>
+            </mat-form-field>
         </div>
         
         <!-- Fin de nombre -->
@@ -28,12 +25,8 @@
         <!-- Fin de RFC -->
 
         <div class="row">
-            <div class="col-2">
-
-            </div>
-            <div class="col">
+            <div class="col-md-2 offset-md-5">
                 <div class="d-flex flex-row-reverse">
-                    
                     <button mat-icon-button color="primary" aria-label="Limpiar Filtros" matTooltip="Limpiar Filtros" (click)="clean()">
                         <mat-icon>clear</mat-icon>
                     </button>
@@ -41,8 +34,6 @@
                         <mat-icon>search</mat-icon>
                     </button>
                 </div>
-            </div>
-            <div class="col-6">
             </div>
         </div>
 
