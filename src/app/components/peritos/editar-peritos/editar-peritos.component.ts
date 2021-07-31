@@ -225,11 +225,11 @@ export class EditarPeritosComponent implements OnInit {
     ) {
         this.peritoPersonaFormGroup = this._formBuilder.group({
             apellidopaterno: ['', Validators.required],
-            apellidomaterno: ['', Validators.required],
+            apellidomaterno: [],
             nombre: ['', Validators.required],
-            rfc: ['', Validators.required],
-            curp: ['', Validators.required],
-            ine: ['', Validators.required],
+            rfc: [null],
+            curp: [null],
+            ine: [null],
             identificacion: [null],
             idedato: [null],
             fechaNacimiento: [null],
@@ -302,6 +302,19 @@ export class EditarPeritosComponent implements OnInit {
         this.datoPeritos.celular = null;
         this.datoPeritos.email = null;
         this.botonEdit = true;
+    }
+
+    changeRequired(): void {
+        if((this.peritoPersonaFormGroup.value.rfc === null && this.peritoPersonaFormGroup.value.curp === null) || (this.peritoPersonaFormGroup.value.rfc === '' && this.peritoPersonaFormGroup.value.curp === '')
+            || (this.datoPeritos.rfc === null && this.datoPeritos.curp === null) || (this.datoPeritos.rfc === '' && this.datoPeritos.curp === '')){​​​​​​​​
+            this.isRequired = true;
+        }​​​​​​​​ else {​​​​​​​​
+            this.isRequired = false;
+        }​​​​​​​​
+
+        console.log(this.peritoPersonaFormGroup.value.rfc);
+        this.peritoPersonaFormGroup.markAsTouched();
+        this.peritoPersonaFormGroup.updateValueAndValidity();
     }
 
     /**

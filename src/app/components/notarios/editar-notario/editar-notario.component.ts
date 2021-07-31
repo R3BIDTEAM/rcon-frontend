@@ -177,11 +177,11 @@ export class EditarNotarioComponent implements OnInit {
 
         this.personaFormGroup = this._formBuilder.group({
             apellidopaterno: ['', Validators.required],
-            apellidomaterno: ['', Validators.required],
+            apellidomaterno: [],
             nombre: ['', Validators.required],
-            rfc: ['', Validators.required],
-            curp: ['', Validators.required],
-            ine: ['', Validators.required],
+            rfc: [null],
+            curp: [null],
+            ine: [null],
             identificacion: [null],
             idedato: [null],
             fechaNacimiento: [null],
@@ -225,6 +225,19 @@ export class EditarNotarioComponent implements OnInit {
             this.loadingEstados = false;
         }
         );
+    }
+
+    changeRequired(): void {
+        if((this.personaFormGroup.value.rfc === null && this.personaFormGroup.value.curp === null) || (this.personaFormGroup.value.rfc === '' && this.personaFormGroup.value.curp === '')
+            || (this.datosGenerales.rfc === null && this.datosGenerales.curp === null) || (this.datosGenerales.rfc === '' && this.datosGenerales.curp === '')){​​​​​​​​
+            this.isRequired = true;
+        }​​​​​​​​ else {​​​​​​​​
+            this.isRequired = false;
+        }​​​​​​​​
+
+        console.log(this.personaFormGroup.value.rfc);
+        this.personaFormGroup.markAsTouched();
+        this.personaFormGroup.updateValueAndValidity();
     }
 
     /**

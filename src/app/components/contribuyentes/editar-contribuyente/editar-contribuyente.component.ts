@@ -311,11 +311,6 @@ export class EditarContribuyenteComponent implements OnInit {
     }
 
     changeRequired(): void {
-        // this.fisicaFormGroup.controls[remove].setValue(null);
-        // this.fisicaFormGroup.controls[remove].clearValidators();
-        // this.fisicaFormGroup.controls[add].setValidators(Validators.required);
-        // this.fisicaFormGroup.markAsUntouched();
-        // this.fisicaFormGroup.updateValueAndValidity();
         if((this.fisicaFormGroup.value.rfc === null && this.fisicaFormGroup.value.curp === null) || (this.fisicaFormGroup.value.rfc === '' && this.fisicaFormGroup.value.curp === '')
             || (this.contribuyente.rfc === null && this.contribuyente.curp === null) || (this.contribuyente.rfc === '' && this.contribuyente.curp === '')){​​​​​​​​
             this.isRequired = true;
