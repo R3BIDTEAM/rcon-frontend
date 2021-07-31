@@ -17,7 +17,6 @@
                 <mat-form-field appearance="fill" class="col-4">
                     <mat-label>Tipo de busqueda:</mat-label>
                     <mat-select [(ngModel)]="tipoBusqueda">
-                        <mat-option value="">Seleccione ...</mat-option>
                         <mat-option value="cuenta">Cuenta</mat-option>
                         <mat-option value="contribuyente">Contribuyente</mat-option>
                     </mat-select>
@@ -52,7 +51,7 @@
                         </mat-form-field>
                         <mat-form-field appearance="outline" class="col-2">
                             <mat-label>Unidad Privativa:</mat-label>
-                            <input matInput #unidad formControlName="unidad" minlength="3" maxlength="3" (keypress)="keyPressAlphaNumeric($event)">
+                            <input matInput #unidad formControlName="unidad" minlength="3" maxlength="3" (keypress)="keyPressAlphaNumeric($event)" (keydown.enter)="getData()">
                             <mat-error *ngIf="cuentaFormGroup.controls.unidad.errors?.required">Requerido</mat-error>
                             <mat-error *ngIf="cuentaFormGroup.controls.unidad.errors?.minlength">El valor debe de tener 3 alfanúmericos</mat-error>
                             <mat-error *ngIf="cuentaFormGroup.controls.unidad.errors?.maxlength">El valor debe de tener 3 alfanúmericos</mat-error>
@@ -88,35 +87,35 @@
                     <ng-container *ngIf="contribuyenteFormGroup.controls.tipo_persona.value == 'F'">
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-4">
-                                <mat-label>Apellido paterno:</mat-label>
-                                <input matInput formControlName="apaterno" (keyup)="clearInputsIdentNoIdent(false)" maxlength="250"  placeholder="Ingrese el apellido paterno">
+                                <mat-label>Apellido paterno / Razón Social:</mat-label>
+                                <input matInput formControlName="apaterno" (keyup)="clearInputsIdentNoIdent(false)" maxlength="250"  placeholder="Ingrese el apellido paterno" (keydown.enter)="getData()">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.apaterno.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-4">
                                 <mat-label>Apellido materno:</mat-label>
-                                <input matInput formControlName="amaterno" (keyup)="clearInputsIdentNoIdent(false)" maxlength="250" placeholder="Ingrese el apellido materno">
+                                <input matInput formControlName="amaterno" (keyup)="clearInputsIdentNoIdent(false)" maxlength="250" placeholder="Ingrese el apellido materno" (keydown.enter)="getData()">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.amaterno.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-4">
                                 <mat-label>Nombre:</mat-label>
-                                <input matInput formControlName="nombre" (keyup)="clearInputsIdentNoIdent(false)" maxlength="250"  placeholder="Ingrese el nombre">
+                                <input matInput formControlName="nombre" (keyup)="clearInputsIdentNoIdent(false)" maxlength="250"  placeholder="Ingrese el nombre" (keydown.enter)="getData()">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-4">
                                 <mat-label>RFC:</mat-label>
-                                <input matInput formControlName="rfc" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250"  placeholder="Ingrese el RFC">
+                                <input matInput formControlName="rfc" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250"  placeholder="Ingrese el RFC" (keydown.enter)="getData()">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-4">
                                 <mat-label>CURP:</mat-label>
-                                <input matInput formControlName="curp" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250"  placeholder="Ingrese el CURP">
+                                <input matInput formControlName="curp" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250"  placeholder="Ingrese el CURP" (keydown.enter)="getData()">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.curp.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-4">
                                 <mat-label>Clave INE:</mat-label>
-                                <input matInput formControlName="ine" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250"  placeholder="Ingrese el INE">
+                                <input matInput formControlName="ine" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250"  placeholder="Ingrese el INE" (keydown.enter)="getData()">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.ine.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
@@ -133,7 +132,7 @@
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-4">
                                 <mat-label></mat-label>
-                                <input matInput placeholder="" formControlName="documentoidentificativo" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250"  placeholder="Ingrese el número de documento">
+                                <input matInput placeholder="" formControlName="documentoidentificativo" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250"  placeholder="Ingrese el número de documento" (keydown.enter)="getData()">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.documentoidentificativo.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>

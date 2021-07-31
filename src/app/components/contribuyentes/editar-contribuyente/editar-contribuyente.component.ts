@@ -159,6 +159,7 @@ export class EditarContribuyenteComponent implements OnInit {
     panelDomicilio = false;
     panelDomPredial = false;
     panelBienes = false;
+    panelDatosRepre = false;
     dataRepresentantes: DataRepresentacion[] = [];
     dataRepresentados: DataRepresentacion[] = [];
     dataActualizacion: DataActualizacion = {} as DataActualizacion;
@@ -169,6 +170,7 @@ export class EditarContribuyenteComponent implements OnInit {
     displayedColumnsDom: string[] = ['tipoDir','direccion', 'historial', 'editar'];
     displayedColumnsRepdo: string[] = ['representacion','texto','caducidad','editar','eliminar'];
     displayedColumnsInm: string[] = ['inmueble','direccion','domicilio','descripcion','sujeto'];
+    displayedColumnsDataRep: string[] = ['fechaCaducidad','texto','caducidad'];
     loadingDomicilios = false;
     loadingInmuebles = false;
     paginaDom = 1;
@@ -216,6 +218,12 @@ export class EditarContribuyenteComponent implements OnInit {
     total5 = 0;
     pagina5 = 1;
     dataPaginate5;
+    total6 = 0;
+    pagina6= 1;
+    dataPaginate6;
+    total7 = 0;
+    pagina7= 1;
+    dataPaginate7;
     /*Paginado*/
 
     constructor(
@@ -1545,6 +1553,24 @@ export class EditarContribuyenteComponent implements OnInit {
      * @param evt Nos da la referencia de la pagina en la que se encuentra
      */
     paginado5(evt): void{
+        this.pagina5 = evt.pageIndex + 1;
+        this.dataSource5 = this.paginate(this.dataSource5, 15, this.pagina5);
+    }
+
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
+     paginado6(evt): void{
+        this.pagina5 = evt.pageIndex + 1;
+        this.dataSource5 = this.paginate(this.dataSource5, 15, this.pagina5);
+    }
+
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
+     paginado7(evt): void{
         this.pagina5 = evt.pageIndex + 1;
         this.dataSource5 = this.paginate(this.dataSource5, 15, this.pagina5);
     }

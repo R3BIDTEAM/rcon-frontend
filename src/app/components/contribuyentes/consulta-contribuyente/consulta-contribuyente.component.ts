@@ -170,78 +170,88 @@ export class ConsultaContribuyenteComponent implements OnInit {
     }
   }
 
-  /**
-  * Obtiene los valores de la consulta
-  */
-  getData(): void { 
-    this.loadingResponse = true;
-    this.busqueda = true;
-    this.pagina = 1;
-    this.queryParamFiltros = '';
-    this.endpointBusqueda = '';
-    
-    if(this.tipoBusqueda == 'cuenta'){
-      this.endpointBusqueda = this.endpoint + 'getContribuyenteByCuenta';
-        if(this.cuentaFormGroup.value.region)
-          this.queryParamFiltros = this.queryParamFiltros + '&region=' + this.cuentaFormGroup.value.region;
-        if(this.cuentaFormGroup.value.manzana)
-          this.queryParamFiltros = this.queryParamFiltros + '&manzana=' + this.cuentaFormGroup.value.manzana;
-        if(this.cuentaFormGroup.value.lote)
-          this.queryParamFiltros = this.queryParamFiltros + '&lote=' + this.cuentaFormGroup.value.lote;
-        if(this.cuentaFormGroup.value.unidad)
-          this.queryParamFiltros = this.queryParamFiltros + '&unidadPrivativa=' + this.cuentaFormGroup.value.unidad;
-    } else {
-      if(this.contribuyenteFormGroup.value.tipo_persona == 'M'){
-        if(this.isIdentificativo){
-          this.endpointBusqueda = this.endpoint + 'getMoralIdentificativos';
-          if(this.contribuyenteFormGroup.value.rfc)
-            this.queryParamFiltros = this.queryParamFiltros + '&rfc=' + this.contribuyenteFormGroup.value.rfc;
-        } else {
-          this.endpointBusqueda = this.endpoint + 'getPersonaMoral';
-          if(this.contribuyenteFormGroup.value.nombre)
-            this.queryParamFiltros = this.queryParamFiltros + '&razonSocial=' + this.contribuyenteFormGroup.value.nombre + '&filtroApellidoPaterno=0';
+    /**
+     * Obtiene los valores de la consulta
+     */
+    getData(): void { 
+        let busca: boolean = false;
+        
+        if(this.tipoBusqueda == 'cuenta'){
+            busca = this.cuentaFormGroup.valid;
+        }else{
+            busca = this.contribuyenteFormGroup.valid;
         }
-      } else {
-        if(this.isIdentificativo){
-          this.endpointBusqueda = this.endpoint + 'getIdentificativos';
-          if(this.contribuyenteFormGroup.value.curp)
-            this.queryParamFiltros = this.queryParamFiltros + '&curp=' + this.contribuyenteFormGroup.value.curp;
-          if(this.contribuyenteFormGroup.value.rfc)
-            this.queryParamFiltros = this.queryParamFiltros + '&rfc=' + this.contribuyenteFormGroup.value.rfc;
-          if(this.contribuyenteFormGroup.value.ine)
-            this.queryParamFiltros = this.queryParamFiltros + '&claveife=' + this.contribuyenteFormGroup.value.ine;
-          if(this.contribuyenteFormGroup.value.iddocumentoidentificativo != '')
-            this.queryParamFiltros = this.queryParamFiltros + '&iddocidentif=' + this.contribuyenteFormGroup.value.iddocumentoidentificativo;
-          if(this.contribuyenteFormGroup.value.documentoidentificativo)
-            this.queryParamFiltros = this.queryParamFiltros + '&valdocidentif=' + this.contribuyenteFormGroup.value.documentoidentificativo;
+        
+        if(busca){
+            this.loadingResponse = true;
+            this.busqueda = true;
+            this.pagina = 1;
+            this.queryParamFiltros = '';
+            this.endpointBusqueda = '';
 
-          this.queryParamFiltros = this.queryParamFiltros + '&coincidenTodos=false';        
-        } else {
-          this.endpointBusqueda = this.endpoint + 'getContribuyente';
-          if(this.contribuyenteFormGroup.value.nombre)
-            this.queryParamFiltros = this.queryParamFiltros + '&nombre=' + this.contribuyenteFormGroup.value.nombre + '&filtroNombre=0';
-          if(this.contribuyenteFormGroup.value.apaterno)
-            this.queryParamFiltros = this.queryParamFiltros + '&apellidoPaterno=' + this.contribuyenteFormGroup.value.apaterno + '&filtroApellidoPaterno=0';
-          if(this.contribuyenteFormGroup.value.amaterno)
-            this.queryParamFiltros = this.queryParamFiltros + '&apellidoMaterno=' + this.contribuyenteFormGroup.value.amaterno + '&filtroApellidoMaterno=0';
+            if(this.tipoBusqueda == 'cuenta'){
+            this.endpointBusqueda = this.endpoint + 'getContribuyenteByCuenta';
+                if(this.cuentaFormGroup.value.region)
+                this.queryParamFiltros = this.queryParamFiltros + '&region=' + this.cuentaFormGroup.value.region;
+                if(this.cuentaFormGroup.value.manzana)
+                this.queryParamFiltros = this.queryParamFiltros + '&manzana=' + this.cuentaFormGroup.value.manzana;
+                if(this.cuentaFormGroup.value.lote)
+                this.queryParamFiltros = this.queryParamFiltros + '&lote=' + this.cuentaFormGroup.value.lote;
+                if(this.cuentaFormGroup.value.unidad)
+                this.queryParamFiltros = this.queryParamFiltros + '&unidadPrivativa=' + this.cuentaFormGroup.value.unidad;
+            } else {
+            if(this.contribuyenteFormGroup.value.tipo_persona == 'M'){
+                if(this.isIdentificativo){
+                this.endpointBusqueda = this.endpoint + 'getMoralIdentificativos';
+                if(this.contribuyenteFormGroup.value.rfc)
+                    this.queryParamFiltros = this.queryParamFiltros + '&rfc=' + this.contribuyenteFormGroup.value.rfc;
+                } else {
+                this.endpointBusqueda = this.endpoint + 'getPersonaMoral';
+                if(this.contribuyenteFormGroup.value.nombre)
+                    this.queryParamFiltros = this.queryParamFiltros + '&razonSocial=' + this.contribuyenteFormGroup.value.nombre + '&filtroApellidoPaterno=0';
+                }
+            } else {
+                if(this.isIdentificativo){
+                this.endpointBusqueda = this.endpoint + 'getIdentificativos';
+                if(this.contribuyenteFormGroup.value.curp)
+                    this.queryParamFiltros = this.queryParamFiltros + '&curp=' + this.contribuyenteFormGroup.value.curp;
+                if(this.contribuyenteFormGroup.value.rfc)
+                    this.queryParamFiltros = this.queryParamFiltros + '&rfc=' + this.contribuyenteFormGroup.value.rfc;
+                if(this.contribuyenteFormGroup.value.ine)
+                    this.queryParamFiltros = this.queryParamFiltros + '&claveife=' + this.contribuyenteFormGroup.value.ine;
+                if(this.contribuyenteFormGroup.value.iddocumentoidentificativo != '')
+                    this.queryParamFiltros = this.queryParamFiltros + '&iddocidentif=' + this.contribuyenteFormGroup.value.iddocumentoidentificativo;
+                if(this.contribuyenteFormGroup.value.documentoidentificativo)
+                    this.queryParamFiltros = this.queryParamFiltros + '&valdocidentif=' + this.contribuyenteFormGroup.value.documentoidentificativo;
+
+                this.queryParamFiltros = this.queryParamFiltros + '&coincidenTodos=false';        
+                } else {
+                this.endpointBusqueda = this.endpoint + 'getContribuyente';
+                if(this.contribuyenteFormGroup.value.nombre)
+                    this.queryParamFiltros = this.queryParamFiltros + '&nombre=' + this.contribuyenteFormGroup.value.nombre + '&filtroNombre=0';
+                if(this.contribuyenteFormGroup.value.apaterno)
+                    this.queryParamFiltros = this.queryParamFiltros + '&apellidoPaterno=' + this.contribuyenteFormGroup.value.apaterno + '&filtroApellidoPaterno=0';
+                if(this.contribuyenteFormGroup.value.amaterno)
+                    this.queryParamFiltros = this.queryParamFiltros + '&apellidoMaterno=' + this.contribuyenteFormGroup.value.amaterno + '&filtroApellidoMaterno=0';
+                }
+            }
+            }
+
+            this.http.get(this.endpointBusqueda + '?' + this.queryParamFiltros, this.httpOptions).subscribe(
+                (res: any) => {
+                    this.loadingResponse = false;
+                    this.data = res;
+                    this.dataSource = this.paginate(this.data, this.pageSize, this.pagina);
+                    this.total = this.data.length;
+                    this.paginator.pageIndex = 0;
+                },
+                (error) => {
+                    this.loadingResponse = false;
+                    this.dataSource = [];
+                }
+            );
         }
-      }
     }
-
-    this.http.get(this.endpointBusqueda + '?' + this.queryParamFiltros, this.httpOptions).subscribe(
-      (res: any) => {
-        this.loadingResponse = false;
-        this.data = res;
-        this.dataSource = this.paginate(this.data, this.pageSize, this.pagina);
-        this.total = this.data.length;
-        this.paginator.pageIndex = 0;
-      },
-      (error) => {
-        this.loadingResponse = false;
-        this.dataSource = [];
-      }
-    );
-  }
 
   /**
   * Método del paginado que nos dira la posición del paginado y los datos a mostrar
