@@ -92,47 +92,49 @@ export class ConsultaSociedadComponent implements OnInit {
      * Obtiene el o los registros de la sociedad de acuerdo al críterio de búsqueda que pueden ser datos identificativos o personales.
      */
     getSociedad(){
-        let query = '';
-        let busquedaDatos = '';
-        if( this.razonSocial ){
-            busquedaDatos = busquedaDatos + 'getSocValuacionByDatosPersonales';
-        }else{
-            busquedaDatos = busquedaDatos + 'getSocValuacionByDatosIdentificativos';
-        }
+        if(this.search){
+            let query = '';
+            let busquedaDatos = '';
+            if( this.razonSocial ){
+                busquedaDatos = busquedaDatos + 'getSocValuacionByDatosPersonales';
+            }else{
+                busquedaDatos = busquedaDatos + 'getSocValuacionByDatosIdentificativos';
+            }
 
-        if( this.razonSocial ){
-            query = query + '&razonSocial=' + this.razonSocial + '&filtroRazon=1';
-        }
-        if(this.rfc){
-            query = query + '&rfc=' + this.rfc;
-        }
-        if(this.registro){
-            query = query + '&registro=' + this.registro;
-        }
+            if( this.razonSocial ){
+                query = query + '&razonSocial=' + this.razonSocial + '&filtroRazon=1';
+            }
+            if(this.rfc){
+                query = query + '&rfc=' + this.rfc;
+            }
+            if(this.registro){
+                query = query + '&registro=' + this.registro;
+            }
 
-        query = query.substr(1);
+            query = query.substr(1);
 
-        this.loading = true;
-        console.log(this.endpoint);
-        this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
-            .subscribe(
-                (res: any) => {
-                    this.loading = false;
-                    this.dataSource = res;
-                    this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-                    this.total = this.dataSource.length; 
-                    this.paginator.pageIndex = 0;
-                    console.log(res);
-                },
-                (error) => {
-                    this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
-                }
-            );
+            this.loading = true;
+            console.log(this.endpoint);
+            this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
+                .subscribe(
+                    (res: any) => {
+                        this.loading = false;
+                        this.dataSource = res;
+                        this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                        this.total = this.dataSource.length; 
+                        this.paginator.pageIndex = 0;
+                        console.log(res);
+                    },
+                    (error) => {
+                        this.loading = false;
+                        this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                            duration: 10000,
+                            horizontalPosition: 'end',
+                            verticalPosition: 'top'
+                        });
+                    }
+                );
+        }
     }
 
     /**

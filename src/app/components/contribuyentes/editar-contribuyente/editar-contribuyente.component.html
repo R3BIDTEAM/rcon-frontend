@@ -606,45 +606,6 @@
                                                     <mat-spinner style="margin:0 auto;"></mat-spinner>
                                                     <p>Cargando...</p>
                                                 </div>
-                                                <div class="alert alert-info" *ngIf="!loadingRepresentante && dataSource5.length == 0">
-                                                    No hay representantes asociados.
-                                                </div> 
-                                                <table mat-table [dataSource]="dataSource5" *ngIf="!loadingRepresentante && dataSource5.length > 0" width="100%">
-                                                    <ng-container matColumnDef="texto">
-                                                        <th mat-header-cell *matHeaderCellDef width="75%"> Texto de representación </th>
-                                                        <td mat-cell *matCellDef="let element" width="75%">
-                                                            {{ element.TEXTOREPRESENTACION }}
-                                                        </td>
-                                                    </ng-container>
-                                                    <ng-container matColumnDef="fechaCaducidad">
-                                                        <th mat-header-cell *matHeaderCellDef width="15%" > Fecha caducidad </th>
-                                                        <td mat-cell *matCellDef="let element" width="15%" >
-                                                            {{ element.FECHACADUCIDAD }}
-                                                        </td>
-                                                    </ng-container>
-                                                    <ng-container matColumnDef="caducidad">
-                                                        <th mat-header-cell *matHeaderCellDef width="75%"> Documento </th>
-                                                        <td mat-cell *matCellDef="let element" width="75%">
-                                                            {{ element.DOCUMENTOS.infoDocumento[0].codtipodocumentojuridico }}
-                                                            {{ element.DOCUMENTOS.infoDocumento[0].fecha }}
-                                                        </td>
-                                                    </ng-container>
-                                                    <tr mat-header-row *matHeaderRowDef="displayedColumnsDataRep"></tr>
-                                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsDataRep;"></tr>
-                                                </table>
-                                                <mat-paginator #paginator [length]="total7" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado7($event)">
-                                                </mat-paginator>
-                                            </ng-container>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-md-11">
-                                            <ng-container>
-                                                <div style="padding: 30px; text-align: center;" *ngIf="loadingRepresentado && loadingRepresentante">
-                                                    <mat-spinner style="margin:0 auto;"></mat-spinner>
-                                                    <p>Cargando...</p>
-                                                </div>
                                                 <div class="alert alert-info" *ngIf="!loadingRepresentado && !loadingRepresentante && (dataSource4.length == 0 || dataSource5.length == 0)">
                                                     No hay representantes asociados.
                                                 </div> 
@@ -664,7 +625,7 @@
                                                     <ng-container matColumnDef="caducidad">
                                                         <th mat-header-cell *matHeaderCellDef width="75%"> Documento </th>
                                                         <td mat-cell *matCellDef="let element" width="75%">
-                                                            {{ element.DOCUMENTOS.infoDocumento[0].codtipodocumentojuridico }}
+                                                            {{ (element.DOCUMENTOS.infoDocumento[0].codtipodocumentojuridico == 'PN') ? 'Poder Norarial' : 'Carta Poder' }}
                                                             {{ element.DOCUMENTOS.infoDocumento[0].fecha }}
                                                         </td>
                                                     </ng-container>
@@ -672,6 +633,45 @@
                                                     <tr mat-row *matRowDef="let row; columns: displayedColumnsDataRep;"></tr>
                                                 </table>
                                                 <mat-paginator #paginator [length]="total6" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado6($event)">
+                                                </mat-paginator>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-11">
+                                            <ng-container>
+                                                <div style="padding: 30px; text-align: center;" *ngIf="loadingRepresentado && loadingRepresentante">
+                                                    <mat-spinner style="margin:0 auto;"></mat-spinner>
+                                                    <p>Cargando...</p>
+                                                </div>
+                                                <div class="alert alert-info" *ngIf="!loadingRepresentante && dataSource5.length == 0">
+                                                    No hay representantes asociados.
+                                                </div> 
+                                                <table mat-table [dataSource]="dataSource5" *ngIf="!loadingRepresentante && dataSource5.length > 0" width="100%">
+                                                    <ng-container matColumnDef="texto">
+                                                        <th mat-header-cell *matHeaderCellDef width="75%"> Texto de representación </th>
+                                                        <td mat-cell *matCellDef="let element" width="75%">
+                                                            {{ element.TEXTOREPRESENTACION }}
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="fechaCaducidad">
+                                                        <th mat-header-cell *matHeaderCellDef width="15%" > Fecha caducidad </th>
+                                                        <td mat-cell *matCellDef="let element" width="15%" >
+                                                            {{ element.FECHACADUCIDAD }}
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="caducidad">
+                                                        <th mat-header-cell *matHeaderCellDef width="75%"> Documento </th>
+                                                        <td mat-cell *matCellDef="let element" width="75%">
+                                                            {{ (element.DOCUMENTOS.infoDocumento[0].codtipodocumentojuridico == 'PN') ? 'Poder Norarial' : 'Carta Poder' }}
+                                                            {{ element.DOCUMENTOS.infoDocumento[0].fecha }}
+                                                        </td>
+                                                    </ng-container>
+                                                    <tr mat-header-row *matHeaderRowDef="displayedColumnsDataRep"></tr>
+                                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsDataRep;"></tr>
+                                                </table>
+                                                <mat-paginator #paginator [length]="total7" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado7($event)">
                                                 </mat-paginator>
                                             </ng-container>
                                         </div>
