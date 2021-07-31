@@ -158,76 +158,77 @@ export class ConsultaNotarioComponent implements OnInit {
     }
   }
 
-  /** 
-  * Obtiene la información una vez llenados los filtros y realizado la búsqueda
-  */
-  getData(): void {
-      let query = '';
-      let busquedaDatos = '';
+    /** 
+     * Obtiene la información una vez llenados los filtros y realizado la búsqueda
+     */
+    getData(): void {
+        if(this.search){
+            let query = '';
+            let busquedaDatos = '';
 
-      if(this.filtros.nombre){
-        query = query + '&nombre=' + this.filtros.nombre + '&filtroNombre=0';
-      }
-      if(this.filtros.apellido_paterno){
-          query = query + '&apellidoPaterno=' + this.filtros.apellido_paterno + '&filtroApellidoPaterno=0';
-      }
-      if(this.filtros.apellido_materno){
-          query = query + '&apellidoMaterno=' + this.filtros.apellido_materno + '&filtroApellidoMaterno=0';
-      }
-      if(this.filtros.rfc){
-          query = query + '&rfc=' + this.filtros.rfc;
-      }
-      if(this.filtros.curp){
-          query = query + '&curp=' + this.filtros.curp;
-      }
-      if(this.filtros.ine){
-          query = query + '&ine=' + this.filtros.ine;
-      }
-      if(this.filtros.otro_documento){
-          query = query + '&iddocidentif=' + this.filtros.otro_documento;
-      }
-      if(this.filtros.numero_documento){
-          query = query + '&valdocidentif=' + this.filtros.numero_documento;
-      }
-      if(this.filtros.no_notario){
-          query = query + '&numnotario=' + this.filtros.no_notario;
-      }
-      if(this.filtros.estado){
-          query = query + '&estado=' + this.filtros.estado;
-      }
-    
+            if(this.filtros.nombre){
+                query = query + '&nombre=' + this.filtros.nombre + '&filtroNombre=0';
+            }
+            if(this.filtros.apellido_paterno){
+                query = query + '&apellidoPaterno=' + this.filtros.apellido_paterno + '&filtroApellidoPaterno=0';
+            }
+            if(this.filtros.apellido_materno){
+                query = query + '&apellidoMaterno=' + this.filtros.apellido_materno + '&filtroApellidoMaterno=0';
+            }
+            if(this.filtros.rfc){
+                query = query + '&rfc=' + this.filtros.rfc;
+            }
+            if(this.filtros.curp){
+                query = query + '&curp=' + this.filtros.curp;
+            }
+            if(this.filtros.ine){
+                query = query + '&ine=' + this.filtros.ine;
+            }
+            if(this.filtros.otro_documento){
+                query = query + '&iddocidentif=' + this.filtros.otro_documento;
+            }
+            if(this.filtros.numero_documento){
+                query = query + '&valdocidentif=' + this.filtros.numero_documento;
+            }
+            if(this.filtros.no_notario){
+                query = query + '&numnotario=' + this.filtros.no_notario;
+            }
+            if(this.filtros.estado){
+                query = query + '&estado=' + this.filtros.estado;
+            }
+            
 
-      if( this.isIdentificativo ){
-          busquedaDatos = busquedaDatos + 'getNotariosByDatosIdentificativos';
-      }else{
-          busquedaDatos = busquedaDatos + 'getNotariosByDatosPersonales';
-      }
+            if( this.isIdentificativo ){
+                busquedaDatos = busquedaDatos + 'getNotariosByDatosIdentificativos';
+            }else{
+                busquedaDatos = busquedaDatos + 'getNotariosByDatosPersonales';
+            }
 
-      query = query.substr(1);
+            query = query.substr(1);
 
-      this.loading = true;
-        // console.log(this.endpoint + busquedaDatos + '?' + query);
-        this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
-            .subscribe(
-                (res: any) => {
-                    this.loading = false;
-                    this.dataSource = res;
-                    this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-                    this.total = this.dataSource.length; 
-                    // this.paginator.pageIndex = 0;
-                    // console.log(this.dataSource);
-                },
-                (error) => {
-                    this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
-                }
-            );
-    
-  }
+            this.loading = true;
+                // console.log(this.endpoint + busquedaDatos + '?' + query);
+                this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
+                    .subscribe(
+                        (res: any) => {
+                            this.loading = false;
+                            this.dataSource = res;
+                            this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                            this.total = this.dataSource.length; 
+                            // this.paginator.pageIndex = 0;
+                            // console.log(this.dataSource);
+                        },
+                        (error) => {
+                            this.loading = false;
+                            this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                                duration: 10000,
+                                horizontalPosition: 'end',
+                                verticalPosition: 'top'
+                            });
+                        }
+                    );
+        }
+    }
 
   paginado(evt): void{
       this.pagina = evt.pageIndex + 1;
