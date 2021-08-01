@@ -89,12 +89,21 @@ export class AltaNotarioComponent implements OnInit {
             fecha_nacimiento: [null, []],
             fecha_defuncion: [null, []],
             celular: [null, []],
-            email: ['', Validators.email]
+            email: ['', Validators.email],
         });
         
         this.getDataEstados();
         this.getDataDocumentosIdentificativos();
         
+    }
+
+    // minDate = '2021-06-06';
+    minDate = '';
+
+    fechaTope(){
+        // alert(moment(this.filtros.fecha_nacimiento).add(2, 'd').format('YYYY-MM-DD'));
+        this.filtros.fecha_defuncion = null;
+        this.minDate = moment(this.filtros.fecha_nacimiento).add(2, 'd').format('YYYY-MM-DD');
     }
 
     /**
