@@ -229,7 +229,7 @@ export class EditarSociedadComponent implements OnInit {
             fecha_naci: [null, []],
             fecha_def: [null, []],
             celular: [null, []],
-            email: [null, []],
+            email: ['', Validators.email],
         });
 
         this.moralFormGroup = this._formBuilder.group({

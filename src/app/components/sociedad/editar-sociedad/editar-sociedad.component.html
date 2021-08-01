@@ -37,7 +37,7 @@
                     </mat-form-field>
                 </div> -->
                 <br>
-                <ng-container *ngIf="datosSociedad.tipoPersona == 'F' && !loading">
+                <!-- <ng-container *ngIf="datosSociedad.tipoPersona == 'F' && !loading">
                     <form [formGroup]="fisicaFormGroup">
                         <div class="row">
                             <mat-form-field class="col-10">
@@ -80,7 +80,6 @@
                             <mat-form-field class="col-5">
                                 <mat-label>Otro Documento:</mat-label>
                                 <mat-select formControlName="idDocIdent" [(ngModel)]="datosSociedad.idDocIdent">
-                                    <mat-option value="">Seleccione...</mat-option>
                                     <mat-option *ngFor="let documento of dataDocumentos" [value]="documento.IDDOCIDENTIF">
                                         {{ documento.DESCRIPCION }}
                                     </mat-option>
@@ -112,18 +111,19 @@
                             </mat-form-field>
                             <mat-form-field class="col-5">
                                 <mat-label>E-mail:</mat-label>
-                                <input matInput formControlName="email" [(ngModel)]="datosSociedad.email">
+                                <input matInput formControlName="email" placeholder="Ingrese E-mail" [(ngModel)]="datosSociedad.email" maxlength="250">
+                                <mat-error *ngIf="fisicaFormGroup.hasError('email', 'email') && fisicaFormGroup.get('email').touched">Correo invalido</mat-error>
                             </mat-form-field>
                         </div>
                     </form>
-                </ng-container>
+                </ng-container> -->
                 <ng-container *ngIf="datosSociedad.tipoPersona == 'M' && !loading">
                     <form [formGroup]="moralFormGroup">
                         <div class="row">
                             <div class="col-md-4">
                                 <mat-form-field appearance="outline" style="width: 100%;">
                                     <mat-label>Razón social</mat-label>
-                                    <input matInput formControlName="razonSocial" placeholder="Razón social" [(ngModel)]="datosSociedad.razonSocial">
+                                    <input matInput formControlName="razonSocial" placeholder="Ingrese Razón social" [(ngModel)]="datosSociedad.razonSocial">
                                     <mat-error *ngIf="moralFormGroup.controls.razonSocial.errors?.required">Requerido</mat-error>
                                 </mat-form-field>
                             </div>
@@ -133,7 +133,7 @@
                             <div class="col-md-4">
                                 <mat-form-field appearance="outline" style="width: 100%;">
                                     <mat-label>RFC*</mat-label>
-                                    <input matInput formControlName="rfc" placeholder="RFC" [(ngModel)]="datosSociedad.rfc" pattern="^([A-ZÑ&]{3})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$">
+                                    <input matInput formControlName="rfc" placeholder="Ingrese RFC" [(ngModel)]="datosSociedad.rfc" pattern="^([A-ZÑ&]{3})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$">
                                     <mat-error *ngIf="moralFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="moralFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 3 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
                                 </mat-form-field>
@@ -143,7 +143,7 @@
                             <div class="col-md-4">
                                 <mat-form-field appearance="outline" style="width: 100%;">
                                     <mat-label>Acta preponderante*</mat-label>
-                                    <input matInput formControlName="actPreponderante" placeholder="Acta preponderante" [(ngModel)]="datosSociedad.acta">
+                                    <input matInput formControlName="actPreponderante" placeholder="Ingrese Acta preponderante" [(ngModel)]="datosSociedad.acta">
                                 </mat-form-field>
                             </div>
                         </div>
@@ -703,7 +703,7 @@
                             <div class="col-md-5">
                                 <mat-form-field appearance="outline" style="width: 100%;">
                                     <mat-label>Registro*</mat-label>
-                                    <input matInput placeholder="Placeholder" [(ngModel)]="datosSociedad.registro">
+                                    <input matInput [(ngModel)]="datosSociedad.registro">
                                 </mat-form-field>
                             </div>
                             <div class="col-md-5">

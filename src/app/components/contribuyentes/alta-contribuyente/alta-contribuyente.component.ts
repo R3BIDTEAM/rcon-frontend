@@ -2005,7 +2005,7 @@ export class DialogRepresentadoAltaC {
             fechaNacimiento: [null, []],
             fechaDefuncion: [null, []],
             celular: [null, []],
-            email: [null, []],
+            email: ['', Validators.email],
             texto: [null, []],
             fechaCaducidad: [null, []],
         });

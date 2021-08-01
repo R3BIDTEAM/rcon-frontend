@@ -235,7 +235,7 @@ export class EditarPeritosComponent implements OnInit {
             fechaNacimiento: [null],
             fechaDefuncion: [null],
             celular: [null],
-            email: [null],
+            email: ['', Validators.email],
         });
 
         this.moralFormGroup = this._formBuilder.group({

@@ -136,7 +136,7 @@
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>E-Mail</mat-label>
-                            <input matInput #email type="email" [email]="true" placeholder="Ingrese e-mail" formControlName="email" [(ngModel)]="filtros.email" placeholder="Placeholder">
+                            <input matInput #email type="email" [email]="true" placeholder="Ingrese E-mail" formControlName="email" [(ngModel)]="filtros.email" placeholder="Placeholder">
                             <mat-error *ngIf="notarioFormGroup.hasError('email', 'email') && notarioFormGroup.get('email').touched">Correo invalido</mat-error>
                         </mat-form-field>
                     </div>

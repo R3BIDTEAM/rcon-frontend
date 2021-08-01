@@ -123,7 +123,6 @@
                             <mat-form-field appearance="fill" class="col-4">
                                 <mat-label>Otro documento identificativo:</mat-label>
                                 <mat-select formControlName="iddocumentoidentificativo" (selectionChange)="clearInputsIdentNoIdent(true)">
-                                    <mat-option value="">Seleccione...</mat-option>
                                     <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF">
                                         {{ documento.DESCRIPCION }}
                                     </mat-option>

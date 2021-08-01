@@ -23,7 +23,7 @@
                     </div>
                     <mat-form-field appearance="outline" class="col-10">
                         <mat-label>Nombre:</mat-label>
-                        <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.nombre" formControlName="nombre" [readonly]="inserto" maxlength="250">
+                        <input matInput placeholder="Ingrese Nombre" [(ngModel)]="datoPeritos.nombre" formControlName="nombre" [readonly]="inserto" maxlength="250">
                         <mat-error *ngIf="peritoPersonaFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                     </mat-form-field>
                 </div>
@@ -32,12 +32,12 @@
                     </div>
                     <mat-form-field appearance="outline" class="col-5">
                         <mat-label>Apellido Paterno:</mat-label>
-                        <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.apepaterno" formControlName="apepaterno" [readonly]="inserto" maxlength="250">
+                        <input matInput placeholder="Ingrese Apellido Paterno" [(ngModel)]="datoPeritos.apepaterno" formControlName="apepaterno" [readonly]="inserto" maxlength="250">
                         <mat-error *ngIf="peritoPersonaFormGroup.controls.apepaterno.errors?.required">Requerido</mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-5">
                         <mat-label>Apellido Materno:</mat-label>
-                        <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.apematerno" formControlName="apematerno" [readonly]="inserto" maxlength="250">
+                        <input matInput placeholder="Ingrese Apellido Materno" [(ngModel)]="datoPeritos.apematerno" formControlName="apematerno" [readonly]="inserto" maxlength="250">
                         <mat-error *ngIf="peritoPersonaFormGroup.controls.apematerno.errors?.required">Requerido</mat-error>
                     </mat-form-field>
                 </div>
@@ -46,13 +46,13 @@
                     </div>
                     <mat-form-field appearance="outline" class="col-5">
                         <mat-label>RFC:</mat-label>
-                        <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.rfc" formControlName="rfc" [readonly]="inserto" [required]="isRequired" (keyup)="changeRequired()" pattern="^([A-ZÑ&]{4})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" maxlength="13">
+                        <input matInput placeholder="Ingrese RFC" [(ngModel)]="datoPeritos.rfc" formControlName="rfc" [readonly]="inserto" [required]="isRequired" (keyup)="changeRequired()" pattern="^([A-ZÑ&]{4})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" maxlength="13">
                         <mat-error *ngIf="peritoPersonaFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                         <mat-error *ngIf="peritoPersonaFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 4 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-5">
                         <mat-label>CURP:</mat-label>
-                        <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.curp" formControlName="curp" [readonly]="inserto" [required]="isRequired" (keyup)="changeRequired()" pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$" maxlength="18">
+                        <input matInput placeholder="Ingrese CURP" [(ngModel)]="datoPeritos.curp" formControlName="curp" [readonly]="inserto" [required]="isRequired" (keyup)="changeRequired()" pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$" maxlength="18">
                         <mat-error *ngIf="peritoPersonaFormGroup.controls.curp.errors?.required">Requerido</mat-error>
                         <mat-error *ngIf="peritoPersonaFormGroup.controls.curp.errors?.pattern">CURP no valido</mat-error>
                     </mat-form-field>
@@ -62,7 +62,7 @@
                     </div>
                     <mat-form-field appearance="outline" class="col-5">
                         <mat-label>INE:</mat-label>
-                        <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.ine" formControlName="ine" [readonly]="inserto" maxlength="30">
+                        <input matInput placeholder="Ingrese INE" [(ngModel)]="datoPeritos.ine" formControlName="ine" [readonly]="inserto" maxlength="30">
                         <mat-error *ngIf="peritoPersonaFormGroup.controls.ine.errors?.required">Requerido</mat-error>
                     </mat-form-field>
                 </div>
@@ -79,7 +79,7 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-5">
                         <mat-label></mat-label>
-                        <input matInput placeholder="Dato de la Identificación" [(ngModel)]="datoPeritos.idedato" formControlName="idedato" [readonly]="inserto" maxlength="250">
+                        <input matInput placeholder="Ingrese Número del documento" [(ngModel)]="datoPeritos.idedato" formControlName="idedato" [readonly]="inserto" maxlength="250">
                     </mat-form-field>
                 </div>
                 <div class="row">
@@ -107,7 +107,7 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-5">
                         <mat-label>E-mail:</mat-label>
-                        <input matInput type="email" [email]="true" placeholder="E-mail" [(ngModel)]="datoPeritos.email" formControlName="email" [readonly]="inserto" maxlength="250">
+                        <input matInput type="email" [email]="true" placeholder="Ingrese E-mail" [(ngModel)]="datoPeritos.email" formControlName="email" [readonly]="inserto" maxlength="250">
                         <mat-error *ngIf="peritoPersonaFormGroup.hasError('email', 'email') && peritoPersonaFormGroup.get('email').touched">Correo invalido</mat-error>
                         
                     </mat-form-field>

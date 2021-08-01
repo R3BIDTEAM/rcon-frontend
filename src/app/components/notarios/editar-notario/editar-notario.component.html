@@ -21,14 +21,13 @@
             <div *ngIf="datosGenerales.tipoPersona == 'F' && !loading" class="col-md-4">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>No. Notario</mat-label>
-                    <input matInput placeholder="Placeholder" [(ngModel)]="datosNotario.no_notario">
+                    <input matInput placeholder="Ingrese No. Notario" [(ngModel)]="datosNotario.no_notario">
                 </mat-form-field>
             </div>
             <div *ngIf="datosGenerales.tipoPersona == 'F' && !loading" class="col-md-4">
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Estado:</mat-label>
                     <mat-select #estado [(ngModel)]="datosNotario.estado">
-                        <mat-option value="">Seleccione ...</mat-option>
                         <mat-option *ngFor="let estado of estados" [value]="estado.CODESTADO">
                             {{ estado.ESTADO }}
                         </mat-option>
@@ -54,21 +53,21 @@
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>Nombre</mat-label>
-                            <input matInput formControlName="nombre" placeholder="Placeholder" [(ngModel)]="datosGenerales.nombre">
+                            <input matInput formControlName="nombre" placeholder="Ingrese Nombre" [(ngModel)]="datosGenerales.nombre">
                             <mat-error *ngIf="personaFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>Apellido Paterno</mat-label>
-                            <input matInput formControlName="apellidopaterno" placeholder="Placeholder" [(ngModel)]="datosGenerales.apellido_paterno">
+                            <input matInput formControlName="apellidopaterno" placeholder="Ingrese Apellido Paterno" [(ngModel)]="datosGenerales.apellido_paterno">
                             <mat-error *ngIf="personaFormGroup.controls.apellidopaterno.errors?.required">Requerido</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>Apellido Materno</mat-label>
-                            <input matInput formControlName="apellidomaterno" placeholder="Placeholder" [(ngModel)]="datosGenerales.apellido_materno">
+                            <input matInput formControlName="apellidomaterno" placeholder="Ingrese Apellido Materno" [(ngModel)]="datosGenerales.apellido_materno">
                             <mat-error *ngIf="personaFormGroup.controls.apellidomaterno.errors?.required">Requerido</mat-error>
                         </mat-form-field>
                     </div> 
@@ -78,7 +77,7 @@
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>RFC*</mat-label>
-                            <input matInput formControlName="rfc" placeholder="Placeholder" [(ngModel)]="datosGenerales.rfc" (keyup)="changeRequired()" [required]="isRequired" pattern="^([A-ZÑ&]{4})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" maxlength="13">
+                            <input matInput formControlName="rfc" placeholder="Ingrese RFC" [(ngModel)]="datosGenerales.rfc" (keyup)="changeRequired()" [required]="isRequired" pattern="^([A-ZÑ&]{4})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" maxlength="13">
                             <mat-error *ngIf="personaFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                             <mat-error *ngIf="personaFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 4 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
                         </mat-form-field>
@@ -86,7 +85,7 @@
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>CURP*</mat-label>
-                            <input matInput formControlName="curp" placeholder="Placeholder" [(ngModel)]="datosGenerales.curp" (keyup)="changeRequired()" [required]="isRequired" pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$" maxlength="18">
+                            <input matInput formControlName="curp" placeholder="Ingrese CURP" [(ngModel)]="datosGenerales.curp" (keyup)="changeRequired()" [required]="isRequired" pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$" maxlength="18">
                             <mat-error *ngIf="personaFormGroup.controls.curp.errors?.required">Requerido</mat-error>
                             <mat-error *ngIf="personaFormGroup.controls.curp.errors?.pattern">CURP no valido</mat-error>
                         </mat-form-field>
@@ -97,7 +96,7 @@
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>INE</mat-label>
-                            <input matInput formControlName="ine" placeholder="Placeholder" [(ngModel)]="datosGenerales.ine">
+                            <input matInput formControlName="ine" placeholder="Ingrese INE" [(ngModel)]="datosGenerales.ine">
                             <mat-error *ngIf="personaFormGroup.controls.ine.errors?.required">Requerido</mat-error>
                         </mat-form-field>
                     </div>
@@ -115,7 +114,7 @@
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>Número Documento</mat-label>
-                            <input matInput formControlName="idedato" #numero_documento [(ngModel)]="datosGenerales.numero_documento" [disabled]="datosGenerales.otro_documento == '' || datosGenerales.otro_documento == null" placeholder="Número documento">
+                            <input matInput formControlName="idedato" #numero_documento [(ngModel)]="datosGenerales.numero_documento" [disabled]="datosGenerales.otro_documento == '' || datosGenerales.otro_documento == null" placeholder="Ingrese Número documento">
                         </mat-form-field>
                     </div>
                 </div>
@@ -124,7 +123,7 @@
                     <div class="col-md-4">
                         <mat-form-field appearance="fill" style="width: 100%;">
                             <mat-label>Fecha Nacimiento</mat-label>
-                            <input matInput formControlName="fechaNacimiento" [matDatepicker]="picknacimiento" [(ngModel)]="datosGenerales.fecha_nacimiento">
+                            <input matInput formControlName="fechaNacimiento" [matDatepicker]="picknacimiento" [(ngModel)]="datosGenerales.fecha_nacimiento" placeholder="Ingrese Fecha Nacimiento">
                             <mat-datepicker-toggle matSuffix [for]="picknacimiento"></mat-datepicker-toggle>
                             <mat-datepicker #picknacimiento></mat-datepicker>
                         </mat-form-field>
@@ -132,7 +131,7 @@
                     <div class="col-md-4">
                         <mat-form-field appearance="fill" style="width: 100%;">
                             <mat-label>Fecha Defunción</mat-label>
-                            <input matInput formControlName="fechaDefuncion" [matDatepicker]="pickdefuncion" [(ngModel)]="datosGenerales.fecha_defuncion">
+                            <input matInput formControlName="fechaDefuncion" [matDatepicker]="pickdefuncion" [(ngModel)]="datosGenerales.fecha_defuncion" placeholder="Ingrese Fecha Defunción">
                             <mat-datepicker-toggle matSuffix [for]="pickdefuncion"></mat-datepicker-toggle>
                             <mat-datepicker #pickdefuncion></mat-datepicker>
                         </mat-form-field>
@@ -143,13 +142,14 @@
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>Celular</mat-label>
-                            <input matInput formControlName="celular" placeholder="Placeholder" [(ngModel)]="datosGenerales.celular">
+                            <input matInput formControlName="celular" placeholder="Ingrese Celular" [(ngModel)]="datosGenerales.celular">
                         </mat-form-field>
                     </div>
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>E-Mail</mat-label>
-                            <input matInput formControlName="email" placeholder="Placeholder" [(ngModel)]="datosGenerales.email">
+                            <input matInput formControlName="email" placeholder="Ingrese E-mail" [(ngModel)]="datosGenerales.email">
+                            <mat-error *ngIf="personaFormGroup.hasError('email', 'email') && personaFormGroup.get('email').touched">Correo invalido</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
