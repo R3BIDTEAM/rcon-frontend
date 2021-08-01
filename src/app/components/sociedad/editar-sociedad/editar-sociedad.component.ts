@@ -1359,7 +1359,12 @@ export class DialogDomicilioSociedad {
             this.dataDomicilio = {} as DataDomicilio;
             this.dataDomicilioEspecifico = {} as DataDomicilio;
             this.getDataEstados();
-            this.getDireccionEspecifica();
+            if(data){
+                console.log(data.dataDomicilioEspecifico);
+                console.log("recibimos data seteado1");
+                this.getDireccionEspecifica();
+            }
+            
             
             this.domicilioFormGroup = this._formBuilder.group({
                 //idtipodireccion: ['', Validators.required],
@@ -1406,11 +1411,6 @@ export class DialogDomicilioSociedad {
                 this.domicilioFormGroup.updateValueAndValidity();
             });
     
-            if(data){
-                console.log(data.dataDomicilioEspecifico);
-                console.log("recibimos data seteado1");
-                // this.setDataDomicilio(data);
-            }
             this.getDataTiposAsentamiento();
             this.getDataTiposVia();
             this.getDataTiposLocalidad();
@@ -1793,6 +1793,8 @@ export class DialogDomicilioSociedad {
             this.domicilioFormGroup.controls['ciudad'].setValue(data.CIUDAD);
             this.domicilioFormGroup.controls['idciudad'].setValue(data.CODCIUDAD);
         }
+
+        this.dataDomicilio.delegacion = data.DELEGACION;
     }
 
     /**

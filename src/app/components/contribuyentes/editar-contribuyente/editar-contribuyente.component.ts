@@ -1699,7 +1699,12 @@ export class DialogDomicilioContribuyente {
             this.dataDomicilio = {} as DataDomicilio;
             this.dataDomicilioEspecifico = {} as DataDomicilio;
             this.getDataEstados();
-            this.getDireccionEspecifica();
+            if(data){
+                console.log(data.dataDomicilioEspecifico);
+                console.log("recibimos data seteado1");
+                this.getDireccionEspecifica();
+
+            }
             
             this.domicilioFormGroup = this._formBuilder.group({
                 //idtipodireccion: ['', Validators.required],
@@ -1746,15 +1751,7 @@ export class DialogDomicilioContribuyente {
                 this.domicilioFormGroup.updateValueAndValidity();
             });
     
-            //   if(data){
-            //       this.setDataDomicilio(data);
-            //   }
-            if(data){
-                console.log(data.dataDomicilioEspecifico);
-                console.log("recibimos data seteado1");
-                //console.log(data.dataDomicilioEspecifico[0]);
-                // this.domicilioFormGroup.controls['cp'].val('11111');
-            }
+
             this.getDataTiposAsentamiento();
             this.getDataTiposVia();
             this.getDataTiposLocalidad();
@@ -2160,8 +2157,6 @@ export class DialogDomicilioContribuyente {
     setDataDomicilio(data): void {
         console.log("ACA EL COD DATA ESPE");
         console.log(data);
-        // console.log("ACA EL COD ESTADO SETEADO"+data.dataDomicilioEspecifico.CODESTADO);
-        //this.domicilioFormGroup.controls['idtipodireccion'].setValue(dataDomicilio.idtipodireccion);
     
         this.domicilioFormGroup.controls['idestado'].setValue(data.CODESTADO);
         this.getDataMunicipios({value: this.domicilioFormGroup.value.idestado});
@@ -2186,7 +2181,6 @@ export class DialogDomicilioContribuyente {
         this.domicilioFormGroup.controls['id_direccion'].setValue(data.IDDIRECCION);
 
         if(data.CODESTADO == 9){
-            // alert('funciona');
             this.domicilioFormGroup.controls['idmunicipio'].setValue(data.IDDELEGACION);
         } else {
             this.domicilioFormGroup.controls['idmunicipio2'].setValue(data.CODMUNICIPIO);
@@ -2194,6 +2188,8 @@ export class DialogDomicilioContribuyente {
             this.domicilioFormGroup.controls['ciudad'].setValue(data.CIUDAD);
             this.domicilioFormGroup.controls['idciudad'].setValue(data.CODCIUDAD);
         }
+
+        this.dataDomicilio.delegacion = data.DELEGACION;
     }
 
     /**
