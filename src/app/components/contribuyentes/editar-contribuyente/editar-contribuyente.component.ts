@@ -195,6 +195,7 @@ export class EditarContribuyenteComponent implements OnInit {
     actCambioPersona = true;
     isRequired = true;
     mensajeConfirma;
+    minDate;
     @ViewChild('paginator') paginator: MatPaginator;
 
     /*Paginado*/
@@ -277,6 +278,10 @@ export class EditarContribuyenteComponent implements OnInit {
         this.getidInmuebles();
         this.getRepresentacion();
         this.getRepresentado();
+
+        // this.minDate = moment(this.dataContribuyenteResultado[0].FECHANACIMIENTO).format('YYYY-MM-DD');
+        // alert('hola');
+        
     }
 
     actualizaPersona(event){
@@ -393,7 +398,16 @@ export class EditarContribuyenteComponent implements OnInit {
         this.contribuyente.fechaCambio = (this.dataContribuyenteResultado[0].FECHACAMBIOSITUACION) ? new Date(this.dataContribuyenteResultado[0].FECHACAMBIOSITUACION) : null;
 
         console.log(this.contribuyente.nombre_moral);
-        
+
+        this.minDate = (moment(this.contribuyente.fecha_naci).format('YYYY-MM-DD'));
+        alert(moment(this.contribuyente.fecha_naci).format('YYYY-MM-DD'));
+    }
+
+    // minDate = moment(this.fisicaFormGroup.controls['fecha_naci'].value).format('YYYY-MM-DD');
+
+    fechaTope(){
+        this.fisicaFormGroup.controls['fecha_def'].setValue(null);
+        this.minDate = moment(this.fisicaFormGroup.controls['fecha_naci'].value).add(2, 'd').format('YYYY-MM-DD');  
     }
 
     /** 
@@ -3034,6 +3048,13 @@ export class DialogRepresentacionC {
         };
     }
 
+    minDate = '';
+
+    fechaTope(){
+        this.fisicaFormGroup.controls['fechaDefuncion'].setValue(null);
+        this.minDate = moment(this.fisicaFormGroup.controls['fechaNacimiento'].value).add(2, 'd').format('YYYY-MM-DD');  
+    }
+
     /**
      * De acuerdo al campo seleccionado será requerido el RFC, el CURP o ambos.
      * @param remove Valor del campo que se le retirara la validación, puede ser CURP o RFC
@@ -3384,6 +3405,13 @@ export class DialogRepresentadoC {
             this.insertOrUpdate = 2;
             this.insUp = true;
         }
+    }
+
+    minDate = '';
+
+    fechaTope(){
+        this.fisicaFormGroup.controls['fechaDefuncion'].setValue(null);
+        this.minDate = moment(this.fisicaFormGroup.controls['fechaNacimiento'].value).add(2, 'd').format('YYYY-MM-DD');  
     }
       
     /**

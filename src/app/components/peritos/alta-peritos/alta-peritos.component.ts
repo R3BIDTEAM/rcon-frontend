@@ -114,6 +114,21 @@ export class AltaPeritosComponent implements OnInit {
         );
     }
 
+    minDate = '';
+
+    fechaTope(){
+        this.peritoPersonaFormGroup.controls['fechaDefuncion'].setValue(null);
+        this.minDate = moment(this.peritoPersonaFormGroup.controls['fechaNacimiento'].value).add(2, 'd').format('YYYY-MM-DD');  
+    }
+
+
+    minDate2 = '';
+
+    fechaTope2(){
+        this.peritoPersonaFormGroup.controls['fechaFin'].setValue(null);
+        this.minDate2 = moment(this.peritoPersonaFormGroup.controls['fechaInicio'].value).add(2, 'd').format('YYYY-MM-DD');  
+    }
+
     /**
      * Limpia los campos del formulario.
      */

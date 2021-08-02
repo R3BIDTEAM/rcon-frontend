@@ -2560,6 +2560,14 @@ export class DialogRepresentacionSociedad {
             })
         };
     }
+
+
+    minDate = '';
+
+    fechaTope(){
+        this.fisicaFormGroup.controls['fechaDefuncion'].setValue(null);
+        this.minDate = moment(this.fisicaFormGroup.controls['fechaNacimiento'].value).add(2, 'd').format('YYYY-MM-DD');  
+    }
     
     /**
      * De acuerdo al campo seleccionado será requerido el RFC, el CURP o ambos.
@@ -2907,6 +2915,14 @@ export class DialogRepresentadoSociedad {
             this.insertOrUpdate = 2;
             this.insUp = true;
         }
+    }
+
+
+    minDate = '';
+
+    fechaTope(){
+        this.fisicaFormGroup.controls['fechaDefuncion'].setValue(null);
+        this.minDate = moment(this.fisicaFormGroup.controls['fechaNacimiento'].value).add(2, 'd').format('YYYY-MM-DD');  
     }
 
     /**

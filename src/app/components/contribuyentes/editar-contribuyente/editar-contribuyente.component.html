@@ -84,13 +84,13 @@
                         <div class="row">
                             <mat-form-field appearance="fill" class="col-md-6">
                                 <mat-label>Fecha Nacimiento:</mat-label>
-                                <input matInput readonly formControlName="fecha_naci" [matDatepicker]="pickfechaNacimiento" [(ngModel)]="contribuyente.fecha_naci" placeholder="Ingrese echa Nacimiento">
+                                <input matInput readonly formControlName="fecha_naci" [matDatepicker]="pickfechaNacimiento" [(ngModel)]="contribuyente.fecha_naci" placeholder="Ingrese echa Nacimiento" (dateChange)="fechaTope()" readonly>
                                 <mat-datepicker-toggle matSuffix [for]="pickfechaNacimiento"></mat-datepicker-toggle>
                                 <mat-datepicker #pickfechaNacimiento></mat-datepicker>
                             </mat-form-field>
                             <mat-form-field appearance="fill" class="col-md-6" style="margin-left: 0px!important;">
                                 <mat-label>Fecha Defunción:</mat-label>
-                                <input matInput readonly formControlName="fecha_def" [matDatepicker]="pickfechaDefuncion" [(ngModel)]="contribuyente.fecha_def" placeholder="Ingrese Fecha Defunción">
+                                <input matInput readonly formControlName="fecha_def" [matDatepicker]="pickfechaDefuncion" [(ngModel)]="contribuyente.fecha_def" placeholder="Ingrese Fecha Defunción" [min]="minDate" readonly>
                                 <mat-datepicker-toggle matSuffix [for]="pickfechaDefuncion"></mat-datepicker-toggle>
                                 <mat-datepicker #pickfechaDefuncion></mat-datepicker>
                             </mat-form-field>

@@ -54,13 +54,13 @@
                         <div class="row">
                                 <mat-form-field appearance="fill" class="col-6">
                                     <mat-label>Fecha Alta</mat-label>
-                                    <input matInput readonly [matDatepicker]="pickini"  [disabled]="inserto" formControlName="fecha_alta">
+                                    <input matInput readonly [matDatepicker]="pickini"  [disabled]="inserto" formControlName="fecha_alta" (dateChange)="fechaTope()" readonly>
                                     <mat-datepicker-toggle matSuffix [for]="pickini"></mat-datepicker-toggle>
                                     <mat-datepicker #pickini></mat-datepicker>
                                 </mat-form-field>
                                 <mat-form-field appearance="fill" class="col-6">
                                     <mat-label>Fecha Baja</mat-label>
-                                    <input matInput readonly [matDatepicker]="pickfin"  [disabled]="inserto" formControlName="fecha_baja">
+                                    <input matInput readonly [matDatepicker]="pickfin"  [disabled]="inserto" formControlName="fecha_baja" [min]="minDate" readonly>
                                     <mat-datepicker-toggle matSuffix [for]="pickfin"></mat-datepicker-toggle>
                                     <mat-datepicker #pickfin></mat-datepicker>
                                     <mat-error></mat-error>

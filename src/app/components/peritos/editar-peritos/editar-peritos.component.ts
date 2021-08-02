@@ -2608,6 +2608,14 @@ export class DialogRepresentacionPeritos {
         };
     }
 
+
+    minDate = '';
+
+    fechaTope(){
+        this.fisicaFormGroup.controls['fechaDefuncion'].setValue(null);
+        this.minDate = moment(this.fisicaFormGroup.controls['fechaNacimiento'].value).add(2, 'd').format('YYYY-MM-DD');  
+    }
+
     /**
      * De acuerdo al campo seleccionado será requerido el RFC, el CURP o ambos.
      * @param remove Valor del campo que se le retirara la validación, puede ser CURP o RFC
@@ -2958,6 +2966,14 @@ export class DialogRepresentadoPeritos {
             this.insertOrUpdate = 2;
             this.insUp = true;
         }
+    }
+
+
+    minDate = '';
+
+    fechaTope(){
+        this.fisicaFormGroup.controls['fechaDefuncion'].setValue(null);
+        this.minDate = moment(this.fisicaFormGroup.controls['fechaNacimiento'].value).add(2, 'd').format('YYYY-MM-DD');  
     }
 
     /**

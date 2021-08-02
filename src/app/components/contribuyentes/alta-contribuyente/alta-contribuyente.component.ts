@@ -214,6 +214,14 @@ export class AltaContribuyenteComponent implements OnInit {
         this.getDataDocumentos();
     }
 
+
+    minDate = '';
+
+    fechaTope(){
+        this.fisicaFormGroup.controls['fechaDefuncion'].setValue(null);
+        this.minDate = moment(this.fisicaFormGroup.controls['fechaNacimiento'].value).add(2, 'd').format('YYYY-MM-DD');  
+    }
+
     clean(){
         this.fisicaFormGroup.controls['nombre'].setValue(null);
         this.fisicaFormGroup.controls['apaterno'].setValue(null);

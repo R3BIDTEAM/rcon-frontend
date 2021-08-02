@@ -87,13 +87,13 @@
                     </div>
                     <mat-form-field appearance="fill" class="col-5">
                         <mat-label>Fecha Nacimiento:</mat-label>
-                        <input matInput [matDatepicker]="fechaNacimiento" [(ngModel)]="datoPeritos.fecha_naci" formControlName="fechaNacimiento" [disabled]="inserto">
+                        <input matInput [matDatepicker]="fechaNacimiento" [(ngModel)]="datoPeritos.fecha_naci" formControlName="fechaNacimiento" [disabled]="inserto" (dateChange)="fechaTope()" readonly>
                                 <mat-datepicker-toggle matSuffix [for]="fechaNacimiento"></mat-datepicker-toggle>
                                 <mat-datepicker #fechaNacimiento></mat-datepicker>
                     </mat-form-field>
                     <mat-form-field appearance="fill" class="col-5">
                         <mat-label>Fecha Defunción:</mat-label>
-                        <input matInput [matDatepicker]="fechaDefuncion" [(ngModel)]="datoPeritos.fecha_def" formControlName="fechaDefuncion" [disabled]="inserto">
+                        <input matInput [matDatepicker]="fechaDefuncion" [(ngModel)]="datoPeritos.fecha_def" formControlName="fechaDefuncion" [disabled]="inserto" [min]="minDate" readonly>
                         <mat-datepicker-toggle matSuffix [for]="fechaDefuncion"></mat-datepicker-toggle>
                         <mat-datepicker #fechaDefuncion></mat-datepicker>
                     </mat-form-field>
@@ -133,13 +133,13 @@
                     </div>
                     <mat-form-field appearance="fill" class="col-5">
                         <mat-label>Fecha Inicio:</mat-label>
-                        <input matInput formControlName="fechaInicio" [matDatepicker]="pickfechaInicio" [(ngModel)]="datoPeritos.fecha_alta" [disabled]="inserto">
+                        <input matInput formControlName="fechaInicio" [matDatepicker]="pickfechaInicio" [(ngModel)]="datoPeritos.fecha_alta" [disabled]="inserto" (dateChange)="fechaTope2()" readonly>
                         <mat-datepicker-toggle matSuffix [for]="pickfechaInicio"></mat-datepicker-toggle>
                         <mat-datepicker #pickfechaInicio></mat-datepicker>
                     </mat-form-field>
                     <mat-form-field appearance="fill" class="col-5">
                         <mat-label>Fecha Fin:</mat-label>
-                        <input matInput formControlName="fechaFin" [matDatepicker]="pickfechaFin" [(ngModel)]="datoPeritos.fecha_baja" [disabled]="inserto">
+                        <input matInput formControlName="fechaFin" [matDatepicker]="pickfechaFin" [(ngModel)]="datoPeritos.fecha_baja" [disabled]="inserto" [min]="minDate2" readonly>
                         <mat-datepicker-toggle matSuffix [for]="pickfechaFin"></mat-datepicker-toggle>
                         <mat-datepicker #pickfechaFin></mat-datepicker>
                     </mat-form-field>

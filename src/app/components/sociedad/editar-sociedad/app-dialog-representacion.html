@@ -81,13 +81,13 @@
                 <div class="row">
                     <mat-form-field appearance="fill" class="col-6">
                         <mat-label>Fecha Nacimiento:</mat-label>
-                        <input matInput readonly formControlName="fechaNacimiento" [matDatepicker]="pickfechaNacimiento" [disabled]="insUp">
+                        <input matInput readonly formControlName="fechaNacimiento" [matDatepicker]="pickfechaNacimiento" [disabled]="insUp" (dateChange)="fechaTope()" readonly>
                         <mat-datepicker-toggle matSuffix [for]="pickfechaNacimiento"></mat-datepicker-toggle>
                         <mat-datepicker #pickfechaNacimiento></mat-datepicker>
                     </mat-form-field>
                     <mat-form-field appearance="fill" class="col-6">
                         <mat-label>Fecha Defunción:</mat-label>
-                        <input matInput readonly formControlName="fechaDefuncion" [matDatepicker]="pickfechaDefuncion" [disabled]="insUp">
+                        <input matInput readonly formControlName="fechaDefuncion" [matDatepicker]="pickfechaDefuncion" [disabled]="insUp" [min]="minDate" readonly>
                         <mat-datepicker-toggle matSuffix [for]="pickfechaDefuncion"></mat-datepicker-toggle>
                         <mat-datepicker #pickfechaDefuncion></mat-datepicker>
                     </mat-form-field>

@@ -68,6 +68,14 @@ export class AltaSociedadComponent implements OnInit {
           });
     }
 
+
+    minDate = '';
+
+    fechaTope(){
+        this.sociedadFormGroup.controls['fecha_baja'].setValue(null);
+        this.minDate = moment(this.sociedadFormGroup.controls['fecha_alta'].value).add(2, 'd').format('YYYY-MM-DD');  
+    }
+
     /**
      * Reinicia los valores del paginado.
      */
