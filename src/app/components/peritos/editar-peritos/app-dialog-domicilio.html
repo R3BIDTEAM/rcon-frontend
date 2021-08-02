@@ -1,6 +1,8 @@
 <h1 mat-dialog-title class="verde-cdmx">Domicilio</h1>
 <div mat-dialog-content>
-
+    <style>
+        input{text-transform: uppercase;}
+    </style>
     <div style="padding: 30px; text-align: center;" *ngIf="loadingEstados">
         <mat-spinner style="margin:0 auto;"></mat-spinner>
         <p>Cargando...</p>
@@ -160,7 +162,7 @@
             <div class="row">
                 <mat-form-field appearance="outline" class="col-6">
                     <mat-label>Sección:</mat-label>
-                    <input matInput formControlName="seccion" [(ngModel)]="seccionNg">
+                    <input matInput formControlName="seccion" [(ngModel)]="seccionNg" maxlength="10">
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="col-5">
                     <mat-label>Entrada:</mat-label>
@@ -174,7 +176,7 @@
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="col-5">
                     <mat-label>Teléfono:</mat-label>
-                    <input matInput formControlName="telefono" [(ngModel)]="telefonoNg">
+                    <input matInput formControlName="telefono" [(ngModel)]="telefonoNg" maxlength="10">
                 </mat-form-field>
             </div>
             <div class="row">

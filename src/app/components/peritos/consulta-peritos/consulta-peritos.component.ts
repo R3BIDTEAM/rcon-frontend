@@ -151,28 +151,28 @@ export class ConsultaPeritosComponent implements OnInit {
             let busquedaDatos = '';
 
             if(this.nombre){
-                query = query + '&nombre=' + this.nombre + '&filtroNombre=0';
+                query = query + '&nombre=' + this.nombre.toLocaleUpperCase() + '&filtroNombre=0';
             }
             if(this.appaterno){
-                query = query + '&apellidoPaterno=' + this.appaterno + '&filtroApellidoPaterno=0';
+                query = query + '&apellidoPaterno=' + this.appaterno.toLocaleUpperCase() + '&filtroApellidoPaterno=0';
             }
             if(this.apmaterno){
-                query = query + '&apellidoMaterno=' + this.apmaterno + '&filtroApellidoMaterno=0';
+                query = query + '&apellidoMaterno=' + this.apmaterno.toLocaleUpperCase() + '&filtroApellidoMaterno=0';
             }
             if(this.rfc){
-                query = query + '&rfc=' + this.rfc;
+                query = query + '&rfc=' + this.rfc.toLocaleUpperCase();
             }
             if(this.curp){
-                query = query + '&curp=' + this.curp;
+                query = query + '&curp=' + this.curp.toLocaleUpperCase();
             }
             if(this.ine){
-                query = query + '&ine=' + this.ine;
+                query = query + '&ine=' + this.ine.toLocaleUpperCase();
             }
             if(this.registro){
-                query = query + '&registro=' + this.registro;
+                query = query + '&registro=' + this.registro.toLocaleUpperCase();
             }
             if(this.identificacion && this.idedato){
-                query = query + '&idOtroDocumento=' + this.identificacion + '&valorOtroDocumento=' + this.idedato;
+                query = query + '&idOtroDocumento=' + this.identificacion + '&valorOtroDocumento=' + this.idedato.toLocaleUpperCase();
             }
 
             if( this.isIdentificativo ){

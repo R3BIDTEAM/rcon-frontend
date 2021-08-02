@@ -7,7 +7,7 @@
             </div>
                 <mat-form-field class="col-4">
                     <mat-label>Razón Social</mat-label>
-                    <input matInput [(ngModel)]="razonSocial" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)">
+                    <input matInput [(ngModel)]="razonSocial" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)" style="text-transform: uppercase;">
                     <mat-error></mat-error>
                 </mat-form-field>
         </div>
@@ -20,14 +20,14 @@
             </div>
                 <mat-form-field class="col-4">
                     <mat-label>RFC</mat-label>
-                    <input matInput [(ngModel)]="rfc" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)">
+                    <input matInput [(ngModel)]="rfc" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" style="text-transform: uppercase;">
                     <mat-error></mat-error>
                 </mat-form-field>
             <div class="col-1 text-center">
             </div>
                 <mat-form-field class="col-4">
                     <mat-label>Registro</mat-label>
-                    <input matInput [(ngModel)]="registro" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)">
+                    <input matInput [(ngModel)]="registro" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" style="text-transform: uppercase;">
                     <mat-error></mat-error>
                 </mat-form-field>
         </div>
@@ -92,6 +92,6 @@
 </mat-card-content>
 </div>
 <mat-dialog-actions align="end">
-    <button mat-flat-button color="primary" [mat-dialog-close]="dataSociedadAsociadaDialog">Aceptar</button>
     <button mat-button mat-dialog-close>Cerrar</button>
+    <button mat-flat-button color="primary" [mat-dialog-close]="dataSociedadAsociadaDialog">Aceptar</button>
 </mat-dialog-actions>

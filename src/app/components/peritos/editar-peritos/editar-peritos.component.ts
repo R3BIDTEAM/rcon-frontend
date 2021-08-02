@@ -580,22 +580,22 @@ export class EditarPeritosComponent implements OnInit {
 
         query = 'codtipospersona=F';
 
-        query = (this.datoPeritos.nombre) ? query + '&nombre=' + this.datoPeritos.nombre : query + '&nombre=';
+        query = (this.datoPeritos.nombre) ? query + '&nombre=' + this.datoPeritos.nombre.toLocaleUpperCase() : query + '&nombre=';
 
         query = query + '&activprincip&idtipomoral&idmotivosmoral&fechainicioactiv&fechacambiosituacion';
         
-        query = (this.datoPeritos.rfc) ? query + '&rfc=' + this.datoPeritos.rfc : query + '&rfc=';
+        query = (this.datoPeritos.rfc) ? query + '&rfc=' + this.datoPeritos.rfc.toLocaleUpperCase() : query + '&rfc=';
 
-        query = (this.datoPeritos.apepaterno) ? query + '&apellidopaterno=' + this.datoPeritos.apepaterno : query + '&apellidopaterno=';
+        query = (this.datoPeritos.apepaterno) ? query + '&apellidopaterno=' + this.datoPeritos.apepaterno.toLocaleUpperCase() : query + '&apellidopaterno=';
 
-        query = (this.datoPeritos.apematerno) ? query + '&apellidomaterno=' + this.datoPeritos.apematerno : query + '&apellidomaterno=';
+        query = (this.datoPeritos.apematerno) ? query + '&apellidomaterno=' + this.datoPeritos.apematerno.toLocaleUpperCase() : query + '&apellidomaterno=';
             
-        query = (this.datoPeritos.curp) ? query + '&curp=' + this.datoPeritos.curp : query + '&curp=';
+        query = (this.datoPeritos.curp) ? query + '&curp=' + this.datoPeritos.curp.toLocaleUpperCase() : query + '&curp=';
             
-        query = (this.datoPeritos.ine) ? query + '&claveife=' + this.datoPeritos.ine : query + '&claveife=';
+        query = (this.datoPeritos.ine) ? query + '&claveife=' + this.datoPeritos.ine.toLocaleUpperCase() : query + '&claveife=';
             
         query = (this.datoPeritos.identificacion && this.datoPeritos.idedato) ? query + '&iddocidentif=' + this.datoPeritos.identificacion 
-                + '&valdocidentif=' + this.datoPeritos.idedato : query + '&iddocidentif=&valdocidentif=';
+                + '&valdocidentif=' + this.datoPeritos.idedato.toLocaleUpperCase() : query + '&iddocidentif=&valdocidentif=';
 
         query = (this.datoPeritos.fecha_naci) ? query + '&fechanacimiento=' + moment(this.datoPeritos.fecha_naci).format('DD-MM-YYYY') : query + '&fechanacimiento=';
 
@@ -732,6 +732,7 @@ export class EditarPeritosComponent implements OnInit {
     }
 
     actualizaPeritoEspecifico(){
+        this.loadingDatosPerito  = true;
         let queryAcPeritoEsp = '';
         let checkIndi = '';
         console.log(this.datoPeritos.independiente + ' - ' +this.datoPeritos.independienteAct);
@@ -748,7 +749,7 @@ export class EditarPeritosComponent implements OnInit {
         console.log(checkIndi);
         queryAcPeritoEsp = queryAcPeritoEsp + 'idPerito=' + this.idPerito;
 
-        queryAcPeritoEsp = (this.datoPeritos.registro) ? queryAcPeritoEsp + '&registro=' + this.datoPeritos.registro : queryAcPeritoEsp + '&registro=';
+        queryAcPeritoEsp = (this.datoPeritos.registro) ? queryAcPeritoEsp + '&registro=' + this.datoPeritos.registro.toLocaleUpperCase() : queryAcPeritoEsp + '&registro=';
 
         queryAcPeritoEsp = queryAcPeritoEsp + '&independiente=' + checkIndi;
 
@@ -760,6 +761,13 @@ export class EditarPeritosComponent implements OnInit {
                 (res: any) => {
                     console.log(res);
                     this.loadingDatosPerito = false;
+                    if(res.idPerito !== null || res.idPerito !== ''){
+                        this.snackBar.open("Guardado correcto", 'Cerrar', {
+                            duration: 10000,
+                            horizontalPosition: 'end',
+                            verticalPosition: 'top'
+                        });
+                    }
                 },
                 (error) => {
                     this.loadingDatosPerito = false;
@@ -1264,28 +1272,28 @@ export class DialogBuscaPerito {
         let busquedaDatos = '';
 
         if(this.nombre){
-            query = query + '&nombre=' + this.nombre + '&filtroNombre=0';
+            query = query + '&nombre=' + this.nombre.toLocaleUpperCase() + '&filtroNombre=0';
         }
         if(this.appaterno){
-            query = query + '&apellidoPaterno=' + this.appaterno + '&filtroApellidoPaterno=0';
+            query = query + '&apellidoPaterno=' + this.appaterno.toLocaleUpperCase() + '&filtroApellidoPaterno=0';
         }
         if(this.apmaterno){
-            query = query + '&apellidoMaterno=' + this.apmaterno + '&filtroApellidoMaterno=0';
+            query = query + '&apellidoMaterno=' + this.apmaterno.toLocaleUpperCase() + '&filtroApellidoMaterno=0';
         }
         if(this.curp){
-            query = query + '&curp=' + this.curp;
+            query = query + '&curp=' + this.curp.toLocaleUpperCase();
         }
         if(this.rfc){
-            query = query + '&rfc=' + this.rfc;
+            query = query + '&rfc=' + this.rfc.toLocaleUpperCase();
         }
         if(this.ine){
-            query = query + '&ine=' + this.ine;
+            query = query + '&ine=' + this.ine.toLocaleUpperCase();
         }
         if(this.registro){
-            query = query + '&registro=' + this.registro;
+            query = query + '&registro=' + this.registro.toLocaleUpperCase();
         }
         if(this.identificacion && this.idedato){
-            query = query + '&iddocidentif=' + this.identificacion + '&valdocidentif=' + this.idedato;
+            query = query + '&iddocidentif=' + this.identificacion + '&valdocidentif=' + this.idedato.toLocaleUpperCase();
         }
 
         if( this.isIdentificativo ){
@@ -1657,16 +1665,16 @@ export class DialogDomicilioPerito {
         this.dataDomicilio.via = (this.domicilioFormGroup.value.via) ? this.domicilioFormGroup.value.via : null;
         this.dataDomicilio.idtipolocalidad = this.domicilioFormGroup.value.idtipolocalidad;
         this.dataDomicilio.cp = (this.domicilioFormGroup.value.cp) ? this.domicilioFormGroup.value.cp : null;
-        this.dataDomicilio.nexterior = (this.domicilioFormGroup.value.nexterior) ? this.domicilioFormGroup.value.nexterior : null;
-        this.dataDomicilio.entrecalle1 = (this.domicilioFormGroup.value.entrecalle1) ? this.domicilioFormGroup.value.entrecalle1 : null;
-        this.dataDomicilio.entrecalle2 = (this.domicilioFormGroup.value.entrecalle2) ? this.domicilioFormGroup.value.entrecalle2 : null;
-        this.dataDomicilio.andador = (this.domicilioFormGroup.value.andador) ? this.domicilioFormGroup.value.andador : null;
-        this.dataDomicilio.edificio = (this.domicilioFormGroup.value.edificio) ? this.domicilioFormGroup.value.edificio : null;
-        this.dataDomicilio.seccion = (this.domicilioFormGroup.value.seccion) ? this.domicilioFormGroup.value.seccion : null;
-        this.dataDomicilio.entrada = (this.domicilioFormGroup.value.entrada) ? this.domicilioFormGroup.value.entrada : null;
-        this.dataDomicilio.ninterior = (this.domicilioFormGroup.value.ninterior) ? this.domicilioFormGroup.value.ninterior : null;
+        this.dataDomicilio.nexterior = (this.domicilioFormGroup.value.nexterior) ? this.domicilioFormGroup.value.nexterior.toLocaleUpperCase() : null;
+        this.dataDomicilio.entrecalle1 = (this.domicilioFormGroup.value.entrecalle1) ? this.domicilioFormGroup.value.entrecalle1.toLocaleUpperCase() : null;
+        this.dataDomicilio.entrecalle2 = (this.domicilioFormGroup.value.entrecalle2) ? this.domicilioFormGroup.value.entrecalle2.toLocaleUpperCase() : null;
+        this.dataDomicilio.andador = (this.domicilioFormGroup.value.andador) ? this.domicilioFormGroup.value.andador.toLocaleUpperCase() : null;
+        this.dataDomicilio.edificio = (this.domicilioFormGroup.value.edificio) ? this.domicilioFormGroup.value.edificio.toLocaleUpperCase() : null;
+        this.dataDomicilio.seccion = (this.domicilioFormGroup.value.seccion) ? this.domicilioFormGroup.value.seccion.toLocaleUpperCase() : null;
+        this.dataDomicilio.entrada = (this.domicilioFormGroup.value.entrada) ? this.domicilioFormGroup.value.entrada.toLocaleUpperCase() : null;
+        this.dataDomicilio.ninterior = (this.domicilioFormGroup.value.ninterior) ? this.domicilioFormGroup.value.ninterior.toLocaleUpperCase() : null;
         this.dataDomicilio.telefono = (this.domicilioFormGroup.value.telefono) ? this.domicilioFormGroup.value.telefono : null;
-        this.dataDomicilio.adicional = (this.domicilioFormGroup.value.adicional) ? this.domicilioFormGroup.value.adicional : null;
+        this.dataDomicilio.adicional = (this.domicilioFormGroup.value.adicional) ? this.domicilioFormGroup.value.adicional.toLocaleUpperCase() : null;
 
         this.dataDomicilio.id_direccion = (this.domicilioFormGroup.value.id_direccion) ? this.domicilioFormGroup.value.id_direccion : null;
         
@@ -1679,11 +1687,11 @@ export class DialogDomicilioPerito {
             this.dataDomicilio.idciudad = (this.domicilioFormGroup.value.idciudad) ? this.domicilioFormGroup.value.idciudad : null;
         }
 
-            if(this.domicilioFormGroup.value.id_direccion == null){
-                 this.guardaDomicilio();
-            } else{
-                 this.actualizarDomicilio();
-            }
+        if(this.domicilioFormGroup.value.id_direccion == null){
+                this.guardaDomicilio();
+        } else{
+                this.actualizarDomicilio();
+        }
     }
 
     /**
@@ -2109,7 +2117,7 @@ export class DialogMunicipios {
         console.log(this.buscaMunicipios);
         if(this.data.codEstado != 9){
             criterio = criterio + 'getMunicipiosByNombre';
-            query = query + 'codEstado=' + this.data.codEstado + '&municipio=' + this.buscaMunicipios;
+            query = query + 'codEstado=' + this.data.codEstado + '&municipio=' + this.buscaMunicipios.toLocaleUpperCase();
         }else{
             criterio = '';
             query = '';
@@ -2210,7 +2218,7 @@ export class DialogCiudad {
         }
 
         if(this.buscaCiudad){
-            query = query + '&nombre=' + this.buscaCiudad;
+            query = query + '&nombre=' + this.buscaCiudad.toLocaleUpperCase();
         }
 
         console.log('CIUDAD!!!!!'+this.endpoint + '?' + query);
@@ -2344,7 +2352,7 @@ export class DialogAsentamiento {
         }
 
         if(this.buscaAsentamiento){
-            query = query + '&nombre=' + this.buscaAsentamiento;
+            query = query + '&nombre=' + this.buscaAsentamiento.toLocaleUpperCase();
         }
 
         console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
@@ -2476,7 +2484,7 @@ export class DialogVia {
         let query = '';
 
         if(this.buscaVia){
-            query = query + 'nombre=' + this.buscaVia;
+            query = query + 'nombre=' + this.buscaVia.toLocaleUpperCase();
         }else{
             query = query + 'nombre';
         }
@@ -2704,36 +2712,36 @@ export class DialogRepresentacionPeritos {
     getDataRepresentacion(): DataRepresentacion {
         this.dataRepresentacion.tipoPersona = this.tipoPersona;
         if(this.tipoPersona == 'F'){
-            this.dataRepresentacion.nombre = (this.fisicaFormGroup.value.nombre) ? this.fisicaFormGroup.value.nombre : null;
-            this.dataRepresentacion.apaterno = (this.fisicaFormGroup.value.apaterno) ? this.fisicaFormGroup.value.apaterno : null;
-            this.dataRepresentacion.amaterno = (this.fisicaFormGroup.value.amaterno) ? this.fisicaFormGroup.value.amaterno : null;
-            this.dataRepresentacion.rfc = (this.fisicaFormGroup.value.rfc) ? this.fisicaFormGroup.value.rfc : null;
-            this.dataRepresentacion.curp = (this.fisicaFormGroup.value.curp) ? this.fisicaFormGroup.value.curp : null;
-            this.dataRepresentacion.ine = (this.fisicaFormGroup.value.ine) ? this.fisicaFormGroup.value.ine : null;
+            this.dataRepresentacion.nombre = (this.fisicaFormGroup.value.nombre) ? this.fisicaFormGroup.value.nombre.toLocaleUpperCase() : null;
+            this.dataRepresentacion.apaterno = (this.fisicaFormGroup.value.apaterno) ? this.fisicaFormGroup.value.apaterno.toLocaleUpperCase() : null;
+            this.dataRepresentacion.amaterno = (this.fisicaFormGroup.value.amaterno) ? this.fisicaFormGroup.value.amaterno.toLocaleUpperCase() : null;
+            this.dataRepresentacion.rfc = (this.fisicaFormGroup.value.rfc) ? this.fisicaFormGroup.value.rfc.toLocaleUpperCase() : null;
+            this.dataRepresentacion.curp = (this.fisicaFormGroup.value.curp) ? this.fisicaFormGroup.value.curp.toLocaleUpperCase() : null;
+            this.dataRepresentacion.ine = (this.fisicaFormGroup.value.ine) ? this.fisicaFormGroup.value.ine.toLocaleUpperCase() : null;
             this.dataRepresentacion.idDocIdent = this.fisicaFormGroup.value.idDocIdent;
-            this.dataRepresentacion.docIdent = (this.fisicaFormGroup.value.docIdent) ? this.fisicaFormGroup.value.docIdent : null;
+            this.dataRepresentacion.docIdent = (this.fisicaFormGroup.value.docIdent) ? this.fisicaFormGroup.value.docIdent.toLocaleUpperCase() : null;
             this.dataRepresentacion.fechaNacimiento = (this.fisicaFormGroup.value.fechaNacimiento) ? this.fisicaFormGroup.value.fechaNacimiento : null;
             this.dataRepresentacion.fechaDefuncion = (this.fisicaFormGroup.value.fechaDefuncion) ? this.fisicaFormGroup.value.fechaDefuncion : null;
             this.dataRepresentacion.celular = (this.fisicaFormGroup.value.celular) ? this.fisicaFormGroup.value.celular : null;
             this.dataRepresentacion.email = (this.fisicaFormGroup.value.email) ? this.fisicaFormGroup.value.email : null;
-            this.dataRepresentacion.texto = (this.fisicaFormGroup.value.texto) ? this.fisicaFormGroup.value.texto : null;
+            this.dataRepresentacion.texto = (this.fisicaFormGroup.value.texto) ? this.fisicaFormGroup.value.texto.toLocaleUpperCase() : null;
             this.dataRepresentacion.fechaCaducidad = (this.fisicaFormGroup.value.fechaCaducidad) ? this.fisicaFormGroup.value.fechaCaducidad : null;
         } else {
-            this.dataRepresentacion.nombre = (this.moralFormGroup.value.nombre) ? this.moralFormGroup.value.nombre : null;
-            this.dataRepresentacion.rfc = (this.moralFormGroup.value.rfc) ? this.moralFormGroup.value.rfc : null;
-            this.dataRepresentacion.actPreponderante = (this.moralFormGroup.value.actPreponderante) ? this.moralFormGroup.value.actPreponderante : null;
+            this.dataRepresentacion.nombre = (this.moralFormGroup.value.nombre) ? this.moralFormGroup.value.nombre.toLocaleUpperCase() : null;
+            this.dataRepresentacion.rfc = (this.moralFormGroup.value.rfc) ? this.moralFormGroup.value.rfc.toLocaleUpperCase() : null;
+            this.dataRepresentacion.actPreponderante = (this.moralFormGroup.value.actPreponderante) ? this.moralFormGroup.value.actPreponderante.toLocaleUpperCase() : null;
             this.dataRepresentacion.idTipoPersonaMoral = this.moralFormGroup.value.idTipoPersonaMoral;
             this.dataRepresentacion.fechaInicioOperacion = (this.moralFormGroup.value.fechaInicioOperacion) ? this.moralFormGroup.value.fechaInicioOperacion : null;
             this.dataRepresentacion.idMotivo = this.moralFormGroup.value.idMotivo;
             this.dataRepresentacion.fechaCambio = (this.moralFormGroup.value.fechaCambio) ? this.moralFormGroup.value.fechaCambio : null;
-            this.dataRepresentacion.texto = (this.moralFormGroup.value.texto) ? this.moralFormGroup.value.texto : null;
+            this.dataRepresentacion.texto = (this.moralFormGroup.value.texto) ? this.moralFormGroup.value.texto.toLocaleUpperCase() : null;
             this.dataRepresentacion.fechaCaducidad = (this.moralFormGroup.value.fechaCaducidad) ? this.moralFormGroup.value.fechaCaducidad : null;
         }
         this.idPersonaRepresentacion = (this.idPersonaRepresentacion) ? this.idPersonaRepresentacion : null;
 
-        console.log('AQUIII EL JSON');
+        console.log('AQUIII EL JSON PRESENTACION');
         console.log(this.dataRepresentacion);
-        //console.log(JSON.stringify(this.dataRepresentacion));
+
         if(this.insertOrUpdate == 2){
             this.updateRepresentacion();            
         }else{
@@ -2795,12 +2803,14 @@ export class DialogRepresentacionPeritos {
                     codTipoDocumentoJuridico: this.dataRepresentacion.documentoRepresentacion.codtipodocumentojuridico,        
                     lugar: this.dataRepresentacion.documentoRepresentacion.lugar,
                     idNotario: this.dataRepresentacion.documentoRepresentacion.idnotario,
-                    noEscritura: this.dataRepresentacion.documentoRepresentacion.noNotario,
+                    noEscritura: this.dataRepresentacion.documentoRepresentacion.num_escritura,
                     documentos: this.dataRepresentacion.documentoRepresentacion.archivos
                 }
             };
             
+            console.log("PAYLOAAAAAAAAAAAAAD!");
             console.log(JSON.stringify(payload));
+            
             this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
                 (res: any) => {
                     this.snackBar.open('REGISTRO EXITOSO', 'Cerrar', {
@@ -3064,35 +3074,36 @@ export class DialogRepresentadoPeritos {
     getDataRepresentacion(): DataRepresentacion {
         this.dataRepresentacion.tipoPersona = this.tipoPersona;
         if(this.tipoPersona == 'F'){
-            this.dataRepresentacion.nombre = (this.fisicaFormGroup.value.nombre) ? this.fisicaFormGroup.value.nombre : null;
-            this.dataRepresentacion.apaterno = (this.fisicaFormGroup.value.apaterno) ? this.fisicaFormGroup.value.apaterno : null;
-            this.dataRepresentacion.amaterno = (this.fisicaFormGroup.value.amaterno) ? this.fisicaFormGroup.value.amaterno : null;
-            this.dataRepresentacion.rfc = (this.fisicaFormGroup.value.rfc) ? this.fisicaFormGroup.value.rfc : null;
-            this.dataRepresentacion.curp = (this.fisicaFormGroup.value.curp) ? this.fisicaFormGroup.value.curp : null;
-            this.dataRepresentacion.ine = (this.fisicaFormGroup.value.ine) ? this.fisicaFormGroup.value.ine : null;
+            this.dataRepresentacion.nombre = (this.fisicaFormGroup.value.nombre) ? this.fisicaFormGroup.value.nombre.toLocaleUpperCase() : null;
+            this.dataRepresentacion.apaterno = (this.fisicaFormGroup.value.apaterno) ? this.fisicaFormGroup.value.apaterno.toLocaleUpperCase() : null;
+            this.dataRepresentacion.amaterno = (this.fisicaFormGroup.value.amaterno) ? this.fisicaFormGroup.value.amaterno.toLocaleUpperCase() : null;
+            this.dataRepresentacion.rfc = (this.fisicaFormGroup.value.rfc) ? this.fisicaFormGroup.value.rfc.toLocaleUpperCase() : null;
+            this.dataRepresentacion.curp = (this.fisicaFormGroup.value.curp) ? this.fisicaFormGroup.value.curp.toLocaleUpperCase() : null;
+            this.dataRepresentacion.ine = (this.fisicaFormGroup.value.ine) ? this.fisicaFormGroup.value.ine.toLocaleUpperCase() : null;
             this.dataRepresentacion.idDocIdent = this.fisicaFormGroup.value.idDocIdent;
-            this.dataRepresentacion.docIdent = (this.fisicaFormGroup.value.docIdent) ? this.fisicaFormGroup.value.docIdent : null;
+            this.dataRepresentacion.docIdent = (this.fisicaFormGroup.value.docIdent) ? this.fisicaFormGroup.value.docIdent.toLocaleUpperCase() : null;
             this.dataRepresentacion.fechaNacimiento = (this.fisicaFormGroup.value.fechaNacimiento) ? this.fisicaFormGroup.value.fechaNacimiento : null;
             this.dataRepresentacion.fechaDefuncion = (this.fisicaFormGroup.value.fechaDefuncion) ? this.fisicaFormGroup.value.fechaDefuncion : null;
             this.dataRepresentacion.celular = (this.fisicaFormGroup.value.celular) ? this.fisicaFormGroup.value.celular : null;
             this.dataRepresentacion.email = (this.fisicaFormGroup.value.email) ? this.fisicaFormGroup.value.email : null;
-            this.dataRepresentacion.texto = (this.fisicaFormGroup.value.texto) ? this.fisicaFormGroup.value.texto : null;
+            this.dataRepresentacion.texto = (this.fisicaFormGroup.value.texto) ? this.fisicaFormGroup.value.texto.toLocaleUpperCase() : null;
             this.dataRepresentacion.fechaCaducidad = (this.fisicaFormGroup.value.fechaCaducidad) ? this.fisicaFormGroup.value.fechaCaducidad : null;
         } else {
-            this.dataRepresentacion.nombre = (this.moralFormGroup.value.nombre) ? this.moralFormGroup.value.nombre : null;
-            this.dataRepresentacion.rfc = (this.moralFormGroup.value.rfc) ? this.moralFormGroup.value.rfc : null;
-            this.dataRepresentacion.actPreponderante = (this.moralFormGroup.value.actPreponderante) ? this.moralFormGroup.value.actPreponderante : null;
+            this.dataRepresentacion.nombre = (this.moralFormGroup.value.nombre) ? this.moralFormGroup.value.nombre.toLocaleUpperCase() : null;
+            this.dataRepresentacion.rfc = (this.moralFormGroup.value.rfc) ? this.moralFormGroup.value.rfc.toLocaleUpperCase() : null;
+            this.dataRepresentacion.actPreponderante = (this.moralFormGroup.value.actPreponderante) ? this.moralFormGroup.value.actPreponderante.toLocaleUpperCase() : null;
             this.dataRepresentacion.idTipoPersonaMoral = this.moralFormGroup.value.idTipoPersonaMoral;
             this.dataRepresentacion.fechaInicioOperacion = (this.moralFormGroup.value.fechaInicioOperacion) ? this.moralFormGroup.value.fechaInicioOperacion : null;
             this.dataRepresentacion.idMotivo = this.moralFormGroup.value.idMotivo;
             this.dataRepresentacion.fechaCambio = (this.moralFormGroup.value.fechaCambio) ? this.moralFormGroup.value.fechaCambio : null;
-            this.dataRepresentacion.texto = (this.moralFormGroup.value.texto) ? this.moralFormGroup.value.texto : null;
+            this.dataRepresentacion.texto = (this.moralFormGroup.value.texto) ? this.moralFormGroup.value.texto.toLocaleUpperCase() : null;
             this.dataRepresentacion.fechaCaducidad = (this.moralFormGroup.value.fechaCaducidad) ? this.moralFormGroup.value.fechaCaducidad : null;
         }
 
         this.idPersonaRepresentacion = (this.idPersonaRepresentacion) ? this.idPersonaRepresentacion : null;
         console.log('AQUIII EL JSON DEL REPRESENTADO');
-        
+        console.log(this.dataRepresentacion);
+
         if(this.insertOrUpdate == 2){
             this.updateRepresentacion();            
         }else{
@@ -3154,12 +3165,14 @@ export class DialogRepresentadoPeritos {
                     codTipoDocumentoJuridico: this.dataRepresentacion.documentoRepresentacion.codtipodocumentojuridico,        
                     lugar: this.dataRepresentacion.documentoRepresentacion.lugar,
                     idNotario: this.dataRepresentacion.documentoRepresentacion.idnotario,
-                    noEscritura: this.dataRepresentacion.documentoRepresentacion.noNotario,
+                    noEscritura: this.dataRepresentacion.documentoRepresentacion.num_escritura,
                     documentos: this.dataRepresentacion.documentoRepresentacion.archivos
                 }
             };
 
+            console.log("PAYLOAAAAAAAAAAAAAD!");
             console.log(JSON.stringify(payload));
+            
             this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
                 (res: any) => {
                     this.snackBar.open('SE HA INSERTADO EL REPRESENTADO', 'Cerrar', {
@@ -3422,13 +3435,13 @@ export class DialogDocumentoPerito {
         this.dataDocumento.codtipodocumentojuridico = this.tiposDocumentoFormGroup.value.codtipodocumentojuridico;
         if(this.tiposDocumentoFormGroup.value.codtipodocumentojuridico == 'PN'){
             this.dataDocumento.noNotario = (this.infoDocumentoFormGroup.value.noNotario) ? this.infoDocumentoFormGroup.value.noNotario : null;
-            this.dataDocumento.ciudadNotario = (this.infoDocumentoFormGroup.value.ciudadNotario) ? this.infoDocumentoFormGroup.value.ciudadNotario : null;
-            this.dataDocumento.nombreNotario = (this.infoDocumentoFormGroup.value.nombreNotario) ? this.infoDocumentoFormGroup.value.nombreNotario : null;
-            this.dataDocumento.num_escritura = (this.infoDocumentoFormGroup.value.num_escritura) ? this.infoDocumentoFormGroup.value.num_escritura : null;
+            this.dataDocumento.ciudadNotario = (this.infoDocumentoFormGroup.value.ciudadNotario) ? this.infoDocumentoFormGroup.value.ciudadNotario.toLocaleUpperCase() : null;
+            this.dataDocumento.nombreNotario = (this.infoDocumentoFormGroup.value.nombreNotario) ? this.infoDocumentoFormGroup.value.nombreNotario.toLocaleUpperCase() : null;
+            this.dataDocumento.num_escritura = (this.infoDocumentoFormGroup.value.num_escritura) ? this.infoDocumentoFormGroup.value.num_escritura.toLocaleUpperCase() : null;
         }
         this.dataDocumento.fecha = (this.infoDocumentoFormGroup.value.fecha) ? this.infoDocumentoFormGroup.value.fecha : null;
-        this.dataDocumento.descripcion = (this.infoDocumentoFormGroup.value.descripcion) ? this.infoDocumentoFormGroup.value.descripcion : null;
-        this.dataDocumento.lugar = (this.infoDocumentoFormGroup.value.lugar) ? this.infoDocumentoFormGroup.value.lugar : null;
+        this.dataDocumento.descripcion = (this.infoDocumentoFormGroup.value.descripcion) ? this.infoDocumentoFormGroup.value.descripcion.toLocaleUpperCase() : null;
+        this.dataDocumento.lugar = (this.infoDocumentoFormGroup.value.lugar) ? this.infoDocumentoFormGroup.value.lugar.toLocaleUpperCase() : null;
         this.dataDocumento.archivos = this.archivosDocumentoFormGroup.value.archivos;
     
         if(this.insertOrUpdate == 2){
@@ -3724,22 +3737,22 @@ export class DialogNotarioPeritos {
             this.queryParamFiltros = this.queryParamFiltros + '&estado=' + this.filtros.estado;
         }
         if(this.filtros.rfc){
-            this.queryParamFiltros = this.queryParamFiltros + '&rfc=' + this.filtros.rfc;
+            this.queryParamFiltros = this.queryParamFiltros + '&rfc=' + this.filtros.rfc.toLocaleUpperCase();
         }
         if(this.filtros.curp){
-            this.queryParamFiltros = this.queryParamFiltros + '&curp=' + this.filtros.curp;
+            this.queryParamFiltros = this.queryParamFiltros + '&curp=' + this.filtros.curp.toLocaleUpperCase();
         }
         if(this.filtros.claveife){
-            this.queryParamFiltros = this.queryParamFiltros + '&claveife=' + this.filtros.claveife;
+            this.queryParamFiltros = this.queryParamFiltros + '&claveife=' + this.filtros.claveife.toLocaleUpperCase();
         }
         if(this.filtros.nombre){
-            this.queryParamFiltros = this.queryParamFiltros + '&nombre=' + this.filtros.nombre + '&filtroNombre=0';
+            this.queryParamFiltros = this.queryParamFiltros + '&nombre=' + this.filtros.nombre.toLocaleUpperCase() + '&filtroNombre=0';
         }
         if(this.filtros.apellidoPaterno){
-            this.queryParamFiltros = this.queryParamFiltros + '&apellidoPaterno=' + this.filtros.apellidoPaterno + '&filtroApellidoPaterno=0';
+            this.queryParamFiltros = this.queryParamFiltros + '&apellidoPaterno=' + this.filtros.apellidoPaterno.toLocaleUpperCase() + '&filtroApellidoPaterno=0';
         }
         if(this.filtros.apellidoMaterno){
-            this.queryParamFiltros = this.queryParamFiltros + '&apellidoMaterno=' + this.filtros.apellidoMaterno + '&filtroApellidoMaterno=0';
+            this.queryParamFiltros = this.queryParamFiltros + '&apellidoMaterno=' + this.filtros.apellidoMaterno.toLocaleUpperCase() + '&filtroApellidoMaterno=0';
         }
         
         if(this.filtros.nombre || this.filtros.apellidoPaterno || this.filtros.apellidoMaterno){
@@ -3908,35 +3921,35 @@ export class DialogPersonaPeritos {
             if(this.isIdentificativo){
                 this.endpointBusqueda = this.endpoint + 'getMoralIdentificativos';
             if(this.filtros.rfc)
-                this.queryParamFiltros = this.queryParamFiltros + '&rfc=' + this.filtros.rfc;
+                this.queryParamFiltros = this.queryParamFiltros + '&rfc=' + this.filtros.rfc.toLocaleUpperCase();
             } else {
                 this.endpointBusqueda = this.endpoint + 'getPersonaMoral';
             if(this.filtros.nombre)
-                this.queryParamFiltros = this.queryParamFiltros + '&razonSocial=' + this.filtros.nombre + '&filtroApellidoPaterno=0';
+                this.queryParamFiltros = this.queryParamFiltros + '&razonSocial=' + this.filtros.nombre.toLocaleUpperCase() + '&filtroApellidoPaterno=0';
             }
         } else {
             if(this.isIdentificativo){
                 this.endpointBusqueda = this.endpoint + 'getIdentificativos';
                 if(this.filtros.curp)
-                    this.queryParamFiltros = this.queryParamFiltros + '&curp=' + this.filtros.curp;
+                    this.queryParamFiltros = this.queryParamFiltros + '&curp=' + this.filtros.curp.toLocaleUpperCase();
                 if(this.filtros.rfc)
-                    this.queryParamFiltros = this.queryParamFiltros + '&rfc=' + this.filtros.rfc;
+                    this.queryParamFiltros = this.queryParamFiltros + '&rfc=' + this.filtros.rfc.toLocaleUpperCase();
                 if(this.filtros.ine)
-                    this.queryParamFiltros = this.queryParamFiltros + '&claveife=' + this.filtros.ine;
+                    this.queryParamFiltros = this.queryParamFiltros + '&claveife=' + this.filtros.ine.toLocaleUpperCase();
                 if(this.filtros.idDocIdent)
                     this.queryParamFiltros = this.queryParamFiltros + '&iddocidentif=' + this.filtros.idDocIdent;
                 if(this.filtros.docIdent)
-                    this.queryParamFiltros = this.queryParamFiltros + '&valdocidentif=' + this.filtros.docIdent;
+                    this.queryParamFiltros = this.queryParamFiltros + '&valdocidentif=' + this.filtros.docIdent.toLocaleUpperCase();
         
                 this.queryParamFiltros = this.queryParamFiltros + '&coincidenTodos=false';        
             } else {
                 this.endpointBusqueda = this.endpoint + 'getContribuyente';
                 if(this.filtros.nombre)
-                    this.queryParamFiltros = this.queryParamFiltros + '&nombre=' + this.filtros.nombre + '&filtroNombre=0';
+                    this.queryParamFiltros = this.queryParamFiltros + '&nombre=' + this.filtros.nombre.toLocaleUpperCase() + '&filtroNombre=0';
                 if(this.filtros.apaterno)
-                    this.queryParamFiltros = this.queryParamFiltros + '&apellidoPaterno=' + this.filtros.apaterno + '&filtroApellidoPaterno=0';
+                    this.queryParamFiltros = this.queryParamFiltros + '&apellidoPaterno=' + this.filtros.apaterno.toLocaleUpperCase() + '&filtroApellidoPaterno=0';
                 if(this.filtros.amaterno)
-                    this.queryParamFiltros = this.queryParamFiltros + '&apellidoMaterno=' + this.filtros.amaterno + '&filtroApellidoMaterno=0';
+                    this.queryParamFiltros = this.queryParamFiltros + '&apellidoMaterno=' + this.filtros.amaterno.toLocaleUpperCase() + '&filtroApellidoMaterno=0';
             }
         }
   
@@ -4109,13 +4122,13 @@ export class DialogSociedadAsociada {
         }
 
         if( this.razonSocial ){
-            query = query + '&razonSocial=' + this.razonSocial + '&filtroRazon=1';
+            query = query + '&razonSocial=' + this.razonSocial.toLocaleUpperCase() + '&filtroRazon=1';
         }
         if(this.rfc){
-            query = query + '&rfc=' + this.rfc;
+            query = query + '&rfc=' + this.rfc.toLocaleUpperCase();
         }
         if(this.registro){
-            query = query + '&registro=' + this.registro;
+            query = query + '&registro=' + this.registro.toLocaleUpperCase();
         }
 
         query = query.substr(1);

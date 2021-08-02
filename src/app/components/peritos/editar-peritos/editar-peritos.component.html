@@ -42,21 +42,21 @@
                         <div class="col-md-4">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>Apellido Paterno</mat-label>
-                                <input matInput placeholder="Ingrese Apellido Paterno" [(ngModel)]="datoPeritos.apepaterno" formControlName="apellidopaterno" id="apepaterno">
+                                <input matInput placeholder="Ingrese Apellido Paterno" [(ngModel)]="datoPeritos.apepaterno" formControlName="apellidopaterno" id="apepaterno" style="text-transform: uppercase;">
                                 <mat-error *ngIf="peritoPersonaFormGroup.controls.apellidopaterno.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="col-md-4">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>Apellido Materno</mat-label>
-                                <input matInput placeholder="Ingrese Apellido Materno" [(ngModel)]="datoPeritos.apematerno" formControlName="apellidomaterno">
+                                <input matInput placeholder="Ingrese Apellido Materno" [(ngModel)]="datoPeritos.apematerno" formControlName="apellidomaterno" style="text-transform: uppercase;">
                                 <mat-error *ngIf="peritoPersonaFormGroup.controls.apellidomaterno.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div> 
                         <div class="col-md-4">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>Nombre</mat-label>
-                                <input matInput placeholder="Ingrese Nombre" [(ngModel)]="datoPeritos.nombre" formControlName="nombre">
+                                <input matInput placeholder="Ingrese Nombre" [(ngModel)]="datoPeritos.nombre" formControlName="nombre" style="text-transform: uppercase;">
                                 <mat-error *ngIf="peritoPersonaFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
@@ -66,7 +66,7 @@
                         <div class="col-md-4">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>RFC*</mat-label>
-                                <input matInput placeholder="Ingrese RFC" [(ngModel)]="datoPeritos.rfc" formControlName="rfc" (keyup)="changeRequired()" [required]="isRequired" pattern="^([A-ZÑ&]{4})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" maxlength="13">
+                                <input matInput placeholder="Ingrese RFC" [(ngModel)]="datoPeritos.rfc" formControlName="rfc" (keyup)="changeRequired()" onkeyup="this.value = this.value.toUpperCase();" style="text-transform: uppercase;" [required]="isRequired" pattern="^([A-ZÑ&]{4})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" maxlength="13">
                                 <mat-error *ngIf="peritoPersonaFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="peritoPersonaFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 4 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
                             </mat-form-field>
@@ -74,7 +74,7 @@
                         <div class="col-md-4">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>CURP*</mat-label>
-                                <input matInput placeholder="Ingrese CURP" [(ngModel)]="datoPeritos.curp" formControlName="curp" (keyup)="changeRequired()" [required]="isRequired" pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$" maxlength="18">
+                                <input matInput placeholder="Ingrese CURP" [(ngModel)]="datoPeritos.curp" formControlName="curp" (keyup)="changeRequired()" onkeyup="this.value = this.value.toUpperCase();" style="text-transform: uppercase;" [required]="isRequired" pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$" maxlength="18">
                                 <mat-error *ngIf="peritoPersonaFormGroup.controls.curp.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="peritoPersonaFormGroup.controls.curp.errors?.pattern">CURP no valido</mat-error>
                             </mat-form-field>
@@ -85,7 +85,7 @@
                         <div class="col-md-4">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>INE</mat-label>
-                                <input matInput placeholder="Ingrese INE" [(ngModel)]="datoPeritos.ine" formControlName="ine">
+                                <input matInput placeholder="Ingrese INE" [(ngModel)]="datoPeritos.ine" formControlName="ine" style="text-transform: uppercase;">
                                 <mat-error *ngIf="peritoPersonaFormGroup.controls.ine.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
@@ -103,7 +103,7 @@
                         <div class="col-md-4">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <!-- <mat-label>Dato de la identificación</mat-label> -->
-                                <input matInput placeholder="Ingrese Número del documento" [(ngModel)]="datoPeritos.idedato" formControlName="idedato">
+                                <input matInput placeholder="Ingrese Número del documento" [(ngModel)]="datoPeritos.idedato" formControlName="idedato" style="text-transform: uppercase;">
                             </mat-form-field>
                         </div>
                     </div>
@@ -144,7 +144,7 @@
                     </div>
                     </form>
                 </ng-container>
-                <ng-container *ngIf="datoPeritos.tipoPersona == 'M'  && !loadingDatosPerito">
+                <!-- <ng-container *ngIf="datoPeritos.tipoPersona == 'M'  && !loadingDatosPerito">
                     <form [formGroup]="moralFormGroup">
                         <div class="row">
                             <mat-form-field class="col-10" appearance="outline">
@@ -194,7 +194,7 @@
                             </mat-form-field>                            
                         </div>
                     </form>
-                </ng-container>
+                </ng-container> -->
             </div>
         
         </div>
@@ -213,13 +213,13 @@
                     </button>
                 </div>
             </div>
-            <div class="col-md-2" *ngIf="!actCambioPersona">
+            <!-- <div class="col-md-2" *ngIf="!actCambioPersona">
                 <div class="d-flex flex-row-reverse">
                     <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Actualizar tipo persona" matTooltip="Actualizar tipo persona" (click)="confirmaCambio()" *ngIf="!loading" [disabled]="(datoPeritos.tipoPersona == 'F' ? peritoPersonaFormGroup.invalid : moralFormGroup.invalid)">
                         Actualizar <mat-icon style="display: inherit; width: 15px;">update</mat-icon>
                     </button>
                 </div>
-            </div><br>
+            </div><br> -->
         </div><br>
     </div>
     <br>
@@ -723,12 +723,16 @@
                             </mat-expansion-panel-header>
                             <div class="row">
                                 <div class="col-md-11">
-                                    <ng-container *ngIf="!loading">
+                                    <div style="padding: 30px; text-align: center;" *ngIf="loadingDatosPerito">
+                                        <mat-spinner style="margin:0 auto;"></mat-spinner>
+                                        <p>Cargando...</p>
+                                    </div>
+                                    <ng-container *ngIf="!loadingDatosPerito">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <mat-form-field appearance="outline" style="width: 100%;">
                                                     <mat-label>Registro*</mat-label>
-                                                    <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.registro">
+                                                    <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.registro" style="text-transform: uppercase;">
                                                 </mat-form-field>
                                             </div>
                                             <div class="col-md-5" style="padding-top: 15px;">
