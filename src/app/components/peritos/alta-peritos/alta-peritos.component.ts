@@ -361,14 +361,14 @@ export class AltaPeritosComponent implements OnInit {
         //     this.peritoPersonaFormGroup.controls['fechaDefuncion'].clearValidators();
         // }
 
-        this.peritoPersonaFormGroup.controls['apepaterno'].setValue(result.apepaterno);
-        this.peritoPersonaFormGroup.controls['apematerno'].setValue(result.apematerno);
+        this.peritoPersonaFormGroup.controls['apepaterno'].setValue(result.apepaterno.toLocaleUpperCase());
+        this.peritoPersonaFormGroup.controls['apematerno'].setValue(result.apematerno.toLocaleUpperCase());
         this.peritoPersonaFormGroup.controls['nombre'].setValue(result.nombre);
-        this.peritoPersonaFormGroup.controls['rfc'].setValue(result.rfc);
-        this.peritoPersonaFormGroup.controls['curp'].setValue(result.curp);
-        this.peritoPersonaFormGroup.controls['ine'].setValue(result.ine);
+        this.peritoPersonaFormGroup.controls['rfc'].setValue(result.rfc.toLocaleUpperCase());
+        this.peritoPersonaFormGroup.controls['curp'].setValue(result.curp.toLocaleUpperCase());
+        this.peritoPersonaFormGroup.controls['ine'].setValue(result.ine.toLocaleUpperCase());
         this.peritoPersonaFormGroup.controls['identificacion'].setValue(result.identificacion);
-        this.peritoPersonaFormGroup.controls['idedato'].setValue(result.identificacion);
+        this.peritoPersonaFormGroup.controls['idedato'].setValue(result.identificacion.toLocaleUpperCase());
         this.peritoPersonaFormGroup.controls['fechaNacimiento'].setValue(this.datoPeritos.fecha_naci);
         this.peritoPersonaFormGroup.controls['fechaDefuncion'].setValue(this.datoPeritos.fecha_def);
         this.peritoPersonaFormGroup.controls['celular'].setValue(result.celular);
