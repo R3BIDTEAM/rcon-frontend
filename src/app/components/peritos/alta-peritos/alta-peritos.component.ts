@@ -186,20 +186,20 @@ export class AltaPeritosComponent implements OnInit {
      * de no existir coincidencias registrará el nuevo perito.
      */
     consulta_previa(){
-        this.datoPeritos.registro = this.peritoPersonaFormGroup.value.registro;
+        this.datoPeritos.registro = this.peritoPersonaFormGroup.value.registro.toLocaleUpperCase();
         this.datoPeritos.fecha_alta = this.peritoPersonaFormGroup.value.fecha_alta;
         this.datoPeritos.fecha_baja = this.peritoPersonaFormGroup.value.fecha_baja;
-        this.datoPeritos.nombre = this.peritoPersonaFormGroup.value.nombre;
-        this.datoPeritos.apepaterno = this.peritoPersonaFormGroup.value.apepaterno;
-        this.datoPeritos.apematerno = this.peritoPersonaFormGroup.value.apematerno;
-        this.datoPeritos.rfc = this.peritoPersonaFormGroup.value.rfc;
-        this.datoPeritos.ine = this.peritoPersonaFormGroup.value.ine;
-        this.datoPeritos.identificacion = this.peritoPersonaFormGroup.value.identificacion;
+        this.datoPeritos.nombre = this.peritoPersonaFormGroup.value.nombre.toLocaleUpperCase();
+        this.datoPeritos.apepaterno = this.peritoPersonaFormGroup.value.apepaterno.toLocaleUpperCase();
+        this.datoPeritos.apematerno = this.peritoPersonaFormGroup.value.apematerno.toLocaleUpperCase();
+        this.datoPeritos.rfc = this.peritoPersonaFormGroup.value.rfc.toLocaleUpperCase();
+        this.datoPeritos.ine = this.peritoPersonaFormGroup.value.ine.toLocaleUpperCase();
+        this.datoPeritos.identificacion = this.peritoPersonaFormGroup.value.identificacion.toLocaleUpperCase();
         this.datoPeritos.fecha_naci = this.peritoPersonaFormGroup.value.fecha_naci;
         this.datoPeritos.fecha_def = this.peritoPersonaFormGroup.value.fecha_def;
         this.datoPeritos.email = this.peritoPersonaFormGroup.value.email;
         this.datoPeritos.celular = this.peritoPersonaFormGroup.value.celular;
-        this.datoPeritos.login = this.peritoPersonaFormGroup.value.login;
+        this.datoPeritos.login = this.peritoPersonaFormGroup.value.login.toLocaleUpperCase();
         
         let query = '';
         let busquedaDatos = 'getPeritosByDatosIdentificativos';
@@ -500,28 +500,28 @@ export class DialogAltaBusca {
         let busquedaDatos = '';
 
         if(this.nombre){
-            query = query + '&nombre=' + this.nombre + '&filtroNombre=0';
+            query = query + '&nombre=' + this.nombre.toLocaleUpperCase() + '&filtroNombre=0';
         }
         if(this.appaterno){
-            query = query + '&apellidoPaterno=' + this.appaterno + '&filtroApellidoPaterno=0';
+            query = query + '&apellidoPaterno=' + this.appaterno.toLocaleUpperCase() + '&filtroApellidoPaterno=0';
         }
         if(this.apmaterno){
-            query = query + '&apellidoMaterno=' + this.apmaterno + '&filtroApellidoMaterno=0';
+            query = query + '&apellidoMaterno=' + this.apmaterno.toLocaleUpperCase() + '&filtroApellidoMaterno=0';
         }
         if(this.curp){
-            query = query + '&curp=' + this.curp;
+            query = query + '&curp=' + this.curp.toLocaleUpperCase();
         }
         if(this.rfc){
-            query = query + '&rfc=' + this.rfc;
+            query = query + '&rfc=' + this.rfc.toLocaleUpperCase();
         }
         if(this.ine){
-            query = query + '&ine=' + this.ine;
+            query = query + '&ine=' + this.ine.toLocaleUpperCase();
         }
         if(this.registro){
-            query = query + '&registro=' + this.registro;
+            query = query + '&registro=' + this.registro.toLocaleUpperCase();
         }
         if(this.identificacion && this.idedato){
-            query = query + '&iddocidentif=' + this.identificacion + '&valdocidentif=' + this.idedato;
+            query = query + '&iddocidentif=' + this.identificacion + '&valdocidentif=' + this.idedato.toLocaleUpperCase();
         }
 
         if( this.isIdentificativo ){
