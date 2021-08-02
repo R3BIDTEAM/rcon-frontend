@@ -44,21 +44,21 @@
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>Nombre</mat-label>
-                            <input matInput #nombre formControlName="nombre" [(ngModel)]="filtros.nombre" placeholder="Ingrese nombre">
+                            <input matInput #nombre formControlName="nombre" [(ngModel)]="filtros.nombre" placeholder="Ingrese el nombre" style="text-transform: uppercase;">
                             <mat-error *ngIf="notarioFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>Apellido Paterno</mat-label>
-                            <input matInput #apellido_paterno formControlName="apellido_paterno" [(ngModel)]="filtros.apellido_paterno" placeholder="Ingrese apellido paterno">
+                            <input matInput #apellido_paterno formControlName="apellido_paterno" [(ngModel)]="filtros.apellido_paterno" placeholder="Ingrese apellido paterno" onkeyup="this.value = this.value.toUpperCase();" style="text-transform: uppercase;">
                             <mat-error *ngIf="notarioFormGroup.controls.apellido_paterno.errors?.required">Requerido</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>Apellido Materno</mat-label>
-                            <input matInput #apellido_materno formControlName="apellido_materno" [(ngModel)]="filtros.apellido_materno" placeholder="Ingrese apellido materno">
+                            <input matInput #apellido_materno formControlName="apellido_materno" [(ngModel)]="filtros.apellido_materno" placeholder="Ingrese apellido materno" (input)="apellido_materno.value = apellido_materno.value.toUpperCase()">
                         </mat-form-field>
                     </div> 
                 </div>
@@ -130,7 +130,7 @@
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>Celular</mat-label>
-                            <input matInput #celular formControlName="celular" [(ngModel)]="filtros.celular" placeholder="Ingrese celular">
+                            <input matInput #celular formControlName="celular" [(ngModel)]="filtros.celular" placeholder="Ingrese celular" maxlength="10">
                         </mat-form-field>
                     </div>
                     <div class="col-md-4">

@@ -148,6 +148,7 @@ export class EditarNotarioComponent implements OnInit {
     cambioPersona;
     actCambioPersona = true;
     isRequired = true;
+    minDate;
 
     /*PAGINADOS*/
     dataSource1 = [];
@@ -317,6 +318,13 @@ export class EditarNotarioComponent implements OnInit {
         this.datosGenerales.nombre_moral = this.dataNotarioResultado[0].APELLIDOPATERNO + ' ' + this.dataNotarioResultado[0].APELLIDOMATERNO + ' ' + this.dataNotarioResultado[0].NOMBRE; 
         console.log(this.datosGenerales.fecha_nacimiento);
         
+        this.minDate = (moment(this.datosGenerales.fecha_nacimiento).add(2, 'd').format('YYYY-MM-DD'));
+    }
+
+
+    fechaTope(){
+        this.personaFormGroup.controls['fechaDefuncion'].setValue(null);
+        this.minDate = moment(this.personaFormGroup.controls['fechaNacimiento'].value).add(2, 'd').format('YYYY-MM-DD');  
     }
   
 

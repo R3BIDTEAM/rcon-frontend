@@ -123,7 +123,7 @@
                     <div class="col-md-4">
                         <mat-form-field appearance="fill" style="width: 100%;">
                             <mat-label>Fecha Nacimiento</mat-label>
-                            <input matInput formControlName="fechaNacimiento" [matDatepicker]="picknacimiento" [(ngModel)]="datosGenerales.fecha_nacimiento" placeholder="Ingrese Fecha Nacimiento">
+                            <input matInput formControlName="fechaNacimiento" [matDatepicker]="picknacimiento" [(ngModel)]="datosGenerales.fecha_nacimiento" placeholder="Ingrese Fecha Nacimiento" (dateChange)="fechaTope()" readonly>
                             <mat-datepicker-toggle matSuffix [for]="picknacimiento"></mat-datepicker-toggle>
                             <mat-datepicker #picknacimiento></mat-datepicker>
                         </mat-form-field>
@@ -131,7 +131,7 @@
                     <div class="col-md-4">
                         <mat-form-field appearance="fill" style="width: 100%;">
                             <mat-label>Fecha Defunción</mat-label>
-                            <input matInput formControlName="fechaDefuncion" [matDatepicker]="pickdefuncion" [(ngModel)]="datosGenerales.fecha_defuncion" placeholder="Ingrese Fecha Defunción">
+                            <input matInput formControlName="fechaDefuncion" [matDatepicker]="pickdefuncion" [(ngModel)]="datosGenerales.fecha_defuncion" placeholder="Ingrese Fecha Defunción" [min]="minDate" readonly>
                             <mat-datepicker-toggle matSuffix [for]="pickdefuncion"></mat-datepicker-toggle>
                             <mat-datepicker #pickdefuncion></mat-datepicker>
                         </mat-form-field>
@@ -142,7 +142,7 @@
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>Celular</mat-label>
-                            <input matInput formControlName="celular" placeholder="Ingrese Celular" [(ngModel)]="datosGenerales.celular">
+                            <input matInput formControlName="celular" placeholder="Ingrese Celular" [(ngModel)]="datosGenerales.celular" maxlength="10">
                         </mat-form-field>
                     </div>
                     <div class="col-md-4">

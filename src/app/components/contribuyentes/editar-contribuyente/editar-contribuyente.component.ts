@@ -399,8 +399,8 @@ export class EditarContribuyenteComponent implements OnInit {
 
         console.log(this.contribuyente.nombre_moral);
 
-        this.minDate = (moment(this.contribuyente.fecha_naci).format('YYYY-MM-DD'));
-        alert(moment(this.contribuyente.fecha_naci).format('YYYY-MM-DD'));
+        this.minDate = (moment(this.contribuyente.fecha_naci).add(2, 'd').format('YYYY-MM-DD'));
+        // alert(moment(this.contribuyente.fecha_naci).format('YYYY-MM-DD'));
     }
 
     // minDate = moment(this.fisicaFormGroup.controls['fecha_naci'].value).format('YYYY-MM-DD');

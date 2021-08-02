@@ -183,6 +183,7 @@ export class EditarPeritosComponent implements OnInit {
     mensajeConfirma;
     documentos: DocumentosIdentificativos[] = [];
     loadingDocumentosIdentificativos = false;
+    minDate;
 
     /*PAGINADOS*/
     dataSource1 = [];
@@ -375,6 +376,14 @@ export class EditarPeritosComponent implements OnInit {
         }else{
             this.datoPeritos.independiente = false;
         }
+
+        this.minDate = (moment(this.datoPeritos.fecha_naci).add(2, 'd').format('YYYY-MM-DD'));
+    }
+
+
+    fechaTope(){
+        this.peritoPersonaFormGroup.controls['fechaDefuncion'].setValue(null);
+        this.minDate = moment(this.peritoPersonaFormGroup.controls['fechaNacimiento'].value).add(2, 'd').format('YYYY-MM-DD');  
     }
 
     /**

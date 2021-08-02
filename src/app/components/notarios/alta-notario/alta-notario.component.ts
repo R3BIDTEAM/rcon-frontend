@@ -284,7 +284,7 @@ export class AltaNotarioComponent implements OnInit {
 
         query = (this.filtros.no_notario) ? query + '&numNotario=' + this.filtros.no_notario : query + '&numNotario=';
         query = (this.filtros.estado) ? query + '&codEstado=' + this.filtros.estado : query + '&codEstado=';
-        query = (this.filtros.nombre) ? query + '&nombre=' + this.filtros.nombre : query + '&nombre=';
+        query = (this.filtros.nombre) ? query + '&nombre=' + this.filtros.nombre.toLocaleUpperCase() : query + '&nombre=';
         query = (this.filtros.apellido_paterno) ? query + '&apellidoPaterno=' + this.filtros.apellido_paterno : query + '&apellidoPaterno=';
         query = (this.filtros.apellido_materno) ? query + '&apellidoMaterno=' + this.filtros.apellido_materno : query + '&apellidoMaterno=';
         query = (this.filtros.rfc) ? query + '&rfc=' + this.filtros.rfc : query + '&rfc=';
