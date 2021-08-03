@@ -30,28 +30,28 @@
                     <div class="row">
                         <mat-form-field appearance="outline" class="col-2 offset-md-2">
                             <mat-label>Región:</mat-label>
-                            <input matInput #region formControlName="region" minlength="3" maxlength="3" (keypress)="keyPressAlphaNumeric($event)" (keyup)="focusNextInput($event, manzana)">
+                            <input matInput #region formControlName="region" minlength="3" maxlength="3" (keypress)="keyPressAlphaNumeric($event)" (keyup)="focusNextInput($event, manzana)" style="text-transform: uppercase;">
                             <mat-error *ngIf="cuentaFormGroup.controls.region.errors?.required">Requerido</mat-error>
                             <mat-error *ngIf="cuentaFormGroup.controls.region.errors?.minlength">El valor debe de tener 3 alfanúmericos</mat-error>
                             <mat-error *ngIf="cuentaFormGroup.controls.region.errors?.maxlength">El valor debe de tener 3 alfanúmericos</mat-error>
                         </mat-form-field>
                         <mat-form-field appearance="outline"  class="col-2">
                             <mat-label>Manzana:</mat-label>
-                            <input matInput #manzana formControlName="manzana" minlength="3" maxlength="3" (keypress)="keyPressAlphaNumeric($event)" (keyup)="focusNextInput($event, lote)">
+                            <input matInput #manzana formControlName="manzana" minlength="3" maxlength="3" (keypress)="keyPressAlphaNumeric($event)" (keyup)="focusNextInput($event, lote)" style="text-transform: uppercase;">
                             <mat-error *ngIf="cuentaFormGroup.controls.manzana.errors?.required">Requerido</mat-error>
                             <mat-error *ngIf="cuentaFormGroup.controls.manzana.errors?.minlength">El valor debe de tener 3 alfanúmericos</mat-error>
                             <mat-error *ngIf="cuentaFormGroup.controls.manzana.errors?.maxlength">El valor debe de tener 3 alfanúmericos</mat-error>
                         </mat-form-field>
                         <mat-form-field appearance="outline"  class="col-2">
                             <mat-label>Lote:</mat-label>
-                            <input matInput #lote formControlName="lote" minlength="2" maxlength="2" (keypress)="keyPressAlphaNumeric($event)" (keyup)="focusNextInput($event, unidad)">
+                            <input matInput #lote formControlName="lote" minlength="2" maxlength="2" (keypress)="keyPressAlphaNumeric($event)" (keyup)="focusNextInput($event, unidad)" style="text-transform: uppercase;">
                             <mat-error *ngIf="cuentaFormGroup.controls.lote.errors?.required">Requerido</mat-error>
                             <mat-error *ngIf="cuentaFormGroup.controls.lote.errors?.minlength">El valor debe de tener 2 alfanúmericos</mat-error>
                             <mat-error *ngIf="cuentaFormGroup.controls.lote.errors?.maxlength">El valor debe de tener 2 alfanúmericos</mat-error>
                         </mat-form-field>
                         <mat-form-field appearance="outline"  class="col-2">
                             <mat-label>Unidad Privativa:</mat-label>
-                            <input matInput #unidad formControlName="unidad" minlength="3" maxlength="3" (keypress)="keyPressAlphaNumeric($event)"  (keydown.enter)="getData()">
+                            <input matInput #unidad formControlName="unidad" minlength="3" maxlength="3" (keypress)="keyPressAlphaNumeric($event)"  (keydown.enter)="getData()" style="text-transform: uppercase;">
                             <mat-error *ngIf="cuentaFormGroup.controls.unidad.errors?.required">Requerido</mat-error>
                             <mat-error *ngIf="cuentaFormGroup.controls.unidad.errors?.minlength">El valor debe de tener 3 alfanúmericos</mat-error>
                             <mat-error *ngIf="cuentaFormGroup.controls.unidad.errors?.maxlength">El valor debe de tener 3 alfanúmericos</mat-error>
@@ -92,34 +92,34 @@
                         <div class="row">
                             <mat-form-field appearance="outline"  class="col-4">
                                 <mat-label>Apellido paterno / Razón Social:</mat-label>
-                                <input matInput formControlName="apaterno" (keyup)="clearInputsIdentNoIdent(false)" maxlength="250"  placeholder="Ingrese el apellido paterno" (keydown.enter)="getData()">
+                                <input matInput formControlName="apaterno" (keyup)="clearInputsIdentNoIdent(false)" maxlength="250"  placeholder="Ingrese el apellido paterno" (keydown.enter)="getData()" style="text-transform: uppercase;">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.apaterno.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-4">
                                 <mat-label>Apellido materno:</mat-label>
-                                <input matInput formControlName="amaterno" (keyup)="clearInputsIdentNoIdent(false)" maxlength="250"  placeholder="Ingrese el apellido materno" (keydown.enter)="getData()">
+                                <input matInput formControlName="amaterno" (keyup)="clearInputsIdentNoIdent(false)" maxlength="250"  placeholder="Ingrese el apellido materno" (keydown.enter)="getData()" style="text-transform: uppercase;">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.amaterno.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-4">
                                 <mat-label>Nombre:</mat-label>
-                                <input matInput formControlName="nombre" (keyup)="clearInputsIdentNoIdent(false)" maxlength="250"  placeholder="Ingrese el nombre" (keydown.enter)="getData()">
+                                <input matInput formControlName="nombre" (keyup)="clearInputsIdentNoIdent(false)" maxlength="250"  placeholder="Ingrese el nombre" (keydown.enter)="getData()" style="text-transform: uppercase;">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-4">
                                 <mat-label>RFC:</mat-label>
-                                <input matInput formControlName="rfc" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250"  placeholder="Ingrese el RFC" (keydown.enter)="getData()">
+                                <input matInput formControlName="rfc" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250"  placeholder="Ingrese el RFC" (keydown.enter)="getData()" style="text-transform: uppercase;" onkeyup="this.value = this.value.toUpperCase();">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-4">
                                 <mat-label>CURP:</mat-label>
-                                <input matInput formControlName="curp" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250"  placeholder="Ingrese el CURP" (keydown.enter)="getData()">
+                                <input matInput formControlName="curp" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250"  placeholder="Ingrese el CURP" (keydown.enter)="getData()" style="text-transform: uppercase;" onkeyup="this.value = this.value.toUpperCase();">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.curp.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-4">
                                 <mat-label>Clave INE:</mat-label>
-                                <input matInput formControlName="ine" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250"  placeholder="Ingrese el INE" (keydown.enter)="getData()">
+                                <input matInput formControlName="ine" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250"  placeholder="Ingrese el INE" (keydown.enter)="getData()" style="text-transform: uppercase;">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.ine.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
@@ -135,7 +135,7 @@
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-4">
                                 <mat-label></mat-label>
-                                <input matInput placeholder="" formControlName="documentoidentificativo" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250"  placeholder="Ingrese el número de documento" (keydown.enter)="getData()">
+                                <input matInput placeholder="" formControlName="documentoidentificativo" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250"  placeholder="Ingrese el número de documento" (keydown.enter)="getData()" style="text-transform: uppercase;">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.documentoidentificativo.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>

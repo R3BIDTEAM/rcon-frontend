@@ -32,31 +32,31 @@
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-md-12">
                                 <mat-label>Nombre:</mat-label>
-                                <input matInput formControlName="nombre" [(ngModel)]="contribuyente.nombre" placeholder="Ingrese Nombre">
+                                <input matInput formControlName="nombre" [(ngModel)]="contribuyente.nombre" placeholder="Ingrese el Nombre" style="text-transform: uppercase;">
                                 <mat-error *ngIf="fisicaFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-md-6">
                                 <mat-label>Apellido Paterno:</mat-label>
-                                <input matInput formControlName="apepaterno" [(ngModel)]="contribuyente.apepaterno" placeholder="Ingrese Apellido Paterno">
+                                <input matInput formControlName="apepaterno" [(ngModel)]="contribuyente.apepaterno" placeholder="Ingrese el Apellido Paterno" style="text-transform: uppercase;">
                                 <mat-error *ngIf="fisicaFormGroup.controls.apepaterno.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-md-6" style="margin-left: 0px!important;">
                                 <mat-label>Apellido Materno:</mat-label>
-                                <input matInput formControlName="apematerno" [(ngModel)]="contribuyente.apematerno" placeholder="Ingrese Apellido Materno">
+                                <input matInput formControlName="apematerno" [(ngModel)]="contribuyente.apematerno" placeholder="Ingrese el Apellido Materno" style="text-transform: uppercase;">
                             </mat-form-field>
                         </div>
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-md-6">
                                 <mat-label>RFC:</mat-label>
-                                <input matInput formControlName="rfc" (keyup)="changeRequired()" placeholder="Ingrese RFC" [(ngModel)]="contribuyente.rfc" [required]="isRequired" pattern="^([A-ZÑ&]{4})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" maxlength="13">
+                                <input matInput formControlName="rfc" (keyup)="changeRequired()" placeholder="Ingrese el RFC" [(ngModel)]="contribuyente.rfc" [required]="isRequired" pattern="^([A-ZÑ&]{4})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" maxlength="13" style="text-transform: uppercase;" onkeyup="this.value = this.value.toUpperCase();">
                                 <mat-error *ngIf="fisicaFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="fisicaFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 4 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-md-6" style="margin-left: 0px!important;">
                                 <mat-label>CURP:</mat-label>
-                                <input matInput formControlName="curp" (keyup)="changeRequired()" placeholder="Ingrese CURP" [(ngModel)]="contribuyente.curp" [required]="isRequired" pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$" maxlength="18">
+                                <input matInput formControlName="curp" (keyup)="changeRequired()" placeholder="Ingrese el CURP" [(ngModel)]="contribuyente.curp" [required]="isRequired" pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$" maxlength="18" style="text-transform: uppercase;" onkeyup="this.value = this.value.toUpperCase();">
                                 <mat-error *ngIf="fisicaFormGroup.controls.curp.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="fisicaFormGroup.controls.curp.errors?.pattern">CURP no valido</mat-error>
                             </mat-form-field>
@@ -64,7 +64,7 @@
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-md-6">
                                 <mat-label>Clave INE:</mat-label>
-                                <input matInput formControlName="ine" [(ngModel)]="contribuyente.ine" placeholder="Ingrese INE">
+                                <input matInput formControlName="ine" [(ngModel)]="contribuyente.ine" placeholder="Ingrese el INE" style="text-transform: uppercase;">
                             </mat-form-field>
                         </div>
                         <div class="row">
@@ -78,7 +78,7 @@
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-md-6" style="margin-left: 0px!important;">
                                 <mat-label>Número Documento</mat-label>
-                                <input matInput formControlName="docIdent" [(ngModel)]="contribuyente.docIdent">
+                                <input matInput formControlName="docIdent" [(ngModel)]="contribuyente.docIdent" placeholder="Ingrese el número de documento" style="text-transform: uppercase;">
                             </mat-form-field>
                         </div>
                         <div class="row">
@@ -98,11 +98,11 @@
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-md-6">
                                 <mat-label>Celular:</mat-label>
-                                <input matInput formControlName="celular" [(ngModel)]="contribuyente.celular" maxlength="10" placeholder="Ingrese Celular">
+                                <input matInput formControlName="celular" [(ngModel)]="contribuyente.celular" maxlength="10" placeholder="Ingrese el Celular">
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-md-6" style="margin-left: 0px!important;">
                                 <mat-label>E-mail:</mat-label>
-                                <input matInput formControlName="email" placeholder="Ingrese E-mail" [(ngModel)]="contribuyente.email">
+                                <input matInput formControlName="email" placeholder="Ingrese el E-mail" [(ngModel)]="contribuyente.email">
                                 <mat-error *ngIf="fisicaFormGroup.hasError('email', 'email') && fisicaFormGroup.get('email').touched">Correo invalido</mat-error>
                             </mat-form-field>
                         </div>
@@ -113,20 +113,20 @@
                         <div class="row">
                             <mat-form-field class="col-12">
                                 <mat-label>Nombre:</mat-label>
-                                <input matInput formControlName="nombre_moral" [(ngModel)]="contribuyente.nombre_moral" placeholder="Ingrese Nombre">
+                                <input matInput formControlName="nombre_moral" [(ngModel)]="contribuyente.nombre_moral" placeholder="Ingrese el Nombre" style="text-transform: uppercase;">
                                 <mat-error *ngIf="moralFormGroup.controls.nombre_moral.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
                             <mat-form-field class="col-6">
                                 <mat-label>RFC:</mat-label>
-                                <input matInput formControlName="rfc" (keyup)="changeRequired()" placeholder="Ingrese RFC" [(ngModel)]="contribuyente.rfc" pattern="^([A-ZÑ&]{3})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" [required]="isRequired">
+                                <input matInput formControlName="rfc" (keyup)="changeRequired()" placeholder="Ingrese el RFC" [(ngModel)]="contribuyente.rfc" pattern="^([A-ZÑ&]{3})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" [required]="isRequired" style="text-transform: uppercase;" onkeyup="this.value = this.value.toUpperCase();">
                                 <mat-error *ngIf="moralFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="moralFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 3 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
                             </mat-form-field>
                             <mat-form-field class="col-6" style="margin-left: 0px!important;">
                                 <mat-label>Act. preponderante:</mat-label>
-                                <input matInput formControlName="actPreponderante" [(ngModel)]="contribuyente.actPreponderante" placeholder="Ingrese Act. preponderante">
+                                <input matInput formControlName="actPreponderante" [(ngModel)]="contribuyente.actPreponderante" placeholder="Ingrese la Act. preponderante" style="text-transform: uppercase;">
                             </mat-form-field>
                         </div>
                         <div class="row">

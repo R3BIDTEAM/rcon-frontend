@@ -349,23 +349,23 @@ export class AltaContribuyenteComponent implements OnInit {
         this.loading = true;
 
         query = (this.contribuyente.tipoPersona) ? query + '&codtipospersona=' + this.contribuyente.tipoPersona : query + '&codtipospersona=';
-        query = (this.contribuyente.nombre) ? query + '&nombre=' + this.contribuyente.nombre : query + '&nombre=';
+        query = (this.contribuyente.nombre) ? query + '&nombre=' + this.contribuyente.nombre.toLocaleUpperCase() : query + '&nombre=';
         query = (this.contribuyente.idTipoPersonaMoral) ? query + '&idtipomoral=' + this.contribuyente.idTipoPersonaMoral : query + '&idtipomoral=';
         query = (this.contribuyente.idMotivo) ? query + '&idmotivosmoral=' + this.contribuyente.idMotivo : query + '&idmotivosmoral=';
         query = (this.contribuyente.fechaInicioOperacion) ? query + '&fechainicioactiv=' + moment(this.contribuyente.fechaInicioOperacion).format('DD-MM-YYYY') : query + '&fechainicioactiv=';
         query = (this.contribuyente.fechaCambio) ? query + '&fechacambiosituacion=' + moment(this.contribuyente.fechaCambio).format('DD-MM-YYYY') : query + '&fechacambiosituacion=';
-        query = (this.contribuyente.rfc) ? query + '&rfc=' + this.contribuyente.rfc : query + '&rfc=';
-        query = (this.contribuyente.apaterno) ? query + '&apellidopaterno=' + this.contribuyente.apaterno : query + '&apellidopaterno=' + this.contribuyente.nombre_moral;
-        query = (this.contribuyente.amaterno) ? query + '&apellidomaterno=' + this.contribuyente.amaterno : query + '&apellidomaterno=';
-        query = (this.contribuyente.curp) ? query + '&curp=' + this.contribuyente.curp : query + '&curp=';
-        query = (this.contribuyente.ine) ? query + '&claveife=' + this.contribuyente.ine : query + '&claveife=';
+        query = (this.contribuyente.rfc) ? query + '&rfc=' + this.contribuyente.rfc.toLocaleUpperCase() : query + '&rfc=';
+        query = (this.contribuyente.apaterno) ? query + '&apellidopaterno=' + this.contribuyente.apaterno.toLocaleUpperCase() : query + '&apellidopaterno=' + this.contribuyente.nombre_moral;
+        query = (this.contribuyente.amaterno) ? query + '&apellidomaterno=' + this.contribuyente.amaterno.toLocaleUpperCase() : query + '&apellidomaterno=';
+        query = (this.contribuyente.curp) ? query + '&curp=' + this.contribuyente.curp.toLocaleUpperCase() : query + '&curp=';
+        query = (this.contribuyente.ine) ? query + '&claveife=' + this.contribuyente.ine.toLocaleUpperCase() : query + '&claveife=';
         query = (this.contribuyente.idDocIdent) ? query + '&iddocidentif=' + this.contribuyente.idDocIdent : query + '&iddocidentif=';
         query = (this.contribuyente.docIdent) ? query + '&valdocidentif=' + this.contribuyente.docIdent : query + '&valdocidentif=';
         query = (this.contribuyente.fechaNacimiento) ? query + '&fechanacimiento=' + moment(this.contribuyente.fechaNacimiento).format('DD-MM-YYYY') : query + '&fechanacimiento=';
         query = (this.contribuyente.fechaDefuncion) ? query + '&fechadefuncion=' + moment(this.contribuyente.fechaDefuncion).format('DD-MM-YYYY') : query + '&fechadefuncion=';
         query = (this.contribuyente.celular) ? query + '&celular=' + this.contribuyente.celular : query + '&celular=';
         query = (this.contribuyente.email) ? query + '&email=' + this.contribuyente.email : query + '&email=';
-        query = (this.contribuyente.actPreponderante) ? query + '&activprincip=' + this.contribuyente.actPreponderante : query + '&activprincip=';
+        query = (this.contribuyente.actPreponderante) ? query + '&activprincip=' + this.contribuyente.actPreponderante.toLocaleUpperCase() : query + '&activprincip=';
         // query = (this.contribuyente.nombre_moral) ? query + '&apellidopaterno=' + this.contribuyente.nombre_moral : query + '&apellidopaterno=';
         query = query + '&idExpediente';
 

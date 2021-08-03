@@ -20,37 +20,37 @@
                             <div class="row">
                                 <mat-form-field appearance="outline" class="col-10">
                                     <mat-label>Nombre:</mat-label>
-                                    <input matInput formControlName="nombre" [(ngModel)]="contribuyente.nombre">
+                                    <input matInput formControlName="nombre" [(ngModel)]="contribuyente.nombre" style="text-transform: uppercase;">
                                     <mat-error *ngIf="fisicaFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="row">
                                 <mat-form-field appearance="outline" class="col-5">
                                     <mat-label>Apellido Paterno:</mat-label>
-                                    <input matInput formControlName="apaterno" [(ngModel)]="contribuyente.apaterno">
+                                    <input matInput formControlName="apaterno" [(ngModel)]="contribuyente.apaterno" style="text-transform: uppercase;">
                                     <mat-error *ngIf="fisicaFormGroup.controls.apaterno.errors?.required">Requerido</mat-error>
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" class="col-5">
                                     <mat-label>Apellido Materno:</mat-label>
-                                    <input matInput formControlName="amaterno" [(ngModel)]="contribuyente.amaterno">
+                                    <input matInput formControlName="amaterno" [(ngModel)]="contribuyente.amaterno" style="text-transform: uppercase;">
                                 </mat-form-field>
                             </div>
                             <div class="row">
                                 <mat-form-field appearance="outline" class="col-5">
                                     <mat-label>RFC:</mat-label>
-                                    <input matInput formControlName="rfc" (keyup)="changeRequired('curp', 'rfc')" [(ngModel)]="contribuyente.rfc">
+                                    <input matInput formControlName="rfc" (keyup)="changeRequired('curp', 'rfc')" [(ngModel)]="contribuyente.rfc" style="text-transform: uppercase;">
                                     <mat-error *ngIf="fisicaFormGroup.controls.rfc.errors?.required">Se han de llenar algunos de los campos de RFC o CURP</mat-error>
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" class="col-5">
                                     <mat-label>CURP:</mat-label>
-                                    <input matInput formControlName="curp" (keyup)="changeRequired('rfc', 'curp')" [(ngModel)]="contribuyente.curp">
+                                    <input matInput formControlName="curp" (keyup)="changeRequired('rfc', 'curp')" [(ngModel)]="contribuyente.curp" style="text-transform: uppercase;">
                                     <mat-error *ngIf="fisicaFormGroup.controls.curp.errors?.required">Se han de llenar algunos de los campos de RFC o CURP</mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="row">
                                 <mat-form-field appearance="outline" class="col-5">
                                     <mat-label>Clave INE:</mat-label>
-                                    <input matInput formControlName="ine" [(ngModel)]="contribuyente.ine">
+                                    <input matInput formControlName="ine" [(ngModel)]="contribuyente.ine" style="text-transform: uppercase;">
                                 </mat-form-field>
                             </div>
                             <div class="row">
@@ -65,7 +65,7 @@
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" class="col-5">
                                     <mat-label>Número Documento</mat-label>
-                                    <input matInput formControlName="docIdent" [(ngModel)]="contribuyente.docIdent">
+                                    <input matInput formControlName="docIdent" [(ngModel)]="contribuyente.docIdent" style="text-transform: uppercase;">
                                 </mat-form-field>
                             </div>
                             <div class="row">
@@ -99,19 +99,19 @@
                             <div class="row">
                                 <mat-form-field appearance="outline" class="col-10">
                                     <mat-label>Nombre:</mat-label>
-                                    <input matInput formControlName="nombre_moral" [(ngModel)]="contribuyente.nombre_moral">
+                                    <input matInput formControlName="nombre_moral" [(ngModel)]="contribuyente.nombre_moral" style="text-transform: uppercase;">
                                     <mat-error *ngIf="moralFormGroup.controls.nombre_moral.errors?.required">Requerido</mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="row">
                                 <mat-form-field appearance="outline" class="col-5">
                                     <mat-label>RFC:</mat-label>
-                                    <input matInput formControlName="rfc" [(ngModel)]="contribuyente.rfc">
+                                    <input matInput formControlName="rfc" [(ngModel)]="contribuyente.rfc" style="text-transform: uppercase;">
                                     <mat-error *ngIf="moralFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                                 </mat-form-field>
                                 <mat-form-field class="col-5">
                                     <mat-label>Act. preponderante:</mat-label>
-                                    <input matInput formControlName="actPreponderante" [(ngModel)]="contribuyente.actPreponderante">
+                                    <input matInput formControlName="actPreponderante" [(ngModel)]="contribuyente.actPreponderante" style="text-transform: uppercase;">
                                 </mat-form-field>
                             </div>
                             <div class="row">

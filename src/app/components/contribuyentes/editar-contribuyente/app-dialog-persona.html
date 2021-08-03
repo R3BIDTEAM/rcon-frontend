@@ -1,3 +1,6 @@
+<style>
+    input,textarea{text-transform: uppercase;}
+</style>
 <h1 mat-dialog-title class="verde-cdmx">Buscador de Personas</h1>
 <div mat-dialog-content>
     <form #formDialog="ngForm">
@@ -30,11 +33,11 @@
             <div class="row">
                 <mat-form-field appearance="outline" class="col-4">
                     <mat-label>RFC:</mat-label>
-                    <input matInput [(ngModel)]="filtros.rfc" name="rfc" (keyup)="clearInputsIdentNoIdent(true)">
+                    <input matInput [(ngModel)]="filtros.rfc" name="rfc" (keyup)="clearInputsIdentNoIdent(true)" onkeyup="this.value = this.value.toUpperCase();">
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="col-4" style="margin-left: 0px!important;">
                     <mat-label>CURP:</mat-label>
-                    <input matInput [(ngModel)]="filtros.curp" name="curp" (keyup)="clearInputsIdentNoIdent(true)">
+                    <input matInput [(ngModel)]="filtros.curp" name="curp" (keyup)="clearInputsIdentNoIdent(true)" onkeyup="this.value = this.value.toUpperCase();">
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="col-4" style="margin-left: 0px!important;">
                     <mat-label>INE:</mat-label>
@@ -66,7 +69,7 @@
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="col-4" style="margin-left: 0px!important;">
                     <mat-label>RFC:</mat-label>
-                    <input matInput [(ngModel)]="filtros.rfc" name="rfc" (keyup)="clearInputsIdentNoIdent(true)">
+                    <input matInput [(ngModel)]="filtros.rfc" name="rfc" (keyup)="clearInputsIdentNoIdent(true)" onkeyup="this.value = this.value.toUpperCase();">
                 </mat-form-field>
             </div>
         </ng-container>

@@ -1,3 +1,6 @@
+<style>
+    input,textarea{text-transform: uppercase;}
+</style>
 <h1 mat-dialog-title class="verde-cdmx">Buscador Notarios</h1>
 <div mat-dialog-content>
     <form #formDialog="ngForm">
@@ -28,11 +31,11 @@
             <div class="row">
                 <mat-form-field appearance="outline" class="col-6">
                     <mat-label>RFC:</mat-label>
-                    <input matInput [(ngModel)]="filtros.rfc" name="rfc">
+                    <input matInput [(ngModel)]="filtros.rfc" name="rfc" onkeyup="this.value = this.value.toUpperCase();">
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="col-6" style="margin-left: 0px!important;">
                     <mat-label>CURP:</mat-label>
-                    <input matInput [(ngModel)]="filtros.curp" name="curp">
+                    <input matInput [(ngModel)]="filtros.curp" name="curp" onkeyup="this.value = this.value.toUpperCase();">
                 </mat-form-field>
             </div>
             <div class="row">
