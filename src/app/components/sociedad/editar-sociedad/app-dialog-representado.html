@@ -27,31 +27,31 @@
                 <div class="row">
                     <mat-form-field appearance="outline" class="col-12">
                         <mat-label>Nombre:</mat-label>
-                        <input matInput formControlName="nombre" [readonly]="insUp">
+                        <input matInput formControlName="nombre" [readonly]="insUp" style="text-transform: uppercase;">
                         <mat-error *ngIf="fisicaFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="row">
                     <mat-form-field appearance="outline" class="col-6">
                         <mat-label>Apellido Paterno:</mat-label>
-                        <input matInput formControlName="apaterno" [readonly]="insUp">
+                        <input matInput formControlName="apaterno" [readonly]="insUp" style="text-transform: uppercase;">
                         <mat-error *ngIf="fisicaFormGroup.controls.apaterno.errors?.required">Requerido</mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-6">
                         <mat-label>Apellido Materno:</mat-label>
-                        <input matInput formControlName="amaterno" [readonly]="insUp">
+                        <input matInput formControlName="amaterno" [readonly]="insUp" style="text-transform: uppercase;">
                     </mat-form-field>
                 </div>
                 <div class="row">
                     <mat-form-field appearance="outline" class="col-6">
                         <mat-label>RFC:</mat-label>
-                        <input matInput formControlName="rfc" (keyup)="changeRequired()" [readonly]="insUp" [required]="isRequired" pattern="^([A-Z,Ñ,&]{4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})$" maxlength="13">
+                        <input matInput formControlName="rfc" style="text-transform: uppercase;" (keyup)="changeRequired()" onkeyup="this.value = this.value.toUpperCase();" [readonly]="insUp" [required]="isRequired" pattern="^([A-Z,Ñ,&]{4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})$" maxlength="13">
                         <mat-error *ngIf="fisicaFormGroup.controls.rfc.errors?.required">Se han de llenar algunos de los campos de RFC o CURP</mat-error>
                         <mat-error *ngIf="fisicaFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 4 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-6">
                         <mat-label>CURP:</mat-label>
-                        <input matInput formControlName="curp" (keyup)="changeRequired()" [readonly]="insUp" [required]="isRequired" pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$" maxlength="18">
+                        <input matInput formControlName="curp" style="text-transform: uppercase;" (keyup)="changeRequired()" onkeyup="this.value = this.value.toUpperCase();" [readonly]="insUp" [required]="isRequired" pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$" maxlength="18">
                         <mat-error *ngIf="fisicaFormGroup.controls.curp.errors?.required">Se han de llenar algunos de los campos de RFC o CURP</mat-error>
                         <mat-error *ngIf="fisicaFormGroup.controls.curp.errors?.pattern">CURP NO VALIDO.</mat-error>
                     </mat-form-field>
@@ -59,14 +59,13 @@
                 <div class="row">
                     <mat-form-field appearance="outline" class="col-6">
                         <mat-label>Clave INE:</mat-label>
-                        <input matInput formControlName="ine" [readonly]="insUp">
+                        <input matInput formControlName="ine" [readonly]="insUp" style="text-transform: uppercase;">
                     </mat-form-field>
                 </div>
                 <div class="row">
                     <mat-form-field appearance="fill" class="col-6">
                         <mat-label></mat-label>
                         <mat-select formControlName="idDocIdent" [disabled]="insUp">
-                            <mat-option value="">Seleccionar</mat-option>
                             <mat-option value="1">Cédula profecional</mat-option>
                             <mat-option value="2">Pasaporte</mat-option>
                             <mat-option value="3">Licencia de conducir</mat-option>
@@ -75,7 +74,7 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-6">
                         <mat-label></mat-label>
-                        <input matInput formControlName="docIdent" [readonly]="insUp">
+                        <input matInput formControlName="docIdent" [readonly]="insUp" style="text-transform: uppercase;">
                     </mat-form-field>
                 </div>
                 <div class="row">
@@ -105,7 +104,7 @@
                 <div class="row">
                     <mat-form-field appearance="outline" class="col-12">
                         <mat-label>Texto de representación:</mat-label>
-                        <textarea matInput formControlName="texto" rows="5"></textarea>
+                        <textarea matInput formControlName="texto" rows="5" style="text-transform: uppercase;"></textarea>
                     </mat-form-field>
                 </div>
                 <div class="row">
@@ -124,19 +123,19 @@
                 <div class="row">
                     <mat-form-field appearance="outline" class="col-12">
                         <mat-label>Nombre:</mat-label>
-                        <input matInput formControlName="nombre" [readonly]="insUp">
+                        <input matInput formControlName="nombre" [readonly]="insUp" style="text-transform: uppercase;">
                         <mat-error *ngIf="moralFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="row">
                     <mat-form-field appearance="outline" class="col-6">
                         <mat-label>RFC:</mat-label>
-                        <input matInput formControlName="rfc" [readonly]="insUp">
+                        <input matInput formControlName="rfc" [readonly]="insUp" style="text-transform: uppercase;">
                         <mat-error *ngIf="moralFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-6">
                         <mat-label>Act. preponderante:</mat-label>
-                        <input matInput formControlName="actPreponderante" [readonly]="insUp">
+                        <input matInput formControlName="actPreponderante" [readonly]="insUp" style="text-transform: uppercase;">
                     </mat-form-field>
                 </div>
                 <div class="row">
@@ -144,7 +143,6 @@
                         <mat-label>Tipo de persona moral</mat-label>
                         <mat-select formControlName="idTipoPersonaMoral" [disabled]="insUp">
                             <mat-option value=""></mat-option>
-                            <mat-option value="1">Test</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field appearance="fill" class="col-6">
@@ -159,7 +157,6 @@
                         <mat-label>Motivo del cambio de situación</mat-label>
                         <mat-select formControlName="idMotivo" [disabled]="insUp">
                             <mat-option value=""></mat-option>
-                            <mat-option value="1">Test</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field appearance="fill" class="col-6">
@@ -172,7 +169,7 @@
                 <div class="row">
                     <mat-form-field appearance="outline" class="col-12">
                         <mat-label>Texto de representación:</mat-label>
-                        <textarea matInput formControlName="texto" rows="5"></textarea>
+                        <textarea matInput formControlName="texto" rows="5" style="text-transform: uppercase;"></textarea>
                     </mat-form-field>
                 </div>
                 <div class="row">

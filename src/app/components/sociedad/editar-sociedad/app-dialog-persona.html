@@ -14,38 +14,37 @@
             <div class="row">
                 <mat-form-field appearance="outline" class="col-6">
                     <mat-label>Apellido Paterno:</mat-label>
-                    <input matInput [(ngModel)]="filtros.apaterno" name="apaterno" (keyup)="clearInputsIdentNoIdent(false)">
+                    <input matInput [(ngModel)]="filtros.apaterno" name="apaterno" (keyup)="clearInputsIdentNoIdent(false)" style="text-transform: uppercase;">
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="col-6">
                     <mat-label>Apellido Materno:</mat-label>
-                    <input matInput [(ngModel)]="filtros.amaterno" name="amaterno" (keyup)="clearInputsIdentNoIdent(false)">
+                    <input matInput [(ngModel)]="filtros.amaterno" name="amaterno" (keyup)="clearInputsIdentNoIdent(false)" style="text-transform: uppercase;">
                 </mat-form-field>
             </div>
             <div class="row">
                 <mat-form-field appearance="outline" class="col-12">
                     <mat-label>Nombre:</mat-label>
-                    <input matInput [(ngModel)]="filtros.nombre" name="nombre" (keyup)="clearInputsIdentNoIdent(false)">
+                    <input matInput [(ngModel)]="filtros.nombre" name="nombre" (keyup)="clearInputsIdentNoIdent(false)" style="text-transform: uppercase;">
                 </mat-form-field>
             </div>
             <div class="row">
                 <mat-form-field appearance="outline" class="col-4">
                     <mat-label>RFC:</mat-label>
-                    <input matInput [(ngModel)]="filtros.rfc" name="rfc" (keyup)="clearInputsIdentNoIdent(true)">
+                    <input matInput [(ngModel)]="filtros.rfc" name="rfc" (keyup)="clearInputsIdentNoIdent(true)" style="text-transform: uppercase;">
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="col-4">
                     <mat-label>CURP:</mat-label>
-                    <input matInput [(ngModel)]="filtros.curp" name="curp" (keyup)="clearInputsIdentNoIdent(true)">
+                    <input matInput [(ngModel)]="filtros.curp" name="curp" (keyup)="clearInputsIdentNoIdent(true)" style="text-transform: uppercase;">
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="col-4">
                     <mat-label>INE:</mat-label>
-                    <input matInput [(ngModel)]="filtros.ine" name="ine" (keyup)="clearInputsIdentNoIdent(true)">
+                    <input matInput [(ngModel)]="filtros.ine" name="ine" (keyup)="clearInputsIdentNoIdent(true)" style="text-transform: uppercase;">
                 </mat-form-field>
             </div>
             <div class="row">
                 <mat-form-field appearance="fill" class="col-4">
                     <mat-label>Identificación</mat-label>
                     <mat-select [(value)]="filtros.idDocIdent">
-                        <mat-option value="">Seleccionar...</mat-option>
                         <mat-option value="1">Cédula profecional</mat-option>
                         <mat-option value="2">Pasaporte</mat-option>
                         <mat-option value="3">Licencia de conducir</mat-option>
@@ -54,7 +53,7 @@
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="col-8">
                     <mat-label>Identificación</mat-label>
-                    <input matInput [(ngModel)]="filtros.docIdent" name="docIdent" (keyup)="clearInputsIdentNoIdent(true)">
+                    <input matInput [(ngModel)]="filtros.docIdent" name="docIdent" (keyup)="clearInputsIdentNoIdent(true)" style="text-transform: uppercase;">
                 </mat-form-field>
             </div>
         </ng-container>
@@ -62,11 +61,11 @@
             <div class="row">
                 <mat-form-field appearance="outline" class="col-8">
                     <mat-label>Razón social:</mat-label>
-                    <input matInput [(ngModel)]="filtros.nombre" name="nombre" (keyup)="clearInputsIdentNoIdent(false)">
+                    <input matInput [(ngModel)]="filtros.nombre" name="nombre" (keyup)="clearInputsIdentNoIdent(false)" style="text-transform: uppercase;">
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="col-4">
                     <mat-label>RFC:</mat-label>
-                    <input matInput [(ngModel)]="filtros.rfc" name="rfc" (keyup)="clearInputsIdentNoIdent(true)">
+                    <input matInput [(ngModel)]="filtros.rfc" name="rfc" (keyup)="clearInputsIdentNoIdent(true)" style="text-transform: uppercase;">
                 </mat-form-field>
             </div>
         </ng-container>

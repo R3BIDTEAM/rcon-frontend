@@ -6,12 +6,12 @@
         <div class="row">
             <mat-form-field appearance="outline" class="col-6">
                 <mat-label>Razón Social</mat-label>
-                <input matInput [(ngModel)]="razonSocial" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)" placeholder="Ingrese la razón social">
+                <input matInput [(ngModel)]="razonSocial" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)" placeholder="Ingrese la razón social" style="text-transform: uppercase;">
                 <mat-error></mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline" class="col-6">
                 <mat-label>RFC</mat-label>
-                <input matInput [(ngModel)]="rfc" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" placeholder="Ingrese el RFC">
+                <input matInput [(ngModel)]="rfc" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" placeholder="Ingrese el RFC" style="text-transform: uppercase;">
                 <mat-error></mat-error>
             </mat-form-field>
         </div>

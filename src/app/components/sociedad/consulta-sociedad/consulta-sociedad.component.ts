@@ -102,13 +102,13 @@ export class ConsultaSociedadComponent implements OnInit {
             }
 
             if( this.razonSocial ){
-                query = query + '&razonSocial=' + this.razonSocial + '&filtroRazon=1';
+                query = query + '&razonSocial=' + this.razonSocial.toLocaleUpperCase() + '&filtroRazon=1';
             }
             if(this.rfc){
-                query = query + '&rfc=' + this.rfc;
+                query = query + '&rfc=' + this.rfc.toLocaleUpperCase();
             }
             if(this.registro){
-                query = query + '&registro=' + this.registro;
+                query = query + '&registro=' + this.registro.toLocaleUpperCase();
             }
 
             query = query.substr(1);

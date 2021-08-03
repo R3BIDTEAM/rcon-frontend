@@ -33,6 +33,7 @@ export class AltaSociedadComponent implements OnInit {
     loading = false;
     inserto = false;
     dataSource = [];
+    btnDisabled = true;
     @ViewChild('paginator') paginator: MatPaginator;
 
     constructor(
@@ -88,6 +89,7 @@ export class AltaSociedadComponent implements OnInit {
         this.sociedadFormGroup.controls['email'].setValue(null);
         this.sociedadFormGroup.controls['login'].setValue(null);
         this.inserto = false;
+        this.btnDisabled = true;
     }
 
     /**
@@ -96,13 +98,13 @@ export class AltaSociedadComponent implements OnInit {
      * de no existir coincidencias registrará la nueva sociedad.
      */
     consulta_previa(){
-        this.razonSocial = this.sociedadFormGroup.value.razonSocial;
-        this.rfc = this.sociedadFormGroup.value.rfc;
-        this.registro = this.sociedadFormGroup.value.registro;
+        this.razonSocial = this.sociedadFormGroup.value.razonSocial.toLocaleUpperCase();
+        this.rfc = this.sociedadFormGroup.value.rfc.toLocaleUpperCase();
+        this.registro = this.sociedadFormGroup.value.registro.toLocaleUpperCase();
         this.fecha_alta = this.sociedadFormGroup.value.fecha_alta;
         this.fecha_baja = this.sociedadFormGroup.value.fecha_baja;
         this.email = this.sociedadFormGroup.value.email;
-        this.login = this.sociedadFormGroup.value.login;
+        this.login = this.sociedadFormGroup.value.login.toLocaleUpperCase();
 
         let query = '';
         let busquedaDatos = 'getSocValuacionByDatosIdentificativos';
@@ -121,6 +123,7 @@ export class AltaSociedadComponent implements OnInit {
         this.loading = true;
         console.log("RESULTADO DE LA BUSQUEDA");
         console.log(this.endpoint);
+        console.log(query);
         this.http.get(this.endpointPrevia + busquedaDatos + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
@@ -142,7 +145,7 @@ export class AltaSociedadComponent implements OnInit {
                     });
                 }
             );
-    }//YA NO SE USA
+    }
 
     /**
      * Abre el dialogo que nos muestra los registros existentes para editar o confirmar si queremos continuar con el registro.
@@ -157,10 +160,10 @@ export class AltaSociedadComponent implements OnInit {
             }
         });
         dialogRef.afterClosed().subscribe(result => {
-            if(result){
-                console.log(result);
-                this.guardaSociedad();
-            }
+            // if(result){
+            //     console.log(result);
+            //     this.guardaSociedad();
+            // }
         });
     }
 
@@ -194,6 +197,7 @@ export class AltaSociedadComponent implements OnInit {
                 (res: any) => {
                     this.loading = false;
                     this.inserto = true;
+                    this.btnDisabled = false;
                     console.log("AQUI ENTRO EL RES DEL NUEVO PERITO");
                     console.log(res);
                     this.snackBar.open('guardado correcto - ' + res.mensaje, 'Cerrar', {
@@ -338,10 +342,10 @@ export class DialogSociedad {
         }
 
         if( this.razonSocial ){
-            query = query + '&razonSocial=' + this.razonSocial + '&filtroApellidoPaterno=0';
+            query = query + '&razonSocial=' + this.razonSocial.toLocaleUpperCase() + '&filtroApellidoPaterno=0';
         }
         if(this.rfc){
-            query = query + '&rfc=' + this.rfc;
+            query = query + '&rfc=' + this.rfc.toLocaleUpperCase();
         }
 
         query = query.substr(1);

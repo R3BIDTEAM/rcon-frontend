@@ -25,14 +25,14 @@
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-12">
                                 <mat-label>Razón Social</mat-label>
-                                <input matInput  [readonly]="inserto" formControlName="razonSocial" maxlength="250" placeholder="Ingrese la razón social">
+                                <input matInput  [readonly]="inserto" formControlName="razonSocial" maxlength="250" placeholder="Ingrese la razón social" style="text-transform: uppercase;">
                                 <mat-error *ngIf="sociedadFormGroup.controls.razonSocial.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-6">
                                 <mat-label>RFC</mat-label>
-                                <input matInput  [readonly]="inserto" formControlName="rfc" pattern="^([A-ZÑ&]{3})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" maxlength="12" placeholder="Ingrese el RFC">
+                                <input matInput  [readonly]="inserto" style="text-transform: uppercase;" onkeyup="this.value = this.value.toUpperCase();" formControlName="rfc" pattern="^([A-ZÑ&]{3})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" maxlength="12" placeholder="Ingrese el RFC">
                                 <mat-error *ngIf="sociedadFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="sociedadFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 3 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
                             </mat-form-field>
@@ -46,7 +46,7 @@
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-6">
                                 <mat-label>Registro</mat-label>
-                                <input matInput  [readonly]="inserto" formControlName="registro" maxlength="250">
+                                <input matInput  [readonly]="inserto" formControlName="registro" maxlength="250" style="text-transform: uppercase;">
                                 <mat-error *ngIf="sociedadFormGroup.controls.registro.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
@@ -70,7 +70,7 @@
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-6">
                                 <mat-label>E-Mail</mat-label>
-                                <input matInput type="email" [email]="true" [disabled]="inserto" formControlName="email" maxlength="250" placeholder="Ingrese E-mail">
+                                <input matInput type="email" [email]="true" [disabled]="inserto" [readonly]="inserto" formControlName="email" maxlength="250" placeholder="Ingrese E-mail">
                                 <mat-error *ngIf="sociedadFormGroup.hasError('email', 'email') && sociedadFormGroup.get('email').touched">Correo invalido</mat-error>
                             </mat-form-field>
                         </div>
@@ -78,7 +78,7 @@
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-6">
                                 <mat-label>Login</mat-label>
-                                <input matInput [disabled]="inserto" formControlName="login" maxlength="250" placeholder="Ingrese el login">
+                                <input matInput [disabled]="inserto" [readonly]="inserto" formControlName="login" maxlength="9" placeholder="Ingrese el login" style="text-transform: uppercase;">
                                 <mat-error *ngIf="sociedadFormGroup.controls.login.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
@@ -93,10 +93,17 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-2" *ngIf="btnDisabled">
                             <div class="d-flex flex-row-reverse">
                                 <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" (click)="consulta_previa()" [disabled]="sociedadFormGroup.invalid">
                                     Guardar
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-2" *ngIf="!btnDisabled">
+                            <div class="d-flex flex-row-reverse">
+                                <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Nuevo" (click)="clean()">
+                                    Nuevo
                                 </button>
                             </div>
                         </div>
