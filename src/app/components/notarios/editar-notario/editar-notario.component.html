@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-8 offset-md-2">
+    <div class="col-md-10 offset-md-1">
 
         <!-- Datos del Notario -->
         <h3 style="margin: 0 0 15px 0;" class="verde-cdmx">Datos del Notario:</h3>
@@ -10,7 +10,7 @@
         <br>
         <div class="row">
             <div *ngIf="!loading" class="col-md-12">
-                <mat-form-field>
+                <mat-form-field appearance="fill">
                     <mat-label>Tipo de persona:</mat-label>
                     <mat-select [(ngModel)]="datosGenerales.tipoPersona" (selectionChange)="actualizaPersona($event.value)">
                         <mat-option value="F">Fisica</mat-option>
@@ -77,7 +77,7 @@
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>RFC*</mat-label>
-                            <input matInput formControlName="rfc" placeholder="Ingrese RFC" [(ngModel)]="datosGenerales.rfc" (keyup)="changeRequired()" [required]="isRequired" pattern="^([A-ZÑ&]{4})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" maxlength="13">
+                            <input matInput formControlName="rfc" placeholder="Ingrese RFC" [(ngModel)]="datosGenerales.rfc" (keyup)="changeRequired()" [required]="isRequired" pattern="^([A-ZÑ&]{4})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" maxlength="13" onkeyup="this.value = this.value.toUpperCase();">
                             <mat-error *ngIf="personaFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                             <mat-error *ngIf="personaFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 4 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
                         </mat-form-field>
@@ -85,7 +85,7 @@
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>CURP*</mat-label>
-                            <input matInput formControlName="curp" placeholder="Ingrese CURP" [(ngModel)]="datosGenerales.curp" (keyup)="changeRequired()" [required]="isRequired" pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$" maxlength="18">
+                            <input matInput formControlName="curp" placeholder="Ingrese CURP" [(ngModel)]="datosGenerales.curp" (keyup)="changeRequired()" [required]="isRequired" pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$" maxlength="18" onkeyup="this.value = this.value.toUpperCase();">
                             <mat-error *ngIf="personaFormGroup.controls.curp.errors?.required">Requerido</mat-error>
                             <mat-error *ngIf="personaFormGroup.controls.curp.errors?.pattern">CURP no valido</mat-error>
                         </mat-form-field>
@@ -148,7 +148,7 @@
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>E-Mail</mat-label>
-                            <input matInput formControlName="email" placeholder="Ingrese E-mail" [(ngModel)]="datosGenerales.email">
+                            <input matInput formControlName="email" placeholder="Ingrese E-mail" [(ngModel)]="datosGenerales.email" style="text-transform: none!important;">
                             <mat-error *ngIf="personaFormGroup.hasError('email', 'email') && personaFormGroup.get('email').touched">Correo invalido</mat-error>
                         </mat-form-field>
                     </div>
@@ -158,32 +158,32 @@
         <ng-container *ngIf="datosGenerales.tipoPersona == 'M'  && !loading">
             <form [formGroup]="moralFormGroup">
                 <div class="row">
-                    <mat-form-field class="col-10" appearance="outline">
+                    <mat-form-field class="col-12" appearance="outline">
                         <mat-label>Nombre:</mat-label>
                         <input matInput formControlName="nombre_moral" [(ngModel)]="datosGenerales.nombre_moral">
                         <mat-error *ngIf="moralFormGroup.controls.nombre_moral.errors?.required">Requerido</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="row">
-                    <mat-form-field class="col-5" appearance="outline">
+                    <mat-form-field class="col-6" appearance="outline">
                         <mat-label>RFC:</mat-label>
-                        <input matInput formControlName="rfc" [(ngModel)]="datosGenerales.rfc" pattern="^([A-ZÑ&]{3})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" [required]="isRequired">
+                        <input matInput formControlName="rfc" [(ngModel)]="datosGenerales.rfc" pattern="^([A-ZÑ&]{3})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" [required]="isRequired" onkeyup="this.value = this.value.toUpperCase();">
                         <mat-error *ngIf="moralFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                         <mat-error *ngIf="moralFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 3 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col-5" appearance="outline">
+                    <mat-form-field class="col-6" appearance="outline">
                         <mat-label>Act. preponderante:</mat-label>
                         <input matInput formControlName="actPreponderante" [(ngModel)]="datosGenerales.actPreponderante">
                     </mat-form-field>
                 </div>
                 <div class="row">
-                    <mat-form-field class="col-5" appearance="fill">
+                    <mat-form-field class="col-6" appearance="fill">
                         <mat-label>Tipo de persona moral</mat-label>
                         <mat-select formControlName="idTipoPersonaMoral">
                             <mat-option value=""></mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field class="col-5" appearance="fill">
+                    <mat-form-field class="col-6" appearance="fill">
                         <mat-label>Fecha de inicio de operación:</mat-label>
                         <input matInput readonly formControlName="fechaInicioOperacion" [matDatepicker]="pickfechaInicioOperacion" [(ngModel)]="datosGenerales.fechaInicioOperacion">
                         <mat-datepicker-toggle matSuffix [for]="pickfechaInicioOperacion"></mat-datepicker-toggle>
@@ -191,13 +191,13 @@
                     </mat-form-field>                            
                 </div>
                 <div class="row">
-                    <mat-form-field class="col-5" appearance="fill">
+                    <mat-form-field class="col-6" appearance="fill">
                         <mat-label>Motivo del cambio de situación</mat-label>
                         <mat-select formControlName="idMotivo" >
                             <mat-option value=""></mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field class="col-5" appearance="fill">
+                    <mat-form-field class="col-6" appearance="fill">
                         <mat-label>Fecha de cambio de situación:</mat-label>
                         <input matInput readonly formControlName="fechaCambio" [matDatepicker]="pickfechaCambio" [(ngModel)]="datosGenerales.fechaCambio">
                         <mat-datepicker-toggle matSuffix [for]="pickfechaCambio"></mat-datepicker-toggle>
