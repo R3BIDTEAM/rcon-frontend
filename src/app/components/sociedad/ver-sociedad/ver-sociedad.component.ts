@@ -109,14 +109,15 @@ export class VerSociedadComponent implements OnInit {
         this.datosSociedad.razonSocial  = this.dataSocedadResultado.RAZONSOCIAL;
         this.datosSociedad.rfc = this.dataSocedadResultado.RFC;
         this.datosSociedad.registro = this.dataSocedadResultado.REGISTRO;
-        this.datosSociedad.fecha_alta = new Date(this.dataSocedadResultado.FECHAALTA);
-        this.datosSociedad.fecha_baja = new Date(this.dataSocedadResultado.FECHABAJA);
+        this.datosSociedad.fecha_alta = (this.dataSocedadResultado.FECHAALTA) ? new Date(this.dataSocedadResultado.FECHAALTA) : null;
+        this.datosSociedad.fecha_baja = (this.dataSocedadResultado.FECHABAJA) ? new Date(this.dataSocedadResultado.FECHABAJA) : null;
     }
+
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
         this.dataSource = this.paginate(this.dataSource, this.pageSize, this.pagina);
     }
-    
+
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }

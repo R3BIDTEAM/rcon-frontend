@@ -194,8 +194,8 @@ export class VerNotarioComponent implements OnInit {
       this.datosNotario.ine = this.dataNotarioResultado[0].CLAVEIFE;
       this.datosNotario.otro_documento = this.dataNotarioResultado[0].IDDOCIDENTIF;
       this.datosNotario.numero_documento = this.dataNotarioResultado[0].VALDOCIDENTIF;
-      this.datosNotario.fecha_nacimiento = new Date(this.dataNotarioResultado[0].FECHANACIMIENTO);
-      this.datosNotario.fecha_defuncion = new Date(this.dataNotarioResultado[0].FECHADEFUNCION);
+      this.datosNotario.fecha_nacimiento = (this.dataNotarioResultado[0].FECHANACIMIENTO) ? new Date(this.dataNotarioResultado[0].FECHANACIMIENTO) : null;
+      this.datosNotario.fecha_defuncion = (this.dataNotarioResultado[0].FECHADEFUNCION) ? new Date(this.dataNotarioResultado[0].FECHADEFUNCION) : null;
       this.datosNotario.celular = this.dataNotarioResultado[0].CELULAR;
       this.datosNotario.email = this.dataNotarioResultado[0].EMAIL;
 

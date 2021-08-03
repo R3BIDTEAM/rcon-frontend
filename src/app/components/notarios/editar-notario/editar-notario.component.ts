@@ -314,9 +314,8 @@ export class EditarNotarioComponent implements OnInit {
         this.datosGenerales.curp = this.dataNotarioResultado[0].CURP;
         this.datosGenerales.ine = this.dataNotarioResultado[0].CLAVEIFE;
         this.datosGenerales.otro_documento = this.dataNotarioResultado[0].IDDOCIDENTIF;
-        this.datosGenerales.numero_documento = this.dataNotarioResultado[0].VALDOCIDENTIF;
-        this.datosGenerales.fecha_nacimiento = new Date(this.dataNotarioResultado[0].FECHANACIMIENTO);
-        this.datosGenerales.fecha_defuncion = new Date(this.dataNotarioResultado[0].FECHADEFUNCION);
+        this.datosGenerales.fecha_nacimiento = (this.dataNotarioResultado[0].FECHANACIMIENTO) ? new Date(this.dataNotarioResultado[0].FECHANACIMIENTO) : null;
+        this.datosGenerales.fecha_defuncion = (this.dataNotarioResultado[0].FECHADEFUNCION) ? new Date(this.dataNotarioResultado[0].FECHADEFUNCION) : null;
         this.datosGenerales.celular = this.dataNotarioResultado[0].CELULAR;
         this.datosGenerales.email = this.dataNotarioResultado[0].EMAIL;
         this.datosGenerales.nombre_moral = this.dataNotarioResultado[0].APELLIDOPATERNO + ' ' + this.dataNotarioResultado[0].APELLIDOMATERNO + ' ' + this.dataNotarioResultado[0].NOMBRE; 

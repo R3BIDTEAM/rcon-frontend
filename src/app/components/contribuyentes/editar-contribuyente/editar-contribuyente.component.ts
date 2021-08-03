@@ -244,7 +244,6 @@ export class EditarContribuyenteComponent implements OnInit {
      }
 
     ngOnInit(): void {
-        
 
         this.fisicaFormGroup = this._formBuilder.group({
             nombre: [null, [Validators.required]],
@@ -403,8 +402,9 @@ export class EditarContribuyenteComponent implements OnInit {
         // alert(moment(this.contribuyente.fecha_naci).format('YYYY-MM-DD'));
     }
 
-    // minDate = moment(this.fisicaFormGroup.controls['fecha_naci'].value).format('YYYY-MM-DD');
-
+    /**
+     * Validación para las fechas, fecha defunción no puede ser menor a la de nacimiento.
+     */
     fechaTope(){
         this.fisicaFormGroup.controls['fecha_def'].setValue(null);
         this.minDate = moment(this.fisicaFormGroup.controls['fecha_naci'].value).add(2, 'd').format('YYYY-MM-DD');  
