@@ -283,7 +283,7 @@ export class AltaNotarioComponent implements OnInit {
         //registro/insertarNotario?numNotario=666&codEstado=9&nombre=Omar Donchai&apellidoPaterno=Vidal&apellidoMaterno=Perez&rfc=VIP900629MG5&curp&ife=PLGMJN83062615H500&iddocIdentif=1&valdocIdentif&fechaNacimiento&fechaDefuncion&email=ividal@mail.com&celular&codtiposPersona=F&persona
 
         query = (this.filtros.no_notario) ? query + '&numNotario=' + this.filtros.no_notario : query + '&numNotario=';
-        query = (this.filtros.estado) ? query + '&codEstado=' + this.filtros.estado : query + '&codEstado=';
+        query = (this.idestadoNg) ? query + '&codEstado=' + this.idestadoNg : query + '&codEstado=';
         query = (this.filtros.nombre) ? query + '&nombre=' + this.filtros.nombre.toLocaleUpperCase() : query + '&nombre=';
         query = (this.filtros.apellido_paterno) ? query + '&apellidoPaterno=' + this.filtros.apellido_paterno.toLocaleUpperCase() : query + '&apellidoPaterno=';
         query = (this.filtros.apellido_materno) ? query + '&apellidoMaterno=' + this.filtros.apellido_materno.toLocaleUpperCase() : query + '&apellidoMaterno=';
@@ -297,19 +297,28 @@ export class AltaNotarioComponent implements OnInit {
         query = (this.filtros.email) ? query + '&email=' + this.filtros.email : query + '&email=';
         query = (this.filtros.celular) ? query + '&celular=' + this.filtros.celular : query + '&celular=';
         query = query + '&codtiposPersona=F&persona';
-
+        console.log(query);
+        //return;
         this.http.post(this.endpoint + 'insertarNotario' + '?' + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
                     // console.log("NOTARIO GUARDADO");
                     // console.log(res);
-                    this.snackBar.open('Notario Dado de Alta Correctamente', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
-                    this.btnDisabled = false;
+                    if(res.original){
+                        this.snackBar.open(res.original.mensaje, 'Cerrar', {
+                            duration: 10000,
+                            horizontalPosition: 'end',
+                            verticalPosition: 'top'
+                        });
+                    }else{
+                        this.snackBar.open('Notario Dado de Alta Correctamente', 'Cerrar', {
+                            duration: 10000,
+                            horizontalPosition: 'end',
+                            verticalPosition: 'top'
+                        });
+                        this.btnDisabled = false;
+                    }
                 },
                 (error) => {
                     this.loading = false;
@@ -500,9 +509,11 @@ export class DialogBuscarNotarioAlta {
         
 
         if( this.isIdentificativo ){
-            busquedaDatos = busquedaDatos + 'getNotariosByDatosIdentificativos';
+            //busquedaDatos = busquedaDatos + 'getNotariosByDatosIdentificativos';
+            busquedaDatos = busquedaDatos + 'getIdentificativos';
         }else{
-            busquedaDatos = busquedaDatos + 'getNotariosByDatosPersonales';
+            //busquedaDatos = busquedaDatos + 'getNotariosByDatosPersonales';
+            busquedaDatos = busquedaDatos + 'getContribuyente';
         }
 
         query = query.substr(1);
