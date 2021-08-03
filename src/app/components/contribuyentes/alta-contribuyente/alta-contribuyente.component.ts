@@ -1900,7 +1900,7 @@ export class DialogRepresentacionAltaC {
                 codTipoDocumentoJuridico: this.dataRepresentacion.documentoRepresentacion.codtipodocumentojuridico,        
                 lugar: this.dataRepresentacion.documentoRepresentacion.lugar,
                 idNotario: this.dataRepresentacion.documentoRepresentacion.idnotario,
-                noEscritura: this.dataRepresentacion.documentoRepresentacion.noNotario,
+                noEscritura: this.dataRepresentacion.documentoRepresentacion.num_escritura,
                 documentos: this.dataRepresentacion.documentoRepresentacion.archivos
             }
         };
@@ -2199,7 +2199,7 @@ export class DialogRepresentadoAltaC {
                 codTipoDocumentoJuridico: this.dataRepresentacion.documentoRepresentacion.codtipodocumentojuridico,        
                 lugar: this.dataRepresentacion.documentoRepresentacion.lugar,
                 idNotario: this.dataRepresentacion.documentoRepresentacion.idnotario,
-                noEscritura: this.dataRepresentacion.documentoRepresentacion.noNotario,
+                noEscritura: this.dataRepresentacion.documentoRepresentacion.num_escritura,
                 documentos: this.dataRepresentacion.documentoRepresentacion.archivos
             }
         };

@@ -21,7 +21,6 @@
                     <mat-form-field class="col-6">
                         <mat-label>Tipo Documento Jurídico:</mat-label>
                         <mat-select formControlName="codtipodocumentojuridico" (selectionChange)="getTipoDocJuridico($event)">
-                            <mat-option value="">Seleccione ...</mat-option>
                             <mat-option value="PN">Poder Notarial</mat-option>
                             <mat-option value="CP">Carta Poder</mat-option>
                         </mat-select>
@@ -90,7 +89,7 @@
                 <form [formGroup]="archivosDocumentoFormGroup">
                     <ng-template matStepLabel>Archivo Adjunto</ng-template>
                     <div class="form-group">
-                        <input type="file" class="form-control" multiple (change)="getArchivos($event)" accept="application/pdf,application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                        <input type="file" class="form-control" multiple (change)="getArchivos($event)" accept="application/pdf">
                     </div>
                     <br>
                     <div *ngIf="archivos.length">
