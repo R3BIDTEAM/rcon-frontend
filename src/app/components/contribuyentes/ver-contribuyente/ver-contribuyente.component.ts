@@ -199,15 +199,15 @@ export class VerContribuyenteComponent implements OnInit {
     this.contribuyente.ine = this.dataContribuyenteResultado[0].CLAVEIFE;
     this.contribuyente.idDocIdent = this.dataContribuyenteResultado[0].IDDOCIDENTIF;
     this.contribuyente.docIdent = this.dataContribuyenteResultado[0].VALDOCIDENTIF;
-    this.contribuyente.fechaNacimiento = new Date(this.dataContribuyenteResultado[0].FECHANACIMIENTO);
-    this.contribuyente.fechaDefuncion = new Date(this.dataContribuyenteResultado[0].FECHADEFUNCION);
+    this.contribuyente.fechaNacimiento = (this.dataContribuyenteResultado[0].FECHANACIMIENTO) ? new Date(this.dataContribuyenteResultado[0].FECHANACIMIENTO) : null;
+    this.contribuyente.fechaDefuncion = (this.dataContribuyenteResultado[0].FECHADEFUNCION) ? new Date(this.dataContribuyenteResultado[0].FECHADEFUNCION) : null;
     this.contribuyente.celular = this.dataContribuyenteResultado[0].CELULAR;
     this.contribuyente.email = this.dataContribuyenteResultado[0].EMAIL;
     this.contribuyente.actPreponderante = this.dataContribuyenteResultado[0].ACTIVPRINCIP;
     this.contribuyente.idTipoPersonaMoral = this.dataContribuyenteResultado[0].IDTIPOMORAL;
-    this.contribuyente.fechaInicioOperacion = new Date(this.dataContribuyenteResultado[0].FECHAINICIOACTIV);
+    this.contribuyente.fechaInicioOperacion = (this.dataContribuyenteResultado[0].FECHAINICIOACTIV) ? new Date(this.dataContribuyenteResultado[0].FECHAINICIOACTIV) : null;
     this.contribuyente.idMotivo = this.dataContribuyenteResultado[0].IDMOTIVOSMORAL;
-    this.contribuyente.fechaCambio = new Date(this.dataContribuyenteResultado[0].FECHACAMBIOSITUACION);
+    this.contribuyente.fechaCambio = (this.dataContribuyenteResultado[0].FECHACAMBIOSITUACION) ? new Date(this.dataContribuyenteResultado[0].FECHACAMBIOSITUACION) : null;
 
     console.log(this.contribuyente.tipoPersona);
     

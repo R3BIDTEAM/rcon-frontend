@@ -109,7 +109,7 @@
                                     <input matInput formControlName="rfc" [(ngModel)]="contribuyente.rfc" style="text-transform: uppercase;">
                                     <mat-error *ngIf="moralFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                                 </mat-form-field>
-                                <mat-form-field class="col-5">
+                                <mat-form-field appearance="fill" class="col-5">
                                     <mat-label>Act. preponderante:</mat-label>
                                     <input matInput formControlName="actPreponderante" [(ngModel)]="contribuyente.actPreponderante" style="text-transform: uppercase;">
                                 </mat-form-field>
