@@ -23,14 +23,14 @@
                 <div class="row">
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" style="width: 100%;">
-                            <mat-label>No. Notario</mat-label>
+                            <mat-label>No. Notario *</mat-label>
                             <input matInput #no_notario formControlName="no_notario" [(ngModel)]="filtros.no_notario" placeholder="Ingrese número de notario">
                             <mat-error *ngIf="notarioFormGroup.controls.no_notario.errors?.required">Requerido</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="col-md-4">
                         <mat-form-field appearance="fill" style="width: 100%;">
-                            <mat-label>Estado:</mat-label>
+                            <mat-label>Estado: *</mat-label>
                             <mat-select #estado formControlName="estado" [(ngModel)]="idestadoNg">
                                 <mat-option *ngFor="let estado of estados" [value]="estado.CODESTADO">
                                     {{ estado.ESTADO }}
@@ -43,14 +43,14 @@
                 <div class="row">
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" style="width: 100%;">
-                            <mat-label>Nombre</mat-label>
+                            <mat-label>Nombre *</mat-label>
                             <input matInput #nombre formControlName="nombre" [(ngModel)]="filtros.nombre" placeholder="Ingrese el nombre" style="text-transform: uppercase;">
                             <mat-error *ngIf="notarioFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" style="width: 100%;">
-                            <mat-label>Apellido Paterno</mat-label>
+                            <mat-label>Apellido Paterno *</mat-label>
                             <input matInput #apellido_paterno formControlName="apellido_paterno" [(ngModel)]="filtros.apellido_paterno" placeholder="Ingrese apellido paterno" onkeyup="this.value = this.value.toUpperCase();" style="text-transform: uppercase;">
                             <mat-error *ngIf="notarioFormGroup.controls.apellido_paterno.errors?.required">Requerido</mat-error>
                         </mat-form-field>

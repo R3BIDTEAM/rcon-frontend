@@ -177,6 +177,8 @@ export class EditarNotarioComponent implements OnInit {
         };
 
         this.personaFormGroup = this._formBuilder.group({
+            no_notario: ['', Validators.required],
+            estado: [null, []],
             apellidopaterno: ['', Validators.required],
             apellidomaterno: [],
             nombre: ['', Validators.required],
@@ -237,6 +239,8 @@ export class EditarNotarioComponent implements OnInit {
         }​​​​​​​​
 
         console.log(this.personaFormGroup.value.rfc);
+        console.log(this.personaFormGroup.value);
+        console.log(this.personaFormGroup.invalid);
         this.personaFormGroup.markAsTouched();
         this.personaFormGroup.updateValueAndValidity();
     }
@@ -430,7 +434,7 @@ export class EditarNotarioComponent implements OnInit {
     */
     actualizarDatosGenerales(){
         let query = '';
-        this.loadingDatosNotario = true;
+        this.loading = true;
         query = 'codtipospersona=F';
         query = (this.datosGenerales.nombre) ? query + '&nombre=' + this.datosGenerales.nombre : query + '&nombre=';
         query = query + '&activprincip&idtipomoral&idmotivosmoral&fechainicioactiv&fechacambiosituacion&idExpediente';
@@ -451,7 +455,7 @@ export class EditarNotarioComponent implements OnInit {
             .subscribe(
                 (res: any) => {
                     console.log(res);
-                    this.loadingDatosNotario = false;
+                    this.loading = false;
                     this.snackBar.open('Datos de Notario actualizados correctamente', 'Cerrar', {
                         duration: 10000,
                         horizontalPosition: 'end',
@@ -459,7 +463,7 @@ export class EditarNotarioComponent implements OnInit {
                     });
                 },
                 (error) => {
-                    this.loadingDatosNotario = false;
+                    this.loading = false;
                     this.snackBar.open(error.error.mensaje, 'Cerrar', {
                         duration: 10000,
                         horizontalPosition: 'end',

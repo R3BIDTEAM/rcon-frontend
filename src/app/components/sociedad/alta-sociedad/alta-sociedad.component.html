@@ -24,14 +24,14 @@
                         <!-- Búsqueda por nombre -->
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-12">
-                                <mat-label>Razón Social</mat-label>
+                                <mat-label>Razón Social *</mat-label>
                                 <input matInput  [readonly]="inserto" formControlName="razonSocial" maxlength="250" placeholder="Ingrese la razón social" style="text-transform: uppercase;">
                                 <mat-error *ngIf="sociedadFormGroup.controls.razonSocial.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-6">
-                                <mat-label>RFC</mat-label>
+                                <mat-label>RFC *</mat-label>
                                 <input matInput  [readonly]="inserto" style="text-transform: uppercase;" onkeyup="this.value = this.value.toUpperCase();" formControlName="rfc" pattern="^([A-ZÑ&]{3})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" maxlength="12" placeholder="Ingrese el RFC">
                                 <mat-error *ngIf="sociedadFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="sociedadFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 3 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
@@ -45,7 +45,7 @@
                         </mat-card-header>
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-6">
-                                <mat-label>Registro</mat-label>
+                                <mat-label>Registro *</mat-label>
                                 <input matInput  [readonly]="inserto" formControlName="registro" maxlength="250" style="text-transform: uppercase;">
                                 <mat-error *ngIf="sociedadFormGroup.controls.registro.errors?.required">Requerido</mat-error>
                             </mat-form-field>
@@ -77,7 +77,7 @@
 
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-6">
-                                <mat-label>Login</mat-label>
+                                <mat-label>Login *</mat-label>
                                 <input matInput [disabled]="inserto" [readonly]="inserto" formControlName="login" maxlength="9" placeholder="Ingrese el login" style="text-transform: uppercase;">
                                 <mat-error *ngIf="sociedadFormGroup.controls.login.errors?.required">Requerido</mat-error>
                             </mat-form-field>
