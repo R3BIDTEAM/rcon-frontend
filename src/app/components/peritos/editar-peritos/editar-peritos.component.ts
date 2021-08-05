@@ -306,8 +306,7 @@ export class EditarPeritosComponent implements OnInit {
     }
 
     changeRequired(): void {
-        if((this.peritoPersonaFormGroup.value.rfc === null && this.peritoPersonaFormGroup.value.curp === null) || (this.peritoPersonaFormGroup.value.rfc === '' && this.peritoPersonaFormGroup.value.curp === '')
-            || (this.datoPeritos.rfc === null && this.datoPeritos.curp === null) || (this.datoPeritos.rfc === '' && this.datoPeritos.curp === '')){​​​​​​​​
+        if((!this.peritoPersonaFormGroup.value.rfc && !this.peritoPersonaFormGroup.value.curp) || (!this.datoPeritos.rfc && !this.datoPeritos.curp)){​​​​​​​​
             this.isRequired = true;
         }​​​​​​​​ else {​​​​​​​​
             this.isRequired = false;
@@ -376,7 +375,7 @@ export class EditarPeritosComponent implements OnInit {
         }else{
             this.datoPeritos.independiente = false;
         }
-
+        this.changeRequired();
         this.minDate = (moment(this.datoPeritos.fecha_naci).add(2, 'd').format('YYYY-MM-DD'));
     }
 
@@ -950,12 +949,13 @@ export class EditarPeritosComponent implements OnInit {
                 this.datoPeritos.ine = result.ine;
                 this.datoPeritos.identificacion = result.identificacion;
                 this.datoPeritos.idedato = result.idedato;
-                this.datoPeritos.fecha_naci = result.fecha_naci;
-                this.datoPeritos.fecha_def = result.fecha_def;
+                this.datoPeritos.fecha_naci = (result.fecha_naci) ? new Date(result.fecha_naci) : null;
+                this.datoPeritos.fecha_def = (result.fecha_def) ? new Date(result.fecha_def) : null;
                 this.datoPeritos.celular = result.celular;
                 this.datoPeritos.email = result.email;
                 this.botonEdit = false;
-                document.getElementById("apepaterno").focus();
+                //document.getElementById("apepaterno").focus();
+                this.changeRequired();
             }
         });
     }
@@ -2639,7 +2639,7 @@ export class DialogRepresentacionPeritos {
      * @param add  Valor del campo que se le agregara a la validación, puede ser CURP o RFC
      */
     changeRequired(remove, add): void {
-        if((this.fisicaFormGroup.value.rfc === null && this.fisicaFormGroup.value.curp === null) || (this.fisicaFormGroup.value.rfc === '' && this.fisicaFormGroup.value.curp === '')){​​​​​​​​
+        if(!this.fisicaFormGroup.value.rfc && !this.fisicaFormGroup.value.curp){​​​​​​​​
             this.isRequired = true;
         }​​​​​​​​ else {​​​​​​​​
             this.isRequired = false;
@@ -2676,6 +2676,7 @@ export class DialogRepresentacionPeritos {
                     this.moralFormGroup.controls['nombre'].setValue(result.apaterno);
                     this.moralFormGroup.controls['rfc'].setValue(result.rfc);
                 }
+                this.changeRequired(null, null);
             }
         });
     }
@@ -3001,7 +3002,7 @@ export class DialogRepresentadoPeritos {
      * @param add  Valor del campo que se le agregara a la validación, puede ser CURP o RFC
      */
     changeRequired(remove, add): void {
-        if((this.fisicaFormGroup.value.rfc === null && this.fisicaFormGroup.value.curp === null) || (this.fisicaFormGroup.value.rfc === '' && this.fisicaFormGroup.value.curp === '')){​​​​​​​​
+        if(!this.fisicaFormGroup.value.rfc && !this.fisicaFormGroup.value.curp){​​​​​​​​
             this.isRequired = true;
         }​​​​​​​​ else {​​​​​​​​
             this.isRequired = false;
@@ -3038,6 +3039,7 @@ export class DialogRepresentadoPeritos {
                     this.moralFormGroup.controls['nombre'].setValue(result.apaterno);
                     this.moralFormGroup.controls['rfc'].setValue(result.rfc);
                 }
+                this.changeRequired(null, null);
             }
         });
     }

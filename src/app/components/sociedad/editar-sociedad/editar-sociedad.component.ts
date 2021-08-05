@@ -2575,7 +2575,7 @@ export class DialogRepresentacionSociedad {
      * @param add  Valor del campo que se le agregara a la validación, puede ser CURP o RFC
      */
     changeRequired(remove, add): void {
-        if((this.fisicaFormGroup.value.rfc === null && this.fisicaFormGroup.value.curp === null) || (this.fisicaFormGroup.value.rfc === '' && this.fisicaFormGroup.value.curp === '')){​​​​​​​​
+        if(!this.fisicaFormGroup.value.rfc && !this.fisicaFormGroup.value.curp){​​​​​​​​
             this.isRequired = true;
         }​​​​​​​​ else {​​​​​​​​
             this.isRequired = false;
@@ -2614,6 +2614,7 @@ export class DialogRepresentacionSociedad {
                     this.moralFormGroup.controls['nombre'].setValue(result.apaterno);
                     this.moralFormGroup.controls['rfc'].setValue(result.rfc);
                 }
+                this.changeRequired(null, null);
             }
         });
     }
@@ -2933,8 +2934,7 @@ export class DialogRepresentadoSociedad {
      * @param add  Valor del campo que se le agregara a la validación, puede ser CURP o RFC
      */
     changeRequired(remove, add): void {
-        if((this.fisicaFormGroup.value.rfc === null && this.fisicaFormGroup.value.curp === null) || (this.fisicaFormGroup.value.rfc === '' && this.fisicaFormGroup.value.curp === '')
-            || (this.dataRepresentacion.rfc === null && this.dataRepresentacion.curp === null) || (this.dataRepresentacion.rfc === '' && this.dataRepresentacion.curp === '')){​​​​​​​​
+        if((!this.fisicaFormGroup.value.rfc && !this.fisicaFormGroup.value.curp) || (!this.dataRepresentacion.rfc && !this.dataRepresentacion.curp)){​​​​​​​​
             this.isRequired = true;
         }​​​​​​​​ else {​​​​​​​​
             this.isRequired = false;
@@ -2971,6 +2971,7 @@ export class DialogRepresentadoSociedad {
                     this.moralFormGroup.controls['nombre'].setValue(result.apaterno);
                     this.moralFormGroup.controls['rfc'].setValue(result.rfc);
                 }
+                this.changeRequired(null, null);
             }
         });
     }

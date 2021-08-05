@@ -315,8 +315,7 @@ export class EditarContribuyenteComponent implements OnInit {
     }
 
     changeRequired(): void {
-        if((this.fisicaFormGroup.value.rfc === null && this.fisicaFormGroup.value.curp === null) || (this.fisicaFormGroup.value.rfc === '' && this.fisicaFormGroup.value.curp === '')
-            || (this.contribuyente.rfc === null && this.contribuyente.curp === null) || (this.contribuyente.rfc === '' && this.contribuyente.curp === '')){​​​​​​​​
+        if((!this.fisicaFormGroup.value.rfc && !this.fisicaFormGroup.value.curp) || (!this.contribuyente.rfc && !this.contribuyente.curp)){​​​​​​​​
             this.isRequired = true;
         }​​​​​​​​ else {​​​​​​​​
             this.isRequired = false;
@@ -3061,7 +3060,7 @@ export class DialogRepresentacionC {
      * @param add  Valor del campo que se le agregara a la validación, puede ser CURP o RFC
      */
     changeRequired(remove, add): void {
-        if((this.fisicaFormGroup.value.rfc === null && this.fisicaFormGroup.value.curp === null) || (this.fisicaFormGroup.value.rfc === '' && this.fisicaFormGroup.value.curp === '')){​​​​​​​​
+        if(!this.fisicaFormGroup.value.rfc && !this.fisicaFormGroup.value.curp){​​​​​​​​
             this.isRequired = true;
         }​​​​​​​​ else {​​​​​​​​
             this.isRequired = false;
@@ -3098,6 +3097,7 @@ export class DialogRepresentacionC {
                     this.moralFormGroup.controls['nombre'].setValue(result.apaterno);
                     this.moralFormGroup.controls['rfc'].setValue(result.rfc);
                 }
+                this.changeRequired(null, null);
             }
         });
     }
@@ -3420,7 +3420,7 @@ export class DialogRepresentadoC {
      * @param add  Valor del campo que se le agregara a la validación, puede ser CURP o RFC
      */
     changeRequired(remove, add): void {
-        if((this.fisicaFormGroup.value.rfc === null && this.fisicaFormGroup.value.curp === null) || (this.fisicaFormGroup.value.rfc === '' && this.fisicaFormGroup.value.curp === '')){​​​​​​​​
+        if(!this.fisicaFormGroup.value.rfc && !this.fisicaFormGroup.value.curp){​​​​​​​​
             this.isRequired = true;
         }​​​​​​​​ else {​​​​​​​​
             this.isRequired = false;
@@ -3457,6 +3457,7 @@ export class DialogRepresentadoC {
                     this.moralFormGroup.controls['nombre'].setValue(result.apaterno);
                     this.moralFormGroup.controls['rfc'].setValue(result.rfc);
                 }
+                this.changeRequired(null, null);
             }
         });
     }

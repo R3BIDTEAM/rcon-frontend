@@ -9,6 +9,8 @@ import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@ang
 import { MatPaginator } from '@angular/material/paginator';
 import * as moment from 'moment';
 import { DialogConfirmacionComponent } from '@comp/dialog-confirmacion/dialog-confirmacion.component';
+import { isEmptyExpression } from '@angular/compiler';
+import { EMPTY } from 'rxjs';
 
 export interface DatosNotario {
   no_notario: string;
@@ -231,16 +233,13 @@ export class EditarNotarioComponent implements OnInit {
     }
 
     changeRequired(): void {
-        if((this.personaFormGroup.value.rfc === null && this.personaFormGroup.value.curp === null) || (this.personaFormGroup.value.rfc === '' && this.personaFormGroup.value.curp === '')
-            || (this.datosGenerales.rfc === null && this.datosGenerales.curp === null) || (this.datosGenerales.rfc === '' && this.datosGenerales.curp === '')){​​​​​​​​
+        if((!this.datosGenerales.rfc && !this.datosGenerales.curp) || (!this.personaFormGroup.value.rfc && !this.personaFormGroup.value.curp)
+            ){​​​​​​​​
             this.isRequired = true;
         }​​​​​​​​ else {​​​​​​​​
             this.isRequired = false;
         }​​​​​​​​
 
-        console.log(this.personaFormGroup.value.rfc);
-        console.log(this.personaFormGroup.value);
-        console.log(this.personaFormGroup.invalid);
         this.personaFormGroup.markAsTouched();
         this.personaFormGroup.updateValueAndValidity();
     }
@@ -311,6 +310,8 @@ export class EditarNotarioComponent implements OnInit {
         this.datosGenerales.apellido_paterno = this.dataNotarioResultado[0].APELLIDOPATERNO;
         this.datosGenerales.apellido_materno = this.dataNotarioResultado[0].APELLIDOMATERNO;
         this.datosGenerales.rfc = this.dataNotarioResultado[0].RFC;
+        this.personaFormGroup.controls['rfc'].setValue(this.dataNotarioResultado[0].RFC);
+        this.personaFormGroup.controls['curp'].setValue(this.dataNotarioResultado[0].CURP);
         this.datosGenerales.curp = this.dataNotarioResultado[0].CURP;
         this.datosGenerales.ine = this.dataNotarioResultado[0].CLAVEIFE;
         this.datosGenerales.otro_documento = this.dataNotarioResultado[0].IDDOCIDENTIF;
@@ -322,6 +323,8 @@ export class EditarNotarioComponent implements OnInit {
         console.log(this.datosGenerales.fecha_nacimiento);
         
         this.minDate = (moment(this.datosGenerales.fecha_nacimiento).add(2, 'd').format('YYYY-MM-DD'));
+        console.log("ACA EL CHAGE REQUIRED");
+        this.changeRequired();
     }
 
 

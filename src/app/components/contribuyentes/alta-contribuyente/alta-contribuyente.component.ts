@@ -250,7 +250,7 @@ export class AltaContribuyenteComponent implements OnInit {
      * De acuerdo al campo seleccionado será requerido el RFC, el CURP o ambos.
      */
     changeRequired(): void {
-        if((this.fisicaFormGroup.value.rfc === null && this.fisicaFormGroup.value.curp === null) || (this.fisicaFormGroup.value.rfc === '' && this.fisicaFormGroup.value.curp === '')){​​​​​​​​
+        if((!this.fisicaFormGroup.value.rfc && !this.fisicaFormGroup.value.curp)){​​​​​​​​
             this.isRequired = true;
         }​​​​​​​​ else {​​​​​​​​
             this.isRequired = false;
@@ -1742,7 +1742,7 @@ export class DialogRepresentacionAltaC {
     * De acuerdo al campo seleccionado será requerido el RFC, el CURP o ambos.
     */
     changeRequired(): void {
-        if((this.fisicaFormGroup.value.rfc === null && this.fisicaFormGroup.value.curp === null) || (this.fisicaFormGroup.value.rfc === '' && this.fisicaFormGroup.value.curp === '')){​​​​​​​​
+        if((!this.fisicaFormGroup.value.rfc && !this.fisicaFormGroup.value.curp)){​​​​​​​​
             this.isRequired = true;
         }​​​​​​​​ else {​​​​​​​​
             this.isRequired = false;
@@ -1779,6 +1779,7 @@ export class DialogRepresentacionAltaC {
                     this.moralFormGroup.controls['rfc'].setValue(result.rfc);
                 }
             }
+            this.changeRequired();
         });
     }
   
@@ -2041,7 +2042,7 @@ export class DialogRepresentadoAltaC {
     * De acuerdo al campo seleccionado será requerido el RFC, el CURP o ambos.
     */
     changeRequired(): void {
-        if((this.fisicaFormGroup.value.rfc === null && this.fisicaFormGroup.value.curp === null) || (this.fisicaFormGroup.value.rfc === '' && this.fisicaFormGroup.value.curp === '')){​​​​​​​​
+        if(!this.fisicaFormGroup.value.rfc && !this.fisicaFormGroup.value.curp){​​​​​​​​
             this.isRequired = true;
         }​​​​​​​​ else {​​​​​​​​
             this.isRequired = false;
@@ -2077,6 +2078,7 @@ export class DialogRepresentadoAltaC {
                     this.moralFormGroup.controls['nombre'].setValue(result.apaterno);
                     this.moralFormGroup.controls['rfc'].setValue(result.rfc);
                 }
+                this.changeRequired();
             }
         });
     }

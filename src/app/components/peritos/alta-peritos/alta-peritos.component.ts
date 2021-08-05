@@ -155,9 +155,8 @@ export class AltaPeritosComponent implements OnInit {
     /**
      * De acuerdo al campo seleccionado será requerido el RFC, el CURP o ambos.
      */
-     changeRequired(): void {
-        if((this.peritoPersonaFormGroup.value.rfc === null && this.peritoPersonaFormGroup.value.curp === null) || (this.peritoPersonaFormGroup.value.rfc === '' && this.peritoPersonaFormGroup.value.curp === '')
-            || (this.datoPeritos.rfc === null && this.datoPeritos.curp === null) || (this.datoPeritos.rfc === '' && this.datoPeritos.curp === '')){​​​​​​​​
+    changeRequired(): void {
+        if((!this.peritoPersonaFormGroup.value.rfc && !this.peritoPersonaFormGroup.value.curp) || (!this.datoPeritos.rfc && !this.datoPeritos.curp)){​​​​​​​​
             this.isRequired = true;
         }​​​​​​​​ else {​​​​​​​​
             this.isRequired = false;
@@ -361,20 +360,21 @@ export class AltaPeritosComponent implements OnInit {
         //     this.peritoPersonaFormGroup.controls['fechaDefuncion'].clearValidators();
         // }
 
-        this.peritoPersonaFormGroup.controls['apepaterno'].setValue(result.apepaterno.toLocaleUpperCase());
-        this.peritoPersonaFormGroup.controls['apematerno'].setValue(result.apematerno.toLocaleUpperCase());
+        this.peritoPersonaFormGroup.controls['apepaterno'].setValue(result.apepaterno);
+        this.peritoPersonaFormGroup.controls['apematerno'].setValue(result.apematerno);
         this.peritoPersonaFormGroup.controls['nombre'].setValue(result.nombre);
-        this.peritoPersonaFormGroup.controls['rfc'].setValue(result.rfc.toLocaleUpperCase());
-        this.peritoPersonaFormGroup.controls['curp'].setValue(result.curp.toLocaleUpperCase());
-        this.peritoPersonaFormGroup.controls['ine'].setValue(result.ine.toLocaleUpperCase());
+        this.peritoPersonaFormGroup.controls['rfc'].setValue(result.rfc);
+        this.peritoPersonaFormGroup.controls['curp'].setValue(result.curp);
+        this.peritoPersonaFormGroup.controls['ine'].setValue(result.ine);
         this.peritoPersonaFormGroup.controls['identificacion'].setValue(result.identificacion);
-        this.peritoPersonaFormGroup.controls['idedato'].setValue(result.identificacion.toLocaleUpperCase());
+        this.peritoPersonaFormGroup.controls['idedato'].setValue(result.identificacion);
         this.peritoPersonaFormGroup.controls['fechaNacimiento'].setValue(this.datoPeritos.fecha_naci);
         this.peritoPersonaFormGroup.controls['fechaDefuncion'].setValue(this.datoPeritos.fecha_def);
         this.peritoPersonaFormGroup.controls['celular'].setValue(result.celular);
         this.peritoPersonaFormGroup.controls['email'].setValue(result.email);
         this.peritoPersonaFormGroup.markAsUntouched();
         this.peritoPersonaFormGroup.updateValueAndValidity();
+        this.changeRequired();
     }
     
 }

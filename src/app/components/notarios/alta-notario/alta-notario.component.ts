@@ -110,14 +110,12 @@ export class AltaNotarioComponent implements OnInit {
      * De acuerdo al campo seleccionado será requerido el RFC, el CURP o ambos.
      */
      changeRequired(): void {
-        if((this.notarioFormGroup.value.rfc === null && this.notarioFormGroup.value.curp === null) || (this.notarioFormGroup.value.rfc === '' && this.notarioFormGroup.value.curp === '')
-            || (this.filtros.rfc === null && this.filtros.curp === null) || (this.filtros.rfc === '' && this.filtros.curp === '')){​​​​​​​​
+        if((!this.notarioFormGroup.value.rfc && !this.notarioFormGroup.value.curp) || (!this.filtros.rfc && !this.filtros.curp)){​​​​​​​​
             this.isRequired = true;
         }​​​​​​​​ else {​​​​​​​​
             this.isRequired = false;
         }​​​​​​​​
 
-        console.log(this.notarioFormGroup.value.rfc);
         this.notarioFormGroup.markAsTouched();
         this.notarioFormGroup.updateValueAndValidity();
     }

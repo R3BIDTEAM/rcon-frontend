@@ -6,22 +6,22 @@ import { AuthService } from './auth.service';
     providedIn: 'root'
 })
 export class GuardService implements CanActivate {
-    rol = this.auth.getSession().userData.rol_nombre;
+    rol = null;
     constructor(public auth: AuthService, public router: Router) { }
 
     canActivate(route: ActivatedRouteSnapshot): boolean {
+        this.rol = this.auth.getSession().userData.rol_nombre;
+        console.log(this.rol);
         switch (this.rol) {
             case "RCONSAT":
-                if(route.url[0].path == "alta-contribuyente" ||  route.url[0].path == "edicion-contribuyente"
-                    ||  route.url[0].path == "main" || route.url[0].path == "editar-contribuyente"){
+                if(route.url[0].path === 'main' || route.url[0].path === 'alta-contribuyente' ||  route.url[0].path === 'edicion-contribuyente' || route.url[0].path === 'editar-contribuyente'){
                     return this.auth.isAuthenticated();
                 }else{
                     this.router.navigate(['/main']);
                 }
             break;
             case 'RCONCSAT':
-                if(route.url[0].path == "consulta-contribuyente" ||  route.url[0].path == "main"
-                    || route.url[0].path == "edicion-contribuyente" || route.url[0].path == "ver-contribuyente"){
+                if(route.url[0].path === 'main' || route.url[0].path == 'consulta-contribuyente' || route.url[0].path == 'ver-contribuyente'){
                     return this.auth.isAuthenticated();
                 }else{
                     this.router.navigate(['/main']);
