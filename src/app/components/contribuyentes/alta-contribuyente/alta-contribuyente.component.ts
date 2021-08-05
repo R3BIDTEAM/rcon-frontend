@@ -1684,6 +1684,8 @@ export class DialogRepresentacionAltaC {
     moralFormGroup: FormGroup;
     dataRepresentacion: DataRepresentacion = {} as DataRepresentacion;
     isRequired = true;
+    loadingDocumentos;
+    dataDocumentos: DocumentosIdentificativos[] = [];
   
     constructor(
         private http: HttpClient,
@@ -1736,6 +1738,24 @@ export class DialogRepresentacionAltaC {
               Authorization: this.auth.getSession().token
             })
         };
+        this.getDataDocumentos();
+    }
+
+    /** 
+    * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
+    */
+     getDataDocumentos(): void{
+        this.loadingDocumentos = true;
+        this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
+            (res: any) => {
+                this.loadingDocumentos = false;
+                this.dataDocumentos = res.CatDocIdentificativos;
+                console.log(this.dataDocumentos);
+            },
+            (error) => {
+                this.loadingDocumentos = false;
+            }
+        );
     }
 
     /**
@@ -1984,6 +2004,8 @@ export class DialogRepresentadoAltaC {
     insertOrUpdate = null;
     dataRepresentacion: DataRepresentacion = {} as DataRepresentacion;
     isRequired = true;
+    loadingDocumentos;
+    dataDocumentos: DocumentosIdentificativos[] = [];
 
     constructor(
         private http: HttpClient,
@@ -2036,8 +2058,26 @@ export class DialogRepresentadoAltaC {
             this.idDocumento = data.dataRepresentante.IDDOCUMENTOREPRESENTACION;
             this.insertOrUpdate = 2;
         }
+        this.getDataDocumentos();
     }
-      
+
+    /** 
+    * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
+    */
+     getDataDocumentos(): void{
+        this.loadingDocumentos = true;
+        this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
+            (res: any) => {
+                this.loadingDocumentos = false;
+                this.dataDocumentos = res.CatDocIdentificativos;
+                console.log(this.dataDocumentos);
+            },
+            (error) => {
+                this.loadingDocumentos = false;
+            }
+        );
+    }
+
     /**
     * De acuerdo al campo seleccionado será requerido el RFC, el CURP o ambos.
     */
@@ -2791,6 +2831,8 @@ export class DialogPersonaAltaC {
     queryParamFiltros;
     endpointBusqueda;
     @ViewChild('paginator') paginator: MatPaginator;
+    loadingDocumentos;
+    dataDocumentos: DocumentosIdentificativos[] = [];
   
     constructor(
       private auth: AuthService,
@@ -2809,8 +2851,26 @@ export class DialogPersonaAltaC {
         this.tipoPersona = data;
         console.log("aca el tipo person " + data);
         console.log(this.tipoPersona);
-      }
-  
+        this.getDataDocumentos();
+    }
+
+    /** 
+    * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
+    */
+    getDataDocumentos(): void{
+        this.loadingDocumentos = true;
+        this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
+            (res: any) => {
+                this.loadingDocumentos = false;
+                this.dataDocumentos = res.CatDocIdentificativos;
+                console.log(this.dataDocumentos);
+            },
+            (error) => {
+                this.loadingDocumentos = false;
+            }
+        );
+    }
+
     /**
      * De acuerdo al parametro sea identificativo o personal se limpiaran los otros campos.
      * @param isIdentificativo Valor booleano

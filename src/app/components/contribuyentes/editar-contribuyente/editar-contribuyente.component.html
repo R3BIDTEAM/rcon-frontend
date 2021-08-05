@@ -70,7 +70,7 @@
                         <div class="row">
                             <mat-form-field appearance="fill" class="col-md-6">
                                 <mat-label>Otro Documento:</mat-label>
-                                <mat-select formControlName="idDocIdent" [(ngModel)]="contribuyente.idDocIdent">
+                                <mat-select formControlName="idDocIdent" [class.spinner]="loadingDocumentos" [(ngModel)]="contribuyente.idDocIdent">
                                     <mat-option *ngFor="let documento of dataDocumentos" [value]="documento.IDDOCIDENTIF">
                                         {{ documento.DESCRIPCION }}
                                     </mat-option>

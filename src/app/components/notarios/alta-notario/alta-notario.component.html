@@ -92,7 +92,7 @@
                     <div class="col-md-4">
                         <mat-form-field appearance="fill" style="width: 100%;">
                             <mat-label>Otro Documento:</mat-label>
-                            <mat-select #otro_documento formControlName="otro_documento" [(ngModel)]="filtros.otro_documento" (selectionChange)="seleccionaDocto($event)">
+                            <mat-select #otro_documento formControlName="otro_documento" [(ngModel)]="filtros.otro_documento" (selectionChange)="seleccionaDocto($event)" [class.spinner]="loadingDocumentosIdentificativos">
                                 <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF">
                                     {{ documento.DESCRIPCION }}
                                 </mat-option>

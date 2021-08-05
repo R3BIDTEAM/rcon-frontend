@@ -44,11 +44,10 @@
             <div class="row">
                 <mat-form-field class="col-4">
                     <mat-label>Identificación</mat-label>
-                    <mat-select [(value)]="filtros.idDocIdent">
-                        <mat-option value="1">Cédula profecional</mat-option>
-                        <mat-option value="2">Pasaporte</mat-option>
-                        <mat-option value="3">Licencia de conducir</mat-option>
-                        <mat-option value="4">Número de seguro social</mat-option>
+                    <mat-select [(value)]="filtros.idDocIdent" [class.spinner]="loadingDocumentos">
+                        <mat-option *ngFor="let documento of dataDocumentos" [value]="documento.IDDOCIDENTIF">
+                            {{ documento.DESCRIPCION }}
+                        </mat-option>
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field class="col-8">
