@@ -1,11 +1,9 @@
-<h1 mat-dialog-title>Búsqueda de personas Morales</h1>
+<h1 mat-dialog-title class="verde-cdmx">Búsqueda de personas Morales</h1>
 <div mat-dialog-content>
     <mat-card-content>
         <!-- Búsqueda por nombre -->
         <div class="row">
-            <div class="col-1 text-center">
-            </div>
-                <mat-form-field class="col-4">
+                <mat-form-field appearance="outline" class="col-6">
                     <mat-label>Razón Social</mat-label>
                     <input matInput [(ngModel)]="razonSocial" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)" style="text-transform: uppercase;">
                     <mat-error></mat-error>
@@ -16,16 +14,12 @@
 
         <!-- Búsqueda por RFC CRUP -->
         <div class="row">
-            <div class="col-1 text-center">
-            </div>
-                <mat-form-field class="col-4">
+                <mat-form-field appearance="outline" class="col-6">
                     <mat-label>RFC</mat-label>
                     <input matInput [(ngModel)]="rfc" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" style="text-transform: uppercase;">
                     <mat-error></mat-error>
                 </mat-form-field>
-            <div class="col-1 text-center">
-            </div>
-                <mat-form-field class="col-4">
+                <mat-form-field appearance="outline" class="col-6" style="margin-left: 0px;">
                     <mat-label>Registro</mat-label>
                     <input matInput [(ngModel)]="registro" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" style="text-transform: uppercase;">
                     <mat-error></mat-error>
@@ -34,10 +28,7 @@
         <!-- Fin de RFC CRUP -->
 
         <div class="row">
-            <div class="col-2">
-
-            </div>
-            <div class="col">
+            <div class="col-md-2 offset-md-5">
                 <div class="d-flex flex-row-reverse">
                     
                     <button mat-icon-button color="primary" aria-label="Limpiar Filtros" matTooltip="Limpiar Filtros" (click)="cleanBusca()">
@@ -47,8 +38,6 @@
                         <mat-icon>search</mat-icon>
                     </button>
                 </div>
-            </div>
-            <div class="col-6">
             </div>
         </div>
 

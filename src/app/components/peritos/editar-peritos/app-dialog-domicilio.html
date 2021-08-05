@@ -22,7 +22,7 @@
                     </mat-select>
                     <mat-error *ngIf="domicilioFormGroup.controls.idestado.errors?.required">Requerido</mat-error>
                 </mat-form-field>
-                <mat-form-field appearance="fill" class="col-5" *ngIf="domicilioFormGroup.controls.idestado.value == 9">
+                <mat-form-field appearance="fill" class="col-6" *ngIf="domicilioFormGroup.controls.idestado.value == 9" style="margin-left: 0px!important;">
                     <mat-label>Alcaldía:</mat-label>
                     <mat-select formControlName="idmunicipio" [class.spinner]="loadingMunicipios" [disabled]="loadingMunicipios"  (selectionChange)="getNombreDel($event)" >
                         <mat-option value="">Seleccione ...</mat-option>
@@ -144,7 +144,7 @@
                     <mat-label>Entre Calle 1:</mat-label>
                     <input matInput formControlName="entrecalle1" [(ngModel)]="entrecalle1Ng">
                 </mat-form-field>
-                <mat-form-field appearance="outline" class="col-5">
+                <mat-form-field appearance="outline" class="col-6" style="margin-left: 0px!important;">
                     <mat-label>Entre Calle 2:</mat-label>
                     <input matInput formControlName="entrecalle2" [(ngModel)]="entrecalle2Ng">
                 </mat-form-field>
@@ -154,7 +154,7 @@
                     <mat-label>Andador:</mat-label>
                     <input matInput formControlName="andador" [(ngModel)]="andadorNg">
                 </mat-form-field>
-                <mat-form-field appearance="outline" class="col-5">
+                <mat-form-field appearance="outline" class="col-6" style="margin-left: 0px!important;">
                     <mat-label>Edificio:</mat-label>
                     <input matInput formControlName="edificio" [(ngModel)]="edificioNg">
                 </mat-form-field>
@@ -164,7 +164,7 @@
                     <mat-label>Sección:</mat-label>
                     <input matInput formControlName="seccion" [(ngModel)]="seccionNg" maxlength="10">
                 </mat-form-field>
-                <mat-form-field appearance="outline" class="col-5">
+                <mat-form-field appearance="outline" class="col-6" style="margin-left: 0px!important;">
                     <mat-label>Entrada:</mat-label>
                     <input matInput formControlName="entrada" [(ngModel)]="entradaNg">
                 </mat-form-field>
@@ -174,7 +174,7 @@
                     <mat-label>Número Interior:</mat-label>
                     <input matInput formControlName="ninterior" [(ngModel)]="ninteriorNg">
                 </mat-form-field>
-                <mat-form-field appearance="outline" class="col-5">
+                <mat-form-field appearance="outline" class="col-6" style="margin-left: 0px!important;">
                     <mat-label>Teléfono:</mat-label>
                     <input matInput formControlName="telefono" [(ngModel)]="telefonoNg" maxlength="10">
                 </mat-form-field>
