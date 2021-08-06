@@ -427,6 +427,8 @@ export class DialogAltaBusca {
     btnDisabled = true;
     datoPeritoPersona: DatosPeritoPersona = {} as DatosPeritoPersona;
     @ViewChild('paginator') paginator: MatPaginator;
+    loadingDocumentos;
+    dataDocumentos: DocumentosIdentificativos[] = [];
 
     constructor(
         private auth: AuthService,
@@ -441,6 +443,7 @@ export class DialogAltaBusca {
                     Authorization: this.auth.getSession().token
                 })
             };
+            this.getDataDocumentos();
         }
 
     /**
@@ -458,6 +461,23 @@ export class DialogAltaBusca {
             this.identificacion ||
             this.idedato
         ) ? true : false;
+    }
+
+    /** 
+    * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
+    */
+     getDataDocumentos(): void{
+        this.loadingDocumentos = true;
+        this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
+            (res: any) => {
+                this.loadingDocumentos = false;
+                this.dataDocumentos = res.CatDocIdentificativos;
+                console.log(this.dataDocumentos);
+            },
+            (error) => {
+                this.loadingDocumentos = false;
+            }
+        );
     }
 
     /**

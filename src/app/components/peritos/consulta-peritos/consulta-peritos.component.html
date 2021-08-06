@@ -74,7 +74,7 @@
                     </div>
                     <mat-form-field appearance="fill" class="col-5">
                         <mat-label>Identificación</mat-label>
-                        <mat-select [(ngModel)]="identificacion" [required]="true" (ngModelChange)="validateSearch();clearInputsIdentNoIdent(true)" >
+                        <mat-select [(ngModel)]="identificacion" [required]="true" (ngModelChange)="validateSearch();clearInputsIdentNoIdent(true)" [class.spinner]="loadingDocumentosIdentificativos">
                             <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF">
                                 {{ documento.DESCRIPCION }}
                             </mat-option>

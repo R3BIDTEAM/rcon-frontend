@@ -2480,6 +2480,10 @@ export class DialogViaSociedad {
     }
 }
 
+export interface DocumentosIdentificativos{
+    id_documento: number;
+    documento: string;
+}
 ///////////////REPRESENTACION////////////////
 @Component({
     selector: 'app-dialog-representacion',
@@ -2499,9 +2503,9 @@ export class DialogRepresentacionSociedad {
     fisicaFormGroup: FormGroup;
     moralFormGroup: FormGroup;
     dataRepresentacion: DataRepresentacion = {} as DataRepresentacion;
-    // isRequiredRfc = true;
-    // isRequiredCurp = true;
     isRequired = true;
+    loadingDocumentosIdentificativos
+    dataDocumentos: DocumentosIdentificativos[] = [];
   
     constructor(
         private http: HttpClient,
@@ -2559,8 +2563,25 @@ export class DialogRepresentacionSociedad {
               Authorization: this.auth.getSession().token
             })
         };
+        this.getDataDocumentos();
     }
 
+    /** 
+    * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
+    */
+    getDataDocumentos(): void{
+        this.loadingDocumentosIdentificativos= true;
+        this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
+            (res: any) => {
+                this.loadingDocumentosIdentificativos= false;
+                this.dataDocumentos = res.CatDocIdentificativos;
+                console.log(this.dataDocumentos);
+            },
+            (error) => {
+                this.loadingDocumentosIdentificativos = false;
+            }
+        );
+    }
 
     minDate = '';
 
@@ -2863,6 +2884,8 @@ export class DialogRepresentadoSociedad {
     insUp = false;
     dataRepresentacion: DataRepresentacion = {} as DataRepresentacion;
     isRequired = true;
+    loadingDocumentosIdentificativos
+    dataDocumentos: DocumentosIdentificativos[] = [];
   
     constructor(
         private http: HttpClient,
@@ -2918,8 +2941,25 @@ export class DialogRepresentadoSociedad {
             this.insertOrUpdate = 2;
             this.insUp = true;
         }
+        this.getDataDocumentos();
     }
 
+    /** 
+    * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
+    */
+    getDataDocumentos(): void{
+        this.loadingDocumentosIdentificativos= true;
+        this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
+            (res: any) => {
+                this.loadingDocumentosIdentificativos= false;
+                this.dataDocumentos = res.CatDocIdentificativos;
+                console.log(this.dataDocumentos);
+            },
+            (error) => {
+                this.loadingDocumentosIdentificativos = false;
+            }
+        );
+    }
 
     minDate = '';
 
@@ -3797,6 +3837,8 @@ export class DialogPersonaSociedad {
     queryParamFiltros;
     endpointBusqueda;
     @ViewChild('paginator') paginator: MatPaginator;
+    loadingDocumentosIdentificativos
+    dataDocumentos: DocumentosIdentificativos[] = [];
   
     constructor(
       private auth: AuthService,
@@ -3815,7 +3857,25 @@ export class DialogPersonaSociedad {
         this.tipoPersona = data;
         console.log("aca el tipo person " + data);
         console.log(this.tipoPersona);
+        this.getDataDocumentos();
       }
+
+    /** 
+    * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
+    */
+    getDataDocumentos(): void{
+        this.loadingDocumentosIdentificativos= true;
+        this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
+            (res: any) => {
+                this.loadingDocumentosIdentificativos= false;
+                this.dataDocumentos = res.CatDocIdentificativos;
+                console.log(this.dataDocumentos);
+            },
+            (error) => {
+                this.loadingDocumentosIdentificativos = false;
+            }
+        );
+    }
 
     /**
      * De acuerdo al parametro sea identificativo o personal se limpiaran los otros campos.
@@ -3999,6 +4059,8 @@ export class DialogSociedadPerito {
     idperito: number;
     datoPeritoPersona: DatosPeritoPersona = {} as DatosPeritoPersona;
     @ViewChild('paginator') paginator: MatPaginator;
+    loadingDocumentosIdentificativos
+    dataDocumentos: DocumentosIdentificativos[] = [];
 
     constructor(
         private auth: AuthService,
@@ -4013,7 +4075,25 @@ export class DialogSociedadPerito {
                     Authorization: this.auth.getSession().token
                 })
             };
+            this.getDataDocumentos();
         }
+
+    /** 
+    * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
+    */
+    getDataDocumentos(): void{
+        this.loadingDocumentosIdentificativos= true;
+        this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
+            (res: any) => {
+                this.loadingDocumentosIdentificativos= false;
+                this.dataDocumentos = res.CatDocIdentificativos;
+                console.log(this.dataDocumentos);
+            },
+            (error) => {
+                this.loadingDocumentosIdentificativos = false;
+            }
+        );
+    }
 
     /**
      * Valida que exista un dato para activar el bóton de búsqueda.

@@ -64,11 +64,10 @@
                 </div>
                 <div class="col-3">
                     <mat-form-field>
-                        <mat-select [(ngModel)]="identificacion" [required]="true" (ngModelChange)="validateSearch()">
-                            <mat-option value="1">Cédula profecional</mat-option>
-                            <mat-option value="2">Pasaporte</mat-option>
-                            <mat-option value="3">Licencia de conducir</mat-option>
-                            <mat-option value="4">Número de seguro social</mat-option>
+                        <mat-select [(ngModel)]="identificacion" [required]="true" (ngModelChange)="validateSearch()" [class.spinner]="loadingDocumentosIdentificativos">
+                            <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF">
+                                {{ documento.DESCRIPCION }}
+                            </mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>

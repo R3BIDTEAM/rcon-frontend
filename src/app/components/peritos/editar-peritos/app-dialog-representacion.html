@@ -65,11 +65,11 @@
                 <div class="row">
                     <mat-form-field appearance="fill" class="col-6">
                         <mat-label></mat-label>
-                        <mat-select formControlName="idDocIdent" [disabled]="insUp">
-                            <mat-option value="1">Cédula profecional</mat-option>
-                            <mat-option value="2">Pasaporte</mat-option>
-                            <mat-option value="3">Licencia de conducir</mat-option>
-                            <mat-option value="4">Número de seguro social</mat-option>
+                        <mat-select formControlName="idDocIdent" [disabled]="insUp" [class.spinner]="loadingDocumentosIdentificativos">
+                            <mat-label>Identificación:</mat-label>
+                            <mat-option *ngFor="let documento of dataDocumentos" [value]="documento.IDDOCIDENTIF">
+                                {{ documento.DESCRIPCION }}
+                            </mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-5">

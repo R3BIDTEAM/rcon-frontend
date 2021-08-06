@@ -56,11 +56,10 @@
         <div class="row">
             <mat-form-field appearance="fill" class="col-6">
                 <mat-label>Identificación</mat-label>
-                <mat-select [(ngModel)]="identificacion" [required]="true" (ngModelChange)="validateSearchBuscaP();clearInputsIdentNoIdent2(true)">
-                    <mat-option value="1">Cédula profecional</mat-option>
-                    <mat-option value="2">Pasaporte</mat-option>
-                    <mat-option value="3">Licencia de conducir</mat-option>
-                    <mat-option value="4">Número de seguro social</mat-option>
+                <mat-select [(ngModel)]="identificacion" [required]="true" (ngModelChange)="validateSearchBuscaP();clearInputsIdentNoIdent2(true)" [class.spinner]="loadingDocumentosIdentificativos">
+                    <mat-option *ngFor="let documento of dataDocumentos" [value]="documento.IDDOCIDENTIF">
+                        {{ documento.DESCRIPCION }}
+                    </mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field appearance="outline" class="col-6" style="margin-left: 0px;">
@@ -123,6 +122,6 @@
     </mat-card-content>
 </div>
 <mat-dialog-actions align="end">
-    <button mat-flat-button color="primary" [mat-dialog-close]="datoPeritoPersona">Aceptar</button>
     <button mat-button mat-dialog-close>Cerrar</button>
+    <button mat-flat-button color="primary" [mat-dialog-close]="datoPeritoPersona">Aceptar</button>
 </mat-dialog-actions>

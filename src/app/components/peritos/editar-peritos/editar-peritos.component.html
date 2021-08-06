@@ -92,8 +92,7 @@
                         <div class="col-md-4">
                             <mat-form-field appearance="fill" style="width: 100%;">
                                 <mat-label>Identificación</mat-label>
-                                <mat-select formControlName="identificacion" [(ngModel)]="datoPeritos.identificacion">
-                                    <mat-option value="">Seleccione...</mat-option>
+                                <mat-select formControlName="identificacion" [(ngModel)]="datoPeritos.identificacion" [class.spinner]="loadingDocumentosIdentificativos">
                                     <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF">
                                         {{ documento.DESCRIPCION }}
                                     </mat-option>
