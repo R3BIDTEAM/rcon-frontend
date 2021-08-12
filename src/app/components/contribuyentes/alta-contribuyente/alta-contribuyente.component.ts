@@ -2527,14 +2527,23 @@ export class DialogDocumentoAltaC {
         let files = event.target.files;
         if(files){
             for(let file of files){
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => {
-                    this.archivos.push(this.createItem({
-                    nombre: file.name,
-                    base64: reader.result
-                    }));
-                };
+                if(file.size < 5200123){
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = () => {
+                        this.archivos.push(this.createItem({
+                        nombre: file.name,
+                        base64: reader.result
+                        }));
+                    };
+                }else{
+                    this.snackBar.open('Su archivo excede el tamaño permido de maximo 5MB', 'Cerrar', {
+                        duration: 5000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                    event.target.value = '';
+                }
             }
         }
     }
