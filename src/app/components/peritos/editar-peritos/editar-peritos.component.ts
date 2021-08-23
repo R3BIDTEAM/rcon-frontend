@@ -3237,7 +3237,7 @@ export class DialogRepresentadoPeritos {
             
             this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
                 (res: any) => {
-                    this.snackBar.open('SE HA INSERTADO EL REPRESENTADO', 'Cerrar', {
+                    this.snackBar.open('REGISTRO EXITOSO', 'Cerrar', {
                         duration: 10000,
                         horizontalPosition: 'end',
                         verticalPosition: 'top'
