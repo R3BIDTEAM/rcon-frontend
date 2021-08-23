@@ -57,7 +57,6 @@
                                 <mat-form-field appearance="fill" class="col-5">
                                     <mat-label>Otro Documento:</mat-label>
                                     <mat-select formControlName="idDocIdent" [(ngModel)]="contribuyente.idDocIdent">
-                                        <mat-option value="">Seleccione...</mat-option>
                                         <mat-option *ngFor="let documento of dataDocumentos" [value]="documento.IDDOCIDENTIF">
                                             {{ documento.DESCRIPCION }}
                                         </mat-option>

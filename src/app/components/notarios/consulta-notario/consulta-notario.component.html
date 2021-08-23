@@ -74,7 +74,6 @@
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Estado:</mat-label>
                     <mat-select #estado [(ngModel)]="filtros.estado" (selectionChange)="clearInputsIdentNoIdent(true)" (ngModelChange)="validateSearch()">
-                        <mat-option value="">Seleccione ...</mat-option>
                         <mat-option *ngFor="let estado of estados" [value]="estado.CODESTADO">
                             {{ estado.ESTADO }}
                         </mat-option>

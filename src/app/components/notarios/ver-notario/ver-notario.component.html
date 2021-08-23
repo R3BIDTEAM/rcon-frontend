@@ -19,7 +19,6 @@
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Estado:</mat-label>
                     <mat-select #estado [disabled]="true" [(ngModel)]="datosNotario.estado">
-                        <mat-option value="">Seleccione ...</mat-option>
                         <mat-option *ngFor="let estado of estados" [value]="estado.CODESTADO">
                             {{ estado.ESTADO }}
                         </mat-option>
@@ -75,7 +74,6 @@
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Otro Documento:</mat-label>
                     <mat-select #otro_documento [disabled]="true" [(ngModel)]="datosNotario.otro_documento">
-                        <mat-option value="">Seleccione...</mat-option>
                         <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF">
                             {{ documento.DESCRIPCION }}
                         </mat-option>
