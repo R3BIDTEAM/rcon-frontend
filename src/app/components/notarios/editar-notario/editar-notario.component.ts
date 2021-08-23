@@ -660,7 +660,7 @@ export class DialogDomiciliosNotario {
     tiposLocalidad;
     optionCiudad;
     codtiposdireccion;
-    idestadoNg
+    idestadoNg = '9';
     idmunicipioNg
     idmunicipio2Ng
     municipioNg
@@ -1326,7 +1326,10 @@ export class DialogMunicipiosNotario {
         console.log(data);
     }
 
-    cleanAsentamiento(){
+    /**
+     * Limpia los registros de la búsqueda especifica realizada y llama al metodo para obtener todos los municipios
+     */
+     cleanMunicipio(){
         this.pagina = 1;
         this.total = 0;
         this.dataSource = [];
@@ -1468,7 +1471,10 @@ export class DialogCiudadNotario {
         console.log(data);
     }
 
-    cleanAsentamiento(){
+    /**
+     * Limpia la búsqueda especifica realizada y llama al método que obtiene todos los registros previamente mostrados.
+     */
+     cleanCiudad(){
         this.pagina = 1;
         this.total = 0;
         this.dataSource = [];
@@ -1702,7 +1708,10 @@ export class DialogViaNotario {
         console.log(data);
     }
 
-    cleanAsentamiento(){
+    /**
+     * Limpia los registros de la búsqueda especifica realizada y llama al metodo para obtener todos los municipios
+     */
+     cleanVia(){
         this.pagina = 1;
         this.total = 0;
         this.dataSource = [];

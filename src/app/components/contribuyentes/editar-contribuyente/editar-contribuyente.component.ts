@@ -2370,20 +2370,20 @@ export class DialogMunicipiosContribuyente {
       console.log(data);
   }
 
-  /**
+    /**
      * Limpia los registros de la búsqueda especifica realizada y llama al metodo para obtener todos los municipios
      */
-  cleanAsentamiento(){
-      this.pagina = 1;
-      this.total = 0;
-      this.dataSource = [];
-      this.loadingBuscaMun = false;
-      this.dataPaginate;
-      this.buscaMunicipios = null;
-      this.obtenerMunicipios();
-  }
+    cleanMunicipio(){
+        this.pagina = 1;
+        this.total = 0;
+        this.dataSource = [];
+        this.loadingBuscaMun = false;
+        this.dataPaginate;
+        this.buscaMunicipios = null;
+        this.obtenerMunicipios();
+    }
 
-  /**
+    /**
      * Obtiene los municipios de acuerdo al estado seleccionado.
      */
   obtenerMunicipios(){
@@ -2531,7 +2531,7 @@ export class DialogCiudadContribuyente {
     /**
      * Limpia la búsqueda especifica realizada y llama al método que obtiene todos los registros previamente mostrados.
      */
-    cleanAsentamiento(){
+    cleanCiudad(){
         this.pagina = 1;
         this.total = 0;
         this.dataSource = [];
@@ -2855,7 +2855,7 @@ export class DialogViaContribuyente {
     /**
      * Limpia los registros de la búsqueda especifica realizada y llama al metodo para obtener todos los municipios
      */
-    cleanAsentamiento(){
+    cleanVia(){
         this.pagina = 1;
         this.total = 0;
         this.dataSource = [];

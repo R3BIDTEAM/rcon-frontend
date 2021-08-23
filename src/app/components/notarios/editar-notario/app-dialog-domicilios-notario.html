@@ -15,7 +15,6 @@
                 <mat-form-field appearance="fill" class="col-6">
                     <mat-label>Estado:</mat-label>
                     <mat-select formControlName="idestado" (selectionChange)="getDataMunicipios($event)" [(ngModel)]="idestadoNg">
-                        <mat-option value="">Seleccione ...</mat-option>
                         <mat-option *ngFor="let estado of estados" [value]="estado.CODESTADO">
                             {{ estado.ESTADO }}
                         </mat-option>
@@ -25,7 +24,6 @@
                 <mat-form-field appearance="fill" class="col-6" *ngIf="domicilioFormGroup.controls.idestado.value == 9">
                     <mat-label>Alcaldía:</mat-label>
                     <mat-select formControlName="idmunicipio" [class.spinner]="loadingMunicipios" [disabled]="loadingMunicipios"  (selectionChange)="getNombreDel($event)" >
-                        <mat-option value="">Seleccione ...</mat-option>
                         <mat-option *ngFor="let municipio of municipios" [value]="(municipio.CODMUNICIPIO) ? municipio.CODMUNICIPIO : municipio.iddelegacion">
                             {{ (municipio.MUNICIPIO) ? municipio.MUNICIPIO : municipio.nombre }}
                         </mat-option>
@@ -84,7 +82,6 @@
                 <mat-form-field appearance="fill" class="col-6">
                     <mat-label>Tipo Asent.:</mat-label>
                     <mat-select formControlName="idtipoasentamiento" [class.spinner]="loadingTiposAsentamiento" [disabled]="loadingTiposAsentamiento" [(ngModel)]="idtipoasentamientoNg">
-                        <mat-option value="">Seleccione ...</mat-option>
                         <mat-option *ngFor="let asentamiento of tiposAsentamiento" [value]="asentamiento.codtiposasentamiento">
                             {{ asentamiento.tipoasentamiento }}
                         </mat-option>
@@ -99,7 +96,6 @@
                 <mat-form-field appearance="fill" class="col-6">
                     <mat-label>Tipo de vía:</mat-label>
                     <mat-select formControlName="codtiposvia" [(ngModel)]="codtiposviaNg">
-                        <mat-option value="">Seleccione ...</mat-option>
                         <mat-option *ngFor="let tipovia of tiposVia" [value]="tipovia.codtiposvia">
                             {{ tipovia.tipovia }}
                         </mat-option>
@@ -125,7 +121,6 @@
                 <mat-form-field appearance="fill" class="col-6">
                     <mat-label>Tipo Localidad:</mat-label>
                     <mat-select formControlName="idtipolocalidad" [(ngModel)]="idtipolocalidadNg">
-                        <mat-option value="">Seleccione ...</mat-option>
                         <mat-option *ngFor="let tipolocalidad of tiposLocalidad" [value]="tipolocalidad.codtiposlocalidad">
                             {{ tipolocalidad.descripcion }}
                         </mat-option>
@@ -190,6 +185,6 @@
 
 </div>
 <mat-dialog-actions align="end">
-    <button mat-flat-button color="primary" [disabled]="domicilioFormGroup.invalid" mat-dialog-close (click)="getDataDomicilio()">Aceptar</button>
     <button mat-button mat-dialog-close>Cerrar</button>
+    <button mat-flat-button color="primary" [disabled]="domicilioFormGroup.invalid" mat-dialog-close (click)="getDataDomicilio()">Aceptar</button>
 </mat-dialog-actions>
