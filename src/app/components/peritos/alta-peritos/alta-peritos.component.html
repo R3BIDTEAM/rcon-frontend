@@ -62,7 +62,7 @@
                     </div>
                     <mat-form-field appearance="outline" class="col-5">
                         <mat-label>INE:</mat-label>
-                        <input matInput placeholder="Ingrese INE" [(ngModel)]="datoPeritos.ine" formControlName="ine" [readonly]="inserto" maxlength="30" style="text-transform: uppercase;">
+                        <input matInput placeholder="Ingrese INE" [(ngModel)]="datoPeritos.ine" formControlName="ine" [readonly]="inserto" maxlength="250" style="text-transform: uppercase;">
                         <mat-error *ngIf="peritoPersonaFormGroup.controls.ine.errors?.required">Requerido</mat-error>
                     </mat-form-field>
                 </div>

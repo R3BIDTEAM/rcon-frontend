@@ -11,19 +11,19 @@
         <div class="col-md-4">
             <mat-form-field appearance="outline" style="width: 100%;">
                 <mat-label>Nombre</mat-label>
-                <input matInput [(ngModel)]="nombre" placeholder="Placeholder" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)">
+                <input matInput [(ngModel)]="nombre" placeholder="Placeholder" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)" maxlength="250">
             </mat-form-field>
         </div>
         <div class="col-md-4">
             <mat-form-field appearance="outline" style="width: 100%;">
                 <mat-label>Apellido Paterno</mat-label>
-                <input matInput [(ngModel)]="apellido_paterno" placeholder="Placeholder" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)">
+                <input matInput [(ngModel)]="apellido_paterno" placeholder="Placeholder" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)" maxlength="250">
             </mat-form-field>
         </div>
         <div class="col-md-4">
             <mat-form-field appearance="outline" style="width: 100%;">
                 <mat-label>Apellido Materno</mat-label>
-                <input matInput [(ngModel)]="apellido_materno" placeholder="Placeholder" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)">
+                <input matInput [(ngModel)]="apellido_materno" placeholder="Placeholder" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)" maxlength="250">
             </mat-form-field>
         </div> 
     </div>
@@ -35,19 +35,19 @@
         <div class="col-md-4">
             <mat-form-field appearance="outline" style="width: 100%;">
                 <mat-label>RFC*</mat-label>
-                <input matInput [(ngModel)]="rfc" placeholder="Placeholder" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)">
+                <input matInput [(ngModel)]="rfc" placeholder="Placeholder" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" maxlength="13">
             </mat-form-field>
         </div>
         <div class="col-md-4">
             <mat-form-field appearance="outline" style="width: 100%;">
                 <mat-label>CURP*</mat-label>
-                <input matInput [(ngModel)]="curp" placeholder="Placeholder" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)">
+                <input matInput [(ngModel)]="curp" placeholder="Placeholder" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" maxlength="18">
             </mat-form-field>
         </div>
         <div class="col-md-4">
             <mat-form-field appearance="outline" style="width: 100%;">
                 <mat-label>INE</mat-label>
-                <input matInput [(ngModel)]="ine" placeholder="Placeholder" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)">
+                <input matInput [(ngModel)]="ine" placeholder="Placeholder" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250">
             </mat-form-field>
         </div>
     </div>
@@ -66,7 +66,7 @@
         <div class="col-md-4">
             <mat-form-field appearance="outline" style="width: 100%;">
                 <!-- <mat-label>INE</mat-label> -->
-                <input matInput [(ngModel)]="numero_documento" placeholder="Placeholder" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)">
+                <input matInput [(ngModel)]="numero_documento" placeholder="Placeholder" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250">
             </mat-form-field>
         </div>
     </div>

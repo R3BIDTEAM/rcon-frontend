@@ -27,19 +27,19 @@
                 <div class="row">
                     <mat-form-field appearance="outline" class="col-12">
                         <mat-label>Nombre:</mat-label>
-                        <input matInput formControlName="nombre" [readonly]="insUp" style="text-transform: uppercase;">
+                        <input matInput formControlName="nombre" [readonly]="insUp" style="text-transform: uppercase;" maxlength="250">
                         <mat-error *ngIf="fisicaFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="row">
                     <mat-form-field appearance="outline" class="col-6">
                         <mat-label>Apellido Paterno:</mat-label>
-                        <input matInput formControlName="apaterno" [readonly]="insUp" style="text-transform: uppercase;">
+                        <input matInput formControlName="apaterno" [readonly]="insUp" style="text-transform: uppercase;" maxlength="250">
                         <mat-error *ngIf="fisicaFormGroup.controls.apaterno.errors?.required">Requerido</mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-6">
                         <mat-label>Apellido Materno:</mat-label>
-                        <input matInput formControlName="amaterno" [readonly]="insUp" style="text-transform: uppercase;">
+                        <input matInput formControlName="amaterno" [readonly]="insUp" style="text-transform: uppercase;" maxlength="250">
                     </mat-form-field>
                 </div>
                 <div class="row">
@@ -59,7 +59,7 @@
                 <div class="row">
                     <mat-form-field appearance="outline" class="col-6">
                         <mat-label>Clave INE:</mat-label>
-                        <input matInput formControlName="ine" [readonly]="insUp" style="text-transform: uppercase;">
+                        <input matInput formControlName="ine" [readonly]="insUp" style="text-transform: uppercase;" maxlength="250">
                     </mat-form-field>
                 </div>
                 <div class="row">
@@ -73,7 +73,7 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-6">
                         <mat-label></mat-label>
-                        <input matInput formControlName="docIdent" [readonly]="insUp" style="text-transform: uppercase;">
+                        <input matInput formControlName="docIdent" [readonly]="insUp" style="text-transform: uppercase;" maxlength="250">
                     </mat-form-field>
                 </div>
                 <div class="row">
@@ -97,13 +97,13 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-6">
                         <mat-label>E-mail:</mat-label>
-                        <input matInput formControlName="email" [readonly]="insUp">
+                        <input matInput formControlName="email" [readonly]="insUp" maxlength="250">
                     </mat-form-field>
                 </div>
                 <div class="row">
                     <mat-form-field appearance="outline" class="col-12">
                         <mat-label>Texto de representación:</mat-label>
-                        <textarea matInput formControlName="texto" rows="5" style="text-transform: uppercase;"></textarea>
+                        <textarea matInput formControlName="texto" rows="5" style="text-transform: uppercase;" maxlength="250"></textarea>
                     </mat-form-field>
                 </div>
                 <div class="row">
@@ -122,7 +122,7 @@
                 <div class="row">
                     <mat-form-field appearance="outline" class="col-12">
                         <mat-label>Nombre:</mat-label>
-                        <input matInput formControlName="nombre" [readonly]="insUp" style="text-transform: uppercase;">
+                        <input matInput formControlName="nombre" [readonly]="insUp" style="text-transform: uppercase;" maxlength="250">
                         <mat-error *ngIf="moralFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                     </mat-form-field>
                 </div>
@@ -134,7 +134,7 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-6">
                         <mat-label>Act. preponderante:</mat-label>
-                        <input matInput formControlName="actPreponderante" [readonly]="insUp" style="text-transform: uppercase;">
+                        <input matInput formControlName="actPreponderante" [readonly]="insUp" style="text-transform: uppercase;" maxlength="250">
                     </mat-form-field>
                 </div>
                 <div class="row">
@@ -168,7 +168,7 @@
                 <div class="row">
                     <mat-form-field appearance="outline" class="col-12">
                         <mat-label>Texto de representación:</mat-label>
-                        <textarea matInput formControlName="texto" rows="5" style="text-transform: uppercase;"></textarea>
+                        <textarea matInput formControlName="texto" rows="5" style="text-transform: uppercase;" maxlength="250"></textarea>
                     </mat-form-field>
                 </div>
                 <div class="row">

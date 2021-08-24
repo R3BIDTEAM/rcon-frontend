@@ -19,7 +19,7 @@
                         <div class="col-md-4">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>Razón social</mat-label>
-                                <input matInput placeholder="Placeholder" [(ngModel)]="datosSociedad.razonSocial">
+                                <input matInput placeholder="Placeholder" [(ngModel)]="datosSociedad.razonSocial" maxlength="250">
                             </mat-form-field>
                         </div>
                     </div>
@@ -28,7 +28,7 @@
                         <div class="col-md-4">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>RFC*</mat-label>
-                                <input matInput placeholder="Placeholder" [(ngModel)]="datosSociedad.rfc">
+                                <input matInput placeholder="Placeholder" [(ngModel)]="datosSociedad.rfc" maxlength="12">
                             </mat-form-field>
                         </div>
                     </div>
@@ -46,7 +46,7 @@
                         <div class="col-md-5">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>Registro*</mat-label>
-                                <input matInput placeholder="Placeholder" [(ngModel)]="datosSociedad.registro">
+                                <input matInput placeholder="Placeholder" [(ngModel)]="datosSociedad.registro" maxlength="250">
                             </mat-form-field>
                         </div>
                         <div class="col-md-5">

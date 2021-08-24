@@ -11,7 +11,7 @@
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-12">
                                 <mat-label>Razón Social</mat-label>
-                                <input matInput [(ngModel)]="razonSocial" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)" (keydown.enter)="getSociedad()" placeholder="Ingrese Razón Social" style="text-transform: uppercase;">
+                                <input matInput [(ngModel)]="razonSocial" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)" (keydown.enter)="getSociedad()" placeholder="Ingrese Razón Social" style="text-transform: uppercase;" maxlength="250">
                                 <mat-error></mat-error>
                             </mat-form-field>
                         </div>
@@ -27,7 +27,7 @@
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-6">
                                 <mat-label>Registro</mat-label>
-                                <input matInput [(ngModel)]="registro" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" (keydown.enter)="getSociedad()" placeholder="Ingrese Registro" style="text-transform: uppercase;">
+                                <input matInput [(ngModel)]="registro" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" (keydown.enter)="getSociedad()" placeholder="Ingrese Registro" style="text-transform: uppercase;" maxlength="250">
                                 <mat-error></mat-error>
                             </mat-form-field>
                         </div>
