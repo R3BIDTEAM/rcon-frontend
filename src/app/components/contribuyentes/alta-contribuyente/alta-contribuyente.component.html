@@ -238,14 +238,6 @@
                                                 C.P. {{ element.CODIGOPOSTAL}}, {{ element.DELEGACION}} ({{ element.ESTADO }})
                                             </td>
                                         </ng-container>
-                                        <ng-container matColumnDef="historial">
-                                            <th mat-header-cell *matHeaderCellDef> Historial </th>
-                                            <td mat-cell *matCellDef="let element">
-                                                <button mat-icon-button type="button" color="primary" aria-label="Historial" matTooltip="Historial">
-                                                    <mat-icon>search</mat-icon>
-                                                </button>
-                                            </td>
-                                        </ng-container>
                                         <tr mat-header-row *matHeaderRowDef="displayedColumnsDom"></tr>
                                         <tr mat-row *matRowDef="let row; columns: displayedColumnsDom;"></tr>
                                     </table>
@@ -296,14 +288,6 @@
                                             <td mat-cell *matCellDef="let element" width="75%">
                                                 {{ element.ABREVIATURAVIA }}, {{ element.VIA }} {{ element.NUMEROEXTERIOR }}, Col: {{ element.COLONIA}}
                                                 C.P. {{ element.CODIGOPOSTAL}}, {{ element.DELEGACION}} ({{ element.ESTADO }})
-                                            </td>
-                                        </ng-container>
-                                        <ng-container matColumnDef="historial">
-                                            <th mat-header-cell *matHeaderCellDef> Historial </th>
-                                            <td mat-cell *matCellDef="let element">
-                                                <button mat-icon-button type="button" color="primary" aria-label="Historial" matTooltip="Historial">
-                                                    <mat-icon>search</mat-icon>
-                                                </button>
                                             </td>
                                         </ng-container>
                                         <tr mat-header-row *matHeaderRowDef="displayedColumnsDom"></tr>
@@ -360,7 +344,7 @@
                                         <ng-container matColumnDef="representacion">
                                             <th mat-header-cell *matHeaderCellDef width="15%" > Tipo Dirección </th>
                                             <td mat-cell *matCellDef="let element" width="15%" >
-                                                {{ element.APELLIDOPATERNO }}, {{ element.APELLIDOMATERNO }} {{ element.NOMBRE }}
+                                                {{ element.APELLIDOPATERNO }} {{ element.APELLIDOMATERNO }} {{ element.NOMBRE }}
                                             </td>
                                         </ng-container>
                                         <ng-container matColumnDef="texto">
@@ -373,22 +357,6 @@
                                             <th mat-header-cell *matHeaderCellDef width="75%"> Caducidad </th>
                                             <td mat-cell *matCellDef="let element" width="75%">
                                                 {{ element.FECHACADUCIDAD }}
-                                            </td>
-                                        </ng-container>
-                                        <ng-container matColumnDef="editar">
-                                            <th mat-header-cell *matHeaderCellDef width="75%"> Editar </th>
-                                            <td mat-cell *matCellDef="let element" width="75%">
-                                                <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar">
-                                                    <mat-icon>edit</mat-icon>
-                                                </button>
-                                            </td>
-                                        </ng-container>
-                                        <ng-container matColumnDef="eliminar">
-                                            <th mat-header-cell *matHeaderCellDef> Eliminar </th>
-                                            <td mat-cell *matCellDef="let element">
-                                                <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar">
-                                                    <mat-icon>delete</mat-icon>
-                                                </button>
                                             </td>
                                         </ng-container>
                                         <tr mat-header-row *matHeaderRowDef="displayedColumnsRepdo"></tr>
@@ -440,7 +408,7 @@
                                         <ng-container matColumnDef="representacion">
                                             <th mat-header-cell *matHeaderCellDef width="15%" > Tipo Dirección </th>
                                             <td mat-cell *matCellDef="let element" width="15%" >
-                                                {{ element.APELLIDOPATERNO }}, {{ element.APELLIDOMATERNO }} {{ element.NOMBRE }}
+                                                {{ element.APELLIDOPATERNO }} {{ element.APELLIDOMATERNO }} {{ element.NOMBRE }}
                                             </td>
                                         </ng-container>
                                         <ng-container matColumnDef="texto">
@@ -453,22 +421,6 @@
                                             <th mat-header-cell *matHeaderCellDef width="75%"> Caducidad </th>
                                             <td mat-cell *matCellDef="let element" width="75%">
                                                 {{ element.FECHACADUCIDAD }}
-                                            </td>
-                                        </ng-container>
-                                        <ng-container matColumnDef="editar">
-                                            <th mat-header-cell *matHeaderCellDef width="75%"> Editar </th>
-                                            <td mat-cell *matCellDef="let element" width="75%">
-                                                <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar" (click)="addRepresentado(null, element)">
-                                                    <mat-icon>edit</mat-icon>
-                                                </button>
-                                            </td>
-                                        </ng-container>
-                                        <ng-container matColumnDef="eliminar">
-                                            <th mat-header-cell *matHeaderCellDef> Eliminar </th>
-                                            <td mat-cell *matCellDef="let element">
-                                                <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar">
-                                                    <mat-icon>delete</mat-icon>
-                                                </button>
                                             </td>
                                         </ng-container>
                                         <tr mat-header-row *matHeaderRowDef="displayedColumnsRepdo"></tr>

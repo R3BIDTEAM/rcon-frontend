@@ -127,6 +127,8 @@ export class AltaContribuyenteComponent implements OnInit {
     // tipoPersona = 'F';
     fisicaFormGroup: FormGroup;
     moralFormGroup: FormGroup;
+    displayedColumnsRepdo: string[] = ['representacion','texto','caducidad'];
+    displayedColumnsDom: string[] = ['tipoDir','direccion'];
     datosContribuyente: DatosContribuyente = {} as DatosContribuyente;
     dataDomicilios: DataDomicilio[] = [];
     dataRepresentantes: DataRepresentacion[] = [];
@@ -134,6 +136,8 @@ export class AltaContribuyenteComponent implements OnInit {
     contribuyente: DataRepresentacion = {} as DataRepresentacion;
     dataDocumentos: DocumentosIdentificativos[] = [];
     loadingDomicilios = false;
+    loadingRepresentante = false;
+    loadingRepresentado = false;
     domInsertCont = false;
     panelRepresentantes = false;
     panelRepresentados = false;
@@ -471,7 +475,7 @@ export class AltaContribuyenteComponent implements OnInit {
             },
         });
         dialogRef.afterClosed().subscribe(result => {
-                this.getDomicilioPerito();
+                this.getDomicilioContribuyente();
         });
     }
 
@@ -484,13 +488,17 @@ export class AltaContribuyenteComponent implements OnInit {
             },
         });
         dialogRef.afterClosed().subscribe(result => {
-            this.getDomicilioPerito();
+            this.getDomicilioContribuyente();
         });
     }
 
-    getDomicilioPerito(){
+    /**
+     * Obtiene los domicilios registrados de la sociedad domicilios particulares y para recibir notificaciones.
+     */
+     getDomicilioContribuyente(){
         this.loadingDomicilios = true;
         let metodo = 'getDireccionesContribuyente';
+        console.log(this.endpoint + metodo + '?idPersona='+ this.idPersona);
         this.http.get(this.endpoint + metodo + '?idPersona='+ this.idPersona, this.httpOptions)
             .subscribe(
                 (res: any) => {
@@ -558,11 +566,10 @@ export class AltaContribuyenteComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
-                if(i != -1){
-                    this.dataRepresentantes[i] = result;
-                }else{
-                    this.dataRepresentantes.push(result);
-                }
+                setTimeout (() => {
+                    this.loadingRepresentante = true;
+                    this.getRepresentacion();
+                }, 1000);
             }
         });
     }
@@ -577,13 +584,83 @@ export class AltaContribuyenteComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
-                if(i != -1){
-                    this.dataRepresentantes[i] = result;
-                }else{
-                    this.dataRepresentantes.push(result);
-                }
+                setTimeout (() => {
+                    this.loadingRepresentado = true;
+                    this.getRepresentado();
+                }, 1000);
             }
         });
+    }
+
+    /**
+     * Obtiene las representaciónes del contribuyente
+     */
+     getRepresentacion(){
+        this.loadingRepresentante = true;
+        let queryRep = 'rep=Representantes&idPersona=' + this.idPersona;
+        this.http.get(this.endpoint + 'getRepresentacionContribuyente?' + queryRep, this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loadingRepresentante = false;
+                    this.dataSource4 = res;
+                    this.total4 = this.dataSource4.length;
+                    this.dataPaginate4 = this.paginate(this.dataSource4, 15, this.pagina4);
+                },
+                (error) => {
+                    this.loadingRepresentante = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
+
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
+    paginado4(evt): void{
+        this.pagina4 = evt.pageIndex + 1;
+        this.dataSource4 = this.paginate(this.dataSource4, 15, this.pagina4);
+    }
+
+    /**
+     * Obtienen los representados de la sociedad.
+     */
+    getRepresentado(){
+        this.loadingRepresentado = true;
+        let queryRepdo = 'rep=Representado&idPersona=' + this.idPersona;
+        console.log(this.endpoint + 'getRepresentacionContribuyente?' + queryRepdo);
+        this.http.get(this.endpoint + 'getRepresentacionContribuyente?' + queryRepdo, this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loadingRepresentado = false;
+                    this.dataSource5 = res;
+                    console.log("ACA ENTRO EL REPRESENTADO");
+                    console.log(this.dataSource5);
+                    this.total5 = this.dataSource5.length;
+                    this.dataPaginate5 = this.paginate(this.dataSource5, 15, this.pagina5);
+                },
+                (error) => {
+                    this.loadingRepresentado = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
+
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
+    paginado5(evt): void{
+        this.pagina5 = evt.pageIndex + 1;
+        this.dataSource5 = this.paginate(this.dataSource5, 15, this.pagina5);
     }
 
     removeRepresentante(i){
@@ -917,13 +994,13 @@ export class DialogDomicilioAlta {
             .subscribe(
                 (res: any) => {
                     console.log(res);
-                    if(res.original.mensaje){
+                    if(res.original){
                         this.snackBar.open('Ocurrio un error al Insertar la dirección, intente nuevemente', 'Cerrar', {
                             duration: 10000,
                             horizontalPosition: 'end',
                             verticalPosition: 'top'
                         });
-                    }else{
+                    }else if(res.IDPERSONA){
                         this.snackBar.open('Registro exitoso', 'Cerrar', {
                             duration: 10000,
                             horizontalPosition: 'end',
@@ -1929,11 +2006,20 @@ export class DialogRepresentacionAltaC {
         console.log(JSON.stringify(payload));
         this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
             (res: any) => {
-                this.snackBar.open('REGISTRO EXITOSO', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
-                });
+                if(res){
+                    this.snackBar.open('REGISTRO EXITOSO', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }else if(res.mensaje){
+                    this.snackBar.open(res.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+                
                 console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTECIÓN");
                 console.log(res);
             },
@@ -2252,11 +2338,19 @@ export class DialogRepresentadoAltaC {
             //this.insertRepresentacion(payload);
             this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
                 (res: any) => {
-                    this.snackBar.open('REGISTRO EXITOSO', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    if(res){
+                        this.snackBar.open('REGISTRO EXITOSO', 'Cerrar', {
+                            duration: 10000,
+                            horizontalPosition: 'end',
+                            verticalPosition: 'top'
+                        });
+                    }else if(res.mensaje){
+                        this.snackBar.open(res.mensaje, 'Cerrar', {
+                            duration: 10000,
+                            horizontalPosition: 'end',
+                            verticalPosition: 'top'
+                        });
+                    }
                     console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTADO");
                     console.log(res);
                 },
