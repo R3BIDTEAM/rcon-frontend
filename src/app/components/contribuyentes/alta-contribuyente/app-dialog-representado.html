@@ -27,19 +27,19 @@
                 <div class="row">
                     <mat-form-field class="col-12">
                         <mat-label>Nombre:</mat-label>
-                        <input matInput formControlName="nombre">
+                        <input matInput formControlName="nombre" maxlength="250">
                         <mat-error *ngIf="fisicaFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="row">
                     <mat-form-field class="col-6">
                         <mat-label>Apellido Paterno:</mat-label>
-                        <input matInput formControlName="apaterno">
+                        <input matInput formControlName="apaterno" maxlength="250">
                         <mat-error *ngIf="fisicaFormGroup.controls.apaterno.errors?.required">Requerido</mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-6">
                         <mat-label>Apellido Materno:</mat-label>
-                        <input matInput formControlName="amaterno">
+                        <input matInput formControlName="amaterno" maxlength="250">
                     </mat-form-field>
                 </div>
                 <div class="row">
@@ -59,13 +59,13 @@
                 <div class="row">
                     <mat-form-field class="col-6">
                         <mat-label>Clave INE:</mat-label>
-                        <input matInput formControlName="ine">
+                        <input matInput formControlName="ine" maxlength="250">
                     </mat-form-field>
                 </div>
                 <div class="row">
                     <mat-form-field class="col-6">
                         <mat-label>Identificación</mat-label>
-                        <mat-select formControlName="idDocIdent" [class.spinner]="loadingDocumentos">
+                        <mat-select formControlName="idDocIdent" [class.spinner]="loadingDocumentos"> 
                             <mat-option *ngFor="let documento of dataDocumentos" [value]="documento.IDDOCIDENTIF">
                                 {{ documento.DESCRIPCION }}
                             </mat-option>
@@ -73,7 +73,7 @@
                     </mat-form-field>
                     <mat-form-field class="col-6">
                         <mat-label>Identificación</mat-label>
-                        <input matInput formControlName="docIdent">
+                        <input matInput formControlName="docIdent" maxlength="250">
                     </mat-form-field>
                 </div>
                 <div class="row">
@@ -93,17 +93,17 @@
                 <div class="row">
                     <mat-form-field class="col-6">
                         <mat-label>Celular:</mat-label>
-                        <input matInput formControlName="celular">
+                        <input matInput formControlName="celular" maxlength="10">
                     </mat-form-field>
                     <mat-form-field class="col-6">
                         <mat-label>E-mail:</mat-label>
-                        <input matInput formControlName="email">
+                        <input matInput formControlName="email" maxlength="250">
                     </mat-form-field>
                 </div>
                 <div class="row">
                     <mat-form-field class="col-12">
                         <mat-label>Texto de representación:</mat-label>
-                        <textarea matInput formControlName="texto" rows="5"></textarea>
+                        <textarea matInput formControlName="texto" rows="5" maxlength="250"></textarea>
                     </mat-form-field>
                 </div>
                 <div class="row">
@@ -122,19 +122,19 @@
                 <div class="row">
                     <mat-form-field class="col-12">
                         <mat-label>Nombre:</mat-label>
-                        <input matInput formControlName="nombre">
+                        <input matInput formControlName="nombre" maxlength="250">
                         <mat-error *ngIf="moralFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="row">
                     <mat-form-field class="col-6">
                         <mat-label>RFC:</mat-label>
-                        <input matInput formControlName="rfc">
+                        <input matInput formControlName="rfc" maxlength="12">
                         <mat-error *ngIf="moralFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-6">
                         <mat-label>Act. preponderante:</mat-label>
-                        <input matInput formControlName="actPreponderante">
+                        <input matInput formControlName="actPreponderante" maxlength="250">
                     </mat-form-field>
                 </div>
                 <div class="row">

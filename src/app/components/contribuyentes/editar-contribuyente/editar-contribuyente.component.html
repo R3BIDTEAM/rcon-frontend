@@ -32,19 +32,19 @@
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-md-12">
                                 <mat-label>Nombre: *</mat-label>
-                                <input matInput formControlName="nombre" [(ngModel)]="contribuyente.nombre" placeholder="Ingrese el Nombre" style="text-transform: uppercase;">
+                                <input matInput formControlName="nombre" [(ngModel)]="contribuyente.nombre" placeholder="Ingrese el Nombre" style="text-transform: uppercase;" maxlength="250">
                                 <mat-error *ngIf="fisicaFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-md-6">
                                 <mat-label>Apellido Paterno: *</mat-label>
-                                <input matInput formControlName="apepaterno" [(ngModel)]="contribuyente.apepaterno" placeholder="Ingrese el Apellido Paterno" style="text-transform: uppercase;">
+                                <input matInput formControlName="apepaterno" [(ngModel)]="contribuyente.apepaterno" placeholder="Ingrese el Apellido Paterno" style="text-transform: uppercase;" maxlength="250">
                                 <mat-error *ngIf="fisicaFormGroup.controls.apepaterno.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-md-6" style="margin-left: 0px!important;">
                                 <mat-label>Apellido Materno:</mat-label>
-                                <input matInput formControlName="apematerno" [(ngModel)]="contribuyente.apematerno" placeholder="Ingrese el Apellido Materno" style="text-transform: uppercase;">
+                                <input matInput formControlName="apematerno" [(ngModel)]="contribuyente.apematerno" placeholder="Ingrese el Apellido Materno" style="text-transform: uppercase;" maxlength="250">
                             </mat-form-field>
                         </div>
                         <div class="row">
@@ -64,7 +64,7 @@
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-md-6">
                                 <mat-label>Clave INE:</mat-label>
-                                <input matInput formControlName="ine" [(ngModel)]="contribuyente.ine" placeholder="Ingrese el INE" style="text-transform: uppercase;">
+                                <input matInput formControlName="ine" [(ngModel)]="contribuyente.ine" placeholder="Ingrese el INE" style="text-transform: uppercase;" maxlength="250">
                             </mat-form-field>
                         </div>
                         <div class="row">
@@ -78,7 +78,7 @@
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-md-6" style="margin-left: 0px!important;">
                                 <mat-label>Número Documento</mat-label>
-                                <input matInput formControlName="docIdent" [(ngModel)]="contribuyente.docIdent" placeholder="Ingrese el número de documento" style="text-transform: uppercase;">
+                                <input matInput formControlName="docIdent" [(ngModel)]="contribuyente.docIdent" placeholder="Ingrese el número de documento" style="text-transform: uppercase;" maxlength="250">
                             </mat-form-field>
                         </div>
                         <div class="row">
@@ -102,7 +102,7 @@
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-md-6" style="margin-left: 0px!important;">
                                 <mat-label>E-mail:</mat-label>
-                                <input matInput formControlName="email" placeholder="Ingrese el E-mail" [(ngModel)]="contribuyente.email">
+                                <input matInput formControlName="email" placeholder="Ingrese el E-mail" [(ngModel)]="contribuyente.email" maxlength="250">
                                 <mat-error *ngIf="fisicaFormGroup.hasError('email', 'email') && fisicaFormGroup.get('email').touched">Correo invalido</mat-error>
                             </mat-form-field>
                         </div>
@@ -113,7 +113,7 @@
                         <div class="row">
                             <mat-form-field class="col-12">
                                 <mat-label>Nombre: *</mat-label>
-                                <input matInput formControlName="nombre_moral" [(ngModel)]="contribuyente.nombre_moral" placeholder="Ingrese el Nombre" style="text-transform: uppercase;">
+                                <input matInput formControlName="nombre_moral" [(ngModel)]="contribuyente.nombre_moral" placeholder="Ingrese el Nombre" style="text-transform: uppercase;" maxlength="250">
                                 <mat-error *ngIf="moralFormGroup.controls.nombre_moral.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>

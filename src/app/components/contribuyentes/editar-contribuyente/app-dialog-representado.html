@@ -30,19 +30,19 @@
                 <div class="row">
                     <mat-form-field appearance="outline" class="col-12">
                         <mat-label>Nombre:</mat-label>
-                        <input matInput formControlName="nombre" [readonly]="insUp">
+                        <input matInput formControlName="nombre" [readonly]="insUp" maxlength="250">
                         <mat-error *ngIf="fisicaFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="row">
                     <mat-form-field appearance="outline" class="col-6">
                         <mat-label>Apellido Paterno:</mat-label>
-                        <input matInput formControlName="apaterno" [readonly]="insUp">
+                        <input matInput formControlName="apaterno" [readonly]="insUp" maxlength="250">
                         <mat-error *ngIf="fisicaFormGroup.controls.apaterno.errors?.required">Requerido</mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-6" style="margin-left: 0px!important;">
                         <mat-label>Apellido Materno:</mat-label>
-                        <input matInput formControlName="amaterno" [readonly]="insUp">
+                        <input matInput formControlName="amaterno" [readonly]="insUp" maxlength="250">
                     </mat-form-field>
                 </div>
                 <div class="row">
@@ -62,7 +62,7 @@
                 <div class="row">
                     <mat-form-field appearance="outline" class="col-6">
                         <mat-label>Clave INE:</mat-label>
-                        <input matInput formControlName="ine" [readonly]="insUp">
+                        <input matInput formControlName="ine" [readonly]="insUp" maxlength="250">
                     </mat-form-field>
                 </div>
                 <div class="row">
@@ -76,7 +76,7 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-6" style="margin-left: 0px!important;">
                         <mat-label></mat-label>
-                        <input matInput formControlName="docIdent" [readonly]="insUp">
+                        <input matInput formControlName="docIdent" [readonly]="insUp" maxlength="250">
                     </mat-form-field>
                 </div>
                 <div class="row">
@@ -96,17 +96,17 @@
                 <div class="row">
                     <mat-form-field appearance="outline" class="col-6">
                         <mat-label>Celular:</mat-label>
-                        <input matInput formControlName="celular" [readonly]="insUp">
+                        <input matInput formControlName="celular" [readonly]="insUp" maxlength="10">
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-6" style="margin-left: 0px!important;">
                         <mat-label>E-mail:</mat-label>
-                        <input matInput formControlName="email" [readonly]="insUp" style="text-transform: none!important;">
+                        <input matInput formControlName="email" [readonly]="insUp" style="text-transform: none!important;" maxlength="250">
                     </mat-form-field>
                 </div>
                 <div class="row">
                     <mat-form-field appearance="outline" class="col-12">
                         <mat-label>Texto de representación:</mat-label>
-                        <textarea matInput formControlName="texto" rows="5"></textarea>
+                        <textarea matInput formControlName="texto" rows="5" maxlength="250"></textarea>
                     </mat-form-field>
                 </div>
                 <div class="row">
@@ -125,19 +125,19 @@
                 <div class="row">
                     <mat-form-field appearance="outline" class="col-12">
                         <mat-label>Nombre:</mat-label>
-                        <input matInput formControlName="nombre" [readonly]="insUp">
+                        <input matInput formControlName="nombre" [readonly]="insUp" maxlength="250">
                         <mat-error *ngIf="moralFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="row">
                     <mat-form-field appearance="outline" class="col-6">
                         <mat-label>RFC:</mat-label>
-                        <input matInput formControlName="rfc" [readonly]="insUp" onkeyup="this.value = this.value.toUpperCase();">
+                        <input matInput formControlName="rfc" [readonly]="insUp" onkeyup="this.value = this.value.toUpperCase();" maxlength="12">
                         <mat-error *ngIf="moralFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-6" style="margin-left: 0px!important;">
                         <mat-label>Act. preponderante:</mat-label>
-                        <input matInput formControlName="actPreponderante" [readonly]="insUp">
+                        <input matInput formControlName="actPreponderante" [readonly]="insUp" maxlength="250">
                     </mat-form-field>
                 </div>
                 <div class="row">
