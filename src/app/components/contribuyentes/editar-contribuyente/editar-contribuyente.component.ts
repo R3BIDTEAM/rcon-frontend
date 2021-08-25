@@ -314,8 +314,11 @@ export class EditarContribuyenteComponent implements OnInit {
         this.contribuyente.rfc = null;
     }
 
+    /**
+     * De acuerdo al campo seleccionado será requerido el RFC, el CURP o ambos.
+     */
     changeRequired(): void {
-        if((!this.fisicaFormGroup.value.rfc && !this.fisicaFormGroup.value.curp) || (!this.contribuyente.rfc && !this.contribuyente.curp)){​​​​​​​​
+        if((!this.contribuyente.rfc && !this.contribuyente.curp)){​​​​​​​​
             this.isRequired = true;
         }​​​​​​​​ else {​​​​​​​​
             this.isRequired = false;
@@ -399,6 +402,7 @@ export class EditarContribuyenteComponent implements OnInit {
 
         this.minDate = (moment(this.contribuyente.fecha_naci).add(2, 'd').format('YYYY-MM-DD'));
         // alert(moment(this.contribuyente.fecha_naci).format('YYYY-MM-DD'));
+        this.changeRequired();
     }
 
     /**

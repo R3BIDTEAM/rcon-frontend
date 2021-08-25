@@ -55,6 +55,7 @@ export class AltaPeritosComponent implements OnInit {
     documentos: DocumentosIdentificativos[] = [];
     loadingDocumentosIdentificativos = false;
     @ViewChild('paginator') paginator: MatPaginator;
+    btnNuevo = false;
 
     constructor(
         private http: HttpClient,
@@ -87,7 +88,7 @@ export class AltaPeritosComponent implements OnInit {
             fechaNacimiento: [null],
             fechaDefuncion: [null],
             celular: [null],
-            email: ['', Validators.email],
+            email: ['', Validators.email && Validators.required],
             registro: [null, []],
             fechaInicio: [null, []],
             fechaFin: [null, []],
@@ -150,6 +151,7 @@ export class AltaPeritosComponent implements OnInit {
         this.peritoPersonaFormGroup.controls['fechaFin'].setValue(null);
         this.peritoPersonaFormGroup.controls['login'].setValue(null);
         this.inserto = false;
+        this.btnNuevo = false;
     }
 
     /**
@@ -185,20 +187,20 @@ export class AltaPeritosComponent implements OnInit {
      * de no existir coincidencias registrará el nuevo perito.
      */
     consulta_previa(){
-        this.datoPeritos.registro = this.peritoPersonaFormGroup.value.registro.toLocaleUpperCase();
-        this.datoPeritos.fecha_alta = this.peritoPersonaFormGroup.value.fecha_alta;
-        this.datoPeritos.fecha_baja = this.peritoPersonaFormGroup.value.fecha_baja;
-        this.datoPeritos.nombre = this.peritoPersonaFormGroup.value.nombre.toLocaleUpperCase();
-        this.datoPeritos.apepaterno = this.peritoPersonaFormGroup.value.apepaterno.toLocaleUpperCase();
-        this.datoPeritos.apematerno = this.peritoPersonaFormGroup.value.apematerno.toLocaleUpperCase();
-        this.datoPeritos.rfc = this.peritoPersonaFormGroup.value.rfc.toLocaleUpperCase();
-        this.datoPeritos.ine = this.peritoPersonaFormGroup.value.ine.toLocaleUpperCase();
-        this.datoPeritos.identificacion = this.peritoPersonaFormGroup.value.identificacion.toLocaleUpperCase();
-        this.datoPeritos.fecha_naci = this.peritoPersonaFormGroup.value.fecha_naci;
-        this.datoPeritos.fecha_def = this.peritoPersonaFormGroup.value.fecha_def;
-        this.datoPeritos.email = this.peritoPersonaFormGroup.value.email;
-        this.datoPeritos.celular = this.peritoPersonaFormGroup.value.celular;
-        this.datoPeritos.login = this.peritoPersonaFormGroup.value.login.toLocaleUpperCase();
+        this.datoPeritos.registro = (this.peritoPersonaFormGroup.value.registro) ? this.peritoPersonaFormGroup.value.registro.toLocaleUpperCase() : null;
+        this.datoPeritos.fecha_alta = (this.peritoPersonaFormGroup.value.fecha_alta) ? this.peritoPersonaFormGroup.value.fecha_alta : null;
+        this.datoPeritos.fecha_baja = (this.peritoPersonaFormGroup.value.fecha_baja) ? this.peritoPersonaFormGroup.value.fecha_baja : null;
+        this.datoPeritos.nombre = (this.peritoPersonaFormGroup.value.nombre) ? this.peritoPersonaFormGroup.value.nombre.toLocaleUpperCase() : null;
+        this.datoPeritos.apepaterno = (this.peritoPersonaFormGroup.value.apepaterno) ? this.peritoPersonaFormGroup.value.apepaterno.toLocaleUpperCase() : null;
+        this.datoPeritos.apematerno = (this.peritoPersonaFormGroup.value.apematerno) ? this.peritoPersonaFormGroup.value.apematerno.toLocaleUpperCase() : null;
+        this.datoPeritos.rfc = (this.peritoPersonaFormGroup.value.rfc) ? this.peritoPersonaFormGroup.value.rfc.toLocaleUpperCase() : null;
+        this.datoPeritos.ine = (this.peritoPersonaFormGroup.value.ine) ? this.peritoPersonaFormGroup.value.ine.toLocaleUpperCase() : null;
+        this.datoPeritos.identificacion = (this.peritoPersonaFormGroup.value.identificacion) ? this.peritoPersonaFormGroup.value.identificacion.toLocaleUpperCase() : null;
+        this.datoPeritos.fecha_naci = (this.peritoPersonaFormGroup.value.fecha_naci) ? this.peritoPersonaFormGroup.value.fecha_naci : null;
+        this.datoPeritos.fecha_def = (this.peritoPersonaFormGroup.value.fecha_def) ? this.peritoPersonaFormGroup.value.fecha_def : null;
+        this.datoPeritos.email = (this.peritoPersonaFormGroup.value.email) ? this.peritoPersonaFormGroup.value.email : null;
+        this.datoPeritos.celular = (this.peritoPersonaFormGroup.value.celular) ? this.peritoPersonaFormGroup.value.celular : null;
+        this.datoPeritos.login = (this.peritoPersonaFormGroup.value.login) ? this.peritoPersonaFormGroup.value.login.toLocaleUpperCase() : null;
         
         let query = '';
         let busquedaDatos = 'getPeritosByDatosIdentificativos';
@@ -319,6 +321,7 @@ export class AltaPeritosComponent implements OnInit {
                         horizontalPosition: 'end',
                         verticalPosition: 'top'
                     });
+                    this.btnNuevo = true;
                 },
                 (error) => {
                     this.loading = false;
@@ -327,6 +330,7 @@ export class AltaPeritosComponent implements OnInit {
                         horizontalPosition: 'end',
                         verticalPosition: 'top'
                     });
+                    this.btnNuevo = false;
                 }
             );
     }

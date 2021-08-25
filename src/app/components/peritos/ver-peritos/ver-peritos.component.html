@@ -56,11 +56,10 @@
                         <div class="col-md-4">
                             <mat-form-field appearance="fill" style="width: 100%;">
                                 <mat-label>Identificación</mat-label>
-                                <mat-select [disabled]="true" [(ngModel)]="datoPeritos.idIden">
-                                    <mat-option value="1">Cédula profecional</mat-option>
-                                    <mat-option value="2">Pasaporte</mat-option>
-                                    <mat-option value="3">Licencia de conducir</mat-option>
-                                    <mat-option value="4">Número de seguro social</mat-option>
+                                <mat-select [disabled]="true" [(ngModel)]="datoPeritos.identificacion">
+                                    <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF">
+                                        {{ documento.DESCRIPCION }}
+                                    </mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>

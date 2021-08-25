@@ -11,8 +11,7 @@
                     </div>
                         <mat-form-field appearance="outline" class="col-5">
                             <mat-label>Apellido Paterno</mat-label>
-                            <input matInput [(ngModel)]="appaterno" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)" (keydown.enter)="getPerito()" placeholder="Ingrese Apellido Paterno" style="text-transform: uppercase;" maxlength="250">
-                            <mat-error></mat-error>
+                            <input matInput [(ngModel)]="appaterno" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)" (keydown.enter)="getPerito()" placeholder="Ingrese Apellido Paterno" style="text-transform: uppercase;" maxlength="250">
                         </mat-form-field>
                 </div>
                 <div class="row">
@@ -20,8 +19,7 @@
                     </div>
                         <mat-form-field appearance="outline" class="col-5">
                             <mat-label>Apellido Materno</mat-label>
-                            <input matInput [(ngModel)]="apmaterno" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)" (keydown.enter)="getPerito()" placeholder="Ingrese Apellido Materno" style="text-transform: uppercase;" maxlength="250">
-                            <mat-error></mat-error>
+                            <input matInput [(ngModel)]="apmaterno" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)" (keydown.enter)="getPerito()" placeholder="Ingrese Apellido Materno" style="text-transform: uppercase;" maxlength="250">
                         </mat-form-field>
                 </div>
                 <div class="row">
@@ -29,8 +27,7 @@
                     </div>
                         <mat-form-field appearance="outline" class="col-5">
                             <mat-label>Nombre</mat-label>
-                            <input matInput [(ngModel)]="nombre" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)" (keydown.enter)="getPerito()" placeholder="Ingrese Nombre" style="text-transform: uppercase;" maxlength="250">
-                            <mat-error></mat-error>
+                            <input matInput [(ngModel)]="nombre" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)" (keydown.enter)="getPerito()" placeholder="Ingrese Nombre" style="text-transform: uppercase;" maxlength="250">
                         </mat-form-field>
                 </div>
                 <!-- Fin de nombre -->
@@ -41,13 +38,11 @@
                     </div>
                         <mat-form-field appearance="outline" class="col-5">
                             <mat-label>RFC</mat-label>
-                            <input matInput [(ngModel)]="rfc" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" (keydown.enter)="getPerito()" placeholder="Ingrese RFC" style="text-transform: uppercase;" maxlength="13">
-                            <mat-error></mat-error>
+                            <input matInput [(ngModel)]="rfc" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" (keydown.enter)="getPerito()" placeholder="Ingrese RFC" style="text-transform: uppercase;" maxlength="13">
                         </mat-form-field>
                         <mat-form-field appearance="outline" class="col-5">
                             <mat-label>CURP</mat-label>
-                            <input matInput [(ngModel)]="curp" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" (keydown.enter)="getPerito()" placeholder="Ingrese CURP" style="text-transform: uppercase;" maxlength="18">
-                            <mat-error></mat-error>
+                            <input matInput [(ngModel)]="curp" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" (keydown.enter)="getPerito()" placeholder="Ingrese CURP" style="text-transform: uppercase;" maxlength="18">
                         </mat-form-field>
                 </div>
                 <!-- Fin de RFC CRUP -->
@@ -58,13 +53,11 @@
                     </div>
                         <mat-form-field appearance="outline" class="col-5">
                             <mat-label>INE</mat-label>
-                            <input matInput [(ngModel)]="ine" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" (keydown.enter)="getPerito()" placeholder="Ingrese INE" style="text-transform: uppercase;" maxlength="250">
-                            <mat-error></mat-error>
+                            <input matInput [(ngModel)]="ine" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" (keydown.enter)="getPerito()" placeholder="Ingrese INE" style="text-transform: uppercase;" maxlength="250">
                         </mat-form-field>
                         <mat-form-field appearance="outline" class="col-5">
                             <mat-label>Registro</mat-label>
-                            <input matInput [(ngModel)]="registro" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" (keydown.enter)="getPerito()" placeholder="Ingrese Registro" style="text-transform: uppercase;" maxlength="250">
-                            <mat-error></mat-error>
+                            <input matInput [(ngModel)]="registro" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" (keydown.enter)="getPerito()" placeholder="Ingrese Registro" style="text-transform: uppercase;" maxlength="250">
                         </mat-form-field>                    
                 </div>
                 <!-- Fin de OTROS -->
@@ -74,7 +67,7 @@
                     </div>
                     <mat-form-field appearance="fill" class="col-5">
                         <mat-label>Identificación</mat-label>
-                        <mat-select [(ngModel)]="identificacion" [required]="true" (ngModelChange)="validateSearch();clearInputsIdentNoIdent(true)" [class.spinner]="loadingDocumentosIdentificativos">
+                        <mat-select [(ngModel)]="identificacion" (ngModelChange)="validateSearch();clearInputsIdentNoIdent(true)" [class.spinner]="loadingDocumentosIdentificativos">
                             <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF">
                                 {{ documento.DESCRIPCION }}
                             </mat-option>
@@ -82,7 +75,7 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-5">
                         <mat-label></mat-label>
-                        <input matInput [(ngModel)]="idedato" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" (keydown.enter)="getPerito()" style="text-transform: uppercase;">
+                        <input matInput [(ngModel)]="idedato" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" (keydown.enter)="getPerito()" style="text-transform: uppercase;">
                     </mat-form-field>
                 </div>
 

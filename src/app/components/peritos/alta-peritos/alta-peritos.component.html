@@ -36,9 +36,8 @@
                         <mat-error *ngIf="peritoPersonaFormGroup.controls.apepaterno.errors?.required">Requerido</mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-5">
-                        <mat-label>Apellido Materno: *</mat-label>
+                        <mat-label>Apellido Materno:</mat-label>
                         <input matInput placeholder="Ingrese Apellido Materno" [(ngModel)]="datoPeritos.apematerno" formControlName="apematerno" [readonly]="inserto" maxlength="250" style="text-transform: uppercase;">
-                        <mat-error *ngIf="peritoPersonaFormGroup.controls.apematerno.errors?.required">Requerido</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="row">
@@ -106,8 +105,9 @@
                         <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.celular" formControlName="celular" [readonly]="inserto" maxlength="10">
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-5">
-                        <mat-label>E-mail:</mat-label>
+                        <mat-label>E-mail: *</mat-label>
                         <input matInput type="email" [email]="true" placeholder="Ingrese E-mail" [(ngModel)]="datoPeritos.email" formControlName="email" [readonly]="inserto" maxlength="250">
+                        <mat-error *ngIf="peritoPersonaFormGroup.controls.email.errors?.required">Requerido</mat-error>
                         <mat-error *ngIf="peritoPersonaFormGroup.hasError('email', 'email') && peritoPersonaFormGroup.get('email').touched">Correo invalido</mat-error>
                         
                     </mat-form-field>
@@ -168,10 +168,17 @@
                         </button>
                     </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2" *ngIf="!btnNuevo">
                     <div class="d-flex flex-row-reverse">
                         <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" (click)="consulta_previa()" [disabled]="peritoPersonaFormGroup.invalid">
                             Guardar
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-2" *ngIf="btnNuevo">
+                    <div class="d-flex flex-row-reverse">
+                        <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Nuevo" (click)="clean()">
+                            Nuevo
                         </button>
                     </div>
                 </div>

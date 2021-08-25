@@ -13,8 +13,8 @@ export interface DatosPeritos {
     rfc: string;
     curp: string;
     ine: string;
-    idIden: number;
-    identificacion: string;
+    identificacion: number;
+    idedato: string;
     fecha_naci: Date;
     fecha_def: Date;
     celular: string;
@@ -25,6 +25,11 @@ export interface DatosPeritos {
     fecha_baja: Date;
 }
 
+export interface DocumentosIdentificativos{
+    id_documento: number;
+    documento: string;
+}
+
 @Component({
     selector: 'app-ver-peritos',
     templateUrl: './ver-peritos.component.html',
@@ -33,6 +38,7 @@ export interface DatosPeritos {
 export class VerPeritosComponent implements OnInit {
 
     endpoint = environment.endpoint + 'registro/getPerito';
+    endpointActualiza = environment.endpoint + 'registro/';
     displayedColumns: string[] = ['nombre','registro', 'rfc'];
     pagina = 1;
     total = 0;
@@ -47,6 +53,8 @@ export class VerPeritosComponent implements OnInit {
     idPerito;
     datoPeritos: DatosPeritos = {} as DatosPeritos;
     @ViewChild('paginator') paginator: MatPaginator;
+    loadingDocumentosIdentificativos = false;
+    documentos: DocumentosIdentificativos[] = [];
 
     constructor(
         private http: HttpClient,
@@ -68,8 +76,25 @@ export class VerPeritosComponent implements OnInit {
         this.idPerito = this.route.snapshot.paramMap.get('idperito');
         console.log(this.idPerito);
         this.getPeritoDatos();
+        this.getDataDocumentosIdentificativos();
     }
 
+    /** 
+    * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
+    */
+     getDataDocumentosIdentificativos(): void{
+        this.loadingDocumentosIdentificativos = true;
+        this.http.get(this.endpointActualiza + 'getCatalogos', this.httpOptions).subscribe(
+            (res: any) => {
+                this.loadingDocumentosIdentificativos = false;
+                this.documentos = res.CatDocIdentificativos;
+            },
+            (error) => {
+                this.loadingDocumentosIdentificativos = false;
+            }
+        );
+    }
+    
     /**
      * Obtiene los datos del perito consultado.
      */
@@ -111,15 +136,15 @@ export class VerPeritosComponent implements OnInit {
         this.datoPeritos.rfc = this.dataPeritoResultado.RFC;
         this.datoPeritos.curp = this.dataPeritoResultado.CURP;
         this.datoPeritos.ine = this.dataPeritoResultado.CLAVEIFE;
-        this.datoPeritos.idIden = 2;
-        this.datoPeritos.identificacion = this.dataPeritoResultado.DESCDOCIDENTIF;
-        this.datoPeritos.fecha_naci = this.dataPeritoResultado.FECHANACIMIENTO;
-        this.datoPeritos.fecha_def = this.dataPeritoResultado.FECHADEFUNCION;
+        this.datoPeritos.identificacion = this.dataPeritoResultado.IDDOCIDENTIF;
+        this.datoPeritos.idedato = this.dataPeritoResultado.VALDOCIDENTIF;
+        this.datoPeritos.fecha_naci = (this.dataPeritoResultado.FECHANACIMIENTO) ? new Date(this.dataPeritoResultado.FECHANACIMIENTO) : null;
+        this.datoPeritos.fecha_def = (this.dataPeritoResultado.FECHADEFUNCION) ? new Date(this.dataPeritoResultado.FECHADEFUNCION) : null;
         this.datoPeritos.celular = this.dataPeritoResultado.CELULAR;
         this.datoPeritos.email = this.dataPeritoResultado.EMAIL;
         this.datoPeritos.registro = this.dataPeritoResultado.REGISTRO;
-        this.datoPeritos.fecha_alta = new Date(this.dataPeritoResultado.FECHAALTA);
-        this.datoPeritos.fecha_baja = new Date(this.dataPeritoResultado.FECHABAJA);
+        this.datoPeritos.fecha_alta = (new Date(this.dataPeritoResultado.FECHAALTA)) ? new Date(new Date(this.dataPeritoResultado.FECHAALTA)) : null;
+        this.datoPeritos.fecha_baja = (this.dataPeritoResultado.FECHABAJA) ? new Date(this.dataPeritoResultado.FECHABAJA) : null;
         
         if(this.dataPeritoResultado.INDEPENDIENTE === 'S'){
             this.datoPeritos.independiente = true;
