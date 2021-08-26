@@ -305,8 +305,11 @@ export class EditarPeritosComponent implements OnInit {
         this.botonEdit = true;
     }
 
+    /**
+     * De acuerdo al campo seleccionado será requerido el RFC, el CURP o ambos.
+     */
     changeRequired(): void {
-        if((!this.peritoPersonaFormGroup.value.rfc && !this.peritoPersonaFormGroup.value.curp) || (!this.datoPeritos.rfc && !this.datoPeritos.curp)){​​​​​​​​
+        if(!this.datoPeritos.rfc && !this.datoPeritos.curp){​​​​​​​​
             this.isRequired = true;
         }​​​​​​​​ else {​​​​​​​​
             this.isRequired = false;
@@ -612,12 +615,23 @@ export class EditarPeritosComponent implements OnInit {
         this.http.post(this.endpointActualiza + 'actualizaContribuyente?' + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
-                    this.loadingDatosPerito = false;
-                    console.log('ACTUALIZOOOOO!')
-                    console.log(this.loadingDatosPerito);
-                    this.loadingDatosPerito = false;
-                    console.log(this.loadingDatosPerito);
-                    
+                    if(res.idpersona){
+                        this.loadingDatosPerito = false;
+                        console.log('ACTUALIZOOOOO!')
+                        // console.log(this.loadingDatosPerito);
+                        // console.log(res);
+                        this.snackBar.open('Guardado exitoso', 'Cerrar', {
+                            duration: 10000,
+                            horizontalPosition: 'end',
+                            verticalPosition: 'top'
+                        });
+                    }else{
+                        this.snackBar.open(res.error.mensaje, 'Cerrar', {
+                            duration: 10000,
+                            horizontalPosition: 'end',
+                            verticalPosition: 'top'
+                        });
+                    }                    
                 },
                 (error) => {
                     this.loadingDatosPerito = false;

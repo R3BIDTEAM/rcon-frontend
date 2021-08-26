@@ -111,32 +111,32 @@
                 <ng-container *ngIf="contribuyente.tipoPersona == 'M'  && !loading">
                     <form [formGroup]="moralFormGroup">
                         <div class="row">
-                            <mat-form-field class="col-12">
+                            <mat-form-field appearance="outline" class="col-12">
                                 <mat-label>Nombre: *</mat-label>
                                 <input matInput formControlName="nombre_moral" [(ngModel)]="contribuyente.nombre_moral" placeholder="Ingrese el Nombre" style="text-transform: uppercase;" maxlength="250">
                                 <mat-error *ngIf="moralFormGroup.controls.nombre_moral.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
-                            <mat-form-field class="col-6">
+                            <mat-form-field appearance="outline" class="col-6">
                                 <mat-label>RFC: *</mat-label>
                                 <input matInput formControlName="rfc" (keyup)="changeRequired()" placeholder="Ingrese el RFC" [(ngModel)]="contribuyente.rfc" pattern="^([A-ZÑ&]{3})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" [required]="isRequired" style="text-transform: uppercase;" onkeyup="this.value = this.value.toUpperCase();">
                                 <mat-error *ngIf="moralFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="moralFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 3 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
                             </mat-form-field>
-                            <mat-form-field class="col-6" style="margin-left: 0px!important;">
+                            <mat-form-field appearance="outline" class="col-6" style="margin-left: 0px!important;">
                                 <mat-label>Act. preponderante: *</mat-label>
                                 <input matInput formControlName="actPreponderante" [(ngModel)]="contribuyente.actPreponderante" placeholder="Ingrese la Act. preponderante" style="text-transform: uppercase;">
                             </mat-form-field>
                         </div>
                         <div class="row">
-                            <mat-form-field class="col-6">
+                            <mat-form-field appearance="fill" class="col-6">
                                 <mat-label>Tipo de persona moral</mat-label>
                                 <mat-select formControlName="idTipoPersonaMoral">
                                     <mat-option value=""></mat-option>
                                 </mat-select>
                             </mat-form-field>
-                            <mat-form-field class="col-6" style="margin-left: 0px!important;">
+                            <mat-form-field appearance="fill" class="col-6" style="margin-left: 0px!important;">
                                 <mat-label>Fecha de inicio de operación:</mat-label>
                                 <input matInput readonly formControlName="fechaInicioOperacion" [matDatepicker]="pickfechaInicioOperacion" [(ngModel)]="contribuyente.fechaInicioOperacion" placeholder="Ingrese Fecha de inicio de operación">
                                 <mat-datepicker-toggle matSuffix [for]="pickfechaInicioOperacion"></mat-datepicker-toggle>
@@ -144,13 +144,13 @@
                             </mat-form-field>                            
                         </div>
                         <div class="row">
-                            <mat-form-field class="col-6">
+                            <mat-form-field appearance="fill" class="col-6">
                                 <mat-label>Motivo del cambio de situación</mat-label>
                                 <mat-select formControlName="idMotivo" >
                                     <mat-option value=""></mat-option>
                                 </mat-select>
                             </mat-form-field>
-                            <mat-form-field class="col-6" style="margin-left: 0px!important;">
+                            <mat-form-field appearance="fill" class="col-6" style="margin-left: 0px!important;">
                                 <mat-label>Fecha de cambio de situación:</mat-label>
                                 <input matInput readonly formControlName="fechaCambio" [matDatepicker]="pickfechaCambio" [(ngModel)]="contribuyente.fechaCambio" placeholder="Ingrese Fecha de cambio de situación">
                                 <mat-datepicker-toggle matSuffix [for]="pickfechaCambio"></mat-datepicker-toggle>
@@ -191,7 +191,7 @@
                     </div>
                     <div class="col-md-2" *ngIf="!actCambioPersona">
                         <div class="d-flex flex-row-reverse">
-                            <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Actualizar tipo persona" matTooltip="Actualizar tipo persona" (click)="confirmaCambio()" *ngIf="!loading" [disabled]="(contribuyente.tipoPersona == 'F' ? fisicaFormGroup.invalid : moralFormGroup.invalid)">
+                            <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Actualizar tipo persona" matTooltip="Actualizar tipo persona" (click)="confirmaCambio(1)" *ngIf="!loading" [disabled]="(contribuyente.tipoPersona == 'F' ? fisicaFormGroup.invalid : moralFormGroup.invalid)">
                                 Guardar <mat-icon style="display: inherit; width: 15px;">update</mat-icon>
                             </button>
                         </div>

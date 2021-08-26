@@ -89,7 +89,7 @@ export class AltaPeritosComponent implements OnInit {
             fechaDefuncion: [null],
             celular: [null],
             email: ['', Validators.email && Validators.required],
-            registro: [null, []],
+            registro: ['', [Validators.required]],
             fechaInicio: [null, []],
             fechaFin: [null, []],
             login: ['', Validators.required]

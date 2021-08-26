@@ -286,6 +286,7 @@ export class EditarContribuyenteComponent implements OnInit {
     actualizaPersona(event){
         console.log(event)
         this.actCambioPersona = (event == this.cambioPersona) ? true : false;
+        console.log(this.actCambioPersona);
         const dialogRef = this.dialog.open(DialogsCambiaPersona, {
             width: '700px',
             data: this.actCambioPersona
@@ -305,13 +306,16 @@ export class EditarContribuyenteComponent implements OnInit {
 
     confirmaCambiaPersona(){
         if(this.contribuyente.tipoPersona == 'M'){
-            this.contribuyente.nombre_moral = (this.contribuyente.apepaterno !== null) ? this.contribuyente.apepaterno : '' 
+            this.contribuyente.nombre_moral = ((this.contribuyente.apepaterno !== null) ? this.contribuyente.apepaterno : '') 
                                                 + ' ' + 
-                                                (this.contribuyente.apematerno !== null) ?  this.contribuyente.apematerno : ''
+                                                ((this.contribuyente.apematerno !== null) ?  this.contribuyente.apematerno : '')
                                                 + ' ' + 
-                                                (this.contribuyente.nombre !== null) ? this.contribuyente.nombre : '';
+                                                ((this.contribuyente.nombre !== null) ? this.contribuyente.nombre : '');
         }
         this.contribuyente.rfc = null;
+        this.cambioPersona = this.contribuyente.tipoPersona;
+        console.log("TIPO DE PERSONA CAMBIO");
+        console.log(this.contribuyente.tipoPersona);
     }
 
     /**

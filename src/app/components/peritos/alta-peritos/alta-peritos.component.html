@@ -121,12 +121,11 @@
                     <div class="col-1 text-center">
                     </div>
                     <mat-form-field appearance="outline" class="col-5">
-                        <mat-label>Registro:</mat-label>
+                        <mat-label>Registro: *</mat-label>
                         <input matInput formControlName="registro" [(ngModel)]="datoPeritos.registro" [readonly]="inserto" maxlength="250" style="text-transform: uppercase;">
+                        <mat-error *ngIf="peritoPersonaFormGroup.controls.registro.errors?.required">Requerido</mat-error>
                     </mat-form-field>
-                    <!-- <mat-form-field class="col-5"> -->
                         <mat-checkbox (change)="isIndependiente($event)" [disabled]="inserto" style="margin-top: 15px; margin-left: 20px;">Independiente</mat-checkbox>
-                    <!-- </mat-form-field> -->
                 </div>
                 <div class="row">
                     <div class="col-1 text-center">
