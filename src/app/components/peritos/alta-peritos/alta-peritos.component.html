@@ -102,7 +102,7 @@
                     </div>
                     <mat-form-field appearance="outline" class="col-5">
                         <mat-label>Celular:</mat-label>
-                        <input matInput placeholder="Placeholder" [(ngModel)]="datoPeritos.celular" formControlName="celular" [readonly]="inserto" maxlength="10">
+                        <input matInput placeholder="Ingrese Celular" [(ngModel)]="datoPeritos.celular" formControlName="celular" [readonly]="inserto" maxlength="10">
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-5">
                         <mat-label>E-mail: *</mat-label>
@@ -122,7 +122,7 @@
                     </div>
                     <mat-form-field appearance="outline" class="col-5">
                         <mat-label>Registro: *</mat-label>
-                        <input matInput formControlName="registro" [(ngModel)]="datoPeritos.registro" [readonly]="inserto" maxlength="250" style="text-transform: uppercase;">
+                        <input matInput formControlName="registro" [(ngModel)]="datoPeritos.registro" [readonly]="inserto" maxlength="250" style="text-transform: uppercase;" placeholder="Ingrese Registro">
                         <mat-error *ngIf="peritoPersonaFormGroup.controls.registro.errors?.required">Requerido</mat-error>
                     </mat-form-field>
                         <mat-checkbox (change)="isIndependiente($event)" [disabled]="inserto" style="margin-top: 15px; margin-left: 20px;">Independiente</mat-checkbox>
@@ -148,7 +148,7 @@
                     </div>
                     <mat-form-field appearance="outline" class="col-5">
                         <mat-label>Login: *</mat-label>
-                        <input matInput formControlName="login" [readonly]="inserto" maxlength="10" style="text-transform: uppercase;">
+                        <input matInput formControlName="login" [readonly]="inserto" maxlength="10" style="text-transform: uppercase;" placeholder="Ingrese Login">
                         <mat-error *ngIf="peritoPersonaFormGroup.controls.login.errors?.required">Requerido</mat-error>
                     </mat-form-field>
                 </div>

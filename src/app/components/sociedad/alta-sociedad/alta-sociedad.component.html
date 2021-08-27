@@ -46,7 +46,7 @@
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-6">
                                 <mat-label>Registro *</mat-label>
-                                <input matInput  [readonly]="inserto" formControlName="registro" maxlength="250" style="text-transform: uppercase;">
+                                <input matInput  [readonly]="inserto" formControlName="registro" maxlength="250" style="text-transform: uppercase;" placeholder="Ingrese Registro">
                                 <mat-error *ngIf="sociedadFormGroup.controls.registro.errors?.required">Requerido</mat-error>
                             </mat-form-field>
                         </div>

@@ -110,7 +110,7 @@ export class AltaNotarioComponent implements OnInit {
      * De acuerdo al campo seleccionado será requerido el RFC, el CURP o ambos.
      */
      changeRequired(): void {
-        if((!this.notarioFormGroup.value.rfc && !this.notarioFormGroup.value.curp) || (!this.filtros.rfc && !this.filtros.curp)){​​​​​​​​
+        if(!this.filtros.rfc && !this.filtros.curp){​​​​​​​​
             this.isRequired = true;
         }​​​​​​​​ else {​​​​​​​​
             this.isRequired = false;
@@ -189,16 +189,17 @@ export class AltaNotarioComponent implements OnInit {
         width: '700px',
         });
         dialogRef.afterClosed().subscribe(result => {
-        this.filtros.no_notario = result.no_notario;
-        this.filtros.estado = result.estado;
-        this.filtros.nombre = result.nombre;
-        this.filtros.apellido_paterno = result.apellido_paterno;
-        this.filtros.apellido_materno = result.apellido_materno;
-        this.filtros.rfc = result.rfc;
-        this.filtros.curp = result.curp;
-        this.filtros.ine = result.ine;
-        this.filtros.celular = result.celular;
-        this.filtros.email = result.email;
+            this.filtros.no_notario = result.no_notario;
+            this.filtros.estado = result.estado;
+            this.filtros.nombre = result.nombre;
+            this.filtros.apellido_paterno = result.apellido_paterno;
+            this.filtros.apellido_materno = result.apellido_materno;
+            this.filtros.rfc = result.rfc;
+            this.filtros.curp = result.curp;
+            this.filtros.ine = result.ine;
+            this.filtros.celular = result.celular;
+            this.filtros.email = result.email;
+            this.changeRequired();
         });
     }
 
