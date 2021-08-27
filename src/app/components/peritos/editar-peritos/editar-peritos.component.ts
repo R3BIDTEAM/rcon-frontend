@@ -805,7 +805,10 @@ export class EditarPeritosComponent implements OnInit {
             },
         });
         dialogRef.afterClosed().subscribe(result => {
+            this.loadingDomicilios = true;
+            setTimeout (() => {
                 this.getDomicilioPerito();
+            }, 1500);
         });
     }
 
@@ -820,7 +823,10 @@ export class EditarPeritosComponent implements OnInit {
                 data: {dataDomicilioEspecifico:dataDomicilioEspecifico, idNotario: this.idPerito},
             });
             dialogRef.afterClosed().subscribe(result => {
+                this.loadingDomicilios = true;
+                setTimeout (() => {
                     this.getDomicilioPerito();
+                }, 1500);
             });
       }
 
@@ -850,7 +856,10 @@ export class EditarPeritosComponent implements OnInit {
             },
         });
         dialogRef.afterClosed().subscribe(result => {
-            this.getDomicilioPerito();
+            this.loadingDomicilios = true;
+            setTimeout (() => {
+                this.getDomicilioPerito();
+            }, 1500);
         });
     }
 
@@ -871,7 +880,7 @@ export class EditarPeritosComponent implements OnInit {
                 setTimeout (() => {
                     this.loadingRepresentante = true;
                     this.getRepresentacion();
-                }, 1000);
+                }, 2000);
             }
         });
     }
@@ -893,7 +902,7 @@ export class EditarPeritosComponent implements OnInit {
                 setTimeout (() => {
                     this.loadingRepresentado = true;
                     this.getRepresentado();
-                }, 1000);
+                }, 2000);
             }
         });
     }

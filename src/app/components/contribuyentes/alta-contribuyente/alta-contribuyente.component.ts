@@ -369,7 +369,7 @@ export class AltaContribuyenteComponent implements OnInit {
         query = (this.contribuyente.fechaInicioOperacion) ? query + '&fechainicioactiv=' + moment(this.contribuyente.fechaInicioOperacion).format('DD-MM-YYYY') : query + '&fechainicioactiv=';
         query = (this.contribuyente.fechaCambio) ? query + '&fechacambiosituacion=' + moment(this.contribuyente.fechaCambio).format('DD-MM-YYYY') : query + '&fechacambiosituacion=';
         query = (this.contribuyente.rfc) ? query + '&rfc=' + this.contribuyente.rfc.toLocaleUpperCase() : query + '&rfc=';
-        query = (this.contribuyente.apaterno) ? query + '&apellidopaterno=' + this.contribuyente.apaterno.toLocaleUpperCase() : query + '&apellidopaterno=' + this.contribuyente.nombre_moral;
+        query = (this.contribuyente.apaterno) ? query + '&apellidopaterno=' + this.contribuyente.apaterno.toLocaleUpperCase() : query + '&apellidopaterno=' + this.contribuyente.nombre_moral.toLocaleUpperCase();
         query = (this.contribuyente.amaterno) ? query + '&apellidomaterno=' + this.contribuyente.amaterno.toLocaleUpperCase() : query + '&apellidomaterno=';
         query = (this.contribuyente.curp) ? query + '&curp=' + this.contribuyente.curp.toLocaleUpperCase() : query + '&curp=';
         query = (this.contribuyente.ine) ? query + '&claveife=' + this.contribuyente.ine.toLocaleUpperCase() : query + '&claveife=';
@@ -488,7 +488,7 @@ export class AltaContribuyenteComponent implements OnInit {
                 this.loadingDomicilios = true;
                 setTimeout (() => {
                     this.getDomicilioContribuyente();
-                }, 1000);
+                }, 1500);
                 
         });
     }
@@ -505,7 +505,7 @@ export class AltaContribuyenteComponent implements OnInit {
             this.loadingDomicilios = true;
             setTimeout (() => {
                 this.getDomicilioContribuyente();
-            }, 1000);
+            }, 1500);
         });
     }
 
@@ -583,10 +583,10 @@ export class AltaContribuyenteComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
+                this.loadingRepresentante = true;
                 setTimeout (() => {
-                    this.loadingRepresentante = true;
                     this.getRepresentacion();
-                }, 1000);
+                }, 2000);
             }
         });
     }
@@ -601,10 +601,10 @@ export class AltaContribuyenteComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
+                this.loadingRepresentado = true;
                 setTimeout (() => {
-                    this.loadingRepresentado = true;
                     this.getRepresentado();
-                }, 1000);
+                }, 2000);
             }
         });
     }

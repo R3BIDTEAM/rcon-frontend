@@ -582,7 +582,10 @@ export class EditarNotarioComponent implements OnInit {
             },
         });
         dialogRef.afterClosed().subscribe(result => {
+            this.loadingDomicilios = true;
+            setTimeout (() => {
                 this.getNotarioDirecciones();
+            }, 1500);
         });
     }
 
@@ -597,7 +600,10 @@ export class EditarNotarioComponent implements OnInit {
                 data: {dataDomicilioEspecifico:dataDomicilioEspecifico, idNotario: this.idNotario},
             });
             dialogRef.afterClosed().subscribe(result => {
+                this.loadingDomicilios = true;
+                setTimeout (() => {
                     this.getNotarioDirecciones();
+                }, 1500);
             });
     }
 

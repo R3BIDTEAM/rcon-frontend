@@ -703,7 +703,10 @@ export class EditarSociedadComponent implements OnInit {
           },
       });
       dialogRef.afterClosed().subscribe(result => {
-              this.getDomicilioSociedad();
+        this.loadingDomicilios = true;
+        setTimeout (() => {
+            this.getDomicilioSociedad();
+        }, 1500);
       });
     }
 
@@ -733,7 +736,9 @@ export class EditarSociedadComponent implements OnInit {
             },
         });
         dialogRef.afterClosed().subscribe(result => {
-            this.getDomicilioSociedad();
+            setTimeout (() => {
+                this.getDomicilioSociedad();
+            }, 1500);
         });
     }
 
@@ -748,7 +753,9 @@ export class EditarSociedadComponent implements OnInit {
                 data: {dataDomicilioEspecifico:dataDomicilioEspecifico, idNotario: this.idSociedad},
             });
             dialogRef.afterClosed().subscribe(result => {
+                setTimeout (() => {
                     this.getDomicilioSociedad();
+                }, 1500);
             });
     }
 
@@ -813,7 +820,7 @@ export class EditarSociedadComponent implements OnInit {
                 setTimeout (() => {
                     this.loadingRepresentante = true;
                     this.getRepresentacion();
-                }, 1000);
+                }, 2000);
             }
         });
     }
@@ -835,7 +842,7 @@ export class EditarSociedadComponent implements OnInit {
                 setTimeout (() => {
                     this.loadingRepresentado = true;
                     this.getRepresentado();
-                }, 1000);
+                }, 2000);
             }
         });
     }

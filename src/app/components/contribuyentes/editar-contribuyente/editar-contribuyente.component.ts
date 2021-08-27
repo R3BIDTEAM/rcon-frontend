@@ -1259,7 +1259,10 @@ export class EditarContribuyenteComponent implements OnInit {
                 this.actualizado = false;
             
             }
-            this.getDomicilioContribuyente();
+            this.loadingDomicilios = true;
+            setTimeout (() => {
+                this.getDomicilioContribuyente();
+            }, 1500);
         });
     }
 
@@ -1302,7 +1305,9 @@ export class EditarContribuyenteComponent implements OnInit {
                 this.actualizado = false;
             
             }
-            this.getDomicilioContribuyente();
+            setTimeout (() => {
+                this.getDomicilioContribuyente();
+            }, 1500);
         });
     }
 
@@ -1345,7 +1350,9 @@ export class EditarContribuyenteComponent implements OnInit {
                 this.actualizado = false;
             
             }
-            this.getDomicilioContribuyente();
+            setTimeout (() => {
+                this.getDomicilioContribuyente();
+            }, 1500);
         });
     }
 
@@ -1389,7 +1396,9 @@ export class EditarContribuyenteComponent implements OnInit {
                 this.actualizado = false;
             
             }
-            this.getDomicilioContribuyente();
+            setTimeout (() => {
+                this.getDomicilioContribuyente();
+            }, 1500);
         });
     }
 
@@ -1436,7 +1445,7 @@ export class EditarContribuyenteComponent implements OnInit {
                 setTimeout (() => {
                     this.loadingRepresentante = true;
                     this.getRepresentacion();
-                }, 1000);
+                }, 2000);
             }
         });
     }
@@ -1458,7 +1467,7 @@ export class EditarContribuyenteComponent implements OnInit {
                 setTimeout (() => {
                     this.loadingRepresentado = true;
                     this.getRepresentado();
-                }, 1000);
+                }, 2000);
             }
         });
     }
