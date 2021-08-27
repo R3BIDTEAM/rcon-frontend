@@ -145,6 +145,7 @@ export class AltaContribuyenteComponent implements OnInit {
     inserto = false;
     isRequired = true;
     btnDisabled = true;
+    selectDisabled = false;
 
     /*PAGINADOS*/
     dataSource1 = [];
@@ -248,6 +249,15 @@ export class AltaContribuyenteComponent implements OnInit {
         this.moralFormGroup.controls['fechaCambio'].setValue(null);
         this.inserto = false;
         this.btnDisabled = true;
+        this.selectDisabled = false;
+    }
+
+    /**
+     *  Si se selecciona alguna opción desbloqueará el input del número del documento.
+     * @param event Valor del option
+     */
+     seleccionaDocto(){
+        this.selectDisabled = true;
     }
 
     /**

@@ -67,14 +67,14 @@
                     </div>
                     <mat-form-field appearance="fill" class="col-5">
                         <mat-label>Identificación</mat-label>
-                        <mat-select [(ngModel)]="identificacion" (ngModelChange)="validateSearch();clearInputsIdentNoIdent(true)" [class.spinner]="loadingDocumentosIdentificativos">
+                        <mat-select [(ngModel)]="identificacion" (ngModelChange)="validateSearch();clearInputsIdentNoIdent(true)" [class.spinner]="loadingDocumentosIdentificativos" (selectionChange)="seleccionaDocto()">
                             <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF">
                                 {{ documento.DESCRIPCION }}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" class="col-5">
-                        <mat-label></mat-label>
+                    <mat-form-field appearance="outline" class="col-5" *ngIf="selectDisabled">
+                        <mat-label>Número de Identificación</mat-label>
                         <input matInput [(ngModel)]="idedato" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" (keydown.enter)="getPerito()" style="text-transform: uppercase;">
                     </mat-form-field>
                 </div>

@@ -70,14 +70,14 @@
                     </div>
                     <mat-form-field appearance="fill" class="col-5">
                         <mat-label>Identificación</mat-label>
-                        <mat-select formControlName="identificacion" [(ngModel)]="datoPeritos.identificacion" [disabled]="inserto" [class.spinner]="loadingDocumentosIdentificativos">
+                        <mat-select formControlName="identificacion" [(ngModel)]="datoPeritos.identificacion" [disabled]="inserto" [class.spinner]="loadingDocumentosIdentificativos" (selectionChange)="seleccionaDocto()">
                             <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF">
                                 {{ documento.DESCRIPCION }}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" class="col-5">
-                        <mat-label></mat-label>
+                    <mat-form-field appearance="outline" class="col-5" *ngIf="selectDisabled">
+                        <mat-label>Número de Identificación</mat-label>
                         <input matInput placeholder="Ingrese Número del documento" [(ngModel)]="datoPeritos.idedato" formControlName="idedato" [readonly]="inserto" maxlength="250" style="text-transform: uppercase;">
                     </mat-form-field>
                 </div>

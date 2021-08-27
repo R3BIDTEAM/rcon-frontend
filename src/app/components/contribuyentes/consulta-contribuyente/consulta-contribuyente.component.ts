@@ -38,6 +38,7 @@ export class ConsultaContribuyenteComponent implements OnInit {
   endpointBusqueda;
   loadingDocumentosIdentificativos = false;
   @ViewChild('paginator') paginator: MatPaginator;
+  selectDisabled = false;
 
   constructor(
     private auth: AuthService,
@@ -168,6 +169,14 @@ export class ConsultaContribuyenteComponent implements OnInit {
         this.contribuyenteFormGroup.controls['documentoidentificativo'].setValue(null);
       }
     }
+  }
+
+  /**
+   *  Si se selecciona alguna opción desbloqueará el input del número del documento.
+   * @param event Valor del option
+   */
+  seleccionaDocto(){
+    this.selectDisabled = true;
   }
 
     /**

@@ -45,7 +45,7 @@ export class EdicionPeritosComponent implements OnInit {
     documentos: DocumentosIdentificativos[] = [];
     loadingDocumentosIdentificativos = false;
     @ViewChild('paginator') paginator: MatPaginator;
-
+    selectDisabled = false;
     constructor(
         private http: HttpClient,
         private snackBar: MatSnackBar,
@@ -121,6 +121,15 @@ export class EdicionPeritosComponent implements OnInit {
         this.registro = null;
         this.identificacion = null;
         this.idedato = null;
+        this.selectDisabled = false;
+    }
+
+    /**
+     *  Si se selecciona alguna opción desbloqueará el input del número del documento.
+     * @param event Valor del option
+     */
+     seleccionaDocto(){
+        this.selectDisabled = true;
     }
 
     /**

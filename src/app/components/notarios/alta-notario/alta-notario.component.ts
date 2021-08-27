@@ -56,7 +56,7 @@ export class AltaNotarioComponent implements OnInit {
     loadingEstados = false;
     loadingDocumentosIdentificativos = false;
     btnDisabled = true;
-    selectDisabled = true;
+    selectDisabled = false;
     isRequired = true;
 
     constructor(
@@ -136,7 +136,7 @@ export class AltaNotarioComponent implements OnInit {
         this.filtros.email = null;
         this.filtros.celular = null;
         this.btnDisabled = true;
-        this.selectDisabled = true;
+        this.selectDisabled = false;
     }
 
     /** 
@@ -161,7 +161,7 @@ export class AltaNotarioComponent implements OnInit {
      * @param event Valor del option
      */
     seleccionaDocto(event){
-        this.selectDisabled = false;
+        this.selectDisabled = true;
     }
 
     /** 

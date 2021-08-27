@@ -126,15 +126,15 @@
                         <div class="row">
                             <mat-form-field appearance="fill" class="col-4">
                                 <mat-label>Otro documento identificativo:</mat-label>
-                                <mat-select formControlName="iddocumentoidentificativo" [class.spinner]="loadingDocumentosIdentificativos" (selectionChange)="clearInputsIdentNoIdent(true)">
+                                <mat-select formControlName="iddocumentoidentificativo" [class.spinner]="loadingDocumentosIdentificativos" (selectionChange)="seleccionaDocto()">
                                     <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF">
                                         {{ documento.DESCRIPCION }}
                                     </mat-option>
                                 </mat-select>
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.iddocumentoidentificativo.errors?.required">Requerido</mat-error>
                             </mat-form-field>
-                            <mat-form-field appearance="outline" class="col-4">
-                                <mat-label></mat-label>
+                            <mat-form-field appearance="outline" class="col-4"  *ngIf="selectDisabled">
+                                <mat-label>Número Documento</mat-label>
                                 <input matInput placeholder="" formControlName="documentoidentificativo" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250"  placeholder="Ingrese el número de documento" (keydown.enter)="getData()" style="text-transform: uppercase;">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.documentoidentificativo.errors?.required">Requerido</mat-error>
                             </mat-form-field>

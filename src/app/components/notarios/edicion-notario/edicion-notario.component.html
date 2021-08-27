@@ -48,14 +48,17 @@
             <div class="col-md-4">
                 <mat-form-field appearance="fill" style="width: 100%;">
                     <mat-label>Otro Documento:</mat-label>
-                    <mat-select #otro_documento [(ngModel)]="filtros.otro_documento" (ngModelChange)="otroDocumento()" [class.spinner]="loadingDocumentosIdentificativos">
+                    <mat-select #otro_documento [(ngModel)]="filtros.otro_documento" (ngModelChange)="otroDocumento()" [class.spinner]="loadingDocumentosIdentificativos" (selectionChange)="seleccionaDocto()">
                         <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF">
                             {{ documento.DESCRIPCION }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4" *ngIf="!selectDisabled">
+                        
+            </div>
+            <div class="col-md-4" *ngIf="selectDisabled">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>Número Documento</mat-label>
                     <input matInput #numero_documento [(ngModel)]="filtros.numero_documento" [disabled]="filtros.otro_documento == '' || filtros.otro_documento == null" placeholder="Ingrese número documento" (keydown.enter)="getData()" maxlength="250">

@@ -42,6 +42,7 @@ export class ConsultaPeritosComponent implements OnInit {
     documentos: DocumentosIdentificativos[] = [];
     loadingDocumentosIdentificativos = false;
     @ViewChild('paginator') paginator: MatPaginator;
+    selectDisabled = false;
 
     constructor(
         private http: HttpClient,
@@ -119,6 +120,7 @@ export class ConsultaPeritosComponent implements OnInit {
         this.registro = null;
         this.identificacion = null;
         this.idedato = null;
+        this.selectDisabled = false;
     }
 
     /**
@@ -136,6 +138,14 @@ export class ConsultaPeritosComponent implements OnInit {
                 this.identificacion ||
                 this.idedato
             ) ? true : false;
+    }
+
+    /**
+     *  Si se selecciona alguna opción desbloqueará el input del número del documento.
+     * @param event Valor del option
+     */
+    seleccionaDocto(){
+        this.selectDisabled = true;
     }
 
     /**

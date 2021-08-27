@@ -57,7 +57,7 @@ export class EdicionNotarioComponent implements OnInit {
   queryParamFiltros;
   endpointBusqueda;
   @ViewChild('paginator') paginator: MatPaginator;
-
+  selectDisabled = false;
 
   constructor(
     private http: HttpClient,
@@ -158,6 +158,13 @@ export class EdicionNotarioComponent implements OnInit {
     }
   }
 
+  /**
+   *  Si se selecciona alguna opción desbloqueará el input del número del documento.
+   * @param event Valor del option
+   */
+  seleccionaDocto(){
+    this.selectDisabled = true;
+  }
     /** 
      * Obtiene la información una vez llenados los filtros y realizado la búsqueda
      */

@@ -56,6 +56,7 @@ export class AltaPeritosComponent implements OnInit {
     loadingDocumentosIdentificativos = false;
     @ViewChild('paginator') paginator: MatPaginator;
     btnNuevo = false;
+    selectDisabled = false;
 
     constructor(
         private http: HttpClient,
@@ -152,6 +153,7 @@ export class AltaPeritosComponent implements OnInit {
         this.peritoPersonaFormGroup.controls['login'].setValue(null);
         this.inserto = false;
         this.btnNuevo = false;
+        this.selectDisabled = false;
     }
 
     /**
@@ -167,6 +169,14 @@ export class AltaPeritosComponent implements OnInit {
         console.log(this.peritoPersonaFormGroup.value.rfc);
         this.peritoPersonaFormGroup.markAsTouched();
         this.peritoPersonaFormGroup.updateValueAndValidity();
+    }
+
+    /**
+     *  Si se selecciona alguna opción desbloqueará el input del número del documento.
+     * @param event Valor del option
+     */
+     seleccionaDocto(){
+        this.selectDisabled = true;
     }
 
     /**

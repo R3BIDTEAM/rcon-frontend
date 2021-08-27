@@ -57,7 +57,7 @@ export class ConsultaNotarioComponent implements OnInit {
   queryParamFiltros;
   endpointBusqueda;
   @ViewChild('paginator') paginator: MatPaginator;
-
+  selectDisabled = false;
 
   constructor(
     private http: HttpClient,
@@ -156,6 +156,14 @@ export class ConsultaNotarioComponent implements OnInit {
     if(this.filtros.otro_documento === null || this.filtros.otro_documento === ''){
       this.filtros.numero_documento = '';
     }
+  }
+
+  /**
+     *  Si se selecciona alguna opción desbloqueará el input del número del documento.
+     * @param event Valor del option
+     */
+   seleccionaDocto(){
+    this.selectDisabled = true;
   }
 
     /** 
