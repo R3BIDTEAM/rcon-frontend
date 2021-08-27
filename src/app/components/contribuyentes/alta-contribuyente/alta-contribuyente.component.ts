@@ -485,7 +485,11 @@ export class AltaContribuyenteComponent implements OnInit {
             },
         });
         dialogRef.afterClosed().subscribe(result => {
-                this.getDomicilioContribuyente();
+                this.loadingDomicilios = true;
+                setTimeout (() => {
+                    this.getDomicilioContribuyente();
+                }, 1000);
+                
         });
     }
 
@@ -498,7 +502,10 @@ export class AltaContribuyenteComponent implements OnInit {
             },
         });
         dialogRef.afterClosed().subscribe(result => {
-            this.getDomicilioContribuyente();
+            this.loadingDomicilios = true;
+            setTimeout (() => {
+                this.getDomicilioContribuyente();
+            }, 1000);
         });
     }
 
