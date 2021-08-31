@@ -71,7 +71,7 @@
 
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-6">
-                                <mat-label>E-Mail</mat-label>
+                                <mat-label>E-Mail *</mat-label>
                                 <input matInput type="email" [email]="true" [disabled]="inserto" [readonly]="inserto" formControlName="email" maxlength="250" placeholder="Ingrese E-mail">
                                 <mat-error *ngIf="sociedadFormGroup.controls.email.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="sociedadFormGroup.hasError('email', 'email') && sociedadFormGroup.get('email').touched">Correo invalido</mat-error>
