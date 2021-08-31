@@ -31,6 +31,7 @@
                                 <mat-label>Nombre: *</mat-label>
                                 <input matInput formControlName="nombre" [(ngModel)]="contribuyente.nombre" [readonly]="inserto" maxlength="250" placeholder="Ingrese el nombre" style="text-transform: uppercase;">
                                 <mat-error *ngIf="fisicaFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
+                                <mat-error *ngIf="fisicaFormGroup.controls.nombre.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
@@ -38,10 +39,12 @@
                                 <mat-label>Apellido Paterno: *</mat-label>
                                 <input matInput formControlName="apaterno" [(ngModel)]="contribuyente.apaterno" [readonly]="inserto" maxlength="250" placeholder="Ingrese el apellido paterno" style="text-transform: uppercase;">
                                 <mat-error *ngIf="fisicaFormGroup.controls.apaterno.errors?.required">Requerido</mat-error>
+                                <mat-error *ngIf="fisicaFormGroup.controls.apaterno.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline"  class="col-5">
                                 <mat-label>Apellido Materno:</mat-label>
                                 <input matInput formControlName="amaterno" [(ngModel)]="contribuyente.amaterno" [readonly]="inserto" maxlength="250" placeholder="Ingrese el apellido materno" style="text-transform: uppercase;">
+                                <mat-error *ngIf="fisicaFormGroup.controls.amaterno.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
@@ -62,6 +65,7 @@
                             <mat-form-field appearance="outline"  class="col-5 offset-1">
                                 <mat-label>Clave INE:</mat-label>
                                 <input matInput formControlName="ine" [(ngModel)]="contribuyente.ine" [readonly]="inserto" maxlength="250"  placeholder="Ingrese el INE" style="text-transform: uppercase;">
+                                <mat-error *ngIf="fisicaFormGroup.controls.ine.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
@@ -76,6 +80,7 @@
                             <mat-form-field appearance="outline"  class="col-5" *ngIf="selectDisabled">
                                 <mat-label>Número Documento</mat-label>
                                 <input matInput formControlName="docIdent" [(ngModel)]="contribuyente.docIdent" [disabled]="inserto" maxlength="250"  placeholder="Ingrese el número de documento" style="text-transform: uppercase;">
+                                <mat-error *ngIf="fisicaFormGroup.controls.docIdent.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
@@ -96,11 +101,14 @@
                             <mat-form-field appearance="outline"  class="col-5 offset-1">
                                 <mat-label>Celular:</mat-label>
                                 <input matInput formControlName="celular" [(ngModel)]="contribuyente.celular" [readonly]="inserto" maxlength="10"  placeholder="Ingrese el número de celular">
+                                <mat-error *ngIf="fisicaFormGroup.controls.celular.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline"  class="col-5">
-                                <mat-label>E-mail:</mat-label>
+                                <mat-label>E-mail: *</mat-label>
                                 <input matInput formControlName="email" [(ngModel)]="contribuyente.email" [readonly]="inserto" maxlength="250"  placeholder="Ingrese el email">
+                                <mat-error *ngIf="fisicaFormGroup.controls.email.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="fisicaFormGroup.hasError('email', 'email') && fisicaFormGroup.get('email').touched">Correo invalido</mat-error>
+                                <mat-error *ngIf="fisicaFormGroup.controls.email.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
                             </mat-form-field>
                         </div>
                     </form>
@@ -112,6 +120,7 @@
                                 <mat-label>Nombre: *</mat-label>
                                 <input matInput formControlName="nombre" [(ngModel)]="contribuyente.nombre_moral" [readonly]="inserto" maxlength="250" placeholder="Ingrese el nombre" style="text-transform: uppercase;">
                                 <mat-error *ngIf="moralFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
+                                <mat-error *ngIf="moralFormGroup.controls.nombre.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
@@ -124,6 +133,7 @@
                             <mat-form-field appearance="outline" class="col-5">
                                 <mat-label>Act. preponderante: *</mat-label>
                                 <input matInput formControlName="actPreponderante" [(ngModel)]="contribuyente.actPreponderante" [readonly]="inserto" maxlength="250"  placeholder="Ingrese la actividad preponderante" style="text-transform: uppercase;">
+                                <mat-error *ngIf="moralFormGroup.controls.actPreponderante.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">

@@ -246,24 +246,24 @@ export class EditarContribuyenteComponent implements OnInit {
     ngOnInit(): void {
 
         this.fisicaFormGroup = this._formBuilder.group({
-            nombre: [null, [Validators.required]],
-            apepaterno: [null, [Validators.required]],
-            apematerno: [null, []],
+            nombre: [null,  [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            apepaterno: [null, [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            apematerno: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             rfc: [null, []],
             curp: [null, []],
-            ine: [null, []],
+            ine: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             idDocIdent: ['', []],
-            docIdent: [null, []],
+            docIdent: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             fecha_naci: [null, []],
             fecha_def: [null, []],
-            celular: [null, []],
-            email: ['', Validators.email],
+            celular: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            email: ['', [Validators.email, Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
         });
 
         this.moralFormGroup = this._formBuilder.group({
-            nombre_moral: [null, [Validators.required]],
-            rfc: [null, [Validators.required]],
-            actPreponderante: [null, []],
+            nombre_moral: [null, [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            rfc: [null, [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            actPreponderante: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             idTipoPersonaMoral: ['', []],
             fechaInicioOperacion: [null, []],
             idMotivo: ['', []],
@@ -428,16 +428,16 @@ export class EditarContribuyenteComponent implements OnInit {
         this.actualizado = false;
 
         query = (this.contribuyente.tipoPersona) ? query + '&codtipospersona=' + this.contribuyente.tipoPersona : query + '&codtipospersona=';
-        query = (this.contribuyente.nombre) ? query + '&nombre=' + this.contribuyente.nombre.toLocaleUpperCase() : query + '&nombre=';
+        query = (this.contribuyente.nombre) ? query + '&nombre=' + this.contribuyente.nombre.toLocaleUpperCase().trim() : query + '&nombre=';
         query = (this.contribuyente.idTipoPersonaMoral) ? query + '&idtipomoral=' + this.contribuyente.idTipoPersonaMoral : query + '&idtipomoral=';
         query = (this.contribuyente.idMotivo) ? query + '&idmotivosmoral=' + this.contribuyente.idMotivo : query + '&idmotivosmoral=';
         query = (this.contribuyente.fechaInicioOperacion) ? query + '&fechainicioactiv=' + moment(this.contribuyente.fechaInicioOperacion).format('DD-MM-YYYY') : query + '&fechainicioactiv=';
         query = (this.contribuyente.fechaCambio) ? query + '&fechacambiosituacion=' + moment(this.contribuyente.fechaCambio).format('DD-MM-YYYY') : query + '&fechacambiosituacion=';
-        query = (this.contribuyente.rfc) ? query + '&rfc=' + this.contribuyente.rfc.toLocaleUpperCase() : query + '&rfc=';
+        query = (this.contribuyente.rfc) ? query + '&rfc=' + this.contribuyente.rfc.toLocaleUpperCase().trim() : query + '&rfc=';
         // query = (this.contribuyente.apepaterno) ? query + '&apellidopaterno=' + this.contribuyente.apepaterno : query + '&apellidopaterno=';
-        query = (this.contribuyente.apematerno) ? query + '&apellidomaterno=' + this.contribuyente.apematerno.toLocaleUpperCase() : query + '&apellidomaterno=';
-        query = (this.contribuyente.curp) ? query + '&curp=' + this.contribuyente.curp.toLocaleUpperCase() : query + '&curp=';
-        query = (this.contribuyente.ine) ? query + '&claveife=' + this.contribuyente.ine.toLocaleUpperCase() : query + '&claveife=';
+        query = (this.contribuyente.apematerno) ? query + '&apellidomaterno=' + this.contribuyente.apematerno.toLocaleUpperCase().trim() : query + '&apellidomaterno=';
+        query = (this.contribuyente.curp) ? query + '&curp=' + this.contribuyente.curp.toLocaleUpperCase().trim() : query + '&curp=';
+        query = (this.contribuyente.ine) ? query + '&claveife=' + this.contribuyente.ine.toLocaleUpperCase().trim() : query + '&claveife=';
         query = (this.contribuyente.identificacion) ? query + '&iddocidentif=' + this.contribuyente.identificacion : query + '&iddocidentif=';
         query = (this.contribuyente.idedato) ? query + '&valdocidentif=' + this.contribuyente.idedato : query + '&valdocidentif=';
         query = (this.contribuyente.fecha_naci) ? query + '&fechanacimiento=' + moment(this.contribuyente.fecha_naci).format('DD-MM-YYYY') : query + '&fechanacimiento=';
@@ -448,9 +448,9 @@ export class EditarContribuyenteComponent implements OnInit {
         // query = (this.contribuyente.nombre_moral) ? query + '&apellidopaterno=' + this.contribuyente.nombre_moral : query + '&apellidopaterno=';
 
         if(this.contribuyente.tipoPersona === 'F'){
-            query = (this.contribuyente.apepaterno) ? query + '&apellidopaterno=' + this.contribuyente.apepaterno.toLocaleUpperCase() : query + '&apellidopaterno=';
+            query = (this.contribuyente.apepaterno) ? query + '&apellidopaterno=' + this.contribuyente.apepaterno.toLocaleUpperCase().trim() : query + '&apellidopaterno=';
         } else {
-            query = (this.contribuyente.nombre_moral) ? query + '&apellidopaterno=' + this.contribuyente.nombre_moral.toLocaleUpperCase() : query + '&apellidopaterno=';
+            query = (this.contribuyente.nombre_moral) ? query + '&apellidopaterno=' + this.contribuyente.nombre_moral.toLocaleUpperCase().trim() : query + '&apellidopaterno=';
         }
 
         query = query + '&idExpediente&idpersona='  + this.idContribuyente;
@@ -544,25 +544,25 @@ export class EditarContribuyenteComponent implements OnInit {
         query = (this.contribuyente.tipoPersona) ? query + '&codtipospersona=' + this.contribuyente.tipoPersona : query + '&codtipospersona=';
 
         if(this.contribuyente.tipoPersona === 'F'){
-            query = (this.contribuyente.apepaterno) ? query + '&apellidopaterno=' + this.contribuyente.apepaterno : query + '&apellidopaterno=';
-            query = (this.contribuyente.apematerno) ? query + '&apellidomaterno=' + this.contribuyente.apematerno : query + '&apellidomaterno=';
-            query = (this.contribuyente.nombre) ? query + '&nombreF=' + this.contribuyente.nombre : query + '&nombreF=';
-            query = (this.contribuyente.rfc) ? query + '&rfcF=' + this.contribuyente.rfc : query + '&rfcF=';
+            query = (this.contribuyente.apepaterno) ? query + '&apellidopaterno=' + this.contribuyente.apepaterno.toLocaleUpperCase().trim() : query + '&apellidopaterno=';
+            query = (this.contribuyente.apematerno) ? query + '&apellidomaterno=' + this.contribuyente.apematerno.toLocaleUpperCase().trim() : query + '&apellidomaterno=';
+            query = (this.contribuyente.nombre) ? query + '&nombreF=' + this.contribuyente.nombre.toLocaleUpperCase().trim() : query + '&nombreF=';
+            query = (this.contribuyente.rfc) ? query + '&rfcF=' + this.contribuyente.rfc.toLocaleUpperCase().trim() : query + '&rfcF=';
         } else {
-            query = (this.contribuyente.nombre_moral) ? query + '&nombreM=' + this.contribuyente.nombre_moral : query + '&nombreM=';
-            query = (this.contribuyente.rfc) ? query + '&rfcM=' + this.contribuyente.rfc : query + '&rfcM=';
+            query = (this.contribuyente.nombre_moral) ? query + '&nombreM=' + this.contribuyente.nombre_moral.toLocaleUpperCase().trim() : query + '&nombreM=';
+            query = (this.contribuyente.rfc) ? query + '&rfcM=' + this.contribuyente.rfc.toLocaleUpperCase().trim() : query + '&rfcM=';
         }
 
-        query = (this.contribuyente.curp) ? query + '&curp=' + this.contribuyente.curp : query + '&curp=';
-        query = (this.contribuyente.ine) ? query + '&claveife=' + this.contribuyente.ine : query + '&claveife=';
+        query = (this.contribuyente.curp) ? query + '&curp=' + this.contribuyente.curp.toLocaleUpperCase().trim() : query + '&curp=';
+        query = (this.contribuyente.ine) ? query + '&claveife=' + this.contribuyente.ine.toLocaleUpperCase().trim() : query + '&claveife=';
         query = (this.contribuyente.identificacion) ? query + '&iddocidentif=' + this.contribuyente.identificacion : query + '&iddocidentif=';
-        query = (this.contribuyente.idedato) ? query + '&valdocidentif=' + this.contribuyente.idedato : query + '&valdocidentif=';
+        query = (this.contribuyente.idedato) ? query + '&valdocidentif=' + this.contribuyente.idedato.toLocaleUpperCase().trim() : query + '&valdocidentif=';
         query = (this.contribuyente.fecha_naci) ? query + '&fechanacimiento=' + moment(this.contribuyente.fecha_naci).format('DD-MM-YYYY') : query + '&fechanacimiento=';
         query = (this.contribuyente.fecha_def) ? query + '&fechadefuncion=' + moment(this.contribuyente.fecha_def).format('DD-MM-YYYY') : query + '&fechadefuncion=';
         query = (this.contribuyente.celular) ? query + '&celular=' + this.contribuyente.celular : query + '&celular=';
         query = (this.contribuyente.email) ? query + '&email=' + this.contribuyente.email : query + '&email=';
 
-        query = (this.contribuyente.actPreponderante) ? query + '&activprincip=' + this.contribuyente.actPreponderante : query + '&activprincip=';
+        query = (this.contribuyente.actPreponderante) ? query + '&activprincip=' + this.contribuyente.actPreponderante.toLocaleUpperCase().trim() : query + '&activprincip=';
         query = (this.contribuyente.idTipoPersonaMoral) ? query + '&idtipomoral=' + this.contribuyente.idTipoPersonaMoral : query + '&idtipomoral=';
         query = (this.contribuyente.idMotivo) ? query + '&idmotivosmoral=' + this.contribuyente.idMotivo : query + '&idmotivosmoral=';
         query = (this.contribuyente.fechaInicioOperacion) ? query + '&fechainicioactiv=' + moment(this.contribuyente.fechaInicioOperacion).format('DD-MM-YYYY') : query + '&fechainicioactiv=';

@@ -44,6 +44,7 @@
                                 <mat-label>Apellido Paterno *</mat-label>
                                 <input matInput placeholder="Ingrese Apellido Paterno" [(ngModel)]="datoPeritos.apepaterno" formControlName="apellidopaterno" id="apepaterno" style="text-transform: uppercase;">
                                 <mat-error *ngIf="peritoPersonaFormGroup.controls.apellidopaterno.errors?.required">Requerido</mat-error>
+                                <mat-error *ngIf="peritoPersonaFormGroup.controls.apellidopaterno.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="col-md-4">
@@ -51,6 +52,7 @@
                                 <mat-label>Apellido Materno</mat-label>
                                 <input matInput placeholder="Ingrese Apellido Materno" [(ngModel)]="datoPeritos.apematerno" formControlName="apellidomaterno" style="text-transform: uppercase;">
                                 <mat-error *ngIf="peritoPersonaFormGroup.controls.apellidomaterno.errors?.required">Requerido</mat-error>
+                                <mat-error *ngIf="peritoPersonaFormGroup.controls.apellidomaterno.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
                             </mat-form-field>
                         </div> 
                         <div class="col-md-4">
@@ -58,6 +60,7 @@
                                 <mat-label>Nombre *</mat-label>
                                 <input matInput placeholder="Ingrese Nombre" [(ngModel)]="datoPeritos.nombre" formControlName="nombre" style="text-transform: uppercase;">
                                 <mat-error *ngIf="peritoPersonaFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
+                                <mat-error *ngIf="peritoPersonaFormGroup.controls.nombre.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -87,6 +90,7 @@
                                 <mat-label>INE</mat-label>
                                 <input matInput placeholder="Ingrese INE" [(ngModel)]="datoPeritos.ine" formControlName="ine" style="text-transform: uppercase;">
                                 <mat-error *ngIf="peritoPersonaFormGroup.controls.ine.errors?.required">Requerido</mat-error>
+                                <mat-error *ngIf="peritoPersonaFormGroup.controls.ine.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="col-md-4">
@@ -103,6 +107,7 @@
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <!-- <mat-label>Dato de la identificación</mat-label> -->
                                 <input matInput placeholder="Ingrese Número del documento" [(ngModel)]="datoPeritos.idedato" formControlName="idedato" style="text-transform: uppercase;">
+                                <mat-error *ngIf="peritoPersonaFormGroup.controls.idedato.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -131,13 +136,16 @@
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>Celular</mat-label>
                                 <input matInput placeholder="Ingrese Celular" [(ngModel)]="datoPeritos.celular" formControlName="celular" maxlength="10">
+                                <mat-error *ngIf="peritoPersonaFormGroup.controls.celular.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="col-md-4">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>E-Mail</mat-label>
                                 <input matInput placeholder="Ingrese E-mail" [(ngModel)]="datoPeritos.email" formControlName="email">
+                                <mat-error *ngIf="peritoPersonaFormGroup.controls.email.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="peritoPersonaFormGroup.hasError('email', 'email') && peritoPersonaFormGroup.get('email').touched">Correo invalido</mat-error>
+                                <mat-error *ngIf="peritoPersonaFormGroup.controls.email.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
                             </mat-form-field>
                         </div>
                     </div>

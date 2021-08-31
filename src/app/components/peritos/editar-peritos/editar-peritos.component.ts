@@ -225,18 +225,18 @@ export class EditarPeritosComponent implements OnInit {
         private route: ActivatedRoute,
     ) {
         this.peritoPersonaFormGroup = this._formBuilder.group({
-            apellidopaterno: ['', Validators.required],
-            apellidomaterno: [],
-            nombre: ['', Validators.required],
+            apellidopaterno: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            apellidomaterno: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            nombre: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             rfc: [null],
             curp: [null],
-            ine: [null],
+            ine: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             identificacion: [null],
-            idedato: [null],
+            idedato: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             fechaNacimiento: [null],
             fechaDefuncion: [null],
-            celular: [null],
-            email: ['', Validators.email],
+            celular: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            email: ['', [Validators.email, Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
         });
 
         this.moralFormGroup = this._formBuilder.group({
@@ -582,22 +582,22 @@ export class EditarPeritosComponent implements OnInit {
 
         query = 'codtipospersona=F';
 
-        query = (this.datoPeritos.nombre) ? query + '&nombre=' + this.datoPeritos.nombre.toLocaleUpperCase() : query + '&nombre=';
+        query = (this.datoPeritos.nombre) ? query + '&nombre=' + this.datoPeritos.nombre.toLocaleUpperCase().trim() : query + '&nombre=';
 
         query = query + '&activprincip&idtipomoral&idmotivosmoral&fechainicioactiv&fechacambiosituacion';
         
-        query = (this.datoPeritos.rfc) ? query + '&rfc=' + this.datoPeritos.rfc.toLocaleUpperCase() : query + '&rfc=';
+        query = (this.datoPeritos.rfc) ? query + '&rfc=' + this.datoPeritos.rfc.toLocaleUpperCase().trim() : query + '&rfc=';
 
-        query = (this.datoPeritos.apepaterno) ? query + '&apellidopaterno=' + this.datoPeritos.apepaterno.toLocaleUpperCase() : query + '&apellidopaterno=';
+        query = (this.datoPeritos.apepaterno) ? query + '&apellidopaterno=' + this.datoPeritos.apepaterno.toLocaleUpperCase().trim() : query + '&apellidopaterno=';
 
-        query = (this.datoPeritos.apematerno) ? query + '&apellidomaterno=' + this.datoPeritos.apematerno.toLocaleUpperCase() : query + '&apellidomaterno=';
+        query = (this.datoPeritos.apematerno) ? query + '&apellidomaterno=' + this.datoPeritos.apematerno.toLocaleUpperCase().trim() : query + '&apellidomaterno=';
             
-        query = (this.datoPeritos.curp) ? query + '&curp=' + this.datoPeritos.curp.toLocaleUpperCase() : query + '&curp=';
+        query = (this.datoPeritos.curp) ? query + '&curp=' + this.datoPeritos.curp.toLocaleUpperCase().trim() : query + '&curp=';
             
-        query = (this.datoPeritos.ine) ? query + '&claveife=' + this.datoPeritos.ine.toLocaleUpperCase() : query + '&claveife=';
+        query = (this.datoPeritos.ine) ? query + '&claveife=' + this.datoPeritos.ine.toLocaleUpperCase().trim() : query + '&claveife=';
             
         query = (this.datoPeritos.identificacion && this.datoPeritos.idedato) ? query + '&iddocidentif=' + this.datoPeritos.identificacion 
-                + '&valdocidentif=' + this.datoPeritos.idedato.toLocaleUpperCase() : query + '&iddocidentif=&valdocidentif=';
+                + '&valdocidentif=' + this.datoPeritos.idedato.toLocaleUpperCase().trim() : query + '&iddocidentif=&valdocidentif=';
 
         query = (this.datoPeritos.fecha_naci) ? query + '&fechanacimiento=' + moment(this.datoPeritos.fecha_naci).format('DD-MM-YYYY') : query + '&fechanacimiento=';
 

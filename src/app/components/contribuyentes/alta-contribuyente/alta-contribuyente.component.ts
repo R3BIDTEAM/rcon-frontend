@@ -5,10 +5,25 @@ import { environment } from '@env/environment';
 import { AuthService } from '@serv/auth.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormArray, FormGroup, FormControl, Validators, ValidatorFn } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import * as moment from 'moment';
 import { DialogDuplicadosComponent } from '@comp/dialog-duplicados/dialog-duplicados.component';
+
+const trimValidator: ValidatorFn = (control: FormControl) => {
+    if (control.value.startsWith(' ')) {
+      return {
+        'trimError': { value: 'control has leading whitespace' }
+      };
+    }
+    if (control.value.endsWith(' ')) {
+      return {
+        'trimError': { value: 'control has trailing whitespace' }
+      };
+    }
+  
+    return null;
+};
 
 export interface DatosContribuyente {
     codtipopersona: string;
@@ -127,6 +142,7 @@ export class AltaContribuyenteComponent implements OnInit {
     // tipoPersona = 'F';
     fisicaFormGroup: FormGroup;
     moralFormGroup: FormGroup;
+    control = new FormControl('', trimValidator);
     displayedColumnsRepdo: string[] = ['representacion','texto','caducidad'];
     displayedColumnsDom: string[] = ['tipoDir','direccion'];
     datosContribuyente: DatosContribuyente = {} as DatosContribuyente;
@@ -192,24 +208,24 @@ export class AltaContribuyenteComponent implements OnInit {
         };
     
         this.fisicaFormGroup = this._formBuilder.group({
-            nombre: [null, [Validators.required]],
-            apaterno: [null, [Validators.required]],
-            amaterno: [null, []],
+            nombre: [null, [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            apaterno: [null, [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            amaterno: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             rfc: [null, []],
             curp: [null, []],
-            ine: [null, []],
+            ine: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             idDocIdent: ['', []],
-            docIdent: [null, []],
+            docIdent: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             fechaNacimiento: [null, []],
             fechaDefuncion: [null, []],
-            celular: [null, []],
-            email: ['', Validators.email],
+            celular: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            email: ['', [Validators.email, Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
         });
 
         this.moralFormGroup = this._formBuilder.group({
-            nombre: [null, [Validators.required]],
+            nombre: [null, [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             rfc: [null, [Validators.required]],
-            actPreponderante: [null, []],
+            actPreponderante: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             idTipoPersonaMoral: ['', []],
             fechaInicioOperacion: [null, []],
             idMotivo: ['', []],
@@ -360,29 +376,29 @@ export class AltaContribuyenteComponent implements OnInit {
         // insertarContribuyente?codtipospersona=M&nombre=&activprincip=RRRRR&idtipomoral=&idmotivosmoral=&fechainicioactiv=22-02-2002&fechacambio&rfc=PAGJ830626aaa&apellidopaterno=JON SAa&apellidomaterno=DA45545&curp=&claveife=&iddocidentif=1&valdocidentif&fechanacimiento=&fechadefuncion&celular=&email=&idExpediente=
         // insertarContribuyente?&codtipospersona=F&nombre=JOEL&activprincip=&idtipomoral=&idmotivosmoral=&fechainicioactiv=&fechacambiosituacion=&rfc=HEVH900629HD5&apellidopaterno=HERRERA&apellidomaterno=VALADEZ&curp=&claveife=&iddocidentif=&valdocidentif=&fechanacimiento=29-06-1990&fechadefuncion=&celular=566566455&email=hj@mail.com&activprincip=&idExpediente
         let query = '';
-        this.loading = true;
+        //this.loading = true;
 
         query = (this.contribuyente.tipoPersona) ? query + '&codtipospersona=' + this.contribuyente.tipoPersona : query + '&codtipospersona=';
-        query = (this.contribuyente.nombre) ? query + '&nombre=' + this.contribuyente.nombre.toLocaleUpperCase() : query + '&nombre=';
+        query = (this.contribuyente.nombre) ? query + '&nombre=' + this.contribuyente.nombre.toLocaleUpperCase().trim() : query + '&nombre=';
         query = (this.contribuyente.idTipoPersonaMoral) ? query + '&idtipomoral=' + this.contribuyente.idTipoPersonaMoral : query + '&idtipomoral=';
         query = (this.contribuyente.idMotivo) ? query + '&idmotivosmoral=' + this.contribuyente.idMotivo : query + '&idmotivosmoral=';
         query = (this.contribuyente.fechaInicioOperacion) ? query + '&fechainicioactiv=' + moment(this.contribuyente.fechaInicioOperacion).format('DD-MM-YYYY') : query + '&fechainicioactiv=';
         query = (this.contribuyente.fechaCambio) ? query + '&fechacambiosituacion=' + moment(this.contribuyente.fechaCambio).format('DD-MM-YYYY') : query + '&fechacambiosituacion=';
-        query = (this.contribuyente.rfc) ? query + '&rfc=' + this.contribuyente.rfc.toLocaleUpperCase() : query + '&rfc=';
-        query = (this.contribuyente.apaterno) ? query + '&apellidopaterno=' + this.contribuyente.apaterno.toLocaleUpperCase() : query + '&apellidopaterno=' + this.contribuyente.nombre_moral.toLocaleUpperCase();
-        query = (this.contribuyente.amaterno) ? query + '&apellidomaterno=' + this.contribuyente.amaterno.toLocaleUpperCase() : query + '&apellidomaterno=';
-        query = (this.contribuyente.curp) ? query + '&curp=' + this.contribuyente.curp.toLocaleUpperCase() : query + '&curp=';
-        query = (this.contribuyente.ine) ? query + '&claveife=' + this.contribuyente.ine.toLocaleUpperCase() : query + '&claveife=';
+        query = (this.contribuyente.rfc) ? query + '&rfc=' + this.contribuyente.rfc.toLocaleUpperCase().trim() : query + '&rfc=';
+        query = (this.contribuyente.apaterno) ? query + '&apellidopaterno=' + this.contribuyente.apaterno.toLocaleUpperCase().trim() : query + '&apellidopaterno=' + this.contribuyente.nombre_moral.toLocaleUpperCase().trim();
+        query = (this.contribuyente.amaterno) ? query + '&apellidomaterno=' + this.contribuyente.amaterno.toLocaleUpperCase().trim() : query + '&apellidomaterno=';
+        query = (this.contribuyente.curp) ? query + '&curp=' + this.contribuyente.curp.toLocaleUpperCase().trim() : query + '&curp=';
+        query = (this.contribuyente.ine) ? query + '&claveife=' + this.contribuyente.ine.toLocaleUpperCase().trim() : query + '&claveife=';
         query = (this.contribuyente.idDocIdent) ? query + '&iddocidentif=' + this.contribuyente.idDocIdent : query + '&iddocidentif=';
         query = (this.contribuyente.docIdent) ? query + '&valdocidentif=' + this.contribuyente.docIdent : query + '&valdocidentif=';
         query = (this.contribuyente.fechaNacimiento) ? query + '&fechanacimiento=' + moment(this.contribuyente.fechaNacimiento).format('DD-MM-YYYY') : query + '&fechanacimiento=';
         query = (this.contribuyente.fechaDefuncion) ? query + '&fechadefuncion=' + moment(this.contribuyente.fechaDefuncion).format('DD-MM-YYYY') : query + '&fechadefuncion=';
-        query = (this.contribuyente.celular) ? query + '&celular=' + this.contribuyente.celular : query + '&celular=';
-        query = (this.contribuyente.email) ? query + '&email=' + this.contribuyente.email : query + '&email=';
-        query = (this.contribuyente.actPreponderante) ? query + '&activprincip=' + this.contribuyente.actPreponderante.toLocaleUpperCase() : query + '&activprincip=';
+        query = (this.contribuyente.celular) ? query + '&celular=' + this.contribuyente.celular.trim() : query + '&celular=';
+        query = (this.contribuyente.email) ? query + '&email=' + this.contribuyente.email.trim() : query + '&email=';
+        query = (this.contribuyente.actPreponderante) ? query + '&activprincip=' + this.contribuyente.actPreponderante.toLocaleUpperCase().trim() : query + '&activprincip=';
         // query = (this.contribuyente.nombre_moral) ? query + '&apellidopaterno=' + this.contribuyente.nombre_moral : query + '&apellidopaterno=';
         query = query + '&idExpediente';
-
+        
         this.http.post(this.endpoint + 'insertarContribuyente' + '?' + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
@@ -586,7 +602,7 @@ export class AltaContribuyenteComponent implements OnInit {
                 this.loadingRepresentante = true;
                 setTimeout (() => {
                     this.getRepresentacion();
-                }, 2000);
+                }, 3000);
             }
         });
     }
@@ -604,7 +620,7 @@ export class AltaContribuyenteComponent implements OnInit {
                 this.loadingRepresentado = true;
                 setTimeout (() => {
                     this.getRepresentado();
-                }, 2000);
+                }, 3000);
             }
         });
     }

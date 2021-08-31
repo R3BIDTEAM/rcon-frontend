@@ -127,6 +127,7 @@
                                             <mat-label>Razón social *</mat-label>
                                             <input matInput formControlName="razonSocial" placeholder="Ingrese Razón social" [(ngModel)]="datosSociedad.razonSocial" style="text-transform: uppercase;" maxlength="250">
                                             <mat-error *ngIf="moralFormGroup.controls.razonSocial.errors?.required">Requerido</mat-error>
+                                            <mat-error *ngIf="moralFormGroup.controls.razonSocial.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -146,6 +147,7 @@
                                         <mat-form-field appearance="outline" style="width: 100%;">
                                             <mat-label>Acta preponderante *</mat-label>
                                             <input matInput formControlName="actPreponderante" placeholder="Ingrese Acta preponderante" [(ngModel)]="datosSociedad.acta" style="text-transform: uppercase;" maxlength="250">
+                                            <mat-error *ngIf="moralFormGroup.controls.actPreponderante.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>

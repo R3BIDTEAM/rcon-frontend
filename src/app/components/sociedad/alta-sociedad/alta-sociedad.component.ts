@@ -59,13 +59,13 @@ export class AltaSociedadComponent implements OnInit {
         };
 
         this.sociedadFormGroup = this._formBuilder.group({
-            razonSocial: ['', Validators.required],
-            rfc: ['', Validators.required],
-            registro: ['', Validators.required],
+            razonSocial: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            rfc: ['', [Validators.required]],
+            registro: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             fecha_alta: [null],
             fecha_baja: [null],
-            email: ['', Validators.email],
-            login: ['', Validators.required],
+            email: ['', [Validators.email, Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            login: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
           });
     }
 
@@ -175,19 +175,19 @@ export class AltaSociedadComponent implements OnInit {
         let query = 'idPersona';
         this.loading = true;
         
-        query = (this.registro) ? query + '&registro=' + this.registro : query + '&registro=';
+        query = (this.registro) ? query + '&registro=' + this.registro.toLocaleUpperCase().trim() : query + '&registro=';
         
         query = (this.fecha_alta) ? query + '&fechaAlta=' + moment(this.fecha_alta).format('DD-MM-YYYY') : query + '&fechaAlta=';
         
         query = (this.fecha_baja) ? query + '&fechaBaja=' + moment(this.fecha_baja).format('DD-MM-YYYY') : query + '&fechaBaja=';
         
-        query = (this.razonSocial) ? query + '&nombre=' + this.razonSocial : query + '&nombre=';
+        query = (this.razonSocial) ? query + '&nombre=' + this.razonSocial.toLocaleUpperCase().trim() : query + '&nombre=';
 
-        query = (this.rfc) ? query + '&rfc=' + this.rfc : query + '&rfc=';
+        query = (this.rfc) ? query + '&rfc=' + this.rfc.toLocaleUpperCase().trim() : query + '&rfc=';
 
-        query = (this.email) ? query + '&email=' + this.email : query + '&email=';
+        query = (this.email) ? query + '&email=' + this.email.trim() : query + '&email=';
 
-        query = (this.login) ? query + '&login=' + this.login : query + '&login=';        
+        query = (this.login) ? query + '&login=' + this.login.toLocaleUpperCase().trim() : query + '&login=';        
 
         query = query + '&codtiposPersona=M&persona&idExpediente';
 

@@ -76,20 +76,20 @@ export class AltaNotarioComponent implements OnInit {
         };
 
         this.notarioFormGroup = this._formBuilder.group({
-            no_notario: ['', Validators.required],
+            no_notario: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             estado: [null, []],
-            apellido_paterno: ['', Validators.required],
-            apellido_materno: [null, []],
-            nombre: ['', Validators.required],
+            apellido_paterno: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            apellido_materno: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            nombre: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             rfc: [null, []],
             curp: [null, []],
-            ine: [null, []],
+            ine: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             otro_documento: [null, []],
-            numero_documento: [null, []],
+            numero_documento: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             fecha_nacimiento: [null, []],
             fecha_defuncion: [null, []],
-            celular: [null, []],
-            email: ['', Validators.email],
+            celular: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            email: ['', [Validators.email, Validators.pattern("^\\S{1}.{1,248}\\S{1}$"), Validators.required]],
         });
         
         this.getDataEstados();
@@ -189,6 +189,9 @@ export class AltaNotarioComponent implements OnInit {
         width: '700px',
         });
         dialogRef.afterClosed().subscribe(result => {
+            if(this.filtros.otro_documento !== null){
+                this.selectDisabled = true;
+            }
             this.filtros.no_notario = result.no_notario;
             this.filtros.estado = result.estado;
             this.filtros.nombre = result.nombre;
@@ -197,6 +200,10 @@ export class AltaNotarioComponent implements OnInit {
             this.filtros.rfc = result.rfc;
             this.filtros.curp = result.curp;
             this.filtros.ine = result.ine;
+            this.filtros.otro_documento = result.otro_documento;
+            this.filtros.numero_documento = result.numero_documento;
+            this.filtros.fecha_nacimiento = (result.fecha_nacimiento) ? new Date(result.fecha_nacimiento) : null;
+            this.filtros.fecha_defuncion = (result.fecha_defuncion) ? new Date(result.fecha_defuncion) : null;
             this.filtros.celular = result.celular;
             this.filtros.email = result.email;
             this.changeRequired();
@@ -283,18 +290,18 @@ export class AltaNotarioComponent implements OnInit {
 
         query = (this.filtros.no_notario) ? query + '&numNotario=' + this.filtros.no_notario : query + '&numNotario=';
         query = (this.idestadoNg) ? query + '&codEstado=' + this.idestadoNg : query + '&codEstado=';
-        query = (this.filtros.nombre) ? query + '&nombre=' + this.filtros.nombre.toLocaleUpperCase() : query + '&nombre=';
-        query = (this.filtros.apellido_paterno) ? query + '&apellidoPaterno=' + this.filtros.apellido_paterno.toLocaleUpperCase() : query + '&apellidoPaterno=';
-        query = (this.filtros.apellido_materno) ? query + '&apellidoMaterno=' + this.filtros.apellido_materno.toLocaleUpperCase() : query + '&apellidoMaterno=';
-        query = (this.filtros.rfc) ? query + '&rfc=' + this.filtros.rfc.toLocaleUpperCase() : query + '&rfc=';
-        query = (this.filtros.curp) ? query + '&curp=' + this.filtros.curp.toLocaleUpperCase() : query + '&curp=';
-        query = (this.filtros.ine) ? query + '&ife=' + this.filtros.ine.toLocaleUpperCase() : query + '&ife=';
+        query = (this.filtros.nombre) ? query + '&nombre=' + this.filtros.nombre.toLocaleUpperCase().trim() : query + '&nombre=';
+        query = (this.filtros.apellido_paterno) ? query + '&apellidoPaterno=' + this.filtros.apellido_paterno.toLocaleUpperCase().trim() : query + '&apellidoPaterno=';
+        query = (this.filtros.apellido_materno) ? query + '&apellidoMaterno=' + this.filtros.apellido_materno.toLocaleUpperCase().trim() : query + '&apellidoMaterno=';
+        query = (this.filtros.rfc) ? query + '&rfc=' + this.filtros.rfc.toLocaleUpperCase().trim() : query + '&rfc=';
+        query = (this.filtros.curp) ? query + '&curp=' + this.filtros.curp.toLocaleUpperCase().trim() : query + '&curp=';
+        query = (this.filtros.ine) ? query + '&ife=' + this.filtros.ine.toLocaleUpperCase().trim() : query + '&ife=';
         query = (this.filtros.otro_documento) ? query + '&iddocIdentif=' + this.filtros.otro_documento : query + '&iddocIdentif=';
-        query = (this.filtros.numero_documento) ? query + '&valdocIdentif=' + this.filtros.numero_documento.toLocaleUpperCase() : query + '&valdocIdentif=';
+        query = (this.filtros.numero_documento) ? query + '&valdocIdentif=' + this.filtros.numero_documento.toLocaleUpperCase().trim() : query + '&valdocIdentif=';
         query = (this.filtros.fecha_nacimiento) ? query + '&fechaNacimiento=' + moment(this.filtros.fecha_nacimiento).format('DD-MM-YYYY') : query + '&fechaNacimiento=';
         query = (this.filtros.fecha_defuncion) ? query + '&fechaDefuncion=' + moment(this.filtros.fecha_defuncion).format('DD-MM-YYYY') : query + '&fechaDefuncion=';
-        query = (this.filtros.email) ? query + '&email=' + this.filtros.email : query + '&email=';
-        query = (this.filtros.celular) ? query + '&celular=' + this.filtros.celular : query + '&celular=';
+        query = (this.filtros.email) ? query + '&email=' + this.filtros.email.trim() : query + '&email=';
+        query = (this.filtros.celular) ? query + '&celular=' + this.filtros.celular.trim() : query + '&celular=';
         query = query + '&codtiposPersona=F&persona';
         console.log(query);
         //return;
@@ -527,7 +534,7 @@ export class DialogBuscarNotarioAlta {
                         this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                         this.total = this.dataSource.length; 
                         this.paginator.pageIndex = 0;
-                        // console.log(this.dataSource);
+                        console.log(this.dataSource);
                     },
                     (error) => {
                         this.loading = false;
@@ -563,6 +570,10 @@ export class DialogBuscarNotarioAlta {
         this.dataNotarioSeleccionado.rfc = element.RFC;
         this.dataNotarioSeleccionado.curp = element.CURP;
         this.dataNotarioSeleccionado.ine = element.CLAVEIFE;
+        this.dataNotarioSeleccionado.otro_documento = element.IDDOCIDENTIF;
+        this.dataNotarioSeleccionado.numero_documento = element.VALDOCIDENTIF;
+        this.dataNotarioSeleccionado.fecha_nacimiento = element.FECHANACIMIENTO;
+        this.dataNotarioSeleccionado.fecha_defuncion = element.FECHADEFUNCION;
         this.dataNotarioSeleccionado.celular = element.CELULAR;
         this.dataNotarioSeleccionado.email = element.EMAIL;
         // console.log(this.dataNotarioSeleccionado.email);

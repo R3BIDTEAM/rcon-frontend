@@ -179,20 +179,20 @@ export class EditarNotarioComponent implements OnInit {
         };
 
         this.personaFormGroup = this._formBuilder.group({
-            no_notario: ['', Validators.required],
+            no_notario: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             estado: [null, []],
-            apellidopaterno: ['', Validators.required],
-            apellidomaterno: [],
-            nombre: ['', Validators.required],
+            apellidopaterno: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            apellidomaterno: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            nombre: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             rfc: [null],
             curp: [null],
-            ine: [null],
+            ine: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             identificacion: [null],
-            idedato: [null],
+            idedato: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             fechaNacimiento: [null],
             fechaDefuncion: [null],
-            celular: [null],
-            email: ['', Validators.email],
+            celular: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            email: ['', [Validators.email, Validators.pattern("^\\S{1}.{1,248}\\S{1}$"), Validators.required]],
         });
 
         this.moralFormGroup = this._formBuilder.group({
@@ -438,19 +438,19 @@ export class EditarNotarioComponent implements OnInit {
         let query = '';
         this.loading = true;
         query = 'codtipospersona=F';
-        query = (this.datosGenerales.nombre) ? query + '&nombre=' + this.datosGenerales.nombre : query + '&nombre=';
+        query = (this.datosGenerales.nombre) ? query + '&nombre=' + this.datosGenerales.nombre.toLocaleUpperCase().trim() : query + '&nombre=';
         query = query + '&activprincip&idtipomoral&idmotivosmoral&fechainicioactiv&fechacambiosituacion&idExpediente';
-        query = (this.datosGenerales.rfc) ? query + '&rfc=' + this.datosGenerales.rfc : query + '&rfc=';
-        query = (this.datosGenerales.apellido_paterno) ? query + '&apellidopaterno=' + this.datosGenerales.apellido_paterno : query + '&apellidopaterno=';
-        query = (this.datosGenerales.apellido_materno) ? query + '&apellidomaterno=' + this.datosGenerales.apellido_materno : query + '&apellidomaterno=';
-        query = (this.datosGenerales.curp) ? query + '&curp=' + this.datosGenerales.curp : query + '&curp=';
-        query = (this.datosGenerales.ine) ? query + '&claveife=' + this.datosGenerales.ine : query + '&claveife=';
+        query = (this.datosGenerales.rfc) ? query + '&rfc=' + this.datosGenerales.rfc.toLocaleUpperCase().trim() : query + '&rfc=';
+        query = (this.datosGenerales.apellido_paterno) ? query + '&apellidopaterno=' + this.datosGenerales.apellido_paterno.toLocaleUpperCase().trim() : query + '&apellidopaterno=';
+        query = (this.datosGenerales.apellido_materno) ? query + '&apellidomaterno=' + this.datosGenerales.apellido_materno.toLocaleUpperCase().trim() : query + '&apellidomaterno=';
+        query = (this.datosGenerales.curp) ? query + '&curp=' + this.datosGenerales.curp.toLocaleUpperCase().trim() : query + '&curp=';
+        query = (this.datosGenerales.ine) ? query + '&claveife=' + this.datosGenerales.ine.toLocaleUpperCase().trim() : query + '&claveife=';
         query = (this.datosGenerales.otro_documento) ? query + '&iddocidentif=' + this.datosGenerales.otro_documento : query + '&iddocidentif=';
-        query = (this.datosGenerales.numero_documento) ? query + '&valdocidentif=' + this.datosGenerales.numero_documento : query + '&valdocidentif=';
+        query = (this.datosGenerales.numero_documento) ? query + '&valdocidentif=' + this.datosGenerales.numero_documento.toLocaleUpperCase().trim() : query + '&valdocidentif=';
         query = (this.datosGenerales.fecha_nacimiento) ? query + '&fechanacimiento=' + moment(this.datosGenerales.fecha_nacimiento).format('DD-MM-YYYY') : query + '&fechanacimiento=';
         query = (this.datosGenerales.fecha_defuncion) ? query + '&fechadefuncion=' + moment(this.datosGenerales.fecha_defuncion).format('DD-MM-YYYY') : query + '&fechadefuncion=';
-        query = (this.datosGenerales.celular) ? query + '&celular=' + this.datosGenerales.celular : query + '&celular=';
-        query = (this.datosGenerales.email) ? query + '&email=' + this.datosGenerales.email : query + '&email=';
+        query = (this.datosGenerales.celular) ? query + '&celular=' + this.datosGenerales.celular.trim() : query + '&celular=';
+        query = (this.datosGenerales.email) ? query + '&email=' + this.datosGenerales.email.trim() : query + '&email=';
         query = query + '&idExpediente&idpersona=' + this.idNotario;
 
         this.http.post(this.endpointEstados + 'actualizaContribuyente?' + query, '', this.httpOptions)

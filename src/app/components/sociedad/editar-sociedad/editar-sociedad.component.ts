@@ -233,9 +233,9 @@ export class EditarSociedadComponent implements OnInit {
         });
 
         this.moralFormGroup = this._formBuilder.group({
-            razonSocial: [null, [Validators.required]],
-            rfc: [null, [Validators.required]],
-            actPreponderante: [null, []],
+            razonSocial: [null, [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            rfc: [null, [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            actPreponderante: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             idTipoPersonaMoral: ['', []],
             fechaInicioOperacion: [null, []],
             idMotivo: ['', []],
@@ -325,7 +325,7 @@ export class EditarSociedadComponent implements OnInit {
         let query = 'codtipospersona=M&nombre=';
         this.loading = true;
         
-        query = (this.datosSociedad.acta) ? query + '&activprincip=' + this.datosSociedad.acta.toLocaleUpperCase() : query + '&activprincip=';
+        query = (this.datosSociedad.acta) ? query + '&activprincip=' + this.datosSociedad.acta.toLocaleUpperCase().trim() : query + '&activprincip=';
 
         query = (this.datosSociedad.tipoMoral) ? query + '&idtipomoral=' + this.datosSociedad.tipoMoral : query + '&idtipomoral=';
 
@@ -335,9 +335,9 @@ export class EditarSociedadComponent implements OnInit {
         
         query = (this.datosSociedad.fechaCambio) ? query + '&fechacambiosituacion=' + moment(this.datosSociedad.fechaCambio).format('DD-MM-YYYY') : query + '&fechacambiosituacion=';
         
-        query = (this.datosSociedad.rfc) ? query + '&rfc=' + this.datosSociedad.rfc.toLocaleUpperCase() : query + '&rfc=';
+        query = (this.datosSociedad.rfc) ? query + '&rfc=' + this.datosSociedad.rfc.toLocaleUpperCase().trim() : query + '&rfc=';
 
-        query = (this.datosSociedad.razonSocial) ? query + '&apellidopaterno=' + this.datosSociedad.razonSocial.toLocaleUpperCase() : query + '&apellidopaterno=';
+        query = (this.datosSociedad.razonSocial) ? query + '&apellidopaterno=' + this.datosSociedad.razonSocial.toLocaleUpperCase().trim() : query + '&apellidopaterno=';
 
         query = query + '&apellidomaterno=&curp=&claveife=&iddocidentif=&valdocidentif=&fechanacimiento=&fechadefuncion=&celular=&email=&idExpediente';
 
@@ -515,7 +515,7 @@ export class EditarSociedadComponent implements OnInit {
 
         query = 'idPersona=' + this.idSociedad;
 
-        query = ( this.datosSociedad.registro ) ? query + '&registro=' + this.datosSociedad.registro.toLocaleUpperCase() : query + '&registro=';
+        query = ( this.datosSociedad.registro ) ? query + '&registro=' + this.datosSociedad.registro.toLocaleUpperCase().trim() : query + '&registro=';
         
         query = (this.datosSociedad.fecha_alta) ? query + '&fechaAlta=' + moment(this.datosSociedad.fecha_alta).format('DD-MM-YYYY')
                                                 : query + '&fechaAlta=';
