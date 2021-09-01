@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Especificación/Consulta Documento Digital</h1>
+<h1 mat-dialog-title class="verde-cdmx">Especificación/Consulta Documento Digital</h1>
 <div mat-dialog-content>
 
     <div style="padding: 30px; text-align: center;" *ngIf="false">
@@ -10,17 +10,18 @@
         <mat-vertical-stepper [linear]="true" #stepper>
             <mat-step [stepControl]="tiposDocumentoFormGroup">
                 <form [formGroup]="tiposDocumentoFormGroup">
-                    <ng-template matStepLabel>Selcción de Documentos</ng-template>
-                    <mat-form-field class="col-6">
+                    <ng-template matStepLabel>Selección de Documentos</ng-template>
+                    <br>
+                    <mat-form-field appearance="fill" class="col-6">
                         <mat-label>Tipo Documento Dígital:</mat-label>
                         <mat-select formControlName="codtipodocumento" [(ngModel)]="selectTipoDoc">
                             <mat-option value="1">Documentos Jurídicos</mat-option>
                         </mat-select>
                         <mat-error *ngIf="tiposDocumentoFormGroup.controls.codtipodocumento.errors?.required">Requerido</mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col-6">
+                    <mat-form-field appearance="fill" class="col-6" style="margin-left: 0px!important;">
                         <mat-label>Tipo Documento Jurídico:</mat-label>
-                        <mat-select formControlName="codtipodocumentojuridico" (selectionChange)="getTipoDocJuridico($event)">
+                        <mat-select formControlName="codtipodocumentojuridico" (selectionChange)="getTipoDocJuridico($event)" [disabled]="insUp">
                             <mat-option value="PN">Poder Notarial</mat-option>
                             <mat-option value="CP">Carta Poder</mat-option>
                         </mat-select>
@@ -35,48 +36,49 @@
             <mat-step [stepControl]="infoDocumentoFormGroup">
                 <form [formGroup]="infoDocumentoFormGroup">
                     <ng-template matStepLabel>{{dataDocumento.nombreTipoDocumentoJuridico}}
-                        <button mat-flat-button type="button" color="primary" [disabled]="tiposDocumentoFormGroup.value.codtipodocumentojuridico != 'PN' || insUp" aria-label="Buscar Notario" matTooltip="Buscar Notario" class="little-button" (click)="addNotario()">
+                        <button mat-flat-button type="button" color="primary" [disabled]="tiposDocumentoFormGroup.value.codtipodocumentojuridico != 'PN' || insUp" aria-label="Buscar Notario" matTooltip="Buscar Notario" class="little-button" (click)="addNotario()" [readonly]="insUp">
                             <mat-icon>search</mat-icon>
                         </button>
                     </ng-template>
+                    <br>
                     <ng-container *ngIf="tiposDocumentoFormGroup.value.codtipodocumentojuridico == 'PN'">
-                        <mat-form-field class="col-6">
+                        <mat-form-field appearance="outline" class="col-6">
                             <mat-label>Número:</mat-label>
-                            <input matInput readonly formControlName="noNotario">
+                            <input matInput readonly formControlName="noNotario" [readonly]="insUp" style="text-transform: uppercase;">
                             <mat-error *ngIf="infoDocumentoFormGroup.controls.noNotario.errors?.required">Requerido</mat-error>
                         </mat-form-field>
-                        <mat-form-field class="col-6">
+                        <mat-form-field appearance="outline" class="col-6" style="margin-left: 0px!important;">
                             <mat-label>Estado:</mat-label>
-                            <input matInput readonly formControlName="ciudadNotario">
+                            <input matInput readonly formControlName="ciudadNotario" [readonly]="insUp" style="text-transform: uppercase;">
                             <mat-error *ngIf="infoDocumentoFormGroup.controls.ciudadNotario.errors?.required">Requerido</mat-error>
                         </mat-form-field>
-                        <mat-form-field class="col-12">
+                        <mat-form-field appearance="outline" class="col-12" style="margin-left: 0px!important;">
                             <mat-label>Nombre:</mat-label>
-                            <input matInput readonly formControlName="nombreNotario">
+                            <input matInput readonly formControlName="nombreNotario" [readonly]="insUp" style="text-transform: uppercase;">
                             <mat-error *ngIf="infoDocumentoFormGroup.controls.nombreNotario.errors?.required">Requerido</mat-error>
                         </mat-form-field>
-                        <mat-form-field class="col-6">
+                        <mat-form-field appearance="outline" class="col-6" style="margin-left: 0px!important;">
                             <mat-label>N° Escritura:</mat-label>
-                            <input matInput formControlName="num_escritura">
+                            <input matInput formControlName="num_escritura" [readonly]="insUp" style="text-transform: uppercase;">
                             <mat-error *ngIf="infoDocumentoFormGroup.controls.num_escritura.errors?.required">Requerido</mat-error>
                         </mat-form-field>
                         <div class="col-6"></div>
                     </ng-container>
-                    <mat-form-field class="col-6">
+                    <mat-form-field appearance="fill" class="col-6">
                         <mat-label>Fecha:</mat-label>
                         <input matInput readonly formControlName="fecha" [matDatepicker]="pickfecha">
                         <mat-datepicker-toggle matSuffix [for]="pickfecha"></mat-datepicker-toggle>
                         <mat-datepicker #pickfecha></mat-datepicker>
                         <mat-error *ngIf="infoDocumentoFormGroup.controls.fecha.errors?.required">Requerido</mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col-6">
+                    <mat-form-field appearance="outline" class="col-6" style="margin-left: 0px!important;">
                         <mat-label>Lugar:</mat-label>
-                        <input matInput formControlName="lugar">
+                        <input matInput formControlName="lugar" style="text-transform: uppercase;">
                         <mat-error *ngIf="infoDocumentoFormGroup.controls.lugar.errors?.required">Requerido</mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col-12">
+                    <mat-form-field appearance="outline" class="col-12" style="margin-left: 0px!important;">
                         <mat-label>Descripción:</mat-label>
-                        <textarea matInput formControlName="descripcion" rows="5"></textarea>
+                        <textarea matInput formControlName="descripcion" rows="5" style="text-transform: uppercase;"></textarea>
                     </mat-form-field>
                     <div>
                         <button mat-button matStepperPrevious>Regresar</button>
@@ -106,37 +108,25 @@
                         <button mat-button matStepperPrevious>Regresar</button>
                         <button mat-button matStepperNext>Siguiente</button>
                     </div>
-                </form>
-                <div>
-                    <table mat-table [dataSource]="dataDoc" *ngIf=" dataDoc.length > 0" width="100%">
-                        <ng-container matColumnDef="nombre">
-                            <th mat-header-cell *matHeaderCellDef width="15%" > Tipo Dirección </th>
-                            <td mat-cell *matCellDef="let element" width="15%" > {{ element.nombre }}</td>
-                        </ng-container>
-                        <ng-container matColumnDef="descripcion">
-                            <th mat-header-cell *matHeaderCellDef width="75%"> Dirección </th>
-                            <td mat-cell *matCellDef="let element" width="75%">
-                                {{ element.descripcion }}
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="download">
-                            <th mat-header-cell *matHeaderCellDef> Descargar </th>
-                            <td mat-cell *matCellDef="let element">
-                                <button mat-icon-button type="button" color="primary" aria-label="Descargar" matTooltip="Historial">
-                                    <mat-icon>download</mat-icon>
-                                </button>
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="eliminar">
-                            <th mat-header-cell *matHeaderCellDef> Elminar </th>
-                            <td mat-cell *matCellDef="let element">
-                                <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar">
-                                    <mat-icon>delete</mat-icon>
-                                </button>
-                            </td>
-                        </ng-container>
-                        <tr mat-header-row *matHeaderRowDef="displayedColumnsDoc"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumnsDoc;"></tr>
+                </form><br><br>
+                <div *ngIf="dataDoc.length > 0">
+                    <table>
+                        <tr>
+                            <th>Tipo Dirección</th>
+                            <th>Dirección</th>
+                            <th>Descargar</th>
+                            <th>Elminar</th>
+                        </tr>
+                        <tr *ngFor="let row of dataDoc; let i = index;">
+                            <td>{{ row.nombre }}</td>
+                            <td>{{ row.descripcion }}</td>
+                            <td><button mat-icon-button type="button" color="primary" aria-label="Descargar" matTooltip="Descargar" (click)="descargarDoc(row)">
+                                <mat-icon>download</mat-icon>
+                            </button></td>
+                            <td><button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar" (click)="eliminarDoc(row, index)">
+                                <mat-icon>delete</mat-icon>
+                            </button></td>
+                        </tr>
                     </table>
                 </div>
             </mat-step>

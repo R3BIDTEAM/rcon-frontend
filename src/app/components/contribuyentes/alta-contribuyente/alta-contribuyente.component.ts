@@ -376,7 +376,7 @@ export class AltaContribuyenteComponent implements OnInit {
         // insertarContribuyente?codtipospersona=M&nombre=&activprincip=RRRRR&idtipomoral=&idmotivosmoral=&fechainicioactiv=22-02-2002&fechacambio&rfc=PAGJ830626aaa&apellidopaterno=JON SAa&apellidomaterno=DA45545&curp=&claveife=&iddocidentif=1&valdocidentif&fechanacimiento=&fechadefuncion&celular=&email=&idExpediente=
         // insertarContribuyente?&codtipospersona=F&nombre=JOEL&activprincip=&idtipomoral=&idmotivosmoral=&fechainicioactiv=&fechacambiosituacion=&rfc=HEVH900629HD5&apellidopaterno=HERRERA&apellidomaterno=VALADEZ&curp=&claveife=&iddocidentif=&valdocidentif=&fechanacimiento=29-06-1990&fechadefuncion=&celular=566566455&email=hj@mail.com&activprincip=&idExpediente
         let query = '';
-        //this.loading = true;
+        this.loading = true;
 
         query = (this.contribuyente.tipoPersona) ? query + '&codtipospersona=' + this.contribuyente.tipoPersona : query + '&codtipospersona=';
         query = (this.contribuyente.nombre) ? query + '&nombre=' + this.contribuyente.nombre.toLocaleUpperCase().trim() : query + '&nombre=';

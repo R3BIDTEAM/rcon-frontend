@@ -110,7 +110,7 @@
                         <button mat-button matStepperNext>Siguiente</button>
                     </div>
                 </form><br><br>
-                <div>
+                <div *ngIf="dataDoc.length > 0">
                     <table>
                         <tr>
                             <th>Tipo Dirección</th>
