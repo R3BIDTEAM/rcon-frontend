@@ -77,6 +77,7 @@ export class VerNotarioComponent implements OnInit {
   dataSource = [];
   dataPaginate = [];
   displayedColumns: string[] = ['direccion'];
+  loadingDomicilios = false;
   dataNotarioResultado;
   dataNotarioDireccionesResultado;
   httpOptions;
@@ -217,17 +218,15 @@ export class VerNotarioComponent implements OnInit {
   */
   getNotarioDirecciones(){
       this.query = '&idPersona=' + this.idNotario; 
-      this.loading = true;
+      this.loadingDomicilios = true;
       console.log(this.endpoint);
       this.http.get(this.endpointEstados + 'getDireccionesContribuyente?' + this.query, this.httpOptions)
           .subscribe(
               (res: any) => {
-                  this.loading = false;
-                  this.dataNotarioDireccionesResultado = res;
+                  this.loadingDomicilios = false;
                   this.dataSource = res;
-                  this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                   this.total = this.dataSource.length; 
-                  this.paginator.pageIndex = 0;
+                  this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                   console.log("AQUI ENTRO EL RES");
                   console.log(this.dataNotarioDireccionesResultado);
               },

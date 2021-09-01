@@ -1,5 +1,5 @@
-<div class="row">
-    <div class="col-md-8 offset-md-2">
+<mat-card>
+    <div class="borde">
 
 
         <h3 style="margin: 0 0 15px;" class="verde-cdmx">Datos Generales:</h3>
@@ -8,156 +8,125 @@
             <p>Cargando...</p>
         </div>
         <br>
-        <div class="row" *ngIf!="loading">
-            <div class="col-md-4">
-                <mat-form-field appearance="outline" style="width: 100%;">
-                    <mat-label>No. Notario</mat-label>
-                    <input matInput placeholder="Placeholder" [disabled]="true" [(ngModel)]="datosNotario.no_notario">
-                </mat-form-field>
-            </div>
-            <div class="col-md-4">
-                <mat-form-field appearance="fill" style="width: 100%;">
-                    <mat-label>Estado:</mat-label>
-                    <mat-select #estado [disabled]="true" [(ngModel)]="datosNotario.estado">
-                        <mat-option *ngFor="let estado of estados" [value]="estado.CODESTADO">
-                            {{ estado.ESTADO }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
+        <div class="row" *ngIf="!loading">
+            <mat-form-field appearance="outline" style="width: 100%;" class="col-5 offset-1">
+                <mat-label>No. Notario</mat-label>
+                <input matInput placeholder="Placeholder" [disabled]="true" [(ngModel)]="datosNotario.no_notario">
+            </mat-form-field>
+            <mat-form-field appearance="fill" style="width: 100%;" class="col-5">
+                <mat-label>Estado:</mat-label>
+                <mat-select #estado [disabled]="true" [(ngModel)]="datosNotario.estado">
+                    <mat-option *ngFor="let estado of estados" [value]="estado.CODESTADO">
+                        {{ estado.ESTADO }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
         </div>
 
         <div class="row" *ngIf="!loading">
-            <div class="col-md-4">
-                <mat-form-field appearance="outline" style="width: 100%;">
-                    <mat-label>Nombre</mat-label>
-                    <input matInput placeholder="Placeholder" [disabled]="true" [(ngModel)]="datosNotario.nombre">
-                </mat-form-field>
-            </div>
-            <div class="col-md-4">
-                <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-form-field appearance="outline" style="width: 100%;" class="col-10 offset-1">
+                <mat-label>Nombre</mat-label>
+                <input matInput placeholder="Placeholder" [disabled]="true" [(ngModel)]="datosNotario.nombre">
+            </mat-form-field>
+        </div>
+        <div class="row" *ngIf="!loading">
+                <mat-form-field appearance="outline" style="width: 100%;" class="col-5 offset-1">
                     <mat-label>Apellido Paterno</mat-label>
                     <input matInput placeholder="Placeholder" [disabled]="true" [(ngModel)]="datosNotario.apellido_paterno">
                 </mat-form-field>
-            </div>
-            <div class="col-md-4">
-                <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-form-field appearance="outline" style="width: 100%;" class="col-5">
                     <mat-label>Apellido Materno</mat-label>
                     <input matInput placeholder="Placeholder" [disabled]="true" [(ngModel)]="datosNotario.apellido_materno">
                 </mat-form-field>
-            </div> 
         </div>
 
         <div class="row" *ngIf="!loading">
-            <div class="col-md-4">
-                <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-form-field appearance="outline" style="width: 100%;" class="col-5 offset-1">
                     <mat-label>RFC*</mat-label>
                     <input matInput placeholder="Placeholder" [disabled]="true" [(ngModel)]="datosNotario.rfc">
                 </mat-form-field>
-            </div>
-            <div class="col-md-4">
-                <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-form-field appearance="outline" style="width: 100%;" class="col-5">
                     <mat-label>CURP*</mat-label>
                     <input matInput placeholder="Placeholder" [disabled]="true" [(ngModel)]="datosNotario.curp">
                 </mat-form-field>
-            </div>
         </div>
 
         <div class="row" *ngIf="!loading">
-            <div class="col-md-4">
-                <mat-form-field appearance="outline" style="width: 100%;">
-                    <mat-label>INE</mat-label>
-                    <input matInput placeholder="Placeholder" [disabled]="true" [(ngModel)]="datosNotario.ine">
-                </mat-form-field>
-            </div>
-            <div class="col-md-4">
-                <mat-form-field appearance="fill" style="width: 100%;">
-                    <mat-label>Otro Documento:</mat-label>
-                    <mat-select #otro_documento [disabled]="true" [(ngModel)]="datosNotario.otro_documento">
-                        <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF">
-                            {{ documento.DESCRIPCION }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-md-4">
-                <mat-form-field appearance="outline" style="width: 100%;">
-                    <mat-label>Número Documento</mat-label>
-                    <input matInput #numero_documento [disabled]="true" [(ngModel)]="datosNotario.numero_documento" placeholder="Número documento">
-                </mat-form-field>
-            </div>
+            <mat-form-field appearance="outline" style="width: 100%;" class="col-4 offset-1">
+                <mat-label>INE</mat-label>
+                <input matInput placeholder="Placeholder" [disabled]="true" [(ngModel)]="datosNotario.ine">
+            </mat-form-field>
+            <mat-form-field appearance="fill" style="width: 100%;" class="col-3">
+                <mat-label>Otro Documento:</mat-label>
+                <mat-select #otro_documento [disabled]="true" [(ngModel)]="datosNotario.otro_documento">
+                    <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF">
+                        {{ documento.DESCRIPCION }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" style="width: 100%;" class="col-3">
+                <mat-label>Número Documento</mat-label>
+                <input matInput #numero_documento [disabled]="true" [(ngModel)]="datosNotario.numero_documento" placeholder="Número documento">
+            </mat-form-field>
         </div>
 
         <div class="row" *ngIf="!loading">
-            <div class="col-md-4">
-                <mat-form-field appearance="fill" style="width: 100%;">
-                    <mat-label>Fecha Nacimiento</mat-label>
-                    <input matInput [matDatepicker]="picknacimiento" [disabled]="true" [(ngModel)]="datosNotario.fecha_nacimiento">
-                    <mat-datepicker-toggle matSuffix [for]="picknacimiento"></mat-datepicker-toggle>
-                    <mat-datepicker #picknacimiento></mat-datepicker>
-                </mat-form-field>
-            </div>
-            <div class="col-md-4">
-                <mat-form-field appearance="fill" style="width: 100%;">
-                    <mat-label>Fecha Defunción</mat-label>
-                    <input matInput [matDatepicker]="pickdefuncion" [disabled]="true" [(ngModel)]="datosNotario.fecha_defuncion">
-                    <mat-datepicker-toggle matSuffix [for]="pickdefuncion"></mat-datepicker-toggle>
-                    <mat-datepicker #pickdefuncion></mat-datepicker>
-                </mat-form-field>
-            </div>
+            <mat-form-field appearance="fill" style="width: 100%;" class="col-5 offset-1">
+                <mat-label>Fecha Nacimiento</mat-label>
+                <input matInput [matDatepicker]="picknacimiento" [disabled]="true" [(ngModel)]="datosNotario.fecha_nacimiento">
+                <mat-datepicker-toggle matSuffix [for]="picknacimiento"></mat-datepicker-toggle>
+                <mat-datepicker #picknacimiento></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="fill" style="width: 100%;" class="col-5">
+                <mat-label>Fecha Defunción</mat-label>
+                <input matInput [matDatepicker]="pickdefuncion" [disabled]="true" [(ngModel)]="datosNotario.fecha_defuncion">
+                <mat-datepicker-toggle matSuffix [for]="pickdefuncion"></mat-datepicker-toggle>
+                <mat-datepicker #pickdefuncion></mat-datepicker>
+            </mat-form-field>
         </div>
 
         <div class="row" *ngIf="!loading">
-            <div class="col-md-4">
-                <mat-form-field appearance="outline" style="width: 100%;">
-                    <mat-label>Celular</mat-label>
-                    <input matInput placeholder="Placeholder" [disabled]="true" [(ngModel)]="datosNotario.celular">
-                </mat-form-field>
-            </div>
-            <div class="col-md-4">
-                <mat-form-field appearance="outline" style="width: 100%;">
-                    <mat-label>E-Mail</mat-label>
-                    <input matInput placeholder="Placeholder" [disabled]="true" [(ngModel)]="datosNotario.email" style="text-transform: none;">
-                </mat-form-field>
-            </div>
+            <mat-form-field appearance="outline" style="width: 100%;" class="col-5 offset-1">
+                <mat-label>Celular</mat-label>
+                <input matInput placeholder="Placeholder" [disabled]="true" [(ngModel)]="datosNotario.celular">
+            </mat-form-field>
+            <mat-form-field appearance="outline" style="width: 100%;" class="col-5">
+                <mat-label>E-Mail</mat-label>
+                <input matInput placeholder="Placeholder" [disabled]="true" [(ngModel)]="datosNotario.email" style="text-transform: none;">
+            </mat-form-field>
         </div>
 
       
 
 
-
-        <!-- Sección de Datos de Contacto -->
-        <h3 style="margin: 30px 0 15px 0;" class="verde-cdmx">Datos de contacto:</h3>
-
-        <div class="row">
-            <div class="col-md-12" *ngIf="dataSource.length == 0">
-                <div class="alert alert-info">
-                    No hay datos que mostrar...
-                </div>
+        <div style="padding: 30px; text-align: center;" *ngIf="loadingDomicilios">
+            <mat-spinner style="margin:0 auto;"></mat-spinner>
+            <p>Cargando...</p>
+        </div>
+        <div class="row" *ngIf="!loadingDomicilios">
+            <div class="col-md-10 offset-1">
+                <ng-container>
+                    
+                    <div class="alert alert-info" *ngIf="!loadingDomicilios && dataSource.length == 0">
+                        No hay direcciones asociadas.
+                    </div> 
+                    <table mat-table [dataSource]="dataSource" *ngIf="!loadingDomicilios && dataSource.length > 0" width="100%">
+                        
+                        <ng-container matColumnDef="direccion">
+                            <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="70%"> Dirección </th>
+                            <td mat-cell *matCellDef="let element">
+                                {{ element.ABREVIATURAVIA }}, {{ element.VIA }} {{ element.NUMEROEXTERIOR }}, Col: {{ element.COLONIA}}
+                                C.P. {{ element.CODIGOPOSTAL}}, {{ element.DELEGACION}} ({{ element.ESTADO }})
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                    <mat-paginator #paginator [length]="total" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado($event)">
+                    </mat-paginator>
+                </ng-container>
             </div>
         </div>
 
-        <table mat-table [dataSource]="dataPaginate" *ngIf="dataSource.length > 0">
-            <ng-container matColumnDef="direccion">
-                <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="width: 50%; font-size: 14px;"> Dirección </th>
-                <td mat-cell *matCellDef="let element" class="contenido-tabla" style="font-size: 13px;"> 
-                    {{ element.VIA + " NÚMERO " + element.NUMEROEXTERIOR + ", INTERIOR " + element.NUMEROINTERIOR + ". COLONIA " + element.COLONIA + ", CÓDIGO POSTAL " + element.CODIGOPOSTAL + ", " + element.DELEGACION + ", " + element.ESTADO}}
-                </td>
-            </ng-container>
-            <!-- <ng-container matColumnDef="editar">
-                <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="width: 10%; font-size: 14px; text-align: center;"> Editar </th>
-                <td mat-cell *matCellDef="let element" style="text-align: center; font-size: 13px;">
-                    <button mat-stroked-button color="primary" aria-label="Ver Notario" matTooltip="Ver Notario" [disabled]="true" style="min-width: 5px;">
-                        <mat-icon style="display: inherit; width: 12px;">create</mat-icon>
-                    </button>
-                </td>
-            </ng-container> -->
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-        <mat-paginator #paginator [length]="total" [pageSize]="pageSize" [pageSizeOptions]="[pageSize]" [showFirstLastButtons]="true" (page)="paginado($event)">
-        </mat-paginator>
-
-
     </div>
-</div>
+</mat-card>

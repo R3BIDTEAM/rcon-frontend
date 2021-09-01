@@ -1,5 +1,5 @@
-<div class="row">
-    <div class="col-md-10 offset-md-1">
+<mat-card>
+    <div class="borde">
 
         <!-- Datos del Notario -->
         <h3 style="margin: 0 0 15px 0;" class="verde-cdmx">Datos del Notario:</h3>
@@ -13,7 +13,7 @@
         <h3 style="margin: 30px 0 15px 0;" class="verde-cdmx">Datos Generales:</h3>
         <ng-container *ngIf="!loading">
             <form [formGroup]="personaFormGroup">
-                <div class="row">
+                <div class="row" *ngIf="!loading">
                     <!-- <div *ngIf="!loading" class="col-md-12">
                         <mat-form-field appearance="fill">
                             <mat-label>Tipo de persona:</mat-label>
@@ -23,16 +23,13 @@
                             </mat-select>
                         </mat-form-field>
                     </div><br><br> -->
-                    <div *ngIf="!loading" class="col-md-4">
-                        <mat-form-field appearance="outline" style="width: 100%;">
+                        <mat-form-field appearance="outline" style="width: 100%;" class="col-4 offset-1">
                             <mat-label>No. Notario *</mat-label>
                             <input matInput  formControlName="no_notario" placeholder="Ingrese No. Notario" [(ngModel)]="datosNotario.no_notario" maxlength="10"> 
                             <mat-error *ngIf="personaFormGroup.controls.no_notario.errors?.required">Requerido</mat-error>
                             <mat-error *ngIf="personaFormGroup.controls.no_notario.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
                         </mat-form-field>
-                    </div>
-                    <div *ngIf="!loading" class="col-md-4">
-                        <mat-form-field appearance="fill" style="width: 100%;">
+                        <mat-form-field appearance="fill" style="width: 100%;" class="col-4">
                             <mat-label>Estado:</mat-label>
                             <mat-select #estado [(ngModel)]="datosNotario.estado" formControlName="estado">
                                 <mat-option *ngFor="let estado of estados" [value]="estado.CODESTADO">
@@ -40,9 +37,8 @@
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
-                    </div>
                         <!-- Actualizar -->
-                        <div class="col-md-4" style="margin-top: 10px;" *ngIf="!loading">
+                        <div class="col-md-3" style="margin-top: 10px;" *ngIf="!loading">
                             <div class="d-flex flex-row-reverse" style="text-align: center;">
                                 <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" style="margin: auto;" (click)="actualizarDatosNotario()">
                                     Actualizar <mat-icon style="display: inherit; width: 15px;">update</mat-icon>
@@ -51,113 +47,91 @@
                         </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4">
-                        <mat-form-field appearance="outline" style="width: 100%;">
-                            <mat-label>Nombre</mat-label>
-                            <input matInput formControlName="nombre" placeholder="Ingrese Nombre" [(ngModel)]="datosGenerales.nombre" maxlength="250">
-                            <mat-error *ngIf="personaFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
-                            <mat-error *ngIf="personaFormGroup.controls.nombre.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-4">
-                        <mat-form-field appearance="outline" style="width: 100%;">
-                            <mat-label>Apellido Paterno</mat-label>
-                            <input matInput formControlName="apellidopaterno" placeholder="Ingrese Apellido Paterno" [(ngModel)]="datosGenerales.apellido_paterno" maxlength="250">
-                            <mat-error *ngIf="personaFormGroup.controls.apellidopaterno.errors?.required">Requerido</mat-error>
-                            <mat-error *ngIf="personaFormGroup.controls.apellidopaterno.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-4">
-                        <mat-form-field appearance="outline" style="width: 100%;">
-                            <mat-label>Apellido Materno</mat-label>
-                            <input matInput formControlName="apellidomaterno" placeholder="Ingrese Apellido Materno" [(ngModel)]="datosGenerales.apellido_materno" maxlength="250">
-                            <mat-error *ngIf="personaFormGroup.controls.apellidomaterno.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
-                        </mat-form-field>
-                    </div> 
+                    <mat-form-field appearance="outline" style="width: 100%;" class="col-10 offset-1">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput formControlName="nombre" placeholder="Ingrese Nombre" [(ngModel)]="datosGenerales.nombre" maxlength="250">
+                        <mat-error *ngIf="personaFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
+                        <mat-error *ngIf="personaFormGroup.controls.nombre.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field appearance="outline" style="width: 100%;" class="col-5 offset-1">
+                        <mat-label>Apellido Paterno</mat-label>
+                        <input matInput formControlName="apellidopaterno" placeholder="Ingrese Apellido Paterno" [(ngModel)]="datosGenerales.apellido_paterno" maxlength="250">
+                        <mat-error *ngIf="personaFormGroup.controls.apellidopaterno.errors?.required">Requerido</mat-error>
+                        <mat-error *ngIf="personaFormGroup.controls.apellidopaterno.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" style="width: 100%;" class="col-5">
+                        <mat-label>Apellido Materno</mat-label>
+                        <input matInput formControlName="apellidomaterno" placeholder="Ingrese Apellido Materno" [(ngModel)]="datosGenerales.apellido_materno" maxlength="250">
+                        <mat-error *ngIf="personaFormGroup.controls.apellidomaterno.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
+                    </mat-form-field>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4">
-                        <mat-form-field appearance="outline" style="width: 100%;">
-                            <mat-label>RFC*</mat-label>
-                            <input matInput formControlName="rfc" onkeyup="this.value = this.value.toUpperCase();" placeholder="Ingrese RFC" [(ngModel)]="datosGenerales.rfc" (keyup)="changeRequired()" [required]="isRequired" pattern="^([A-ZÑ&]{4})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" maxlength="13">
-                            <mat-error *ngIf="personaFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
-                            <mat-error *ngIf="personaFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 4 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-4">
-                        <mat-form-field appearance="outline" style="width: 100%;">
-                            <mat-label>CURP*</mat-label>
-                            <input matInput formControlName="curp" onkeyup="this.value = this.value.toUpperCase();" placeholder="Ingrese CURP" [(ngModel)]="datosGenerales.curp" (keyup)="changeRequired()" [required]="isRequired" pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$" maxlength="18">
-                            <mat-error *ngIf="personaFormGroup.controls.curp.errors?.required">Requerido</mat-error>
-                            <mat-error *ngIf="personaFormGroup.controls.curp.errors?.pattern">CURP no valido</mat-error>
-                        </mat-form-field>
-                    </div>
+                    <mat-form-field appearance="outline" style="width: 100%;" class="col-5 offset-1">
+                        <mat-label>RFC*</mat-label>
+                        <input matInput formControlName="rfc" onkeyup="this.value = this.value.toUpperCase();" placeholder="Ingrese RFC" [(ngModel)]="datosGenerales.rfc" (keyup)="changeRequired()" [required]="isRequired" pattern="^([A-ZÑ&]{4})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" maxlength="13">
+                        <mat-error *ngIf="personaFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
+                        <mat-error *ngIf="personaFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 4 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" style="width: 100%;" class="col-5">
+                        <mat-label>CURP*</mat-label>
+                        <input matInput formControlName="curp" onkeyup="this.value = this.value.toUpperCase();" placeholder="Ingrese CURP" [(ngModel)]="datosGenerales.curp" (keyup)="changeRequired()" [required]="isRequired" pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$" maxlength="18">
+                        <mat-error *ngIf="personaFormGroup.controls.curp.errors?.required">Requerido</mat-error>
+                        <mat-error *ngIf="personaFormGroup.controls.curp.errors?.pattern">CURP no valido</mat-error>
+                    </mat-form-field>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4">
-                        <mat-form-field appearance="outline" style="width: 100%;">
-                            <mat-label>INE</mat-label>
-                            <input matInput formControlName="ine" placeholder="Ingrese INE" [(ngModel)]="datosGenerales.ine" maxlength="250">
-                            <mat-error *ngIf="personaFormGroup.controls.ine.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-4">
-                        <mat-form-field appearance="fill" style="width: 100%;">
-                            <mat-label>Otro Documento:</mat-label>
-                            <mat-select #otro_documento formControlName="identificacion" [(ngModel)]="datosGenerales.otro_documento" (ngModelChange)="otroDocumento()" [class.spinner]="loadingDocumentosIdentificativos">
-                                <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF">
-                                    {{ documento.DESCRIPCION }}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-4">
-                        <mat-form-field appearance="outline" style="width: 100%;">
-                            <mat-label>Número Documento</mat-label>
-                            <input matInput formControlName="idedato" #numero_documento [(ngModel)]="datosGenerales.numero_documento" [disabled]="datosGenerales.otro_documento == '' || datosGenerales.otro_documento == null" placeholder="Ingrese Número documento" maxlength="250">
-                            <mat-error *ngIf="personaFormGroup.controls.idedato.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
-                        </mat-form-field>
-                    </div>
+                    <mat-form-field appearance="outline" style="width: 100%;" class="col-4 offset-1">
+                        <mat-label>INE</mat-label>
+                        <input matInput formControlName="ine" placeholder="Ingrese INE" [(ngModel)]="datosGenerales.ine" maxlength="250">
+                        <mat-error *ngIf="personaFormGroup.controls.ine.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" style="width: 100%;" class="col-3">
+                        <mat-label>Otro Documento:</mat-label>
+                        <mat-select #otro_documento formControlName="identificacion" [(ngModel)]="datosGenerales.otro_documento" (ngModelChange)="otroDocumento()" [class.spinner]="loadingDocumentosIdentificativos">
+                            <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF">
+                                {{ documento.DESCRIPCION }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" style="width: 100%;" class="col-3">
+                        <mat-label>Número Documento</mat-label>
+                        <input matInput formControlName="idedato" #numero_documento [(ngModel)]="datosGenerales.numero_documento" [disabled]="datosGenerales.otro_documento == '' || datosGenerales.otro_documento == null" placeholder="Ingrese Número documento" maxlength="250">
+                        <mat-error *ngIf="personaFormGroup.controls.idedato.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
+                    </mat-form-field>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4">
-                        <mat-form-field appearance="fill" style="width: 100%;">
-                            <mat-label>Fecha Nacimiento</mat-label>
-                            <input matInput formControlName="fechaNacimiento" [matDatepicker]="picknacimiento" [(ngModel)]="datosGenerales.fecha_nacimiento" placeholder="Ingrese Fecha Nacimiento" (dateChange)="fechaTope()" readonly>
-                            <mat-datepicker-toggle matSuffix [for]="picknacimiento"></mat-datepicker-toggle>
-                            <mat-datepicker #picknacimiento></mat-datepicker>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-4">
-                        <mat-form-field appearance="fill" style="width: 100%;">
-                            <mat-label>Fecha Defunción</mat-label>
-                            <input matInput formControlName="fechaDefuncion" [matDatepicker]="pickdefuncion" [(ngModel)]="datosGenerales.fecha_defuncion" placeholder="Ingrese Fecha Defunción" [min]="minDate" readonly>
-                            <mat-datepicker-toggle matSuffix [for]="pickdefuncion"></mat-datepicker-toggle>
-                            <mat-datepicker #pickdefuncion></mat-datepicker>
-                        </mat-form-field>
-                    </div>
+                    <mat-form-field appearance="fill" style="width: 100%;" class="col-5 offset-1">
+                        <mat-label>Fecha Nacimiento</mat-label>
+                        <input matInput formControlName="fechaNacimiento" [matDatepicker]="picknacimiento" [(ngModel)]="datosGenerales.fecha_nacimiento" placeholder="Ingrese Fecha Nacimiento" (dateChange)="fechaTope()" readonly>
+                        <mat-datepicker-toggle matSuffix [for]="picknacimiento"></mat-datepicker-toggle>
+                        <mat-datepicker #picknacimiento></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" style="width: 100%;" class="col-5">
+                        <mat-label>Fecha Defunción</mat-label>
+                        <input matInput formControlName="fechaDefuncion" [matDatepicker]="pickdefuncion" [(ngModel)]="datosGenerales.fecha_defuncion" placeholder="Ingrese Fecha Defunción" [min]="minDate" readonly>
+                        <mat-datepicker-toggle matSuffix [for]="pickdefuncion"></mat-datepicker-toggle>
+                        <mat-datepicker #pickdefuncion></mat-datepicker>
+                    </mat-form-field>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4">
-                        <mat-form-field appearance="outline" style="width: 100%;">
-                            <mat-label>Celular</mat-label>
-                            <input matInput formControlName="celular" placeholder="Ingrese Celular" [(ngModel)]="datosGenerales.celular" maxlength="10">
-                            <mat-error *ngIf="personaFormGroup.controls.celular.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
+                    <mat-form-field appearance="outline" style="width: 100%;" class="col-5 offset-1">
+                        <mat-label>Celular</mat-label>
+                        <input matInput formControlName="celular" placeholder="Ingrese Celular" [(ngModel)]="datosGenerales.celular" maxlength="10">
+                        <mat-error *ngIf="personaFormGroup.controls.celular.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" style="width: 100%;" class="col-5">
+                        <mat-label>E-Mail *</mat-label>
+                        <input matInput formControlName="email" placeholder="Ingrese E-mail" [(ngModel)]="datosGenerales.email" style="text-transform: none!important;" maxlength="250">
+                        <mat-error *ngIf="personaFormGroup.controls.email.errors?.required">Requerido</mat-error>
+                        <mat-error *ngIf="personaFormGroup.hasError('email', 'email') && personaFormGroup.get('email').touched">Correo invalido</mat-error>
+                        <mat-error *ngIf="personaFormGroup.controls.email.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
                         </mat-form-field>
-                    </div>
-                    <div class="col-md-4">
-                        <mat-form-field appearance="outline" style="width: 100%;">
-                            <mat-label>E-Mail</mat-label>
-                            <input matInput formControlName="email" placeholder="Ingrese E-mail" [(ngModel)]="datosGenerales.email" style="text-transform: none!important;" maxlength="250">
-                            <mat-error *ngIf="personaFormGroup.controls.email.errors?.required">Requerido</mat-error>
-                            <mat-error *ngIf="personaFormGroup.hasError('email', 'email') && personaFormGroup.get('email').touched">Correo invalido</mat-error>
-                            <mat-error *ngIf="personaFormGroup.controls.email.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
-                        </mat-form-field>
-                    </div>
                 </div>
             </form>
         </ng-container>
@@ -221,7 +195,7 @@
                             </button>
                         </div> -->
                     </div>
-                    <div class="col-md-4 offset-md-3" *ngIf="actCambioPersona">
+                    <div class="col-md-7 offset-md-4" *ngIf="actCambioPersona">
                         <div class="d-flex flex-row-reverse">
                             <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Actualizar" (click)="actualizarDatosGenerales()" matTooltip="Actualizar" [disabled]="personaFormGroup.invalid">
                                 Actualizar <mat-icon style="display: inherit; width: 15px;">update</mat-icon>
@@ -240,10 +214,12 @@
 
 
         <!-- Datos de Contacto -->
-        <h3 class="verde-cdmx" style="margin: 45px 0 15px 0;">Datos de contacto:</h3>
+        <div class="col-md-10 offset-1">
+            <h3 class="verde-cdmx" style="margin: 45px 0 15px 0;">Datos de contacto:</h3>
+        </div>
 
         <div class="row" style="margin-bottom: 15px;">
-            <div class="col-md-4">
+            <div class="col-md-10 offset-1">
                 <button mat-stroked-button aria-label="Domicilios" style="background-color: #00A447; color: #FFF!important;" (click)="addDomicilio()">
                     Domicilios <mat-icon style="display: inherit; width: 15px;">add</mat-icon>
                 </button>
@@ -251,14 +227,14 @@
         </div>
 
 
-
+        <div style="padding: 30px; text-align: center;" *ngIf="loadingDomicilios">
+            <mat-spinner style="margin:0 auto;"></mat-spinner>
+            <p>Cargando...</p>
+        </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-10 offset-1">
                 <ng-container>
-                    <div style="padding: 30px; text-align: center;" *ngIf="loadingDomicilios">
-                        <mat-spinner style="margin:0 auto;"></mat-spinner>
-                        <p>Cargando...</p>
-                    </div>
+                    
                     <div class="alert alert-info" *ngIf="!loadingDomicilios && dataSource1.length == 0">
                         No hay direcciones asociadas.
                     </div> 
@@ -300,4 +276,4 @@
 
 
     </div>
-</div>
+</mat-card>

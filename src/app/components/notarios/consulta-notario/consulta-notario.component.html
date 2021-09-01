@@ -1,92 +1,70 @@
-<div class="row">
-    <div class="col-md-10 offset-md-1">
+<mat-card>
+    <div class="borde">
         <h1 class="titulo-cdmx" style="margin: 0 0 25px 0;">Búsqueda de notarios</h1>
-
         <div class="row">
-            <div class="col-md-4">
-                <mat-form-field appearance="outline" style="width: 100%;">
-                    <mat-label>Apellido Paterno</mat-label>
-                    <input matInput #apellido_paterno [(ngModel)]="filtros.apellido_paterno" placeholder="Ingrese apellido paterno" (keyup)="clearInputsIdentNoIdent(false)" (ngModelChange)="validateSearch()" (keydown.enter)="getData()" maxlength="250">
-                </mat-form-field>
-            </div>
-            <div class="col-md-4">
-                <mat-form-field appearance="outline" style="width: 100%;">
-                    <mat-label>Apellido Materno</mat-label>
-                    <input matInput #apellido_materno [(ngModel)]="filtros.apellido_materno" placeholder="Ingrese apellido materno" (keyup)="clearInputsIdentNoIdent(false)" (ngModelChange)="validateSearch()" (keydown.enter)="getData()" maxlength="250">
-                </mat-form-field>
-            </div> 
-            <div class="col-md-4">
-                <mat-form-field appearance="outline" style="width: 100%;">
-                    <mat-label>Nombre</mat-label>
-                    <input matInput #nombre [(ngModel)]="filtros.nombre" placeholder="Ingrese nombre" (keyup)="clearInputsIdentNoIdent(false)" (ngModelChange)="validateSearch()" (keydown.enter)="getData()" maxlength="250">
-                </mat-form-field>
-            </div>
+            <mat-form-field appearance="outline" style="width: 100%;" class="col-5 offset-1">
+                <mat-label>Apellido Paterno</mat-label>
+                <input matInput #apellido_paterno [(ngModel)]="filtros.apellido_paterno" placeholder="Ingrese apellido paterno" (keyup)="clearInputsIdentNoIdent(false)" (ngModelChange)="validateSearch()" (keydown.enter)="getData()" maxlength="250">
+            </mat-form-field>
+            <mat-form-field appearance="outline" style="width: 100%;" class="col-5">
+                <mat-label>Apellido Materno</mat-label>
+                <input matInput #apellido_materno [(ngModel)]="filtros.apellido_materno" placeholder="Ingrese apellido materno" (keyup)="clearInputsIdentNoIdent(false)" (ngModelChange)="validateSearch()" (keydown.enter)="getData()" maxlength="250">
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="outline" style="width: 100%;" class="col-10 offset-1">
+                <mat-label>Nombre</mat-label>
+                <input matInput #nombre [(ngModel)]="filtros.nombre" placeholder="Ingrese nombre" (keyup)="clearInputsIdentNoIdent(false)" (ngModelChange)="validateSearch()" (keydown.enter)="getData()" maxlength="250">
+            </mat-form-field>
         </div>
 
         <div class="row">
-            <div class="col-md-4">
-                <mat-form-field appearance="outline" style="width: 100%;">
-                    <mat-label>RFC*</mat-label>
-                    <input matInput #rfc [(ngModel)]="filtros.rfc" placeholder="Ingrese RFC" (keyup)="clearInputsIdentNoIdent(true)" (ngModelChange)="validateSearch()" (keydown.enter)="getData()" onkeyup="this.value = this.value.toUpperCase();" maxlength="13">
-                </mat-form-field>
-            </div>
-            <div class="col-md-4">
-                <mat-form-field appearance="outline" style="width: 100%;">
-                    <mat-label>CURP*</mat-label>
-                    <input matInput #curp [(ngModel)]="filtros.curp" placeholder="Ingrese CURP" (keyup)="clearInputsIdentNoIdent(true)" (ngModelChange)="validateSearch()" (keydown.enter)="getData()" onkeyup="this.value = this.value.toUpperCase();" maxlength="18">
-                </mat-form-field>
-            </div>
+            <mat-form-field appearance="outline" style="width: 100%;" class="col-5 offset-1">
+                <mat-label>RFC*</mat-label>
+                <input matInput #rfc [(ngModel)]="filtros.rfc" placeholder="Ingrese RFC" (keyup)="clearInputsIdentNoIdent(true)" (ngModelChange)="validateSearch()" (keydown.enter)="getData()" onkeyup="this.value = this.value.toUpperCase();" maxlength="13">
+            </mat-form-field>
+            <mat-form-field appearance="outline" style="width: 100%;" class="col-5">
+                <mat-label>CURP*</mat-label>
+                <input matInput #curp [(ngModel)]="filtros.curp" placeholder="Ingrese CURP" (keyup)="clearInputsIdentNoIdent(true)" (ngModelChange)="validateSearch()" (keydown.enter)="getData()" onkeyup="this.value = this.value.toUpperCase();" maxlength="18">
+            </mat-form-field>
         </div>
 
         <div class="row">
-            <div class="col-md-4">
-                <mat-form-field appearance="outline" style="width: 100%;">
-                    <mat-label>INE</mat-label>
-                    <input matInput #ine [(ngModel)]="filtros.ine" placeholder="Ingrese INE" (keyup)="clearInputsIdentNoIdent(true)" (keydown.enter)="getData()" maxlength="250">
-                </mat-form-field>
-            </div>
-            <div class="col-md-4">
-                <mat-form-field appearance="fill" style="width: 100%;">
-                    <mat-label>Otro Documento:</mat-label>
-                    <mat-select #otro_documento [(ngModel)]="filtros.otro_documento" (ngModelChange)="otroDocumento()" [class.spinner]="loadingDocumentosIdentificativos" (selectionChange)="seleccionaDocto()">
-                        <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF" (keydown.enter)="getData()">
-                            {{ documento.DESCRIPCION }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-md-4" *ngIf="!selectDisabled">
-                        
-            </div>
-            <div class="col-md-4" *ngIf="selectDisabled">
-                <mat-form-field appearance="outline" style="width: 100%;">
-                    <mat-label>Número Documento</mat-label>
-                    <input matInput #numero_documento [(ngModel)]="filtros.numero_documento" [disabled]="filtros.otro_documento == '' || filtros.otro_documento == null" placeholder="Ingrese número de documento" (keydown.enter)="getData()" maxlength="250">
-                </mat-form-field>
-            </div>
+            <mat-form-field appearance="outline" style="width: 100%;" class="col-4 offset-1">
+                <mat-label>INE</mat-label>
+                <input matInput #ine [(ngModel)]="filtros.ine" placeholder="Ingrese INE" (keyup)="clearInputsIdentNoIdent(true)" (keydown.enter)="getData()" maxlength="250">
+            </mat-form-field>
+            <mat-form-field appearance="fill" style="width: 100%;" class="col-3">
+                <mat-label>Otro Documento:</mat-label>
+                <mat-select #otro_documento [(ngModel)]="filtros.otro_documento" (ngModelChange)="otroDocumento()" [class.spinner]="loadingDocumentosIdentificativos" (selectionChange)="seleccionaDocto()">
+                    <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF" (keydown.enter)="getData()">
+                        {{ documento.DESCRIPCION }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" style="width: 100%;" class="col-3" *ngIf="selectDisabled">
+                <mat-label>Número Documento</mat-label>
+                <input matInput #numero_documento [(ngModel)]="filtros.numero_documento" [disabled]="filtros.otro_documento == '' || filtros.otro_documento == null" placeholder="Ingrese número de documento" (keydown.enter)="getData()" maxlength="250">
+            </mat-form-field>
         </div> 
 
         <div class="row">
-            <div class="col-md-4">
-                <mat-form-field appearance="outline" style="width: 100%;">
-                    <mat-label>No. Notario</mat-label>
-                    <input matInput #no_notario [(ngModel)]="filtros.no_notario" placeholder="Ingrese número de notario" (keyup)="clearInputsIdentNoIdent(true)" (ngModelChange)="validateSearch()" (keydown.enter)="getData()" maxlength="10">
-                </mat-form-field>
-            </div>
-            <div class="col-md-4">
-                <mat-form-field appearance="fill" style="width: 100%;">
-                    <mat-label>Estado:</mat-label>
-                    <mat-select #estado [(ngModel)]="filtros.estado" (selectionChange)="clearInputsIdentNoIdent(true)" (ngModelChange)="validateSearch()">
-                        <mat-option *ngFor="let estado of estados" [value]="estado.CODESTADO">
-                            {{ estado.ESTADO }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
+            <mat-form-field appearance="outline" style="width: 100%;" class="col-5 offset-1">
+                <mat-label>No. Notario</mat-label>
+                <input matInput #no_notario [(ngModel)]="filtros.no_notario" placeholder="Ingrese número de notario" (keyup)="clearInputsIdentNoIdent(true)" (ngModelChange)="validateSearch()" (keydown.enter)="getData()" maxlength="10">
+            </mat-form-field>
+            <mat-form-field appearance="fill" style="width: 100%;" class="col-5">
+                <mat-label>Estado:</mat-label>
+                <mat-select #estado [(ngModel)]="filtros.estado" (selectionChange)="clearInputsIdentNoIdent(true)" (ngModelChange)="validateSearch()">
+                    <mat-option *ngFor="let estado of estados" [value]="estado.CODESTADO">
+                        {{ estado.ESTADO }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
         </div>
 
         <div class="row">
-            <div class="col-md-2 offset-md-10">
+            <div class="col-md-2 offset-md-9">
                 <div class="d-flex flex-row-reverse">
                     <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getData()" [disabled]="!search">
                         Buscar
@@ -106,7 +84,7 @@
             </div>
 
             <div class="row" *ngIf="dataSource.length == 0 && !loading">
-                <div class="col-md-12">
+                <div class="col-md-10 offset-1">
                     <h3 class="verde-cdmx" style="margin-top: 10%;">Lista de notarios:</h3>
                     <div class="alert alert-info">
                         No hay Notarios para el filtro seleccionado
@@ -115,7 +93,7 @@
             </div>
 
             <div class="row" *ngIf="!loading && dataSource.length > 0">
-                <div class="col-md-12">
+                <div class="col-md-10 offset-1">
                     <h3 class="verde-cdmx" style="margin-top: 10%;">Lista de notarios:</h3>
                     <table mat-table [dataSource]="dataPaginate">
                         <ng-container matColumnDef="nombre">
@@ -160,4 +138,4 @@
         <!-- Fin de Table generado por la búsqueda -->
     
     </div>
-</div>
+</mat-card>
