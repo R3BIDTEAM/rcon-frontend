@@ -131,7 +131,7 @@
             <div class="row">
                 <mat-form-field appearance="outline" class="col-6">
                     <mat-label>Número Exterior:</mat-label>
-                    <input matInput formControlName="nexterior" [(ngModel)]="nexteriorNg"  maxlengrh="250"="10">
+                    <input matInput formControlName="nexterior" [(ngModel)]="nexteriorNg"  maxlength="10">
                     <mat-error *ngIf="domicilioFormGroup.controls.nexterior.errors?.required">Requerido</mat-error>
                     <mat-error *ngIf="domicilioFormGroup.controls.nexterior.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?)</mat-error>
                 </mat-form-field>
