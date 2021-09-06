@@ -233,9 +233,9 @@ export class EditarSociedadComponent implements OnInit {
         });
 
         this.moralFormGroup = this._formBuilder.group({
-            razonSocial: [null, [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
-            rfc: [null, [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
-            actPreponderante: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            razonSocial: [null, [Validators.required, Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            rfc: [null, [Validators.required]],
+            actPreponderante: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             idTipoPersonaMoral: ['', []],
             fechaInicioOperacion: [null, []],
             idMotivo: ['', []],
@@ -1388,16 +1388,16 @@ export class DialogDomicilioSociedad {
                 via: [null, Validators.required],
                 idtipolocalidad: [null],
                 cp: [null],
-                nexterior: [null, Validators.required],
-                entrecalle1: [null],
-                entrecalle2: [null],
-                andador: [null],
-                edificio: [null],
-                seccion: [null],
-                entrada: [null],
-                ninterior: [null],
-                telefono: [null],
-                adicional: [null],
+                nexterior: [null, [Validators.required, Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+                entrecalle1: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+                entrecalle2: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+                andador: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+                edificio: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+                seccion: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+                entrada: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+                ninterior: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+                telefono: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+                adicional: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
                 id_direccion: [null]
             });
     
@@ -1650,13 +1650,13 @@ export class DialogDomicilioSociedad {
         query = (this.dataDomicilio.idtipovia) ? query + '&idvia=' + this.dataDomicilio.idtipovia : query + '&idvia=';
         query = (this.dataDomicilio.via) ? query + '&via=' + this.dataDomicilio.via : query + '&via=';
   
-        query = (this.dataDomicilio.nexterior) ? query + '&numeroexterior=' + this.dataDomicilio.nexterior : query + '&numeroexterior=';
-        query = (this.dataDomicilio.entrecalle1) ? query + '&entrecalle1='  + this.dataDomicilio.entrecalle1 : query + '&entrecalle1';
-        query = (this.dataDomicilio.entrecalle2) ? query + '&entrecalle2='  + this.dataDomicilio.entrecalle2 : query + '&entrecalle2';
-        query = (this.dataDomicilio.andador) ? query + '&andador=' + this.dataDomicilio.andador : query + '&andador';
-        query = (this.dataDomicilio.edificio) ? query + '&edificio=' + this.dataDomicilio.edificio : query + '&edificio';
-        query = (this.dataDomicilio.seccion) ? query + '&seccion=' + this.dataDomicilio.seccion : query + '&seccion=';
-        query = (this.dataDomicilio.entrada) ? query + '&entrada=' + this.dataDomicilio.entrada : query + '&entrada=';
+        query = (this.dataDomicilio.nexterior) ? query + '&numeroexterior=' + this.dataDomicilio.nexterior.trim() : query + '&numeroexterior=';
+        query = (this.dataDomicilio.entrecalle1) ? query + '&entrecalle1='  + this.dataDomicilio.entrecalle1.trim() : query + '&entrecalle1';
+        query = (this.dataDomicilio.entrecalle2) ? query + '&entrecalle2='  + this.dataDomicilio.entrecalle2.trim() : query + '&entrecalle2';
+        query = (this.dataDomicilio.andador) ? query + '&andador=' + this.dataDomicilio.andador.trim() : query + '&andador';
+        query = (this.dataDomicilio.edificio) ? query + '&edificio=' + this.dataDomicilio.edificio.trim() : query + '&edificio';
+        query = (this.dataDomicilio.seccion) ? query + '&seccion=' + this.dataDomicilio.seccion.trim() : query + '&seccion=';
+        query = (this.dataDomicilio.entrada) ? query + '&entrada=' + this.dataDomicilio.entrada.trim() : query + '&entrada=';
         query = (this.dataDomicilio.idtipolocalidad) ? query + '&codtiposlocalidad=' + this.dataDomicilio.idtipolocalidad : query + '&codtiposlocalidad=';
         query = (this.dataDomicilio.idtipoasentamiento) ? query + '&codtiposasentamiento=' + this.dataDomicilio.idtipoasentamiento : query + '&codtiposasentamiento=';
         
@@ -1672,11 +1672,11 @@ export class DialogDomicilioSociedad {
         
         query = (this.dataDomicilio.idestado == 9) ? query + '&delegacion=' + this.dataDomicilio.delegacion : query + '&delegacion=' + this.dataDomicilio.municipio;
         
-        query = (this.dataDomicilio.telefono) ? query + '&telefono=' + this.dataDomicilio.telefono : query + '&telefono=';
+        query = (this.dataDomicilio.telefono) ? query + '&telefono=' + this.dataDomicilio.telefono.trim() : query + '&telefono=';
         query = (this.dataDomicilio.idestado) ? query + '&codestado=' + this.dataDomicilio.idestado : query + '&codestado=';
         query = (this.codtiposdireccion) ? query + '&codtiposdireccion=' + this.codtiposdireccion : query + '&codtiposdireccion=';
-        query = (this.dataDomicilio.adicional) ? query + '&indicacionesadicionales=' + this.dataDomicilio.adicional : query + '&indicacionesadicionales=';
-        query = (this.dataDomicilio.ninterior) ? query + '&numerointerior=' + this.dataDomicilio.ninterior : query + '&numerointerior=';
+        query = (this.dataDomicilio.adicional) ? query + '&indicacionesadicionales=' + this.dataDomicilio.adicional.trim() : query + '&indicacionesadicionales=';
+        query = (this.dataDomicilio.ninterior) ? query + '&numerointerior=' + this.dataDomicilio.ninterior.trim() : query + '&numerointerior=';
         
         console.log('EL SUPER QUERY!!!!!!');
         console.log(query);

@@ -179,19 +179,19 @@ export class EditarNotarioComponent implements OnInit {
         };
 
         this.personaFormGroup = this._formBuilder.group({
-            no_notario: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            no_notario: ['', [Validators.required, Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             estado: [null, []],
-            apellidopaterno: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
-            apellidomaterno: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
-            nombre: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            apellidopaterno: ['', [Validators.required, Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            apellidomaterno: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            nombre: ['', [Validators.required, Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             rfc: [null],
             curp: [null],
-            ine: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            ine: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             identificacion: [null],
-            idedato: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            idedato: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             fechaNacimiento: [null],
             fechaDefuncion: [null],
-            celular: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            celular: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             email: ['', [Validators.email, Validators.pattern("^\\S{1}.{1,248}\\S{1}$"), Validators.required]],
         });
 
@@ -739,16 +739,16 @@ export class DialogDomiciliosNotario {
             via: [null, Validators.required],
             idtipolocalidad: [null],
             cp: [null],
-            nexterior: [null, Validators.required],
-            entrecalle1: [null],
-            entrecalle2: [null],
-            andador: [null],
-            edificio: [null],
-            seccion: [null],
-            entrada: [null],
-            ninterior: [null],
-            telefono: [null],
-            adicional: [null],
+            nexterior: [null, [Validators.required, Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            entrecalle1: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            entrecalle2: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            andador: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            edificio: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            seccion: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            entrada: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            ninterior: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            telefono: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            adicional: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             id_direccion: [null]
         });
 

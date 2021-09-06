@@ -225,17 +225,17 @@ export class EditarPeritosComponent implements OnInit {
         private route: ActivatedRoute,
     ) {
         this.peritoPersonaFormGroup = this._formBuilder.group({
-            apellidopaterno: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
-            apellidomaterno: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
-            nombre: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            apellidopaterno: ['', [Validators.required, Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            apellidomaterno: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            nombre: ['', [Validators.required, Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             rfc: [null],
             curp: [null],
-            ine: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            ine: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             identificacion: [null],
-            idedato: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            idedato: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             fechaNacimiento: [null],
             fechaDefuncion: [null],
-            celular: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            celular: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             email: ['', [Validators.email, Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
         });
 
@@ -1476,7 +1476,6 @@ export class DialogDomicilioPerito {
             this.domicilioFormGroup = this._formBuilder.group({
                 idestado: ['', Validators.required],
                 delegacion: [null],
-                idmunicipio: [null],
                 municipio: [null, Validators.required],
                 idciudad: [null],
                 ciudad: [null, Validators.required],
@@ -1488,16 +1487,16 @@ export class DialogDomicilioPerito {
                 via: [null, Validators.required],
                 idtipolocalidad: [null],
                 cp: [null],
-                nexterior: [null, Validators.required],
-                entrecalle1: [null],
-                entrecalle2: [null],
-                andador: [null],
-                edificio: [null],
-                seccion: [null],
-                entrada: [null],
-                ninterior: [null],
-                telefono: [null],
-                adicional: [null],
+                nexterior: [null, [Validators.required, Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+                entrecalle1: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+                entrecalle2: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+                andador: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+                edificio: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+                seccion: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+                entrada: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+                ninterior: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+                telefono: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+                adicional: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
                 id_direccion: [null]
             });
     
@@ -1749,13 +1748,13 @@ export class DialogDomicilioPerito {
         query = (this.dataDomicilio.idtipovia) ? query + '&idvia=' + this.dataDomicilio.idtipovia : query + '&idvia=';
         query = (this.dataDomicilio.via) ? query + '&via=' + this.dataDomicilio.via : query + '&via=';
 
-        query = (this.dataDomicilio.nexterior) ? query + '&numeroexterior=' + this.dataDomicilio.nexterior : query + '&numeroexterior=';
-        query = (this.dataDomicilio.entrecalle1) ? query + '&entrecalle1='  + this.dataDomicilio.entrecalle1 : query + '&entrecalle1';
-        query = (this.dataDomicilio.entrecalle2) ? query + '&entrecalle2='  + this.dataDomicilio.entrecalle2 : query + '&entrecalle2';
-        query = (this.dataDomicilio.andador) ? query + '&andador=' + this.dataDomicilio.andador : query + '&andador';
-        query = (this.dataDomicilio.edificio) ? query + '&edificio=' + this.dataDomicilio.edificio : query + '&edificio';
-        query = (this.dataDomicilio.seccion) ? query + '&seccion=' + this.dataDomicilio.seccion : query + '&seccion=';
-        query = (this.dataDomicilio.entrada) ? query + '&entrada=' + this.dataDomicilio.entrada : query + '&entrada=';
+        query = (this.dataDomicilio.nexterior) ? query + '&numeroexterior=' + this.dataDomicilio.nexterior.trim() : query + '&numeroexterior=';
+        query = (this.dataDomicilio.entrecalle1) ? query + '&entrecalle1='  + this.dataDomicilio.entrecalle1.toLocaleUpperCase().trim() : query + '&entrecalle1';
+        query = (this.dataDomicilio.entrecalle2) ? query + '&entrecalle2='  + this.dataDomicilio.entrecalle2.toLocaleUpperCase().trim() : query + '&entrecalle2';
+        query = (this.dataDomicilio.andador) ? query + '&andador=' + this.dataDomicilio.andador.toLocaleUpperCase().trim() : query + '&andador';
+        query = (this.dataDomicilio.edificio) ? query + '&edificio=' + this.dataDomicilio.edificio.toLocaleUpperCase().trim() : query + '&edificio';
+        query = (this.dataDomicilio.seccion) ? query + '&seccion=' + this.dataDomicilio.seccion.toLocaleUpperCase().trim() : query + '&seccion=';
+        query = (this.dataDomicilio.entrada) ? query + '&entrada=' + this.dataDomicilio.entrada.toLocaleUpperCase().trim() : query + '&entrada=';
         query = (this.dataDomicilio.idtipolocalidad) ? query + '&codtiposlocalidad=' + this.dataDomicilio.idtipolocalidad : query + '&codtiposlocalidad=';
         query = (this.dataDomicilio.idtipoasentamiento) ? query + '&codtiposasentamiento=' + this.dataDomicilio.idtipoasentamiento : query + '&codtiposasentamiento=';
         
@@ -1771,11 +1770,11 @@ export class DialogDomicilioPerito {
         
         query = (this.dataDomicilio.idestado == 9) ? query + '&delegacion=' + this.dataDomicilio.delegacion : query + '&delegacion=' + this.dataDomicilio.municipio;
         
-        query = (this.dataDomicilio.telefono) ? query + '&telefono=' + this.dataDomicilio.telefono : query + '&telefono=';
+        query = (this.dataDomicilio.telefono) ? query + '&telefono=' + this.dataDomicilio.telefono.trim() : query + '&telefono=';
         query = (this.dataDomicilio.idestado) ? query + '&codestado=' + this.dataDomicilio.idestado : query + '&codestado=';
         query = (this.codtiposdireccion) ? query + '&codtiposdireccion=' + this.codtiposdireccion : query + '&codtiposdireccion=';
-        query = (this.dataDomicilio.adicional) ? query + '&indicacionesadicionales=' + this.dataDomicilio.adicional : query + '&indicacionesadicionales=';
-        query = (this.dataDomicilio.ninterior) ? query + '&numerointerior=' + this.dataDomicilio.ninterior : query + '&numerointerior=';
+        query = (this.dataDomicilio.adicional) ? query + '&indicacionesadicionales=' + this.dataDomicilio.adicional.toLocaleUpperCase().trim() : query + '&indicacionesadicionales=';
+        query = (this.dataDomicilio.ninterior) ? query + '&numerointerior=' + this.dataDomicilio.ninterior.trim() : query + '&numerointerior=';
         
         console.log('EL SUPER QUERY!!!!!!');
         console.log(query);
@@ -2626,18 +2625,18 @@ export class DialogRepresentacionPeritos {
         
         dialogRef.disableClose = true;
         this.fisicaFormGroup = this._formBuilder.group({
-            nombre: [null, [Validators.required]],
-            apaterno: [null, [Validators.required]],
+            nombre: [null, [Validators.required, Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            apaterno: [null, [Validators.required, Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             amaterno: [null, []],
             rfc: [null, []],
             curp: [null, []],
-            ine: [null, []],
+            ine: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             idDocIdent: ['', []],
-            docIdent: [null, []],
+            docIdent: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             fechaNacimiento: [null, []],
             fechaDefuncion: [null, []],
-            celular: [null, []],
-            email: [null, []],
+            celular: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            email: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             texto: [null, []],
             fechaCaducidad: [null, []],
         });

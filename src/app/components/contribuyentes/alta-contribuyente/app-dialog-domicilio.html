@@ -131,54 +131,64 @@
             <div class="row">
                 <mat-form-field appearance="outline" class="col-6">
                     <mat-label>Número Exterior:</mat-label>
-                    <input matInput formControlName="nexterior" [(ngModel)]="nexteriorNg">
+                    <input matInput formControlName="nexterior" [(ngModel)]="nexteriorNg"  maxlengrh="250"="10">
                     <mat-error *ngIf="domicilioFormGroup.controls.nexterior.errors?.required">Requerido</mat-error>
+                    <mat-error *ngIf="domicilioFormGroup.controls.nexterior.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?)</mat-error>
                 </mat-form-field>
             </div>
             <div class="row">
                 <mat-form-field appearance="outline" class="col-6">
                     <mat-label>Entre Calle 1:</mat-label>
-                    <input matInput formControlName="entrecalle1" [(ngModel)]="entrecalle1Ng">
+                    <input matInput formControlName="entrecalle1" [(ngModel)]="entrecalle1Ng" maxlength="10">
+                    <mat-error *ngIf="domicilioFormGroup.controls.entrecalle1.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?)</mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="col-6" style="margin-left: 0px!important;">
                     <mat-label>Entre Calle 2:</mat-label>
-                    <input matInput formControlName="entrecalle2" [(ngModel)]="entrecalle2Ng">
+                    <input matInput formControlName="entrecalle2" [(ngModel)]="entrecalle2Ng" maxlength="10">
+                    <mat-error *ngIf="domicilioFormGroup.controls.entrecalle2.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?)</mat-error>
                 </mat-form-field>
             </div>
             <div class="row">
                 <mat-form-field appearance="outline" class="col-6">
                     <mat-label>Andador:</mat-label>
-                    <input matInput formControlName="andador" [(ngModel)]="andadorNg">
+                    <input matInput formControlName="andador" [(ngModel)]="andadorNg" maxlength="10">
+                    <mat-error *ngIf="domicilioFormGroup.controls.andador.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?)</mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="col-6" style="margin-left: 0px!important;">
                     <mat-label>Edificio:</mat-label>
-                    <input matInput formControlName="edificio" [(ngModel)]="edificioNg">
+                    <input matInput formControlName="edificio" [(ngModel)]="edificioNg" maxlength="10">
+                    <mat-error *ngIf="domicilioFormGroup.controls.edificio.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?)</mat-error>
                 </mat-form-field>
             </div>
             <div class="row">
                 <mat-form-field appearance="outline" class="col-6">
                     <mat-label>Sección:</mat-label>
                     <input matInput formControlName="seccion" [(ngModel)]="seccionNg" maxlength="10">
+                    <mat-error *ngIf="domicilioFormGroup.controls.seccion.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?)</mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="col-6" style="margin-left: 0px!important;">
                     <mat-label>Entrada:</mat-label>
-                    <input matInput formControlName="entrada" [(ngModel)]="entradaNg">
+                    <input matInput formControlName="entrada" [(ngModel)]="entradaNg" maxlength="10">
+                    <mat-error *ngIf="domicilioFormGroup.controls.entrada.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?)</mat-error>
                 </mat-form-field>
             </div>
             <div class="row">
                 <mat-form-field appearance="outline" class="col-6">
                     <mat-label>Número Interior:</mat-label>
-                    <input matInput formControlName="ninterior" [(ngModel)]="ninteriorNg">
+                    <input matInput formControlName="ninterior" [(ngModel)]="ninteriorNg" maxlength="10">
+                    <mat-error *ngIf="domicilioFormGroup.controls.ninterior.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?)</mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="col-6" style="margin-left: 0px!important;">
                     <mat-label>Teléfono:</mat-label>
                     <input matInput formControlName="telefono" [(ngModel)]="telefonoNg" maxlength="10">
+                    <mat-error *ngIf="domicilioFormGroup.controls.telefono.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?)</mat-error>
                 </mat-form-field>
             </div>
             <div class="row">
                 <mat-form-field appearance="outline" class="col-12">
                     <mat-label>Ind. adicionales:</mat-label>
-                    <input matInput formControlName="adicional" [(ngModel)]="adicionalNg">
+                    <input matInput formControlName="adicional" [(ngModel)]="adicionalNg" maxlengrh="250">
+                    <mat-error *ngIf="domicilioFormGroup.controls.adicional.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?)</mat-error>
                 </mat-form-field>
             </div>
         </form>

@@ -208,24 +208,24 @@ export class AltaContribuyenteComponent implements OnInit {
         };
     
         this.fisicaFormGroup = this._formBuilder.group({
-            nombre: [null, [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
-            apaterno: [null, [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
-            amaterno: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            nombre: [null, [Validators.required, Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            apaterno: [null, [Validators.required, Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            amaterno: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             rfc: [null, []],
             curp: [null, []],
-            ine: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            ine: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             idDocIdent: ['', []],
-            docIdent: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            docIdent: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             fechaNacimiento: [null, []],
             fechaDefuncion: [null, []],
-            celular: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            celular: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             email: ['', [Validators.email, Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
         });
 
         this.moralFormGroup = this._formBuilder.group({
-            nombre: [null, [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            nombre: [null, [Validators.required, Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             rfc: [null, [Validators.required]],
-            actPreponderante: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            actPreponderante: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             idTipoPersonaMoral: ['', []],
             fechaInicioOperacion: [null, []],
             idMotivo: ['', []],
@@ -769,16 +769,17 @@ export class DialogDomicilioAlta {
             via: [null, Validators.required],
             idtipolocalidad: [null],
             cp: [null],
-            nexterior: [null, Validators.required],
-            entrecalle1: [null],
-            entrecalle2: [null],
-            andador: [null],
-            edificio: [null],
-            seccion: [null],
-            entrada: [null],
-            ninterior: [null],
-            telefono: [null],
-            adicional: [null],
+            nexterior: [null, [Validators.required, Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            entrecalle1: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            entrecalle2: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            andador: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            edificio: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            seccion: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            entrada: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            ninterior: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            telefono: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            adicional: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            id_direccion: [null]
         });
 
         this.domicilioFormGroup.controls.idestado.valueChanges.subscribe(idestado => {
