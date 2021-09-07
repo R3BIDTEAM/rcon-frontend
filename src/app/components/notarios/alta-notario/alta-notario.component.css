@@ -11,3 +11,8 @@ input,textarea{text-transform: uppercase;}
     padding-left: 10px;
     padding-right: 10px;
 }
+
+/* ::ng-deep .notario2 {
+    background-color: #FFF!important;
+    color: #000 !important;
+} */

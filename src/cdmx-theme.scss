@@ -22,10 +22,16 @@ $cdmx-app-theme: mat-light-theme($cdmx-app-primary, $cdmx-app-accent, $cdmx-app-
 }
 
 .mat-list-item-content:hover{
+    background-color: #FAFAFA;
     color: #00A447;
 }
 
 .active-list-item {
+    background-color: #00A447!important;
+    color: #FFF !important;
+}
+
+.provisional{
     background-color: #00A447!important;
     color: #FFF !important;
 }
