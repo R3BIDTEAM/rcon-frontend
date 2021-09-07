@@ -3021,26 +3021,26 @@ export class DialogRepresentacionC {
         
         dialogRef.disableClose = true;
         this.fisicaFormGroup = this._formBuilder.group({
-            nombre: [null, [Validators.required]],
-            apaterno: [null, [Validators.required]],
-            amaterno: [null, []],
+            nombre: [null, [Validators.required, Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            apaterno: [null, [Validators.required, Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            amaterno: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             rfc: [null, []],
             curp: [null, []],
-            ine: [null, []],
+            ine: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             idDocIdent: ['', []],
-            docIdent: [null, []],
+            docIdent: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             fechaNacimiento: [null, []],
             fechaDefuncion: [null, []],
-            celular: [null, []],
-            email: [null, []],
+            celular: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            email: ['', [Validators.email, Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             texto: [null, []],
             fechaCaducidad: [null, []],
         });
     
         this.moralFormGroup = this._formBuilder.group({
-            nombre: [null, [Validators.required]],
+            nombre: [null, [Validators.required, Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             rfc: [null, [Validators.required]],
-            actPreponderante: [null, []],
+            actPreponderante: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             idTipoPersonaMoral: ['', []],
             fechaInicioOperacion: [null, []],
             idMotivo: ['', []],
@@ -3410,26 +3410,26 @@ export class DialogRepresentadoC {
 
         dialogRef.disableClose = true;
         this.fisicaFormGroup = this._formBuilder.group({
-            nombre: [null, [Validators.required]],
-            apaterno: [null, [Validators.required]],
-            amaterno: [null, []],
+            nombre: [null, [Validators.required, Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            apaterno: [null, [Validators.required, Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            amaterno: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             rfc: [null, []],
             curp: [null, []],
-            ine: [null, []],
+            ine: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             idDocIdent: ['', []],
-            docIdent: [null, []],
+            docIdent: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             fechaNacimiento: [null, []],
             fechaDefuncion: [null, []],
-            celular: [null, []],
-            email: [null, []],
+            celular: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            email: ['', [Validators.email, Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             texto: [null, []],
             fechaCaducidad: [null, []],
         });
     
         this.moralFormGroup = this._formBuilder.group({
-            nombre: [null, [Validators.required]],
+            nombre: [null, [Validators.required, Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             rfc: [null, [Validators.required]],
-            actPreponderante: [null, []],
+            actPreponderante: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             idTipoPersonaMoral: ['', []],
             fechaInicioOperacion: [null, []],
             idMotivo: ['', []],

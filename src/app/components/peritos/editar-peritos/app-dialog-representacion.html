@@ -29,6 +29,7 @@
                         <mat-label>Nombre:</mat-label>
                         <input matInput formControlName="nombre" [readonly]="insUp" style="text-transform: uppercase;" maxlength="250">
                         <mat-error *ngIf="fisicaFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
+                        <mat-error *ngIf="fisicaFormGroup.controls.nombre.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?) </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="row">
@@ -36,10 +37,12 @@
                         <mat-label>Apellido Paterno:</mat-label>
                         <input matInput formControlName="apaterno" [readonly]="insUp" style="text-transform: uppercase;" maxlength="250">
                         <mat-error *ngIf="fisicaFormGroup.controls.apaterno.errors?.required">Requerido</mat-error>
+                        <mat-error *ngIf="fisicaFormGroup.controls.apaterno.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?) </mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-5">
                         <mat-label>Apellido Materno:</mat-label>
                         <input matInput formControlName="amaterno" [readonly]="insUp" style="text-transform: uppercase;" maxlength="250">
+                        <mat-error *ngIf="fisicaFormGroup.controls.amaterno.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?) </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="row">
@@ -60,6 +63,7 @@
                     <mat-form-field appearance="outline" class="col-6">
                         <mat-label>Clave INE:</mat-label>
                         <input matInput formControlName="ine" [readonly]="insUp" style="text-transform: uppercase;" maxlength="250">
+                        <mat-error *ngIf="fisicaFormGroup.controls.ine.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?) </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="row">
@@ -75,6 +79,7 @@
                     <mat-form-field appearance="outline" class="col-5">
                         <mat-label></mat-label>
                         <input matInput formControlName="docIdent" [readonly]="insUp" style="text-transform: uppercase;" maxlength="250">
+                        <mat-error *ngIf="fisicaFormGroup.controls.docIdent.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?) </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="row">
@@ -95,10 +100,14 @@
                     <mat-form-field appearance="outline" class="col-6">
                         <mat-label>Celular:</mat-label>
                         <input matInput formControlName="celular" [readonly]="insUp" maxlength="10">
+                        <mat-error *ngIf="fisicaFormGroup.controls.celular.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?) </mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-5">
                         <mat-label>E-mail:</mat-label>
                         <input matInput formControlName="email" [readonly]="insUp" maxlength="250">
+                        <mat-error *ngIf="fisicaFormGroup.controls.email.errors?.required">Requerido</mat-error>
+                        <mat-error *ngIf="fisicaFormGroup.hasError('email', 'email') && fisicaFormGroup.get('email').touched">Correo invalido</mat-error>
+                        <mat-error *ngIf="fisicaFormGroup.controls.email.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?) </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="row">
@@ -125,17 +134,20 @@
                         <mat-label>Nombre:</mat-label>
                         <input matInput formControlName="nombre" [readonly]="insUp" style="text-transform: uppercase;" maxlength="250">
                         <mat-error *ngIf="moralFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
+                        <mat-error *ngIf="moralFormGroup.controls.nombre.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?) </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="row">
                     <mat-form-field appearance="outline" class="col-6">
                         <mat-label>RFC:</mat-label>
-                        <input matInput formControlName="rfc" [readonly]="insUp" style="text-transform: uppercase;" maxlength="12">
+                        <input matInput formControlName="rfc" [readonly]="insUp" pattern="^([A-ZÑ&]{3})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" maxlength="12"  placeholder="Ingrese el RFC" style="text-transform: uppercase;" onkeyup="this.value = this.value.toUpperCase();">
                         <mat-error *ngIf="moralFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
+                        <mat-error *ngIf="moralFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 3 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-5">
                         <mat-label>Act. preponderante:</mat-label>
                         <input matInput formControlName="actPreponderante" [readonly]="insUp" style="text-transform: uppercase;" maxlength="250">
+                        <mat-error *ngIf="moralFormGroup.controls.actPreponderante.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?) </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="row">
