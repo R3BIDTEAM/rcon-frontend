@@ -46,8 +46,15 @@ export interface DocumentosIdentificativos{
 })
 export class VerContribuyenteComponent implements OnInit {
   endpoint = environment.endpoint + 'registro/';
+  displayedColumnsDom: string[] = ['tipoDir','direccion', 'historial', 'editar'];
+  displayedColumnsRepdo: string[] = ['representacion','texto','caducidad','editar','eliminar'];
+  displayedColumnsInm: string[] = ['inmueble','direccion','domicilio','descripcion','sujeto'];
+  displayedColumnsDataRep: string[] = ['fechaCaducidad','texto','caducidad'];
   loading = false;
   loadingDocumentos = false;
+  loadingDomicilios = false;
+  loadingRepresentante = false;
+  loadingRepresentado = false;
   httpOptions;
   fisicaFormGroup: FormGroup;
   moralFormGroup: FormGroup;
@@ -59,6 +66,35 @@ export class VerContribuyenteComponent implements OnInit {
   dataRepresentados: DataRepresentacion[] = [];
   contribuyente: DataRepresentacion = {} as DataRepresentacion;
   dataDocumentos: DocumentosIdentificativos[] = [];
+
+  /*Paginado*/
+  dataSource1 = [];
+  total1 = 0;
+  pagina1 = 1;
+  dataPaginate1;
+  dataSource2 = [];
+  total2 = 0;
+  pagina2 = 1;
+  dataPaginate2;
+  dataSource3 = [];
+  total3 = 0;
+  pagina3= 1;
+  dataPaginate3;
+  dataSource4 = [];
+  total4 = 0;
+  pagina4 = 1;
+  dataPaginate4;
+  dataSource5 = [];
+  total5 = 0;
+  pagina5 = 1;
+  dataPaginate5;
+  total6 = 0;
+  pagina6= 1;
+  dataPaginate6;
+  total7 = 0;
+  pagina7= 1;
+  dataPaginate7;
+  /*Paginado*/
 
   constructor(
     private http: HttpClient,
@@ -126,6 +162,9 @@ export class VerContribuyenteComponent implements OnInit {
     this.idContribuyente = this.route.snapshot.paramMap.get('idcontribuyente');
     this.getDataDocumentos();
     this.getContribuyenteDatos();
+    this.getDomicilioContribuyente();
+    this.getRepresentacion();
+    this.getRepresentado();
   }
 
   /**
@@ -183,6 +222,133 @@ export class VerContribuyenteComponent implements OnInit {
                 });
             }
         );
+  }
+
+  /**
+  * Obtiene los domicilios registrados de la sociedad domicilios particulares y para recibir notificaciones.
+  */
+  getDomicilioContribuyente(){
+  this.loadingDomicilios = true;
+  let metodo = 'getDireccionesContribuyente';
+  this.http.get(this.endpoint + metodo + '?idPersona='+ this.idContribuyente, this.httpOptions)
+    .subscribe(
+        (res: any) => {
+            this.loadingDomicilios = false;
+
+            this.dataSource1 = res.filter(element => element.CODTIPOSDIRECCION !== "N");
+            this.dataSource2 = res.filter(element => element.CODTIPOSDIRECCION === "N");
+            this.total1 = this.dataSource1.length;
+            this.total2 = this.dataSource2.length;
+            this.dataPaginate1 = this.paginate(this.dataSource1, 15, this.pagina1);
+            this.dataPaginate2 = this.paginate(this.dataSource2, 15, this.pagina2);
+        },
+        (error) => {
+            this.loadingDomicilios = false;
+            this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                duration: 10000,
+                horizontalPosition: 'end',
+                verticalPosition: 'top'
+            });
+        }
+    );
+  }
+
+  /**
+  * Obtiene las representaciónes del contribuyente
+  */
+  getRepresentacion(){
+  this.loadingRepresentante = true;
+  let queryRep = 'rep=Representantes&idPersona=' + this.idContribuyente;
+  this.http.get(this.endpoint + 'getRepresentacionContribuyente?' + queryRep, this.httpOptions)
+    .subscribe(
+        (res: any) => {
+            this.loadingRepresentante = false;
+            this.dataSource4 = res;
+            this.total4 = this.dataSource4.length;
+            this.dataPaginate4 = this.paginate(this.dataSource4, 15, this.pagina4);
+        },
+        (error) => {
+            this.loadingRepresentante = false;
+            this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                duration: 10000,
+                horizontalPosition: 'end',
+                verticalPosition: 'top'
+            });
+        }
+    );
+  }
+
+  /**
+  * Obtienen los representados de la sociedad.
+  */
+  getRepresentado(){
+  this.loadingRepresentado = true;
+  let queryRepdo = 'rep=Representado&idPersona=' + this.idContribuyente;
+  console.log(this.endpoint + 'getRepresentacionContribuyente?' + queryRepdo);
+  this.http.get(this.endpoint + 'getRepresentacionContribuyente?' + queryRepdo, this.httpOptions)
+    .subscribe(
+        (res: any) => {
+            this.loadingRepresentado = false;
+            this.dataSource5 = res;
+            console.log("ACA ENTRO EL REPRESENTADO");
+            console.log(res);
+            this.total5 = this.dataSource5.length;
+            this.dataPaginate5 = this.paginate(this.dataSource5, 15, this.pagina5);
+        },
+        (error) => {
+            this.loadingRepresentado = false;
+            this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                duration: 10000,
+                horizontalPosition: 'end',
+                verticalPosition: 'top'
+            });
+        }
+    );
+  }
+
+
+  /**
+  * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+  * @param evt Nos da la referencia de la pagina en la que se encuentra
+  */
+  paginado1(evt): void{
+    this.pagina1 = evt.pageIndex + 1;
+    this.dataSource1 = this.paginate(this.dataSource1, 15, this.pagina1);
+  }
+
+  /**
+  * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+  * @param evt Nos da la referencia de la pagina en la que se encuentra
+  */
+  paginado2(evt): void{
+    this.pagina1 = evt.pageIndex + 1;
+    this.dataSource1 = this.paginate(this.dataSource1, 15, this.pagina1);
+  }
+
+  /**
+  * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+  * @param evt Nos da la referencia de la pagina en la que se encuentra
+  */
+  paginado4(evt): void{
+    this.pagina4 = evt.pageIndex + 1;
+    this.dataSource4 = this.paginate(this.dataSource4, 15, this.pagina4);
+  }
+
+  /**
+  * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+  * @param evt Nos da la referencia de la pagina en la que se encuentra
+  */
+  paginado5(evt): void{
+    this.pagina5 = evt.pageIndex + 1;
+    this.dataSource5 = this.paginate(this.dataSource5, 15, this.pagina5);
+  } 
+
+  /**
+  * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+  * @param evt Nos da la referencia de la pagina en la que se encuentra
+  */
+  paginate(array, page_size, page_number) {
+    return array.slice((page_number - 1) * page_size, page_number * page_size);
   }
 
   /** 

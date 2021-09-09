@@ -146,6 +146,202 @@
 
              
             </mat-card-content>
+
+            <div class="col-md-12">
+                <ng-container>
+                    <div style="padding: 30px; text-align: center;" *ngIf="loadingDomicilios">
+                        <mat-spinner style="margin:0 auto;"></mat-spinner>
+                        <p>Cargando...</p>
+                    </div>
+                    <div class="alert alert-info" *ngIf="!loadingDomicilios && dataSource1.length == 0">
+                        No hay direcciones asociadas.
+                    </div> 
+                    <table mat-table [dataSource]="dataSource1" *ngIf="!loadingDomicilios && dataSource1.length > 0" width="100%">
+                        <ng-container matColumnDef="tipoDir">
+                            <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="15%" style="text-align: center; font-size: 14px;"> Tipo<br> Dirección </th>
+                            <td mat-cell *matCellDef="let element" style="text-align: center;"> {{ element.CODTIPOSDIRECCION }}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="direccion">
+                            <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="65%" style="font-size: 14px;"> Dirección </th>
+                            <td mat-cell *matCellDef="let element">
+                                {{ element.ABREVIATURAVIA }}, {{ element.VIA }} {{ element.NUMEROEXTERIOR }}, Col: {{ element.COLONIA}}
+                                C.P. {{ element.CODIGOPOSTAL}}, {{ element.DELEGACION}} ({{ element.ESTADO }})
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="historial">
+                            <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="10%" style="text-align: center; font-size: 14px;"> Historial </th>
+                            <td mat-cell *matCellDef="let element" style="text-align: center;">
+                                <button mat-icon-button type="button" color="primary" aria-label="Historial" matTooltip="Historial" (click)="viewHistoricoDomicilio(element.IDDIRECCION)">
+                                    <mat-icon>search</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="editar">
+                            <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="10%" style="text-align: center; font-size: 14px;"> Editar </th>
+                            <td mat-cell *matCellDef="let element" style="text-align: center;">
+                                <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar" (click)="editDomicilio(element.IDDIRECCION)">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsDom"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumnsDom;"></tr>
+                    </table>
+                    <mat-paginator #paginator [length]="total1" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado1($event)">
+                    </mat-paginator>
+                </ng-container>
+            </div>
+
+
+            <div class="col-md-12">
+                <ng-container>
+                    <div style="padding: 30px; text-align: center;" *ngIf="loadingDomicilios">
+                        <mat-spinner style="margin:0 auto;"></mat-spinner>
+                        <p>Cargando...</p>
+                    </div>
+                    <div class="alert alert-info" *ngIf="!loadingDomicilios && dataSource2.length == 0">
+                        No hay direcciones asociadas.
+                    </div> 
+                    <table mat-table [dataSource]="dataSource2" *ngIf="!loadingDomicilios && dataSource2.length > 0" width="100%">
+                        <ng-container matColumnDef="tipoDir">
+                            <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="10%" style="text-align: center; font-size: 14px;"> Tipo Dirección </th>
+                            <td mat-cell *matCellDef="let element" style="text-align: center; font-size: 14px;"> {{ element.CODTIPOSDIRECCION }}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="direccion">
+                            <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="70%"> Dirección </th>
+                            <td mat-cell *matCellDef="let element">
+                                {{ element.ABREVIATURAVIA }}, {{ element.VIA }} {{ element.NUMEROEXTERIOR }}, Col: {{ element.COLONIA}}
+                                C.P. {{ element.CODIGOPOSTAL}}, {{ element.DELEGACION}} ({{ element.ESTADO }})
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="historial">
+                            <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="10%" style="text-align: center; font-size: 14px;"> Historial </th>
+                            <td mat-cell *matCellDef="let element" style="text-align: center;">
+                                <button mat-icon-button type="button" color="primary" aria-label="Historial" matTooltip="Historial" (click)="viewHistoricoDomicilio(element.IDDIRECCION)">
+                                    <mat-icon>search</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="editar">
+                            <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="10%" style="text-align: center; font-size: 14px;"> Editar </th>
+                            <td mat-cell *matCellDef="let element" style="text-align: center;">
+                                <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar" (click)="editDomicilioBoleta(element.IDDIRECCION)">
+                                <mat-icon>edit</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsDom"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumnsDom;"></tr>
+                    </table>
+                    <mat-paginator #paginator [length]="total2" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado2($event)">
+                    </mat-paginator>
+                </ng-container>                    
+            </div>
+
+            <div class="col-md-12">
+                <ng-container>
+                    <div style="padding: 30px; text-align: center;" *ngIf="loadingRepresentante">
+                        <mat-spinner style="margin:0 auto;"></mat-spinner>
+                        <p>Cargando...</p>
+                    </div>
+                    <div class="alert alert-info" *ngIf="!loadingRepresentante && dataSource4.length == 0">
+                        No hay representantes asociados.
+                    </div> 
+                    <table mat-table [dataSource]="dataSource4" *ngIf="!loadingRepresentante && dataSource4.length > 0" width="100%">
+                        <ng-container matColumnDef="representacion">
+                            <th mat-header-cell *matHeaderCellDef width="15%" > Tipo Dirección </th>
+                            <td mat-cell *matCellDef="let element" width="15%" >
+                                {{ element.APELLIDOPATERNO }} {{ element.APELLIDOMATERNO }} {{ element.NOMBRE }}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="texto">
+                            <th mat-header-cell *matHeaderCellDef width="75%"> Texto </th>
+                            <td mat-cell *matCellDef="let element" width="75%">
+                                {{ element.TEXTOREPRESENTACION }}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="caducidad">
+                            <th mat-header-cell *matHeaderCellDef width="75%"> Caducidad </th>
+                            <td mat-cell *matCellDef="let element" width="75%">
+                                {{ element.FECHACADUCIDAD }}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="editar">
+                            <th mat-header-cell *matHeaderCellDef width="75%"> Editar </th>
+                            <td mat-cell *matCellDef="let element" width="75%">
+                                <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar" (click)="addRepresentante(null, element)">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="eliminar">
+                            <th mat-header-cell *matHeaderCellDef> Eliminar </th>
+                            <td mat-cell *matCellDef="let element">
+                                <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar" (click)="confirmaCambio(4,element,1)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsRepdo"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumnsRepdo;"></tr>
+                    </table>
+                    <mat-paginator #paginator [length]="total4" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado4($event)">
+                    </mat-paginator>
+                </ng-container>
+            </div>
+
+            <div class="col-md-12">
+                <ng-container>
+                    <div style="padding: 30px; text-align: center;" *ngIf="loadingRepresentado">
+                        <mat-spinner style="margin:0 auto;"></mat-spinner>
+                        <p>Cargando...</p>
+                    </div>
+                    <div class="alert alert-info" *ngIf="!loadingRepresentado && dataSource5.length == 0">
+                        No hay representantes asociados.
+                    </div> 
+                    <table mat-table [dataSource]="dataSource5" *ngIf="!loadingRepresentado && dataSource5.length > 0" width="100%">
+                        <ng-container matColumnDef="representacion">
+                            <th mat-header-cell *matHeaderCellDef width="15%" > Tipo Dirección </th>
+                            <td mat-cell *matCellDef="let element" width="15%" >
+                                {{ element.APELLIDOPATERNO }} {{ element.APELLIDOMATERNO }} {{ element.NOMBRE }}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="texto">
+                            <th mat-header-cell *matHeaderCellDef width="75%"> Texto </th>
+                            <td mat-cell *matCellDef="let element" width="75%">
+                                {{ element.TEXTOREPRESENTACION }}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="caducidad">
+                            <th mat-header-cell *matHeaderCellDef width="75%"> Caducidad </th>
+                            <td mat-cell *matCellDef="let element" width="75%">
+                                {{ element.FECHACADUCIDAD }}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="editar">
+                            <th mat-header-cell *matHeaderCellDef width="75%"> Editar </th>
+                            <td mat-cell *matCellDef="let element" width="75%">
+                                <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar" (click)="addRepresentado(null, element)">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="eliminar">
+                            <th mat-header-cell *matHeaderCellDef> Eliminar </th>
+                            <td mat-cell *matCellDef="let element">
+                                <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar" (click)="confirmaCambio(4,element,2)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsRepdo"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumnsRepdo;"></tr>
+                    </table>
+                    <mat-paginator #paginator [length]="total5" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado5($event)">
+                    </mat-paginator>
+                </ng-container>
+            </div>
+
         </div>
       
 
