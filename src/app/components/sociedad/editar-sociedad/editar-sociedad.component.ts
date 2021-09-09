@@ -2293,10 +2293,6 @@ export class DialogAsentamientoSociedad {
             query = (this.data.codCiudad) ? query + '&codCiudad=' + this.data.codCiudad : query + '&codCiudad=';
         }
   
-        if(this.buscaAsentamiento){
-            query = query + '&nombre=' + this.buscaAsentamiento.toLocaleUpperCase();
-        }
-  
         console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
         this.loading = true;
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
@@ -2340,6 +2336,7 @@ export class DialogAsentamientoSociedad {
      * @param element Arreglo de los datos del asentamiento.
      */
     selectAsentamiento(element){
+        console.log("ACA EL SELECT ASENTAMIENTO!!!");
         console.log(element);
         this.btnAceptar = false;
         if(element.IDDELEGACION){
@@ -2347,12 +2344,47 @@ export class DialogAsentamientoSociedad {
             this.dataAsentamiento.asentamiento = element.DESCRIPCION;
             this.dataAsentamiento.codigopostal = element.CODIGOPOSTAL;
             this.dataAsentamiento.codtiposasentamiento = element.CODTIPOSASENTAMIENTO;
-        }else{
+        }else if(element.codasentamiento){
             this.dataAsentamiento.codasentamiento = element.codasentamiento;
             this.dataAsentamiento.asentamiento = element.asentamiento;
             this.dataAsentamiento.codigopostal = element.codigopostal;
             this.dataAsentamiento.codtiposasentamiento = element.codtiposasentamiento;
+        }else{
+            this.dataAsentamiento.codasentamiento = element.CODASENTAMIENTO;
+            this.dataAsentamiento.asentamiento = element.ASENTAMIENTO;
+            this.dataAsentamiento.codigopostal = element.CODIGOPOSTAL;
+            this.dataAsentamiento.codtiposasentamiento = element.CODTIPOSASENTAMIENTO;
         }
+    }
+
+    /**
+     * Obtiene el asenteamiento de acuerdo al estado, municipio o ciudad.
+     */
+    obtenerAsentamientoByNombre(){
+        this.loading = true;
+        let criterio = '';
+        let query = '';
+  
+        criterio = 'getAsentamientoByNombre';
+        query = query + 'nombre=' + this.buscaAsentamiento + '&codEstado=' + this.data.codEstado + '&codMunicipio=' + this.data.codMunicipio2;
+        query = (this.data.codCiudad) ? query + '&codCiudad=' + this.data.codCiudad : query + '&codCiudad=';
+        
+        console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
+        this.loading = true;
+        this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loading = false;
+                    this.dataSource = res;
+                    this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                    this.total = this.dataSource.length; 
+                    this.paginator.pageIndex = 0;
+                    console.log(this.dataSource);
+                },
+                (error) => {
+                    this.loading = false;
+                }
+            );
     }
   
 }

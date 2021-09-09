@@ -19,7 +19,7 @@
             <p>Cargando...</p>
         </div>
         <div class="alert alert-info" *ngIf="dataSource.length == 0 && !loadingBuscaVia">
-            No hay Peritos para el filtro seleccionado
+            No hay registro para el filtro seleccionado
         </div> 
         <table mat-table [dataSource]="dataPaginate" *ngIf="!loadingBuscaVia && dataSource.length > 0">
             <ng-container matColumnDef="via">

@@ -88,7 +88,7 @@ export class AltaPeritosComponent implements OnInit {
             idedato: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             fechaNacimiento: [null],
             fechaDefuncion: [null],
-            celular: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            celular: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             email: ['', [Validators.email, Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             registro: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             fechaInicio: [null, []],

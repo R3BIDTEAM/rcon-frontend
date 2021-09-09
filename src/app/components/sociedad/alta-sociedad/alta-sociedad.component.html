@@ -27,7 +27,7 @@
                                 <mat-label>Razón Social *</mat-label>
                                 <input matInput  [readonly]="inserto" formControlName="razonSocial" maxlength="250" placeholder="Ingrese la razón social" style="text-transform: uppercase;">
                                 <mat-error *ngIf="sociedadFormGroup.controls.razonSocial.errors?.required">Requerido</mat-error>
-                                <mat-error *ngIf="sociedadFormGroup.controls.razonSocial.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
+                                <mat-error *ngIf="sociedadFormGroup.controls.razonSocial.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
@@ -49,7 +49,7 @@
                                 <mat-label>Registro *</mat-label>
                                 <input matInput  [readonly]="inserto" formControlName="registro" maxlength="250" style="text-transform: uppercase;" placeholder="Ingrese Registro">
                                 <mat-error *ngIf="sociedadFormGroup.controls.registro.errors?.required">Requerido</mat-error>
-                                <mat-error *ngIf="sociedadFormGroup.controls.registro.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
+                                <mat-error *ngIf="sociedadFormGroup.controls.registro.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
                             </mat-form-field>
                         </div>
 
@@ -75,7 +75,7 @@
                                 <input matInput type="email" [email]="true" [disabled]="inserto" [readonly]="inserto" formControlName="email" maxlength="250" placeholder="Ingrese E-mail">
                                 <mat-error *ngIf="sociedadFormGroup.controls.email.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="sociedadFormGroup.hasError('email', 'email') && sociedadFormGroup.get('email').touched">Correo invalido</mat-error>
-                                <mat-error *ngIf="sociedadFormGroup.controls.email.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
+                                <mat-error *ngIf="sociedadFormGroup.controls.email.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
                             </mat-form-field>
                         </div>
 
@@ -84,7 +84,7 @@
                                 <mat-label>Login *</mat-label>
                                 <input matInput [disabled]="inserto" [readonly]="inserto" formControlName="login" maxlength="9" placeholder="Ingrese el login" style="text-transform: uppercase;">
                                 <mat-error *ngIf="sociedadFormGroup.controls.login.errors?.required">Requerido</mat-error>
-                                <mat-error *ngIf="sociedadFormGroup.controls.login.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
+                                <mat-error *ngIf="sociedadFormGroup.controls.login.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
                             </mat-form-field>
                         </div>
                     </form>
