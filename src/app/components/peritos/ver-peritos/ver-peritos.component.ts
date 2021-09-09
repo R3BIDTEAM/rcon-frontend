@@ -44,6 +44,13 @@ export class VerPeritosComponent implements OnInit {
     total = 0;
     pageSize = 15;
     loading = false;
+    loadingRepresentante = false;
+    loadingRepresentado = false;
+    loadingDomicilios = false;
+    displayedColumnsDom: string[] = ['tipoDir','direccion', 'historial', 'modificar'];
+    displayedColumnsInm: string[] = ['inmueble','direccion','domicilio','descripcion','sujeto'];
+    displayedColumnsRepdo: string[] = ['representacion','texto','caducidad','editar','eliminar'];
+    displayedColumnsDataRep: string[] = ['fechaCaducidad','texto','caducidad'];
     dataPeritoResultado;
     dataSource;
     dataPaginate;
@@ -55,6 +62,35 @@ export class VerPeritosComponent implements OnInit {
     @ViewChild('paginator') paginator: MatPaginator;
     loadingDocumentosIdentificativos = false;
     documentos: DocumentosIdentificativos[] = [];
+
+    /*PAGINADOS*/
+    dataSource1 = [];
+    total1 = 0;
+    pagina1= 1;
+    dataPaginate1;
+    dataSource2 = [];
+    total2 = 0;
+    pagina2= 1;
+    dataPaginate2;
+    dataSource3 = [];
+    total3 = 0;
+    pagina3= 1;
+    dataPaginate3;
+    dataSource4 = [];
+    total4 = 0;
+    pagina4= 1;
+    dataPaginate4;
+    dataSource5 = [];
+    total5 = 0;
+    pagina5= 1;
+    dataPaginate5;
+    total6 = 0;
+    pagina6= 1;
+    dataPaginate6;
+    total7 = 0;
+    pagina7= 1;
+    dataPaginate7;
+    /*PAGINADOS*/
 
     constructor(
         private http: HttpClient,
@@ -77,6 +113,9 @@ export class VerPeritosComponent implements OnInit {
         console.log(this.idPerito);
         this.getPeritoDatos();
         this.getDataDocumentosIdentificativos();
+        this.getDomicilioPerito();
+        this.getRepresentacion();
+        this.getRepresentado();
     }
 
     /** 
@@ -127,6 +166,34 @@ export class VerPeritosComponent implements OnInit {
     }
 
     /**
+    * Obtiene los domicilios registrados del perito domicilios particulares y para recibir notificaciones.
+    */
+    getDomicilioPerito(){
+    this.loadingDomicilios = true;
+    let metodo = 'getDireccionesContribuyente';
+    this.http.get(this.endpointActualiza + metodo + '?idPersona='+ this.idPerito, this.httpOptions)
+        .subscribe(
+            (res: any) => {
+                this.loadingDomicilios = false;
+                this.dataSource1 = res.filter(element => element.CODTIPOSDIRECCION !== "N");
+                this.dataSource2 = res.filter(element => element.CODTIPOSDIRECCION === "N");
+                this.total1 = this.dataSource1.length;
+                this.total2 = this.dataSource2.length;
+                this.dataPaginate1 = this.paginate(this.dataSource1, 15, this.pagina1);
+                this.dataPaginate2 = this.paginate(this.dataSource2, 15, this.pagina2);
+            },
+            (error) => {
+                this.loadingDomicilios = false;
+                this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+            }
+        );
+    }
+
+    /**
      * Almacena los valores recibidos de la consulta realizada.
      */
     datoDelPerito(){
@@ -154,12 +221,103 @@ export class VerPeritosComponent implements OnInit {
     }
 
     /**
+    * Obtiene las representaciónes de la sociedad.
+    */
+    getRepresentacion(){
+    this.loadingRepresentante = true;
+    let queryRep = 'rep=Representantes&idPersona=' + this.idPerito;
+    this.http.get(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRep, this.httpOptions)
+        .subscribe(
+            (res: any) => {
+                this.loadingRepresentante = false;
+                this.dataSource4 = res;
+                console.log("RES REPRESNTADO!!!!!!!!!");
+                console.log(res);
+                this.total4 = this.dataSource4.length;
+                this.dataPaginate4 = this.paginate(this.dataSource4, 15, this.pagina4);
+            },
+            (error) => {
+                this.loadingRepresentante = false;
+                this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+            }
+        );
+    }
+
+    /**
+    * Obtienen los representados de la sociedad.
+    */
+    getRepresentado(){
+    this.loadingRepresentado = true;
+    let queryRepdo = 'rep=Representado&idPersona=' + this.idPerito;
+    console.log(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRepdo);
+    this.http.get(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRepdo, this.httpOptions)
+        .subscribe(
+            (res: any) => {
+                this.loadingRepresentado = false;
+                this.dataSource5 = res;
+                console.log("ACA ENTRO EL REPRESENTADO");
+                console.log(res);
+                this.total5 = this.dataSource5.length;
+                this.dataPaginate5 = this.paginate(this.dataSource5, 15, this.pagina5);
+            },
+            (error) => {
+                this.loadingRepresentado = false;
+                this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+            }
+        );
+    }
+
+    /**
      * Método del paginado que nos dira la posición del paginado y los datos a mostrar
      * @param evt Nos da la referencia de la pagina en la que se encuentra
      */
     paginado(evt): void{
         this.pagina = evt.pageIndex + 1;
         this.dataSource = this.paginate(this.dataSource, this.pageSize, this.pagina);
+    }
+
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
+     paginado1(evt): void{
+        this.pagina1 = evt.pageIndex + 1;
+        this.dataSource1 = this.paginate(this.dataSource1, 15, this.pagina1);
+    }
+
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
+     paginado2(evt): void{
+        this.pagina2 = evt.pageIndex + 1;
+        this.dataSource2 = this.paginate(this.dataSource2, 15, this.pagina2);
+    }
+
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
+     paginado4(evt): void{
+        this.pagina4 = evt.pageIndex + 1;
+        this.dataSource4 = this.paginate(this.dataSource4, 15, this.pagina4);
+    }
+
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
+     paginado5(evt): void{
+        this.pagina5 = evt.pageIndex + 1;
+        this.dataSource5 = this.paginate(this.dataSource5, 15, this.pagina5);
     }
     
     /**
