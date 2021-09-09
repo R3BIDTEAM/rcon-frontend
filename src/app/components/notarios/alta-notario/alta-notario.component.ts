@@ -88,7 +88,7 @@ export class AltaNotarioComponent implements OnInit {
             numero_documento: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             fecha_nacimiento: [null, []],
             fecha_defuncion: [null, []],
-            celular: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            celular: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             email: ['', [Validators.email, Validators.pattern("^\\S{1}.{1,248}\\S{1}$"), Validators.required]],
         });
         

@@ -29,7 +29,7 @@
                         <mat-label>No. Notario *</mat-label>
                         <input matInput #no_notario formControlName="no_notario" [(ngModel)]="filtros.no_notario" placeholder="Ingrese número de notario" maxlength="10">
                         <mat-error *ngIf="notarioFormGroup.controls.no_notario.errors?.required">Requerido</mat-error>
-                        <mat-error *ngIf="notarioFormGroup.controls.no_notario.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
+                        <mat-error *ngIf="notarioFormGroup.controls.no_notario.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?)</mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="fill" style="width: 100%;" class="col-5">
                         <mat-label>Estado: *</mat-label>
@@ -46,7 +46,7 @@
                         <mat-label>Nombre *</mat-label>
                         <input matInput #nombre formControlName="nombre" [(ngModel)]="filtros.nombre" placeholder="Ingrese el nombre" style="text-transform: uppercase;" maxlength="250">
                         <mat-error *ngIf="notarioFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
-                        <mat-error *ngIf="notarioFormGroup.controls.nombre.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
+                        <mat-error *ngIf="notarioFormGroup.controls.nombre.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="row">
@@ -54,12 +54,12 @@
                         <mat-label>Apellido Paterno *</mat-label>
                         <input matInput #apellido_paterno formControlName="apellido_paterno" [(ngModel)]="filtros.apellido_paterno" placeholder="Ingrese apellido paterno" onkeyup="this.value = this.value.toUpperCase();" style="text-transform: uppercase;" maxlength="250">
                         <mat-error *ngIf="notarioFormGroup.controls.apellido_paterno.errors?.required">Requerido</mat-error>
-                        <mat-error *ngIf="notarioFormGroup.controls.apellido_paterno.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
+                        <mat-error *ngIf="notarioFormGroup.controls.apellido_paterno.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="outline" style="width: 100%;" class="col-5"> 
                         <mat-label>Apellido Materno</mat-label>
                         <input matInput #apellido_materno formControlName="apellido_materno" [(ngModel)]="filtros.apellido_materno" placeholder="Ingrese apellido materno" (input)="apellido_materno.value = apellido_materno.value.toUpperCase()" maxlength="250">
-                        <mat-error *ngIf="notarioFormGroup.controls.apellido_materno.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
+                        <mat-error *ngIf="notarioFormGroup.controls.apellido_materno.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
                     </mat-form-field>
                 </div>
 
@@ -81,8 +81,8 @@
                 <div class="row">
                     <mat-form-field appearance="outline" style="width: 100%;" class="col-4 offset-1">
                         <mat-label>INE</mat-label>
-                        <input matInput #ine formControlName="ine" [(ngModel)]="filtros.ine" placeholder="Ingrese INE" maxlength="250">
-                        <mat-error *ngIf="notarioFormGroup.controls.ine.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
+                        <input matInput #ine formControlName="ine" [(ngModel)]="filtros.ine" placeholder="Ingrese INE" maxlength="18">
+                        <mat-error *ngIf="notarioFormGroup.controls.ine.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="fill" style="width: 100%;" class="col-3">
                         <mat-label>Otro Documento:</mat-label>
@@ -95,7 +95,7 @@
                     <mat-form-field appearance="outline" style="width: 100%;" *ngIf="selectDisabled" class="col-3">
                         <mat-label>Número Documento</mat-label>
                         <input matInput #numero_documento formControlName="numero_documento" [(ngModel)]="filtros.numero_documento" placeholder="Ingrese número documento" maxlength="250">
-                        <mat-error *ngIf="notarioFormGroup.controls.numero_documento.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
+                        <mat-error *ngIf="notarioFormGroup.controls.numero_documento.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
                     </mat-form-field>
                 </div>
 
@@ -118,14 +118,14 @@
                     <mat-form-field appearance="outline" style="width: 100%;" class="col-5 offset-1">
                         <mat-label>Celular</mat-label>
                         <input matInput #celular formControlName="celular" [(ngModel)]="filtros.celular" placeholder="Ingrese celular" maxlength="10">
-                        <mat-error *ngIf="notarioFormGroup.controls.celular.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
+                        <mat-error *ngIf="notarioFormGroup.controls.celular.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?)</mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="outline" style="width: 100%;" class="col-5">
                         <mat-label>E-Mail *</mat-label>
                         <input matInput #email type="email" [email]="true" placeholder="Ingrese E-mail" formControlName="email" [(ngModel)]="filtros.email" placeholder="Ingrese Email" style="text-transform: none!important;" maxlength="250">
                         <mat-error *ngIf="notarioFormGroup.controls.email.errors?.required">Requerido</mat-error>
                         <mat-error *ngIf="notarioFormGroup.hasError('email', 'email') && notarioFormGroup.get('email').touched">Correo invalido</mat-error>
-                        <mat-error *ngIf="notarioFormGroup.controls.email.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
+                        <mat-error *ngIf="notarioFormGroup.controls.email.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
                     </mat-form-field>
                 </div>
 
