@@ -147,6 +147,11 @@
              
             </mat-card-content>
 
+
+            <!-- Datos de contacto -->
+            <mat-card-header>
+                <mat-card-title>Datos de contacto</mat-card-title>
+            </mat-card-header>
             <div class="col-md-12">
                 <ng-container>
                     <div style="padding: 30px; text-align: center;" *ngIf="loadingDomicilios">
@@ -166,22 +171,6 @@
                             <td mat-cell *matCellDef="let element">
                                 {{ element.ABREVIATURAVIA }}, {{ element.VIA }} {{ element.NUMEROEXTERIOR }}, Col: {{ element.COLONIA}}
                                 C.P. {{ element.CODIGOPOSTAL}}, {{ element.DELEGACION}} ({{ element.ESTADO }})
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="historial">
-                            <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="10%" style="text-align: center; font-size: 14px;"> Historial </th>
-                            <td mat-cell *matCellDef="let element" style="text-align: center;">
-                                <button mat-icon-button type="button" color="primary" aria-label="Historial" matTooltip="Historial" (click)="viewHistoricoDomicilio(element.IDDIRECCION)">
-                                    <mat-icon>search</mat-icon>
-                                </button>
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="editar">
-                            <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="10%" style="text-align: center; font-size: 14px;"> Editar </th>
-                            <td mat-cell *matCellDef="let element" style="text-align: center;">
-                                <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar" (click)="editDomicilio(element.IDDIRECCION)">
-                                    <mat-icon>edit</mat-icon>
-                                </button>
                             </td>
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="displayedColumnsDom"></tr>
@@ -214,22 +203,6 @@
                                 C.P. {{ element.CODIGOPOSTAL}}, {{ element.DELEGACION}} ({{ element.ESTADO }})
                             </td>
                         </ng-container>
-                        <ng-container matColumnDef="historial">
-                            <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="10%" style="text-align: center; font-size: 14px;"> Historial </th>
-                            <td mat-cell *matCellDef="let element" style="text-align: center;">
-                                <button mat-icon-button type="button" color="primary" aria-label="Historial" matTooltip="Historial" (click)="viewHistoricoDomicilio(element.IDDIRECCION)">
-                                    <mat-icon>search</mat-icon>
-                                </button>
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="editar">
-                            <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="10%" style="text-align: center; font-size: 14px;"> Editar </th>
-                            <td mat-cell *matCellDef="let element" style="text-align: center;">
-                                <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar" (click)="editDomicilioBoleta(element.IDDIRECCION)">
-                                <mat-icon>edit</mat-icon>
-                                </button>
-                            </td>
-                        </ng-container>
                         <tr mat-header-row *matHeaderRowDef="displayedColumnsDom"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumnsDom;"></tr>
                     </table>
@@ -238,6 +211,11 @@
                 </ng-container>                    
             </div>
 
+
+            <!-- Datos de representación -->
+            <mat-card-header>
+                <mat-card-title>Datos de representación</mat-card-title>
+            </mat-card-header>
             <div class="col-md-12">
                 <ng-container>
                     <div style="padding: 30px; text-align: center;" *ngIf="loadingRepresentante">
@@ -264,22 +242,6 @@
                             <th mat-header-cell *matHeaderCellDef width="75%"> Caducidad </th>
                             <td mat-cell *matCellDef="let element" width="75%">
                                 {{ element.FECHACADUCIDAD }}
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="editar">
-                            <th mat-header-cell *matHeaderCellDef width="75%"> Editar </th>
-                            <td mat-cell *matCellDef="let element" width="75%">
-                                <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar" (click)="addRepresentante(null, element)">
-                                    <mat-icon>edit</mat-icon>
-                                </button>
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="eliminar">
-                            <th mat-header-cell *matHeaderCellDef> Eliminar </th>
-                            <td mat-cell *matCellDef="let element">
-                                <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar" (click)="confirmaCambio(4,element,1)">
-                                    <mat-icon>delete</mat-icon>
-                                </button>
                             </td>
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="displayedColumnsRepdo"></tr>
@@ -316,22 +278,6 @@
                             <th mat-header-cell *matHeaderCellDef width="75%"> Caducidad </th>
                             <td mat-cell *matCellDef="let element" width="75%">
                                 {{ element.FECHACADUCIDAD }}
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="editar">
-                            <th mat-header-cell *matHeaderCellDef width="75%"> Editar </th>
-                            <td mat-cell *matCellDef="let element" width="75%">
-                                <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar" (click)="addRepresentado(null, element)">
-                                    <mat-icon>edit</mat-icon>
-                                </button>
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="eliminar">
-                            <th mat-header-cell *matHeaderCellDef> Eliminar </th>
-                            <td mat-cell *matCellDef="let element">
-                                <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar" (click)="confirmaCambio(4,element,2)">
-                                    <mat-icon>delete</mat-icon>
-                                </button>
                             </td>
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="displayedColumnsRepdo"></tr>

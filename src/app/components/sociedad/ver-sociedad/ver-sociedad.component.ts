@@ -29,9 +29,9 @@ export class VerSociedadComponent implements OnInit {
     total = 0;
     pageSize = 15;
     loading = false;
-    displayedColumnsDom: string[] = ['tipoDir', 'direccion', 'historial', 'editar'];
+    displayedColumnsDom: string[] = ['tipoDir', 'direccion'];
     displayedColumnsInm: string[] = ['inmueble','direccion','domicilio','descripcion','sujeto'];
-    displayedColumnsRepdo: string[] = ['representacion','texto','caducidad','editar','eliminar'];
+    displayedColumnsRepdo: string[] = ['representacion','texto','caducidad'];
     displayedColumnsDataRep: string[] = ['fechaCaducidad','texto','caducidad'];
     loadingDomicilios = false;
     loadingRepresentante = false;

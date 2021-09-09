@@ -46,8 +46,8 @@ export interface DocumentosIdentificativos{
 })
 export class VerContribuyenteComponent implements OnInit {
   endpoint = environment.endpoint + 'registro/';
-  displayedColumnsDom: string[] = ['tipoDir','direccion', 'historial', 'editar'];
-  displayedColumnsRepdo: string[] = ['representacion','texto','caducidad','editar','eliminar'];
+  displayedColumnsDom: string[] = ['tipoDir','direccion'];
+  displayedColumnsRepdo: string[] = ['representacion','texto','caducidad'];
   displayedColumnsInm: string[] = ['inmueble','direccion','domicilio','descripcion','sujeto'];
   displayedColumnsDataRep: string[] = ['fechaCaducidad','texto','caducidad'];
   loading = false;

@@ -47,9 +47,9 @@ export class VerPeritosComponent implements OnInit {
     loadingRepresentante = false;
     loadingRepresentado = false;
     loadingDomicilios = false;
-    displayedColumnsDom: string[] = ['tipoDir','direccion', 'historial', 'modificar'];
+    displayedColumnsDom: string[] = ['tipoDir','direccion'];
     displayedColumnsInm: string[] = ['inmueble','direccion','domicilio','descripcion','sujeto'];
-    displayedColumnsRepdo: string[] = ['representacion','texto','caducidad','editar','eliminar'];
+    displayedColumnsRepdo: string[] = ['representacion','texto','caducidad'];
     displayedColumnsDataRep: string[] = ['fechaCaducidad','texto','caducidad'];
     dataPeritoResultado;
     dataSource;
