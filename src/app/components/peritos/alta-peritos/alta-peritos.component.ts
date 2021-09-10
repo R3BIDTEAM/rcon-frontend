@@ -4,12 +4,12 @@ import { MatPaginator } from '@angular/material/paginator';
 import { environment } from '@env/environment'
 import { AuthService } from '@serv/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox'; 
 import * as moment from 'moment';
-import { DialogDuplicadosComponent, DialogsMensaje } from '@comp/dialog-duplicados/dialog-duplicados.component';
+import { DialogDuplicadosComponent, DialogsMensaje, DialogsValidaPerito } from '@comp/dialog-duplicados/dialog-duplicados.component';
 
 export interface DatosPeritos {
     apepaterno: string;
@@ -57,7 +57,7 @@ export class AltaPeritosComponent implements OnInit {
     @ViewChild('paginator') paginator: MatPaginator;
     btnNuevo = false;
     selectDisabled = false;
-
+    buscadoEscrito: number = 0;
     constructor(
         private http: HttpClient,
         private _formBuilder: FormBuilder,
@@ -65,6 +65,7 @@ export class AltaPeritosComponent implements OnInit {
         public dialog: MatDialog,
         private auth: AuthService,
         private route: ActivatedRoute,
+        private router:Router
     ) {}
 
     /**
@@ -154,6 +155,7 @@ export class AltaPeritosComponent implements OnInit {
         this.inserto = false;
         this.btnNuevo = false;
         this.selectDisabled = false;
+        this.buscadoEscrito = 0;
     }
 
     /**
@@ -197,79 +199,91 @@ export class AltaPeritosComponent implements OnInit {
      * de no existir coincidencias registrará el nuevo perito.
      */
     consulta_previa(){
-        this.datoPeritos.registro = (this.peritoPersonaFormGroup.value.registro) ? this.peritoPersonaFormGroup.value.registro.toLocaleUpperCase().trim() : null;
-        this.datoPeritos.fecha_alta = (this.peritoPersonaFormGroup.value.fecha_alta) ? this.peritoPersonaFormGroup.value.fecha_alta : null;
-        this.datoPeritos.fecha_baja = (this.peritoPersonaFormGroup.value.fecha_baja) ? this.peritoPersonaFormGroup.value.fecha_baja : null;
-        this.datoPeritos.nombre = (this.peritoPersonaFormGroup.value.nombre) ? this.peritoPersonaFormGroup.value.nombre.toLocaleUpperCase().trim() : null;
-        this.datoPeritos.apepaterno = (this.peritoPersonaFormGroup.value.apepaterno) ? this.peritoPersonaFormGroup.value.apepaterno.toLocaleUpperCase().trim() : null;
-        this.datoPeritos.apematerno = (this.peritoPersonaFormGroup.value.apematerno) ? this.peritoPersonaFormGroup.value.apematerno.toLocaleUpperCase().trim() : null;
-        this.datoPeritos.rfc = (this.peritoPersonaFormGroup.value.rfc) ? this.peritoPersonaFormGroup.value.rfc.toLocaleUpperCase().trim() : null;
-        this.datoPeritos.ine = (this.peritoPersonaFormGroup.value.ine) ? this.peritoPersonaFormGroup.value.ine.toLocaleUpperCase().trim() : null;
-        this.datoPeritos.identificacion = (this.peritoPersonaFormGroup.value.identificacion) ? this.peritoPersonaFormGroup.value.identificacion.toLocaleUpperCase().trim() : null;
-        this.datoPeritos.fecha_naci = (this.peritoPersonaFormGroup.value.fecha_naci) ? this.peritoPersonaFormGroup.value.fecha_naci : null;
-        this.datoPeritos.fecha_def = (this.peritoPersonaFormGroup.value.fecha_def) ? this.peritoPersonaFormGroup.value.fecha_def : null;
-        this.datoPeritos.email = (this.peritoPersonaFormGroup.value.email) ? this.peritoPersonaFormGroup.value.email.trim() : null;
-        this.datoPeritos.celular = (this.peritoPersonaFormGroup.value.celular) ? this.peritoPersonaFormGroup.value.celular.trim() : null;
-        this.datoPeritos.login = (this.peritoPersonaFormGroup.value.login) ? this.peritoPersonaFormGroup.value.login.toLocaleUpperCase().trim() : null;
-        
-        let query = '';
-        let busquedaDatos = 'getPeritosByDatosIdentificativos';
+        //this.router.navigate(['/main/consulta-peritos']);
+        if(this.buscadoEscrito == 0){
+            this.datoPeritos.registro = (this.peritoPersonaFormGroup.value.registro) ? this.peritoPersonaFormGroup.value.registro.toLocaleUpperCase().trim() : null;
+            this.datoPeritos.fecha_alta = (this.peritoPersonaFormGroup.value.fecha_alta) ? this.peritoPersonaFormGroup.value.fecha_alta : null;
+            this.datoPeritos.fecha_baja = (this.peritoPersonaFormGroup.value.fecha_baja) ? this.peritoPersonaFormGroup.value.fecha_baja : null;
+            this.datoPeritos.nombre = (this.peritoPersonaFormGroup.value.nombre) ? this.peritoPersonaFormGroup.value.nombre.toLocaleUpperCase().trim() : null;
+            this.datoPeritos.apepaterno = (this.peritoPersonaFormGroup.value.apepaterno) ? this.peritoPersonaFormGroup.value.apepaterno.toLocaleUpperCase().trim() : null;
+            this.datoPeritos.apematerno = (this.peritoPersonaFormGroup.value.apematerno) ? this.peritoPersonaFormGroup.value.apematerno.toLocaleUpperCase().trim() : null;
+            this.datoPeritos.rfc = (this.peritoPersonaFormGroup.value.rfc) ? this.peritoPersonaFormGroup.value.rfc.toLocaleUpperCase().trim() : null;
+            this.datoPeritos.ine = (this.peritoPersonaFormGroup.value.ine) ? this.peritoPersonaFormGroup.value.ine.toLocaleUpperCase().trim() : null;
+            this.datoPeritos.identificacion = (this.peritoPersonaFormGroup.value.identificacion) ? this.peritoPersonaFormGroup.value.identificacion.toLocaleUpperCase().trim() : null;
+            this.datoPeritos.fecha_naci = (this.peritoPersonaFormGroup.value.fecha_naci) ? this.peritoPersonaFormGroup.value.fecha_naci : null;
+            this.datoPeritos.fecha_def = (this.peritoPersonaFormGroup.value.fecha_def) ? this.peritoPersonaFormGroup.value.fecha_def : null;
+            this.datoPeritos.email = (this.peritoPersonaFormGroup.value.email) ? this.peritoPersonaFormGroup.value.email.trim() : null;
+            this.datoPeritos.celular = (this.peritoPersonaFormGroup.value.celular) ? this.peritoPersonaFormGroup.value.celular.trim() : null;
+            this.datoPeritos.login = (this.peritoPersonaFormGroup.value.login) ? this.peritoPersonaFormGroup.value.login.toLocaleUpperCase().trim() : null;
+            
+            let query = '';
+            //let busquedaDatos = 'getPeritosByDatosIdentificativos';
+            let busquedaDatos = 'getContribuyentesSimilares';
 
-        // query = query + 'nombre=&filtroNombre=';
+            query = query + 'nombre=&filtroNombre=';
 
-        // query = query + '&apellidoPaterno=&filtroApellidoPaterno=';
+            query = query + '&apellidoPaterno=&filtroApellidoPaterno=';
 
-        // query = query + '&apellidoMaterno=&filtroApellidoMaterno=';
+            query = query + '&apellidoMaterno=&filtroApellidoMaterno=';
 
-        query = (this.datoPeritos.rfc) ? query + '&rfc=' + this.datoPeritos.rfc : query + '&rfc=';
+            //getContribuyentesSimilares?nombre=&filtroNombre=&apellidoPaterno=&filtroApellidoPaterno=&apellidoMaterno=&filtroApellidoMaterno=&curp=&rfc=VIPI900629MG5&claveife&actividadPrincip=
+            query = (this.datoPeritos.rfc) ? query + '&rfc=' + this.datoPeritos.rfc : query + '&rfc=';
 
-        query = (this.datoPeritos.curp) ? query + '&curp=' + this.datoPeritos.curp : query + '&curp=';
+            query = (this.datoPeritos.curp) ? query + '&curp=' + this.datoPeritos.curp : query + '&curp=';
 
-        //query = (this.datoPeritos.ine) ? query + '&claveife=' + this.datoPeritos.ine : query + '&claveife=';
+            query = (this.datoPeritos.ine) ? query + '&claveife=' + this.datoPeritos.ine : query + '&claveife=';
 
-        query = query.substr(1);
+            //query = query.substr(1);
 
-        //query = query + '&actividadPrincip=';
+            //query = query + '&actividadPrincip=';
 
-        console.log(this.endpoint + busquedaDatos + '?' + query);
-        this.loading = true;
-        this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
-            .subscribe(
-                (res: any) => {
-                    this.loading = false;
-                    console.log(res);
-                    console.log("CON");
-                    if(res.length > 0){
-                        this.validaDialog(res);
-                    }else{
-                        this.guardaPerito();
+            console.log(this.endpoint + busquedaDatos + '?' + query);
+            this.loading = true;
+            this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
+                .subscribe(
+                    (res: any) => {
+                        this.loading = false;
+                        console.log(res);
+                        console.log("EL RES DE LA VALIDACIÓN CONSULTA");
+                        console.log(res.length);
+                        if(res.length > 0){
+                            this.validaDialog(res);
+                        }else{
+                            this.guardaPerito();
+                        }
+                    },
+                    (error) => {
+                        this.loading = false;
+                        this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                            duration: 10000,
+                            horizontalPosition: 'end',
+                            verticalPosition: 'top'
+                        });
                     }
-                },
-                (error) => {
-                    this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
-                }
-            );
+                );
+        }else{
+            this.existePerito();
+        }
     }
 
     /**
      * Abre el dialogo que nos muestra los registros existentes para editar o confirmar si queremos continuar con el registro.
      */
     validaDialog(res){
-        const dialogRef = this.dialog.open(DialogsMensaje, {
+        const dialogRef = this.dialog.open(DialogsValidacionPerito, {
             width: '850px',
             data: {
                 dataSource: res,
-                bandeja: 3
+                bandeja: 3,
+                buscadoEscrito: this.buscadoEscrito
             }
         });
         dialogRef.afterClosed().subscribe(result => {
-            if(result){
+            if(result !== 1){
+                console.log("RESULT DEL VALIDADO SIN ENCOTRAR COMO PERITO");
                 console.log(result);
+                this.puebaform(result);
+            }else if(result == 1){
                 this.guardaPerito();
             }
         });
@@ -345,6 +359,55 @@ export class AltaPeritosComponent implements OnInit {
             );
     }
 
+    existePerito(){
+        let query = '';
+        let busquedaDatos = 'getPeritosByDatosIdentificativos';
+
+        query = (this.datoPeritos.rfc) ? query + '&rfc=' + this.datoPeritos.rfc : query + '&rfc=';
+
+        query = (this.datoPeritos.curp) ? query + '&curp=' + this.datoPeritos.curp : query + '&curp=';
+
+        query = (this.datoPeritos.ine) ? query + '&claveife=' + this.datoPeritos.ine : query + '&claveife=';
+
+        console.log(this.endpoint + busquedaDatos + '?' + query);
+        this.loading = true;
+        this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loading = false;
+                    console.log("RES DEL ELEMENT BUSQUEDA PERITO 111!!!");
+                    console.log(res);
+                    if(res.length > 0){
+                        this.validaDialog2(res);
+                    }else{
+                        this.guardaPerito();
+                    }
+                },
+                (error) => {
+                    this.loading = false;
+                }
+            );
+    }
+
+    /**
+     * Abre el dialogo que nos muestra los registros existentes.
+     */
+    validaDialog2(res){
+        const dialogRef = this.dialog.open(DialogsMensaje, {
+            width: '850px',
+            data: {
+                dataSource: res,
+                bandeja: 3
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                console.log(result);
+                //this.guardaPerito();
+            }
+        });
+    }
+    
     /**
      * Abre el dialogo para realizar la búsqueda de un contribuyente existente.
      */
@@ -369,6 +432,7 @@ export class AltaPeritosComponent implements OnInit {
 
     puebaform(result){
         
+        this.buscadoEscrito = 1;
         this.datoPeritos.fecha_naci = (result.fecha_naci) ? new Date(result.fecha_naci) : null;
         this.datoPeritos.fecha_def = (result.fecha_def) ? new Date(result.fecha_def) : null;
         
@@ -378,7 +442,7 @@ export class AltaPeritosComponent implements OnInit {
         // if(this.datoPeritos.fecha_def){
         //     this.peritoPersonaFormGroup.controls['fechaDefuncion'].clearValidators();
         // }
-
+        //this.inserto = true;
         this.peritoPersonaFormGroup.controls['apepaterno'].setValue(result.apepaterno);
         this.peritoPersonaFormGroup.controls['apematerno'].setValue(result.apematerno);
         this.peritoPersonaFormGroup.controls['nombre'].setValue(result.nombre);
@@ -398,7 +462,7 @@ export class AltaPeritosComponent implements OnInit {
     
 }
 
-///////////////BUSCAR PERSONA PERITO////////////////
+//////////////////////////BUSCAR PERSONA PERITO////////////////////////
 export interface DatosPeritoPersona {
     apepaterno: string;
     apematerno: string;
@@ -412,6 +476,7 @@ export interface DatosPeritoPersona {
     fecha_def: Date;
     celular: string;
     email: string;
+    buscadoEscrito: number;
 }
 @Component({
     selector: 'app-dialog-buscaPersona',
@@ -629,6 +694,159 @@ export class DialogAltaBusca {
         this.datoPeritoPersona.fecha_def = element.FECHADEFUNCION;
         this.datoPeritoPersona.celular = element.CELULAR;
         this.datoPeritoPersona.email = element.EMAIL;
+        this.datoPeritoPersona.buscadoEscrito = 1;
         this.btnDisabled = false;
+    }
+}
+
+///////////////////////// VALIDACIÓN DEL PERITO ///////////////////////
+export interface DatosPeritoValida {
+    apepaterno: string;
+    apematerno: string;
+    nombre: string;
+    rfc: string;
+    curp: string;
+    ine: string;
+    identificacion: number;
+    idedato: string;
+    fecha_naci: Date;
+    fecha_def: Date;
+    celular: string;
+    email: string;
+    buscadoEscrito: number;
+}
+@Component({
+    selector: 'dialog-valida-perito',
+    templateUrl: 'dialog-valida-perito.html',
+})
+export class DialogsValidacionPerito {
+    endpoint = environment.endpoint + 'registro/';
+    displayedColumns: string[] = ['nombre','rfc', 'datos', 'select'];
+    pagina = 1;
+    total = 0;
+    pageSize = 15;
+    loading = false;
+    dataSource = [];
+    dataPaginate = [];
+    linkRoute;
+    bandeja;
+    buscadoEscrito: number;
+    httpOptions;
+    datosPeritoValida: DatosPeritoValida = {} as DatosPeritoValida;
+    @ViewChild('paginator') paginator: MatPaginator;
+
+    constructor(
+        private http: HttpClient,
+        private auth: AuthService,
+        public dialog: MatDialog,
+        private router:Router,
+        public dialogRef: MatDialogRef<DialogsValidacionPerito>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) { 
+        dialogRef.disableClose = true;
+        console.log("ACA EL RES DEL VALIDADOR PERITO 222");
+        console.log(data);
+        console.log(data.dataSource.registro);
+        this.bandeja = data.bandeja;
+        this.buscadoEscrito = data.buscadoEscrito;
+        // if(data.bandeja == 3){
+        //     this.registro = data.dataSource[0].registro;
+        // }else{
+        //     this.registro = data.dataSource[0].REGISTRO;
+        // }
+        
+    }
+
+    ngOnInit(): void {
+        this.httpOptions = {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/json',
+              Authorization: this.auth.getSession().token
+            })
+        };
+        this.bandeja = this.data.bandeja;
+        console.log("ESTA ES LA DATA DEL DIALOG DUPLICADOS 222");
+        console.log(this.data.dataSource.length);
+        this.dataSource = this.data.dataSource;
+        this.dataPaginate = this.paginate(this.data.dataSource, this.pageSize, this.pagina);
+        this.total = this.data.dataSource.length; 
+        //this.paginator.pageIndex = 0;
+    }
+
+    paginado(evt): void{
+        this.pagina = evt.pageIndex + 1;
+        this.dataPaginate = this.paginate(this.data.dataSource, this.pageSize, this.pagina);
+    }
+    
+    paginate(array, page_size, page_number) {
+        return array.slice((page_number - 1) * page_size, page_number * page_size);
+    }
+
+    existePerito(element){
+        let query = '';
+        let busquedaDatos = 'getPeritosByDatosIdentificativos';
+
+        query = (element.RFC) ? query + '&rfc=' + element.RFC : query + '&rfc=';
+
+        query = (element.CURP) ? query + '&curp=' + element.CURP : query + '&curp=';
+
+        query = (element.CLAVEIFE) ? query + '&claveife=' + element.CLAVEIFE : query + '&claveife=';
+
+        console.log(this.endpoint + busquedaDatos + '?' + query);
+        this.loading = true;
+        this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loading = false;
+                    console.log("RES DEL ELEMENT BUSQUEDA PERITO 222!!!");
+                    console.log(res);
+                    if(res.length > 0){
+                        this.dialogRef.close();
+                        this.validaDialog(res);
+                    }else{
+                        //this.guardaPerito();
+                        console.log("ACA EL RES DEL EXISTE PERITO")
+                        console.log(element);
+                        this.datosPeritoValida.nombre = element.NOMBRE;
+                        this.datosPeritoValida.apepaterno = element.APELLIDOPATERNO;
+                        this.datosPeritoValida.apematerno = element.APELLIDOMATERNO;
+                        this.datosPeritoValida.rfc = element.RFC;
+                        this.datosPeritoValida.curp = element.CURP;
+                        this.datosPeritoValida.ine = element.CLAVEIFE;
+                        this.datosPeritoValida.identificacion = element.IDDOCIDENTIF;
+                        this.datosPeritoValida.idedato = element.VALDOCIDENTIF;
+                        this.datosPeritoValida.fecha_naci = element.FECHANACIMIENTO;
+                        this.datosPeritoValida.fecha_def = element.FECHADEFUNCION;
+                        this.datosPeritoValida.celular = element.CELULAR;
+                        this.datosPeritoValida.email = element.EMAIL;
+                        this.datosPeritoValida.buscadoEscrito = 1;
+                        this.dialogRef.close(this.datosPeritoValida);
+                    }
+                },
+                (error) => {
+                    this.loading = false;
+                }
+            );
+    }
+
+    /**
+     * Abre el dialogo que nos muestra los registros existentes.
+     */
+     validaDialog(res){
+        const dialogRef = this.dialog.open(DialogsMensaje, {
+            width: '850px',
+            data: {
+                dataSource: res,
+                bandeja: 4
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result === true){
+                console.log("EL ID PERITO DEL MENSAJE CHECK");
+                console.log(res[0].idperito);
+                let navegar = '/main/editar-peritos/' + res[0].idperito;
+                this.router.navigate([navegar]);
+            }
+        });
     }
 }

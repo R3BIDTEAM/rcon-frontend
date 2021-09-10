@@ -26,10 +26,10 @@ import { AltaContribuyenteComponent, DialogRepresentacionAltaC, DialogDomicilioA
           DialogViaAlta, DialogDocumentoAltaC, DialogNotarioAltaC, DialogPersonaAltaC } from './components/contribuyentes/alta-contribuyente/alta-contribuyente.component';
 import { ConsultaContribuyenteComponent } from './components/contribuyentes/consulta-contribuyente/consulta-contribuyente.component';
 import { EdicionContribuyenteComponent } from './components/contribuyentes/edicion-contribuyente/edicion-contribuyente.component';
-import { AltaNotarioComponent, DialogBuscarNotarioAlta } from './components/notarios/alta-notario/alta-notario.component';
+import { AltaNotarioComponent, DialogBuscarNotarioAlta, DataNotarioSeleccionado } from './components/notarios/alta-notario/alta-notario.component';
 import { ConsultaNotarioComponent } from './components/notarios/consulta-notario/consulta-notario.component';
 import { EdicionNotarioComponent } from './components/notarios/edicion-notario/edicion-notario.component';
-import { AltaPeritosComponent, DialogAltaBusca } from './components/peritos/alta-peritos/alta-peritos.component';
+import { AltaPeritosComponent, DialogAltaBusca, DialogsValidacionPerito } from './components/peritos/alta-peritos/alta-peritos.component';
 import { ConsultaPeritosComponent } from './components/peritos/consulta-peritos/consulta-peritos.component';
 import { EdicionPeritosComponent } from './components/peritos/edicion-peritos/edicion-peritos.component';
 import { AltaSociedadComponent, DialogSociedad } from './components/sociedad/alta-sociedad/alta-sociedad.component';
@@ -58,7 +58,7 @@ import { EditarContribuyenteComponent, DialogDomicilioContribuyente, DialogAsent
          DialogDomicilioHistoricoEspecificoContribuyente, DialogPersonalesHistoricoContribuyente, 
          DialogPersonalesHistoricoEspecificoContribuyente, DialogHistorialRepC, DialogHistorialRepDetalleC } from './components/contribuyentes/editar-contribuyente/editar-contribuyente.component';
 import { VerHistoricoDomicilioNotarioComponent } from './components/notarios/ver-historico-domicilio-notario/ver-historico-domicilio-notario.component';
-import { DialogDuplicadosComponent, DialogsMensaje } from './components/dialog-duplicados/dialog-duplicados.component';
+import { DialogDuplicadosComponent, DialogsMensaje, DialogsValidaPerito } from './components/dialog-duplicados/dialog-duplicados.component';
 import { DialogConfirmacionComponent, DialogsCambiaPersona } from './components/dialog-confirmacion/dialog-confirmacion.component';
 
 @NgModule({
@@ -165,7 +165,9 @@ import { DialogConfirmacionComponent, DialogsCambiaPersona } from './components/
     DialogDuplicadosComponent,
     DialogConfirmacionComponent,
     DialogsMensaje,
-    DialogsCambiaPersona
+    DialogsCambiaPersona,
+    DialogsValidaPerito,
+    DialogsValidacionPerito
   ],
   imports: [
     BrowserModule,
