@@ -55,6 +55,13 @@ export class VerContribuyenteComponent implements OnInit {
   loadingDomicilios = false;
   loadingRepresentante = false;
   loadingRepresentado = false;
+  loadingInmuebles = false;
+  pagina = 1;
+  total = 0;
+  pageSize = 15;
+  paginaDom = 1;
+  totalDom = 0;
+  pageSizeDom = 15;
   httpOptions;
   fisicaFormGroup: FormGroup;
   moralFormGroup: FormGroup;
@@ -66,6 +73,7 @@ export class VerContribuyenteComponent implements OnInit {
   dataRepresentados: DataRepresentacion[] = [];
   contribuyente: DataRepresentacion = {} as DataRepresentacion;
   dataDocumentos: DocumentosIdentificativos[] = [];
+  @ViewChild('paginator') paginator: MatPaginator;
 
   /*Paginado*/
   dataSource1 = [];
@@ -254,6 +262,46 @@ export class VerContribuyenteComponent implements OnInit {
   }
 
   /**
+  * Obtiene los inmuebles de la persona
+  */
+  getidInmuebles(){
+  this.loadingInmuebles = true;
+  this.http.get(this.endpoint + 'getInmuebles' + '?idPersona='+ this.idContribuyente, this.httpOptions)
+    .subscribe(
+        (res: any) => {
+            this.loadingInmuebles = false;
+            console.log("AQUI ENTRO IDINMUEBLE!!!");
+            console.log(res);
+
+            this.dataSource3 = res;
+            console.log(res.length);
+            console.log(this.dataSource3);
+            this.dataPaginate3 = this.paginate(this.dataSource3, 15, this.paginaDom);
+            this.total3 = this.dataPaginate3.length; 
+            this.paginator.pageIndex = 0;
+            console.log("AQUI ENTRO EL RES DEL INMUEBLE!");
+            console.log(this.dataSource3);
+
+            //console.log(res[0].idinmueble);
+            // if(res.length > 0){
+            //     this.idInmueble = res[0].idinmueble;
+            // }else{
+            //     this.idInmueble = null;
+            // }
+            // this.getInmuebles();
+        },
+        (error) => {
+            this.loadingInmuebles = false;
+            this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                duration: 10000,
+                horizontalPosition: 'end',
+                verticalPosition: 'top'
+            });
+        }
+    );
+  }
+
+  /**
   * Obtiene las representaciónes del contribuyente
   */
   getRepresentacion(){
@@ -324,6 +372,15 @@ export class VerContribuyenteComponent implements OnInit {
     this.pagina1 = evt.pageIndex + 1;
     this.dataSource1 = this.paginate(this.dataSource1, 15, this.pagina1);
   }
+
+  /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
+   paginado3(evt): void{
+    this.pagina3 = evt.pageIndex + 1;
+    this.dataSource3 = this.paginate(this.dataSource3, 15, this.pagina3);
+}
 
   /**
   * Método del paginado que nos dira la posición del paginado y los datos a mostrar

@@ -23,13 +23,17 @@ table {
 }
   
 td, th {
-    border: 1px solid #dddddd;
+    /* border: 1px solid #dddddd; */
     text-align: left;
     padding: 8px;
 }
   
-tr:nth-child(even) {
+/* tr:nth-child(even) {
     background-color: #dddddd;
+} */
+
+tr.mat-row, tr.mat-footer-row {
+    height: 35px;
 }
 
 .mat-input-element:disabled, .mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after{color:#666!important; font-weight: 600;}
