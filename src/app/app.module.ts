@@ -32,7 +32,7 @@ import { EdicionNotarioComponent } from './components/notarios/edicion-notario/e
 import { AltaPeritosComponent, DialogAltaBusca, DialogsValidacionPerito } from './components/peritos/alta-peritos/alta-peritos.component';
 import { ConsultaPeritosComponent } from './components/peritos/consulta-peritos/consulta-peritos.component';
 import { EdicionPeritosComponent } from './components/peritos/edicion-peritos/edicion-peritos.component';
-import { AltaSociedadComponent, DialogSociedad } from './components/sociedad/alta-sociedad/alta-sociedad.component';
+import { AltaSociedadComponent, DialogSociedad, DialogsValidacionSociedad } from './components/sociedad/alta-sociedad/alta-sociedad.component';
 import { ConsultaSociedadComponent } from './components/sociedad/consulta-sociedad/consulta-sociedad.component';
 import { EdicionSociedadComponent } from './components/sociedad/edicion-sociedad/edicion-sociedad.component';
 import { VerPeritosComponent } from './components/peritos/ver-peritos/ver-peritos.component';
@@ -167,7 +167,8 @@ import { DialogConfirmacionComponent, DialogsCambiaPersona } from './components/
     DialogsMensaje,
     DialogsCambiaPersona,
     DialogsValidaPerito,
-    DialogsValidacionPerito
+    DialogsValidacionPerito,
+    DialogsValidacionSociedad
   ],
   imports: [
     BrowserModule,

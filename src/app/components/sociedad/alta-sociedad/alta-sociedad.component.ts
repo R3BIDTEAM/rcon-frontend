@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { environment } from '@env/environment'
 import { AuthService } from '@serv/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox'; 
@@ -34,6 +34,7 @@ export class AltaSociedadComponent implements OnInit {
     inserto = false;
     dataSource = [];
     btnDisabled = true;
+    buscadoEscrito: number = 0;
     @ViewChild('paginator') paginator: MatPaginator;
 
     constructor(
@@ -43,6 +44,7 @@ export class AltaSociedadComponent implements OnInit {
         public dialog: MatDialog,
         private auth: AuthService,
         private route: ActivatedRoute,
+        private router:Router
     ) { }
 
     /**
@@ -90,6 +92,7 @@ export class AltaSociedadComponent implements OnInit {
         this.sociedadFormGroup.controls['login'].setValue(null);
         this.inserto = false;
         this.btnDisabled = true;
+        this.buscadoEscrito = 0;
     }
 
     /**
@@ -105,44 +108,75 @@ export class AltaSociedadComponent implements OnInit {
         this.fecha_baja = this.sociedadFormGroup.value.fecha_baja;
         this.email = this.sociedadFormGroup.value.email;
         this.login = this.sociedadFormGroup.value.login.toLocaleUpperCase();
+        if(this.buscadoEscrito == 0){
+            
 
+            let query = '';
+            let busquedaDatos = 'getContribuyentesSimilares';
+            
+            // query = query + 'nombre=&filtroNombre=';
+
+            // query = query + '&apellidoPaterno=&filtroApellidoPaterno=';
+            
+            // query = query + '&apellidoMaterno=&filtroApellidoMaterno=&curp=';
+
+            if(this.rfc){
+                query = query + '&rfc=' + this.rfc;
+            }
+
+            //query = query + '&claveife&actividadPrincip=';
+            this.loading = true;
+            console.log("RESULTADO DE LA BUSQUEDA");
+            console.log(this.endpoint);
+            console.log(query);
+            this.http.get(this.endpointPrevia + busquedaDatos + '?' + query, this.httpOptions)
+                .subscribe(
+                    (res: any) => {
+                        this.loading = false;
+                        if(res.length > 0){
+                            console.log("RES SOCIEDAD");
+                            console.log(res);
+                            this.validaDialog(res);
+                        }else{
+                            this.guardaSociedad();
+                        }
+                    },
+                    (error) => {
+                        this.loading = false;
+                        this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                            duration: 10000,
+                            horizontalPosition: 'end',
+                            verticalPosition: 'top'
+                        });
+                    }
+                );
+        }else{
+            this.existeSociedad();
+        }                
+    }
+
+    existeSociedad(){
         let query = '';
         let busquedaDatos = 'getSocValuacionByDatosIdentificativos';
         
-        // query = query + 'nombre=&filtroNombre=';
+        query = query + '&rfc=' + this.rfc;
 
-        // query = query + '&apellidoPaterno=&filtroApellidoPaterno=';
-        
-        // query = query + '&apellidoMaterno=&filtroApellidoMaterno=&curp=';
-
-        if(this.rfc){
-            query = query + '&rfc=' + this.rfc;
-        }
-
-        //query = query + '&claveife&actividadPrincip=';
+        console.log(this.endpointPrevia + busquedaDatos + '?' + query);
         this.loading = true;
-        console.log("RESULTADO DE LA BUSQUEDA");
-        console.log(this.endpoint);
-        console.log(query);
         this.http.get(this.endpointPrevia + busquedaDatos + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
+                    console.log("RES DEL ELEMENT BUSQUEDA PERITO 111 !!!");
+                    console.log(res);
                     if(res.length > 0){
-                        console.log("RES SOCIEDAD");
-                        console.log(res);
-                        this.validaDialog(res);
+                        this.validaDialogRedirect(res);
                     }else{
                         this.guardaSociedad();
                     }
                 },
                 (error) => {
                     this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
                 }
             );
     }
@@ -152,18 +186,41 @@ export class AltaSociedadComponent implements OnInit {
      */
     validaDialog(res): void {
         //this.dataSource = res;
+        const dialogRef = this.dialog.open(DialogsValidacionSociedad, {
+            width: '850px',
+            data: {
+                dataSource: res,
+                bandeja: 6
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result !== 1){
+                console.log("RESULT DEL VALIDADO SIN ENCOTRAR COMO PERITO");
+                console.log(result);
+                this.sociedadFormGroup.controls['razonSocial'].setValue(result.razon_social);
+                this.sociedadFormGroup.controls['rfc'].setValue(result.rfc);
+                this.buscadoEscrito = 1;
+            }else if(result === 1){
+                this.guardaSociedad();
+            }
+        });
+    }
+
+    /**
+     * Abre el dialogo que nos muestra los registros existentes.
+     */
+    validaDialogRedirect(res){
         const dialogRef = this.dialog.open(DialogsMensaje, {
             width: '850px',
             data: {
                 dataSource: res,
-                bandeja: 4
+                bandeja: 5
             }
         });
         dialogRef.afterClosed().subscribe(result => {
-            // if(result){
-            //     console.log(result);
-            //     this.guardaSociedad();
-            // }
+            if(result === true){
+               
+            }
         });
     }
 
@@ -229,6 +286,7 @@ export class AltaSociedadComponent implements OnInit {
             if(result){
                 this.sociedadFormGroup.controls['razonSocial'].setValue(result.razonSocial);
                 this.sociedadFormGroup.controls['rfc'].setValue(result.rfc);
+                this.buscadoEscrito = 1;
                 console.log(result);
             }
         });
@@ -403,3 +461,136 @@ export class DialogSociedad {
         this.sociedadDialog.rfc = element.RFC;
     }
 }
+
+
+///////////////////// VALIDACIÓN SOCIEDAD ///////////////////////////
+export interface DatosSociedad{
+    idsociedad: string;
+    razon_social: string;
+    rfc: string;
+}
+
+@Component({
+    selector: 'dialog-valida-sociedad',
+    templateUrl: 'dialog-valida-sociedad.html',
+})
+export class DialogsValidacionSociedad {
+    endpoint = environment.endpoint + 'registro/';
+    displayedColumns: string[] = ['nombre','rfc', 'datos', 'select'];
+    pagina = 1;
+    total = 0;
+    pageSize = 15;
+    loading = false;
+    dataSource = [];
+    dataPaginate = [];
+    linkRoute;
+    bandeja;
+    buscadoEscrito: number;
+    httpOptions;
+    registro;
+    datosSociedad: DatosSociedad = {} as DatosSociedad;
+    @ViewChild('paginator') paginator: MatPaginator;
+
+    constructor(
+        private http: HttpClient,
+        private auth: AuthService,
+        public dialog: MatDialog,
+        private router:Router,
+        public dialogRef: MatDialogRef<DialogsValidacionSociedad>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) { 
+        dialogRef.disableClose = true;
+        console.log("ACA EL RES DEL VALIDADOR PERITO");
+        console.log(data);
+        console.log(data.dataSource.registro);
+        this.bandeja = data.bandeja;
+        this.buscadoEscrito = data.buscadoEscrito;
+        
+        this.registro = data.dataSource[0].REGISTRO;
+    }
+
+    ngOnInit(): void {
+        this.httpOptions = {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/json',
+              Authorization: this.auth.getSession().token
+            })
+        };
+        this.bandeja = this.data.bandeja;
+        console.log("ESTA ES LA DATA DEL DIALOG DUPLICADOS");
+        console.log(this.data.dataSource.length);
+        this.dataSource = this.data.dataSource;
+        this.dataPaginate = this.paginate(this.data.dataSource, this.pageSize, this.pagina);
+        this.total = this.data.dataSource.length; 
+        //this.paginator.pageIndex = 0;
+    }
+
+    paginado(evt): void{
+        this.pagina = evt.pageIndex + 1;
+        this.dataPaginate = this.paginate(this.data.dataSource, this.pageSize, this.pagina);
+    }
+    
+    paginate(array, page_size, page_number) {
+        return array.slice((page_number - 1) * page_size, page_number * page_size);
+    }
+
+    existeSociedad(element){
+        let query = '';
+        let busquedaDatos = 'getSocValuacionByDatosIdentificativos';
+        
+        // query = query + 'nombre=&filtroNombre=';
+
+        // query = query + '&apellidoPaterno=&filtroApellidoPaterno=';
+        
+        // query = query + '&apellidoMaterno=&filtroApellidoMaterno=&curp=';
+
+        if(element.RFC){
+            query = query + '&rfc=' + element.RFC;
+        };
+
+        console.log(this.endpoint + busquedaDatos + '?' + query);
+        this.loading = true;
+        this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loading = false;
+                    console.log("RES DEL ELEMENT BUSQUEDA PERITO!!!");
+                    console.log(res);
+                    if(res.length > 0){
+                        this.dialogRef.close();
+                        this.validaDialog(res);
+                    }else{
+                        this.datosSociedad.razon_social = element.APELLIDOPATERNO;
+                        this.datosSociedad.rfc = element.RFC;
+                        this.dialogRef.close(this.datosSociedad);
+                    }
+                },
+                (error) => {
+                    this.loading = false;
+                }
+            );
+    }
+
+    /**
+     * Abre el dialogo que nos muestra los registros existentes.
+     */
+     validaDialog(res){
+        const dialogRef = this.dialog.open(DialogsMensaje, {
+            width: '850px',
+            data: {
+                dataSource: res,
+                bandeja: 6
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result === true){
+                console.log("EL ID SOCIEDAD DEL MENSAJE CHECK");
+                console.log(res[0].IDSOCIEDAD);
+                let navegar = '/main/editar-sociedad/' + res[0].IDSOCIEDAD;
+                this.router.navigate([navegar]);
+            }
+        });
+    }
+}
+
+

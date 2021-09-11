@@ -12,6 +12,18 @@
             <p>Se cargarán sus datos en modo edición</p>
         </h4>
     </div>
+    <div *ngIf="bandeja == 5">
+        <h4>
+            <p>No se ha podido realizar el alta.</p>
+            <p>La persona moral ya es una sociedad con clave: {{ (registro) }}</p>
+        </h4>
+    </div>
+    <div *ngIf="bandeja == 6">
+        <h4>
+            <p>La persona moral seleccionada ya es una sociedad.</p>
+            <p>Se cargarán sus datos en modo edición</p>
+        </h4>
+    </div>
 </div>
 <mat-dialog-actions align="end">
     <button mat-flat-button color="primary" [mat-dialog-close]="true">Aceptar</button>
