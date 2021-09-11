@@ -4,7 +4,7 @@
         <!-- <mat-card-header>
             <mat-card-title>Datos Sociedad</mat-card-title>
         </mat-card-header> -->
-        <mat-card-header style="padding-left: 8%;">
+        <mat-card-header style="padding-left: 7%;">
             <mat-card-title>Datos de persona moral</mat-card-title>
         </mat-card-header>
         <div class="row">
@@ -29,7 +29,7 @@
                     </div>
 
                     <mat-card-header>
-                        <mat-card-title>Datos especifícos de la sociedad</mat-card-title>
+                        <h3 style="margin: 0 0 15px; margin-left: -32px;" class="verde-cdmx">Datos especifícos de la sociedad:</h3>
                     </mat-card-header>
                     <div class="row">
                         <div class="col-md-6">
@@ -60,7 +60,10 @@
                         </div>
                     </div>
                 </ng-container>
-                <h3>Peritos Asociados</h3>
+
+                <mat-card-header>
+                    <h3 style="margin: 0 0 15px; margin-left: -32px;" class="verde-cdmx">Peritos Asociados:</h3>
+                </mat-card-header>
                 <ng-container>
                     <div style="padding: 30px; text-align: center;" *ngIf="loading">
                         <mat-spinner style="margin:0 auto;"></mat-spinner>
@@ -71,15 +74,15 @@
                     </div> 
                     <table mat-table [dataSource]="dataSource" *ngIf="!loading && dataSource.length > 0">
                         <ng-container matColumnDef="nombre">
-                            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                            <th mat-header-cell *matHeaderCellDef class="verde-cdmx"> Nombre </th>
                             <td mat-cell *matCellDef="let element"> {{ element.nombre }} {{ element.apellidopaterno }} {{ element.apellidomaterno }}</td>
                         </ng-container>
                         <ng-container matColumnDef="registro">
-                            <th mat-header-cell *matHeaderCellDef> Registro </th>
+                            <th mat-header-cell *matHeaderCellDef class="verde-cdmx"> Registro </th>
                             <td mat-cell *matCellDef="let element"> {{element.registro}}</td>
                         </ng-container>
                         <ng-container matColumnDef="rfc">
-                            <th mat-header-cell *matHeaderCellDef> RFC </th>
+                            <th mat-header-cell *matHeaderCellDef class="verde-cdmx"> RFC </th>
                             <td mat-cell *matCellDef="let element"> {{ element.rfc }}</td>
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -91,11 +94,18 @@
             </div>
         </div>
 
+        <!-- ***************** -->
         <!-- Datos de contacto -->
-        <mat-card-header>
+        <!-- ***************** -->
+        <mat-card-header style="padding-left: 7%;">
             <mat-card-title>Datos de contacto</mat-card-title>
         </mat-card-header>
-        <div class="col-md-12">
+
+        <!-- Domicilios -->
+        <mat-card-header style="padding-left: 7%;">
+            <h3 style="margin: 0 0 15px;" class="verde-cdmx">Domicilios:</h3>
+        </mat-card-header>
+        <div class="col-md-10 offset-md-1">
             <ng-container>
                 <div style="padding: 30px; text-align: center;" *ngIf="loadingDomicilios">
                     <mat-spinner style="margin:0 auto;"></mat-spinner>
@@ -106,12 +116,12 @@
                 </div> 
                 <table mat-table [dataSource]="dataSource1" *ngIf="!loadingDomicilios && dataSource1.length > 0" width="100%">
                     <ng-container matColumnDef="tipoDir">
-                        <th mat-header-cell *matHeaderCellDef width="15%" > Tipo Dirección </th>
-                        <td mat-cell *matCellDef="let element" width="15%" > {{ element.CODTIPOSDIRECCION }}</td>
+                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="11%" style="text-align: center; font-size: 13px; padding-left: 0px;"> Tipo Dirección </th>
+                        <td mat-cell *matCellDef="let element" style="text-align: center; font-size: 13px; padding-left: 0px;"> {{ element.CODTIPOSDIRECCION }}</td>
                     </ng-container>
                     <ng-container matColumnDef="direccion">
-                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="80%" style="font-size: 14px;"> Dirección </th>
-                        <td mat-cell *matCellDef="let element" style="text-align: center;">
+                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="89%" style="font-size: 13px;"> Dirección </th>
+                        <td mat-cell *matCellDef="let element" style="font-size: 13px;">
                             {{ element.ABREVIATURAVIA }}, {{ element.VIA }} {{ element.NUMEROEXTERIOR }}, Col: {{ element.COLONIA}}
                             C.P. {{ element.CODIGOPOSTAL}}, {{ element.DELEGACION}} ({{ element.ESTADO }})
                         </td>
@@ -124,7 +134,11 @@
             </ng-container>
         </div>
 
-        <div class="col-md-12">
+        <!-- Gestión de Domicilios para Recibir Boletas Prediales -->
+        <mat-card-header style="padding-left: 7%;">
+            <h3 style="margin: 0 0 15px;" class="verde-cdmx">Gestión de Domicilios para Recibir Boletas Prediales:</h3>
+        </mat-card-header>
+        <div class="col-md-10 offset-md-1">
             <ng-container>
                 <div style="padding: 30px; text-align: center;" *ngIf="loadingDomicilios">
                     <mat-spinner style="margin:0 auto;"></mat-spinner>
@@ -135,12 +149,12 @@
                 </div> 
                 <table mat-table [dataSource]="dataSource2" *ngIf="!loadingDomicilios && dataSource2.length > 0" width="100%">
                     <ng-container matColumnDef="tipoDir">
-                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="10%"> Tipo Dirección </th>
-                        <td mat-cell *matCellDef="let element"> {{ element.CODTIPOSDIRECCION }}</td>
+                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="11%" style="text-align: center; font-size: 13px; padding-left: 0px;"> Tipo Dirección </th>
+                        <td mat-cell *matCellDef="let element" style="text-align: center; font-size: 13px; padding-left: 0px;"> {{ element.CODTIPOSDIRECCION }}</td>
                     </ng-container>
                     <ng-container matColumnDef="direccion">
-                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="70%"> Dirección </th>
-                        <td mat-cell *matCellDef="let element">
+                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="89%" style="font-size: 13px;"> Dirección </th>
+                        <td mat-cell *matCellDef="let element" style="font-size: 13px;">
                             {{ element.ABREVIATURAVIA }}, {{ element.VIA }} {{ element.NUMEROEXTERIOR }}, Col: {{ element.COLONIA}}
                             C.P. {{ element.CODIGOPOSTAL}}, {{ element.DELEGACION}} ({{ element.ESTADO }})
                         </td>
@@ -153,12 +167,71 @@
             </ng-container>                    
         </div>
 
-
-        <!-- Datos de representación -->
-        <mat-card-header>
-            <mat-card-title>Datos de representación</mat-card-title>
+        <!-- Datos de bienes -->
+        <mat-card-header style="padding-left: 7%;">
+            <h3 style="margin: 0 0 15px;" class="verde-cdmx">Datos de bienes:</h3>
         </mat-card-header>
-        <div class="col-md-12">
+        <div class="col-md-10 offset-md-1"> 
+            <ng-container>
+                <div style="padding: 30px; text-align: center;" *ngIf="loadingInmuebles">
+                    <mat-spinner style="margin:0 auto;"></mat-spinner>
+                    <p>Cargando...</p>
+                </div>
+                <div class="alert alert-info" *ngIf="!loadingInmuebles && dataSource3.length == 0">
+                    No hay inmuebles asociados.
+                </div> 
+                <table mat-table [dataSource]="dataSource3" *ngIf="!loadingInmuebles && dataSource3.length > 0" width="100%">
+                    <ng-container matColumnDef="inmueble">
+                        <th mat-header-cell *matHeaderCellDef width="75%"> Inmueble </th>
+                        <td mat-cell *matCellDef="let element" width="75%">
+                            {{ element.INMUEBLE }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="direccion">
+                        <th mat-header-cell *matHeaderCellDef width="75%"> Dirección </th>
+                        <td mat-cell *matCellDef="let element" width="75%">
+                            {{ element.DIRECCION }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="domiclio">
+                        <th mat-header-cell *matHeaderCellDef width="75%"> Domicilio Fiscal </th>
+                        <td mat-cell *matCellDef="let element" width="75%">
+                            {{ element.DOMICILIOFISCAL }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="descripcion">
+                        <th mat-header-cell *matHeaderCellDef width="75%"> Descripción </th>
+                        <td mat-cell *matCellDef="let element" width="75%">
+                            {{ element.DIRECCIONINMUEBLE }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="sujeto">
+                        <th mat-header-cell *matHeaderCellDef width="75%"> Sujeto Pasivo </th>
+                        <td mat-cell *matCellDef="let element" width="75%">
+                            {{ element.ESSUJETOPASIVO }}
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumnsInm"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumnsInm;"></tr>
+                </table>
+                <mat-paginator #paginator [length]="total3" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado3($event)">
+                </mat-paginator>
+            </ng-container>                    
+        </div>
+
+
+        <!-- *********************** -->
+        <!-- Datos de representación -->
+        <!-- *********************** -->
+        <mat-card-header style="padding-left: 7%;">
+            <mat-card-title>Datos de representación</mat-card-title><br>
+        </mat-card-header>
+
+        <!-- Representantes -->
+        <mat-card-header style="padding-left: 7%;">
+            <h3 style="margin: 0 0 15px;" class="verde-cdmx">Representante:</h3>
+        </mat-card-header>
+        <div class="col-md-10 offset-md-1">
             <ng-container>
                 <div style="padding: 30px; text-align: center;" *ngIf="loadingRepresentante">
                     <mat-spinner style="margin:0 auto;"></mat-spinner>
@@ -169,20 +242,20 @@
                 </div> 
                 <table mat-table [dataSource]="dataSource4" *ngIf="!loadingRepresentante && dataSource4.length > 0" width="100%">
                     <ng-container matColumnDef="representacion">
-                        <th mat-header-cell *matHeaderCellDef width="15%" > Tipo Dirección </th>
-                        <td mat-cell *matCellDef="let element" width="15%" >
+                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="15%" style="font-size: 13px;"> Tipo Dirección </th>
+                        <td mat-cell *matCellDef="let element" style="font-size: 13px;">
                             {{ element.APELLIDOPATERNO }} {{ element.APELLIDOMATERNO }} {{ element.NOMBRE }}
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="texto">
-                        <th mat-header-cell *matHeaderCellDef width="75%"> Texto </th>
-                        <td mat-cell *matCellDef="let element" width="75%">
+                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="70%" style="font-size: 13px;"> Texto </th>
+                        <td mat-cell *matCellDef="let element" style="font-size: 13px;">
                             {{ element.TEXTOREPRESENTACION }}
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="caducidad">
-                        <th mat-header-cell *matHeaderCellDef width="75%"> Caducidad </th>
-                        <td mat-cell *matCellDef="let element" width="75%">
+                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="15%" style="font-size: 13px;"> Caducidad </th>
+                        <td mat-cell *matCellDef="let element" style="font-size: 13px;">
                             {{ element.FECHACADUCIDAD }}
                         </td>
                     </ng-container>
@@ -194,7 +267,11 @@
             </ng-container>
         </div>
 
-        <div class="col-md-12">
+        <!-- Representados -->
+        <mat-card-header style="padding-left: 7%;">
+            <h3 style="margin: 0 0 15px;" class="verde-cdmx">Representado:</h3>
+        </mat-card-header>
+        <div class="col-md-10 offset-md-1">
             <ng-container>
                 <div style="padding: 30px; text-align: center;" *ngIf="loadingRepresentado">
                     <mat-spinner style="margin:0 auto;"></mat-spinner>
@@ -205,20 +282,20 @@
                 </div> 
                 <table mat-table [dataSource]="dataSource5" *ngIf="!loadingRepresentado && dataSource5.length > 0" width="100%">
                     <ng-container matColumnDef="representacion">
-                        <th mat-header-cell *matHeaderCellDef width="15%" > Tipo Dirección </th>
-                        <td mat-cell *matCellDef="let element" width="15%" >
+                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="15%" style="font-size: 13px;"> Tipo Dirección </th>
+                        <td mat-cell *matCellDef="let element" style="font-size: 13px;">
                             {{ element.APELLIDOPATERNO }} {{ element.APELLIDOMATERNO }} {{ element.NOMBRE }}
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="texto">
-                        <th mat-header-cell *matHeaderCellDef width="75%"> Texto </th>
-                        <td mat-cell *matCellDef="let element" width="75%">
+                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="70%" style="font-size: 13px;"> Texto </th>
+                        <td mat-cell *matCellDef="let element" style="font-size: 13px;">
                             {{ element.TEXTOREPRESENTACION }}
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="caducidad">
-                        <th mat-header-cell *matHeaderCellDef width="75%"> Caducidad </th>
-                        <td mat-cell *matCellDef="let element" width="75%">
+                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="15%" style="font-size: 13px;"> Caducidad </th>
+                        <td mat-cell *matCellDef="let element" style="font-size: 13px;">
                             {{ element.FECHACADUCIDAD }}
                         </td>
                     </ng-container>

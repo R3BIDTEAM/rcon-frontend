@@ -1,8 +1,13 @@
 <mat-card>
     <div class="borde">
+        <h1 class="titulo-cdmx" style="margin-top: 15px; margin-bottom: 20px;">Datos del notario</h1>
 
-
-        <h3 style="margin: 0 0 15px;" class="verde-cdmx">Datos Generales:</h3>
+        <!-- ***************** -->
+        <!-- Datos Generales -->
+        <!-- ***************** -->
+        <mat-card-header style="padding-left: 7%;">
+            <mat-card-title>Datos Generales</mat-card-title>
+        </mat-card-header>
         <div style="padding: 30px; text-align: center;" *ngIf="loading">
             <mat-spinner style="margin:0 auto;"></mat-spinner>
             <p>Cargando...</p>
@@ -98,7 +103,17 @@
 
       
 
+        <!-- ***************** -->
+        <!-- Datos de contacto -->
+        <!-- ***************** -->
+        <mat-card-header style="padding-left: 7%;">
+            <mat-card-title>Datos de contacto</mat-card-title>
+        </mat-card-header>
 
+        <!-- Domicilios -->
+        <mat-card-header style="padding-left: 7%;">
+            <h3 style="margin: 0 0 15px;" class="verde-cdmx">Domicilios:</h3>
+        </mat-card-header>
         <div style="padding: 30px; text-align: center;" *ngIf="loadingDomicilios">
             <mat-spinner style="margin:0 auto;"></mat-spinner>
             <p>Cargando...</p>
