@@ -201,16 +201,16 @@ export class AltaPeritosComponent implements OnInit {
     consulta_previa(){
         if(this.buscadoEscrito == 0){
             this.datoPeritos.registro = (this.peritoPersonaFormGroup.value.registro) ? this.peritoPersonaFormGroup.value.registro.toLocaleUpperCase().trim() : null;
-            this.datoPeritos.fecha_alta = (this.peritoPersonaFormGroup.value.fecha_alta) ? this.peritoPersonaFormGroup.value.fecha_alta : null;
-            this.datoPeritos.fecha_baja = (this.peritoPersonaFormGroup.value.fecha_baja) ? this.peritoPersonaFormGroup.value.fecha_baja : null;
+            this.datoPeritos.fecha_alta = (this.peritoPersonaFormGroup.value.fechaInicio) ? this.peritoPersonaFormGroup.value.fechaInicio : null;
+            this.datoPeritos.fecha_baja = (this.peritoPersonaFormGroup.value.fechaFin) ? this.peritoPersonaFormGroup.value.fechaFin : null;
             this.datoPeritos.nombre = (this.peritoPersonaFormGroup.value.nombre) ? this.peritoPersonaFormGroup.value.nombre.toLocaleUpperCase().trim() : null;
             this.datoPeritos.apepaterno = (this.peritoPersonaFormGroup.value.apepaterno) ? this.peritoPersonaFormGroup.value.apepaterno.toLocaleUpperCase().trim() : null;
             this.datoPeritos.apematerno = (this.peritoPersonaFormGroup.value.apematerno) ? this.peritoPersonaFormGroup.value.apematerno.toLocaleUpperCase().trim() : null;
             this.datoPeritos.rfc = (this.peritoPersonaFormGroup.value.rfc) ? this.peritoPersonaFormGroup.value.rfc.toLocaleUpperCase().trim() : null;
             this.datoPeritos.ine = (this.peritoPersonaFormGroup.value.ine) ? this.peritoPersonaFormGroup.value.ine.toLocaleUpperCase().trim() : null;
             this.datoPeritos.identificacion = (this.peritoPersonaFormGroup.value.identificacion) ? this.peritoPersonaFormGroup.value.identificacion.toLocaleUpperCase().trim() : null;
-            this.datoPeritos.fecha_naci = (this.peritoPersonaFormGroup.value.fecha_naci) ? this.peritoPersonaFormGroup.value.fecha_naci : null;
-            this.datoPeritos.fecha_def = (this.peritoPersonaFormGroup.value.fecha_def) ? this.peritoPersonaFormGroup.value.fecha_def : null;
+            this.datoPeritos.fecha_naci = (this.peritoPersonaFormGroup.value.fechaNacimiento) ? this.peritoPersonaFormGroup.value.fechaNacimiento : null;
+            this.datoPeritos.fecha_def = (this.peritoPersonaFormGroup.value.fechaDefuncion) ? this.peritoPersonaFormGroup.value.fechaDefuncion : null;
             this.datoPeritos.email = (this.peritoPersonaFormGroup.value.email) ? this.peritoPersonaFormGroup.value.email.trim() : null;
             this.datoPeritos.celular = (this.peritoPersonaFormGroup.value.celular) ? this.peritoPersonaFormGroup.value.celular.trim() : null;
             this.datoPeritos.login = (this.peritoPersonaFormGroup.value.login) ? this.peritoPersonaFormGroup.value.login.toLocaleUpperCase().trim() : null;
