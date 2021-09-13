@@ -194,14 +194,15 @@ export class AltaSociedadComponent implements OnInit {
             }
         });
         dialogRef.afterClosed().subscribe(result => {
-            if(result !== 1){
+            console.log(result);
+            if(result === 1){
+                this.guardaSociedad();
+            }else if(result !== 1 && result !== 2){
                 console.log("RESULT DEL VALIDADO SIN ENCOTRAR COMO PERITO");
                 console.log(result);
                 this.sociedadFormGroup.controls['razonSocial'].setValue(result.razon_social);
                 this.sociedadFormGroup.controls['rfc'].setValue(result.rfc);
                 this.buscadoEscrito = 1;
-            }else if(result === 1){
-                this.guardaSociedad();
             }
         });
     }
@@ -536,7 +537,8 @@ export class DialogsValidacionSociedad {
 
     existeSociedad(element){
         let query = '';
-        let busquedaDatos = 'getSocValuacionByDatosIdentificativos';
+        //let busquedaDatos = 'getSocValuacionByDatosIdentificativos';
+        let busquedaDatos = 'getSociedadValuacion';
         
         // query = query + 'nombre=&filtroNombre=';
 
@@ -544,9 +546,11 @@ export class DialogsValidacionSociedad {
         
         // query = query + '&apellidoMaterno=&filtroApellidoMaterno=&curp=';
 
-        if(element.RFC){
-            query = query + '&rfc=' + element.RFC;
-        };
+        // if(element.RFC){
+        //     query = query + '&rfc=' + element.RFC;
+        // };
+
+        query = query + 'idSociedad=' + element.IDPERSONA;
 
         console.log(this.endpoint + busquedaDatos + '?' + query);
         this.loading = true;

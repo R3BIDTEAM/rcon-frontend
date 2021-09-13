@@ -199,7 +199,6 @@ export class AltaPeritosComponent implements OnInit {
      * de no existir coincidencias registrará el nuevo perito.
      */
     consulta_previa(){
-        //this.router.navigate(['/main/consulta-peritos']);
         if(this.buscadoEscrito == 0){
             this.datoPeritos.registro = (this.peritoPersonaFormGroup.value.registro) ? this.peritoPersonaFormGroup.value.registro.toLocaleUpperCase().trim() : null;
             this.datoPeritos.fecha_alta = (this.peritoPersonaFormGroup.value.fecha_alta) ? this.peritoPersonaFormGroup.value.fecha_alta : null;
@@ -217,7 +216,7 @@ export class AltaPeritosComponent implements OnInit {
             this.datoPeritos.login = (this.peritoPersonaFormGroup.value.login) ? this.peritoPersonaFormGroup.value.login.toLocaleUpperCase().trim() : null;
             
             let query = '';
-            //let busquedaDatos = 'getPeritosByDatosIdentificativos';
+            //let busquedaDatos = 'getContribuyentesSimilares';
             let busquedaDatos = 'getContribuyentesSimilares';
 
             query = query + 'nombre=&filtroNombre=';
@@ -279,12 +278,14 @@ export class AltaPeritosComponent implements OnInit {
             }
         });
         dialogRef.afterClosed().subscribe(result => {
-            if(result !== 1){
+            if(result !== 1 && result !== 2){
                 console.log("RESULT DEL VALIDADO SIN ENCOTRAR COMO PERITO");
                 console.log(result);
                 this.puebaform(result);
             }else if(result == 1){
                 this.guardaPerito();
+            }else{
+                console.log("RESULT NADA");
             }
         });
     }
@@ -784,13 +785,16 @@ export class DialogsValidacionPerito {
 
     existePerito(element){
         let query = '';
-        let busquedaDatos = 'getPeritosByDatosIdentificativos';
+        //let busquedaDatos = 'getPeritosByDatosIdentificativos';
+        let busquedaDatos = 'getPerito';
+        //obtenerSociedades=1&idPerito=4494886
 
-        query = (element.RFC) ? query + '&rfc=' + element.RFC : query + '&rfc=';
+        query = query + 'obtenerSociedades=1&idPerito=' + element.IDPERSONA;
+        // query = (element.RFC) ? query + '&rfc=' + element.RFC : query + '&rfc=';
 
-        query = (element.CURP) ? query + '&curp=' + element.CURP : query + '&curp=';
+        // query = (element.CURP) ? query + '&curp=' + element.CURP : query + '&curp=';
 
-        query = (element.CLAVEIFE) ? query + '&claveife=' + element.CLAVEIFE : query + '&claveife=';
+        // query = (element.CLAVEIFE) ? query + '&claveife=' + element.CLAVEIFE : query + '&claveife=';
 
         console.log(this.endpoint + busquedaDatos + '?' + query);
         this.loading = true;
@@ -800,10 +804,12 @@ export class DialogsValidacionPerito {
                     this.loading = false;
                     console.log("RES DEL ELEMENT BUSQUEDA PERITO 222!!!");
                     console.log(res);
-                    if(res.length > 0){
-                        this.dialogRef.close();
-                        this.validaDialog(res);
-                    }else{
+                    if(res.dsPeritos){
+                        if(res.dsPeritos.length > 0){
+                            this.dialogRef.close();
+                            this.validaDialog(res.dsPeritos);
+                        }
+                    }else if(res.mensaje){
                         //this.guardaPerito();
                         console.log("ACA EL RES DEL EXISTE PERITO")
                         console.log(element);
@@ -843,8 +849,8 @@ export class DialogsValidacionPerito {
         dialogRef.afterClosed().subscribe(result => {
             if(result === true){
                 console.log("EL ID PERITO DEL MENSAJE CHECK");
-                console.log(res[0].idperito);
-                let navegar = '/main/editar-peritos/' + res[0].idperito;
+                console.log(res[0].IDPERITO);
+                let navegar = '/main/editar-peritos/' + res[0].IDPERITO;
                 this.router.navigate([navegar]);
             }
         });
