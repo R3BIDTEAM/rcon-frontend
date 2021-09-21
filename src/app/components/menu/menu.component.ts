@@ -49,85 +49,12 @@ export class MenuComponent implements OnInit {
     pathCambio: void;
     route: string;
   
-
+    step: string;
+    step2: string;
+    step3: string;
+    step4: string;
     constructor(private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute, private location:Location) {
 
-
-        window.onload = function() {
-            if (window.location.href.indexOf("ver-contribuyente") > -1) {
-                document.getElementById('contribuyente2').classList.add('provisional');
-            }
-            if (window.location.href.indexOf("editar-contribuyente") > -1) {
-                document.getElementById('contribuyente3').classList.add('provisional');
-            }
-            if (window.location.href.indexOf("ver-notario") > -1) {
-                document.getElementById('notario2').classList.add('provisional');
-            }
-            if (window.location.href.indexOf("editar-notario") > -1) {
-                document.getElementById('notario3').classList.add('provisional');
-            }
-            if (window.location.href.indexOf("ver-peritos") > -1) {
-                document.getElementById('perito2').classList.add('provisional');
-            }
-            if (window.location.href.indexOf("editar-peritos") > -1) {
-                document.getElementById('perito3').classList.add('provisional');
-            }
-            if (window.location.href.indexOf("ver-sociedad") > -1) {
-                document.getElementById('sociedad2').classList.add('provisional');
-            }
-            if (window.location.href.indexOf("editar-sociedad") > -1) {
-                document.getElementById('sociedad3').classList.add('provisional');
-            }
-        };
-
-
-        this.pathCambio=location.onUrlChange((val) => {
-            var elementc2 = document.getElementById('contribuyente2');
-            var elementc3 = document.getElementById('contribuyente3');
-            var elementn2 = document.getElementById('notario2');
-            var elementn3 = document.getElementById('notario3');
-            var elementp2 = document.getElementById('perito2');
-            var elementp3 = document.getElementById('perito3');
-            var elements2 = document.getElementById('sociedad2');
-            var elements3 = document.getElementById('sociedad3');
-            
-            elementc2.classList.remove('provisional');
-            elementc3.classList.remove('provisional');
-            elementn2.classList.remove('provisional');
-            elementn3.classList.remove('provisional');
-            elementp2.classList.remove('provisional');
-            elementp3.classList.remove('provisional');
-            elements2.classList.remove('provisional');
-            elements3.classList.remove('provisional');
-
-            var posicion = val.split("/");
-            console.log(posicion[2]);
-
-                if(posicion[2] == 'ver-contribuyente'){
-                    elementc2.classList.add('provisional');
-                }
-                if(posicion[2] == 'editar-contribuyente'){
-                    elementc3.classList.add('provisional');
-                }
-                if(posicion[2] == 'ver-notario'){
-                    elementn2.classList.add('provisional');
-                }
-                if(posicion[2] == 'editar-notario'){
-                    elementn3.classList.add('provisional');
-                }
-                if(posicion[2] == 'ver-peritos'){
-                    elementp2.classList.add('provisional');
-                }
-                if(posicion[2] == 'editar-peritos'){
-                    elementp3.classList.add('provisional');
-                }
-                if(posicion[2] == 'ver-sociedad'){
-                    elements2.classList.add('provisional');
-                }
-                if(posicion[2] == 'editar-sociedad'){
-                    elements3.classList.add('provisional');
-                }
-        })
 
     }
 
@@ -160,11 +87,32 @@ export class MenuComponent implements OnInit {
             break;
         }
 
-        if (window.location.href.indexOf("editar-notario") > -1) {
-            var elementn3 = document.getElementById('#notario2');
-            // elementn3.classList.add('provisional');
-            // elementn3.setAttribute("style", "color:red; border: 1px solid blue;");
+    }
+
+    elactive(ruta){
+        if(ruta == '/main/alta-contribuyente' || ruta == '/main/consulta-contribuyente' || ruta == '/main/edicion-contribuyente'){
+            this.step = ruta;
+            this.step2 = null;
+            this.step3 = null;
+            this.step4 = null;
+        }else if(ruta == '/main/alta-notario' || ruta == '/main/consulta-notario' || ruta == '/main/edicion-notario'){
+            this.step = null;
+            this.step2 = ruta;
+            this.step3 = null;
+            this.step4 = null;
+        }else if(ruta == '/main/alta-peritos' || ruta == '/main/consulta-peritos' || ruta == '/main/edicion-peritos'){
+            this.step = null;
+            this.step2 = null;
+            this.step3 = ruta;
+            this.step4 = null;
+        }else if(ruta == '/main/alta-sociedad' || ruta == '/main/consulta-sociedad' || ruta == '/main/edicion-sociedad'){
+            this.step = null;
+            this.step2 = null;
+            this.step3 = null;
+            this.step4 = ruta;
         }
+        console.log("falg");
+        console.log(ruta);
     }
 
 }

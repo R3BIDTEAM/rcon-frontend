@@ -1,0 +1,14 @@
+.verde{
+    background-color: #1b5533;
+    color: white;
+}
+
+.verde:hover{
+    background-color: #00b140;
+    color: white;
+}
+
+.li_menu:hover{
+    background-color: #00b140;
+    color: white;
+}
