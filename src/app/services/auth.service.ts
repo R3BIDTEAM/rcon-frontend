@@ -40,8 +40,8 @@ export class AuthService {
     localStorage.removeItem('session_' + environment.appName);
     this.dialogRef.closeAll();
     sessionStorage.clear();
-    //this.router.navigate([environment.baseHref]);
-    document.location.href = "/";
+    this.router.navigate([environment.baseHref]);
+    //document.location.href = "/";
   }
 
   public isAuthenticated(): boolean {
