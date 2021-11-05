@@ -6,9 +6,19 @@
     <div class="borde" *ngIf="!loading">
         <mat-card-header style="padding-left: 7%;">
             <mat-card-title style="margin-top: 10px;">Datos perito</mat-card-title>
-            <button mat-icon-button color="primary" (click)="openDialogPerito()" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente" [disabled]="inserto">
-                <mat-icon>search</mat-icon>
-            </button>
+                <!-- <button mat-icon-button color="primary" (click)="openDialogPerito()" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente" [disabled]="inserto">
+                    <mat-icon>search</mat-icon>
+                </button> -->
+            <div id="BotonBuscar" Style="display: block">
+                <button mat-icon-button color="primary" (click)="this.peritoPersonaFormGroup.reset(); openDialogPerito();" aria-label="Buscar Contribuyente" matTooltip="Buscar Contribuyente" [disabled]="inserto">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </div>                    
+            <div id="BotonBorrar" Style="display: none">
+                <button mat-icon-button color="primary" (click)="this.peritoPersonaFormGroup.reset();" aria-label="Borrar" matTooltip="Borrar">
+                    <mat-icon>delete_outline</mat-icon>
+                </button>    
+            </div> 
         </mat-card-header>
         <hr>
         <br>

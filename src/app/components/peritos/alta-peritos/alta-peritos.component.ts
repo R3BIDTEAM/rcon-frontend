@@ -431,6 +431,18 @@ export class AltaPeritosComponent implements OnInit {
         });
     }
 
+    cambiaBoton(){
+        var x = document.getElementById("BotonBorrar");
+        var b = document.getElementById("BotonBuscar");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+
+        b.style.display = "none";    
+    }
+
     puebaform(result){
         
         this.buscadoEscrito = 1;
@@ -697,6 +709,16 @@ export class DialogAltaBusca {
         this.datoPeritoPersona.email = element.EMAIL;
         this.datoPeritoPersona.buscadoEscrito = 1;
         this.btnDisabled = false;
+
+        var x = document.getElementById("BotonBorrar");
+        var b = document.getElementById("BotonBuscar");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+
+        b.style.display = "none";
     }
 }
 
