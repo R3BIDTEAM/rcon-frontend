@@ -141,7 +141,7 @@ export class AltaContribuyenteComponent implements OnInit {
     idChs;
     // tipoPersona = 'F';
     fisicaFormGroup: FormGroup;
-    moralFormGroup: FormGroup;
+    moralFormGroup: FormGroup;    
     control = new FormControl('', trimValidator);
     displayedColumnsRepdo: string[] = ['representacion','texto','caducidad'];
     displayedColumnsDom: string[] = ['tipoDir','direccion'];
@@ -230,7 +230,7 @@ export class AltaContribuyenteComponent implements OnInit {
             fechaInicioOperacion: [null, []],
             idMotivo: ['', []],
             fechaCambio: [null, []],
-        });
+        });    
 
         this.getDataDocumentos();
     }
@@ -2987,6 +2987,7 @@ export class DialogPersonaAltaC {
     loading = false;
     dataSource = [];
     dataPersonas = [];
+    //buscaPersonaFormGroup: FormGroup;
     displayedColumns: string[] = ['nombre', 'datos_identificativos', 'select'];
     httpOptions;
     filtros: Filtros = {} as Filtros;
@@ -3004,6 +3005,7 @@ export class DialogPersonaAltaC {
     constructor(
       private auth: AuthService,
       private http: HttpClient,
+      //private _formBuilder: FormBuilder,
       public dialogRef: MatDialogRef<DialogPersonaAltaC>,
       @Inject(MAT_DIALOG_DATA) public data: any
     ) {
@@ -3020,6 +3022,21 @@ export class DialogPersonaAltaC {
         console.log(this.tipoPersona);
         this.getDataDocumentos();
     }
+
+    /*ngOnInit(): void {
+        this.httpOptions = {
+        headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            Authorization: this.auth.getSession().token
+            })
+        };
+
+        this.buscaPersonaFormGroup = this._formBuilder.group({
+            nombre: [null, [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],    
+        });
+
+        this.getDataDocumentos();
+    }*/
 
     /** 
     * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos

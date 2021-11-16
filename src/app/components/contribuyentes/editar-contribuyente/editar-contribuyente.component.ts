@@ -4375,14 +4375,14 @@ export interface Persona {
     templateUrl: 'app-dialog-persona.html',
     styleUrls: ['./editar-contribuyente.component.css']
 })
-export class DialogPersonaC {
+export class DialogPersonaC{
     endpoint = environment.endpoint + 'registro/';
     pageSize = 15;
     pagina = 1;
     total = 0;
     loading = false;
     dataSource = [];
-    dataPersonas = [];
+    dataPersonas = [];    
     displayedColumns: string[] = ['nombre', 'datos_identificativos', 'select'];
     httpOptions;
     filtros: Filtros = {} as Filtros;
@@ -4399,7 +4399,7 @@ export class DialogPersonaC {
   
     constructor(
       private auth: AuthService,
-      private http: HttpClient,
+      private http: HttpClient,      
       public dialogRef: MatDialogRef<DialogPersonaC>,
       @Inject(MAT_DIALOG_DATA) public data: any
     ) {
@@ -4414,8 +4414,12 @@ export class DialogPersonaC {
         this.tipoPersona = data;
         console.log("aca el tipo person " + data);
         console.log(this.tipoPersona);
+
+        
+
         this.getDataDocumentos();
     }
+    
 
     /** 
     * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos

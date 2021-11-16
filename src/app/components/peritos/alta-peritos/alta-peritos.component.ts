@@ -440,7 +440,7 @@ export class AltaPeritosComponent implements OnInit {
             x.style.display = "none";
         }
 
-        b.style.display = "none";    
+        b.style.display = "block";    
     }
 
     puebaform(result){
@@ -721,6 +721,8 @@ export class DialogAltaBusca {
         b.style.display = "none";
     }
 }
+
+    
 
 ///////////////////////// VALIDACIÓN DEL PERITO ///////////////////////
 export interface DatosPeritoValida {

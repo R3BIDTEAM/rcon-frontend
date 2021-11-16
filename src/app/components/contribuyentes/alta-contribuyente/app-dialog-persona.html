@@ -1,6 +1,6 @@
 <h1 mat-dialog-title class="verde-cdmx">Buscador de Personas</h1>
 <div mat-dialog-content>
-    <form #formDialog="ngForm">
+    <form  #formDialog="ngForm">
         <div class="row">
             <mat-form-field appearance="fill" class="col-6">
                 <mat-label>Tipo de persona:</mat-label>
@@ -14,31 +14,33 @@
             <div class="row">
                 <mat-form-field appearance="outline" class="col-6">
                     <mat-label>Apellido Paterno:</mat-label>
-                    <input matInput [(ngModel)]="filtros.apaterno" name="apaterno" (keyup)="clearInputsIdentNoIdent(false)" style="text-transform: uppercase;">
+                    <input matInput [(ngModel)]="filtros.apaterno" name="apaterno" placeholder="Ingrese el apellido paterno" (keyup)="clearInputsIdentNoIdent(false)" placeholder="Ingrese el apellido paterno" style="text-transform: uppercase;">
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="col-6" style="margin-left: 0px;">
                     <mat-label>Apellido Materno:</mat-label>
-                    <input matInput [(ngModel)]="filtros.amaterno" name="amaterno" (keyup)="clearInputsIdentNoIdent(false)" style="text-transform: uppercase;">
+                    <input matInput [(ngModel)]="filtros.amaterno" name="amaterno" placeholder="Ingrese el apellido materno" (keyup)="clearInputsIdentNoIdent(false)" style="text-transform: uppercase;">
                 </mat-form-field>
             </div>
             <div class="row">
                 <mat-form-field appearance="outline" class="col-12">
                     <mat-label>Nombre:</mat-label>
-                    <input matInput [(ngModel)]="filtros.nombre" name="nombre" (keyup)="clearInputsIdentNoIdent(false)" style="text-transform: uppercase;">
+                    <input matInput [(ngModel)]="filtros.nombre" name="nombre" placeholder="Ingrese el nombre" (keyup)="clearInputsIdentNoIdent(false)" style="text-transform: uppercase;">
+                    <!-- <mat-error *ngIf="buscaPersonaFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
+                    <mat-error *ngIf="buscaPersonaFormGroup.controls.nombre.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error> -->
                 </mat-form-field>
             </div>
             <div class="row">
                 <mat-form-field appearance="outline" class="col-4">
                     <mat-label>RFC:</mat-label>
-                    <input matInput [(ngModel)]="filtros.rfc" name="rfc" (keyup)="clearInputsIdentNoIdent(true)" style="text-transform: uppercase;">
+                    <input matInput [(ngModel)]="filtros.rfc" name="rfc" placeholder="Ingrese el RFC" (keyup)="clearInputsIdentNoIdent(true)" style="text-transform: uppercase;">
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="col-4" style="margin-left: 0px;">
                     <mat-label>CURP:</mat-label>
-                    <input matInput [(ngModel)]="filtros.curp" name="curp" (keyup)="clearInputsIdentNoIdent(true)" style="text-transform: uppercase;">
+                    <input matInput [(ngModel)]="filtros.curp" name="curp" placeholder="Ingrese el CURP" (keyup)="clearInputsIdentNoIdent(true)" style="text-transform: uppercase;">
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="col-4" style="margin-left: 0px;">
                     <mat-label>INE:</mat-label>
-                    <input matInput [(ngModel)]="filtros.ine" name="ine" (keyup)="clearInputsIdentNoIdent(true)" style="text-transform: uppercase;">
+                    <input matInput [(ngModel)]="filtros.ine" name="ine" placeholder="Ingrese el INE" (keyup)="clearInputsIdentNoIdent(true)" style="text-transform: uppercase;">
                 </mat-form-field>
             </div>
             <div class="row">
@@ -52,7 +54,7 @@
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="col-8" style="margin-left: 0px;">
                     <mat-label>Identificación</mat-label>
-                    <input matInput [(ngModel)]="filtros.docIdent" name="docIdent" (keyup)="clearInputsIdentNoIdent(true)" style="text-transform: uppercase;">
+                    <input matInput [(ngModel)]="filtros.docIdent" name="docIdent" placeholder="Ingrese la identificación" (keyup)="clearInputsIdentNoIdent(true)" style="text-transform: uppercase;">
                 </mat-form-field>
             </div>
         </ng-container>
@@ -60,11 +62,11 @@
             <div class="row">
                 <mat-form-field appearance="outline" class="col-8">
                     <mat-label>Razón social:</mat-label>
-                    <input matInput [(ngModel)]="filtros.nombre" name="nombre" (keyup)="clearInputsIdentNoIdent(false)" style="text-transform: uppercase;">
+                    <input matInput [(ngModel)]="filtros.nombre" name="nombre" placeholder="Ingrese el nombre" (keyup)="clearInputsIdentNoIdent(false)" style="text-transform: uppercase;">
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="col-4">
                     <mat-label>RFC:</mat-label>
-                    <input matInput [(ngModel)]="filtros.rfc" name="rfc" (keyup)="clearInputsIdentNoIdent(true)" style="text-transform: uppercase;">
+                    <input matInput [(ngModel)]="filtros.rfc" name="rfc" placeholder="Ingrese el RFC" (keyup)="clearInputsIdentNoIdent(true)" style="text-transform: uppercase;">
                 </mat-form-field>
             </div>
         </ng-container>

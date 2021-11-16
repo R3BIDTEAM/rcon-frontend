@@ -15,7 +15,7 @@
                 </button>
             </div>                    
             <div id="BotonBorrar" Style="display: none">
-                <button mat-icon-button color="primary" (click)="this.peritoPersonaFormGroup.reset();" aria-label="Borrar" matTooltip="Borrar">
+                <button mat-icon-button color="primary" (click)="this.peritoPersonaFormGroup.reset(); cambiaBoton();" aria-label="Borrar" matTooltip="Borrar">
                     <mat-icon>delete_outline</mat-icon>
                 </button>    
             </div> 
