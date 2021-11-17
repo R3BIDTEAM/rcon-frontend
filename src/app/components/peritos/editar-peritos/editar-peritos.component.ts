@@ -3991,10 +3991,13 @@ export class DialogPersonaPeritos {
     @ViewChild('paginator') paginator: MatPaginator;
     loadingDocumentosIdentificativos
     dataDocumentos: DocumentosIdentificativos[] = [];
+    fisicaFormGroup: FormGroup;
+    moralFormGroup: FormGroup;
 
     constructor(
       private auth: AuthService,
       private http: HttpClient,
+      private _formBuilder: FormBuilder,
       public dialogRef: MatDialogRef<DialogPersonaPeritos>,
       @Inject(MAT_DIALOG_DATA) public data: any
     ) {
@@ -4007,8 +4010,16 @@ export class DialogPersonaPeritos {
             })
         };
         this.tipoPersona = data;
-        console.log("aca el tipo person " + data);
-        console.log(this.tipoPersona);
+        
+        this.fisicaFormGroup = this._formBuilder.group({
+            rfc: [null, []],
+            curp: [null, []],
+        });
+
+        this.moralFormGroup = this._formBuilder.group({
+            rfc: [null, []],
+        });
+
         this.getDataDocumentos();
     }
 

@@ -2988,6 +2988,8 @@ export class DialogPersonaAltaC {
     dataSource = [];
     dataPersonas = [];
     //buscaPersonaFormGroup: FormGroup;
+    fisicaFormGroup: FormGroup;
+    moralFormGroup: FormGroup;
     displayedColumns: string[] = ['nombre', 'datos_identificativos', 'select'];
     httpOptions;
     filtros: Filtros = {} as Filtros;
@@ -3005,7 +3007,7 @@ export class DialogPersonaAltaC {
     constructor(
       private auth: AuthService,
       private http: HttpClient,
-      //private _formBuilder: FormBuilder,
+      private _formBuilder: FormBuilder,
       public dialogRef: MatDialogRef<DialogPersonaAltaC>,
       @Inject(MAT_DIALOG_DATA) public data: any
     ) {
@@ -3018,8 +3020,16 @@ export class DialogPersonaAltaC {
             })
         };
         this.tipoPersona = data;
-        console.log("aca el tipo person " + data);
-        console.log(this.tipoPersona);
+        
+        this.fisicaFormGroup = this._formBuilder.group({
+            rfc: [null, []],
+            curp: [null, []],
+        });
+
+        this.moralFormGroup = this._formBuilder.group({
+            rfc: [null, []],
+        });
+
         this.getDataDocumentos();
     }
 
