@@ -7,6 +7,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import * as moment from 'moment';
+//import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 
 export interface Filtros {
   apellido_paterno: string;
@@ -56,6 +58,7 @@ export class EdicionNotarioComponent implements OnInit {
   isBusqueda;
   queryParamFiltros;
   endpointBusqueda;
+  ediNotFormGroup: FormGroup;
   @ViewChild('paginator') paginator: MatPaginator;
   selectDisabled = false;
 
@@ -63,7 +66,8 @@ export class EdicionNotarioComponent implements OnInit {
     private http: HttpClient,
     private snackBar: MatSnackBar,
     private auth: AuthService,
-    private router: Router,
+    private router: Router,  
+    private _formBuilder: FormBuilder,
   ) { 
     
   }
@@ -76,6 +80,21 @@ export class EdicionNotarioComponent implements OnInit {
         Authorization: this.auth.getSession().token
       })
     };
+
+    this.ediNotFormGroup = this._formBuilder.group({
+      no_notario: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+      estado: [null, []],
+      apellido_paterno: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+      apellido_materno: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+      nombre: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+      rfc: [null, []],
+      curp: [null, []],
+      ine: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],      
+      numero_documento: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],     
+      celular: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+      email: ['', [Validators.email, Validators.pattern("^\\S{1}.{1,248}\\S{1}$"), Validators.required]],
+  });
+
     this.getDataEstados();
     this.getDataDocumentosIdentificativos();
   }

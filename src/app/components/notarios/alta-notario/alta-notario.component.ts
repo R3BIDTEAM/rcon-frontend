@@ -46,7 +46,7 @@ export interface DocumentosIdentificativos{
 
 export class AltaNotarioComponent implements OnInit {
     endpoint = environment.endpoint + 'registro/';
-    notarioFormGroup: FormGroup;
+    notarioFormGroup: FormGroup;    
     idestadoNg = '9';
     httpOptions;
     filtros: Filtros = {} as Filtros;
@@ -90,8 +90,8 @@ export class AltaNotarioComponent implements OnInit {
             fecha_defuncion: [null, []],
             celular: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             email: ['', [Validators.email, Validators.pattern("^\\S{1}.{1,248}\\S{1}$"), Validators.required]],
-        });
-        
+        });    
+
         this.getDataEstados();
         this.getDataDocumentosIdentificativos();
         
@@ -397,6 +397,7 @@ export class DialogBuscarNotarioAlta {
   // documentos: DocumentosIdentificativos = {} as DocumentosIdentificativos;
   documentos: DocumentosIdentificativos[] = [];
   loadingDocumentosIdentificativos = false;
+  notPersonaFormGroup: FormGroup;
   @ViewChild('paginator') paginator: MatPaginator;
 
   constructor(
@@ -405,6 +406,7 @@ export class DialogBuscarNotarioAlta {
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
     public dialog: MatDialog,
+    private _formBuilder: FormBuilder,
   ) { }
 
     ngOnInit(): void {
@@ -415,6 +417,23 @@ export class DialogBuscarNotarioAlta {
             })
         };
         this.getDataDocumentosIdentificativos();
+
+        this.notPersonaFormGroup = this._formBuilder.group({
+            no_notario: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            estado: [null, []],
+            apellido_paterno: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            apellido_materno: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            nombre: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            rfc: [null, []],
+            curp: [null, []],
+            ine: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            otro_documento: [null, []],
+            numero_documento: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            fecha_nacimiento: [null, []],
+            fecha_defuncion: [null, []],
+            celular: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+            email: ['', [Validators.email, Validators.pattern("^\\S{1}.{1,248}\\S{1}$"), Validators.required]],
+        });
     }
 
     /** 

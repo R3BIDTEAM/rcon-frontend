@@ -6,6 +6,7 @@ import { AuthService } from '@serv/auth.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
+import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import * as moment from 'moment';
 
 export interface Filtros {
@@ -58,12 +59,14 @@ export class ConsultaNotarioComponent implements OnInit {
   endpointBusqueda;
   @ViewChild('paginator') paginator: MatPaginator;
   selectDisabled = false;
+  contribuyenteFormGroup: FormGroup;
 
   constructor(
     private http: HttpClient,
     private snackBar: MatSnackBar,
     private auth: AuthService,
     private router: Router,
+    private _formBuilder: FormBuilder,
   ) { 
     
   }
@@ -78,6 +81,20 @@ export class ConsultaNotarioComponent implements OnInit {
     };
     this.getDataEstados();
     this.getDataDocumentosIdentificativos();
+    
+    this.contribuyenteFormGroup = this._formBuilder.group({
+      tipo_persona: ['F', Validators.required],
+      nombre: [null,[Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+      rfc: [null],
+      apaterno: [null,[Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+      amaterno: [null,[Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+      curp: [null],
+      ine: [null,[Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+      iddocumentoidentificativo: [null],
+      documentoidentificativo: [null]
+    });
+
+
   }
 
   /** 

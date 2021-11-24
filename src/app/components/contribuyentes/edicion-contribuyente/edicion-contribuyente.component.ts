@@ -65,12 +65,12 @@ export class EdicionContribuyenteComponent implements OnInit {
 
     this.contribuyenteFormGroup = this._formBuilder.group({
       tipo_persona: ['F', Validators.required],
-      nombre: [null],
+      nombre: [null, [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
       rfc: [null],
-      apaterno: [null],
-      amaterno: [null],
+      apaterno: [null, [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+      amaterno: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],      
       curp: [null],
-      ine: [null],
+      ine: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
       iddocumentoidentificativo: [null],
       documentoidentificativo: [null]
     });

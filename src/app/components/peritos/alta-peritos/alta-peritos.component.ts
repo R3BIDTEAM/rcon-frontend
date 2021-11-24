@@ -522,6 +522,7 @@ export class DialogAltaBusca {
     optionPeritoPersona;
     idperito: number;
     btnDisabled = true;
+    personaFormGroup: FormGroup;
     datoPeritoPersona: DatosPeritoPersona = {} as DatosPeritoPersona;
     @ViewChild('paginator') paginator: MatPaginator;
     loadingDocumentos;
@@ -542,6 +543,23 @@ export class DialogAltaBusca {
             };
             this.getDataDocumentos();
         }
+
+        ngOnInit(): void {
+            
+            this.personaFormGroup = this._formBuilder.group({
+                appaterno: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+                apmaterno: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+                nombre: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+                rfc: [null, []],
+                curp: [null, []],
+                ine: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+                identificacion: [null],    
+                registro: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]]
+            });
+            
+        }
+
+        
 
     /**
      * Valida que exista un dato para activar el bóton de búsqueda.
@@ -601,6 +619,14 @@ export class DialogAltaBusca {
      * Reinicia los valores del paginado.
      */
     cleanBusca(): void{
+        this.personaFormGroup.controls['appaterno'].setValue(null);
+        this.personaFormGroup.controls['apmaterno'].setValue(null);
+        this.personaFormGroup.controls['nombre'].setValue(null);
+        this.personaFormGroup.controls['rfc'].setValue(null);
+        this.personaFormGroup.controls['curp'].setValue(null);
+        this.personaFormGroup.controls['ine'].setValue(null);
+        this.personaFormGroup.controls['registro'].setValue(null);
+        this.personaFormGroup.controls['idedato'].setValue(null);
         this.pagina = 1;
         this.total = 0;
         this.dataSource = [];

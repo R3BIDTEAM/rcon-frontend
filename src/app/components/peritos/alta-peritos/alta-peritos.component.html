@@ -23,7 +23,7 @@
         <hr>
         <br>
         <mat-card-header style="padding-left: 7%;">
-            <mat-card-title>Datos persona física</mat-card-title>
+            <mat-card-title>Alta de Peritos</mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <form [formGroup]="peritoPersonaFormGroup">
@@ -66,7 +66,7 @@
                         <mat-label>CURP: **</mat-label>
                         <input matInput placeholder="Ingrese CURP" [(ngModel)]="datoPeritos.curp" formControlName="curp" [readonly]="inserto" [required]="isRequired" (keyup)="changeRequired()" onkeyup="this.value = this.value.toUpperCase();" style="text-transform: uppercase;" pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$" maxlength="18">
                         <mat-error *ngIf="peritoPersonaFormGroup.controls.curp.errors?.required">Requerido</mat-error>
-                        <mat-error *ngIf="peritoPersonaFormGroup.controls.curp.errors?.pattern">CURP no valido</mat-error>
+                        <mat-error *ngIf="peritoPersonaFormGroup.controls.curp.errors?.pattern">El campo CURP debe contener 4 letras mayúsculas, 6 números, H o M, 5 letras mayúsculas, 1 alfanumérico y 1 número.</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="row">

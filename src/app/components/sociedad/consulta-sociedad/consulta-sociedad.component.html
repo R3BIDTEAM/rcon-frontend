@@ -1,6 +1,6 @@
 <mat-card>
     <div class="borde">
-        <h1 class="titulo-cdmx" style="margin-top: 15px; margin-bottom: 20px;">Búsqueda de sociedad (Consulta)</h1>
+        <h1 class="titulo-cdmx" style="margin-top: 15px; margin-bottom: 20px;">Consulta de Sociedades</h1>
         <!-- <mat-card-header>
             <mat-card-title>Búsqueda de sociedad (Consulta)</mat-card-title>
         </mat-card-header> -->
@@ -34,13 +34,29 @@
                         <!-- Fin de RFC CRUP -->
 
                     <div class="row">
-                        <div class="col-md-2 offset-md-5">
+                        <!-- <div class="col-md-2 offset-md-5">
                             <div class="d-flex flex-row-reverse">
                                 <button mat-icon-button color="primary" aria-label="Limpiar Filtros" matTooltip="Limpiar Filtros" (click)="clean()">
                                     <mat-icon>clear</mat-icon>
                                 </button>
                                 <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getSociedad()" [disabled]="!search">
                                     <mat-icon>search</mat-icon>
+                                </button>
+                            </div>
+                        </div> -->
+
+                        <div class="col-md-2 offset-md-8" style="padding-left: 0px;">
+                            <div class="d-flex flex-row-reverse">                       
+                                <button mat-stroked-button color="accent" aria-label="Limpiar Filtros" matTooltip="Limpiar Filtros" (click)="clean()">
+                                    Limpiar <mat-icon style="display: inherit; width: 15px;">delete</mat-icon>
+                                </button>
+                                                        
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="padding-left: 0px;">
+                            <div class="d-flex flex-row-reverse">                       
+                                <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getSociedad()" [disabled]="!search">
+                                    Buscar
                                 </button>
                             </div>
                         </div>

@@ -12,6 +12,10 @@ input,textarea{text-transform: uppercase;}
     padding-right: 10px;
 }
 
+.mat-error {
+    font-size: 8px;
+}
+
 /* ::ng-deep .notario2 {
     background-color: #00A447!important;
     color: #FFF !important;

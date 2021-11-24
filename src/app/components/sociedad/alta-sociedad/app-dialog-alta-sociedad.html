@@ -1,37 +1,55 @@
 <h1 mat-dialog-title class="verde-cdmx">Búsqueda de personas morales</h1>
 <br>
-<div mat-dialog-content>
+<div mat-dialog-content (keydown.enter) = "getSociedad()">
     <mat-card-content>
-        <!-- Búsqueda por nombre -->
-        <div class="row">
-            <mat-form-field appearance="outline" class="col-6">
-                <mat-label>Razón Social</mat-label>
-                <input matInput [(ngModel)]="razonSocial" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)" placeholder="Ingrese la razón social" style="text-transform: uppercase;" maxlength="250">
-                <mat-error></mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="col-6">
-                <mat-label>RFC</mat-label>
-                <input matInput [(ngModel)]="rfc" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" placeholder="Ingrese el RFC" style="text-transform: uppercase;" maxlength="12">
-                <mat-error></mat-error>
-            </mat-form-field>
-        </div>
-        
-        <!-- Fin de nombre -->
-
-        <!-- Búsqueda por RFC CRUP -->
-        <div class="row">
+        <!-- <form [formGroup]="personaFormGroup"> -->
+            <!-- Búsqueda por nombre -->
+            <div class="row">
+                <mat-form-field appearance="outline" class="col-6">
+                    <mat-label>Razón Social</mat-label>
+                    <input matInput [(ngModel)]="razonSocial" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)" placeholder="Ingrese la razón social" style="text-transform: uppercase;" maxlength="250">
+                    <mat-error></mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-6">
+                    <mat-label>RFC</mat-label>
+                    <input matInput [(ngModel)]="rfc" [required]="true" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" placeholder="Ingrese el RFC" style="text-transform: uppercase;" maxlength="12">
+                    <mat-error></mat-error>
+                </mat-form-field>
+            </div>
             
-        </div>
-        <!-- Fin de RFC -->
+            <!-- Fin de nombre -->
+
+            <!-- Búsqueda por RFC CRUP -->
+            <div class="row">
+                
+            </div>
+            <!-- Fin de RFC -->
+        <!-- </form> -->
 
         <div class="row">
-            <div class="col-md-2 offset-md-5">
+            <!-- <div class="col-md-2 offset-md-5">
                 <div class="d-flex flex-row-reverse">
                     <button mat-icon-button color="primary" aria-label="Limpiar Filtros" matTooltip="Limpiar Filtros" (click)="clean()">
                         <mat-icon>clear</mat-icon>
                     </button>
                     <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getSociedad()" [disabled]="!search">
                         <mat-icon>search</mat-icon>
+                    </button>
+                </div>
+            </div> -->
+
+            <div class="col-md-2 offset-md-8" style="padding-left: 0px;">
+                <div class="d-flex flex-row-reverse">                       
+                    <button mat-stroked-button color="accent" aria-label="Limpiar Filtros" matTooltip="Limpiar Filtros" (click)="clean()">
+                        Limpiar <mat-icon style="display: inherit; width: 15px;">delete</mat-icon>
+                    </button>
+                                            
+                </div>
+            </div>
+            <div class="col-md-2" style="padding-left: 0px;">
+                <div class="d-flex flex-row-reverse">                       
+                    <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getSociedad()" [disabled]="!search">
+                        Buscar
                     </button>
                 </div>
             </div>

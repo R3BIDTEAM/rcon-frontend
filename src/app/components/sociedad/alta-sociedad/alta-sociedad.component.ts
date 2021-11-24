@@ -19,7 +19,7 @@ import { DialogDuplicadosComponent, DialogsMensaje } from '@comp/dialog-duplicad
 export class AltaSociedadComponent implements OnInit {
     endpoint = environment.endpoint + 'registro/insertarSociedad';
     endpointPrevia = environment.endpoint + 'registro/';
-    sociedadFormGroup: FormGroup;
+    sociedadFormGroup: FormGroup;    
     httpOptions;
     razonSocial;
     rfc;
@@ -89,11 +89,11 @@ export class AltaSociedadComponent implements OnInit {
         this.sociedadFormGroup.controls['fecha_alta'].setValue(null);
         this.sociedadFormGroup.controls['fecha_baja'].setValue(null);
         this.sociedadFormGroup.controls['email'].setValue(null);
-        this.sociedadFormGroup.controls['login'].setValue(null);
+        this.sociedadFormGroup.controls['login'].setValue(null);    
         this.inserto = false;
         this.btnDisabled = true;
         this.buscadoEscrito = 0;
-    }
+    }    
 
     /**
      * Consulta si existe un registro con los mismos datos que se están ingresando para evitar la duplicidad,
@@ -319,6 +319,7 @@ export class DialogSociedad {
     registro;
     search;
     isIdentificativo;
+    personaFormGroup: FormGroup;
     sociedadDialog: SociedadDialog = {} as SociedadDialog;
     @ViewChild('paginator') paginator: MatPaginator;
 
@@ -354,7 +355,10 @@ export class DialogSociedad {
     /**
      * Reinicia los valores del paginado.
      */
-    clean(): void{
+     clean(): void{
+        console.log("ENTREEEEE EN CLEAN");
+        this.razonSocial = null;
+        this.rfc = null;
         this.loading = false;
         this.pagina = 1;
         this.total = 0;
@@ -362,6 +366,12 @@ export class DialogSociedad {
         this.dataSource = [];
         this.dataPaginate;
     }
+
+    /*cleanPersona(): void{
+        this.personaFormGroup.controls['razonSocial'].setValue(null);
+        this.personaFormGroup.controls['rfc'].setValue(null);
+        
+    }*/
 
     /**
      * Valida que exista un dato para activar el bóton de búsqueda.

@@ -246,12 +246,12 @@ export class EditarContribuyenteComponent implements OnInit {
     ngOnInit(): void {
 
         this.fisicaFormGroup = this._formBuilder.group({
-            nombre: [null,  [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            nombre: [null,  []],
             apepaterno: [null, [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             apematerno: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             rfc: [null, []],
             curp: [null, []],
-            ine: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            ine: [null, []],
             idDocIdent: ['', []],
             docIdent: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             fecha_naci: [null, []],

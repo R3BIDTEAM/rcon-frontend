@@ -5,13 +5,15 @@
             <mat-card-title>Búsqueda de peritos (Consulta)</mat-card-title>
         </mat-card-header> -->
         <mat-card-content>
+            <form [formGroup]="consPeritoFormGroup">
                 <!-- Búsqueda por nombre -->
                 <div class="row">
                     <div class="col-1 text-center">
                     </div>
                         <mat-form-field appearance="outline" class="col-5">
                             <mat-label>Apellido Paterno</mat-label>
-                            <input matInput [(ngModel)]="appaterno" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)" (keydown.enter)="getPerito()" placeholder="Ingrese Apellido Paterno" style="text-transform: uppercase;" maxlength="250">
+                            <input matInput [(ngModel)]="appaterno" formControlName="appaterno" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)" (keydown.enter)="getPerito()" placeholder="Ingrese Apellido Paterno" style="text-transform: uppercase;" maxlength="250">
+                            <mat-error *ngIf="consPeritoFormGroup.controls.appaterno.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
                         </mat-form-field>
                 </div>
                 <div class="row">
@@ -19,7 +21,9 @@
                     </div>
                         <mat-form-field appearance="outline" class="col-5">
                             <mat-label>Apellido Materno</mat-label>
-                            <input matInput [(ngModel)]="apmaterno" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)" (keydown.enter)="getPerito()" placeholder="Ingrese Apellido Materno" style="text-transform: uppercase;" maxlength="250">
+                            <input matInput [(ngModel)]="apmaterno" formControlName="apmaterno" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)" (keydown.enter)="getPerito()" placeholder="Ingrese Apellido Materno" style="text-transform: uppercase;" maxlength="250">
+                            <mat-error *ngIf="consPeritoFormGroup.controls.apmaterno.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
+                            
                         </mat-form-field>
                 </div>
                 <div class="row">
@@ -27,7 +31,8 @@
                     </div>
                         <mat-form-field appearance="outline" class="col-5">
                             <mat-label>Nombre</mat-label>
-                            <input matInput [(ngModel)]="nombre" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)" (keydown.enter)="getPerito()" placeholder="Ingrese Nombre" style="text-transform: uppercase;" maxlength="250">
+                            <input matInput [(ngModel)]="nombre" formControlName="nombre" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(false)" (keydown.enter)="getPerito()" placeholder="Ingrese Nombre" style="text-transform: uppercase;" maxlength="250">
+                            <mat-error *ngIf="consPeritoFormGroup.controls.nombre.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
                         </mat-form-field>
                 </div>
                 <!-- Fin de nombre -->
@@ -38,11 +43,13 @@
                     </div>
                         <mat-form-field appearance="outline" class="col-5">
                             <mat-label>RFC</mat-label>
-                            <input matInput [(ngModel)]="rfc" onkeyup="this.value = this.value.toUpperCase();" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" (keydown.enter)="getPerito()" placeholder="Ingrese RFC" style="text-transform: uppercase;" maxlength="13">
+                            <input matInput [(ngModel)]="rfc" formControlName="rfc" onkeyup="this.value = this.value.toUpperCase();" (ngModelChange)="validateSearch()" pattern="^([A-ZÑ&]{4})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" (keyup)="clearInputsIdentNoIdent(true)" (keydown.enter)="getPerito()" placeholder="Ingrese RFC" style="text-transform: uppercase;" maxlength="13">
+                            <mat-error *ngIf="consPeritoFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 4 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
                         </mat-form-field>
                         <mat-form-field appearance="outline" class="col-5">
                             <mat-label>CURP</mat-label>
-                            <input matInput [(ngModel)]="curp" onkeyup="this.value = this.value.toUpperCase();" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" (keydown.enter)="getPerito()" placeholder="Ingrese CURP" style="text-transform: uppercase;" maxlength="18">
+                            <input matInput [(ngModel)]="curp" formControlName="curp" onkeyup="this.value = this.value.toUpperCase();" (ngModelChange)="validateSearch()" pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$" (keyup)="clearInputsIdentNoIdent(true)" (keydown.enter)="getPerito()" placeholder="Ingrese CURP" style="text-transform: uppercase;" maxlength="18">
+                            <mat-error *ngIf="consPeritoFormGroup.controls.curp.errors?.pattern">El campo CURP debe contener 4 letras mayúsculas, 6 números, H o M, 5 letras mayúsculas, 1 alfanumérico y 1 número.</mat-error>
                         </mat-form-field>
                 </div>
                 <!-- Fin de RFC CRUP -->
@@ -53,11 +60,13 @@
                     </div>
                         <mat-form-field appearance="outline" class="col-5">
                             <mat-label>INE</mat-label>
-                            <input matInput [(ngModel)]="ine" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" (keydown.enter)="getPerito()" placeholder="Ingrese INE" style="text-transform: uppercase;" maxlength="250">
+                            <input matInput [(ngModel)]="ine" formControlName="ine" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" (keydown.enter)="getPerito()" placeholder="Ingrese INE" style="text-transform: uppercase;" maxlength="250">
+                            <mat-error *ngIf="consPeritoFormGroup.controls.ine.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
                         </mat-form-field>
                         <mat-form-field appearance="outline" class="col-5">
                             <mat-label>Registro</mat-label>
-                            <input matInput [(ngModel)]="registro" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" (keydown.enter)="getPerito()" placeholder="Ingrese Registro" style="text-transform: uppercase;" maxlength="250">
+                            <input matInput [(ngModel)]="registro" formControlName="registro" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" (keydown.enter)="getPerito()" placeholder="Ingrese Registro" style="text-transform: uppercase;" maxlength="250">
+                            <mat-error *ngIf="consPeritoFormGroup.controls.registro.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
                         </mat-form-field>                    
                 </div>
                 <!-- Fin de OTROS -->
@@ -78,16 +87,28 @@
                         <input matInput [(ngModel)]="idedato" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" (keydown.enter)="getPerito()" style="text-transform: uppercase;" maxlength="250">
                     </mat-form-field>
                 </div>
-
+                </form>
             <div class="row">
-                <div class="col-md-2 offset-md-5">
+                <div class="col-md-2 offset-md-8" style="padding-left: 0px;">
                     <div class="d-flex flex-row-reverse">
                         
-                        <button mat-icon-button color="primary" aria-label="Limpiar Filtros" matTooltip="Limpiar Filtros" (click)="clean()">
+                        <!-- <button mat-icon-button color="primary" aria-label="Limpiar Filtros" matTooltip="Limpiar Filtros" (click)="clean()">
                             <mat-icon>clear</mat-icon>
                         </button>
                         <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getPerito()"  [disabled]="!search">
                             <mat-icon>search</mat-icon>
+                        </button> -->
+                        
+                        <button mat-stroked-button color="accent" aria-label="Limpiar Filtros" matTooltip="Limpiar Filtros" (click)="clean()">
+                            Limpiar <mat-icon style="display: inherit; width: 15px;">delete</mat-icon>
+                        </button>
+                                                
+                    </div>
+                </div>
+                <div class="col-md-2" style="padding-left: 0px;">
+                    <div class="d-flex flex-row-reverse">                       
+                        <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getPerito()"  [disabled]="!search">
+                            Buscar
                         </button>
                     </div>
                 </div>
