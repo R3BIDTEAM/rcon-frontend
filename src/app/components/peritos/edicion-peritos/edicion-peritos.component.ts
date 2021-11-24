@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { environment } from '@env/environment'
 import { AuthService } from '@serv/auth.service';
 import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 export interface DocumentosIdentificativos{
     id_documento: number;
@@ -42,6 +43,7 @@ export class EdicionPeritosComponent implements OnInit {
     panelDomicilio = false;
     panelDomPredial = false;
     panelBienes = false;
+    ediPeritoFormGroup: FormGroup;
     documentos: DocumentosIdentificativos[] = [];
     loadingDocumentosIdentificativos = false;
     @ViewChild('paginator') paginator: MatPaginator;
@@ -50,7 +52,8 @@ export class EdicionPeritosComponent implements OnInit {
         private http: HttpClient,
         private snackBar: MatSnackBar,
         private auth: AuthService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private _formBuilder: FormBuilder
     ) { }
 
     /**
@@ -63,6 +66,17 @@ export class EdicionPeritosComponent implements OnInit {
               Authorization: this.auth.getSession().token
             })
         };
+
+        this.ediPeritoFormGroup = this._formBuilder.group({
+            appaterno: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            apmaterno: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            nombre: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            rfc: [null, []],
+            curp: [null, []],
+            ine: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            identificacion: [null],    
+            registro: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]]    
+        });
 
         this.getDataDocumentosIdentificativos();
     }
