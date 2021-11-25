@@ -31,3 +31,7 @@ td, th {
 tr:nth-child(even) {
     background-color: #dddddd;
 }
+
+.mat-error {
+    font-size: 8px;
+}

@@ -6,6 +6,7 @@ import { environment } from '@env/environment'
 import { AuthService } from '@serv/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-consulta-sociedad',
@@ -27,13 +28,16 @@ export class ConsultaSociedadComponent implements OnInit {
     registro;
     search;
     isIdentificativo;
+    consSociedadFormGroup: FormGroup;
     @ViewChild('paginator') paginator: MatPaginator;
 
     constructor(
         private http: HttpClient,
         private snackBar: MatSnackBar,
         private auth: AuthService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private _formBuilder: FormBuilder
+        
     ) { }
 
     /**
@@ -46,6 +50,16 @@ export class ConsultaSociedadComponent implements OnInit {
               Authorization: this.auth.getSession().token
             })
         };
+
+        this.consSociedadFormGroup = this._formBuilder.group({
+            razonSocial: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            rfc: ['', [Validators.required]],
+            registro: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            fecha_alta: [null],
+            fecha_baja: [null],
+            email: ['', [Validators.email, Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            login: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+          });
     }
 
     /**

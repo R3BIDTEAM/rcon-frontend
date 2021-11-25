@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatPaginator } from '@angular/material/paginator';
 import { environment } from '@env/environment'
 import { AuthService } from '@serv/auth.service';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-edicion-sociedad',
@@ -25,12 +26,14 @@ export class EdicionSociedadComponent implements OnInit {
     registro;
     search;
     isIdentificativo;
+    ediSociedadFormGroup: FormGroup;
     @ViewChild('paginator') paginator: MatPaginator;
 
     constructor(
         private http: HttpClient,
         private snackBar: MatSnackBar,
         private auth: AuthService,
+        private _formBuilder: FormBuilder
     ) { }
     
     /**
@@ -43,6 +46,12 @@ export class EdicionSociedadComponent implements OnInit {
               Authorization: this.auth.getSession().token
             })
         };
+
+        this.ediSociedadFormGroup = this._formBuilder.group({
+            razonSocial: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            rfc: ['', [Validators.required]],
+            registro: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],    
+          });
     }
 
     /**

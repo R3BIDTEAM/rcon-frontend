@@ -39,3 +39,7 @@ th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:
 th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type{
     padding-right: 0px!important;
 }
+
+.mat-error {
+    font-size: 8px;
+}
