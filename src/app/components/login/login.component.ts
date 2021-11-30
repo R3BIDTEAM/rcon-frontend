@@ -74,6 +74,9 @@ export class LoginComponent implements OnInit {
               this.router.navigate(['main']);
             },
             (error) => {
+              if(error.status == 406){
+                window.location.replace(error.error.redirect);
+              }
               this.loading = false;
               this.errMsj = error.error.mensaje;
             });

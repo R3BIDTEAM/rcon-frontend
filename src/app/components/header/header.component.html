@@ -10,7 +10,9 @@
     <img src="assets/img/logo_dependencia.png" height="60" alt="Secretaría de Administración y Finanzas">
   </a>
   <span class="spacer"></span>
-  <span class="d-none d-sm-none d-md-block" *ngIf="session.userData" style="font-size: medium; margin-right: 20px;">{{session.userData.nombre}} {{session.userData.primer_apellido}} {{session.userData.segundo_apellido}}</span>
+  <span class="d-none d-sm-none d-md-block" *ngIf="session.userData" style="font-size: medium; margin-right: 20px;">{{session.userData.nombre}} {{session.userData.primer_apellido}} {{session.userData.segundo_apellido}}
+    <span style="font-size: smaller; color: #dc3545; display: block; margin: 0; padding: 0;" *ngIf="session?.userData?.porExpirar"> {{session?.userData?.msjExpirar}}</span>
+    </span>
   <div *ngIf="isAuth" style="cursor: pointer;">
     
     <ngx-avatar [src]="session.userData.perfil_img" *ngIf="session.userData.perfil_img" [matMenuTriggerFor]="menu"></ngx-avatar>
