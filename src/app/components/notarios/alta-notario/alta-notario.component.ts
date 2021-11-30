@@ -538,7 +538,7 @@ export class DialogBuscarNotarioAlta {
             busquedaDatos = busquedaDatos + 'getIdentificativos';
         }else{
             //busquedaDatos = busquedaDatos + 'getNotariosByDatosPersonales';
-            busquedaDatos = busquedaDatos + 'getContribuyente';
+            busquedaDatos = busquedaDatos + 'getContribuyenteFisico';
         }
 
         query = query.substr(1);

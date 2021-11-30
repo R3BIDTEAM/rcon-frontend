@@ -34,7 +34,7 @@
                     <input matInput #curp formControlName="curp" [(ngModel)]="filtros.curp" placeholder="Ingrese CURP" (keyup)="clearInputsIdentNoIdent(true)" pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$" (ngModelChange)="validateSearch()" (keydown.enter)="getData()" onkeyup="this.value = this.value.toUpperCase();" maxlength="18">
                     <mat-error *ngIf="contribuyenteFormGroup.controls.curp.errors?.pattern">El campo CURP debe contener 4 letras mayúsculas, 6 números, H o M, 5 letras mayúsculas, 1 alfanumérico y 1 número.</mat-error>
                 </mat-form-field>
-            </div>
+            </div>            
     
             <div class="row">
                 <mat-form-field appearance="outline" style="width: 100%;" class="col-4 offset-1">
@@ -52,14 +52,15 @@
                 </mat-form-field>
                 <mat-form-field appearance="outline" style="width: 100%;" class="col-3" *ngIf="selectDisabled">
                     <mat-label>Número Documento</mat-label>
-                    <input matInput #numero_documento [(ngModel)]="filtros.numero_documento" [disabled]="filtros.otro_documento == '' || filtros.otro_documento == null" placeholder="Ingrese número de documento" (keydown.enter)="getData()" maxlength="250">
+                    <input matInput #numero_documento formControlName="numero_documento" [(ngModel)]="filtros.numero_documento" [disabled]="filtros.otro_documento == '' || filtros.otro_documento == null" placeholder="Ingrese número de documento" (keydown.enter)="getData()" maxlength="250">
                 </mat-form-field>
-            </div> 
-    
+            </div>
+
             <div class="row">
                 <mat-form-field appearance="outline" style="width: 100%;" class="col-5 offset-1">
                     <mat-label>No. Notario</mat-label>
-                    <input matInput #no_notario [(ngModel)]="filtros.no_notario" placeholder="Ingrese número de notario" (keyup)="clearInputsIdentNoIdent(true)" (ngModelChange)="validateSearch()" (keydown.enter)="getData()" maxlength="10">
+                    <input matInput #no_notario formControlName="no_notario" [(ngModel)]="filtros.no_notario" placeholder="Ingrese número de notario" (keyup)="clearInputsIdentNoIdent(true)" (ngModelChange)="validateSearch()" (keydown.enter)="getData()" maxlength="10">
+                    <mat-error *ngIf="contribuyenteFormGroup.controls.no_notario.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?)</mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill" style="width: 100%;" class="col-5">
                     <mat-label>Estado:</mat-label>
@@ -70,11 +71,29 @@
                     </mat-select>
                 </mat-form-field>
             </div>
+    
+            
         </form>
             <div class="row">
-                <div class="col-md-2 offset-md-9">
+                <!-- <div class="col-md-2 offset-md-9">
                     <div class="d-flex flex-row-reverse">
                         <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getData()" [disabled]="!search">
+                            Buscar
+                        </button>
+                    </div>
+                </div> -->
+
+                <div class="col-md-2 offset-md-8" style="padding-left: 0px;">
+                    <div class="d-flex flex-row-reverse">                                            
+                        <button mat-stroked-button color="accent" aria-label="Limpiar Filtros" matTooltip="Limpiar Filtros" (click)="clean()">
+                            Limpiar <mat-icon style="display: inherit; width: 15px;">delete</mat-icon>
+                        </button>
+                                                
+                    </div>
+                </div>
+                <div class="col-md-2" style="padding-left: 0px;">
+                    <div class="d-flex flex-row-reverse">                       
+                        <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getData()"  [disabled]="!search">
                             Buscar
                         </button>
                     </div>

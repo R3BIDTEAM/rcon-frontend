@@ -671,7 +671,7 @@ export class DialogAltaBusca {
             busquedaDatos = busquedaDatos + 'getIdentificativos';
             query = query + '&coincidenTodos=false';
         }else{
-            busquedaDatos = busquedaDatos + 'getContribuyente';
+            busquedaDatos = busquedaDatos + 'getContribuyenteFisico';
         }
 
         query = query.substr(1);

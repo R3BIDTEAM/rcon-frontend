@@ -91,11 +91,25 @@ export class ConsultaNotarioComponent implements OnInit {
       curp: [null],
       ine: [null,[Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
       iddocumentoidentificativo: [null],
-      documentoidentificativo: [null]
+      documentoidentificativo: [null],
+      no_notario: ['', [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]]
     });
 
 
   }
+
+  clean(): void{    
+    this.filtros.apellido_paterno = null;
+    this.filtros.apellido_materno = null;
+    this.filtros.nombre = null;
+    this.filtros.rfc = null;
+    this.filtros.curp = null;
+    this.filtros.ine = null;
+    this.filtros.numero_documento = null;
+    this.filtros.no_notario = null;
+    this.filtros.estado = null;
+   
+}
 
   /** 
   * Obtiene el nombre de los Estados para llenar el el Select de Estados

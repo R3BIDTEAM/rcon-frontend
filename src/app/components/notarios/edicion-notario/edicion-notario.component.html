@@ -71,9 +71,25 @@
         </div>
         </form>
         <div class="row">
-            <div class="col-md-2 offset-md-9">
+            <!-- <div class="col-md-2 offset-md-9">
                 <div class="d-flex flex-row-reverse">
                     <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getData()" [disabled]="!search">
+                        Buscar
+                    </button>
+                </div>
+            </div> -->
+
+            <div class="col-md-2 offset-md-8" style="padding-left: 0px;">
+                <div class="d-flex flex-row-reverse">                                            
+                    <button mat-stroked-button color="accent" aria-label="Limpiar Filtros" matTooltip="Limpiar Filtros" (click)="clean()">
+                        Limpiar <mat-icon style="display: inherit; width: 15px;">delete</mat-icon>
+                    </button>
+                                            
+                </div>
+            </div>
+            <div class="col-md-2" style="padding-left: 0px;">
+                <div class="d-flex flex-row-reverse">                       
+                    <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getData()"  [disabled]="!search">
                         Buscar
                     </button>
                 </div>
