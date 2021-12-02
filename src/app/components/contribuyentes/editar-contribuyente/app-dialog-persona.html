@@ -17,11 +17,11 @@
             <div class="row">
                 <mat-form-field appearance="outline" class="col-6">
                     <mat-label>Apellido Paterno:</mat-label>
-                    <input matInput [(ngModel)]="filtros.apaterno" name="apaterno" placeholder="Ingrese el apellido paterno" (keyup)="clearInputsIdentNoIdent(false)">
+                    <input matInput [(ngModel)]="filtros.apaterno" formControlName="apaterno" name="apaterno" placeholder="Ingrese el apellido paterno" (keyup)="clearInputsIdentNoIdent(false)">
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="col-6" style="margin-left: 0px!important;">
                     <mat-label>Apellido Materno:</mat-label>
-                    <input matInput [(ngModel)]="filtros.amaterno" name="amaterno" placeholder="Ingrese el apellido materno" (keyup)="clearInputsIdentNoIdent(false)">
+                    <input matInput [(ngModel)]="filtros.amaterno" formControlName="amaterno" name="amaterno" placeholder="Ingrese el apellido materno" (keyup)="clearInputsIdentNoIdent(false)">
                 </mat-form-field>
             </div>
             <div class="row">
@@ -51,7 +51,7 @@
             <div class="row">
                 <mat-form-field appearance="outline" class="col-4">
                     <mat-label>Identificación</mat-label>
-                    <mat-select [(value)]="filtros.idDocIdent" [class.spinner]="loadingDocumentos">
+                    <mat-select [(value)]="filtros.idDocIdent" [class.spinner]="loadingDocumentos" formControlName="idDocIdent">
                         <mat-option *ngFor="let documento of dataDocumentos" [value]="documento.IDDOCIDENTIF">
                             {{ documento.DESCRIPCION }}
                         </mat-option>
@@ -59,16 +59,17 @@
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="col-8" style="margin-left: 0px!important;">
                     <mat-label>Identificación</mat-label>
-                    <input matInput [(ngModel)]="filtros.docIdent" name="docIdent" placeholder="Ingrese la identificación" (keyup)="clearInputsIdentNoIdent(true)">
+                    <input matInput formControlName="docIdent" [(ngModel)]="filtros.docIdent" name="docIdent" placeholder="Ingrese la identificación" (keyup)="clearInputsIdentNoIdent(true)">
                 </mat-form-field>
             </div>
         </ng-container>
+    </form>
         <ng-container *ngIf="tipoPersona == 'M'">
             <form [formGroup]="moralFormGroup">
                 <div class="row">
                     <mat-form-field appearance="outline" class="col-8">
                         <mat-label>Razón social:</mat-label>
-                        <input matInput [(ngModel)]="filtros.nombre" name="nombre" placeholder="Ingrese el nombre" (keyup)="clearInputsIdentNoIdent(false)">
+                        <input matInput formControlName="nombre" [(ngModel)]="filtros.nombre" name="nombre" placeholder="Ingrese el nombre" (keyup)="clearInputsIdentNoIdent(false)">
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-4" style="margin-left: 0px!important;">
                         <mat-label>RFC:</mat-label>
@@ -89,7 +90,6 @@
                 </button>
             </div>
         </div>
-    </form>
     <ng-container *ngIf="isBusqueda">
         <div style="padding: 30px; text-align: center;" *ngIf="loading">
             <mat-spinner style="margin:0 auto;"></mat-spinner>

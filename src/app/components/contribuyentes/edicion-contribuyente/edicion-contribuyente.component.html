@@ -88,7 +88,7 @@
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-4">
                                 <mat-label>Apellido paterno / Razón Social:</mat-label>
-                                <input matInput formControlName="apaterno" (keyup)="clearInputsIdentNoIdent(false)" maxlength="250" [required]="isRequired" placeholder="Ingrese el apellido paterno" (keydown.enter)="getData()" style="text-transform: uppercase;">
+                                <input matInput formControlName="apaterno" (keyup)="clearInputsIdentNoIdent(false)" maxlength="250" placeholder="Ingrese el apellido paterno" (keydown.enter)="getData()" style="text-transform: uppercase;">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.apaterno.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.apaterno.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
                             </mat-form-field>
@@ -100,7 +100,7 @@
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-4">
                                 <mat-label>Nombre:</mat-label>
-                                <input matInput formControlName="nombre" (keyup)="clearInputsIdentNoIdent(false)" maxlength="250" [required]="isRequired" placeholder="Ingrese el nombre" (keydown.enter)="getData()" style="text-transform: uppercase;">
+                                <input matInput formControlName="nombre" (keyup)="clearInputsIdentNoIdent(false)" maxlength="250" placeholder="Ingrese el nombre" (keydown.enter)="getData()" style="text-transform: uppercase;">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.nombre.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
                             </mat-form-field>

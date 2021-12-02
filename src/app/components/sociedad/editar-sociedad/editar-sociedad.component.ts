@@ -3910,10 +3910,17 @@ export class DialogPersonaSociedad {
         this.fisicaFormGroup = this._formBuilder.group({
             rfc: [null, []],
             curp: [null, []],
+            apaterno: [null, []],
+            amaterno: [null, []],
+            nombre: [null, []],
+            ine: [null, []],
+            idDocIdent: [null, []],
+            docIdent: [null, []]
         });
 
         this.moralFormGroup = this._formBuilder.group({
             rfc: [null, []],
+            nombre: [null, []]
         });
         
         this.getDataDocumentos();
@@ -3993,12 +4000,9 @@ export class DialogPersonaSociedad {
                 this.queryParamFiltros = this.queryParamFiltros + '&coincidenTodos=false';        
             } else {
                 this.endpointBusqueda = this.endpoint + 'getContribuyente';
-                if(this.filtros.nombre)
-                    this.queryParamFiltros = this.queryParamFiltros + '&nombre=' + this.filtros.nombre.toLocaleUpperCase() + '&filtroNombre=0';
-                if(this.filtros.apaterno)
-                    this.queryParamFiltros = this.queryParamFiltros + '&apellidoPaterno=' + this.filtros.apaterno.toLocaleUpperCase() + '&filtroApellidoPaterno=0';
-                if(this.filtros.amaterno)
-                    this.queryParamFiltros = this.queryParamFiltros + '&apellidoMaterno=' + this.filtros.amaterno.toLocaleUpperCase() + '&filtroApellidoMaterno=0';
+                this.queryParamFiltros = (this.filtros.nombre) ? this.queryParamFiltros + '&nombre=' + this.filtros.nombre.toLocaleUpperCase() + '&filtroNombre=0' : this.queryParamFiltros + '&nombre=';
+                this.queryParamFiltros = (this.filtros.apaterno) ? this.queryParamFiltros + '&apellidoPaterno=' + this.filtros.apaterno.toLocaleUpperCase() + '&filtroApellidoPaterno=0' : this.queryParamFiltros + '&apellidoPaterno=';
+                this.queryParamFiltros = (this.filtros.amaterno) ? this.queryParamFiltros + '&apellidoMaterno=' + this.filtros.amaterno.toLocaleUpperCase() + '&filtroApellidoMaterno=0' : this.queryParamFiltros + '&apellidoMaterno=';
             }
         }
   
