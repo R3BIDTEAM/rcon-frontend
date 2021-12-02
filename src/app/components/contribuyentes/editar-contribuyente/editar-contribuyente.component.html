@@ -20,7 +20,7 @@
                     <mat-form-field appearance="fill" class="col-6">
                         <mat-label>Tipo de persona:</mat-label>
                         <mat-select [(ngModel)]="contribuyente.tipoPersona" (selectionChange)="actualizaPersona($event.value)">
-                            <mat-option value="F">Fisica</mat-option>
+                            <mat-option value="F">Física</mat-option>
                             <mat-option value="M">Moral</mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -129,7 +129,7 @@
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-6">
                                 <mat-label>RFC: *</mat-label>
-                                <input matInput formControlName="rfc" (keyup)="changeRequired()" placeholder="Ingrese el RFC" [(ngModel)]="contribuyente.rfc" pattern="^([A-ZÑ&]{3})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" [required]="isRequired" style="text-transform: uppercase;" onkeyup="this.value = this.value.toUpperCase();">
+                                <input matInput formControlName="rfc" (keyup)="changeRequired()" placeholder="Ingrese el RFC" [(ngModel)]="contribuyente.rfc" pattern="^([A-ZÑ&]{3})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" [required]="isRequired" style="text-transform: uppercase;" onkeyup="this.value = this.value.toUpperCase();" maxlength="12">
                                 <mat-error *ngIf="moralFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="moralFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 3 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
                             </mat-form-field>

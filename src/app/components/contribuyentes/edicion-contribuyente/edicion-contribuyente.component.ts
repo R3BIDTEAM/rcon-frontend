@@ -37,6 +37,7 @@ export class EdicionContribuyenteComponent implements OnInit {
   queryParamFiltros;
   endpointBusqueda;
   loadingDocumentosIdentificativos = false;
+  isRequired: boolean;
   @ViewChild('paginator') paginator: MatPaginator;
 
   constructor(
@@ -54,6 +55,7 @@ export class EdicionContribuyenteComponent implements OnInit {
       })
     };
 
+    this.isRequired = true;
     this.getDataDocumentosIdentificativos();
 
     this.cuentaFormGroup = this._formBuilder.group({
@@ -65,9 +67,9 @@ export class EdicionContribuyenteComponent implements OnInit {
 
     this.contribuyenteFormGroup = this._formBuilder.group({
       tipo_persona: ['F', Validators.required],
-      nombre: [null, [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+      nombre: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
       rfc: [null],
-      apaterno: [null, [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+      apaterno: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
       amaterno: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],      
       curp: [null],
       ine: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
@@ -75,25 +77,25 @@ export class EdicionContribuyenteComponent implements OnInit {
       documentoidentificativo: [null]
     });
 
-    this.contribuyenteFormGroup.value.tipo_persona = 'F';
-    this.contribuyenteFormGroup.controls.tipo_persona.valueChanges.subscribe(tipo_persona => {
-      if(tipo_persona == 'F') {
-        this.contribuyenteFormGroup.addControl('apaterno', new FormControl(null));
-        this.contribuyenteFormGroup.addControl('amaterno', new FormControl(null));
-        this.contribuyenteFormGroup.addControl('curp', new FormControl(null));
-        this.contribuyenteFormGroup.addControl('ine', new FormControl(null));
-        this.contribuyenteFormGroup.addControl('iddocumentoidentificativo', new FormControl(''));
-        this.contribuyenteFormGroup.addControl('documentoidentificativo', new FormControl(null));
-      } else {
-        this.contribuyenteFormGroup.removeControl('apaterno');
-        this.contribuyenteFormGroup.removeControl('amaterno');
-        this.contribuyenteFormGroup.removeControl('curp');
-        this.contribuyenteFormGroup.removeControl('ine');
-        this.contribuyenteFormGroup.removeControl('iddocumentoidentificativo');
-        this.contribuyenteFormGroup.removeControl('documentoidentificativo');
-      }
-      this.contribuyenteFormGroup.updateValueAndValidity();
-    });
+    // this.contribuyenteFormGroup.value.tipo_persona = 'F';
+    // this.contribuyenteFormGroup.controls.tipo_persona.valueChanges.subscribe(tipo_persona => {
+    //   if(tipo_persona == 'F') {
+    //     this.contribuyenteFormGroup.addControl('apaterno', new FormControl(null));
+    //     this.contribuyenteFormGroup.addControl('amaterno', new FormControl(null));
+    //     this.contribuyenteFormGroup.addControl('curp', new FormControl(null));
+    //     this.contribuyenteFormGroup.addControl('ine', new FormControl(null));
+    //     this.contribuyenteFormGroup.addControl('iddocumentoidentificativo', new FormControl(''));
+    //     this.contribuyenteFormGroup.addControl('documentoidentificativo', new FormControl(null));
+    //   } else {
+    //     this.contribuyenteFormGroup.removeControl('apaterno');
+    //     this.contribuyenteFormGroup.removeControl('amaterno');
+    //     this.contribuyenteFormGroup.removeControl('curp');
+    //     this.contribuyenteFormGroup.removeControl('ine');
+    //     this.contribuyenteFormGroup.removeControl('iddocumentoidentificativo');
+    //     this.contribuyenteFormGroup.removeControl('documentoidentificativo');
+    //   }
+    //   this.contribuyenteFormGroup.updateValueAndValidity();
+    // });
   }
 
   /** 
@@ -153,12 +155,14 @@ export class EdicionContribuyenteComponent implements OnInit {
     this.isIdentificativo = isIdentificativo;
 
     if(isIdentificativo){
+      this.isRequired = false;
       this.contribuyenteFormGroup.controls['nombre'].setValue(null);
       if(this.contribuyenteFormGroup.value.tipo_persona == 'F'){
         this.contribuyenteFormGroup.controls['apaterno'].setValue(null);
         this.contribuyenteFormGroup.controls['amaterno'].setValue(null);
       }
     } else {
+      this.isRequired = true;
       this.contribuyenteFormGroup.controls['rfc'].setValue(null);
       if(this.contribuyenteFormGroup.value.tipo_persona == 'F'){
         this.contribuyenteFormGroup.controls['curp'].setValue(null);

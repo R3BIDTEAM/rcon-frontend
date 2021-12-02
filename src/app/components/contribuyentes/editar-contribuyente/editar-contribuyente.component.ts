@@ -581,6 +581,8 @@ export class EditarContribuyenteComponent implements OnInit {
                         horizontalPosition: 'end',
                         verticalPosition: 'top'
                     });
+                    this.actCambioPersona = true;
+                    this.actualizado = true;
                 }else{
                     this.snackBar.open('Se ha presentado un problema intente más tarde', 'Cerrar', {
                         duration: 10000,
