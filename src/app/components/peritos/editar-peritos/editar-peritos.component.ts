@@ -2915,7 +2915,7 @@ export class DialogRepresentacionPeritos {
                     console.log(res);
                 },
                 (error) => {
-                    this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
                         duration: 10000,
                         horizontalPosition: 'end',
                         verticalPosition: 'top'
@@ -3297,7 +3297,7 @@ export class DialogRepresentadoPeritos {
                     console.log(res);
                 },
                 (error) => {
-                    this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
                         duration: 10000,
                         horizontalPosition: 'end',
                         verticalPosition: 'top'
