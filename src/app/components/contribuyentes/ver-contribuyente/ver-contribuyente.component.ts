@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import * as moment from 'moment';
+import { DialogHistorialComponent } from '@comp/dialog-historial/dialog-historial.component';
 
 export interface DataRepresentacion {
   tipoPersona: string;
@@ -436,5 +437,21 @@ export class VerContribuyenteComponent implements OnInit {
     
   }
 
-
+  /**
+   * Abre el dialogo que nos mostrará el historial de las representaciones.
+   */
+  historialRepresentacion(){
+    let idContribuyente = this.route.snapshot.paramMap.get('idcontribuyente');
+    const dialogRef = this.dialog.open(DialogHistorialComponent, {
+        width: '700px',
+        data: idContribuyente,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    if(result){
+        setTimeout (() => {
+            
+        }, 1000);
+      }
+    });
+  }
 }

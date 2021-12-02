@@ -361,6 +361,11 @@
                     <mat-paginator #paginator [length]="total5" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado5($event)">
                     </mat-paginator>
                 </ng-container>
+                <mat-card-content>
+                    <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar" (click)="historialRepresentacion()" *ngIf="!loadingRepresentado">
+                        <b>Historial Representaciones</b>
+                    </button>
+                </mat-card-content><br>
             </div>
 
         </div>

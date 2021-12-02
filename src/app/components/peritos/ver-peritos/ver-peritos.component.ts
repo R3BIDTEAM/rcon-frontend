@@ -5,6 +5,8 @@ import { environment } from '@env/environment'
 import { AuthService } from '@serv/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { DialogHistorialComponent } from '@comp/dialog-historial/dialog-historial.component';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 export interface DatosPeritos {
     apepaterno: string;
@@ -100,6 +102,7 @@ export class VerPeritosComponent implements OnInit {
         private http: HttpClient,
         private snackBar: MatSnackBar,
         private auth: AuthService,
+        public dialog: MatDialog,
         private route: ActivatedRoute
     ) { }
 
@@ -381,5 +384,22 @@ export class VerPeritosComponent implements OnInit {
     paginate(array, page_size, page_number) {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
-  
+
+    /**
+     * Abre el dialogo que nos mostrará el historial de las representaciones.
+     */
+    historialRepresentacion(){
+        let idContribuyente = this.route.snapshot.paramMap.get('idcontribuyente');
+        const dialogRef = this.dialog.open(DialogHistorialComponent, {
+            width: '700px',
+            data: idContribuyente,
+        });
+        dialogRef.afterClosed().subscribe(result => {
+        if(result){
+            setTimeout (() => {
+                
+            }, 1000);
+        }
+        });
+    }
 }
