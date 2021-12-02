@@ -162,6 +162,10 @@ export class AltaContribuyenteComponent implements OnInit {
     isRequired = true;
     btnDisabled = true;
     selectDisabled = false;
+    selectCedula = false;
+    selectPasaporte = false;
+    selectLicencia = false;
+    selectNSS = false;
 
     /*PAGINADOS*/
     dataSource1 = [];
@@ -213,7 +217,7 @@ export class AltaContribuyenteComponent implements OnInit {
             amaterno: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             rfc: [null, []],
             curp: [null, []],
-            ine: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            ine: [null, []],
             idDocIdent: ['', []],
             docIdent: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             fechaNacimiento: [null, []],
@@ -264,16 +268,42 @@ export class AltaContribuyenteComponent implements OnInit {
         this.moralFormGroup.controls['idMotivo'].setValue(null);
         this.moralFormGroup.controls['fechaCambio'].setValue(null);
         this.inserto = false;
-        this.btnDisabled = true;
+        this.btnDisabled = true;    
         this.selectDisabled = false;
+        this.selectCedula = false;
+        this.selectPasaporte = false;
+        this.selectLicencia = false;
+        this.selectNSS = false;
     }
 
     /**
      *  Si se selecciona alguna opción desbloqueará el input del número del documento.
      * @param event Valor del option
      */
-     seleccionaDocto(){
+     seleccionaDocto(event){
         this.selectDisabled = true;
+        this.selectCedula = false;
+        this.selectPasaporte = false;
+        this.selectLicencia = false;
+        this.selectNSS = false;
+
+        console.log("LO QUE SE SELECCIONO "+this.contribuyente.idDocIdent);
+
+        if(this.contribuyente.idDocIdent == 1){
+            this.selectCedula = true;
+        }
+
+        if(this.contribuyente.idDocIdent == 2){
+            this.selectPasaporte = true;
+        }
+
+        if(this.contribuyente.idDocIdent == 3){
+            this.selectLicencia = true;
+        }
+
+        if(this.contribuyente.idDocIdent == 6){
+            this.selectNSS = true;
+        }
     }
 
     /**

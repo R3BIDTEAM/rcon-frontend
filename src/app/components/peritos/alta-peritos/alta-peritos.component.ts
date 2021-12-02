@@ -57,6 +57,10 @@ export class AltaPeritosComponent implements OnInit {
     @ViewChild('paginator') paginator: MatPaginator;
     btnNuevo = false;
     selectDisabled = false;
+    selectCedula = false;
+    selectPasaporte = false;
+    selectLicencia = false;
+    selectNSS = false;
     buscadoEscrito: number = 0;
     constructor(
         private http: HttpClient,
@@ -84,7 +88,7 @@ export class AltaPeritosComponent implements OnInit {
             nombre: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             rfc: [null, []],
             curp: [null, []],
-            ine: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            ine: [null, []],
             identificacion: [null],
             idedato: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             fechaNacimiento: [null],
@@ -155,6 +159,10 @@ export class AltaPeritosComponent implements OnInit {
         this.inserto = false;
         this.btnNuevo = false;
         this.selectDisabled = false;
+        this.selectCedula = false;
+        this.selectPasaporte = false;
+        this.selectLicencia = false;
+        this.selectNSS = false;
         this.buscadoEscrito = 0;
     }
 
@@ -179,6 +187,26 @@ export class AltaPeritosComponent implements OnInit {
      */
      seleccionaDocto(){
         this.selectDisabled = true;
+        this.selectCedula = false;
+        this.selectPasaporte = false;
+        this.selectLicencia = false;
+        this.selectNSS = false;
+
+        if(this.datoPeritos.identificacion == 1){
+            this.selectCedula = true;
+        }
+
+        if(this.datoPeritos.identificacion == 2){
+            this.selectPasaporte = true;
+        }
+
+        if(this.datoPeritos.identificacion == 3){
+            this.selectLicencia = true;
+        }
+
+        if(this.datoPeritos.identificacion == 6){
+            this.selectNSS = true;
+        }
     }
 
     /**

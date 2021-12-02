@@ -57,6 +57,10 @@ export class AltaNotarioComponent implements OnInit {
     loadingDocumentosIdentificativos = false;
     btnDisabled = true;
     selectDisabled = false;
+    selectCedula = false;
+    selectPasaporte = false;
+    selectLicencia = false;
+    selectNSS = false;
     isRequired = true;
 
     constructor(
@@ -76,7 +80,7 @@ export class AltaNotarioComponent implements OnInit {
         };
 
         this.notarioFormGroup = this._formBuilder.group({
-            no_notario: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            no_notario: ['', [Validators.required, Validators.pattern("^\\S{1,6}")]],
             estado: [null, []],
             apellido_paterno: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             apellido_materno: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
@@ -85,7 +89,7 @@ export class AltaNotarioComponent implements OnInit {
             curp: [null, []],
             ine: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             otro_documento: [null, []],
-            numero_documento: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            numero_documento: [null, []],
             fecha_nacimiento: [null, []],
             fecha_defuncion: [null, []],
             celular: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
@@ -137,6 +141,10 @@ export class AltaNotarioComponent implements OnInit {
         this.filtros.celular = null;
         this.btnDisabled = true;
         this.selectDisabled = false;
+        this.selectCedula = false;
+        this.selectPasaporte = false;
+        this.selectLicencia = false;
+        this.selectNSS = false;
     }
 
     /** 
@@ -162,6 +170,26 @@ export class AltaNotarioComponent implements OnInit {
      */
     seleccionaDocto(event){
         this.selectDisabled = true;
+        this.selectCedula = false;
+        this.selectPasaporte = false;
+        this.selectLicencia = false;
+        this.selectNSS = false;
+
+        if(this.filtros.otro_documento === '1'){
+            this.selectCedula = true;
+        }
+
+        if(this.filtros.otro_documento === '2'){
+            this.selectPasaporte = true;
+        }
+
+        if(this.filtros.otro_documento === '3'){
+            this.selectLicencia = true;
+        }
+
+        if(this.filtros.otro_documento === '6'){
+            this.selectNSS = true;
+        }
     }
 
     /** 

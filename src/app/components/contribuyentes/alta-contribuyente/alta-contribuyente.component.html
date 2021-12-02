@@ -64,23 +64,43 @@
                         <div class="row">
                             <mat-form-field appearance="outline"  class="col-5 offset-1">
                                 <mat-label>Clave INE:</mat-label>
-                                <input matInput formControlName="ine" [(ngModel)]="contribuyente.ine" [readonly]="inserto" maxlength="18"  placeholder="Ingrese el INE" style="text-transform: uppercase;">
-                                <mat-error *ngIf="fisicaFormGroup.controls.ine.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
+                                <input matInput formControlName="ine" [(ngModel)]="contribuyente.ine" [readonly]="inserto" pattern="[a-zA-Z]{6}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])(?:0[1-9]|[12]\d|3[0123])[hmHM]{1}\d{3}" maxlength="18"  placeholder="Ingrese el INE" style="text-transform: uppercase;">
+                                <mat-error *ngIf="fisicaFormGroup.controls.ine.errors?.pattern">El campo INE debe contener 6 letras mayúsculas, 8 números, H o M y 3 números.</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
                             <mat-form-field appearance="fill"  class="col-5 offset-1">
                                 <mat-label>Otro Documento:</mat-label>
-                                <mat-select formControlName="idDocIdent" [class.spinner]="loadingDocumentos" [(ngModel)]="contribuyente.idDocIdent" [disabled]="inserto" (selectionChange)="seleccionaDocto()">
+                                <mat-select formControlName="idDocIdent" [class.spinner]="loadingDocumentos" [(ngModel)]="contribuyente.idDocIdent" [disabled]="inserto" (selectionChange)="seleccionaDocto($event)">
                                     <mat-option *ngFor="let documento of dataDocumentos" [value]="documento.IDDOCIDENTIF">
                                         {{ documento.DESCRIPCION }}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
-                            <mat-form-field appearance="outline"  class="col-5" *ngIf="selectDisabled">
+                            <!-- <mat-form-field appearance="outline"  class="col-5" *ngIf="selectDisabled">
                                 <mat-label>Número Documento</mat-label>
                                 <input matInput formControlName="docIdent" [(ngModel)]="contribuyente.docIdent" [disabled]="inserto" maxlength="250"  placeholder="Ingrese el número de documento" style="text-transform: uppercase;">
                                 <mat-error *ngIf="fisicaFormGroup.controls.docIdent.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
+                            </mat-form-field> -->
+                            <mat-form-field appearance="outline" class="col-5"  *ngIf="selectCedula">
+                                <mat-label>Número Documento</mat-label>                        
+                                    <input matInput formControlName="docIdent" [(ngModel)]="contribuyente.docIdent" [disabled]="inserto" pattern="\d{8}" placeholder="Ingrese número documento" maxlength="8" style="text-transform: uppercase;">
+                                    <mat-error *ngIf="fisicaFormGroup.controls.docIdent.errors?.pattern">El número de cédula debe contener 8 dígitos en caso de tener 7 debe incluir un "0"</mat-error>                        
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-5"  *ngIf="selectPasaporte">
+                                <mat-label>Número Documento</mat-label>                        
+                                    <input matInput formControlName="docIdent" [(ngModel)]="contribuyente.docIdent" [disabled]="inserto" pattern="\d{1,8}" placeholder="Ingrese número documento" maxlength="8" style="text-transform: uppercase;">
+                                    <mat-error *ngIf="fisicaFormGroup.controls.docIdent.errors?.pattern">El número del pasaporte no debe ser mayor a 8 dígitos</mat-error>                        
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-5"  *ngIf="selectLicencia">
+                                <mat-label>Número Documento</mat-label>                        
+                                    <input matInput formControlName="docIdent" [(ngModel)]="contribuyente.docIdent" [disabled]="inserto" pattern="^\S{10}" placeholder="Ingrese número documento" maxlength="10" style="text-transform: uppercase;">
+                                    <mat-error *ngIf="fisicaFormGroup.controls.docIdent.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?)</mat-error>                        
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-5"  *ngIf="selectNSS">
+                                <mat-label>Número Documento</mat-label>                        
+                                    <input matInput formControlName="docIdent" [(ngModel)]="contribuyente.docIdent" [disabled]="inserto" pattern="\d{11}" placeholder="Ingrese número documento" maxlength="11" style="text-transform: uppercase;">
+                                    <mat-error *ngIf="fisicaFormGroup.controls.docIdent.errors?.pattern">El número de seguro social (NSS) debe contener 11 números</mat-error>                        
                             </mat-form-field>
                         </div>
                         <div class="row">
