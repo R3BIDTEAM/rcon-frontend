@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import * as moment from 'moment';
-import { DialogHistorialComponent } from '@comp/dialog-historial/dialog-historial.component';
+import { DialogHistorialComponent, DialogDomicilioHistoricoG, DialogPersonalesHistoricoG } from '@comp/dialog-historial/dialog-historial.component';
 
 export interface DataRepresentacion {
   tipoPersona: string;
@@ -47,7 +47,7 @@ export interface DocumentosIdentificativos{
 })
 export class VerContribuyenteComponent implements OnInit {
   endpoint = environment.endpoint + 'registro/';
-  displayedColumnsDom: string[] = ['tipoDir','direccion'];
+  displayedColumnsDom: string[] = ['tipoDir','direccion','historial'];
   displayedColumnsRepdo: string[] = ['representacion','texto','caducidad'];
   displayedColumnsInm: string[] = ['inmueble','direccion','domicilio','descripcion','sujeto'];
   displayedColumnsDataRep: string[] = ['fechaCaducidad','texto','caducidad'];
@@ -435,6 +435,32 @@ export class VerContribuyenteComponent implements OnInit {
 
     console.log(this.contribuyente.tipoPersona);
     
+  }
+
+  /**
+   * @param idPersona Valor que se enviará para la obtención de los movimientos sobre esa persona
+   */
+  viewHistoricoDatosPersonales(idPersona): void {
+    const dialogRef = this.dialog.open(DialogPersonalesHistoricoG, {
+        width: '700px',
+        data: {idPersona},
+    });
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+
+  /**
+   * @param idDireccion Valor que se enviará para la obtención de los movimientos sobre ese domicilio
+   */
+  viewHistoricoDomicilio(idDireccion): void {
+    const dialogRef = this.dialog.open(DialogDomicilioHistoricoG, {
+        width: '700px',
+        data: {idDireccion},
+    });
+    dialogRef.afterClosed().subscribe(result => {
+            
+    });
   }
 
   /**

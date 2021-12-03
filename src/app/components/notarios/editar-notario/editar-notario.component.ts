@@ -723,7 +723,6 @@ export class DialogDomiciliosNotario {
     this.dataDomicilio = {} as DataDomicilio;
     this.dataDomicilioEspecifico = {} as DataDomicilio;
     this.getDataEstados();
-    this.getDireccionEspecifica();
         this.domicilioFormGroup = this._formBuilder.group({
             ///idtipodireccion: ['', Validators.required],
             idestado: ['', Validators.required],
@@ -769,7 +768,7 @@ export class DialogDomiciliosNotario {
             }
             this.domicilioFormGroup.updateValueAndValidity();
         });
-
+        this.getDireccionEspecifica();
             if(data){
                 console.log(data.dataDomicilioEspecifico);
                 console.log("recibimos data seteado1");
