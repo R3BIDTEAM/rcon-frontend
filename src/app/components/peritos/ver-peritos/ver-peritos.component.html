@@ -208,10 +208,18 @@
                         <td mat-cell *matCellDef="let element" style="text-align: center; font-size: 13px; padding-left: 0px;"> {{ element.CODTIPOSDIRECCION }}</td>
                     </ng-container>
                     <ng-container matColumnDef="direccion">
-                        <th mat-header-cell *matHeaderCellDef  class="verde-cdmx" width="89%" style="font-size: 13px;"> Dirección </th>
+                        <th mat-header-cell *matHeaderCellDef  class="verde-cdmx" width="79%" style="font-size: 13px;"> Dirección </th>
                         <td mat-cell *matCellDef="let element" style="font-size: 13px;">
                             {{ element.ABREVIATURAVIA }}, {{ element.VIA }} {{ element.NUMEROEXTERIOR }}, Col: {{ element.COLONIA}}
                             C.P. {{ element.CODIGOPOSTAL}}, {{ element.DELEGACION}} ({{ element.ESTADO }})
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="historial">
+                        <th mat-header-cell *matHeaderCellDef  class="verde-cdmx" width="10%" style="font-size: 14px; text-align: center;"> Historial </th>
+                        <td mat-cell *matCellDef="let element" style="text-align: center;">
+                            <button mat-icon-button type="button" color="primary" aria-label="Historial" matTooltip="Historial" (click)="viewHistoricoDomicilio(element.IDDIRECCION)">
+                                <mat-icon>search</mat-icon>
+                            </button>
                         </td>
                     </ng-container>
                     <tr mat-header-row *matHeaderRowDef="displayedColumnsDom"></tr>
@@ -241,10 +249,18 @@
                         <td mat-cell *matCellDef="let element" style="text-align: center; font-size: 13px; padding-left: 0px;"> {{ element.CODTIPOSDIRECCION }}</td>
                     </ng-container>
                     <ng-container matColumnDef="direccion">
-                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="89%" style="font-size: 13px;"> Dirección </th>
+                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="79%" style="font-size: 13px;"> Dirección </th>
                         <td mat-cell *matCellDef="let element" style="font-size: 13px;">
                             {{ element.ABREVIATURAVIA }}, {{ element.VIA }} {{ element.NUMEROEXTERIOR }}, Col: {{ element.COLONIA}}
                             C.P. {{ element.CODIGOPOSTAL}}, {{ element.DELEGACION}} ({{ element.ESTADO }})
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="historial">
+                        <th mat-header-cell *matHeaderCellDef  class="verde-cdmx" width="10%" style="font-size: 14px; text-align: center;"> Historial </th>
+                        <td mat-cell *matCellDef="let element" style="text-align: center;">
+                            <button mat-icon-button type="button" color="primary" aria-label="Historial" matTooltip="Historial" (click)="viewHistoricoDomicilio(element.IDDIRECCION)">
+                                <mat-icon>search</mat-icon>
+                            </button>
                         </td>
                     </ng-container>
                     <tr mat-header-row *matHeaderRowDef="displayedColumnsDom"></tr>

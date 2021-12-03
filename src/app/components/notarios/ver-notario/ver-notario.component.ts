@@ -5,6 +5,8 @@ import { environment } from '@env/environment'
 import { AuthService } from '@serv/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { DialogDomicilioHistoricoG } from '@comp/dialog-historial/dialog-historial.component';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 export interface DatosNotario {
   no_notario: string;
@@ -76,7 +78,7 @@ export class VerNotarioComponent implements OnInit {
   loading = false;
   dataSource = [];
   dataPaginate = [];
-  displayedColumns: string[] = ['direccion'];
+  displayedColumns: string[] = ['direccion', 'historial'];
   loadingDomicilios = false;
   dataNotarioResultado;
   dataNotarioDireccionesResultado;
@@ -98,6 +100,7 @@ export class VerNotarioComponent implements OnInit {
     private http: HttpClient,
     private snackBar: MatSnackBar,
     private auth: AuthService,
+    public dialog: MatDialog,
     private route: ActivatedRoute
   ) { }
 
@@ -250,4 +253,16 @@ export class VerNotarioComponent implements OnInit {
       return array.slice((page_number - 1) * page_size, page_number * page_size);
   }
 
+  /**
+   * @param idDireccion Valor que se enviará para la obtención de los movimientos sobre ese domicilio
+   */
+   viewHistoricoDomicilio(idDireccion): void {
+    const dialogRef = this.dialog.open(DialogDomicilioHistoricoG, {
+        width: '700px',
+        data: {idDireccion},
+    });
+    dialogRef.afterClosed().subscribe(result => {
+            
+    });
+  }
 }

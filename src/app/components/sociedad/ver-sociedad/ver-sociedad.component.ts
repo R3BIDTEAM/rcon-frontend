@@ -5,6 +5,8 @@ import { environment } from '@env/environment'
 import { AuthService } from '@serv/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { DialogHistorialComponent, DialogDomicilioHistoricoG } from '@comp/dialog-historial/dialog-historial.component';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 export interface DatosSociedad {
     razonSocial: string;
@@ -29,7 +31,7 @@ export class VerSociedadComponent implements OnInit {
     total = 0;
     pageSize = 15;
     loading = false;
-    displayedColumnsDom: string[] = ['tipoDir', 'direccion'];
+    displayedColumnsDom: string[] = ['tipoDir', 'direccion', 'historial'];
     displayedColumnsInm: string[] = ['inmueble','direccion','domicilio','descripcion','sujeto'];
     displayedColumnsRepdo: string[] = ['representacion','texto','caducidad'];
     displayedColumnsDataRep: string[] = ['fechaCaducidad','texto','caducidad'];
@@ -83,6 +85,7 @@ export class VerSociedadComponent implements OnInit {
         private http: HttpClient,
         private snackBar: MatSnackBar,
         private auth: AuthService,
+        public dialog: MatDialog,
         private route: ActivatedRoute
     ) { }
 
@@ -331,4 +334,34 @@ export class VerSociedadComponent implements OnInit {
         return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
 
+    /**
+     * Abre el dialogo que nos mostrará el historial de las representaciones.
+     */
+    historialRepresentacion(){
+        let idContribuyente = this.route.snapshot.paramMap.get('idcontribuyente');
+        const dialogRef = this.dialog.open(DialogHistorialComponent, {
+            width: '700px',
+            data: idContribuyente,
+        });
+        dialogRef.afterClosed().subscribe(result => {
+        if(result){
+            setTimeout (() => {
+                
+            }, 1000);
+        }
+        });
+    }
+
+    /**
+   * @param idDireccion Valor que se enviará para la obtención de los movimientos sobre ese domicilio
+   */
+    viewHistoricoDomicilio(idDireccion): void {
+        const dialogRef = this.dialog.open(DialogDomicilioHistoricoG, {
+            width: '700px',
+            data: {idDireccion},
+        });
+        dialogRef.afterClosed().subscribe(result => {
+                
+        });
+    }
 }

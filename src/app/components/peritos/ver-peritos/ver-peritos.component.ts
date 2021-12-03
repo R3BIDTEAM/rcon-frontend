@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { DialogHistorialComponent } from '@comp/dialog-historial/dialog-historial.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DialogDomicilioHistoricoG } from '@comp/dialog-historial/dialog-historial.component';
 
 export interface DatosPeritos {
     apepaterno: string;
@@ -53,7 +54,7 @@ export class VerPeritosComponent implements OnInit {
     paginaDom = 1;
     totalDom = 0;
     pageSizeDom = 15;
-    displayedColumnsDom: string[] = ['tipoDir','direccion'];
+    displayedColumnsDom: string[] = ['tipoDir','direccion', 'historial'];
     displayedColumnsInm: string[] = ['inmueble','direccion','domicilio','descripcion','sujeto'];
     displayedColumnsRepdo: string[] = ['representacion','texto','caducidad'];
     displayedColumnsDataRep: string[] = ['fechaCaducidad','texto','caducidad'];
@@ -402,4 +403,17 @@ export class VerPeritosComponent implements OnInit {
         }
         });
     }
+
+    /**
+   * @param idDireccion Valor que se enviará para la obtención de los movimientos sobre ese domicilio
+   */
+   viewHistoricoDomicilio(idDireccion): void {
+    const dialogRef = this.dialog.open(DialogDomicilioHistoricoG, {
+        width: '700px',
+        data: {idDireccion},
+    });
+    dialogRef.afterClosed().subscribe(result => {
+            
+    });
+  }
 }

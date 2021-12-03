@@ -829,6 +829,7 @@ export class DialogDomiciliosNotario {
             (res: any) => {
                 this.loadingEstados = false;
                 this.estados = res;
+                this.getAlcaldia();
             },
             (error) => {
                 this.loadingEstados = false;
