@@ -94,6 +94,7 @@ export class VerNotarioComponent implements OnInit {
   documentos: DocumentosIdentificativos[] = [];
   loadingEstados = false;
   loadingDocumentosIdentificativos = false;
+  Auditor: boolean = false;
   @ViewChild('paginator') paginator: MatPaginator;
 
   constructor(
@@ -111,6 +112,9 @@ export class VerNotarioComponent implements OnInit {
           Authorization: this.auth.getSession().token
         })
     };
+    if(this.auth.getSession().userData.rol_nombre == 'AUDITORIA RCON'){
+      this.Auditor = true; 
+  }
     this.idNotario = this.route.snapshot.paramMap.get('idnotario');
     console.log(this.idNotario);
     this.getNotarioDatos();

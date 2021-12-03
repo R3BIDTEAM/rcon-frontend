@@ -74,6 +74,7 @@ export class VerContribuyenteComponent implements OnInit {
   dataRepresentados: DataRepresentacion[] = [];
   contribuyente: DataRepresentacion = {} as DataRepresentacion;
   dataDocumentos: DocumentosIdentificativos[] = [];
+  Auditor: boolean = false;
   @ViewChild('paginator') paginator: MatPaginator;
 
   /*Paginado*/
@@ -122,6 +123,9 @@ export class VerContribuyenteComponent implements OnInit {
       })
     };
 
+    if(this.auth.getSession().userData.rol_nombre == 'AUDITORIA RCON'){
+      this.Auditor = true; 
+    }
     this.fisicaFormGroup = this._formBuilder.group({
       nombre: [null, [Validators.required]],
       apaterno: [null, [Validators.required]],

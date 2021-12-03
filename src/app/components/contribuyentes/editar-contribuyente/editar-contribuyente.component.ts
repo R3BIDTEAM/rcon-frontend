@@ -196,7 +196,6 @@ export class EditarContribuyenteComponent implements OnInit {
     isRequired = true;
     mensajeConfirma;
     minDate;
-    Editor: boolean = false;
     @ViewChild('paginator') paginator: MatPaginator;
 
     /*Paginado*/
@@ -245,9 +244,6 @@ export class EditarContribuyenteComponent implements OnInit {
      }
 
     ngOnInit(): void {
-        if(this.auth.getSession().userData.rol_nombre != 'SUPERVISOR RCON'){
-            this.Editor = true; 
-        }
         this.fisicaFormGroup = this._formBuilder.group({
             nombre: [null,  []],
             apepaterno: [null, [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],

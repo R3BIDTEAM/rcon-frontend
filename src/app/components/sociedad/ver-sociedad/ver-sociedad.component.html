@@ -127,9 +127,9 @@
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="historial">
-                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="10%" style="text-align: center; font-size: 14px;"> Historial </th>
+                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="10%" style="text-align: center; font-size: 14px;"><span *ngIf="Auditor"> Historial </span></th>
                         <td mat-cell *matCellDef="let element" style="text-align: center;">
-                            <button mat-icon-button type="button" color="primary" aria-label="Historial" matTooltip="Historial" (click)="viewHistoricoDomicilio(element.IDDIRECCION)">
+                            <button *ngIf="Auditor" mat-icon-button type="button" color="primary" aria-label="Historial" matTooltip="Historial" (click)="viewHistoricoDomicilio(element.IDDIRECCION)">
                                 <mat-icon>search</mat-icon>
                             </button>
                         </td>
@@ -168,9 +168,9 @@
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="historial">
-                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="10%" style="text-align: center; font-size: 14px;"> Historial </th>
+                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="10%" style="text-align: center; font-size: 14px;"><span *ngIf="Auditor"> Historial </span></th>
                         <td mat-cell *matCellDef="let element" style="text-align: center;">
-                            <button mat-icon-button type="button" color="primary" aria-label="Historial" matTooltip="Historial" (click)="viewHistoricoDomicilio(element.IDDIRECCION)">
+                            <button mat-icon-button *ngIf="Auditor" type="button" color="primary" aria-label="Historial" matTooltip="Historial" (click)="viewHistoricoDomicilio(element.IDDIRECCION)">
                                 <mat-icon>search</mat-icon>
                             </button>
                         </td>
@@ -321,7 +321,7 @@
                 <mat-paginator #paginator [length]="total5" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado5($event)">
                 </mat-paginator>
             </ng-container>
-            <mat-card-content>
+            <mat-card-content *ngIf="Auditor">
                 <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar" (click)="historialRepresentacion()" *ngIf="!loadingRepresentado">
                     <b>Historial Representaciones</b>
                 </button>

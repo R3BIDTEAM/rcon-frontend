@@ -68,6 +68,7 @@ export class VerPeritosComponent implements OnInit {
     datoPeritos: DatosPeritos = {} as DatosPeritos;
     @ViewChild('paginator') paginator: MatPaginator;
     loadingDocumentosIdentificativos = false;
+    Auditor: boolean = false;
     documentos: DocumentosIdentificativos[] = [];
 
     /*PAGINADOS*/
@@ -117,6 +118,10 @@ export class VerPeritosComponent implements OnInit {
               Authorization: this.auth.getSession().token
             })
         };
+
+        if(this.auth.getSession().userData.rol_nombre == 'AUDITORIA RCON'){
+            this.Auditor = true; 
+        }
         this.idPerito = this.route.snapshot.paramMap.get('idperito');
         console.log(this.idPerito);
         this.getPeritoDatos();

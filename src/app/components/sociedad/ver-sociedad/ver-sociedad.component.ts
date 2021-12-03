@@ -50,6 +50,7 @@ export class VerSociedadComponent implements OnInit {
     query;
     idSociedad;
     datosSociedad: DatosSociedad = {} as DatosSociedad;
+    Auditor: boolean = false;
     @ViewChild('paginator') paginator: MatPaginator;
 
     /*Paginado*/
@@ -96,6 +97,9 @@ export class VerSociedadComponent implements OnInit {
               Authorization: this.auth.getSession().token
             })
         };
+        if(this.auth.getSession().userData.rol_nombre == 'AUDITORIA RCON'){
+            this.Auditor = true; 
+        }
         this.idSociedad = this.route.snapshot.paramMap.get('idsociedad');
         console.log(this.idSociedad);
         this.getSociedadDatos();
