@@ -11,8 +11,8 @@ $cdmx-app-theme: mat-light-theme($cdmx-app-primary, $cdmx-app-accent, $cdmx-app-
 
 @include angular-material-theme($cdmx-app-theme);
 
-.titulo-cdmx{color: #00A447; text-align: center;}
-.verde-cdmx{color: #00A447;}
+.titulo-cdmx{color: #9C2348; text-align: center;}
+.verde-cdmx{color: #9C2348;}
 
 .contenido-tabla{font-size: 14px;}
 .contenido-tabla-modal{font-size: 12px;}
@@ -23,15 +23,15 @@ $cdmx-app-theme: mat-light-theme($cdmx-app-primary, $cdmx-app-accent, $cdmx-app-
 
 .mat-list-item-content:hover{
     background-color: #FAFAFA;
-    color: #00A447;
+    color: #9C2348;
 }
 
 .active-list-item {
-    background-color: #00A447!important;
+    background-color: #9C2348!important;
     color: #FFF !important;
 }
 
 .provisional{
-    background-color: #00A447!important;
+    background-color: #9C2348!important;
     color: #FFF !important;
 }

@@ -59,7 +59,8 @@ table {
   }
   
   .sidenav {
-    min-width: 240px;
+    /* min-width: 240px; */
+    min-width: 290px;
     padding-top: 20px;
   }
 
@@ -179,5 +180,81 @@ table {
   
   .alert-danger .alert-link {
     color: #843534;
+  }
+
+  .alert-warning {
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+    color: #8a6d3b;
+  }
+  
+  .alert-warning hr {
+    border-top-color: #f7e1b5;
+  }
+  
+  .alert-warning .alert-link {
+    color: #66512c;
+  }
+  
+  .alert-danger {
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    color: #a94442;
+  }
+  
+  .alert-danger hr {
+    border-top-color: #e4b9c0;
+  }
+  
+  .alert-danger .alert-link {
+    color: #843534;
+  }
+
+  .mat-progress-spinner circle, .mat-spinner circle {
+    stroke: #9C2348!important;
+  }
+
+  .mat-icon{
+    color: #9C2348!important;
+  }
+
+  .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: #B69264!important;
+  }
+  
+  .mat-radio-button.mat-accent .mat-radio-inner-circle, .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple), .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple, .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
+    background-color: #B69264;
+  } 
+
+
+  .mat-button.mat-primary,
+  .mat-stroked-button.mat-primary {
+      color: #9C2348;
+  }
+  .mat-button.mat-primary:hover,
+  .mat-stroked-button.mat-primary:hover {
+    background-color: #f0fff3;
+  }
+
+  .mat-raised-button.mat-primary,
+  .mat-flat-button.mat-primary,
+  .mat-fab.mat-primary,
+  .mat-mini-fab.mat-primary {
+    color: #f0fff3;
+    background-color: #9C2348;
+  }
+
+  .mat-icon-button.mat-primary {
+    color:#9C2348;
+  }
+
+
+  /* Progress Bar */
+  .mat-progress-bar-fill::after{
+    background-color: #9C2348;
+
+  }
+  mat-progress-bar .mat-progress-bar-buffer {
+    background: #E4E8EB;
   }
   

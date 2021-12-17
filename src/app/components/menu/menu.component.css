@@ -1,14 +1,18 @@
 .verde{
-    background-color: #1b5533;
+    background-color: #B38E5E;
     color: white;
 }
 
 .verde:hover{
-    background-color: #00b140;
+    background-color: #9C2348;
     color: white;
 }
 
 .li_menu:hover{
-    background-color: #00b140;
+    background-color: #9C2348;
     color: white;
+}
+
+.mat-icon:hover{
+    color: white!important;
 }
