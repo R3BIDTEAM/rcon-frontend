@@ -59,7 +59,8 @@
         <div class="row" *ngIf="!loading">
             <mat-form-field appearance="outline" style="width: 100%;" class="col-4 offset-1">
                 <mat-label>INE</mat-label>
-                <input matInput placeholder="Placeholder" [disabled]="true" [(ngModel)]="datosNotario.ine">
+                <input matInput placeholder="Ingrese INE" [disabled]="true" [(ngModel)]="datosNotario.ine" maxlength="18">
+                <!-- <mat-error *ngIf="notarioFormGroup.controls.ine.errors?.pattern">El campo INE debe contener 6 letras mayúsculas, 8 números, H o M y 3 números.</mat-error> -->
             </mat-form-field>
             <mat-form-field appearance="fill" style="width: 100%;" class="col-3">
                 <mat-label>Otro Documento:</mat-label>

@@ -54,8 +54,8 @@
                 <div class="col-md-4">
                     <mat-form-field appearance="outline" style="width: 100%;">
                         <mat-label>INE</mat-label>
-                        <input matInput formControlName="ine" [(ngModel)]="ine" placeholder="Ingrese INE" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250">
-                        <mat-error *ngIf="notPersonaFormGroup.controls.ine.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
+                        <input matInput formControlName="ine" [(ngModel)]="ine" pattern="[a-zA-Z]{6}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])(?:0[1-9]|[12]\d|3[0123])[hmHM]{1}\d{3}" placeholder="Ingrese INE" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250">
+                        <mat-error *ngIf="notPersonaFormGroup.controls.ine.errors?.pattern">El campo INE debe contener 6 letras mayúsculas, 8 números, H o M y 3 números.</mat-error>
                     </mat-form-field>
                 </div>
             </div>
@@ -64,7 +64,7 @@
                 <div class="col-md-4">
                     <mat-form-field appearance="fill" style="width: 100%;">
                         <mat-label>Otro Documento:</mat-label>
-                        <mat-select [(ngModel)]="otro_documento">
+                        <mat-select [(ngModel)]="otro_documento" (selectionChange)="seleccionaDoctoD($event)">
                             <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF">
                                 {{ documento.DESCRIPCION }}
                             </mat-option>
@@ -72,10 +72,32 @@
                     </mat-form-field>
                 </div>
                 <div class="col-md-4">
-                    <mat-form-field appearance="outline" style="width: 100%;">
+                    <!-- <mat-form-field appearance="outline" style="width: 100%;">
                         <mat-label>Número Documento</mat-label>
                         <input matInput [(ngModel)]="numero_documento" placeholder="Número documento" maxlength="250">
+                    </mat-form-field> -->
+
+                    <mat-form-field appearance="outline" style="width: 100%;" *ngIf="selectCedula" class="col-3">
+                        <mat-label>Número Documento</mat-label>                        
+                            <input matInput #numero_documento formControlName="numero_documento" [(ngModel)]="filtros.numero_documento" pattern="\d{8}" placeholder="Ingrese número documento" maxlength="8">
+                            <mat-error *ngIf="notPersonaFormGroup.controls.numero_documento.errors?.pattern">El número de cédula debe contener 8 dígitos en caso de tener 7 debe incluir un "0"</mat-error>                        
                     </mat-form-field>
+                    <mat-form-field appearance="outline" style="width: 100%;" *ngIf="selectPasaporte" class="col-3">
+                        <mat-label>Número Documento</mat-label>                        
+                            <input matInput #numero_documento formControlName="numero_documento" [(ngModel)]="filtros.numero_documento" pattern="\d{1,8}" placeholder="Ingrese número documento" maxlength="8">
+                            <mat-error *ngIf="notPersonaFormGroup.controls.numero_documento.errors?.pattern">El número del pasaporte no debe ser mayor a 8 dígitos</mat-error>                        
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" style="width: 100%;" *ngIf="selectLicencia" class="col-3">
+                        <mat-label>Número Documento</mat-label>                        
+                            <input matInput #numero_documento formControlName="numero_documento" [(ngModel)]="filtros.numero_documento" pattern="^\S{10}" placeholder="Ingrese número documento" maxlength="10">
+                            <mat-error *ngIf="notPersonaFormGroup.controls.numero_documento.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?)</mat-error>                        
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" style="width: 100%;" *ngIf="selectNSS" class="col-3">
+                        <mat-label>Número Documento</mat-label>                        
+                            <input matInput #numero_documento formControlName="numero_documento" [(ngModel)]="filtros.numero_documento" pattern="\d{11}" placeholder="Ingrese número documento" maxlength="11">
+                            <mat-error *ngIf="notPersonaFormGroup.controls.numero_documento.errors?.pattern">El número de seguro social (NSS) debe contener 11 números</mat-error>                        
+                    </mat-form-field>
+
                 </div>
             </div>
             <!-- Fin de Identificativos -->

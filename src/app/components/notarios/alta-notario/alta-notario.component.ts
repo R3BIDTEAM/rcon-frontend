@@ -175,6 +175,8 @@ export class AltaNotarioComponent implements OnInit {
         this.selectLicencia = false;
         this.selectNSS = false;
 
+        
+
         if(this.filtros.otro_documento === '1'){
             this.selectCedula = true;
         }
@@ -419,6 +421,11 @@ export class DialogBuscarNotarioAlta {
   otro_documento;
   numero_documento;
   search = false;
+  selectDisabled = false;
+  selectCedula = false;
+  selectPasaporte = false;
+  selectLicencia = false;
+  selectNSS = false;
   isIdentificativo;
   notarioSeleccionado;
   dataNotarioSeleccionado: DataNotarioSeleccionado = {} as DataNotarioSeleccionado;
@@ -454,9 +461,9 @@ export class DialogBuscarNotarioAlta {
             nombre: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             rfc: [null, []],
             curp: [null, []],
-            ine: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            ine: [null, []],
             otro_documento: [null, []],
-            numero_documento: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            numero_documento: [null, []],
             fecha_nacimiento: [null, []],
             fecha_defuncion: [null, []],
             celular: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
@@ -479,6 +486,37 @@ export class DialogBuscarNotarioAlta {
                 this.loadingDocumentosIdentificativos = false;
             }
         );
+    }
+
+
+    /**
+     *  Si se selecciona alguna opción desbloqueará el input del número del documento.
+     * @param event Valor del option
+     */
+     seleccionaDoctoD(event){
+        this.selectDisabled = true;
+        this.selectCedula = false;
+        this.selectPasaporte = false;
+        this.selectLicencia = false;
+        this.selectNSS = false;
+
+        console.log("LO QUE SE SELECCIONO "+this.otro_documento);
+
+        if(this.otro_documento === '1'){
+            this.selectCedula = true;
+        }
+
+        if(this.otro_documento === '2'){
+            this.selectPasaporte = true;
+        }
+
+        if(this.otro_documento === '3'){
+            this.selectLicencia = true;
+        }
+
+        if(this.otro_documento === '6'){
+            this.selectNSS = true;
+        }
     }
 
     /** 

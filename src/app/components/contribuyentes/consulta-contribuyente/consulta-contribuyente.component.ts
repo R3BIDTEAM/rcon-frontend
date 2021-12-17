@@ -81,7 +81,7 @@ export class ConsultaContribuyenteComponent implements OnInit {
       apaterno: [null,[Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
       amaterno: [null,[Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
       curp: [null],
-      ine: [null,[Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+      ine: [null],
       iddocumentoidentificativo: [null],
       documentoidentificativo: [null]
     });

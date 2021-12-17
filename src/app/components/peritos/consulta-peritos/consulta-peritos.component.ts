@@ -76,7 +76,7 @@ export class ConsultaPeritosComponent implements OnInit {
             nombre: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             rfc: [null, []],
             curp: [null, []],
-            ine: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            ine: [null, []],
             identificacion: [null],
             idedato: [null],
             registro: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]]    
