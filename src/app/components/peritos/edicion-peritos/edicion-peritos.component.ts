@@ -78,7 +78,8 @@ export class EdicionPeritosComponent implements OnInit {
             rfc: [null, []],
             curp: [null, []],
             ine: [null, []],
-            identificacion: [null],    
+            identificacion: [null],
+            idedato: [null],    
             registro: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]]    
         });
 
@@ -148,7 +149,7 @@ export class EdicionPeritosComponent implements OnInit {
      */
      seleccionaDocto(){
        
-            console.log("LO QUE SE SELECCIONO "+this.identificacion);
+        console.log("LO QUE SE SELECCIONO "+this.identificacion);
         this.selectDisabled = true;
         this.selectCedula = false;
         this.selectPasaporte = false;

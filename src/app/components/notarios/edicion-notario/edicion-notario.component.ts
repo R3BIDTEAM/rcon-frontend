@@ -94,7 +94,8 @@ export class EdicionNotarioComponent implements OnInit {
       rfc: [null, []],
       curp: [null, []],
       ine: [null, []],      
-      numero_documento: [null, []],     
+      numero_documento: [null, []],
+      otro_documento: [null, []],
       celular: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
       email: ['', [Validators.email, Validators.pattern("^\\S{1}.{1,248}\\S{1}$"), Validators.required]],
   });
@@ -163,7 +164,7 @@ export class EdicionNotarioComponent implements OnInit {
 
     if(this.filtros.otro_documento === '6'){
         this.selectNSS = true;
-    }       
+    }
   }
   
   /** 

@@ -8,6 +8,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 
+export interface DatosContribuyente {  
+  identificacion: number;
+  idedato: string;  
+}
+
 export interface DocumentosIdentificativos{
   id_documento: number;
   documento: string;
@@ -30,6 +35,7 @@ export class ConsultaContribuyenteComponent implements OnInit {
   documentos: DocumentosIdentificativos[] = [];
   httpOptions;
   cuentaFormGroup: FormGroup;
+  contribuyente: DatosContribuyente = {} as DatosContribuyente;
   contribuyenteFormGroup: FormGroup;
   tipoBusqueda;
   isIdentificativo: boolean;
@@ -39,6 +45,10 @@ export class ConsultaContribuyenteComponent implements OnInit {
   loadingDocumentosIdentificativos = false;
   @ViewChild('paginator') paginator: MatPaginator;
   selectDisabled = false;
+  selectCedula = false;
+  selectPasaporte = false;
+  selectLicencia = false;
+  selectNSS = false;
 
   constructor(
     private auth: AuthService,
@@ -175,8 +185,30 @@ export class ConsultaContribuyenteComponent implements OnInit {
    *  Si se selecciona alguna opción desbloqueará el input del número del documento.
    * @param event Valor del option
    */
-  seleccionaDocto(){
+  seleccionaDocto(event){
     this.selectDisabled = true;
+    this.selectCedula = false;
+    this.selectPasaporte = false;
+    this.selectLicencia = false;
+    this.selectNSS = false;
+
+    console.log("LO QUE SE SELECCIONO "+this.contribuyente.identificacion);
+
+    if(this.contribuyente.identificacion == 1){
+        this.selectCedula = true;
+    }
+
+    if(this.contribuyente.identificacion == 2){
+        this.selectPasaporte = true;
+    }
+
+    if(this.contribuyente.identificacion == 3){
+        this.selectLicencia = true;
+    }
+
+    if(this.contribuyente.identificacion == 6){
+        this.selectNSS = true;
+    }
   }
 
     /**

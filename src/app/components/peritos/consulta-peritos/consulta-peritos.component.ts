@@ -45,6 +45,10 @@ export class ConsultaPeritosComponent implements OnInit {
     loadingDocumentosIdentificativos = false;
     @ViewChild('paginator') paginator: MatPaginator;
     selectDisabled = false;
+    selectCedula = false;
+    selectPasaporte = false;
+    selectLicencia = false;
+    selectNSS = false;
 
     constructor(
         private http: HttpClient,
@@ -73,7 +77,8 @@ export class ConsultaPeritosComponent implements OnInit {
             rfc: [null, []],
             curp: [null, []],
             ine: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
-            identificacion: [null],    
+            identificacion: [null],
+            idedato: [null],
             registro: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]]    
         });
 
@@ -159,7 +164,28 @@ export class ConsultaPeritosComponent implements OnInit {
      * @param event Valor del option
      */
     seleccionaDocto(){
+        console.log("LO QUE SE SELECCIONO "+this.identificacion);
         this.selectDisabled = true;
+        this.selectCedula = false;
+        this.selectPasaporte = false;
+        this.selectLicencia = false;
+        this.selectNSS = false;
+
+        if(this.identificacion == 1){
+            this.selectCedula = true;
+        }
+
+        if(this.identificacion == 2){
+            this.selectPasaporte = true;
+        }
+
+        if(this.identificacion == 3){
+            this.selectLicencia = true;
+        }
+
+        if(this.identificacion == 6){
+            this.selectNSS = true;
+        }
     }
 
     /**

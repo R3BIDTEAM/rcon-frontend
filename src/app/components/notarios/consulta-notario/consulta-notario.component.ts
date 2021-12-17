@@ -58,8 +58,12 @@ export class ConsultaNotarioComponent implements OnInit {
   queryParamFiltros;
   endpointBusqueda;
   @ViewChild('paginator') paginator: MatPaginator;
-  selectDisabled = false;
   contribuyenteFormGroup: FormGroup;
+  selectDisabled = false;
+  selectCedula = false;
+  selectPasaporte = false;
+  selectLicencia = false;
+  selectNSS = false;
 
   constructor(
     private http: HttpClient,
@@ -90,8 +94,9 @@ export class ConsultaNotarioComponent implements OnInit {
       amaterno: [null,[Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
       curp: [null],
       ine: [null,[Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
-      iddocumentoidentificativo: [null],
-      documentoidentificativo: [null],
+      numero_documento: [null, []],
+      otro_documento: [null, []],
+      estado: [null],
       no_notario: ['', [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]]
     });
 
@@ -193,8 +198,31 @@ export class ConsultaNotarioComponent implements OnInit {
      *  Si se selecciona alguna opción desbloqueará el input del número del documento.
      * @param event Valor del option
      */
-   seleccionaDocto(){
+   seleccionaDocto(event){
     this.selectDisabled = true;
+    this.selectCedula = false;
+    this.selectPasaporte = false;
+    this.selectLicencia = false;
+    this.selectNSS = false;
+
+    console.log("LO QUE SE SELECCIONO "+this.filtros.otro_documento);
+
+    if(this.filtros.otro_documento === '1'){
+        this.selectCedula = true;
+    }
+
+    if(this.filtros.otro_documento === '2'){
+        this.selectPasaporte = true;
+    }
+
+    if(this.filtros.otro_documento === '3'){
+        this.selectLicencia = true;
+    }
+
+    if(this.filtros.otro_documento === '6'){
+        this.selectNSS = true;
+    }
+    
   }
 
     /** 

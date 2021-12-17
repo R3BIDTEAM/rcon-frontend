@@ -76,15 +76,35 @@
                     </div>
                     <mat-form-field appearance="fill" class="col-5">
                         <mat-label>Identificación</mat-label>
-                        <mat-select [(ngModel)]="identificacion" (ngModelChange)="validateSearch();clearInputsIdentNoIdent(true)" [class.spinner]="loadingDocumentosIdentificativos" (selectionChange)="seleccionaDocto()">
+                        <mat-select formControlName="identificacion" [(ngModel)]="identificacion" (ngModelChange)="validateSearch();clearInputsIdentNoIdent(true)" [class.spinner]="loadingDocumentosIdentificativos" (selectionChange)="seleccionaDocto()">
                             <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF">
                                 {{ documento.DESCRIPCION }}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" class="col-5" *ngIf="selectDisabled">
+                    <!-- <mat-form-field appearance="outline" class="col-5" *ngIf="selectDisabled">
                         <mat-label>Número de Identificación</mat-label>
-                        <input matInput [(ngModel)]="idedato" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" (keydown.enter)="getPerito()" style="text-transform: uppercase;" maxlength="250">
+                        <input matInput formControlName="idedato" [(ngModel)]="idedato" (ngModelChange)="validateSearch()" (keyup)="clearInputsIdentNoIdent(true)" (keydown.enter)="getPerito()" style="text-transform: uppercase;" maxlength="250">
+                    </mat-form-field> -->
+                    <mat-form-field appearance="outline" class="col-5" *ngIf="selectCedula">
+                        <mat-label>Número de Identificación</mat-label>
+                        <input matInput placeholder="Ingrese Número del documento" [(ngModel)]="idedato" formControlName="idedato" pattern="\d{8}" [readonly]="inserto" maxlength="250" style="text-transform: uppercase;">
+                        <mat-error *ngIf="consPeritoFormGroup.controls.idedato.errors?.pattern">El número de cédula debe contener 8 dígitos en caso de tener 7 debe incluir un "0"</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="col-5" *ngIf="selectPasaporte">
+                        <mat-label>Número de Identificación</mat-label>
+                        <input matInput placeholder="Ingrese Número del documento" [(ngModel)]="idedato" formControlName="idedato" pattern="\d{1,8}" [readonly]="inserto" maxlength="250" style="text-transform: uppercase;">
+                        <mat-error *ngIf="consPeritoFormGroup.controls.idedato.errors?.pattern">El número del pasaporte no debe ser mayor a 8 dígitos</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="col-5" *ngIf="selectLicencia">
+                        <mat-label>Número de Identificación</mat-label>
+                        <input matInput placeholder="Ingrese Número del documento" [(ngModel)]="idedato" formControlName="idedato" pattern="^\S{10}" [readonly]="inserto" maxlength="250" style="text-transform: uppercase;">
+                        <mat-error *ngIf="consPeritoFormGroup.controls.idedato.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?)</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="col-5" *ngIf="selectNSS">
+                        <mat-label>Número de Identificación</mat-label>
+                        <input matInput placeholder="Ingrese Número del documento" [(ngModel)]="idedato" formControlName="idedato" pattern="\d{11}" [readonly]="inserto" maxlength="250" style="text-transform: uppercase;">
+                        <mat-error *ngIf="consPeritoFormGroup.controls.idedato.errors?.pattern">El número de seguro social (NSS) debe contener 11 números</mat-error>
                     </mat-form-field>
                 </div>
                 </form>
