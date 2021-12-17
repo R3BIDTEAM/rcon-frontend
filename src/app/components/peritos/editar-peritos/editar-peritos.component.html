@@ -88,7 +88,7 @@
                         <div class="col-md-4">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>INE</mat-label>
-                                <input matInput placeholder="Ingrese INE" [(ngModel)]="datoPeritos.ine" formControlName="ine" style="text-transform: uppercase;" maxlength="18">
+                                <input matInput placeholder="Ingrese INE" [(ngModel)]="datoPeritos.ine" formControlName="ine" pattern="[a-zA-Z]{6}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])(?:0[1-9]|[12]\d|3[0123])[hmHM]{1}\d{3}" style="text-transform: uppercase;" maxlength="18">
                                 <mat-error *ngIf="peritoPersonaFormGroup.controls.ine.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="peritoPersonaFormGroup.controls.ine.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
                             </mat-form-field>
@@ -96,20 +96,39 @@
                         <div class="col-md-4">
                             <mat-form-field appearance="fill" style="width: 100%;">
                                 <mat-label>Identificación</mat-label>
-                                <mat-select formControlName="identificacion" [(ngModel)]="datoPeritos.identificacion" [class.spinner]="loadingDocumentosIdentificativos">
+                                <mat-select formControlName="identificacion" [(ngModel)]="datoPeritos.identificacion" [class.spinner]="loadingDocumentosIdentificativos" (selectionChange)="seleccionaDocto()">
                                     <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF">
                                         {{ documento.DESCRIPCION }}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
-                        <div class="col-md-4">
-                            <mat-form-field appearance="outline" style="width: 100%;">
-                                <!-- <mat-label>Dato de la identificación</mat-label> -->
+                        <!-- <div class="col-md-4">
+                            <mat-form-field appearance="outline" style="width: 100%;">                                
                                 <input matInput placeholder="Ingrese Número del documento" [(ngModel)]="datoPeritos.idedato" formControlName="idedato" style="text-transform: uppercase;">
                                 <mat-error *ngIf="peritoPersonaFormGroup.controls.idedato.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
                             </mat-form-field>
-                        </div>
+                        </div> -->
+                        <mat-form-field appearance="outline" class="col-5" *ngIf="selectCedula">
+                            <mat-label>Número de Identificación</mat-label>
+                            <input matInput placeholder="Ingrese Número del documento" [(ngModel)]="datoPeritos.idedato" formControlName="idedato" pattern="\d{8}" [readonly]="inserto" maxlength="250" style="text-transform: uppercase;">
+                            <mat-error *ngIf="peritoPersonaFormGroup.controls.idedato.errors?.pattern">El número de cédula debe contener 8 dígitos en caso de tener 7 debe incluir un "0"</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="col-5" *ngIf="selectPasaporte">
+                            <mat-label>Número de Identificación</mat-label>
+                            <input matInput placeholder="Ingrese Número del documento" [(ngModel)]="datoPeritos.idedato" formControlName="idedato" pattern="\d{1,8}" [readonly]="inserto" maxlength="250" style="text-transform: uppercase;">
+                            <mat-error *ngIf="peritoPersonaFormGroup.controls.idedato.errors?.pattern">El número del pasaporte no debe ser mayor a 8 dígitos</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="col-5" *ngIf="selectLicencia">
+                            <mat-label>Número de Identificación</mat-label>
+                            <input matInput placeholder="Ingrese Número del documento" [(ngModel)]="datoPeritos.idedato" formControlName="idedato" pattern="^\S{10}" [readonly]="inserto" maxlength="250" style="text-transform: uppercase;">
+                            <mat-error *ngIf="peritoPersonaFormGroup.controls.idedato.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?)</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="col-5" *ngIf="selectNSS">
+                            <mat-label>Número de Identificación</mat-label>
+                            <input matInput placeholder="Ingrese Número del documento" [(ngModel)]="datoPeritos.idedato" formControlName="idedato" pattern="\d{11}" [readonly]="inserto" maxlength="250" style="text-transform: uppercase;">
+                            <mat-error *ngIf="peritoPersonaFormGroup.controls.idedato.errors?.pattern">El número de seguro social (NSS) debe contener 11 números</mat-error>
+                        </mat-form-field>
                     </div>
 
                     <div class="row">

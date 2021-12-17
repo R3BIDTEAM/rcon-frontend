@@ -164,6 +164,11 @@ export class EditarPeritosComponent implements OnInit {
     loadingDomicilios = false;
     loadingInmuebles = false;
     loadingDireccionEspecifica = false;
+    selectDisabled = false;
+    selectCedula = false;
+    selectPasaporte = false;
+    selectLicencia = false;
+    selectNSS = false;
     displayedColumnsDom: string[] = ['tipoDir','direccion', 'historial', 'modificar'];
     displayedColumnsInm: string[] = ['inmueble','direccion','domicilio','descripcion','sujeto'];
     displayedColumnsRepdo: string[] = ['representacion','texto','caducidad','editar','eliminar'];
@@ -284,6 +289,34 @@ export class EditarPeritosComponent implements OnInit {
                 this.loadingDocumentosIdentificativos = false;
             }
         );
+    }
+
+    /**
+     *  Si se selecciona alguna opción desbloqueará el input del número del documento.
+     * @param event Valor del option
+     */
+     seleccionaDocto(){
+        this.selectDisabled = true;
+        this.selectCedula = false;
+        this.selectPasaporte = false;
+        this.selectLicencia = false;
+        this.selectNSS = false;
+
+        if(this.datoPeritos.identificacion == 1){
+            this.selectCedula = true;
+        }
+
+        if(this.datoPeritos.identificacion == 2){
+            this.selectPasaporte = true;
+        }
+
+        if(this.datoPeritos.identificacion == 3){
+            this.selectLicencia = true;
+        }
+
+        if(this.datoPeritos.identificacion == 6){
+            this.selectNSS = true;
+        }
     }
 
     /**

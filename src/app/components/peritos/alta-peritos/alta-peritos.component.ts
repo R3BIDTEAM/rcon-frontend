@@ -157,12 +157,7 @@ export class AltaPeritosComponent implements OnInit {
         this.peritoPersonaFormGroup.controls['fechaFin'].setValue(null);
         this.peritoPersonaFormGroup.controls['login'].setValue(null);
         this.inserto = false;
-        this.btnNuevo = false;
-        this.selectDisabled = false;
-        this.selectCedula = false;
-        this.selectPasaporte = false;
-        this.selectLicencia = false;
-        this.selectNSS = false;
+        this.btnNuevo = false;        
         this.buscadoEscrito = 0;
     }
 

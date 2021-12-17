@@ -6,6 +6,10 @@ input,textarea{text-transform: uppercase;}
     margin: 5% 0 5% 0;
 }
 
+.mat-error {
+    font-size: 8px;
+}
+
 .borde {
     border: 2px solid rgb(155, 154, 154);
     padding-left: 10px;

@@ -8,6 +8,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 
+export interface DatosContribuyente {  
+  identificacion: number;
+  idedato: string;  
+}
+
 export interface DocumentosIdentificativos{
   id_documento: number;
   documento: string;
@@ -28,12 +33,18 @@ export class EdicionContribuyenteComponent implements OnInit {
   data = [];
   displayedColumns: string[] = ['nombre', 'datos_identificativos', 'seleccionar'];
   documentos: DocumentosIdentificativos[] = [];
+  contribuyente: DatosContribuyente = {} as DatosContribuyente;
   httpOptions;
   cuentaFormGroup: FormGroup;
   contribuyenteFormGroup: FormGroup;
   tipoBusqueda;
   isIdentificativo: boolean;
   busqueda = false;
+  selectDisabled = false;
+  selectCedula = false;
+  selectPasaporte = false;
+  selectLicencia = false;
+  selectNSS = false;
   queryParamFiltros;
   endpointBusqueda;
   loadingDocumentosIdentificativos = false;
@@ -72,7 +83,7 @@ export class EdicionContribuyenteComponent implements OnInit {
       apaterno: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
       amaterno: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],      
       curp: [null],
-      ine: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+      ine: [null],
       iddocumentoidentificativo: [null],
       documentoidentificativo: [null]
     });
@@ -146,6 +157,36 @@ export class EdicionContribuyenteComponent implements OnInit {
     this.contribuyenteFormGroup.markAsUntouched();
     this.contribuyenteFormGroup.updateValueAndValidity();
   }
+
+  /**
+     *  Si se selecciona alguna opción desbloqueará el input del número del documento.
+     * @param event Valor del option
+     */
+   seleccionaDocto(event){
+    this.selectDisabled = true;
+    this.selectCedula = false;
+    this.selectPasaporte = false;
+    this.selectLicencia = false;
+    this.selectNSS = false;
+
+    console.log("LO QUE SE SELECCIONO "+this.contribuyente.identificacion);
+
+    if(this.contribuyente.identificacion == 1){
+        this.selectCedula = true;
+    }
+
+    if(this.contribuyente.identificacion == 2){
+        this.selectPasaporte = true;
+    }
+
+    if(this.contribuyente.identificacion == 3){
+        this.selectLicencia = true;
+    }
+
+    if(this.contribuyente.identificacion == 6){
+        this.selectNSS = true;
+    }
+}
 
   /**
   * De acuerdo al valor del dato limpiara los campos identificativos o personales.

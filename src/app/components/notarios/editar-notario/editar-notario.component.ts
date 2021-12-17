@@ -149,6 +149,11 @@ export class EditarNotarioComponent implements OnInit {
     loadingDireccionEspecifica = false;
     cambioPersona;
     actCambioPersona = true;
+    selectDisabled = false;
+    selectCedula = false;
+    selectPasaporte = false;
+    selectLicencia = false;
+    selectNSS = false;
     isRequired = true;
     minDate;
 
@@ -186,7 +191,7 @@ export class EditarNotarioComponent implements OnInit {
             nombre: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             rfc: [null],
             curp: [null],
-            ine: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            ine: [null, []],
             identificacion: [null],
             idedato: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             fechaNacimiento: [null],
@@ -230,6 +235,38 @@ export class EditarNotarioComponent implements OnInit {
             this.loadingEstados = false;
         }
         );
+    }
+
+    /**
+     *  Si se selecciona alguna opción desbloqueará el input del número del documento.
+     * @param event Valor del option
+     */
+     seleccionaDocto(event){
+        this.selectDisabled = true;
+        this.selectCedula = false;
+        this.selectPasaporte = false;
+        this.selectLicencia = false;
+        this.selectNSS = false;
+
+        if(this.datosGenerales.otro_documento === '1'){
+            this.selectCedula = true;
+        }
+
+        if(this.datosGenerales.otro_documento === '2'){
+            this.selectPasaporte = true;
+        }
+
+        if(this.datosGenerales.otro_documento === '3'){
+            this.selectLicencia = true;
+        }
+
+        if(this.datosGenerales.otro_documento === '6'){
+            this.selectNSS = true;
+        }
+
+        if(this.datosGenerales.otro_documento === null || this.datosGenerales.otro_documento === ''){
+            this.datosGenerales.numero_documento = '';
+            }
     }
 
     changeRequired(): void {

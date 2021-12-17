@@ -54,13 +54,17 @@ export class EdicionNotarioComponent implements OnInit {
   loadingEstados = false;
   loadingDocumentosIdentificativos = false;
   isIdentificativo;
-  search = false;
+  search = false;    
   isBusqueda;
   queryParamFiltros;
   endpointBusqueda;
   ediNotFormGroup: FormGroup;
   @ViewChild('paginator') paginator: MatPaginator;
   selectDisabled = false;
+  selectCedula = false;
+  selectPasaporte = false;
+  selectLicencia = false;
+  selectNSS = false;
 
   constructor(
     private http: HttpClient,
@@ -89,8 +93,8 @@ export class EdicionNotarioComponent implements OnInit {
       nombre: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
       rfc: [null, []],
       curp: [null, []],
-      ine: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],      
-      numero_documento: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],     
+      ine: [null, []],      
+      numero_documento: [null, []],     
       celular: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
       email: ['', [Validators.email, Validators.pattern("^\\S{1}.{1,248}\\S{1}$"), Validators.required]],
   });
@@ -98,6 +102,7 @@ export class EdicionNotarioComponent implements OnInit {
     this.getDataEstados();
     this.getDataDocumentosIdentificativos();
   }
+  
 
   clean(): void{    
     this.filtros.apellido_paterno = null;
@@ -109,6 +114,7 @@ export class EdicionNotarioComponent implements OnInit {
     this.filtros.numero_documento = null;
     this.filtros.no_notario = null;
     this.filtros.estado = null;
+    this.filtros.otro_documento = null;
    
 }
 
@@ -127,6 +133,37 @@ export class EdicionNotarioComponent implements OnInit {
         this.loadingEstados = false;
       }
     );
+  }
+
+  /**
+     *  Si se selecciona alguna opción desbloqueará el input del número del documento.
+     * @param event Valor del option
+     */
+
+   seleccionaDocto(event){
+    this.selectDisabled = true;
+    this.selectCedula = false;
+    this.selectPasaporte = false;
+    this.selectLicencia = false;
+    this.selectNSS = false;
+
+    console.log("LO QUE SE SELECCIONO "+this.filtros.otro_documento);
+
+    if(this.filtros.otro_documento === '1'){
+        this.selectCedula = true;
+    }
+
+    if(this.filtros.otro_documento === '2'){
+        this.selectPasaporte = true;
+    }
+
+    if(this.filtros.otro_documento === '3'){
+        this.selectLicencia = true;
+    }
+
+    if(this.filtros.otro_documento === '6'){
+        this.selectNSS = true;
+    }       
   }
   
   /** 
@@ -188,15 +225,10 @@ export class EdicionNotarioComponent implements OnInit {
     if(this.filtros.otro_documento === null || this.filtros.otro_documento === ''){
       this.filtros.numero_documento = '';
     }
+
   }
 
-  /**
-   *  Si se selecciona alguna opción desbloqueará el input del número del documento.
-   * @param event Valor del option
-   */
-  seleccionaDocto(){
-    this.selectDisabled = true;
-  }
+  
     /** 
      * Obtiene la información una vez llenados los filtros y realizado la búsqueda
      */

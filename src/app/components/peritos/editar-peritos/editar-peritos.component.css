@@ -35,3 +35,7 @@ tr:nth-child(even) {
 .mat-form-field + .mat-form-field {
     margin-left: 8px;
   }
+
+  .mat-error {
+    font-size: 8px;
+}

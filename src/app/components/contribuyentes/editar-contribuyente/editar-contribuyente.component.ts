@@ -194,6 +194,11 @@ export class EditarContribuyenteComponent implements OnInit {
     cambioPersona;
     actCambioPersona = true;
     isRequired = true;
+    selectDisabled = false;
+    selectCedula = false;
+    selectPasaporte = false;
+    selectLicencia = false;
+    selectNSS = false;
     mensajeConfirma;
     minDate;
     @ViewChild('paginator') paginator: MatPaginator;
@@ -315,6 +320,36 @@ export class EditarContribuyenteComponent implements OnInit {
         this.cambioPersona = this.contribuyente.tipoPersona;
         console.log("TIPO DE PERSONA CAMBIO");
         console.log(this.contribuyente.tipoPersona);
+    }
+
+    /**
+     *  Si se selecciona alguna opción desbloqueará el input del número del documento.
+     * @param event Valor del option
+     */
+     seleccionaDocto(event){
+        this.selectDisabled = true;
+        this.selectCedula = false;
+        this.selectPasaporte = false;
+        this.selectLicencia = false;
+        this.selectNSS = false;
+
+        console.log("LO QUE SE SELECCIONO "+this.contribuyente.identificacion);
+
+        if(this.contribuyente.identificacion == 1){
+            this.selectCedula = true;
+        }
+
+        if(this.contribuyente.identificacion == 2){
+            this.selectPasaporte = true;
+        }
+
+        if(this.contribuyente.identificacion == 3){
+            this.selectLicencia = true;
+        }
+
+        if(this.contribuyente.identificacion == 6){
+            this.selectNSS = true;
+        }
     }
 
     /**
