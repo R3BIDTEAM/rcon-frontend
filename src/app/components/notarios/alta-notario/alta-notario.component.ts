@@ -454,11 +454,11 @@ export class DialogBuscarNotarioAlta {
         this.getDataDocumentosIdentificativos();
 
         this.notPersonaFormGroup = this._formBuilder.group({
-            no_notario: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            no_notario: ['', [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             estado: [null, []],
-            apellido_paterno: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            apellido_paterno: ['', [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             apellido_materno: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
-            nombre: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            nombre: ['', [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             rfc: [null, []],
             curp: [null, []],
             ine: [null, []],
@@ -467,7 +467,7 @@ export class DialogBuscarNotarioAlta {
             fecha_nacimiento: [null, []],
             fecha_defuncion: [null, []],
             celular: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
-            email: ['', [Validators.email, Validators.pattern("^\\S{1}.{1,248}\\S{1}$"), Validators.required]],
+            email: ['', [Validators.email, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
         });
     }
 
@@ -493,7 +493,7 @@ export class DialogBuscarNotarioAlta {
      *  Si se selecciona alguna opción desbloqueará el input del número del documento.
      * @param event Valor del option
      */
-     seleccionaDoctoD(event){
+    seleccionaDoctoD(event){
         this.selectDisabled = true;
         this.selectCedula = false;
         this.selectPasaporte = false;
@@ -533,7 +533,7 @@ export class DialogBuscarNotarioAlta {
             this.curp = null;
             this.ine = null;
             this.otro_documento = null;
-            this.numero_documento = null;
+            this.dataNotarioSeleccionado.numero_documento = null;
         }
     }
 
@@ -550,7 +550,7 @@ export class DialogBuscarNotarioAlta {
         this.curp = '';
         this.ine = '';
         this.otro_documento = '';
-        this.numero_documento = '';
+        this.dataNotarioSeleccionado.numero_documento = '';
         this.search = false;
         this.dataNotarioSeleccionado = {} as DataNotarioSeleccionado;
     }
@@ -559,6 +559,8 @@ export class DialogBuscarNotarioAlta {
     * Verifica que haya campos llenos para habilitar el botón de búsqueda
     */
     validateSearch(){
+        console.log("ACA EL NUMERO");
+        console.log(this.dataNotarioSeleccionado.numero_documento);
         this.search = (
                 this.apellido_paterno ||
                 this.apellido_materno ||
@@ -567,7 +569,7 @@ export class DialogBuscarNotarioAlta {
                 this.curp ||
                 this.ine ||
                 this.otro_documento ||
-                this.numero_documento
+                this.dataNotarioSeleccionado.numero_documento
             ) ? true : false;
     }
 
@@ -589,7 +591,7 @@ export class DialogBuscarNotarioAlta {
             query = query + '&apellidoMaterno=' + this.apellido_materno + '&filtroApellidoMaterno=0';
         }
         if(this.rfc){
-            query = query + '&rfc=' + this.rfc;
+            query = query + '&rfc=' + this.rfc.toLocaleUpperCase();
         }
         if(this.curp){
             query = query + '&curp=' + this.curp;
@@ -597,6 +599,10 @@ export class DialogBuscarNotarioAlta {
         if(this.ine){
             query = query + '&ine=' + this.ine;
         }
+        if(this.otro_documento && this.dataNotarioSeleccionado.numero_documento){
+            query = query + '&iddocidentif=' + this.otro_documento + '&valdocidentif=' + this.dataNotarioSeleccionado.numero_documento;
+        }
+
         
 
         if( this.isIdentificativo ){

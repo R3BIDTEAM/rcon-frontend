@@ -550,6 +550,11 @@ export class DialogAltaBusca {
     @ViewChild('paginator') paginator: MatPaginator;
     loadingDocumentos;
     dataDocumentos: DocumentosIdentificativos[] = [];
+    selectDisabled = false;
+    selectCedula = false;
+    selectPasaporte = false;
+    selectLicencia = false;
+    selectNSS = false;
 
     constructor(
         private auth: AuthService,
@@ -567,22 +572,51 @@ export class DialogAltaBusca {
             this.getDataDocumentos();
         }
 
-        ngOnInit(): void {
-            
-            this.personaFormGroup = this._formBuilder.group({
-                appaterno: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
-                apmaterno: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
-                nombre: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
-                rfc: [null, []],
-                curp: [null, []],
-                ine: [null, []],
-                identificacion: [null],    
-                registro: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]]
-            });
-            
+    ngOnInit(): void {
+        
+        this.personaFormGroup = this._formBuilder.group({
+            appaterno: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            apmaterno: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            nombre: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            rfc: [null, []],
+            curp: [null, []],
+            ine: [null, []],
+            identificacion: [null],
+            idedato: [null],
+            registro: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]]
+        });
+        
+    }
+
+    /**
+     *  Si se selecciona alguna opción desbloqueará el input del número del documento.
+     * @param event Valor del option
+     */
+    seleccionaDoctoD(event){
+        this.selectDisabled = true;
+        this.selectCedula = false;
+        this.selectPasaporte = false;
+        this.selectLicencia = false;
+        this.selectNSS = false;
+
+        console.log("LO QUE SE SELECCIONO "+this.identificacion);
+
+        if(this.identificacion === '1'){
+            this.selectCedula = true;
         }
 
-        
+        if(this.identificacion === '2'){
+            this.selectPasaporte = true;
+        }
+
+        if(this.identificacion === '3'){
+            this.selectLicencia = true;
+        }
+
+        if(this.identificacion === '6'){
+            this.selectNSS = true;
+        }
+    }
 
     /**
      * Valida que exista un dato para activar el bóton de búsqueda.
@@ -597,7 +631,7 @@ export class DialogAltaBusca {
             this.ine ||
             this.registro ||
             this.identificacion ||
-            this.idedato
+            this.datoPeritoPersona.idedato
         ) ? true : false;
     }
 
@@ -634,7 +668,7 @@ export class DialogAltaBusca {
             this.ine = null;
             this.registro = null;
             this.identificacion = null;
-            this.idedato = null;
+            this.datoPeritoPersona.idedato = null;
         }
     }
 
@@ -686,8 +720,8 @@ export class DialogAltaBusca {
         if(this.registro){
             query = query + '&registro=' + this.registro.toLocaleUpperCase();
         }
-        if(this.identificacion && this.idedato){
-            query = query + '&iddocidentif=' + this.identificacion + '&valdocidentif=' + this.idedato.toLocaleUpperCase();
+        if(this.identificacion && this.datoPeritoPersona.idedato){
+            query = query + '&iddocidentif=' + this.identificacion + '&valdocidentif=' + this.datoPeritoPersona.idedato;
         }
 
         if( this.isIdentificativo ){
