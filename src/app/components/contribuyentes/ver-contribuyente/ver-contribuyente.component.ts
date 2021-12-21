@@ -9,6 +9,9 @@ import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@ang
 import { MatPaginator } from '@angular/material/paginator';
 import * as moment from 'moment';
 import { DialogHistorialComponent, DialogDomicilioHistoricoG, DialogPersonalesHistoricoG } from '@comp/dialog-historial/dialog-historial.component';
+import pdfMake from "pdfmake/build/pdfmake";  
+import pdfFonts from "pdfmake/build/vfs_fonts";  
+pdfMake.vfs = pdfFonts.pdfMake.vfs; 
 
 export interface DataRepresentacion {
   tipoPersona: string;
@@ -75,6 +78,7 @@ export class VerContribuyenteComponent implements OnInit {
   contribuyente: DataRepresentacion = {} as DataRepresentacion;
   dataDocumentos: DocumentosIdentificativos[] = [];
   Auditor: boolean = false;
+  historicoCambios = [];
   @ViewChild('paginator') paginator: MatPaginator;
 
   /*Paginado*/
@@ -241,29 +245,29 @@ export class VerContribuyenteComponent implements OnInit {
   * Obtiene los domicilios registrados de la sociedad domicilios particulares y para recibir notificaciones.
   */
   getDomicilioContribuyente(){
-  this.loadingDomicilios = true;
-  let metodo = 'getDireccionesContribuyente';
-  this.http.get(this.endpoint + metodo + '?idPersona='+ this.idContribuyente, this.httpOptions)
-    .subscribe(
-        (res: any) => {
-            this.loadingDomicilios = false;
+    this.loadingDomicilios = true;
+    let metodo = 'getDireccionesContribuyente';
+    this.http.get(this.endpoint + metodo + '?idPersona='+ this.idContribuyente, this.httpOptions)
+      .subscribe(
+          (res: any) => {
+              this.loadingDomicilios = false;
 
-            this.dataSource1 = res.filter(element => element.CODTIPOSDIRECCION !== "N");
-            this.dataSource2 = res.filter(element => element.CODTIPOSDIRECCION === "N");
-            this.total1 = this.dataSource1.length;
-            this.total2 = this.dataSource2.length;
-            this.dataPaginate1 = this.paginate(this.dataSource1, 15, this.pagina1);
-            this.dataPaginate2 = this.paginate(this.dataSource2, 15, this.pagina2);
-        },
-        (error) => {
-            this.loadingDomicilios = false;
-            this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                duration: 10000,
-                horizontalPosition: 'end',
-                verticalPosition: 'top'
-            });
-        }
-    );
+              this.dataSource1 = res.filter(element => element.CODTIPOSDIRECCION !== "N");
+              this.dataSource2 = res.filter(element => element.CODTIPOSDIRECCION === "N");
+              this.total1 = this.dataSource1.length;
+              this.total2 = this.dataSource2.length;
+              this.dataPaginate1 = this.paginate(this.dataSource1, 15, this.pagina1);
+              this.dataPaginate2 = this.paginate(this.dataSource2, 15, this.pagina2);
+          },
+          (error) => {
+              this.loadingDomicilios = false;
+              this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                  duration: 10000,
+                  horizontalPosition: 'end',
+                  verticalPosition: 'top'
+              });
+          }
+      );
   }
 
   /**
@@ -482,6 +486,157 @@ export class VerContribuyenteComponent implements OnInit {
             
         }, 1000);
       }
+    });
+  }
+
+  consultaCambios(){
+    let metodo = 'getCambiosContribuyente';
+    //this.http.get(this.endpoint + metodo + '?idPersona=4493213', this.httpOptions)
+    this.http.get(this.endpoint + metodo + '?idPersona=' + this.idContribuyente, this.httpOptions)
+      .subscribe(
+          (res: any) => {
+            this.historicoCambios = res;
+            if(this.historicoCambios.length > 0){
+              this.generatePDF();
+            }else{
+              this.loadingDomicilios = false;
+              this.snackBar.open('No se han encontrado movimientos', 'Cerrar', {
+                  duration: 10000,
+                  horizontalPosition: 'end',
+                  verticalPosition: 'top'
+              });
+            }
+            
+          },
+          (error) => {
+              this.loadingDomicilios = false;
+              this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                  duration: 10000,
+                  horizontalPosition: 'end',
+                  verticalPosition: 'top'
+              });
+          }
+      );
+  }
+
+  /**
+      * Genera el PDF de histórico cambios
+      */
+  async generatePDF() {
+    
+    let i = 0;
+    //let eldos = [['1','2','3','4','5','6','7'],['1','2','3','4','5','6','7'],['1','2','3','4','5','6','7']];
+    this.historicoCambios
+    let arreglo = [
+      [
+        { text: 'Campo Modificado:', fontSize: 9,  bold: true },
+        { text: 'Valor Antes', fontSize: 9, bold: true },
+        { text: 'Valor despúes', fontSize: 9, bold: true },
+        { text: 'Fecha Cambio', fontSize: 9, bold: true },
+        { text: 'Nombre de usuario', fontSize: 9, bold: true },
+        { text: 'Área', fontSize: 9, bold: true },
+        { text: 'Subarea', fontSize: 9, bold: true }
+      ],
+    ];
+
+    for (let i = 0; i < this.historicoCambios.length; i++) {
+      //console.log(this.historicoCambios[i].campo_modificado);
+      //arreglo.push([{ text:eldos[i][0], fontSize: 9,  bold: true }, { text: eldos[i][1], fontSize: 9, bold: true }, { text: eldos[i][2], fontSize: 9, bold: true }, { text: eldos[i][3], fontSize: 9, bold: true }, { text: eldos[i][4], fontSize: 9, bold: true }, { text: eldos[i][5], fontSize: 9, bold: true }, { text: eldos[i][6], fontSize: 9, bold: true }],  );
+      arreglo.push(
+        [
+          { text: this.historicoCambios[i].campo_modificado, fontSize: 9, bold: false },
+          { text: this.historicoCambios[i].valor_antes, fontSize: 9, bold: false },
+          { text: this.historicoCambios[i].valor_despues, fontSize: 9, bold: false },
+          { text: this.historicoCambios[i].fecha_de_cambio, fontSize: 9, bold: false },
+          { text: this.historicoCambios[i].nombre_de_usuario, fontSize: 9, bold: false },
+          { text: this.historicoCambios[i].area, fontSize: 9, bold: false },
+          { text: this.historicoCambios[i].subarea, fontSize: 9, bold: false }
+        ],
+      );
+    }
+    
+    let docDefinition = {
+      content: [
+        {
+            image: await this.getBase64ImageFromURL(
+            "assets/img/logo_dependencia_rcon.PNG"
+          ),
+          width: 450,
+          alignment: 'center',
+        }, 
+        {  
+            text: 'HISTÓRICO DE CAMBIOS',  
+            fontSize: 9,  
+            alignment: 'center',
+            color: '#000'  
+        }, 
+        {
+            canvas: [
+                {
+                    type: 'line',
+                    color: 'white',
+                    x1: 0,
+                    y1: 5,
+                    x2: 250,
+                    y2: 5,
+                    lineWidth: 0.5
+                }
+            ]
+        },
+        {  
+            table: {  
+                headerRows: 1,  
+                widths: ['14%', '14%', '14%', '14%', '14%', '14%', '16%'],  
+                body:   
+                    arreglo
+                  
+            }  
+        },
+        {
+            canvas: [
+                {
+                    type: 'line',
+                    color: 'white',
+                    x1: 0,
+                    y1: 10,
+                    x2: 250,
+                    y2: 10,
+                    lineWidth: 0.5
+                }
+            ]
+        },
+      ]
+    };
+
+    pdfMake.createPdf(docDefinition).open();
+  }
+
+  /**
+   * Convierte la imagen para que pueda ser visualizada en el PDF
+   */
+  getBase64ImageFromURL(url) {
+    return new Promise((resolve, reject) => {
+      var img = new Image();
+      img.setAttribute("crossOrigin", "anonymous");
+
+      img.onload = () => {
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+
+        var dataURL = canvas.toDataURL("image/png");
+
+        resolve(dataURL);
+      };
+
+      img.onerror = error => {
+        reject(error);
+      };
+
+      img.src = url;
     });
   }
 }
