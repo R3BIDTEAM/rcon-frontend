@@ -113,6 +113,12 @@ export class ReporteComponent implements OnInit {
                 },
                 (error) => {
                     this.loading = false;
+					dialogRef.close();
+					this.snackBar.open(error.error.mensaje, 'Cerrar', {
+						duration: 10000,
+						horizontalPosition: 'end',
+						verticalPosition: 'top'
+					});
                 }
             );
 	}
