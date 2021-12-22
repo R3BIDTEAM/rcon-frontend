@@ -43,6 +43,10 @@ export class MenuComponent implements OnInit {
         { nombre: 'Edición de sociedad', ruta: '/main/edicion-sociedad', icono: 'edit', identificador: '3' },
     ];
 
+    reporte: any[] = [
+        { nombre: 'Reporte', ruta: '/main/reporte', icono: 'file', identificador: '1' },
+    ];
+
     path: string;
     path2: string;
     pathRefresh: void;
@@ -53,6 +57,7 @@ export class MenuComponent implements OnInit {
     step2: string;
     step3: string;
     step4: string;
+    step5: string;
     constructor(private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute, private location:Location) {
 
 
@@ -117,21 +122,31 @@ export class MenuComponent implements OnInit {
             this.step2 = null;
             this.step3 = null;
             this.step4 = null;
+            this.step5 = ruta;
         }else if(ruta == '/main/alta-notario' || ruta == '/main/consulta-notario' || ruta == '/main/edicion-notario'){
             this.step = null;
             this.step2 = ruta;
             this.step3 = null;
             this.step4 = null;
+            this.step5 = ruta;
         }else if(ruta == '/main/alta-peritos' || ruta == '/main/consulta-peritos' || ruta == '/main/edicion-peritos'){
             this.step = null;
             this.step2 = null;
             this.step3 = ruta;
             this.step4 = null;
+            this.step5 = ruta;
         }else if(ruta == '/main/alta-sociedad' || ruta == '/main/consulta-sociedad' || ruta == '/main/edicion-sociedad'){
             this.step = null;
             this.step2 = null;
             this.step3 = null;
             this.step4 = ruta;
+            this.step5 = null;
+        }else if(ruta == '/main/reporte'){
+            this.step = null;
+            this.step2 = null;
+            this.step3 = null;
+            this.step4 = null;
+            this.step5 = ruta;
         }
         console.log("falg");
         console.log(ruta);

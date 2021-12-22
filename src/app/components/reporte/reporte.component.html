@@ -1,0 +1,61 @@
+<mat-card>
+    <div class="borde">
+        <h1 class="titulo-cdmx" style="margin-top: 15px;">Reporte de Movimientos</h1>
+        <mat-card-content>
+            <form [formGroup]="reporteFormGroup">
+                <!-- Búsqueda por nombre -->
+                <div class="row">
+                    <div class="col-1 text-center">
+                    </div>
+                    <mat-form-field appearance="fill" class="col-5">
+                        <mat-label>Fecha Inicio:</mat-label>
+                        <input matInput formControlName="fechaInicio" [matDatepicker]="pickfechaInicio" (dateChange)="fechaTope2()" readonly>
+                        <mat-datepicker-toggle matSuffix [for]="pickfechaInicio"></mat-datepicker-toggle>
+                        <mat-datepicker #pickfechaInicio></mat-datepicker>
+                        <mat-error *ngIf="reporteFormGroup.controls.fechaInicio.errors?.required">Requerido</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="col-5">
+                        <mat-label>Fecha Fin:</mat-label>
+                        <input matInput formControlName="fechaFin" [matDatepicker]="pickfechaFin" [min]="minDate2" readonly>
+                        <mat-datepicker-toggle matSuffix [for]="pickfechaFin"></mat-datepicker-toggle>
+                        <mat-datepicker #pickfechaFin></mat-datepicker>
+                        <mat-error *ngIf="reporteFormGroup.controls.fechaFin.errors?.required">Requerido</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <!-- Búsqueda por OTROS -->
+                <div class="row">
+                    <div class="col-1 text-center">
+                    </div>
+                        <mat-form-field appearance="outline" class="col-5">
+                            <mat-label>Usuario</mat-label>
+                            <input matInput formControlName="usuario" placeholder="Ingrese Usuario" maxlength="250" readonly>
+                        </mat-form-field>
+                        <div id="BotonBuscar" Style="display: block">
+                            <button mat-icon-button color="primary" (click)="openDialogUsuario();" aria-label="Buscar Usuario" matTooltip="Buscar Usuario">
+                                <mat-icon>search</mat-icon>
+                            </button>
+                        </div>    
+                </div>
+                <!-- Fin de OTROS -->
+            </form>
+            <div class="row">
+                <div class="col-md-2 offset-md-6" style="padding-left: 0px;">
+                    <div class="d-flex flex-row-reverse">
+                        <button mat-stroked-button color="accent" aria-label="Limpiar Filtros" matTooltip="Limpiar Filtros" (click)="clean()">
+                            Limpiar <mat-icon style="display: inherit; width: 15px;">delete</mat-icon>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-2" style="padding-left: 0px;">
+                    <div class="d-flex flex-row-reverse">                       
+                        <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Generar reporte" matTooltip="Generar reporte" (click)="getReporte()"  [disabled]="!search">
+                            Generar Reporte
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <br>
+        </mat-card-content>
+    </div>
+</mat-card>

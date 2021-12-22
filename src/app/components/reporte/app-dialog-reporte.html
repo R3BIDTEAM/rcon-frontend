@@ -1,0 +1,97 @@
+<h1 mat-dialog-title class="verde-cdmx">Búqueda de Usuario</h1>
+<div mat-dialog-content (keydown.enter)="getUsuario()">
+    <mat-card-content>
+        <!-- Búsqueda por nombre y/o RFC -->
+        <form [formGroup]="personaFormGroup">        
+            <div class="row">
+                    <mat-form-field appearance="outline" class="col-6">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput formControlName="nombre" (ngModelChange)="validateSearchBuscaP()" placeholder="Ingrese el nombre" style="text-transform: uppercase;" maxlength="250">
+                        <mat-error *ngIf="personaFormGroup.controls.nombre.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="col-6">
+                        <mat-label>RFC</mat-label>
+                        <input matInput formControlName="rfc" (ngModelChange)="validateSearchBuscaP()" placeholder="Ingrese el RFC" pattern="^([A-ZÑ&]{4})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" style="text-transform: uppercase;">
+                        <mat-error *ngIf="personaFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 4 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
+                    </mat-form-field>
+            </div>
+            <!-- Fin de nombre -->
+
+            <!-- Búsqueda por Usuario/Login -->
+            <div class="row">
+                    <mat-form-field appearance="outline" class="col-6">
+                        <mat-label>Usuario/Login</mat-label>
+                        <input matInput formControlName="usuario" (ngModelChange)="validateSearchBuscaP()" placeholder="Ingrese el usuario/login" style="text-transform: uppercase;">
+                        <mat-error *ngIf="personaFormGroup.controls.usuario.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
+                    </mat-form-field>                    
+            </div>
+            <!-- Fin de Usuario/Login -->
+        </form>
+        
+        <div class="row">
+            <div class="col-md-2 offset-md-8" style="padding-left: 0px;">
+                <div class="d-flex flex-row-reverse">                       
+                    <button mat-stroked-button color="accent" aria-label="Limpiar Filtros" matTooltip="Limpiar Filtros" (click)="cleanBusca()">
+                        Limpiar <mat-icon style="display: inherit; width: 15px;">delete</mat-icon>
+                    </button>
+                                            
+                </div>
+            </div>
+            <div class="col-md-2" style="padding-left: 0px;">
+                <div class="d-flex flex-row-reverse">                       
+                    <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="getUsuario()" [disabled]="!search">
+                        Buscar
+                    </button>
+                </div>
+            </div>
+        </div>
+        <br>
+            <ng-container>
+                <div style="padding: 30px; text-align: center;" *ngIf="loading">
+                    <mat-spinner style="margin:0 auto;"></mat-spinner>
+                    <p>Cargando...</p>
+                </div>
+                <div class="alert alert-info" *ngIf="dataSource.length == 0 && !loading">
+                    No hay registro para el filtro seleccionado
+                </div> 
+                <table mat-table [dataSource]="dataPaginate" *ngIf="!loading && dataSource.length > 0">
+                    <ng-container matColumnDef="nombre">
+                        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                        <td mat-cell *matCellDef="let element"> 
+                            {{ (element.nombre) ? element.nombre : element.NOMBRE}}
+                            {{ (element.apellidopaterno) ? element.apellidopaterno : element.APELLIDOPATERNO }}
+                            {{ (element.apellidomaterno) ? element.apellidomaterno : element.APELLIDOMATERNO }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="datos">
+                        <th mat-header-cell *matHeaderCellDef> Datos Identificativos </th>
+                        <td mat-cell *matCellDef="let element"> 
+                            RFC: {{ (element.rfc) ? element.rfc : element.RFC }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="login">
+                        <th mat-header-cell *matHeaderCellDef> Usuario/Login: </th>
+                        <td mat-cell *matCellDef="let element"> 
+                            {{ (element.login) ? element.login : element.RFC }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-radio-group [(ngModel)]="optionPeritoPersona">
+                                <mat-radio-button [value]="element" (change)="usuarioSelected(element)"></mat-radio-button>
+                            </mat-radio-group>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <mat-paginator #paginator [length]="total" [pageSize]="pageSize" [pageSizeOptions]="[pageSize]" [showFirstLastButtons]="true" (page)="paginado($event)">
+                </mat-paginator>
+            </ng-container>
+    </mat-card-content>
+</div>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cerrar</button>
+    <button mat-flat-button color="primary" [mat-dialog-close]="datoPeritoPersona"  [disabled]="btnDisabled">Aceptar</button>
+</mat-dialog-actions>

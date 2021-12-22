@@ -32,6 +32,13 @@
                 </ul>
             </mat-nav-list>
         </ng-container>
+        <ng-container *ngIf="menu.ruta === '/sociedad'">
+            <mat-nav-list style="margin-left: -10px; font-size: 16px;">
+                <ul style="list-style: none;">
+                    <li  class="li_menu" style="padding-top: 10px; padding-bottom: 10px; cursor: pointer;" *ngFor="let opcion of reporte" [routerLink]="opcion.ruta"  [ngClass]="{'verde': step4 === opcion.ruta}" (click)="elactive(opcion.ruta)" id="sociedad{{opcion.identificador}}"><mat-icon>{{opcion.icono}}</mat-icon> {{opcion.nombre}}</li>
+                </ul>
+            </mat-nav-list>
+        </ng-container>
     </ng-container>
 </mat-selection-list>
 
