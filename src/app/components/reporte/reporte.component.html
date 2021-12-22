@@ -16,7 +16,7 @@
                     </mat-form-field>
                     <mat-form-field appearance="fill" class="col-5">
                         <mat-label>Fecha Fin:</mat-label>
-                        <input matInput formControlName="fechaFin" [matDatepicker]="pickfechaFin" [min]="minDate2" readonly>
+                        <input matInput formControlName="fechaFin" [matDatepicker]="pickfechaFin" [min]="minDate2" [max]="maxDate2" readonly>
                         <mat-datepicker-toggle matSuffix [for]="pickfechaFin"></mat-datepicker-toggle>
                         <mat-datepicker #pickfechaFin></mat-datepicker>
                         <mat-error *ngIf="reporteFormGroup.controls.fechaFin.errors?.required">Requerido</mat-error>
@@ -24,7 +24,7 @@
                 </div>
 
                 <!-- Búsqueda por OTROS -->
-                <div class="row">
+                <div class="row" *ngIf="botonDisabled">
                     <div class="col-1 text-center">
                     </div>
                         <mat-form-field appearance="outline" class="col-5">

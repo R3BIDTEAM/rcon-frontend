@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import * as moment from 'moment';
+import { DialogCargaComponent } from '@comp/dialog-carga/dialog-carga.component'
 import { DialogHistorialComponent, DialogDomicilioHistoricoG, DialogPersonalesHistoricoG } from '@comp/dialog-historial/dialog-historial.component';
 import pdfMake from "pdfmake/build/pdfmake";  
 import pdfFonts from "pdfmake/build/vfs_fonts";  
@@ -79,6 +80,10 @@ export class VerContribuyenteComponent implements OnInit {
   dataDocumentos: DocumentosIdentificativos[] = [];
   Auditor: boolean = false;
   historicoCambios = [];
+  infoContribuyente = [];
+  infoContribuyenteNombre;
+  infoContribuyenteCurp;
+  infoContribuyenteRfc;
   @ViewChild('paginator') paginator: MatPaginator;
 
   /*Paginado*/
@@ -489,8 +494,47 @@ export class VerContribuyenteComponent implements OnInit {
     });
   }
 
+  consultaInfoCambios(){
+    this.infoContribuyenteNombre = null;
+    let metodo = 'getInfoContribuyente';
+    const dialogRef = this.dialog.open(DialogCargaComponent, {
+			width: '800px',
+		});
+    this.http.get(this.endpoint + metodo + '?idPersona=' + this.idContribuyente, this.httpOptions)
+      .subscribe(
+          (res: any) => {
+            this.infoContribuyente = res.contribuyente;
+            if(this.infoContribuyente[0].IDPERSONA){
+              this.infoContribuyenteNombre = this.infoContribuyente[0].NOMBRE + ' ' + this.infoContribuyente[0].APELLIDOPATERNO + ' ' + this.infoContribuyente[0].APELLIDOMATERNO;
+              this.infoContribuyenteRfc = (this.infoContribuyente[0].RFC) ? 'RFC: ' + this.infoContribuyente[0].RFC : 'CURP: ' + this.infoContribuyente[0].CURP;
+              this.consultaCambios();
+              dialogRef.close();
+            }else{
+              this.loadingDomicilios = false;
+              this.snackBar.open('No se encontro información', 'Cerrar', {
+                  duration: 10000,
+                  horizontalPosition: 'end',
+                  verticalPosition: 'top'
+              });
+            }
+            
+          },
+          (error) => {
+              this.loadingDomicilios = false;
+              this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                  duration: 10000,
+                  horizontalPosition: 'end',
+                  verticalPosition: 'top'
+              });
+          }
+      );
+  }
+
   consultaCambios(){
     let metodo = 'getCambiosContribuyente';
+    const dialogRef = this.dialog.open(DialogCargaComponent, {
+			width: '800px',
+		});
     //this.http.get(this.endpoint + metodo + '?idPersona=4493213', this.httpOptions)
     this.http.get(this.endpoint + metodo + '?idPersona=' + this.idContribuyente, this.httpOptions)
       .subscribe(
@@ -498,6 +542,7 @@ export class VerContribuyenteComponent implements OnInit {
             this.historicoCambios = res;
             if(this.historicoCambios.length > 0){
               this.generatePDF();
+              dialogRef.close();
             }else{
               this.loadingDomicilios = false;
               this.snackBar.open('No se han encontrado movimientos', 'Cerrar', {
@@ -559,7 +604,7 @@ export class VerContribuyenteComponent implements OnInit {
       content: [
         {
             image: await this.getBase64ImageFromURL(
-            "assets/img/logo_dependencia_rcon.PNG"
+            "assets/img/logo_dependencia_vino.png"
           ),
           width: 450,
           alignment: 'center',
@@ -576,13 +621,32 @@ export class VerContribuyenteComponent implements OnInit {
                     type: 'line',
                     color: 'white',
                     x1: 0,
-                    y1: 5,
+                    y1: 15,
                     x2: 250,
                     y2: 5,
                     lineWidth: 0.5
                 }
             ]
         },
+        {  
+          text: 'Nombre: ' + this.infoContribuyenteNombre + '   ' + this.infoContribuyenteRfc,  
+          fontSize: 9,  
+          alignment: 'center',
+          color: '#000'  
+      }, 
+      {
+          canvas: [
+              {
+                  type: 'line',
+                  color: 'white',
+                  x1: 0,
+                  y1: 5,
+                  x2: 250,
+                  y2: 5,
+                  lineWidth: 0.5
+              }
+          ]
+      },
         {  
             table: {  
                 headerRows: 1,  

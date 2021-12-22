@@ -26,6 +26,9 @@ export class ReporteComponent implements OnInit {
 	dataSource;
 	search = true;
 	downloading;
+    rol;
+    botonDisabled = false;
+
 	constructor(
 		private auth: AuthService,
 		private http: HttpClient,
@@ -48,13 +51,22 @@ export class ReporteComponent implements OnInit {
             fechaFin: [null, []],
 			usuario: [null, []]
 		});
+
+        this.rol = this.auth.getSession().userData.rol_nombre;
+        if(this.rol == 'SUPERVISOR RCON' || this.rol == 'Administrador'){
+            this.botonDisabled = true;
+        }else{
+            this.botonDisabled = false;
+        }
 	}
 
     minDate2 = '';
+    maxDate2 = '';
 
     fechaTope2(){
         this.reporteFormGroup.controls['fechaFin'].setValue(null);
-        this.minDate2 = moment(this.reporteFormGroup.controls['fechaInicio'].value).add(2, 'd').format('YYYY-MM-DD');  
+        this.minDate2 = moment(this.reporteFormGroup.controls['fechaInicio'].value).add(2, 'd').format('YYYY-MM-DD');
+        this.maxDate2 = moment(this.reporteFormGroup.controls['fechaInicio'].value).add(31, 'd').format('YYYY-MM-DD');
     }
 
 	/**
@@ -92,8 +104,12 @@ export class ReporteComponent implements OnInit {
 			query = query + 'fecha_ini=' + moment(this.reporteFormGroup.value.fechaInicio).format('YYYY-MM-DD') + '&fecha_fin='+ moment(this.reporteFormGroup.value.fechaFin).format('YYYY-MM-DD');
 		}
 		
+        if(this.rol !== 'SUPERVISOR RCON' && this.rol !== 'Administrador'){
+            this.idUsuario = this.auth.getSession().userData.id_usuario;
+        }
+
 		if(this.idUsuario){
-			query = query  + '&id_usuario=' + this.idUsuario;
+            query = query  + '&id_usuario=' + this.idUsuario;
 		}
 
 		const dialogRef = this.dialog.open(DialogCargaComponent, {
@@ -103,13 +119,18 @@ export class ReporteComponent implements OnInit {
             .subscribe(
                 (res: any) => {
                     this.loading = false;
-                    this.dataSource = res;
-                    // this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-                    // this.total = this.dataSource.length; 
-                    // this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
-					this.downloadInforme();
-					dialogRef.close();
+                    dialogRef.close();
+                    if(!res.mensaje){
+                        this.dataSource = res;
+                        console.log(this.dataSource);
+                        this.downloadInforme();
+                    }else{
+                        this.snackBar.open(res.mensaje, 'Cerrar', {
+                            duration: 10000,
+                            horizontalPosition: 'end',
+                            verticalPosition: 'top'
+                        });
+                    }
                 },
                 (error) => {
                     this.loading = false;
