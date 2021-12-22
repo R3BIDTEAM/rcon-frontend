@@ -7,6 +7,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as moment from 'moment';
+import { ExcelService } from '@serv/excel.service';
+import { DialogCargaComponent } from '@comp/dialog-carga/dialog-carga.component';
 
 @Component({
 	selector: 'app-reporte',
@@ -23,13 +25,14 @@ export class ReporteComponent implements OnInit {
 	loading;
 	dataSource;
 	search = true;
-
+	downloading;
 	constructor(
 		private auth: AuthService,
 		private http: HttpClient,
 		private _formBuilder: FormBuilder,
 		private snackBar: MatSnackBar,
 		public dialog: MatDialog,
+		private excelService: ExcelService
 	) { }
 
 	ngOnInit(): void {
@@ -61,6 +64,7 @@ export class ReporteComponent implements OnInit {
         this.reporteFormGroup.controls['fechaInicio'].setValue(null);
         this.reporteFormGroup.controls['fechaFin'].setValue(null);
         this.reporteFormGroup.controls['usuario'].setValue(null);
+		this.idUsuario = null;
     }
 
 	/**
@@ -92,20 +96,47 @@ export class ReporteComponent implements OnInit {
 			query = query  + '&id_usuario=' + this.idUsuario;
 		}
 
+		const dialogRef = this.dialog.open(DialogCargaComponent, {
+			width: '800px',
+		});
 		this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
-                    this.dataSource = res.data;
+                    this.dataSource = res;
                     // this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                     // this.total = this.dataSource.length; 
                     // this.paginator.pageIndex = 0;
                     console.log(this.dataSource);
+					this.downloadInforme();
+					dialogRef.close();
                 },
                 (error) => {
                     this.loading = false;
                 }
             );
+	}
+
+	downloadInforme(): void {
+		this.downloading = true;
+		let tipo = 'E'
+		let head = [['NUM', 'FECHA', 'CUENTA', 'CAMPO MODIFICADO', 'VALOR ANTERIOR', 'VALOR DESPÚES']];
+		let data = [];
+		switch(tipo) {
+			case 'E': {
+				this.dataSource.forEach(element => data.push([element.numero, element.fecha_de_cambio, element.cuenta, element.campo_modificado, element.valor_antes, element.valor_despues]));
+				break;
+			}
+		default: {
+			this.dataSource.forEach(element => data.push([element.numero, element.fecha_de_cambio, element.cuenta, element.campo_modificado, element.valor_antes, element.valor_despues]));
+			break; 
+		   } 
+		}     
+
+		let fechasR = moment(this.reporteFormGroup.value.fechaInicio).format('YYYY-MM-DD') + '_' + moment(this.reporteFormGroup.value.fechaFin).format('YYYY-MM-DD');
+		this.excelService.exportAsExcelFile(head[0], data, 'Rep_Mov_' + fechasR);
+	
+		this.downloading = false;
 	}
 }
 

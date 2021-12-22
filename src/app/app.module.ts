@@ -63,6 +63,7 @@ import { DialogConfirmacionComponent, DialogsCambiaPersona } from './components/
 import { DialogHistorialComponent, DialogHistorialRepDetalleG, DialogDomicilioHistoricoG, DialogDomicilioHistoricoEspecificoG,
           DialogPersonalesHistoricoG, DialogPersonalesHistoricoEspecificoG } from './components/dialog-historial/dialog-historial.component';
 import { ReporteComponent, DialogBuscaUsuario } from './components/reporte/reporte.component';
+import { DialogCargaComponent } from './components/dialog-carga/dialog-carga.component';
 
 @NgModule({
   declarations: [
@@ -179,7 +180,8 @@ import { ReporteComponent, DialogBuscaUsuario } from './components/reporte/repor
     DialogPersonalesHistoricoG,
     DialogPersonalesHistoricoEspecificoG,
     ReporteComponent,
-    DialogBuscaUsuario
+    DialogBuscaUsuario,
+    DialogCargaComponent
   ],
   imports: [
     BrowserModule,

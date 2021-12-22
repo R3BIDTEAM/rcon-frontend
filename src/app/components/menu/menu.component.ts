@@ -23,6 +23,7 @@ export class MenuComponent implements OnInit {
         { nombre: 'Alta de contribuyente', ruta: '/main/alta-contribuyente', icono: 'add', identificador: '1' },
         { nombre: 'Consulta de contribuyente', ruta: '/main/consulta-contribuyente', icono: 'search', identificador: '2' },
         { nombre: 'Edición de contribuyente', ruta: '/main/edicion-contribuyente', icono: 'edit', identificador: '3' },
+        { nombre: 'Reporte', ruta: '/main/reporte', icono: 'assessment', identificador: '4' },
     ];
 
     notarios: any[] = [
@@ -43,9 +44,9 @@ export class MenuComponent implements OnInit {
         { nombre: 'Edición de sociedad', ruta: '/main/edicion-sociedad', icono: 'edit', identificador: '3' },
     ];
 
-    reporte: any[] = [
-        { nombre: 'Reporte', ruta: '/main/reporte', icono: 'file', identificador: '1' },
-    ];
+    // reporte: any[] = [
+    //     { nombre: 'Reporte', ruta: '/main/reporte', icono: 'file', identificador: '1' },
+    // ];
 
     path: string;
     path2: string;
@@ -117,7 +118,7 @@ export class MenuComponent implements OnInit {
     }
 
     elactive(ruta){
-        if(ruta == '/main/alta-contribuyente' || ruta == '/main/consulta-contribuyente' || ruta == '/main/edicion-contribuyente'){
+        if(ruta == '/main/alta-contribuyente' || ruta == '/main/consulta-contribuyente' || ruta == '/main/edicion-contribuyente' || ruta == '/main/reporte'){
             this.step = ruta;
             this.step2 = null;
             this.step3 = null;
@@ -141,13 +142,13 @@ export class MenuComponent implements OnInit {
             this.step3 = null;
             this.step4 = ruta;
             this.step5 = null;
-        }else if(ruta == '/main/reporte'){
-            this.step = null;
-            this.step2 = null;
-            this.step3 = null;
-            this.step4 = null;
-            this.step5 = ruta;
-        }
+        }//else if(ruta == '/main/reporte'){
+        //     this.step = null;
+        //     this.step2 = null;
+        //     this.step3 = null;
+        //     this.step4 = null;
+        //     this.step5 = ruta;
+        // }
         console.log("falg");
         console.log(ruta);
     }
