@@ -1,4 +1,5 @@
 <mat-card>
+    <h1 class="titulo-cdmx" style="margin-top: 15px; margin-bottom: 20px;">Alta de Peritos</h1>
     <div style="padding: 30px; text-align: center;" *ngIf="loading">
         <mat-spinner style="margin:0 auto;"></mat-spinner>
         <p>Cargando...</p>
@@ -22,9 +23,9 @@
         </mat-card-header>
         <hr>
         <br>
-        <mat-card-header style="padding-left: 7%;">
+        <!-- <mat-card-header style="padding-left: 7%;">
             <mat-card-title>Alta de Peritos</mat-card-title>
-        </mat-card-header>
+        </mat-card-header> -->
         <mat-card-content>
             <form [formGroup]="peritoPersonaFormGroup">
                 <!-- Búsqueda por nombre -->
