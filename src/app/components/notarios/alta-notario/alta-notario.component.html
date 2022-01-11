@@ -139,8 +139,8 @@
                         <mat-label>E-Mail *</mat-label>
                         <input matInput #email type="email" [email]="true" placeholder="Ingrese E-mail" formControlName="email" [(ngModel)]="filtros.email" placeholder="Ingrese Email" style="text-transform: none!important;" maxlength="250">
                         <mat-error *ngIf="notarioFormGroup.controls.email.errors?.required">Requerido</mat-error>
-                        <mat-error *ngIf="notarioFormGroup.hasError('email', 'email') && notarioFormGroup.get('email').touched">Correo invalido</mat-error>
-                        <mat-error *ngIf="notarioFormGroup.controls.email.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
+                        <mat-error *ngIf="notarioFormGroup.hasError('email', 'email') && notarioFormGroup.get('email').touched">El campo correo electrónico debe cumplir la estructura "usuario@dominio".</mat-error>
+                        <mat-error *ngIf="notarioFormGroup.controls.email.errors?.pattern">El campo correo electrónico debe cumplir la estructura "usuario@dominio".</mat-error>
                     </mat-form-field>
                 </div>
 

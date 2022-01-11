@@ -74,8 +74,8 @@
                                 <mat-label>E-Mail *</mat-label>
                                 <input matInput type="email" [email]="true" [disabled]="inserto" [readonly]="inserto" formControlName="email" maxlength="250" placeholder="Ingrese E-mail">
                                 <mat-error *ngIf="sociedadFormGroup.controls.email.errors?.required">Requerido</mat-error>
-                                <mat-error *ngIf="sociedadFormGroup.hasError('email', 'email') && sociedadFormGroup.get('email').touched">Correo invalido</mat-error>
-                                <mat-error *ngIf="sociedadFormGroup.controls.email.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
+                                <mat-error *ngIf="sociedadFormGroup.hasError('email', 'email') && sociedadFormGroup.get('email').touched">El campo correo electrónico debe cumplir la estructura "usuario@dominio".</mat-error>
+                                <mat-error *ngIf="sociedadFormGroup.controls.email.errors?.pattern">El campo correo electrónico debe cumplir la estructura "usuario@dominio".</mat-error>
                             </mat-form-field>
                         </div>
 

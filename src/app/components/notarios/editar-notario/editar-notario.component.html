@@ -150,8 +150,8 @@
                         <mat-label>E-Mail *</mat-label>
                         <input matInput formControlName="email" placeholder="Ingrese E-mail" [(ngModel)]="datosGenerales.email" style="text-transform: none!important;" maxlength="250">
                         <mat-error *ngIf="personaFormGroup.controls.email.errors?.required">Requerido</mat-error>
-                        <mat-error *ngIf="personaFormGroup.hasError('email', 'email') && personaFormGroup.get('email').touched">Correo invalido</mat-error>
-                        <mat-error *ngIf="personaFormGroup.controls.email.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?)</mat-error>
+                        <mat-error *ngIf="personaFormGroup.hasError('email', 'email') && personaFormGroup.get('email').touched">El campo correo electrónico debe cumplir la estructura "usuario@dominio".</mat-error>
+                        <mat-error *ngIf="personaFormGroup.controls.email.errors?.pattern">El campo correo electrónico debe cumplir la estructura "usuario@dominio".</mat-error>
                         </mat-form-field>
                 </div>
             </form>
