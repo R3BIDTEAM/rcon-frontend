@@ -71,15 +71,15 @@ export class ConsultaPeritosComponent implements OnInit {
         };
 
         this.consPeritoFormGroup = this._formBuilder.group({
-            appaterno: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            appaterno: ['', [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             apmaterno: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
-            nombre: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            nombre: ['', [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             rfc: [null, []],
             curp: [null, []],
             ine: [null, []],
             identificacion: [null],
             idedato: [null],
-            registro: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]]    
+            registro: ['', [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]]    
         });
 
         this.getDataDocumentosIdentificativos();

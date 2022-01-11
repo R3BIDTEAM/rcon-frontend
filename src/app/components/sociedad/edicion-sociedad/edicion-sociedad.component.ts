@@ -48,9 +48,9 @@ export class EdicionSociedadComponent implements OnInit {
         };
 
         this.ediSociedadFormGroup = this._formBuilder.group({
-            razonSocial: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
-            rfc: ['', [Validators.required]],
-            registro: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],    
+            razonSocial: ['', [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            rfc: ['', []],
+            registro: ['', [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],    
           });
     }
 

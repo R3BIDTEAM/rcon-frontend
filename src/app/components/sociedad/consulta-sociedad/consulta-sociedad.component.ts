@@ -52,13 +52,13 @@ export class ConsultaSociedadComponent implements OnInit {
         };
 
         this.consSociedadFormGroup = this._formBuilder.group({
-            razonSocial: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
-            rfc: ['', [Validators.required]],
-            registro: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            razonSocial: ['', [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            rfc: ['', []],
+            registro: ['', [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             fecha_alta: [null],
             fecha_baja: [null],
-            email: ['', [Validators.email, Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
-            login: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            email: ['', [Validators.email, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            login: ['', [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
           });
     }
 

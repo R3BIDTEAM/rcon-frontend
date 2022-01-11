@@ -165,7 +165,8 @@ export class AltaContribuyenteComponent implements OnInit {
     selectCedula = false;
     selectPasaporte = false;
     selectLicencia = false;
-    selectNSS = false;
+    selectNSS = false;   
+    
 
     /*PAGINADOS*/
     dataSource1 = [];
@@ -204,39 +205,42 @@ export class AltaContribuyenteComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        
         this.httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
             Authorization: this.auth.getSession().token
             })
-        };
+        };       
+
+            this.fisicaFormGroup = this._formBuilder.group({
+                nombre: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+                apaterno: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+                amaterno: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+                rfc: [null, []],
+                curp: [null, []],
+                ine: [null, []],
+                idDocIdent: ['', []],
+                docIdent: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+                fechaNacimiento: [null, []],
+                fechaDefuncion: [null, []],
+                celular: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
+                email: ['', [Validators.email, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            });
     
-        this.fisicaFormGroup = this._formBuilder.group({
-            nombre: [null, [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
-            apaterno: [null, [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
-            amaterno: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
-            rfc: [null, []],
-            curp: [null, []],
-            ine: [null, []],
-            idDocIdent: ['', []],
-            docIdent: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
-            fechaNacimiento: [null, []],
-            fechaDefuncion: [null, []],
-            celular: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
-            email: ['', [Validators.email, Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
-        });
-
-        this.moralFormGroup = this._formBuilder.group({
-            nombre: [null, [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
-            rfc: [null, [Validators.required]],
-            actPreponderante: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
-            idTipoPersonaMoral: ['', []],
-            fechaInicioOperacion: [null, []],
-            idMotivo: ['', []],
-            fechaCambio: [null, []],
-        });    
-
-        this.getDataDocumentos();
+            this.moralFormGroup = this._formBuilder.group({
+                nombre: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+                rfc: [null, [Validators.required]],
+                actPreponderante: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+                idTipoPersonaMoral: ['', []],
+                fechaInicioOperacion: [null, []],
+                idMotivo: ['', []],
+                fechaCambio: [null, []],
+            });    
+    
+            this.getDataDocumentos();
+        
+        
     }
 
 
@@ -273,7 +277,7 @@ export class AltaContribuyenteComponent implements OnInit {
         this.selectCedula = false;
         this.selectPasaporte = false;
         this.selectLicencia = false;
-        this.selectNSS = false;
+        this.selectNSS = false;        
     }
 
     /**

@@ -29,8 +29,8 @@
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-10 offset-1">
                                 <mat-label>Nombre: *</mat-label>
-                                <input matInput formControlName="nombre" [(ngModel)]="contribuyente.nombre" [readonly]="inserto" maxlength="250" placeholder="Ingrese el nombre" style="text-transform: uppercase;">
-                                <mat-error *ngIf="fisicaFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
+                                <input matInput formControlName="nombre" [(ngModel)]="contribuyente.nombre" [readonly]="inserto" maxlength="250" placeholder="Ingrese el nombre" style="text-transform: uppercase;">                        
+                                <!-- <mat-error *ngIf="fisicaFormGroup.controls.nombre.errors?.required">Requerido</mat-error> -->
                                 <mat-error *ngIf="fisicaFormGroup.controls.nombre.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
                             </mat-form-field>
                         </div>
@@ -38,7 +38,7 @@
                             <mat-form-field appearance="outline"  class="col-5 offset-1">
                                 <mat-label>Apellido Paterno: *</mat-label>
                                 <input matInput formControlName="apaterno" [(ngModel)]="contribuyente.apaterno" [readonly]="inserto" maxlength="250" placeholder="Ingrese el apellido paterno" style="text-transform: uppercase;">
-                                <mat-error *ngIf="fisicaFormGroup.controls.apaterno.errors?.required">Requerido</mat-error>
+                                <!-- <mat-error *ngIf="fisicaFormGroup.controls.apaterno.errors?.required">Requerido</mat-error> -->
                                 <mat-error *ngIf="fisicaFormGroup.controls.apaterno.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline"  class="col-5">
@@ -126,7 +126,7 @@
                             <mat-form-field appearance="outline"  class="col-5">
                                 <mat-label>E-mail: *</mat-label>
                                 <input matInput formControlName="email" [(ngModel)]="contribuyente.email" [readonly]="inserto" maxlength="250"  placeholder="Ingrese el email">
-                                <mat-error *ngIf="fisicaFormGroup.controls.email.errors?.required">Requerido</mat-error>
+                                <!-- <mat-error *ngIf="fisicaFormGroup.controls.email.errors?.required">Requerido</mat-error> -->
                                 <mat-error *ngIf="fisicaFormGroup.hasError('email', 'email') && fisicaFormGroup.get('email').touched">El campo correo electrónico debe cumplir la estructura "usuario@dominio".</mat-error>
                                 <mat-error *ngIf="fisicaFormGroup.controls.email.errors?.pattern">El campo correo electrónico debe cumplir la estructura "usuario@dominio".</mat-error>
                             </mat-form-field>

@@ -80,11 +80,11 @@ export class AltaNotarioComponent implements OnInit {
         };
 
         this.notarioFormGroup = this._formBuilder.group({
-            no_notario: ['', [Validators.required, Validators.pattern("^\\S{1,6}")]],
+            no_notario: ['', [Validators.pattern("^\\S{1,6}")]],
             estado: [null, []],
-            apellido_paterno: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            apellido_paterno: ['', [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             apellido_materno: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
-            nombre: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            nombre: ['', [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             rfc: [null, []],
             curp: [null, []],
             ine: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
@@ -93,7 +93,7 @@ export class AltaNotarioComponent implements OnInit {
             fecha_nacimiento: [null, []],
             fecha_defuncion: [null, []],
             celular: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
-            email: ['', [Validators.email, Validators.pattern("^\\S{1}.{1,248}\\S{1}$"), Validators.required]],
+            email: ['', [Validators.email, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
         });    
 
         this.getDataEstados();
