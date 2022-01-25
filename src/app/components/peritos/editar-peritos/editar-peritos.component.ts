@@ -4057,6 +4057,7 @@ export class DialogPersonaPeritos {
 
         this.moralFormGroup = this._formBuilder.group({
             rfc: [null, []],
+            nombre: [null, []]
         });
 
         this.getDataDocumentos();
