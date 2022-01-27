@@ -3058,10 +3058,17 @@ export class DialogPersonaAltaC {
         this.fisicaFormGroup = this._formBuilder.group({
             rfc: [null, []],
             curp: [null, []],
+            apaterno: [null, []],
+            amaterno: [null, []],
+            nombre: [null, []],
+            ine: [null, []],
+            idDocIdent: [null, []],
+            docIdent: [null, []]
         });
 
         this.moralFormGroup = this._formBuilder.group({
             rfc: [null, []],
+            nombre: [null, []]
         });
 
         this.getDataDocumentos();
