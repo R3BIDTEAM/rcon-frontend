@@ -2365,9 +2365,14 @@ export class DialogAsentamientoSociedad {
         let criterio = '';
         let query = '';
   
-        criterio = 'getAsentamientoByNombre';
-        query = query + 'nombre=' + this.buscaAsentamiento + '&codEstado=' + this.data.codEstado + '&codMunicipio=' + this.data.codMunicipio2;
-        query = (this.data.codCiudad) ? query + '&codCiudad=' + this.data.codCiudad : query + '&codCiudad=';
+        if(this.data.codEstado == 9){
+            criterio = criterio + 'getColAsentByDelegacion';
+            query = query + 'idDelegacion=' + this.data.codMunicipio + '&nombre=' + this.buscaAsentamiento;
+        }else{
+            criterio = 'getAsentamientoByNombre';
+            query = query + 'nombre=' + this.buscaAsentamiento + '&codEstado=' + this.data.codEstado + '&codMunicipio=' + this.data.codMunicipio2;
+            query = (this.data.codCiudad) ? query + '&codCiudad=' + this.data.codCiudad : query + '&codCiudad=';
+        }
         
         console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
         this.loading = true;
