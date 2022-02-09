@@ -32,7 +32,7 @@
                         <mat-error *ngIf="fisicaFormGroup.controls.nombre.errors?.pattern" >Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
                     </mat-form-field>
                 </div>
-                <div class="row">
+                <div class="row" style="margin-top: 20px;">
                     <mat-form-field appearance="outline" class="col-6">
                         <mat-label>Apellido Paterno:*</mat-label>
                         <input matInput placeholder="Ingrese Apellido Paterno" formControlName="apaterno" [readonly]="insUp" style="text-transform: uppercase;" maxlength="250">
@@ -45,28 +45,28 @@
                         <mat-error *ngIf="fisicaFormGroup.controls.amaterno.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
                     </mat-form-field>
                 </div>
-                <div class="row">
+                <div class="row" style="margin-top: 20px;">
                     <mat-form-field class="col-6" appearance="outline">
                         <mat-label>RFC:</mat-label>
                         <input matInput placeholder="Ingrese RFC" formControlName="rfc" onkeyup="this.value = this.value.toUpperCase();" (keyup)="changeRequired()" [readonly]="insUp" style="text-transform: uppercase;" [required]="isRequired" pattern="^([A-Z,Ñ,&]{4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})$" maxlength="13">
                         <mat-error *ngIf="fisicaFormGroup.controls.rfc.errors?.required">Se han de llenar algunos de los campos de RFC o CURP</mat-error>
                         <mat-error *ngIf="fisicaFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 4 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col-6" appearance="outline">
+                    <mat-form-field class="col-6" appearance="outline" style="margin-left: 0px!important;">
                         <mat-label>CURP:</mat-label>
                         <input matInput placeholder="Ingrese CURP" formControlName="curp" onkeyup="this.value = this.value.toUpperCase();" (keyup)="changeRequired()" [readonly]="insUp" style="text-transform: uppercase;" [required]="isRequired" pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$" maxlength="18">
                         <mat-error *ngIf="fisicaFormGroup.controls.curp.errors?.required">Se han de llenar algunos de los campos de RFC o CURP</mat-error>
                         <mat-error *ngIf="fisicaFormGroup.controls.curp.errors?.pattern">El campo CURP debe contener 4 letras mayúsculas, 6 números, H o M, 5 letras mayúsculas, 1 alfanumérico y 1 número.</mat-error>
                     </mat-form-field>
                 </div>
-                <div class="row">
+                <div class="row" style="margin-top: 20px;">
                     <mat-form-field appearance="outline" class="col-6">
                         <mat-label>Clave INE:</mat-label>
                         <input matInput placeholder="Ingrese INE" formControlName="ine" [readonly]="insUp" style="text-transform: uppercase;" maxlength="18">
                         <mat-error *ngIf="fisicaFormGroup.controls.ine.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
                     </mat-form-field>
                 </div>
-                <div class="row">
+                <div class="row" style="margin-top: 20px;">
                     <mat-form-field appearance="fill" class="col-6">
                         <mat-label>Identificación:</mat-label>
                         <mat-select formControlName="idDocIdent" [disabled]="insUp" [class.spinner]="loadingDocumentosIdentificativos">
@@ -82,7 +82,7 @@
                         <mat-error *ngIf="fisicaFormGroup.controls.docIdent.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
                     </mat-form-field>
                 </div>
-                <div class="row">
+                <div class="row" style="margin-top: 20px;">
                     <mat-form-field appearance="fill" class="col-6">
                         <mat-label>Fecha Nacimiento:</mat-label>
                         <input matInput readonly formControlName="fechaNacimiento" [matDatepicker]="pickfechaNacimiento" [disabled]="insUp" (dateChange)="fechaTope()" readonly>
@@ -96,7 +96,7 @@
                         <mat-datepicker #pickfechaDefuncion></mat-datepicker>
                     </mat-form-field>
                 </div>
-                <div class="row">
+                <div class="row" style="margin-top: 20px;">
                     <mat-form-field appearance="outline" class="col-6">
                         <mat-label>Celular:</mat-label>
                         <input matInput placeholder="INGRESE CELULAR" formControlName="celular" [readonly]="insUp" maxlength="10">
@@ -110,13 +110,13 @@
                         <mat-error *ngIf="fisicaFormGroup.controls.email.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
                     </mat-form-field>
                 </div>
-                <div class="row">
+                <div class="row" style="margin-top: 20px;">
                     <mat-form-field appearance="outline" class="col-12">
                         <mat-label>Texto de representación:</mat-label>
                         <textarea matInput formControlName="texto" rows="5" style="text-transform: uppercase;" maxlength="250"></textarea>
                     </mat-form-field>
                 </div>
-                <div class="row">
+                <div class="row" style="margin-top: 20px;">
                     <mat-form-field appearance="fill" class="col-6">
                         <mat-label>Fecha Caducidad:</mat-label>
                         <input matInput readonly formControlName="fechaCaducidad" [matDatepicker]="pickfechaCaducidad">
@@ -137,7 +137,7 @@
                         <mat-error *ngIf="moralFormGroup.controls.nombre.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
                     </mat-form-field>
                 </div>
-                <div class="row">
+                <div class="row" style="margin-top: 20px;">
                     <mat-form-field appearance="outline" class="col-6">
                         <mat-label>RFC:</mat-label>
                         <input matInput placeholder="Ingrese RFC" formControlName="rfc" [readonly]="insUp" pattern="^([A-ZÑ&]{3})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" maxlength="12"  placeholder="Ingrese el RFC" style="text-transform: uppercase;" onkeyup="this.value = this.value.toUpperCase();">
@@ -150,7 +150,7 @@
                         <mat-error *ngIf="moralFormGroup.controls.actPreponderante.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
                     </mat-form-field>
                 </div>
-                <div class="row">
+                <div class="row" style="margin-top: 20px;">
                     <mat-form-field appearance="fill" class="col-6">
                         <mat-label>Tipo de persona moral</mat-label>
                         <mat-select formControlName="idTipoPersonaMoral" [disabled]="insUp">
@@ -164,7 +164,7 @@
                         <mat-datepicker #pickfechaInicioOperacion></mat-datepicker>
                     </mat-form-field>                            
                 </div>
-                <div class="row">
+                <div class="row" style="margin-top: 20px;">
                     <mat-form-field appearance="fill" class="col-6">
                         <mat-label>Motivo del cambio de situación</mat-label>
                         <mat-select formControlName="idMotivo" [disabled]="insUp">
@@ -178,13 +178,13 @@
                         <mat-datepicker #pickfechaCambio></mat-datepicker>
                     </mat-form-field>                            
                 </div>
-                <div class="row">
+                <div class="row" style="margin-top: 20px;">
                     <mat-form-field appearance="outline" class="col-12">
                         <mat-label>Texto de representación:</mat-label>
                         <textarea matInput formControlName="texto" rows="5" style="text-transform: uppercase;" maxlength="250"></textarea>
                     </mat-form-field>
                 </div>
-                <div class="row">
+                <div class="row" style="margin-top: 20px;">
                     <mat-form-field appearance="fill" class="col-6">
                         <mat-label>Fecha Caducidad:</mat-label>
                         <input matInput readonly formControlName="fechaCaducidad" [matDatepicker]="pickfechaCaducidad" maxlength="">

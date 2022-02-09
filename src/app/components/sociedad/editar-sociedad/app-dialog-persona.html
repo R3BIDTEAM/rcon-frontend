@@ -24,14 +24,14 @@
                     <input matInput [(ngModel)]="filtros.amaterno" formControlName="amaterno" name="amaterno" placeholder="Ingrese el apellido materno" (keyup)="clearInputsIdentNoIdent(false)">
                 </mat-form-field>
             </div>
-            <div class="row">
+            <div class="row" style="margin-top: 20px;">
                 <mat-form-field appearance="outline" class="col-12">
                     <mat-label>Nombre:</mat-label>                    
                     <input matInput formControlName="nombre" [(ngModel)]="filtros.nombre" name="nombre" placeholder="Ingrese el nombre" (keyup)="clearInputsIdentNoIdent(false)" [required]="isRequired" pattern="^\\S{1}.{1,248}\\S{1}$" maxlength="250">
                     <!-- <mat-error *ngIf="fisicaFormGroup.controls.nombre.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error> -->
                 </mat-form-field>
             </div>
-            <div class="row">
+            <div class="row" style="margin-top: 20px;">
                 <mat-form-field appearance="outline" class="col-4">
                     <mat-label>RFC:</mat-label>
                     <input matInput formControlName="rfc" [(ngModel)]="filtros.rfc" name="rfc" placeholder="Ingrese el rfc" (keyup)="clearInputsIdentNoIdent(true)" onkeyup="this.value = this.value.toUpperCase();" [required]="isRequired" pattern="^([A-Z,Ñ,&]{4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})$" maxlength="13">
@@ -48,7 +48,7 @@
                     <!-- <mat-error *ngIf="fisicaFormGroup.controls.ine.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error> -->
                 </mat-form-field>
             </div>
-            <div class="row">
+            <div class="row" style="margin-top: 20px;">
                 <mat-form-field appearance="outline" class="col-4">
                     <mat-label>Identificación</mat-label>
                     <mat-select [(value)]="filtros.idDocIdent" [class.spinner]="loadingDocumentos" formControlName="idDocIdent">
