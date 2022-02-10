@@ -666,7 +666,7 @@ export class EditarContribuyenteComponent implements OnInit {
           content: [
             {
                 image: await this.getBase64ImageFromURL(
-                "assets/img/logo_dependencia_rcon.PNG"
+                "assets/img/logo_dependencia_rcon.png"
               ),
               width: 450,
               alignment: 'center',
@@ -800,7 +800,7 @@ export class EditarContribuyenteComponent implements OnInit {
             },
             {
                 image: await this.getBase64ImageFromURL(
-                "assets/img/logo_dependencia_rcon.PNG"
+                "assets/img/logo_dependencia_rcon.png"
               ),
               width: 450,
               alignment: 'center',
@@ -946,7 +946,7 @@ export class EditarContribuyenteComponent implements OnInit {
           content: [
             {
                 image: await this.getBase64ImageFromURL(
-                "assets/img/logo_dependencia_rcon.PNG"
+                "assets/img/logo_dependencia_rcon.png"
               ),
               width: 450,
               alignment: 'center',

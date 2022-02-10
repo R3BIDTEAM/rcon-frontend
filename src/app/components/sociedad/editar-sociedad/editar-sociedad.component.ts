@@ -511,10 +511,11 @@ export class EditarSociedadComponent implements OnInit {
      * Actualiza los datos correspondientes a la Sociedad.
      */
     actualizaSociedad(){
+        
         let query = '';
-
+        this.loading = true;
         query = 'idPersona=' + this.idSociedad;
-
+        
         query = ( this.datosSociedad.registro ) ? query + '&registro=' + this.datosSociedad.registro.toLocaleUpperCase().trim() : query + '&registro=';
         
         query = (this.datosSociedad.fecha_alta) ? query + '&fechaAlta=' + moment(this.datosSociedad.fecha_alta).format('DD-MM-YYYY')
@@ -527,11 +528,15 @@ export class EditarSociedadComponent implements OnInit {
         this.http.post(this.endpointActualiza + 'actualizarSociedad' + '?' + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.datosSociedad.fecha_alta = null;
+                    this.datosSociedad.fecha_baja = null;
                     this.loading = false;
                     this.dataSource = res;
-                    this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-                    this.total = this.dataSource.length; 
-                    this.paginator.pageIndex = 0;
+                    this.getSociedadDatos();
+
+                    // this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                    // this.total = this.dataSource.length; 
+                    // this.paginator.pageIndex = 0;
                     console.log(res);
                 },
                 (error) => {

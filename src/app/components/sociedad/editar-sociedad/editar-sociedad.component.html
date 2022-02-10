@@ -714,7 +714,11 @@
                                 {{panelEspecifico ? 'Cerrar' : 'Ver'}} datos especifícos
                             </mat-panel-description>
                         </mat-expansion-panel-header>
-                        <div class="row">
+                        <div style="padding: 30px; text-align: center;" *ngIf="loading">
+                            <mat-spinner style="margin:0 auto;"></mat-spinner>
+                            <p>Cargando...</p>
+                        </div>
+                        <div class="row" *ngIf="!loading">
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-5">
@@ -744,7 +748,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" *ngIf="!loading">
                             <div class="col-md-2 offset-md-6">
                                 <div class="d-flex flex-row-reverse">
                                     <button mat-stroked-button class="boton-n-representacion" color="warn" aria-label="Cancelar">
