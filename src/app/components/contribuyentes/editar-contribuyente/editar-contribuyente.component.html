@@ -234,6 +234,36 @@
         </div>
         <br>
 
+        <div class="borde">
+            <mat-card-header style="padding-left: 7%;">
+                <mat-card-title>Datos Persona inmueble</mat-card-title>
+            </mat-card-header>
+            <div class="row">
+                <mat-form-field appearance="outline" class="col-md-5 offset-md-1">
+                    <mat-label>Porcentaje:</mat-label>
+                    <input matInput formControlName="apepaterno" maxlength="3">
+                
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-md-5" style="margin-left: 0px!important;">
+                    <mat-label>Descripcion</mat-label>
+                        <mat-select formControlName="idMotivo" >
+                            <mat-option value=""></mat-option>
+                        </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <div class="col-md-2 offset-md-9" style="margin-bottom: 2%;">
+                    <div class="d-flex flex-row-reverse">
+                        <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Actualizar tipo persona" matTooltip="Actualizar tipo persona">
+                            Guardar <mat-icon style="display: inherit; width: 15px;">update</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <br>
+
         <!------------------------- DOMICILIO ------------------------------->
         <div class="borde">
             <mat-card-header style="padding-left: 7%;">
