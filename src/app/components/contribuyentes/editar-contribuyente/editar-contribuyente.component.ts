@@ -444,40 +444,37 @@ export class EditarContribuyenteComponent implements OnInit {
     /**
      * Actualiza la información del inmueble.
      */
-    desasociarCuenta(i,idpersonainmueble,cuentaCatastral){
-        console.log("INMUEBLES INPUTS");
+    desasociarCuenta(idpersonainmueble){
+        console.log("BORRAR INMUEBLES INPUTS");
         console.log(idpersonainmueble);
-        console.log(cuentaCatastral);
-
+        
         this.loadingDerecho = true;
         console.log(this.personaInmueble);
-        // let varPorcentaje = (this.personaInmueble[i].porcentajeparticipacion) ? this.personaInmueble[i].porcentajeparticipacion : '';
-        // let queryP = 'idPersona=' + this.idContribuyente + '&codTipoDerecho=' + this.personaInmueble[i].codtipoderecho 
-        //             + '&porcentajeParticipacion=' + varPorcentaje + '&idPersonaInmueble=' + idpersonainmueble;
-        // console.log(this.endpoint + 'borrarAsociaCuentaContrib?');
-        // this.http.post(this.endpoint + 'borrarAsociaCuentaContrib' + '?' + queryP, '', this.httpOptions)
-        //     .subscribe(
-        //         (res: any) => {
-        //             this.loadingDerecho = false;
-        //             if(res == "Actualizado"){
-        //                 this.snackBar.open("Actualización correcta", 'Cerrar', {
-        //                     duration: 10000,
-        //                     horizontalPosition: 'end',
-        //                     verticalPosition: 'top'
-        //                 });
-        //                 this.getDomicilioContribuyente();
-        //             }
+        let queryP = 'idpersonainmueble=' + idpersonainmueble;
+        console.log(this.endpoint + 'borrarAsociaCuentaContrib?');
+        this.http.post(this.endpoint + 'borrarAsociaCuentaContrib' + '?' + queryP, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loadingDerecho = false;
+                    if(res == "Actualizado"){
+                        this.snackBar.open("Actualización correcta", 'Cerrar', {
+                            duration: 10000,
+                            horizontalPosition: 'end',
+                            verticalPosition: 'top'
+                        });
+                        this.getTipoDerecho();
+                    }
                     
-        //         },
-        //         (error) => {
-        //             this.loadingDerecho = false;
-        //             this.snackBar.open(error.error.mensaje, 'Cerrar', {
-        //                 duration: 10000,
-        //                 horizontalPosition: 'end',
-        //                 verticalPosition: 'top'
-        //             });
-        //         }
-        //     );
+                },
+                (error) => {
+                    this.loadingDerecho = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
     }
 
     /**
@@ -497,9 +494,10 @@ export class EditarContribuyenteComponent implements OnInit {
     asociarCuenta(dataCuenta){
         console.log("ACÁ EL QUERY DE LA CUENTA");
         let queryP = 'idPersona=' + this.idContribuyente + '&region=' + dataCuenta.region + '&manzana=' + dataCuenta.manzana 
-                    + '&lote=' + dataCuenta.region + '&unidadPrivativa=' + dataCuenta.region
+                    + '&lote=' + dataCuenta.lote + '&unidadPrivativa=' + dataCuenta.unidad
                     + '&digitoVerificador=' + dataCuenta.digito + '&codtipoderecho=' + dataCuenta.codDerecho + '&porcenparticipacion=' + dataCuenta.porcentaje;
         console.log(this.endpoint + 'insertAsociaCuentaContrib?');
+        console.log(queryP);
         this.http.post(this.endpoint + 'insertAsociaCuentaContrib' + '?' + queryP, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
@@ -510,7 +508,7 @@ export class EditarContribuyenteComponent implements OnInit {
                             horizontalPosition: 'end',
                             verticalPosition: 'top'
                         });
-                        this.getDomicilioContribuyente();
+                        this.getTipoDerecho();
                     }
                     
                 },

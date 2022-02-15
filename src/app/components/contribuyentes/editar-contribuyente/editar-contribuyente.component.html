@@ -243,7 +243,7 @@
                 <mat-spinner style="margin:0 auto;"></mat-spinner>
                 <p>Cargando...</p>
             </div>
-            <div class="row" style="margin-bottom: 15px;">
+            <div class="row" style="margin-bottom: 15px;"  *ngIf="!loadingDerecho">
                 <div class="col-md-4">
                     <button mat-stroked-button aria-label="Asociar" style="background-color: #9F2241; color: #FFF!important;" (click)="addCuenta()">
                         Agregar Cuenta <mat-icon style="display: inherit; width: 15px; color: #FFF!important;">add</mat-icon>
@@ -273,7 +273,7 @@
                     <div class="row"  *ngIf="!loadingDerecho">
                         <div class="col-md-2 offset-md-6" style="margin-bottom: 2%;">
                             <div class="d-flex flex-row-reverse">
-                                <button mat-stroked-button class="boton-n-representacion" color="danger" aria-label="Guardar Porcentaje" matTooltip="Guardar Porcentaje" (click)="desasociarCuenta(i,personaInmueble[i].idpersonainmueble,personaInmueble[i].cuentaCatastral)">
+                                <button mat-stroked-button class="boton-n-representacion" color="danger" aria-label="Guardar Porcentaje" matTooltip="Guardar Porcentaje" (click)="desasociarCuenta(personaInmueble[i].idpersonainmueble)">
                                     Desasociar <mat-icon style="display: inherit; width: 15px;">delete</mat-icon>
                                 </button>   
                             </div>
