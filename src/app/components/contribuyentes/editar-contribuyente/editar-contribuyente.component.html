@@ -234,42 +234,63 @@
         </div>
         <br>
 
+        <!------------------------ CUENTAS ASOCIADAS ------------------>
         <div class="borde">
             <mat-card-header style="padding-left: 7%;">
-                <mat-card-title>Datos Persona inmueble</mat-card-title>
+                <mat-card-title>Cuentas Asociadas</mat-card-title>
             </mat-card-header>
             <div style="padding: 30px; text-align: center;" *ngIf="loadingDerecho">
                 <mat-spinner style="margin:0 auto;"></mat-spinner>
                 <p>Cargando...</p>
             </div>
-            <div class="row"  *ngIf="!loadingDerecho">
-                <mat-form-field appearance="outline" class="col-md-5 offset-md-1">
-                    <mat-label>Porcentaje:</mat-label>
-                    <input matInput [(ngModel)]="personaInmueble.porcentajeparticipacion" maxlength="4">
-                
-                </mat-form-field>
-                <mat-form-field appearance="outline" class="col-md-5" style="margin-left: 0px!important;">
-                    <mat-label>Tipo de Derecho</mat-label>
-                        <mat-select [class.spinner]="loadingDerecho" [(ngModel)]="personaInmueble.codtipoderecho">
-                            <mat-option *ngFor="let tipoDerecho of dataTipoDerecho" [value]="tipoDerecho.codtipoderecho">
-                                {{tipoDerecho.descripcion}}
-                            </mat-option>
-                        </mat-select>
-                </mat-form-field>
+            <div class="row" style="margin-bottom: 15px;">
+                <div class="col-md-4">
+                    <button mat-stroked-button aria-label="Asociar" style="background-color: #9F2241; color: #FFF!important;" (click)="addCuenta()">
+                        Agregar Cuenta <mat-icon style="display: inherit; width: 15px; color: #FFF!important;">add</mat-icon>
+                    </button>
+                </div>
             </div>
-            <div class="row"  *ngIf="!loadingDerecho">
-                <div class="col-md-2 offset-md-9" style="margin-bottom: 2%;">
-                    <div class="d-flex flex-row-reverse">
-                        <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar Porcentaje" matTooltip="Guardar Porcentaje" (click)="actualizaPersonaInmueble()">
-                            Guardar <mat-icon style="display: inherit; width: 15px;">update</mat-icon>
-                        </button>
+            <div *ngIf="!loadingDerecho">
+                <div  *ngFor="let datoPI of personaInmueble; let i = index">                
+                    <div class="row"  *ngIf="!loadingDerecho">
+                        <mat-form-field appearance="outline" class="col-md-2 offset-md-1">
+                            <mat-label>Cuenta Catastral:</mat-label>
+                            <input matInput [value]="datoPI.cuentaCatastral"[(ngModel)]="personaInmueble[i].cuentaCatastral" [disabled]="true">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="col-md-2">
+                            <mat-label>Porcentaje:</mat-label>
+                            <input matInput [value]="datoPI.porcentajeparticipacion" maxlength="3" [(ngModel)]="personaInmueble[i].porcentajeparticipacion">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" class="col-md-5" style="margin-left: 0px!important;">
+                            <mat-label>Tipo de Derecho</mat-label>
+                                <mat-select [class.spinner]="loadingDerecho" [(ngModel)]="personaInmueble[i].codtipoderecho">
+                                    <mat-option *ngFor="let tipoDerecho of dataTipoDerecho" [value]="tipoDerecho.codtipoderecho">
+                                        {{tipoDerecho.descripcion}}
+                                    </mat-option>
+                                </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="row"  *ngIf="!loadingDerecho">
+                        <div class="col-md-2 offset-md-6" style="margin-bottom: 2%;">
+                            <div class="d-flex flex-row-reverse">
+                                <button mat-stroked-button class="boton-n-representacion" color="danger" aria-label="Guardar Porcentaje" matTooltip="Guardar Porcentaje" (click)="desasociarCuenta(i,personaInmueble[i].idpersonainmueble,personaInmueble[i].cuentaCatastral)">
+                                    Desasociar <mat-icon style="display: inherit; width: 15px;">delete</mat-icon>
+                                </button>   
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="margin-bottom: 2%;">
+                            <div class="d-flex flex-row-reverse">
+                                <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar Porcentaje" matTooltip="Guardar Porcentaje" (click)="actualizaPersonaInmueble(i,personaInmueble[i].idpersonainmueble)">
+                                    Guardar <mat-icon style="display: inherit; width: 15px;">update</mat-icon>
+                                </button>   
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            
         </div>
         <br>
-
+       
         <!------------------------- DOMICILIO ------------------------------->
         <div class="borde">
             <mat-card-header style="padding-left: 7%;">
@@ -362,8 +383,8 @@
                                 </mat-expansion-panel-header>
                                 <div class="row" style="margin-bottom: 15px;">
                                     <div class="col-md-4">
-                                        <button mat-stroked-button aria-label="Domicilios" style="background-color: #9F2241; color: #FFF!important;" (click)="insertaDomicilioInmueble()">
-                                            Guardar Dirección <mat-icon style="display: inherit; width: 15px; color: #FFF!important;">add</mat-icon>
+                                        <button mat-stroked-button aria-label="Domicilios" class="boton-n-representacion" color="primary" (click)="verificaDomicilioInmueble()" [disabled]="(selectIdPersonaI || selectIdDireccion)">
+                                            Guardar Dirección <mat-icon style="display: inherit; width: 25px;">update</mat-icon>
                                         </button>
                                     </div>
                                     <!-- <div class="col-md-4 offset-md-2" style="text-align: right;">
@@ -386,7 +407,7 @@
                                                 <ng-container matColumnDef="radio">
                                                     <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="10%" style="text-align: center; font-size: 14px;"> Tipo Dirección </th>
                                                     <td mat-cell *matCellDef="let element" style="text-align: center; font-size: 14px;">
-                                                        <input type="radio" name="options" ng-control="options" value="element.IDDIRECCION" (click)="setIdDireccion(element.IDDIRECCION)">{{element.IDDIRECCION}}
+                                                        <input type="radio" name="options" ng-control="options" value="element.IDDIRECCION" (click)="setIdDireccion(element.IDDIRECCION)">
                                                     </td>
                                                 </ng-container>
                                                 <ng-container matColumnDef="direccion">
@@ -404,21 +425,10 @@
                                         </ng-container>                    
                                     </div>
                                 </div>
-                            </mat-expansion-panel>
-                        </mat-accordion>
-                        <br><hr><br>
-                        <mat-accordion>
-                            <mat-expansion-panel (opened)="panelBienes = true" (closed)="panelBienes = false">
-                                <mat-expansion-panel-header>
-                                <mat-panel-title style="padding-right: 210px;">
-                                    Datos de bienes
-                                </mat-panel-title>
-                                <mat-panel-description >
-                                    {{panelBienes ? 'Cerrar' : 'Ver'}} datos de bienes
-                                </mat-panel-description>
-                                </mat-expansion-panel-header>
+                                <br>
+                                <h3>Datos de bienes</h3>
                                 <div class="row">
-                                    <div class="col-md-9 offset-md-1">
+                                    <div class="col-md-12">
                                         <ng-container>
                                             <div style="padding: 30px; text-align: center;" *ngIf="loadingInmuebles">
                                                 <mat-spinner style="margin:0 auto;"></mat-spinner>
@@ -429,32 +439,33 @@
                                             </div> 
                                             <table mat-table [dataSource]="dataSource3" *ngIf="!loadingInmuebles && dataSource3.length > 0" width="100%">
                                                 <ng-container matColumnDef="inmueble">
-                                                    <th mat-header-cell *matHeaderCellDef width="75%"> Inmueble </th>
-                                                    <td mat-cell *matCellDef="let element" width="75%">
+                                                    <th mat-header-cell *matHeaderCellDef width="15%"> Inmueble </th>
+                                                    <td mat-cell *matCellDef="let element" width="15%">
+                                                        <input type="radio" name="optionsInmueble" ng-control="options" value="element.IDPERSONAINMUEBLE" (click)="setIdInmueble(element.IDPERSONAINMUEBLE,element.IDDOMICILIOFISCALPREDIAL)">
                                                         {{ element.INMUEBLE }}
                                                     </td>
                                                 </ng-container>
                                                 <ng-container matColumnDef="direccion">
-                                                    <th mat-header-cell *matHeaderCellDef width="75%"> Dirección </th>
-                                                    <td mat-cell *matCellDef="let element" width="75%">
+                                                    <th mat-header-cell *matHeaderCellDef width="30%"> Dirección </th>
+                                                    <td mat-cell *matCellDef="let element" width="30%">
                                                         {{ element.DIRECCION }}
                                                     </td>
                                                 </ng-container>
                                                 <ng-container matColumnDef="domicilio">
-                                                    <th mat-header-cell *matHeaderCellDef width="75%"> Domicilio fiscal </th>
-                                                    <td mat-cell *matCellDef="let element" width="75%">
+                                                    <th mat-header-cell *matHeaderCellDef width="30%"> Domicilio fiscal </th>
+                                                    <td mat-cell *matCellDef="let element" width="30%">
                                                         {{ element.DOMICILIOFISCAL }}
                                                     </td>
                                                 </ng-container>
                                                 <ng-container matColumnDef="descripcion">
-                                                    <th mat-header-cell *matHeaderCellDef width="75%"> Descripción </th>
-                                                    <td mat-cell *matCellDef="let element" width="75%">
+                                                    <th mat-header-cell *matHeaderCellDef width="20%"> Descripción </th>
+                                                    <td mat-cell *matCellDef="let element" width="20%">
                                                         {{ element.DESCRIPCION }}
                                                     </td>
                                                 </ng-container>
                                                 <ng-container matColumnDef="sujeto">
-                                                    <th mat-header-cell *matHeaderCellDef width="75%"> Sujeto Pasivo </th>
-                                                    <td mat-cell *matCellDef="let element" width="75%">
+                                                    <th mat-header-cell *matHeaderCellDef width="5%"> Sujeto Pasivo </th>
+                                                    <td mat-cell *matCellDef="let element" width="5%">
                                                         {{ element.ESSUJETOPASIVO }}
                                                     </td>
                                                 </ng-container>
@@ -468,6 +479,69 @@
                                 </div>
                             </mat-expansion-panel>
                         </mat-accordion>
+                        <!-- <br><hr><br>
+                        <mat-accordion>
+                            <mat-expansion-panel (opened)="panelBienes = true" (closed)="panelBienes = false">
+                                <mat-expansion-panel-header>
+                                <mat-panel-title style="padding-right: 210px;">
+                                    Datos de bienes
+                                </mat-panel-title>
+                                <mat-panel-description >
+                                    {{panelBienes ? 'Cerrar' : 'Ver'}} datos de bienes
+                                </mat-panel-description>
+                                </mat-expansion-panel-header>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <ng-container>
+                                            <div style="padding: 30px; text-align: center;" *ngIf="loadingInmuebles">
+                                                <mat-spinner style="margin:0 auto;"></mat-spinner>
+                                                <p>Cargando...</p>
+                                            </div>
+                                            <div class="alert alert-info" *ngIf="!loadingInmuebles && dataSource3.length == 0">
+                                                No hay inmuebles asociados.
+                                            </div> 
+                                            <table mat-table [dataSource]="dataSource3" *ngIf="!loadingInmuebles && dataSource3.length > 0" width="100%">
+                                                <ng-container matColumnDef="inmueble">
+                                                    <th mat-header-cell *matHeaderCellDef width="15%"> Inmueble </th>
+                                                    <td mat-cell *matCellDef="let element" width="15%">
+                                                        <input type="radio" name="optionsInmueble" ng-control="options" value="element.IDPERSONAINMUEBLE" (click)="setIdInmueble(element.IDPERSONAINMUEBLE,element.IDDOMICILIOFISCALPREDIAL)">{{element.IDPERSONAINMUEBLE}}<br>{{element.IDDOMICILIOFISCALPREDIAL}}<br>
+                                                        {{ element.INMUEBLE }}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="direccion">
+                                                    <th mat-header-cell *matHeaderCellDef width="30%"> Dirección </th>
+                                                    <td mat-cell *matCellDef="let element" width="30%">
+                                                        {{ element.DIRECCION }}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="domicilio">
+                                                    <th mat-header-cell *matHeaderCellDef width="30%"> Domicilio fiscal </th>
+                                                    <td mat-cell *matCellDef="let element" width="30%">
+                                                        {{ element.DOMICILIOFISCAL }}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="descripcion">
+                                                    <th mat-header-cell *matHeaderCellDef width="20%"> Descripción </th>
+                                                    <td mat-cell *matCellDef="let element" width="20%">
+                                                        {{ element.DESCRIPCION }}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="sujeto">
+                                                    <th mat-header-cell *matHeaderCellDef width="5%"> Sujeto Pasivo </th>
+                                                    <td mat-cell *matCellDef="let element" width="5%">
+                                                        {{ element.ESSUJETOPASIVO }}
+                                                    </td>
+                                                </ng-container>
+                                                <tr mat-header-row *matHeaderRowDef="displayedColumnsInm"></tr>
+                                                <tr mat-row *matRowDef="let row; columns: displayedColumnsInm;"></tr>
+                                            </table>
+                                            <mat-paginator #paginator [length]="total3" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado3($event)">
+                                            </mat-paginator>
+                                        </ng-container>                    
+                                    </div>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion> -->
                     </mat-card-content>
                 </div>
             </div>

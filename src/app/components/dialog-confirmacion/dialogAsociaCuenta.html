@@ -1,0 +1,63 @@
+<h1 mat-dialog-title>ASOCIAR CUENTA</h1>
+<div mat-dialog-content>
+    <ng-container>
+        <form [formGroup]="cuentaFormGroup">
+            <div class="row">
+                <mat-form-field appearance="outline" class="col-2">
+                    <mat-label>Región:</mat-label>
+                    <input matInput #region formControlName="region" minlength="3" maxlength="3" placeholder="Ingrese la región" (keyup)="focusNextInput($event, manzana)" style="text-transform: uppercase;">
+                    <mat-error *ngIf="cuentaFormGroup.controls.region.errors?.required">Requerido</mat-error>
+                    <mat-error *ngIf="cuentaFormGroup.controls.region.errors?.minlength">El valor debe de tener 3 alfanúmericos</mat-error>
+                    <mat-error *ngIf="cuentaFormGroup.controls.region.errors?.maxlength">El valor debe de tener 3 alfanúmericos</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-2">
+                    <mat-label>Manzana:</mat-label>
+                    <input matInput #manzana formControlName="manzana" minlength="3" maxlength="3" placeholder="Ingrese la manzana" (keyup)="focusNextInput($event, lote)" style="text-transform: uppercase;">
+                    <mat-error *ngIf="cuentaFormGroup.controls.manzana.errors?.required">Requerido</mat-error>
+                    <mat-error *ngIf="cuentaFormGroup.controls.manzana.errors?.minlength">El valor debe de tener 3 alfanúmericos</mat-error>
+                    <mat-error *ngIf="cuentaFormGroup.controls.manzana.errors?.maxlength">El valor debe de tener 3 alfanúmericos</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-2">
+                    <mat-label>Lote:</mat-label>
+                    <input matInput #lote formControlName="lote" minlength="2" maxlength="2" placeholder="Ingrese el lote" (keyup)="focusNextInput($event, unidad)" style="text-transform: uppercase;">
+                    <mat-error *ngIf="cuentaFormGroup.controls.lote.errors?.required">Requerido</mat-error>
+                    <mat-error *ngIf="cuentaFormGroup.controls.lote.errors?.minlength">El valor debe de tener 2 alfanúmericos</mat-error>
+                    <mat-error *ngIf="cuentaFormGroup.controls.lote.errors?.maxlength">El valor debe de tener 2 alfanúmericos</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-2">
+                    <mat-label>Unidad Privativa:</mat-label>
+                    <input matInput #unidad formControlName="unidad" minlength="3" maxlength="3" placeholder="Ingrese la unidad privativa" style="text-transform: uppercase;">
+                    <mat-error *ngIf="cuentaFormGroup.controls.unidad.errors?.required">Requerido</mat-error>
+                    <mat-error *ngIf="cuentaFormGroup.controls.unidad.errors?.minlength">El valor debe de tener 3 alfanúmericos</mat-error>
+                    <mat-error *ngIf="cuentaFormGroup.controls.unidad.errors?.maxlength">El valor debe de tener 3 alfanúmericos</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-2">
+                    <mat-label>Digito Verificador:</mat-label>
+                    <input matInput #unidad formControlName="digito" minlength="1" maxlength="1" placeholder="Ingrese el digito verificador" style="text-transform: uppercase;">
+                    <mat-error *ngIf="cuentaFormGroup.controls.digito.errors?.required">Requerido</mat-error>
+                    <mat-error *ngIf="cuentaFormGroup.controls.digito.errors?.minlength">El valor debe de tener 1 alfanúmericos</mat-error>
+                    <mat-error *ngIf="cuentaFormGroup.controls.digito.errors?.maxlength">El valor debe de tener 1 alfanúmericos</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field appearance="outline" class="col-md-2">
+                    <mat-label>Porcentaje:</mat-label>
+                    <input matInput #porcentaje formControlName="porcentaje" placeholder="Ingrese el porcentaje de Participación">
+                    <mat-error *ngIf="cuentaFormGroup.controls.porcentaje.errors?.required">Requerido</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-md-5" style="margin-left: 0px!important;">
+                    <mat-label>Tipo de Derecho</mat-label>
+                        <mat-select [class.spinner]="loadingDerecho" formControlName="codDerecho">
+                            <mat-option *ngFor="let tipoDerecho of dataTipoDerecho" [value]="tipoDerecho.codtipoderecho">
+                                {{tipoDerecho.descripcion}}
+                            </mat-option>
+                        </mat-select>
+                </mat-form-field>
+            </div>
+        </form>
+    </ng-container>
+</div>
+<mat-dialog-actions align="end">
+    <button mat-flat-button [mat-dialog-close]="false">Cancelar</button>
+    <button mat-flat-button color="primary" [disabled]="cuentaFormGroup.invalid" (click)="guardarCuenta()">Aceptar</button>
+</mat-dialog-actions>

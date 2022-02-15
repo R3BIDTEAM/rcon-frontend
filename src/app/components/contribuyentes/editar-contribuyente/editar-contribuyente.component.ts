@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ElementRef, QueryList, ViewChildren } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '@env/environment';
@@ -12,7 +12,7 @@ import * as FileSaver from 'file-saver';
 import pdfMake from "pdfmake/build/pdfmake";  
 import pdfFonts from "pdfmake/build/vfs_fonts";  
 pdfMake.vfs = pdfFonts.pdfMake.vfs; 
-import { DialogConfirmacionComponent, DialogsCambiaPersona } from '@comp/dialog-confirmacion/dialog-confirmacion.component';
+import { DialogConfirmacionComponent, DialogsCambiaPersona, DialogsAsociarCuenta } from '@comp/dialog-confirmacion/dialog-confirmacion.component';
 
 export interface DatosContribuyente {
     tipoPersona: string;
@@ -174,7 +174,7 @@ export class EditarContribuyenteComponent implements OnInit {
     dataRepresentados: DataRepresentacion[] = [];
     dataActualizacion: DataActualizacion = {} as DataActualizacion;
     contribuyente: DatosContribuyente = {} as DatosContribuyente;
-    personaInmueble: PersonaInmueble = {} as PersonaInmueble;
+    personaInmueble: PersonaInmueble[] = [];
     dataDocumentos: DocumentosIdentificativos[] = [];
     dataTipoDerecho: DataTipoDerecho[] = [];
     dataDomicilios: DataDomicilio[] = [];
@@ -195,6 +195,7 @@ export class EditarContribuyenteComponent implements OnInit {
     endpointActualiza = environment.endpoint + 'registro/';
     isIdentificativo;
     idInmueble;
+    idDomicilioFP;
     idDireccionI;
     idPersonaInmueble;
     loadingDireccionEspecifica = false;
@@ -215,10 +216,12 @@ export class EditarContribuyenteComponent implements OnInit {
     selectPasaporte = false;
     selectLicencia = false;
     selectNSS = false;
+    selectIdDireccion = true;
+    selectIdPersonaI = true;
     mensajeConfirma;
     minDate;
     @ViewChild('paginator') paginator: MatPaginator;
-
+    
     /*Paginado*/
     dataSource1 = [];
     total1 = 0;
@@ -295,7 +298,6 @@ export class EditarContribuyenteComponent implements OnInit {
         this.getDataDocumentos();
         this.getContribuyenteDatos();
         this.getDomicilioContribuyente();
-        this.getidInmuebles();
         this.getRepresentacion();
         this.getRepresentado();
         
@@ -303,6 +305,20 @@ export class EditarContribuyenteComponent implements OnInit {
         // this.minDate = moment(this.dataContribuyenteResultado[0].FECHANACIMIENTO).format('YYYY-MM-DD');
         // alert('hola');
         
+    }
+
+    /** 
+     * @param event detecta cuando se presiona una tecla, esta funcion sólo permite que se tecleen valores alfanuméricos, los demás son bloqueados
+     */
+    keyPressAlphaNumeric(event) {
+        console.log(event);
+        var inp = String.fromCharCode(event.keyCode);
+        if (/[a-zA-Z0-9]/.test(inp)) {
+        return true;
+        } else {
+        event.preventDefault();
+        return false;
+        }
     }
 
     /**
@@ -339,9 +355,39 @@ export class EditarContribuyenteComponent implements OnInit {
             .subscribe(
                 (res: any) => {
                     this.loadingDerecho = false;
-                    this.personaInmueble.porcentajeparticipacion = res[0].porcentajeparticipacion;
-                    this.personaInmueble.codtipoderecho = res[0].codtipoderecho;
-                    this.idPersonaInmueble = res[0].idpersonainmueble;
+                    // res = [
+                    //     {
+                    //         "idpersonainmueble": "2490937",
+                    //         "idpersona": "2492432",
+                    //         "idinmueble": "33869",
+                    //         "iddocumentojuridicoalta": null,
+                    //         "codtipoderecho": "5",
+                    //         "idchs_mtodesde": "535429",
+                    //         "porcentajeparticipacion": ".3",
+                    //         "descripcionTipoDerecho": "Propietario o Poseedor"
+                    //     },
+                    //     {
+                    //         "idpersonainmueble": "2490937",
+                    //         "idpersona": "2492432",
+                    //         "idinmueble": "33869",
+                    //         "iddocumentojuridicoalta": null,
+                    //         "codtipoderecho": "7",
+                    //         "idchs_mtodesde": "535429",
+                    //         "porcentajeparticipacion": "1",
+                    //         "descripcionTipoDerecho": "Propietario o Poseedor"
+                    //     },
+                    //     {
+                    //         "idpersonainmueble": "2490937",
+                    //         "idpersona": "2492432",
+                    //         "idinmueble": "33869",
+                    //         "iddocumentojuridicoalta": null,
+                    //         "codtipoderecho": "1",
+                    //         "idchs_mtodesde": "535429",
+                    //         "porcentajeparticipacion": ".25",
+                    //         "descripcionTipoDerecho": "Propietario o Poseedor"
+                    //     }
+                    // ];
+                    this.personaInmueble = res;
                     console.log("DERECHO DATOS");
                     console.log(this.personaInmueble);
                 },
@@ -359,13 +405,17 @@ export class EditarContribuyenteComponent implements OnInit {
     /**
      * Actualiza la información del inmueble.
      */
-    actualizaPersonaInmueble(){
+    actualizaPersonaInmueble(i,idpersonainmueble){
+        console.log("INMUEBLES INPUTS");
+        console.log(this.personaInmueble[i].porcentajeparticipacion);
+        console.log(this.personaInmueble[i].codtipoderecho);
+        
         this.loadingDerecho = true;
         console.log(this.personaInmueble);
-        let varPorcentaje = (this.personaInmueble.porcentajeparticipacion) ? this.personaInmueble.porcentajeparticipacion : '';
-        let queryP = 'idPersona=' + this.idContribuyente + '&codTipoDerecho=' + this.personaInmueble.codtipoderecho 
-                    + '&porcentajeParticipacion=' + varPorcentaje;
-        console.log(this.endpoint + 'updatePersonaInmueble?' + queryP);
+        let varPorcentaje = (this.personaInmueble[i].porcentajeparticipacion) ? this.personaInmueble[i].porcentajeparticipacion : '';
+        let queryP = 'idPersona=' + this.idContribuyente + '&codTipoDerecho=' + this.personaInmueble[i].codtipoderecho 
+                    + '&porcentajeParticipacion=' + varPorcentaje + '&idPersonaInmueble=' + idpersonainmueble;
+        console.log(this.endpoint + 'updatePersonaInmueble?');
         this.http.post(this.endpoint + 'updatePersonaInmueble' + '?' + queryP, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
@@ -376,7 +426,91 @@ export class EditarContribuyenteComponent implements OnInit {
                             horizontalPosition: 'end',
                             verticalPosition: 'top'
                         });
-                        this.getInfoPersonaInmueble();
+                        this.getDomicilioContribuyente();
+                    }
+                    
+                },
+                (error) => {
+                    this.loadingDerecho = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
+
+    /**
+     * Actualiza la información del inmueble.
+     */
+    desasociarCuenta(i,idpersonainmueble,cuentaCatastral){
+        console.log("INMUEBLES INPUTS");
+        console.log(idpersonainmueble);
+        console.log(cuentaCatastral);
+
+        this.loadingDerecho = true;
+        console.log(this.personaInmueble);
+        // let varPorcentaje = (this.personaInmueble[i].porcentajeparticipacion) ? this.personaInmueble[i].porcentajeparticipacion : '';
+        // let queryP = 'idPersona=' + this.idContribuyente + '&codTipoDerecho=' + this.personaInmueble[i].codtipoderecho 
+        //             + '&porcentajeParticipacion=' + varPorcentaje + '&idPersonaInmueble=' + idpersonainmueble;
+        // console.log(this.endpoint + 'borrarAsociaCuentaContrib?');
+        // this.http.post(this.endpoint + 'borrarAsociaCuentaContrib' + '?' + queryP, '', this.httpOptions)
+        //     .subscribe(
+        //         (res: any) => {
+        //             this.loadingDerecho = false;
+        //             if(res == "Actualizado"){
+        //                 this.snackBar.open("Actualización correcta", 'Cerrar', {
+        //                     duration: 10000,
+        //                     horizontalPosition: 'end',
+        //                     verticalPosition: 'top'
+        //                 });
+        //                 this.getDomicilioContribuyente();
+        //             }
+                    
+        //         },
+        //         (error) => {
+        //             this.loadingDerecho = false;
+        //             this.snackBar.open(error.error.mensaje, 'Cerrar', {
+        //                 duration: 10000,
+        //                 horizontalPosition: 'end',
+        //                 verticalPosition: 'top'
+        //             });
+        //         }
+        //     );
+    }
+
+    /**
+     * Muestra el dialogo de advertencia para realizar el cambio de tipo de persona.
+     * @param event Variable que contiene el valor del tipo de persona actual.
+     */
+    addCuenta(){
+        const dialogRef = this.dialog.open(DialogsAsociarCuenta, {
+            width: '700px'
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+            this.asociarCuenta(result);
+        });
+    }
+
+    asociarCuenta(dataCuenta){
+        console.log("ACÁ EL QUERY DE LA CUENTA");
+        let queryP = 'idPersona=' + this.idContribuyente + '&region=' + dataCuenta.region + '&manzana=' + dataCuenta.manzana 
+                    + '&lote=' + dataCuenta.region + '&unidadPrivativa=' + dataCuenta.region
+                    + '&digitoVerificador=' + dataCuenta.digito + '&codtipoderecho=' + dataCuenta.codDerecho + '&porcenparticipacion=' + dataCuenta.porcentaje;
+        console.log(this.endpoint + 'insertAsociaCuentaContrib?');
+        this.http.post(this.endpoint + 'insertAsociaCuentaContrib' + '?' + queryP, '', this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loadingDerecho = false;
+                    if(res == "Actualizado"){
+                        this.snackBar.open("Actualización correcta", 'Cerrar', {
+                            duration: 10000,
+                            horizontalPosition: 'end',
+                            verticalPosition: 'top'
+                        });
+                        this.getDomicilioContribuyente();
                     }
                     
                 },
@@ -1231,6 +1365,7 @@ export class EditarContribuyenteComponent implements OnInit {
      */
     getDomicilioContribuyente(){
         this.loadingDomicilios = true;
+        this.loadingInmuebles = true;
         let metodo = 'getDireccionesContribuyente';
         this.http.get(this.endpointActualiza + metodo + '?idPersona='+ this.idContribuyente, this.httpOptions)
             .subscribe(
@@ -1243,6 +1378,7 @@ export class EditarContribuyenteComponent implements OnInit {
                     this.total2 = this.dataSource2.length;
                     this.dataPaginate1 = this.paginate(this.dataSource1, 15, this.pagina1);
                     this.dataPaginate2 = this.paginate(this.dataSource2, 15, this.pagina2);
+                    this.getidInmuebles();
                 },
                 (error) => {
                     this.loadingDomicilios = false;
@@ -1288,23 +1424,74 @@ export class EditarContribuyenteComponent implements OnInit {
             );
     }
 
+    /**
+     * Almacena la variable con el id seleccionado en la tabla. 
+     * @param direccionID Variable con el valor del id de la dirección
+     */
     setIdDireccion(direccionID){
         console.log("ACÁ EL ID DE LA DIRECCIÓN");
         console.log(direccionID);
         this.idDireccionI = direccionID;
+        this.selectIdDireccion = false;
     }
 
+    /**
+     * Almacena las variables del inmueble seleccionado para insertar o actualizar la información del inmuble.
+     * @param inmueblePersonaID Variable con el valor del id del inmueblePersona.
+     * @param domicilioFPId Variable con el valor de id del domicilio fiscal predial.
+     */
+    setIdInmueble(inmueblePersonaID,domicilioFPId){
+        console.log("ACÁ EL ID DEL INMUEBLE");
+        console.log(inmueblePersonaID);
+        console.log(domicilioFPId);
+        this.idPersonaInmueble = inmueblePersonaID;
+        this.idDomicilioFP = domicilioFPId;
+        this.selectIdPersonaI = false;
+    }
+
+    verificaDomicilioInmueble(){
+        if(this.idDomicilioFP){
+            this.actualizaDomicilioInmueble();
+            console.log("ACÁ SI EXISTE EL" + this.idDomicilioFP);
+        }else{
+            this.insertaDomicilioInmueble();
+            console.log("ACÁ NO EXISTE EL" + this.idDomicilioFP);
+        }
+    }
+    
+    /**
+     * Inserta la nueva dirección fiscal del inmuble.
+     */
     insertaDomicilioInmueble(){
+        this.loadingDomicilios = true;
+        this.loadingInmuebles = true;
         let queryDPI = 'idPersona=' + this.idContribuyente + '&idDireccion=' + this.idDireccionI + '&idPersonaInmueble=' + this.idPersonaInmueble;
         console.log("INSERTAR LA DIRECCIÓN DEL INMUEBLE");
         console.log(this.endpoint + 'InsertarInmuebleDomicilioFiscal' + '?' + queryDPI);
         this.http.post(this.endpoint + 'InsertarInmuebleDomicilioFiscal' + '?' + queryDPI, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    if(res.length > 0){
+                        this.getDomicilioContribuyente();
+                        this.snackBar.open('Actualización correcta', 'Cerrar', {
+                            duration: 10000,
+                            horizontalPosition: 'end',
+                            verticalPosition: 'top'
+                        });
+                    }else{
+                        this.snackBar.open('No se pudo registrar intente nuevamente', 'Cerrar', {
+                            duration: 10000,
+                            horizontalPosition: 'end',
+                            verticalPosition: 'top'
+                        });
+                    }
+                    this.loadingDomicilios = false;
+                    this.loadingInmuebles = false;
                     console.log(res);
                 },
                 (error) => {
-                    this.loadingDerecho = false;
+                    this.loadingDomicilios = false;
+                    this.loadingInmuebles = false;
                     this.snackBar.open(error.error.mensaje, 'Cerrar', {
                         duration: 10000,
                         horizontalPosition: 'end',
@@ -1312,6 +1499,17 @@ export class EditarContribuyenteComponent implements OnInit {
                     });
                 }
             );
+    }
+
+    /**
+     * Inserta la nueva dirección fiscal del inmuble.
+     */
+    actualizaDomicilioInmueble(){
+        this.snackBar.open('El inmueble ya cuenta con una dirección registrada.', 'Cerrar', {
+            duration: 10000,
+            horizontalPosition: 'end',
+            verticalPosition: 'top'
+        });
     }
 
     /**
