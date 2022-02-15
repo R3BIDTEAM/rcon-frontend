@@ -487,7 +487,9 @@ export class EditarContribuyenteComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe(result => {
             console.log(result);
-            this.asociarCuenta(result);
+            if(result != false){
+                this.asociarCuenta(result);
+            }
         });
     }
 
