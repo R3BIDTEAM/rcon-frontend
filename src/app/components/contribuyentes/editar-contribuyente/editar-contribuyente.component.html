@@ -244,7 +244,7 @@
                 <p>Cargando...</p>
             </div>
             <div class="row" style="margin-bottom: 15px;"  *ngIf="!loadingDerecho">
-                <div class="col-md-4">
+                <div class="col-md-4 offset-md-1">
                     <button mat-stroked-button aria-label="Asociar" style="background-color: #9F2241; color: #FFF!important;" (click)="addCuenta()">
                         Agregar Cuenta <mat-icon style="display: inherit; width: 15px; color: #FFF!important;">add</mat-icon>
                     </button>
@@ -257,11 +257,11 @@
                             <mat-label>Cuenta Catastral:</mat-label>
                             <input matInput [value]="datoPI.cuentaCatastral"[(ngModel)]="personaInmueble[i].cuentaCatastral" [disabled]="true">
                         </mat-form-field>
-                        <mat-form-field appearance="outline" class="col-md-2">
+                        <mat-form-field appearance="outline" class="col-md-1">
                             <mat-label>Porcentaje:</mat-label>
                             <input matInput [value]="datoPI.porcentajeparticipacion" maxlength="3" [(ngModel)]="personaInmueble[i].porcentajeparticipacion">
                         </mat-form-field>
-                        <mat-form-field appearance="outline" class="col-md-5" style="margin-left: 0px!important;">
+                        <mat-form-field appearance="outline" class="col-md-3" style="margin-left: 0px!important;">
                             <mat-label>Tipo de Derecho</mat-label>
                                 <mat-select [class.spinner]="loadingDerecho" [(ngModel)]="personaInmueble[i].codtipoderecho">
                                     <mat-option *ngFor="let tipoDerecho of dataTipoDerecho" [value]="tipoDerecho.codtipoderecho">
@@ -269,8 +269,22 @@
                                     </mat-option>
                                 </mat-select>
                         </mat-form-field>
+                        <div class="col-md-2">
+                            <div class="d-flex flex-row-reverse" style="text-align: center!important; padding-top: 12px;">
+                                <button mat-stroked-button class="boton-n-representacion" color="danger" aria-label="Guardar Porcentaje" matTooltip="Guardar Porcentaje" (click)="desasociarCuenta(personaInmueble[i].idpersonainmueble)" style="margin: auto!important;">
+                                    Desasociar <mat-icon style="display: inherit; width: 15px;">delete</mat-icon>
+                                </button>   
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="d-flex flex-row-reverse" style="text-align: center!important; padding-top: 12px;">
+                                <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar Porcentaje" matTooltip="Guardar Porcentaje" (click)="actualizaPersonaInmueble(i,personaInmueble[i].idpersonainmueble)" style="margin: auto!important;">
+                                    Guardar <mat-icon style="display: inherit; width: 15px;">update</mat-icon>
+                                </button>   
+                            </div>
+                        </div>
                     </div>
-                    <div class="row"  *ngIf="!loadingDerecho">
+                    <!-- <div class="row"  *ngIf="!loadingDerecho">
                         <div class="col-md-2 offset-md-6" style="margin-bottom: 2%;">
                             <div class="d-flex flex-row-reverse">
                                 <button mat-stroked-button class="boton-n-representacion" color="danger" aria-label="Guardar Porcentaje" matTooltip="Guardar Porcentaje" (click)="desasociarCuenta(personaInmueble[i].idpersonainmueble)">
@@ -285,7 +299,7 @@
                                 </button>   
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

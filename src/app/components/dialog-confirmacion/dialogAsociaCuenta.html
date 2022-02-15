@@ -1,9 +1,10 @@
-<h1 mat-dialog-title>ASOCIAR CUENTA</h1>
+<h1 mat-dialog-title style="color: #9F2241; padding-left: 8%; margin-bottom: 3%;">Asociar Cuenta:</h1>
+
 <div mat-dialog-content>
     <ng-container>
         <form [formGroup]="cuentaFormGroup">
             <div class="row">
-                <mat-form-field appearance="outline" class="col-2">
+                <mat-form-field appearance="outline" class="col-2 offset-md-1">
                     <mat-label>Región:</mat-label>
                     <input matInput #region formControlName="region" minlength="3" maxlength="3" placeholder="Ingrese la región" (keyup)="focusNextInput($event, manzana)" style="text-transform: uppercase;">
                     <mat-error *ngIf="cuentaFormGroup.controls.region.errors?.required">Requerido</mat-error>
@@ -40,7 +41,7 @@
                 </mat-form-field>
             </div>
             <div class="row">
-                <mat-form-field appearance="outline" class="col-md-2">
+                <mat-form-field appearance="outline" class="col-md-2 offset-md-1">
                     <mat-label>Porcentaje:</mat-label>
                     <input matInput #porcentaje formControlName="porcentaje" placeholder="Ingrese el porcentaje de Participación">
                     <mat-error *ngIf="cuentaFormGroup.controls.porcentaje.errors?.required">Requerido</mat-error>
@@ -57,7 +58,7 @@
         </form>
     </ng-container>
 </div>
-<mat-dialog-actions align="end">
+<mat-dialog-actions align="end" style="padding-right: 8%; margin-top: 3%; margin-bottom: 1%;">
     <button mat-flat-button [mat-dialog-close]="false">Cancelar</button>
     <button mat-flat-button color="primary" [disabled]="cuentaFormGroup.invalid" (click)="guardarCuenta()">Aceptar</button>
 </mat-dialog-actions>

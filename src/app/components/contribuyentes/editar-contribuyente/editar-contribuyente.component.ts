@@ -483,7 +483,7 @@ export class EditarContribuyenteComponent implements OnInit {
      */
     addCuenta(){
         const dialogRef = this.dialog.open(DialogsAsociarCuenta, {
-            width: '700px'
+            width: '800px'
         });
         dialogRef.afterClosed().subscribe(result => {
             console.log(result);
