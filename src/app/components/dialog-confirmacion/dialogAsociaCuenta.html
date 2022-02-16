@@ -43,8 +43,8 @@
             <div class="row">
                 <mat-form-field appearance="outline" class="col-md-2 offset-md-1">
                     <mat-label>Porcentaje:</mat-label>
-                    <input matInput #porcentaje formControlName="porcentaje" placeholder="Ingrese el porcentaje de Participación">
-                    <mat-error *ngIf="cuentaFormGroup.controls.porcentaje.errors?.required">Requerido</mat-error>
+                    <input matInput #porcentaje formControlName="porcentaje" placeholder="Ingrese el porcentaje de Participación" pattern="^[1-9][0-9]?$|^100$" maxlength="3">
+                    <mat-error *ngIf="cuentaFormGroup.controls.porcentaje.errors?.pattern">Valor de 1-100</mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="col-md-5" style="margin-left: 0px!important;">
                     <mat-label>Tipo de Derecho</mat-label>

@@ -106,7 +106,7 @@ export class DialogsAsociarCuenta {
             lote: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(2)]],
             unidad: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
             digito: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(1)]],
-            porcentaje: [null, [Validators.required]],
+            porcentaje: [null, []],
             codDerecho: [null, [Validators.required]],
         });
 
