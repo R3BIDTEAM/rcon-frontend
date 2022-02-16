@@ -1598,12 +1598,12 @@ export class EditarContribuyenteComponent implements OnInit {
                 this.accionDomicilio = true;
                 this.accionDomicilioBoletas = false;
                 this.actualizado = false;
-            
+                this.loadingDomicilios = true;
+                setTimeout (() => {
+                    this.getDomicilioContribuyente();
+                }, 1500);
             }
-            this.loadingDomicilios = true;
-            setTimeout (() => {
-                this.getDomicilioContribuyente();
-            }, 1500);
+            
         });
     }
 
@@ -1644,11 +1644,11 @@ export class EditarContribuyenteComponent implements OnInit {
                 this.accionDomicilio = false;
                 this.accionDomicilioBoletas = true;
                 this.actualizado = false;
-            
+                setTimeout (() => {
+                    this.getDomicilioContribuyente();
+                }, 1500);
             }
-            setTimeout (() => {
-                this.getDomicilioContribuyente();
-            }, 1500);
+            
         });
     }
 
@@ -1662,6 +1662,8 @@ export class EditarContribuyenteComponent implements OnInit {
             data: {dataDomicilioEspecifico:dataDomicilioEspecifico, idContribuyente: this.idContribuyente},
         });
         dialogRef.afterClosed().subscribe(result => {
+            console.log("ACA ESTAMOS!!!!!!!!!!!!!!!!");
+            console.log(result);
             if(result){
                 console.log(result);
 
@@ -1689,11 +1691,11 @@ export class EditarContribuyenteComponent implements OnInit {
                 this.accionDomicilio = true;
                 this.accionDomicilioBoletas = false;
                 this.actualizado = false;
-            
+                this.loadingDomicilios = true;
+                setTimeout (() => {
+                    this.getDomicilioContribuyente();
+                }, 1500);
             }
-            setTimeout (() => {
-                this.getDomicilioContribuyente();
-            }, 1500);
         });
     }
 
@@ -2046,6 +2048,7 @@ export class DialogDomicilioContribuyente {
   loadingDireccionEspecifica = false;
   iddomicilio;
   iddireccion;
+  blockButtons = true;
   lafinal: DataMovimientoDomicilio[] = [];
 
     constructor(
@@ -2070,11 +2073,18 @@ export class DialogDomicilioContribuyente {
             this.dataDomicilio = {} as DataDomicilio;
             this.dataDomicilioEspecifico = {} as DataDomicilio;
             this.getDataEstados();
-            if(data){
+            this.getDataTiposAsentamiento();
+            this.getDataTiposVia();
+            this.getDataTiposLocalidad();
+            console.log("recibimos data");
+            
+            if(data.dataDomicilioEspecifico){
                 console.log(data.dataDomicilioEspecifico);
                 console.log("recibimos data seteado1");
-                this.getDireccionEspecifica();
-
+                this.loadingDireccionEspecifica = true;
+                setTimeout(() => {
+                    this.getDireccionEspecifica();
+                }, 5000);
             }
             //^([A-Z,Ñ,&]{4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})$
             this.domicilioFormGroup = this._formBuilder.group({
@@ -2123,25 +2133,26 @@ export class DialogDomicilioContribuyente {
             });
     
 
-            this.getDataTiposAsentamiento();
-            this.getDataTiposVia();
-            this.getDataTiposLocalidad();
+            
         }
   
     /** 
      * Realiza la búsqueda del domicilio por el id Dirección
      * */  
     getDireccionEspecifica(){
-        this.loadingDireccionEspecifica = true;
+        
         let metodo = 'getDireccionById';
         this.http.get(this.endpointCatalogos + metodo + '?idDireccion='+ this.iddireccion, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingDireccionEspecifica = false;
                     this.dataDomicilioEspecifico = res;
-                    this.setDataDomicilio(this.dataDomicilioEspecifico[0]);
                     console.log('domicilio único encontrado');
                     console.log(this.dataDomicilioEspecifico);
+                    setTimeout(() => {
+                        this.setDataDomicilio(this.dataDomicilioEspecifico[0]);    
+                    }, 500);
+                    
                 },
                 (error) => {
                     this.loadingDireccionEspecifica = false;
@@ -2305,6 +2316,8 @@ export class DialogDomicilioContribuyente {
      * Almacena los datos del formulario del domicilio y de acuerdo al valor inserta o actualiza
      */
     getDataDomicilio(): void {
+        this.loadingEstados = true;
+        this.blockButtons = false;
         //this.dataDomicilio.idtipodireccion = this.domicilioFormGroup.value.idtipodireccion;
         this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
         this.dataDomicilio.codasentamiento = this.domicilioFormGroup.value.codasentamiento;
@@ -2421,7 +2434,7 @@ export class DialogDomicilioContribuyente {
                     this.dataMovimientoDomicilio.usuario = res.usuario;
 
                     this.dialogRef.close(this.dataMovimientoDomicilio);
-
+                    this.loadingEstados = false;
                     this.snackBar.open('Registro exitoso', 'Cerrar', {
                         duration: 10000,
                         horizontalPosition: 'end',
@@ -2429,6 +2442,7 @@ export class DialogDomicilioContribuyente {
                     });
                 },
                 (error) => {
+                    this.dialogRef.close();
                     this.snackBar.open(error.error.mensaje, 'Cerrar', {
                         duration: 10000,
                         horizontalPosition: 'end',
@@ -2502,16 +2516,19 @@ export class DialogDomicilioContribuyente {
                     this.dataMovimientoDomicilio.folio = res.folio;
                     this.dataMovimientoDomicilio.idpersona = res.idpersona;
                     this.dataMovimientoDomicilio.usuario = res.usuario;
-
-                    this.dialogRef.close(this.dataMovimientoDomicilio);
+                    console.log("AQUI dataMovimientoDomicilio");
+                    console.log(this.dataMovimientoDomicilio);
 
                     this.snackBar.open('Actualización Correcta', 'Cerrar', {
                         duration: 10000,
                         horizontalPosition: 'end',
                         verticalPosition: 'top'
                     });
+                    this.dialogRef.close(this.dataMovimientoDomicilio);
+                    this.loadingEstados = false;
                 },
                 (error) => {
+                    this.dialogRef.close();
                     this.snackBar.open(error.error.mensaje, 'Cerrar', {
                         duration: 10000,
                         horizontalPosition: 'end',
@@ -2561,6 +2578,10 @@ export class DialogDomicilioContribuyente {
         }
 
         this.dataDomicilio.delegacion = data.DELEGACION;
+        // setTimeout(() => {
+        //     console.log("aca entre setdom");
+        //     this.loadingDireccionEspecifica = false;
+        // }, 2000);
     }
 
     /**

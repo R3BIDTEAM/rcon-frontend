@@ -288,22 +288,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="row"  *ngIf="!loadingDerecho">
-                        <div class="col-md-2 offset-md-6" style="margin-bottom: 2%;">
-                            <div class="d-flex flex-row-reverse">
-                                <button mat-stroked-button class="boton-n-representacion" color="danger" aria-label="Guardar Porcentaje" matTooltip="Guardar Porcentaje" (click)="desasociarCuenta(personaInmueble[i].idpersonainmueble)">
-                                    Desasociar <mat-icon style="display: inherit; width: 15px;">delete</mat-icon>
-                                </button>   
-                            </div>
-                        </div>
-                        <div class="col-md-2" style="margin-bottom: 2%;">
-                            <div class="d-flex flex-row-reverse">
-                                <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar Porcentaje" matTooltip="Guardar Porcentaje" (click)="actualizaPersonaInmueble(i,personaInmueble[i].idpersonainmueble)">
-                                    Guardar <mat-icon style="display: inherit; width: 15px;">update</mat-icon>
-                                </button>   
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
             </div>
         </div>
@@ -328,14 +312,14 @@
                                         {{panelDomicilio ? 'Cerrar' : 'Ver'}} los datos de los Domicilios
                                     </mat-panel-description>
                                 </mat-expansion-panel-header>
-                                <div class="row" style="margin-bottom: 15px;">
+                                <div class="row" style="margin-bottom: 15px; padding-left: 0% !important; padding-right: 0% !important;">
                                     <div class="col-md-4">
                                         <button mat-stroked-button aria-label="Domicilios" style="background-color: #9F2241; color: #FFF!important;" (click)="addDomicilio()">
                                             Domicilios <mat-icon style="display: inherit; width: 15px; color: #FFF!important;">add</mat-icon>
                                         </button>
                                     </div>
-                                    <div class="col-md-4 offset-md-2" style="text-align: right;">
-                                        <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Imprimir" style="font-size: 11px; margin: auto;" (click)="generatePDFDomicilio()" *ngIf="!loading && accionDomicilio">
+                                    <div class="col-md-4 offset-md-3" style="text-align: right;">
+                                        <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Imprimir" style="font-size: 11px; margin: auto;" (click)="generatePDFDomicilio()" *ngIf="!loadingDomicilios && accionDomicilio">
                                             Imprimir Comprobante <mat-icon style="display: inherit; width: 15px;">print</mat-icon>
                                         </button>
                                     </div>
