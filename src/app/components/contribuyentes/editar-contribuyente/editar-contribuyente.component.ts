@@ -162,6 +162,7 @@ export class EditarContribuyenteComponent implements OnInit {
     httpOptions;
     fisicaFormGroup: FormGroup;
     moralFormGroup: FormGroup;
+    cuentaFormGroup: FormGroup;
     dataContribuyenteResultado;
     query;
     idContribuyente;
@@ -293,6 +294,12 @@ export class EditarContribuyenteComponent implements OnInit {
             fechaCambio: [null, []],
         });
 
+        this.cuentaFormGroup = this._formBuilder.group({
+            porcentanje: [null, []],
+            cuenta: [null, []],
+            tipoDerecho: [null, []],
+        });
+
         this.idContribuyente = this.route.snapshot.paramMap.get('idcontribuyente');
         this.getTipoDerecho();
         this.getDataDocumentos();
@@ -314,10 +321,10 @@ export class EditarContribuyenteComponent implements OnInit {
         console.log(event);
         var inp = String.fromCharCode(event.keyCode);
         if (/[a-zA-Z0-9]/.test(inp)) {
-        return true;
+            return true;
         } else {
         event.preventDefault();
-        return false;
+            return false;
         }
     }
 
@@ -355,38 +362,6 @@ export class EditarContribuyenteComponent implements OnInit {
             .subscribe(
                 (res: any) => {
                     this.loadingDerecho = false;
-                    // res = [
-                    //     {
-                    //         "idpersonainmueble": "2490937",
-                    //         "idpersona": "2492432",
-                    //         "idinmueble": "33869",
-                    //         "iddocumentojuridicoalta": null,
-                    //         "codtipoderecho": "5",
-                    //         "idchs_mtodesde": "535429",
-                    //         "porcentajeparticipacion": ".3",
-                    //         "descripcionTipoDerecho": "Propietario o Poseedor"
-                    //     },
-                    //     {
-                    //         "idpersonainmueble": "2490937",
-                    //         "idpersona": "2492432",
-                    //         "idinmueble": "33869",
-                    //         "iddocumentojuridicoalta": null,
-                    //         "codtipoderecho": "7",
-                    //         "idchs_mtodesde": "535429",
-                    //         "porcentajeparticipacion": "1",
-                    //         "descripcionTipoDerecho": "Propietario o Poseedor"
-                    //     },
-                    //     {
-                    //         "idpersonainmueble": "2490937",
-                    //         "idpersona": "2492432",
-                    //         "idinmueble": "33869",
-                    //         "iddocumentojuridicoalta": null,
-                    //         "codtipoderecho": "1",
-                    //         "idchs_mtodesde": "535429",
-                    //         "porcentajeparticipacion": ".25",
-                    //         "descripcionTipoDerecho": "Propietario o Poseedor"
-                    //     }
-                    // ];
                     this.personaInmueble = res;
                     console.log("DERECHO DATOS");
                     console.log(this.personaInmueble);
@@ -494,6 +469,7 @@ export class EditarContribuyenteComponent implements OnInit {
     }
 
     asociarCuenta(dataCuenta){
+        this.loadingDerecho = true;
         console.log("ACÁ EL QUERY DE LA CUENTA");
         let queryP = 'idPersona=' + this.idContribuyente + '&region=' + dataCuenta.region + '&manzana=' + dataCuenta.manzana 
                     + '&lote=' + dataCuenta.lote + '&unidadPrivativa=' + dataCuenta.unidad
@@ -503,7 +479,7 @@ export class EditarContribuyenteComponent implements OnInit {
         this.http.post(this.endpoint + 'insertAsociaCuentaContrib' + '?' + queryP, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
-                    this.loadingDerecho = false;
+                    
                     if(res == "Actualizado"){
                         this.snackBar.open("Actualización correcta", 'Cerrar', {
                             duration: 10000,
@@ -511,6 +487,13 @@ export class EditarContribuyenteComponent implements OnInit {
                             verticalPosition: 'top'
                         });
                         this.getTipoDerecho();
+                    }else{
+                        this.snackBar.open("Error al actualizar, intente nuevamente.", 'Cerrar', {
+                            duration: 10000,
+                            horizontalPosition: 'end',
+                            verticalPosition: 'top'
+                        });
+                        this.loadingDerecho = false;
                     }
                     
                 },
@@ -800,6 +783,9 @@ export class EditarContribuyenteComponent implements OnInit {
                         break;
                     case 4:
                         this.eliminarRepresentacion(element,tipo);
+                        break;
+                    case 5:
+                        this.desasociarCuenta(element);
                         break;
                     default:
                         break;
@@ -3372,7 +3358,6 @@ export class DialogRepresentacionC {
     isRequired = true;
     loadingDocumentos;
     dataDocumentos: DocumentosIdentificativos[] = [];
-  
     constructor(
         private http: HttpClient,
         private _formBuilder: FormBuilder,
@@ -3495,15 +3480,26 @@ export class DialogRepresentacionC {
                     this.fisicaFormGroup.controls['ine'].setValue(result.ine);
                     this.fisicaFormGroup.controls['idDocIdent'].setValue(result.idDocIdent);
                     this.fisicaFormGroup.controls['docIdent'].setValue(result.docIdent);
+                    this.fisicaFormGroup.markAllAsTouched();
                 } else {
                     this.moralFormGroup.controls['nombre'].setValue(result.apaterno);
                     this.moralFormGroup.controls['rfc'].setValue(result.rfc);
+                    this.moralFormGroup.markAllAsTouched();
                 }
                 this.changeRequired(null, null);
             }
         });
     }
-  
+
+    /** 
+  * Genera un salto automático de un input al siguiente una vez que la longitud máxima del input ha sido alcanzada
+  */
+  focusNextInput(event, input) {
+    if(event.srcElement.value.length === event.srcElement.maxLength){
+      input.focus();
+    }
+  }
+
     /**
      * Abre el dialogo para agregar los ficheros y datos relacionados su registro.
      */
@@ -3876,9 +3872,11 @@ export class DialogRepresentadoC {
                     this.fisicaFormGroup.controls['ine'].setValue(result.ine);
                     this.fisicaFormGroup.controls['idDocIdent'].setValue(result.idDocIdent);
                     this.fisicaFormGroup.controls['docIdent'].setValue(result.docIdent);
+                    this.fisicaFormGroup.markAllAsTouched();
                 } else {
                     this.moralFormGroup.controls['nombre'].setValue(result.apaterno);
                     this.moralFormGroup.controls['rfc'].setValue(result.rfc);
+                    this.moralFormGroup.markAllAsTouched();
                 }
                 this.changeRequired(null, null);
             }

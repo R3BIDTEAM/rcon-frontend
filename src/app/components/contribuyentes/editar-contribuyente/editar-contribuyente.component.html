@@ -259,7 +259,9 @@
                         </mat-form-field>
                         <mat-form-field appearance="outline" class="col-md-1">
                             <mat-label>Porcentaje:</mat-label>
-                            <input matInput [value]="datoPI.porcentajeparticipacion" maxlength="3" [(ngModel)]="personaInmueble[i].porcentajeparticipacion">
+                            <input matInput class="form-control" #porcentaje="ngModel" name="porcentaje" [value]="datoPI.porcentajeparticipacion" maxlength="3" 
+                                    [(ngModel)]="personaInmueble[i].porcentajeparticipacion" pattern="^[1-9][0-9]?$|^100$">
+                            <mat-error *ngIf="porcentaje.errors?.pattern">VALOR DE 1-100</mat-error>
                         </mat-form-field>
                         <mat-form-field appearance="outline" class="col-md-3" style="margin-left: 0px!important;">
                             <mat-label>Tipo de Derecho</mat-label>
@@ -271,14 +273,16 @@
                         </mat-form-field>
                         <div class="col-md-2">
                             <div class="d-flex flex-row-reverse" style="text-align: center!important; padding-top: 12px;">
-                                <button mat-stroked-button class="boton-n-representacion" color="danger" aria-label="Guardar Porcentaje" matTooltip="Guardar Porcentaje" (click)="desasociarCuenta(personaInmueble[i].idpersonainmueble)" style="margin: auto!important;">
+                                <button mat-stroked-button class="boton-n-representacion" color="danger" aria-label="Guardar Porcentaje" matTooltip="Guardar Porcentaje" (click)="confirmaCambio(5,personaInmueble[i].idpersonainmueble)" style="margin: auto!important;">
                                     Desasociar <mat-icon style="display: inherit; width: 15px;">delete</mat-icon>
                                 </button>   
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="d-flex flex-row-reverse" style="text-align: center!important; padding-top: 12px;">
-                                <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar Porcentaje" matTooltip="Guardar Porcentaje" (click)="actualizaPersonaInmueble(i,personaInmueble[i].idpersonainmueble)" style="margin: auto!important;">
+                                <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar Porcentaje" 
+                                        matTooltip="Guardar Porcentaje" (click)="actualizaPersonaInmueble(i,personaInmueble[i].idpersonainmueble)" 
+                                        style="margin: auto!important;" [disabled]="porcentaje.invalid">
                                     Guardar <mat-icon style="display: inherit; width: 15px;">update</mat-icon>
                                 </button>   
                             </div>

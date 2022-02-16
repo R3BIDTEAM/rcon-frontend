@@ -77,6 +77,7 @@ export class DialogsAsociarCuenta {
     dataCuenta: DataCuenta = {} as DataCuenta;
     loadingDerecho = false;
     dataTipoDerecho: DataTipoDerecho[] = [];
+    mensajeConfirma;
     constructor(
         public dialog: MatDialog,
         private _formBuilder: FormBuilder,
@@ -134,6 +135,33 @@ export class DialogsAsociarCuenta {
                     });
                 }
             );
+    }
+
+    /** 
+    * Abre el dialogo que mostrarrá un mensaje de confirmación según sea el caso
+    * @param evento Es el parametro que recibe el método para elegir en el switch que acción realizar.
+    * @param element Pude ser un solo dato o un array dependiendo el metodo del swtich.
+    * @param tipo Utilizado en el método de eliminarRepresentación para diferenciar entre un representante o representado
+    * con valor de 1 y 2 respectivamente.
+    */
+     confirmaCambio(evento = null, element = null, tipo = null): void {
+        this.mensajeConfirma = evento;
+        console.log(this.mensajeConfirma);
+        const dialogRef = this.dialog.open(DialogConfirmacionComponent, {
+            width: '700px',
+            data: this.mensajeConfirma
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                switch (this.mensajeConfirma) {
+                    case 6:
+                        this.guardarCuenta();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
     }
 
     guardarCuenta(){

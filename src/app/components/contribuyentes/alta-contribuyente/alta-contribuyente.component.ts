@@ -1974,9 +1974,11 @@ export class DialogRepresentacionAltaC {
                     this.fisicaFormGroup.controls['ine'].setValue(result.ine);
                     this.fisicaFormGroup.controls['idDocIdent'].setValue(result.idDocIdent);
                     this.fisicaFormGroup.controls['docIdent'].setValue(result.docIdent);
+                    this.fisicaFormGroup.markAllAsTouched();
                 } else {
                     this.moralFormGroup.controls['nombre'].setValue(result.apaterno);
                     this.moralFormGroup.controls['rfc'].setValue(result.rfc);
+                    this.moralFormGroup.markAllAsTouched();
                 }
             }
             this.changeRequired();
@@ -2303,9 +2305,11 @@ export class DialogRepresentadoAltaC {
                     this.fisicaFormGroup.controls['ine'].setValue(result.ine);
                     this.fisicaFormGroup.controls['idDocIdent'].setValue(result.idDocIdent);
                     this.fisicaFormGroup.controls['docIdent'].setValue(result.docIdent);
+                    this.fisicaFormGroup.markAllAsTouched();
                 } else {
                     this.moralFormGroup.controls['nombre'].setValue(result.apaterno);
                     this.moralFormGroup.controls['rfc'].setValue(result.rfc);
+                    this.moralFormGroup.markAllAsTouched();
                 }
                 this.changeRequired();
             }
