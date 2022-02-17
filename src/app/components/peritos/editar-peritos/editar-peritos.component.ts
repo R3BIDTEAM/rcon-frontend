@@ -4127,7 +4127,7 @@ export class DialogPersonaPeritos {
             if(this.isIdentificativo){
                 this.endpointBusqueda = this.endpoint + 'getMoralIdentificativos';
             if(this.filtros.rfc)
-                this.queryParamFiltros = this.queryParamFiltros + '&rfc=' + this.filtros.rfc.toLocaleUpperCase();
+                this.queryParamFiltros = this.queryParamFiltros + '&rfc=' + this.filtros.rfc.toLocaleUpperCase() + '&codtipopersona=M';
             } else {
                 this.endpointBusqueda = this.endpoint + 'getPersonaMoral';
             if(this.filtros.nombre)
@@ -4148,7 +4148,7 @@ export class DialogPersonaPeritos {
                 if(this.filtros.docIdent)
                     this.queryParamFiltros = this.queryParamFiltros + '&valdocidentif=' + this.filtros.docIdent.toLocaleUpperCase();
         
-                this.queryParamFiltros = this.queryParamFiltros + '&coincidenTodos=false';        
+                this.queryParamFiltros = this.queryParamFiltros + '&coincidenTodos=false&codtipopersona=F';        
             } else {
                 this.endpointBusqueda = this.endpoint + 'getContribuyente';
                 this.queryParamFiltros = (this.filtros.nombre) ? this.queryParamFiltros + '&nombre=' + this.filtros.nombre.toLocaleUpperCase() + '&filtroNombre=0' : this.queryParamFiltros + '&nombre=';

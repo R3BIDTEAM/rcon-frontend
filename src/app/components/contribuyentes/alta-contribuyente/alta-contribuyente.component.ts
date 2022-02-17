@@ -3149,13 +3149,13 @@ export class DialogPersonaAltaC {
         if(this.tipoPersona == 'M'){
             if(this.isIdentificativo){
                 this.endpointBusqueda = this.endpoint + 'getMoralIdentificativos';
-            if(this.filtros.rfc)
-                this.queryParamFiltros = this.queryParamFiltros + '&rfc=' + this.filtros.rfc;
+                if(this.filtros.rfc)
+                    this.queryParamFiltros = this.queryParamFiltros + '&rfc=' + this.filtros.rfc + '&codtipopersona=M';
             } else {
                 this.endpointBusqueda = this.endpoint + 'getPersonaMoral';
-            if(this.filtros.nombre)
-                this.queryParamFiltros = this.queryParamFiltros + '&razonSocial=' + this.filtros.nombre 
-                                        + '&filtroApellidoPaterno=0&codtipopersona=M';
+                if(this.filtros.nombre)
+                    this.queryParamFiltros = this.queryParamFiltros + '&razonSocial=' + this.filtros.nombre 
+                                            + '&filtroApellidoPaterno=0&codtipopersona=M';
             }
         } else {
             if(this.isIdentificativo){
@@ -3171,7 +3171,7 @@ export class DialogPersonaAltaC {
                 if(this.filtros.docIdent)
                     this.queryParamFiltros = this.queryParamFiltros + '&valdocidentif=' + this.filtros.docIdent;
         
-                this.queryParamFiltros = this.queryParamFiltros + '&coincidenTodos=false';        
+                this.queryParamFiltros = this.queryParamFiltros + '&coincidenTodos=false&codtipopersona=F';        
             } else {
                 this.endpointBusqueda = this.endpoint + 'getContribuyente';
                 if(this.filtros.nombre)
