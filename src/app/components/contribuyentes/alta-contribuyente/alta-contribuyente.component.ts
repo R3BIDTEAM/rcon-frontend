@@ -2618,7 +2618,7 @@ export class DialogDocumentoAltaC {
   
         this.infoDocumentoFormGroup = this._formBuilder.group({
             fecha: [null, [Validators.required]],
-            descripcion: [null, []],
+            descripcion: [null, [Validators.required]],
             lugar: [null, [Validators.required]]
         });
   
@@ -3154,7 +3154,8 @@ export class DialogPersonaAltaC {
             } else {
                 this.endpointBusqueda = this.endpoint + 'getPersonaMoral';
             if(this.filtros.nombre)
-                this.queryParamFiltros = this.queryParamFiltros + '&razonSocial=' + this.filtros.nombre + '&filtroApellidoPaterno=0';
+                this.queryParamFiltros = this.queryParamFiltros + '&razonSocial=' + this.filtros.nombre 
+                                        + '&filtroApellidoPaterno=0&codtipopersona=M';
             }
         } else {
             if(this.isIdentificativo){
@@ -3179,6 +3180,7 @@ export class DialogPersonaAltaC {
                     this.queryParamFiltros = this.queryParamFiltros + '&apellidoPaterno=' + this.filtros.apaterno + '&filtroApellidoPaterno=0';
                 if(this.filtros.amaterno)
                     this.queryParamFiltros = this.queryParamFiltros + '&apellidoMaterno=' + this.filtros.amaterno + '&filtroApellidoMaterno=0';
+                    this.queryParamFiltros = this.queryParamFiltros + '&codtipopersona=F';
             }
         }
   

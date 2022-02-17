@@ -214,7 +214,7 @@
             </div>
 
             <!-- Gestión de Domicilios para Recibir Boletas Prediales -->
-            <mat-card-header>
+            <!-- <mat-card-header>
                 <h3 style="margin: 0 0 15px;" class="verde-cdmx">Gestión de Domicilios para Recibir Boletas Prediales:</h3>
             </mat-card-header>
             <div class="col-md-12">
@@ -252,7 +252,7 @@
                     <mat-paginator #paginator [length]="total2" [pageSize]="15" [pageSizeOptions]="[15]" [showFirstLastButtons]="true" (page)="paginado2($event)">
                     </mat-paginator>
                 </ng-container>                    
-            </div>
+            </div> -->
 
             <!-- Datos de bienes -->
             <mat-card-header>
@@ -269,32 +269,32 @@
                     </div> 
                     <table mat-table [dataSource]="dataSource3" *ngIf="!loadingInmuebles && dataSource3.length > 0" width="100%">
                         <ng-container matColumnDef="inmueble">
-                            <th mat-header-cell *matHeaderCellDef width="75%"> Inmueble </th>
-                            <td mat-cell *matCellDef="let element" width="75%">
+                            <th mat-header-cell *matHeaderCellDef width="15%"> Inmueble </th>
+                            <td mat-cell *matCellDef="let element" width="15%">
                                 {{ element.INMUEBLE }}
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="direccion">
-                            <th mat-header-cell *matHeaderCellDef width="75%"> Dirección </th>
-                            <td mat-cell *matCellDef="let element" width="75%">
+                            <th mat-header-cell *matHeaderCellDef width="30%"> Dirección </th>
+                            <td mat-cell *matCellDef="let element" width="30%">
                                 {{ element.DIRECCION }}
                             </td>
                         </ng-container>
-                        <ng-container matColumnDef="domiclio">
-                            <th mat-header-cell *matHeaderCellDef width="75%"> Domicilio Fiscal </th>
-                            <td mat-cell *matCellDef="let element" width="75%">
+                        <ng-container matColumnDef="domicilio">
+                            <th mat-header-cell *matHeaderCellDef width="30%"> Domicilio Notificación </th>
+                            <td mat-cell *matCellDef="let element" width="30%">
                                 {{ element.DOMICILIOFISCAL }}
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="descripcion">
-                            <th mat-header-cell *matHeaderCellDef width="75%"> Descripción </th>
-                            <td mat-cell *matCellDef="let element" width="75%">
-                                {{ element.DIRECCIONINMUEBLE }}
+                            <th mat-header-cell *matHeaderCellDef width="20%"> Descripción </th>
+                            <td mat-cell *matCellDef="let element" width="20%">
+                                {{ element.DESCRIPCION }}
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="sujeto">
-                            <th mat-header-cell *matHeaderCellDef width="75%"> Sujeto Pasivo </th>
-                            <td mat-cell *matCellDef="let element" width="75%">
+                            <th mat-header-cell *matHeaderCellDef width="5%"> Sujeto Pasivo </th>
+                            <td mat-cell *matCellDef="let element" width="5%">
                                 {{ element.ESSUJETOPASIVO }}
                             </td>
                         </ng-container>

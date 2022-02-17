@@ -3486,7 +3486,7 @@ export class DialogDocumentoPerito {
   
         this.infoDocumentoFormGroup = this._formBuilder.group({
             fecha: [null, [Validators.required]],
-            descripcion: [null, []],
+            descripcion: [null, [Validators.required]],
             lugar: [null, [Validators.required]]
         });
   
@@ -4131,7 +4131,8 @@ export class DialogPersonaPeritos {
             } else {
                 this.endpointBusqueda = this.endpoint + 'getPersonaMoral';
             if(this.filtros.nombre)
-                this.queryParamFiltros = this.queryParamFiltros + '&razonSocial=' + this.filtros.nombre.toLocaleUpperCase() + '&filtroApellidoPaterno=0';
+                this.queryParamFiltros = this.queryParamFiltros + '&razonSocial=' + this.filtros.nombre.toLocaleUpperCase() 
+                                        + '&filtroApellidoPaterno=0&codtipopersona=M';
             }
         } else {
             if(this.isIdentificativo){
@@ -4153,6 +4154,7 @@ export class DialogPersonaPeritos {
                 this.queryParamFiltros = (this.filtros.nombre) ? this.queryParamFiltros + '&nombre=' + this.filtros.nombre.toLocaleUpperCase() + '&filtroNombre=0' : this.queryParamFiltros + '&nombre=';
                 this.queryParamFiltros = (this.filtros.apaterno) ? this.queryParamFiltros + '&apellidoPaterno=' + this.filtros.apaterno.toLocaleUpperCase() + '&filtroApellidoPaterno=0' : this.queryParamFiltros + '&apellidoPaterno=';
                 this.queryParamFiltros = (this.filtros.amaterno) ? this.queryParamFiltros + '&apellidoMaterno=' + this.filtros.amaterno.toLocaleUpperCase() + '&filtroApellidoMaterno=0' : this.queryParamFiltros + '&apellidoMaterno=';
+                this.queryParamFiltros = this.queryParamFiltros + '&codtipopersona=F';
             }
         }
   

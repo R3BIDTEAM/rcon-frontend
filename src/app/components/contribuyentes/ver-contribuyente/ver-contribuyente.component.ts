@@ -263,6 +263,7 @@ export class VerContribuyenteComponent implements OnInit {
               this.total2 = this.dataSource2.length;
               this.dataPaginate1 = this.paginate(this.dataSource1, 15, this.pagina1);
               this.dataPaginate2 = this.paginate(this.dataSource2, 15, this.pagina2);
+              this.getidInmuebles();
           },
           (error) => {
               this.loadingDomicilios = false;
@@ -279,40 +280,33 @@ export class VerContribuyenteComponent implements OnInit {
   * Obtiene los inmuebles de la persona
   */
   getidInmuebles(){
-  this.loadingInmuebles = true;
-  this.http.get(this.endpoint + 'getInmuebles' + '?idPersona='+ this.idContribuyente, this.httpOptions)
-    .subscribe(
-        (res: any) => {
-            this.loadingInmuebles = false;
-            console.log("AQUI ENTRO IDINMUEBLE!!!");
-            console.log(res);
+    this.loadingInmuebles = true;
+    this.http.get(this.endpoint + 'getInmuebles' + '?idPersona='+ this.idContribuyente, this.httpOptions)
+        .subscribe(
+            (res: any) => {
+                this.loadingInmuebles = false;
+                console.log("AQUI ENTRO IDINMUEBLE!!!");
+                console.log(res);
 
-            this.dataSource3 = res;
-            console.log(res.length);
-            console.log(this.dataSource3);
-            this.dataPaginate3 = this.paginate(this.dataSource3, 15, this.paginaDom);
-            this.total3 = this.dataPaginate3.length; 
-            this.paginator.pageIndex = 0;
-            console.log("AQUI ENTRO EL RES DEL INMUEBLE!");
-            console.log(this.dataSource3);
+                this.dataSource3 = res;
+                console.log(res.length);
+                console.log(this.dataSource3);
+                this.dataPaginate3 = this.paginate(this.dataSource3, 15, this.paginaDom);
+                this.total3 = this.dataPaginate3.length; 
+                this.paginator.pageIndex = 0;
+                console.log("AQUI ENTRO EL RES DEL INMUEBLE!");
+                console.log(this.dataSource3);
 
-            //console.log(res[0].idinmueble);
-            // if(res.length > 0){
-            //     this.idInmueble = res[0].idinmueble;
-            // }else{
-            //     this.idInmueble = null;
-            // }
-            // this.getInmuebles();
-        },
-        (error) => {
-            this.loadingInmuebles = false;
-            this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                duration: 10000,
-                horizontalPosition: 'end',
-                verticalPosition: 'top'
-            });
-        }
-    );
+            },
+            (error) => {
+                this.loadingInmuebles = false;
+                this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    duration: 10000,
+                    horizontalPosition: 'end',
+                    verticalPosition: 'top'
+                });
+            }
+        );
   }
 
   /**

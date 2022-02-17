@@ -37,19 +37,19 @@
                 <form [formGroup]="infoDocumentoFormGroup">
                     <ng-template matStepLabel>{{dataDocumento.nombreTipoDocumentoJuridico}}
                         <button mat-flat-button type="button" color="primary" [disabled]="tiposDocumentoFormGroup.value.codtipodocumentojuridico != 'PN' || insUp" aria-label="Buscar Notario" matTooltip="Buscar Notario" class="little-button" (click)="addNotario()" [readonly]="insUp">
-                            <mat-icon>search</mat-icon>
+                            <mat-icon style="color: #FFF!important;">search</mat-icon>
                         </button>
                     </ng-template>
                     <br>
                     <ng-container *ngIf="tiposDocumentoFormGroup.value.codtipodocumentojuridico == 'PN'">
                         <mat-form-field appearance="outline" class="col-6">
                             <mat-label>Número:</mat-label>
-                            <input matInput readonly formControlName="noNotario" [readonly]="insUp" style="text-transform: uppercase;">
+                            <input matInput readonly="true" formControlName="noNotario" style="text-transform: uppercase;">
                             <mat-error *ngIf="infoDocumentoFormGroup.controls.noNotario.errors?.required">Requerido</mat-error>
                         </mat-form-field>
                         <mat-form-field appearance="outline" class="col-6" style="margin-left: 0px!important;">
                             <mat-label>Estado:</mat-label>
-                            <input matInput readonly formControlName="ciudadNotario" [readonly]="insUp" style="text-transform: uppercase;">
+                            <input matInput readonly="true" formControlName="ciudadNotario" style="text-transform: uppercase;">
                             <mat-error *ngIf="infoDocumentoFormGroup.controls.ciudadNotario.errors?.required">Requerido</mat-error>
                         </mat-form-field>
                         <mat-form-field appearance="outline" class="col-12" style="margin-left: 0px!important;">
@@ -78,6 +78,7 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-12" style="margin-left: 0px!important;">
                         <mat-label>Descripción:</mat-label>
+                        <mat-error *ngIf="infoDocumentoFormGroup.controls.descripcion.errors?.required">Requerido</mat-error>
                         <textarea matInput formControlName="descripcion" rows="5" style="text-transform: uppercase;"></textarea>
                     </mat-form-field>
                     <div>
