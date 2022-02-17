@@ -1,14 +1,14 @@
 <h1 mat-dialog-title class="verde-cdmx">Domicilio</h1>
 <div mat-dialog-content>
 
-    <div style="padding: 30px; text-align: center;" *ngIf="loadingEstados">
+    <div style="padding: 30px; text-align: center;" *ngIf="loadingEstados || loadingDireccionEspecifica">
         <mat-spinner style="margin:0 auto;"></mat-spinner>
         <p>Cargando...</p>
     </div>
     <div>
        
     </div>
-    <ng-container *ngIf="!loadingEstados">
+    <ng-container *ngIf="!loadingEstados && !loadingDireccionEspecifica">
         <form [formGroup]="domicilioFormGroup">
             <div class="row"><input matInput formControlName="id_direccion" hidden></div>
             <div class="row">
@@ -194,7 +194,7 @@
     </ng-container>
 
 </div>
-<mat-dialog-actions align="end">
+<mat-dialog-actions align="end" *ngIf="blockButtons">
     <button mat-button mat-dialog-close>Cerrar</button>
-    <button mat-flat-button color="primary" [disabled]="domicilioFormGroup.invalid" mat-dialog-close (click)="getDataDomicilio()">Aceptar</button>
+    <button mat-flat-button color="primary" [disabled]="domicilioFormGroup.invalid" (click)="getDataDomicilio()">Aceptar</button>
 </mat-dialog-actions>

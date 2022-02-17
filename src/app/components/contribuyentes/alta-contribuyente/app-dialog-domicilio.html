@@ -195,7 +195,7 @@
     </ng-container>
 
 </div>
-<mat-dialog-actions align="end">
+<mat-dialog-actions align="end" *ngIf="blockButtons">
     <button mat-button mat-dialog-close>Cerrar</button>
-    <button mat-flat-button color="primary" [disabled]="domicilioFormGroup.invalid" mat-dialog-close (click)="getDataDomicilio()">Aceptar</button>
+    <button mat-flat-button color="primary" [disabled]="domicilioFormGroup.invalid" (click)="getDataDomicilio()">Aceptar</button>
 </mat-dialog-actions>

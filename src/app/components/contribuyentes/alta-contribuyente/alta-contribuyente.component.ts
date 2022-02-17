@@ -765,6 +765,7 @@ export class DialogDomicilioAlta {
     botonMunicipio = true;
     botonVia = true;
     buscaMunicipios;
+    blockButtons = true;
     domicilioFormGroup: FormGroup;
     dataDomicilio: DataDomicilio = {} as DataDomicilio;
 
@@ -787,6 +788,9 @@ export class DialogDomicilioAlta {
         this.codtiposdireccion = data.codtiposdireccion;
         this.dataDomicilio = {} as DataDomicilio
         this.getDataEstados();
+        this.getDataTiposAsentamiento();
+        this.getDataTiposVia();
+        this.getDataTiposLocalidad();
         
         this.domicilioFormGroup = this._formBuilder.group({
             //idtipodireccion: ['', Validators.required],
@@ -833,12 +837,10 @@ export class DialogDomicilioAlta {
             this.domicilioFormGroup.updateValueAndValidity();
         });
 
-        if(data){
-            this.setDataDomicilio(data);
-        }
-        this.getDataTiposAsentamiento();
-        this.getDataTiposVia();
-        this.getDataTiposLocalidad();
+        // if(data){
+        //     this.setDataDomicilio(data);
+        // }
+        
     }
   
     getNombreDel(event): void {
@@ -978,6 +980,8 @@ export class DialogDomicilioAlta {
     * Obtiene la información de los domicilios
     */
     getDataDomicilio(): void {
+        this.loadingEstados = true;
+        this.blockButtons = false;
         //this.dataDomicilio.idtipodireccion = this.domicilioFormGroup.value.idtipodireccion;
         this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
         this.dataDomicilio.codasentamiento = this.domicilioFormGroup.value.codasentamiento;
@@ -1008,10 +1012,8 @@ export class DialogDomicilioAlta {
             this.dataDomicilio.ciudad = (this.domicilioFormGroup.value.ciudad) ? this.domicilioFormGroup.value.ciudad : null;
             this.dataDomicilio.idciudad = (this.domicilioFormGroup.value.idciudad) ? this.domicilioFormGroup.value.idciudad : null;
         }
+
         this.guardaDomicilio();
-        //console.log('AQUEI EL FORM VALID');
-        // console.log(this.domicilioFormGroup);
-        ///retu
     }
 
     /** 
@@ -1055,9 +1057,7 @@ export class DialogDomicilioAlta {
         
         console.log('EL SUPER QUERY!!!!!!');
         console.log(query);
-        //insertarDireccion?idPersona=4485239&codtiposvia=1&idvia=686&via=DR LAVISTA&numeroexterior=144&entrecalle1&entrecalle2&andador&edificio&seccion&entrada
-            //&codtiposlocalidad=1&codtiposasentamiento=9&idcolonia=8&codasentamiento=&colonia=DOCTORES&codigopostal=06720
-            //&codciudad=&ciudad&iddelegacion=5&codmunicipio=15&delegacion=CUAUHTEMOC&telefono&codestado=9&codtiposdireccion=N&indicacionesadicionales&numerointerior=
+
         this.http.post(this.endpointCatalogos + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
@@ -1075,7 +1075,8 @@ export class DialogDomicilioAlta {
                             verticalPosition: 'top'
                         });
                     }
-                    //this.dialogRef.close();
+                    this.loadingEstados = false;
+                    this.dialogRef.close();
                 },
                 (error) => {
                 }

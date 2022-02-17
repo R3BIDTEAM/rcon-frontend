@@ -36,6 +36,12 @@
             <h3>¿Está seguro que desea asociar la cuenta?</h3>
         </div>
     </div>
+    <div class="row" *ngIf="mensajeConfirma == 7">
+        <div class="col-md-1"></div>
+        <div class="col-md-8">
+            <h3>¿Está seguro que desea actualizar los datos de la cuenta asociada?</h3>
+        </div>
+    </div>
 </div>
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Cerrar</button>

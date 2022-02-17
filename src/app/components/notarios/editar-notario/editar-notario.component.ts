@@ -619,10 +619,10 @@ export class EditarNotarioComponent implements OnInit {
             },
         });
         dialogRef.afterClosed().subscribe(result => {
-            this.loadingDomicilios = true;
-            setTimeout (() => {
+            if(result){
+                this.loadingDomicilios = true;
                 this.getNotarioDirecciones();
-            }, 1500);
+            }
         });
     }
 
@@ -637,10 +637,10 @@ export class EditarNotarioComponent implements OnInit {
                 data: {dataDomicilioEspecifico:dataDomicilioEspecifico, idNotario: this.idNotario},
             });
             dialogRef.afterClosed().subscribe(result => {
-                this.loadingDomicilios = true;
-                setTimeout (() => {
+                if(result){
+                    this.loadingDomicilios = true;
                     this.getNotarioDirecciones();
-                }, 1500);
+                }
             });
     }
 
@@ -738,15 +738,16 @@ export class DialogDomiciliosNotario {
     loadingDireccionEspecifica = false;
     iddomicilio;
     iddireccion;
+    blockButtons = true;
 
-  constructor(
-    private auth: AuthService,
-        private snackBar: MatSnackBar,
-        private http: HttpClient,
-        private _formBuilder: FormBuilder,
-        public dialogRef: MatDialogRef<DialogDomiciliosNotario>,
-        public dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
+    constructor(
+        private auth: AuthService,
+            private snackBar: MatSnackBar,
+            private http: HttpClient,
+            private _formBuilder: FormBuilder,
+            public dialogRef: MatDialogRef<DialogDomiciliosNotario>,
+            public dialog: MatDialog,
+        @Inject(MAT_DIALOG_DATA) public data: any) {
         dialogRef.disableClose = true;
         this.httpOptions = {
             headers: new HttpHeaders({
@@ -755,11 +756,15 @@ export class DialogDomiciliosNotario {
             })
         };
     
-    this.iddireccion = data.dataDomicilioEspecifico;
-    this.codtiposdireccion = data.codtiposdireccion;
-    this.dataDomicilio = {} as DataDomicilio;
-    this.dataDomicilioEspecifico = {} as DataDomicilio;
-    this.getDataEstados();
+        this.iddireccion = data.dataDomicilioEspecifico;
+        this.codtiposdireccion = data.codtiposdireccion;
+        this.dataDomicilio = {} as DataDomicilio;
+        this.dataDomicilioEspecifico = {} as DataDomicilio;
+        this.getDataEstados();
+        this.getDataTiposAsentamiento();
+        this.getDataTiposVia();
+        this.getDataTiposLocalidad();
+
         this.domicilioFormGroup = this._formBuilder.group({
             ///idtipodireccion: ['', Validators.required],
             idestado: ['', Validators.required],
@@ -805,15 +810,14 @@ export class DialogDomiciliosNotario {
             }
             this.domicilioFormGroup.updateValueAndValidity();
         });
-        this.getDireccionEspecifica();
-            if(data){
-                console.log(data.dataDomicilioEspecifico);
-                console.log("recibimos data seteado1");
-            }
-            this.getDataTiposAsentamiento();
-            this.getDataTiposVia();
-            this.getDataTiposLocalidad();
-            //this.getDireccionEspecifica();
+
+        if(data.dataDomicilioEspecifico){
+            console.log("recibimos data seteado1"+data.dataDomicilioEspecifico);
+            this.loadingDireccionEspecifica = true;
+            setTimeout(() => {
+                this.getDireccionEspecifica();
+            }, 5000);
+        }
 
     }
 
@@ -822,16 +826,18 @@ export class DialogDomiciliosNotario {
     * Obtiene la dirección especifica guardada para éste notario
     */
     getDireccionEspecifica(){
-        this.loadingDireccionEspecifica = true;
+
         let metodo = 'getDireccionById';
         this.http.get(this.endpointCatalogos + metodo + '?idDireccion='+ this.iddireccion, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingDireccionEspecifica = false;
                     this.dataDomicilioEspecifico = res;
-                    this.setDataDomicilio(this.dataDomicilioEspecifico[0]);
                     console.log('domicilio único encontrado');
                     console.log(this.dataDomicilioEspecifico);
+                    setTimeout(() => {
+                        this.setDataDomicilio(this.dataDomicilioEspecifico[0]);    
+                    }, 500);
                 },
                 (error) => {
                     this.loadingDireccionEspecifica = false;
@@ -991,6 +997,8 @@ export class DialogDomiciliosNotario {
      * Almacena los datos del formulario del domicilio y de acuerdo al valor inserta o actualiza
      */
     getDataDomicilio(): void {
+        this.loadingEstados = true;
+        this.blockButtons = false;
         //this.dataDomicilio.idtipodireccion = this.domicilioFormGroup.value.idtipodireccion;
         this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
         this.dataDomicilio.codasentamiento = this.domicilioFormGroup.value.codasentamiento;
@@ -1016,7 +1024,6 @@ export class DialogDomiciliosNotario {
         
         if(this.domicilioFormGroup.value.idestado == 9){
             this.dataDomicilio.idmunicipio = this.domicilioFormGroup.value.idmunicipio;
-            // alert(this.dataDomicilio.idmunicipio);
         } else {
             this.dataDomicilio.idmunicipio2 = this.domicilioFormGroup.value.idmunicipio2;
             this.dataDomicilio.municipio = (this.domicilioFormGroup.value.municipio) ? this.domicilioFormGroup.value.municipio : null;
@@ -1024,13 +1031,9 @@ export class DialogDomiciliosNotario {
             this.dataDomicilio.idciudad = (this.domicilioFormGroup.value.idciudad) ? this.domicilioFormGroup.value.idciudad : null;
         }
 
-
-            // alert(this.dataDomicilio.id_direccion);
             if(this.domicilioFormGroup.value.id_direccion == null){
-                // alert('guardar');
                  this.guardaDomicilio();
             } else{
-                // alert('actualizar');
                  this.actualizarDomicilio();
             }
 
@@ -1047,7 +1050,6 @@ export class DialogDomiciliosNotario {
         query = (this.dataDomicilio.codtiposvia) ? query + '&codtiposvia=' + this.dataDomicilio.codtiposvia : query + '&codtiposvia=';
         query = (this.dataDomicilio.idtipovia) ? query + '&idvia=' + this.dataDomicilio.idtipovia : query + '&idvia=';
         query = (this.dataDomicilio.via) ? query + '&via=' + this.dataDomicilio.via : query + '&via=';
-
         query = (this.dataDomicilio.nexterior) ? query + '&numeroexterior=' + this.dataDomicilio.nexterior : query + '&numeroexterior=';
         query = (this.dataDomicilio.entrecalle1) ? query + '&entrecalle1='  + this.dataDomicilio.entrecalle1.toLocaleUpperCase() : query + '&entrecalle1';
         query = (this.dataDomicilio.entrecalle2) ? query + '&entrecalle2='  + this.dataDomicilio.entrecalle2.toLocaleUpperCase() : query + '&entrecalle2';
@@ -1057,9 +1059,7 @@ export class DialogDomiciliosNotario {
         query = (this.dataDomicilio.entrada) ? query + '&entrada=' + this.dataDomicilio.entrada.toLocaleUpperCase() : query + '&entrada=';
         query = (this.dataDomicilio.idtipolocalidad) ? query + '&codtiposlocalidad=' + this.dataDomicilio.idtipolocalidad : query + '&codtiposlocalidad=';
         query = (this.dataDomicilio.idtipoasentamiento) ? query + '&codtiposasentamiento=' + this.dataDomicilio.idtipoasentamiento : query + '&codtiposasentamiento=';
-        
         query = (this.dataDomicilio.codasentamiento) ? query + '&idcolonia=' + this.dataDomicilio.codasentamiento : query + '&idcolonia=';
-        
         query = (this.dataDomicilio.codasentamiento) ? query + '&codasentamiento=' + this.dataDomicilio.codasentamiento : query + '&codasentamiento=';
         query = (this.dataDomicilio.asentamiento) ? query + '&colonia=' + this.dataDomicilio.asentamiento : query + '&colonia=';
         query = (this.dataDomicilio.cp) ? query + '&codigopostal=' + this.dataDomicilio.cp : query + '&codigopostal=';
@@ -1067,18 +1067,16 @@ export class DialogDomiciliosNotario {
         query = (this.dataDomicilio.ciudad) ? query + '&ciudad=' + this.dataDomicilio.ciudad : query + '&ciudad=';
         query = (this.dataDomicilio.idmunicipio) ? query + '&iddelegacion=' + this.dataDomicilio.idmunicipio : query + '&iddelegacion';
         query = (this.dataDomicilio.idmunicipio2) ? query + '&codmunicipio=' + this.dataDomicilio.idmunicipio2 : query + '&codmunicipio=';
-        
         query = (this.dataDomicilio.idestado == 9) ? query + '&delegacion=' + this.dataDomicilio.delegacion : query + '&delegacion=' + this.dataDomicilio.municipio;
-        
         query = (this.dataDomicilio.telefono) ? query + '&telefono=' + this.dataDomicilio.telefono : query + '&telefono=';
         query = (this.dataDomicilio.idestado) ? query + '&codestado=' + this.dataDomicilio.idestado : query + '&codestado=';
         query = (this.codtiposdireccion) ? query + '&codtiposdireccion=' + this.codtiposdireccion : query + '&codtiposdireccion=';
         query = (this.dataDomicilio.adicional) ? query + '&indicacionesadicionales=' + this.dataDomicilio.adicional.toLocaleUpperCase() : query + '&indicacionesadicionales=';
         query = (this.dataDomicilio.ninterior) ? query + '&numerointerior=' + this.dataDomicilio.ninterior : query + '&numerointerior=';
         
-        // console.log('EL SUPER QUERY!!!!!!');
-        // console.log(query);
-        // insertarDireccion?idPersona=4485239&codtiposvia=1&idvia=686&via=DR LAVISTA&numeroexterior=144&entrecalle1&entrecalle2&andador&edificio&seccion&entrada&codtiposlocalidad=1&codtiposasentamiento=9&idcolonia=8&codasentamiento=&colonia=DOCTORES&codigopostal=06720&codciudad=&ciudad&iddelegacion=5&codmunicipio=15&delegacion=CUAUHTEMOC&telefono&codestado=9&codtiposdireccion=N&indicacionesadicionales&numerointerior=
+        console.log('EL SUPER QUERY!!!!!!');
+        console.log(query);
+
         this.http.post(this.endpointCatalogos + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
@@ -1088,9 +1086,11 @@ export class DialogDomiciliosNotario {
                         horizontalPosition: 'end',
                         verticalPosition: 'top'
                     });
-                    //this.dialogRef.close();
+                    this.dialogRef.close(res.idpersona);
+                    this.loadingEstados = false;
                 },
                 (error) => {
+                    this.dialogRef.close();
                     this.snackBar.open('Ocurrio un error al Insertar la dirección, intente nuevemente', 'Cerrar', {
                         duration: 10000,
                         horizontalPosition: 'end',
@@ -1138,8 +1138,6 @@ export class DialogDomiciliosNotario {
         console.log('Actualizacion de Direcciones...');
         console.log(query);
         
-        //localhost:8000/api/v1/registro/actualizarDireccion?idPersona=4353312&idDireccion=3597172&codtiposvia=1&idvia=2568&via=ABRAHAM SANCHEZ&numeroexterior=21&entrecalle1&entrecalle2&andador&edificio&seccion&entrada&codtiposlocalidad=1&numerointerior=&codtiposasentamiento=9&idcolonia=8&codasentamiento=&colonia=DOCTORES&codigopostal=06720&codciudad&ciudad&iddelegacion=5&codmunicipio=15&delegacion=CUAUHTEMOC&telefono&codestado=9&codtiposdireccion=&indicacionesadicionales
-
         this.http.post(this.endpointCatalogos + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
@@ -1150,8 +1148,11 @@ export class DialogDomiciliosNotario {
                         horizontalPosition: 'end',
                         verticalPosition: 'top'
                     });
+                    this.dialogRef.close(res.idpersona);
+                    this.loadingEstados = false;
                 },
                 (error) => {
+                    this.dialogRef.close();
                     this.snackBar.open(error.error.mensaje, 'Cerrar', {
                         duration: 10000,
                         horizontalPosition: 'end',
@@ -1168,9 +1169,9 @@ export class DialogDomiciliosNotario {
     setDataDomicilio(data): void {
         console.log("ACA EL COD DATA ESPE");
         console.log(data);
-        // console.log("ACA EL COD ESTADO SETEADO"+data.dataDomicilioEspecifico.CODESTADO);
        
         this.domicilioFormGroup.controls['idestado'].setValue(data.CODESTADO);
+        this.domicilioFormGroup.updateValueAndValidity();
         this.getDataMunicipios({value: this.domicilioFormGroup.value.idestado});
         this.domicilioFormGroup.controls['codasentamiento'].setValue(data.IDCOLONIA);
         this.domicilioFormGroup.controls['idtipoasentamiento'].setValue(data.CODTIPOSASENTAMIENTO);
@@ -1192,15 +1193,18 @@ export class DialogDomiciliosNotario {
         this.domicilioFormGroup.controls['adicional'].setValue(data.INDICACIONESADICIONALES);
         this.domicilioFormGroup.controls['id_direccion'].setValue(data.IDDIRECCION);
     
-        if(data.CODESTADO == 9){
-            // alert('funciona');
-            this.domicilioFormGroup.controls['idmunicipio'].setValue(data.IDDELEGACION);
-        } else {
-            this.domicilioFormGroup.controls['idmunicipio2'].setValue(data.CODMUNICIPIO);
-            this.domicilioFormGroup.controls['municipio'].setValue(data.DELEGACION);
-            this.domicilioFormGroup.controls['ciudad'].setValue(data.CIUDAD);
-            this.domicilioFormGroup.controls['idciudad'].setValue(data.CODCIUDAD);
-        }
+        setTimeout(() => {
+            if(data.CODESTADO == 9){
+                // alert('funciona');
+                this.domicilioFormGroup.controls['idmunicipio'].setValue(data.IDDELEGACION);
+            } else {
+                this.domicilioFormGroup.controls['idmunicipio2'].setValue(data.CODMUNICIPIO);
+                this.domicilioFormGroup.controls['municipio'].setValue(data.DELEGACION);
+                this.domicilioFormGroup.controls['ciudad'].setValue(data.CIUDAD);
+                this.domicilioFormGroup.controls['idciudad'].setValue(data.CODCIUDAD);
+            }
+        }, 500);
+        this.dataDomicilio.delegacion = data.DELEGACION;
     }
 
     /** 

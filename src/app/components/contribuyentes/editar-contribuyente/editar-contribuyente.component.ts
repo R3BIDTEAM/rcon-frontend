@@ -787,6 +787,9 @@ export class EditarContribuyenteComponent implements OnInit {
                     case 5:
                         this.desasociarCuenta(element);
                         break;
+                    case 7:
+                        this.actualizaPersonaInmueble(element,tipo);
+                        break;
                     default:
                         break;
                 }
@@ -2076,17 +2079,7 @@ export class DialogDomicilioContribuyente {
             this.getDataTiposAsentamiento();
             this.getDataTiposVia();
             this.getDataTiposLocalidad();
-            console.log("recibimos data");
             
-            if(data.dataDomicilioEspecifico){
-                console.log(data.dataDomicilioEspecifico);
-                console.log("recibimos data seteado1");
-                this.loadingDireccionEspecifica = true;
-                setTimeout(() => {
-                    this.getDireccionEspecifica();
-                }, 5000);
-            }
-            //^([A-Z,Ñ,&]{4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})$
             this.domicilioFormGroup = this._formBuilder.group({
                 //idtipodireccion: ['', Validators.required],
                 idestado: ['', Validators.required],
@@ -2133,7 +2126,13 @@ export class DialogDomicilioContribuyente {
             });
     
 
-            
+            if(data.dataDomicilioEspecifico){
+                console.log("recibimos data seteado1"+data.dataDomicilioEspecifico);
+                this.loadingDireccionEspecifica = true;
+                setTimeout(() => {
+                    this.getDireccionEspecifica();
+                }, 5000);
+            }
         }
   
     /** 
@@ -2343,8 +2342,6 @@ export class DialogDomicilioContribuyente {
         
         if(this.domicilioFormGroup.value.idestado == 9){
             this.dataDomicilio.idmunicipio = this.domicilioFormGroup.value.idmunicipio;
-            // alert(this.dataDomicilio.idmunicipio);
-            //this.dataDomicilio.delegacion = this.domicilioFormGroup.value.delegacion;
         } else {
             this.dataDomicilio.idmunicipio2 = this.domicilioFormGroup.value.idmunicipio2;
             this.dataDomicilio.municipio = (this.domicilioFormGroup.value.municipio) ? this.domicilioFormGroup.value.municipio : null;
@@ -2352,22 +2349,11 @@ export class DialogDomicilioContribuyente {
             this.dataDomicilio.idciudad = (this.domicilioFormGroup.value.idciudad) ? this.domicilioFormGroup.value.idciudad : null;
         }
 
-
-            // alert(this.dataDomicilio.id_direccion);
             if(this.domicilioFormGroup.value.id_direccion == null){
-                // alert('guardar');
                 this.guardaDomicilio();
             } else{
-                // alert('actualizar');
                 this.actualizarDomicilio();
             }
-
-        
-    
-
-        //console.log('AQUEI EL FORM VALID');
-        // console.log(this.domicilioFormGroup);
-        ///retu
     }
       
     /**
@@ -2406,7 +2392,6 @@ export class DialogDomicilioContribuyente {
       
         console.log('EL SUPER QUERY!!!!!!');
         console.log(query);
-        //insertarDireccion?idPersona=4485239&codtiposvia=1&idvia=686&via=DR LAVISTA&numeroexterior=144&entrecalle1&entrecalle2&andador&edificio&seccion&entrada&codtiposlocalidad=1&codtiposasentamiento=9&idcolonia=8&codasentamiento=&colonia=DOCTORES&codigopostal=06720&codciudad=&ciudad&iddelegacion=5&codmunicipio=15&delegacion=CUAUHTEMOC&telefono&codestado=9&codtiposdireccion=N&indicacionesadicionales&numerointerior=
         
         this.http.post(this.endpointCatalogos + query, '', this.httpOptions)
             .subscribe(
@@ -2489,8 +2474,6 @@ export class DialogDomicilioContribuyente {
         console.log('Actualizacion de Direcciones...');
         console.log(query);
     
-        //localhost:8000/api/v1/registro/actualizarDireccion?idPersona=4353312&idDireccion=3597172&codtiposvia=1&idvia=2568&via=ABRAHAM SANCHEZ&numeroexterior=21&entrecalle1&entrecalle2&andador&edificio&seccion&entrada&codtiposlocalidad=1&numerointerior=&codtiposasentamiento=9&idcolonia=8&codasentamiento=&colonia=DOCTORES&codigopostal=06720&codciudad&ciudad&iddelegacion=5&codmunicipio=15&delegacion=CUAUHTEMOC&telefono&codestado=9&codtiposdireccion=&indicacionesadicionales
-
         this.http.post(this.endpointCatalogos + query, '', this.httpOptions)
             .subscribe(
             
@@ -2547,6 +2530,7 @@ export class DialogDomicilioContribuyente {
         console.log(data);
     
         this.domicilioFormGroup.controls['idestado'].setValue(data.CODESTADO);
+        this.domicilioFormGroup.updateValueAndValidity();
         this.getDataMunicipios({value: this.domicilioFormGroup.value.idestado});
         this.domicilioFormGroup.controls['codasentamiento'].setValue(data.IDCOLONIA);
         this.domicilioFormGroup.controls['idtipoasentamiento'].setValue(data.CODTIPOSASENTAMIENTO);
@@ -2567,21 +2551,18 @@ export class DialogDomicilioContribuyente {
         this.domicilioFormGroup.controls['telefono'].setValue(data.TELEFONO);
         this.domicilioFormGroup.controls['adicional'].setValue(data.INDICACIONESADICIONALES);
         this.domicilioFormGroup.controls['id_direccion'].setValue(data.IDDIRECCION);
-
-        if(data.CODESTADO == 9){
-            this.domicilioFormGroup.controls['idmunicipio'].setValue(data.IDDELEGACION);
-        } else {
-            this.domicilioFormGroup.controls['idmunicipio2'].setValue(data.CODMUNICIPIO);
-            this.domicilioFormGroup.controls['municipio'].setValue(data.DELEGACION);
-            this.domicilioFormGroup.controls['ciudad'].setValue(data.CIUDAD);
-            this.domicilioFormGroup.controls['idciudad'].setValue(data.CODCIUDAD);
-        }
-
+        
+        setTimeout(() => {
+            if(data.CODESTADO == 9){
+                this.domicilioFormGroup.controls['idmunicipio'].setValue(data.IDDELEGACION);
+            } else {
+                this.domicilioFormGroup.controls['idmunicipio2'].setValue(data.CODMUNICIPIO);
+                this.domicilioFormGroup.controls['municipio'].setValue(data.DELEGACION);
+                this.domicilioFormGroup.controls['ciudad'].setValue(data.CIUDAD);
+                this.domicilioFormGroup.controls['idciudad'].setValue(data.CODCIUDAD);
+            }
+        }, 500);
         this.dataDomicilio.delegacion = data.DELEGACION;
-        // setTimeout(() => {
-        //     console.log("aca entre setdom");
-        //     this.loadingDireccionEspecifica = false;
-        // }, 2000);
     }
 
     /**
