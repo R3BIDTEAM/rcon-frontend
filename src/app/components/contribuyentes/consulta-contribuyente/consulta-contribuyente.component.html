@@ -110,12 +110,13 @@
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-4">
                                 <mat-label>RFC:</mat-label>
-                                <input matInput formControlName="rfc" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250"  placeholder="Ingrese el RFC" pattern="^([A-ZÑ&]{4})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" (keydown.enter)="getData()" style="text-transform: uppercase;" onkeyup="this.value = this.value.toUpperCase();">
-                                <mat-error *ngIf="contribuyenteFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 4 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
+                                <!-- <input matInput formControlName="rfc" (keyup)="clearInputsIdentNoIdent(true)" maxlength="13"  placeholder="Ingrese el RFC" pattern="^([A-ZÑ&]{4})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" (keydown.enter)="getData()" style="text-transform: uppercase;" onkeyup="this.value = this.value.toUpperCase();"> -->
+                                <input matInput formControlName="rfc" (keyup)="clearInputsIdentNoIdent(true)" maxlength="13"  placeholder="Ingrese el RFC" (keydown.enter)="getData()" style="text-transform: uppercase;" onkeyup="this.value = this.value.toUpperCase();">
+                                <!-- <mat-error *ngIf="contribuyenteFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 4 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error> -->
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-4">
                                 <mat-label>CURP:</mat-label>
-                                <input matInput formControlName="curp" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250"  placeholder="Ingrese el CURP" pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$" (keydown.enter)="getData()" style="text-transform: uppercase;" onkeyup="this.value = this.value.toUpperCase();">
+                                <input matInput formControlName="curp" (keyup)="clearInputsIdentNoIdent(true)" maxlength="18"  placeholder="Ingrese el CURP" pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$" (keydown.enter)="getData()" style="text-transform: uppercase;" onkeyup="this.value = this.value.toUpperCase();">
                                 <mat-error *ngIf="contribuyenteFormGroup.controls.curp.errors?.pattern">El campo CURP debe contener 4 letras mayúsculas, 6 números, H o M, 5 letras mayúsculas, 1 alfanumérico y 1 número.</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-4">

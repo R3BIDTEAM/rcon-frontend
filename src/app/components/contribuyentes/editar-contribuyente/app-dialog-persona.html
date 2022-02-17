@@ -34,8 +34,8 @@
             <div class="row" style="margin-top: 20px;">
                 <mat-form-field appearance="outline" class="col-4">
                     <mat-label>RFC:</mat-label>
-                    <input matInput formControlName="rfc" [(ngModel)]="filtros.rfc" name="rfc" placeholder="Ingrese el rfc" (keyup)="clearInputsIdentNoIdent(true)" onkeyup="this.value = this.value.toUpperCase();" [required]="isRequired" pattern="^([A-Z,Ñ,&]{4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})$" maxlength="13">
-                    <mat-error *ngIf="fisicaFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 4 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
+                    <!-- <input matInput formControlName="rfc" [(ngModel)]="filtros.rfc" name="rfc" placeholder="Ingrese el rfc" (keyup)="clearInputsIdentNoIdent(true)" onkeyup="this.value = this.value.toUpperCase();" [required]="isRequired" pattern="^([A-Z,Ñ,&]{4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})$" maxlength="13"> -->
+                    <input matInput formControlName="rfc" [(ngModel)]="filtros.rfc" name="rfc" placeholder="Ingrese el rfc" (keyup)="clearInputsIdentNoIdent(true)" onkeyup="this.value = this.value.toUpperCase();" [required]="isRequired" maxlength="13">
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="col-4" style="margin-left: 0px!important;">
                     <mat-label>CURP:</mat-label>
