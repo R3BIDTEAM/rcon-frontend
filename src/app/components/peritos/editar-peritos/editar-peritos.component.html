@@ -641,14 +641,14 @@
                                 <div class="row">
                                     <div class="col-md-11">
                                         <ng-container>
-                                            <div style="padding: 30px; text-align: center;" *ngIf="loadingRepresentado && loadingRepresentante">
+                                            <div style="padding: 30px; text-align: center;" *ngIf="loadingRepresentante">
                                                 <mat-spinner style="margin:0 auto;"></mat-spinner>
                                                 <p>Cargando...</p>
                                             </div>
-                                            <div class="alert alert-info" *ngIf="!loadingRepresentado && !loadingRepresentante && (dataSource4.length == 0 || dataSource5.length == 0)">
+                                            <div class="alert alert-info" *ngIf="!loadingRepresentante && dataSource4.length == 0">
                                                 No hay representantes asociados.
                                             </div> 
-                                            <table mat-table [dataSource]="dataSource4" *ngIf="!loadingRepresentado && !loadingRepresentante && (dataSource4.length > 0 || dataSource5.length > 0)" width="100%">
+                                            <table mat-table [dataSource]="dataSource4" *ngIf="!loadingRepresentante && dataSource4.length > 0" width="100%">
                                                 <ng-container matColumnDef="texto">
                                                     <th mat-header-cell *matHeaderCellDef width="75%"> Texto de representación </th>
                                                     <td mat-cell *matCellDef="let element" width="75%">
@@ -680,14 +680,14 @@
                                 <div class="row">
                                     <div class="col-md-11">
                                         <ng-container>
-                                            <div style="padding: 30px; text-align: center;" *ngIf="loadingRepresentado && loadingRepresentante">
+                                            <div style="padding: 30px; text-align: center;" *ngIf="loadingRepresentado">
                                                 <mat-spinner style="margin:0 auto;"></mat-spinner>
                                                 <p>Cargando...</p>
                                             </div>
-                                            <div class="alert alert-info" *ngIf="!loadingRepresentante && dataSource5.length == 0">
+                                            <div class="alert alert-info" *ngIf="!loadingRepresentado && dataSource5.length == 0">
                                                 No hay representantes asociados.
                                             </div> 
-                                            <table mat-table [dataSource]="dataSource5" *ngIf="!loadingRepresentante && dataSource5.length > 0" width="100%">
+                                            <table mat-table [dataSource]="dataSource5" *ngIf="!loadingRepresentado && dataSource5.length > 0" width="100%">
                                                 <ng-container matColumnDef="texto">
                                                     <th mat-header-cell *matHeaderCellDef width="75%"> Texto de representación </th>
                                                     <td mat-cell *matCellDef="let element" width="75%">
