@@ -910,8 +910,8 @@ export class EditarPeritosComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
+                this.loadingRepresentante = true;
                 setTimeout (() => {
-                    this.loadingRepresentante = true;
                     this.getRepresentacion();
                 }, 2000);
             }
@@ -932,8 +932,8 @@ export class EditarPeritosComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
+                this.loadingRepresentado = true;
                 setTimeout (() => {
-                    this.loadingRepresentado = true;
                     this.getRepresentado();
                 }, 2000);
             }
@@ -2670,6 +2670,7 @@ export class DialogVia {
 export class DialogRepresentacionPeritos {
     endpoint = environment.endpoint + 'registro/';
     loading = false;
+    bloqueo = true;
     httpOptions;
     tipoPersona = 'F';
     idPersonaRepresentacion;
@@ -2683,6 +2684,8 @@ export class DialogRepresentacionPeritos {
     dataRepresentacion: DataRepresentacion = {} as DataRepresentacion;
     isRequired = true;
     loadingDocumentosIdentificativos;
+    documentoRepresentacionTipo;
+    existedoctoRep = false;
     dataDocumentos: DocumentosIdentificativos[] = [];
   
     constructor(
@@ -2848,6 +2851,8 @@ export class DialogRepresentacionPeritos {
      * @returns Regresa el arreglo de los datos que fueron registrados en el formulario de la representación.
      */
     getDataRepresentacion(): DataRepresentacion {
+        this.loading = true;
+        this.bloqueo = false;
         this.dataRepresentacion.tipoPersona = this.tipoPersona;
         if(this.tipoPersona == 'F'){
             this.dataRepresentacion.nombre = (this.fisicaFormGroup.value.nombre) ? this.fisicaFormGroup.value.nombre.toLocaleUpperCase() : null;
@@ -2958,6 +2963,8 @@ export class DialogRepresentacionPeritos {
                     });
                     console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTECIÓN");
                     console.log(res);
+                    this.loading = false;
+                    this.dialogRef.close(res);
                 },
                 (error) => {
                     this.snackBar.open(error.error.mensaje, 'Cerrar', {
@@ -2974,7 +2981,6 @@ export class DialogRepresentacionPeritos {
      * Actualiza la información de la representación seleccionada.
      */
     updateRepresentacion(){
-        console.log("ACTUALIZA");
         let queryActRep = '';
 
         queryActRep = (this.dataRepresentacion.texto) ? queryActRep + 'textorepresentacion=' + this.dataRepresentacion.texto : queryActRep + 'textorepresentacion=';
@@ -2983,10 +2989,8 @@ export class DialogRepresentacionPeritos {
 
         queryActRep = queryActRep + '&idRepresentacion=' + this.idRepresentacion + '&idDocumentoDigital=' + this.idDocumento;
 
-        //actualizarRepresentaciontextorepresentacion=Texto Representacion Prueba 33&fechacaducidad=Fri Dec 31 2021 00:00:00 GMT-0600 (hora estándar central)&idRepresentacion=14&idDocumentoDigital=17646226
         console.log("QUERY ACTUALIZA");
         console.log(queryActRep);
-        //return;
         this.http.post(this.endpoint + 'actualizarRepresentacion?' + queryActRep, '', this.httpOptions).subscribe(
             (res: any) => {
                 this.snackBar.open('SE HA ACTUALIZADO EL REPRESENTADO', 'Cerrar', {
@@ -2996,8 +3000,11 @@ export class DialogRepresentacionPeritos {
                 });
                 console.log("AQUI ENTRO LAS RESPUESTA DEL POST ACT REPRESENTADO");
                 console.log(res);
+                let fin = true;
+                this.dialogRef.close(fin);
             },
             (error) => {
+                this.dialogRef.close();
                 this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
                     duration: 10000,
                     horizontalPosition: 'end',
@@ -3031,6 +3038,8 @@ export class DialogRepresentacionPeritos {
             this.fisicaFormGroup.controls['email'].setValue(dataRepresentacion.EMAIL);
             this.fisicaFormGroup.controls['texto'].setValue(dataRepresentacion.TEXTOREPRESENTACION);
             this.fisicaFormGroup.controls['fechaCaducidad'].setValue((dataRepresentacion.FECHACADUCIDAD) ? new Date(dataRepresentacion.FECHACADUCIDAD) : null);
+            this.fisicaFormGroup.markAllAsTouched();
+            this.fisicaFormGroup.updateValueAndValidity();
         } else {
             this.moralFormGroup.controls['nombre'].setValue(dataRepresentacion.APELLIDOPATERNO);
             this.moralFormGroup.controls['rfc'].setValue(dataRepresentacion.RFC);
@@ -3041,9 +3050,14 @@ export class DialogRepresentacionPeritos {
             this.moralFormGroup.controls['fechaCambio'].setValue((dataRepresentacion.FECHACAMBIOSITUACION) ? new Date(dataRepresentacion.FECHACAMBIOSITUACION) : null);
             this.moralFormGroup.controls['texto'].setValue(dataRepresentacion.TEXTOREPRESENTACION);
             this.moralFormGroup.controls['fechaCaducidad'].setValue((dataRepresentacion.FECHACADUCIDAD) ? new Date(dataRepresentacion.FECHACADUCIDAD) : null);
+            this.moralFormGroup.markAllAsTouched();
+            this.moralFormGroup.updateValueAndValidity();
         }
+        this.changeRequired(null, null);
         
-        //this.dataRepresentacion.documentoRepresentacion = dataRepresentacion.documentoRepresentacion;
+        this.dataRepresentacion.documentoRepresentacion = dataRepresentacion.DOCUMENTOS;
+        this.documentoRepresentacionTipo = dataRepresentacion.DOCUMENTOS;
+        this.existedoctoRep = true;
         
     }
 }
@@ -3057,6 +3071,7 @@ export class DialogRepresentacionPeritos {
 export class DialogRepresentadoPeritos {
     endpoint = environment.endpoint + 'registro/';
     loading = false;
+    bloqueo = true;
     httpOptions;
     tipoPersona = 'F';
     fisicaFormGroup: FormGroup;
@@ -3069,7 +3084,9 @@ export class DialogRepresentadoPeritos {
     insUp = false;
     dataRepresentacion: DataRepresentacion = {} as DataRepresentacion;
     isRequired = true;
-    loadingDocumentosIdentificativos
+    loadingDocumentosIdentificativos;
+    documentoRepresentacionTipo;
+    existedoctoRep = false;
     dataDocumentos: DocumentosIdentificativos[] = [];
 
     constructor(
@@ -3232,6 +3249,8 @@ export class DialogRepresentadoPeritos {
      * @returns Regresa el arreglo de los datos que fueron registrados en el formulario de la representación.
      */
     getDataRepresentacion(): DataRepresentacion {
+        this.loading = true;
+        this.bloqueo = false;
         this.dataRepresentacion.tipoPersona = this.tipoPersona;
         if(this.tipoPersona == 'F'){
             this.dataRepresentacion.nombre = (this.fisicaFormGroup.value.nombre) ? this.fisicaFormGroup.value.nombre.toLocaleUpperCase() : null;
@@ -3342,8 +3361,11 @@ export class DialogRepresentadoPeritos {
                     });
                     console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTADO");
                     console.log(res);
+                    this.loading = false;
+                    this.dialogRef.close(res);
                 },
                 (error) => {
+                    this.dialogRef.close()
                     this.snackBar.open(error.error.mensaje, 'Cerrar', {
                         duration: 10000,
                         horizontalPosition: 'end',
@@ -3380,8 +3402,11 @@ export class DialogRepresentadoPeritos {
                 });
                 console.log("AQUI ENTRO LAS RESPUESTA DEL POST ACT REPRESENTADO");
                 console.log(res);
+                let fin = true;
+                this.dialogRef.close(fin);
             },
             (error) => {
+                this.dialogRef.close();
                 this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
                     duration: 10000,
                     horizontalPosition: 'end',
@@ -3415,6 +3440,8 @@ export class DialogRepresentadoPeritos {
             this.fisicaFormGroup.controls['email'].setValue(dataRepresentacion.EMAIL);
             this.fisicaFormGroup.controls['texto'].setValue(dataRepresentacion.TEXTOREPRESENTACION);
             this.fisicaFormGroup.controls['fechaCaducidad'].setValue((dataRepresentacion.FECHACADUCIDAD) ? new Date(dataRepresentacion.FECHACADUCIDAD) : null);
+            this.fisicaFormGroup.markAllAsTouched();
+            this.fisicaFormGroup.updateValueAndValidity();
         } else {
             this.moralFormGroup.controls['nombre'].setValue(dataRepresentacion.APELLIDOPATERNO);
             this.moralFormGroup.controls['rfc'].setValue(dataRepresentacion.RFC);
@@ -3425,9 +3452,13 @@ export class DialogRepresentadoPeritos {
             this.moralFormGroup.controls['fechaCambio'].setValue((dataRepresentacion.FECHACAMBIOSITUACION) ? new Date(dataRepresentacion.FECHACAMBIOSITUACION) : null);
             this.moralFormGroup.controls['texto'].setValue(dataRepresentacion.TEXTOREPRESENTACION);
             this.moralFormGroup.controls['fechaCaducidad'].setValue((dataRepresentacion.FECHACADUCIDAD) ? new Date(dataRepresentacion.FECHACADUCIDAD) : null);
+            this.moralFormGroup.markAllAsTouched();
+            this.moralFormGroup.updateValueAndValidity();
         }
-        
-        //this.dataRepresentacion.documentoRepresentacion = dataRepresentacion.documentoRepresentacion;
+        this.changeRequired(null, null);
+        this.dataRepresentacion.documentoRepresentacion = dataRepresentacion.DOCUMENTOS;
+        this.documentoRepresentacionTipo = dataRepresentacion.DOCUMENTOS;
+        this.existedoctoRep = true;
         
     }
 }

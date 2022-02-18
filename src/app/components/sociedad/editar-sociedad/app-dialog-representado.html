@@ -1,12 +1,12 @@
-<h1 mat-dialog-title class="verde-cdmx">Datos del Representado</h1>
+<h1 mat-dialog-title class="verde-cdmx">Datos de la Representación</h1>
 <div mat-dialog-content>
 
-    <div style="padding: 30px; text-align: center;" *ngIf="false">
+    <div style="padding: 30px; text-align: center;" *ngIf="loading">
         <mat-spinner style="margin:0 auto;"></mat-spinner>
         <p>Cargando...</p>
     </div>
 
-    <ng-container *ngIf="true">
+    <ng-container *ngIf="!loading">
         <div class="row">
             <mat-form-field appearance="fill" class="col-6">
                 <mat-label>Tipo de persona:</mat-label>
@@ -210,11 +210,13 @@
                 </div>
                 <ng-template #documentos>
                     <mat-list>
-                        <div mat-subheader>{{dataRepresentacion.documentoRepresentacion.nombreTipoDocumentoJuridico}} - {{dataRepresentacion.documentoRepresentacion.fecha | date: 'dd/MM/yyyy'}}
-                            <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar" (click)="addDocumento(dataRepresentacion.documentoRepresentacion)">
+                        <div mat-subheader>
+                            <label *ngIf="existedoctoRep">{{ documentoRepresentacionTipo.infoDocumento[0].codtipodocumentojuridico }} - {{ documentoRepresentacionTipo.infoDocumento[0].fecha | date: 'dd/MM/yyyy' }}</label>
+                            <label *ngIf="!existedoctoRep">{{(dataRepresentacion.documentoRepresentacion.nombreTipoDocumentoJuridico) ? dataRepresentacion.documentoRepresentacion.nombreTipoDocumentoJuridico: ''}} - {{dataRepresentacion.documentoRepresentacion.fecha | date: 'dd/MM/yyyy'}}</label>
+                            <button mat-icon-button *ngIf="existedoctoRep" type="button" color="primary" aria-label="Editar" matTooltip="Editar" (click)="addDocumento(dataRepresentacion.documentoRepresentacion)">
                                 <mat-icon>edit</mat-icon>
                             </button>
-                            <button mat-icon-button type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar" (click)="removeDocumento()">
+                            <button mat-icon-button *ngIf="!existedoctoRep" type="button" color="primary" aria-label="Eliminar" matTooltip="Eliminar" (click)="removeDocumento()">
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </div>
@@ -230,7 +232,11 @@
     </ng-container>
 
 </div>
-<mat-dialog-actions align="end">
+<mat-dialog-actions align="end" *ngIf="bloqueo">
     <button mat-button [mat-dialog-close]="false">Cerrar</button>
-        <button mat-flat-button color="primary" [disabled]="(tipoPersona == 'F' ? fisicaFormGroup.invalid : moralFormGroup.invalid)" [mat-dialog-close]="true" (click)="getDataRepresentacion()">Aceptar</button>
+    <button mat-flat-button color="primary" 
+        [disabled]="((tipoPersona == 'F' ? fisicaFormGroup.invalid : moralFormGroup.invalid) || 
+                    (dataRepresentacion.documentoRepresentacion === null || dataRepresentacion.documentoRepresentacion === undefined))"
+        (click)="getDataRepresentacion()">Aceptar
+    </button>
 </mat-dialog-actions>

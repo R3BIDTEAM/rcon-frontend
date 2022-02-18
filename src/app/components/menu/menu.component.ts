@@ -69,30 +69,6 @@ export class MenuComponent implements OnInit {
         this.menus = this.authService.getMenu();
         console.log(this.rol);
         switch (this.rol) {
-            // case "RCONSAT":
-            //     this.contribuyentes = this.contribuyentes.filter(item=>{return (item.nombre !== 'Consulta de contribuyente')});
-            //     console.log("ACA EL ROL 1");
-            // break;
-            // case 'RCONCSAT':
-            //     this.contribuyentes = this.contribuyentes.filter(item=>{return (item.nombre == 'Consulta de contribuyente')});
-            //     console.log("ACA EL ROL 2");
-            // break;
-            // case "RCONPERITOS":
-            //     this.notarios = this.notarios.filter(item=>{return (item.nombre !== 'Consulta de notario')});
-            //     this.peritos = this.peritos.filter(item=>{return (item.nombre !== 'Consulta de peritos')});
-            //     this.sociedad = this.sociedad.filter(item=>{return (item.nombre !== 'Consulta de sociedad')});
-            //     console.log("ACA EL ROL 3");
-            // break;
-            // case "RCONCPERITOS":
-            //     this.notarios = this.notarios.filter(item=>{return (item.nombre == 'Consulta de notario')});
-            //     this.peritos = this.peritos.filter(item=>{return (item.nombre == 'Consulta de peritos')});
-            //     this.sociedad = this.sociedad.filter(item=>{return (item.nombre == 'Consulta de sociedad')});
-            //     console.log("ACA EL ROL 4");
-            // break;
-            // case "RCONSAT":
-            //     this.contribuyentes = this.contribuyentes.filter(item=>{return (item.nombre !== 'Consulta de contribuyente')});
-            //     console.log("ACA EL ROL 1");
-            // break;
             case "SUPERVISOR RCON":
                 this.contribuyentes = this.contribuyentes.filter(item=>{return (item.nombre == 'Reporte' || item.nombre == 'Consulta de contribuyente')});
                 this.notarios = this.notarios.filter(item=>{return (item.nombre == 'Consulta de notario')});

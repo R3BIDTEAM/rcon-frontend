@@ -569,7 +569,7 @@
                                 </mat-expansion-panel-header>
                                 <mat-card-content>
                                     <br>
-                                    <div class="row">
+                                    <div class="row" *ngIf="!loadingRepresentante">
                                         <div class="col-4">
                                             <h3>Agregar
                                                 <button mat-flat-button type="button" color="primary" aria-label="Agregar" matTooltip="Agregar" class="little-button" (click)="addRepresentante()">
@@ -649,7 +649,7 @@
                                 </mat-expansion-panel-header>
                                 <mat-card-content>
                                     <br>
-                                    <div class="row">
+                                    <div class="row" *ngIf="!loadingRepresentado">
                                         <div class="col-4">
                                             <h3>Representados
                                                 <button mat-flat-button type="button" color="primary" aria-label="Agregar" matTooltip="Agregar" class="little-button" (click)="addRepresentado()">

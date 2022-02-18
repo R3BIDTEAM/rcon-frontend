@@ -1857,6 +1857,7 @@ export class DialogViaAlta {
 export class DialogRepresentacionAltaC {
     endpoint = environment.endpoint + 'registro/';
     loading = false;
+    bloqueo = true;
     httpOptions;
     tipoPersona = 'F';
     idPersonaRepresentacion;
@@ -2014,6 +2015,8 @@ export class DialogRepresentacionAltaC {
     * @returns Regresa el arreglo de los datos que fueron registrados en el formulario de la representación.
     */
     getDataRepresentacion(): DataRepresentacion {
+        this.loading = true;
+        this.bloqueo = false;
         this.dataRepresentacion.tipoPersona = this.tipoPersona;
         if(this.tipoPersona == 'F'){
             this.dataRepresentacion.nombre = (this.fisicaFormGroup.value.nombre) ? this.fisicaFormGroup.value.nombre : null;
@@ -2118,7 +2121,10 @@ export class DialogRepresentacionAltaC {
                         horizontalPosition: 'end',
                         verticalPosition: 'top'
                     });
+                    this.loading = false;
+                    this.dialogRef.close(res);
                 }else if(res.mensaje){
+                    this.dialogRef.close();
                     this.snackBar.open(res.mensaje, 'Cerrar', {
                         duration: 10000,
                         horizontalPosition: 'end',
@@ -2186,6 +2192,7 @@ export class DialogRepresentacionAltaC {
 export class DialogRepresentadoAltaC {
     endpoint = environment.endpoint + 'registro/';
     loading = false;
+    bloqueo = true;
     httpOptions;
     tipoPersona = 'F';
     fisicaFormGroup: FormGroup;
@@ -2345,6 +2352,8 @@ export class DialogRepresentadoAltaC {
      * @returns Regresa el arreglo de los datos que fueron registrados en el formulario de la representación.
      */
     getDataRepresentacion(): DataRepresentacion {
+        this.loading = true;
+        this.bloqueo = false;
         this.dataRepresentacion.tipoPersona = this.tipoPersona;
         if(this.tipoPersona == 'F'){
             this.dataRepresentacion.nombre = (this.fisicaFormGroup.value.nombre) ? this.fisicaFormGroup.value.nombre : null;
@@ -2443,26 +2452,20 @@ export class DialogRepresentadoAltaC {
         if(this.insertOrUpdate == 2){
             this.updateRepresentacion(payload);            
         }else{
-            //this.insertRepresentacion(payload);
             this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
                 (res: any) => {
-                    if(res){
-                        this.snackBar.open('REGISTRO EXITOSO', 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
-                        });
-                    }else if(res.mensaje){
-                        this.snackBar.open(res.mensaje, 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
-                        });
-                    }
+                    this.snackBar.open('REGISTRO EXITOSO', 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
                     console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTADO");
                     console.log(res);
+                    this.loading = false;
+                    this.dialogRef.close(res);
                 },
                 (error) => {
+                    this.dialogRef.close();
                     this.snackBar.open(error.error.mensaje, 'Cerrar', {
                         duration: 10000,
                         horizontalPosition: 'end',

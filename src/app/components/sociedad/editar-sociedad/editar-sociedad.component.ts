@@ -824,8 +824,8 @@ export class EditarSociedadComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
+                this.loadingRepresentante = true;
                 setTimeout (() => {
-                    this.loadingRepresentante = true;
                     this.getRepresentacion();
                 }, 2000);
             }
@@ -846,8 +846,8 @@ export class EditarSociedadComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
+                this.loadingRepresentado = true;
                 setTimeout (() => {
-                    this.loadingRepresentado = true;
                     this.getRepresentado();
                 }, 2000);
             }
@@ -2553,6 +2553,7 @@ export interface DocumentosIdentificativos{
 export class DialogRepresentacionSociedad {
     endpoint = environment.endpoint + 'registro/';
     loading = false;
+    bloqueo = true;
     httpOptions;
     tipoPersona = 'F';
     idPersonaRepresentacion;
@@ -2564,7 +2565,9 @@ export class DialogRepresentacionSociedad {
     moralFormGroup: FormGroup;
     dataRepresentacion: DataRepresentacion = {} as DataRepresentacion;
     isRequired = true;
-    loadingDocumentosIdentificativos
+    loadingDocumentosIdentificativos;
+    documentoRepresentacionTipo;
+    existedoctoRep = false;
     dataDocumentos: DocumentosIdentificativos[] = [];
   
     constructor(
@@ -2733,6 +2736,8 @@ export class DialogRepresentacionSociedad {
      * @returns Regresa el arreglo de los datos que fueron registrados en el formulario de la representación.
      */
     getDataRepresentacion(): DataRepresentacion {
+        this.loading = true;
+        this.bloqueo = false;
         this.dataRepresentacion.tipoPersona = this.tipoPersona;
         if(this.tipoPersona == 'F'){
             this.dataRepresentacion.nombre = (this.fisicaFormGroup.value.nombre) ? this.fisicaFormGroup.value.nombre.toLocaleUpperCase() : null;
@@ -2841,8 +2846,11 @@ export class DialogRepresentacionSociedad {
                     });
                     console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTECIÓN");
                     console.log(res);
+                    this.loading = false;
+                    this.dialogRef.close(res);
                 },
                 (error) => {
+                    this.dialogRef.close();
                     this.snackBar.open(error.error.mensaje, 'Cerrar', {
                         duration: 10000,
                         horizontalPosition: 'end',
@@ -2877,8 +2885,11 @@ export class DialogRepresentacionSociedad {
                 });
                 console.log("AQUI ENTRO LAS RESPUESTA DEL POST ACT REPRESENTADO");
                 console.log(res);
+                let fin = true;
+                this.dialogRef.close(fin);
             },
             (error) => {
+                this.dialogRef.close();
                 this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
                     duration: 10000,
                     horizontalPosition: 'end',
@@ -2912,6 +2923,8 @@ export class DialogRepresentacionSociedad {
             this.fisicaFormGroup.controls['email'].setValue(dataRepresentacion.EMAIL);
             this.fisicaFormGroup.controls['texto'].setValue(dataRepresentacion.TEXTOREPRESENTACION);
             this.fisicaFormGroup.controls['fechaCaducidad'].setValue((dataRepresentacion.FECHACADUCIDAD) ? new Date(dataRepresentacion.FECHACADUCIDAD) : null);
+            this.fisicaFormGroup.markAllAsTouched();
+            this.fisicaFormGroup.updateValueAndValidity();
         } else {
             this.moralFormGroup.controls['nombre'].setValue(dataRepresentacion.APELLIDOPATERNO);
             this.moralFormGroup.controls['rfc'].setValue(dataRepresentacion.RFC);
@@ -2922,7 +2935,16 @@ export class DialogRepresentacionSociedad {
             this.moralFormGroup.controls['fechaCambio'].setValue((dataRepresentacion.FECHACAMBIOSITUACION) ? new Date(dataRepresentacion.FECHACAMBIOSITUACION) : null);
             this.moralFormGroup.controls['texto'].setValue(dataRepresentacion.TEXTOREPRESENTACION);
             this.moralFormGroup.controls['fechaCaducidad'].setValue((dataRepresentacion.FECHACADUCIDAD) ? new Date(dataRepresentacion.FECHACADUCIDAD) : null);
+            this.moralFormGroup.markAllAsTouched();
+            this.moralFormGroup.updateValueAndValidity();
         }
+        this.changeRequired(null, null);
+
+        this.dataRepresentacion.documentoRepresentacion = dataRepresentacion.DOCUMENTOS;
+        this.documentoRepresentacionTipo = dataRepresentacion.DOCUMENTOS;
+        this.existedoctoRep = true;
+        console.log("ACÁ LA DATA REPRESENTACIÓN dataRepresentacion");
+        console.log(this.dataRepresentacion.documentoRepresentacion);
     }
 }
 
@@ -2935,6 +2957,7 @@ export class DialogRepresentacionSociedad {
 export class DialogRepresentadoSociedad {
     endpoint = environment.endpoint + 'registro/';
     loading = false;
+    bloqueo = true;
     httpOptions;
     tipoPersona = 'F';
     fisicaFormGroup: FormGroup;
@@ -2947,7 +2970,9 @@ export class DialogRepresentadoSociedad {
     insUp = false;
     dataRepresentacion: DataRepresentacion = {} as DataRepresentacion;
     isRequired = true;
-    loadingDocumentosIdentificativos
+    loadingDocumentosIdentificativos;
+    documentoRepresentacionTipo;
+    existedoctoRep = false;
     dataDocumentos: DocumentosIdentificativos[] = [];
   
     constructor(
@@ -3111,6 +3136,8 @@ export class DialogRepresentadoSociedad {
      * @returns Regresa el arreglo de los datos que fueron registrados en el formulario de la representación.
      */
     getDataRepresentacion(): DataRepresentacion {
+        this.loading = true;
+        this.bloqueo = false;
         this.dataRepresentacion.tipoPersona = this.tipoPersona;
         if(this.tipoPersona == 'F'){
             this.dataRepresentacion.nombre = (this.fisicaFormGroup.value.nombre) ? this.fisicaFormGroup.value.nombre.toLocaleUpperCase() : null;
@@ -3219,8 +3246,11 @@ export class DialogRepresentadoSociedad {
                     });
                     console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTECIÓN");
                     console.log(res);
+                    this.loading = false;
+                    this.dialogRef.close(res);
                 },
                 (error) => {
+                    this.dialogRef.close();
                     this.snackBar.open(error.error.mensaje, 'Cerrar', {
                         duration: 10000,
                         horizontalPosition: 'end',
@@ -3257,8 +3287,11 @@ export class DialogRepresentadoSociedad {
                 });
                 console.log("AQUI ENTRO LAS RESPUESTA DEL POST ACT REPRESENTADO");
                 console.log(res);
+                let fin = true;
+                this.dialogRef.close(fin);
             },
             (error) => {
+                this.dialogRef.close();
                 this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
                     duration: 10000,
                     horizontalPosition: 'end',
@@ -3292,6 +3325,8 @@ export class DialogRepresentadoSociedad {
             this.fisicaFormGroup.controls['email'].setValue(dataRepresentacion.EMAIL);
             this.fisicaFormGroup.controls['texto'].setValue(dataRepresentacion.TEXTOREPRESENTACION);
             this.fisicaFormGroup.controls['fechaCaducidad'].setValue((dataRepresentacion.FECHACADUCIDAD) ? new Date(dataRepresentacion.FECHACADUCIDAD) : null);
+            this.fisicaFormGroup.markAllAsTouched();
+            this.fisicaFormGroup.updateValueAndValidity();
         } else {
             this.moralFormGroup.controls['nombre'].setValue(dataRepresentacion.APELLIDOPATERNO);
             this.moralFormGroup.controls['rfc'].setValue(dataRepresentacion.RFC);
@@ -3302,9 +3337,14 @@ export class DialogRepresentadoSociedad {
             this.moralFormGroup.controls['fechaCambio'].setValue((dataRepresentacion.FECHACAMBIOSITUACION) ? new Date(dataRepresentacion.FECHACAMBIOSITUACION) : null);
             this.moralFormGroup.controls['texto'].setValue(dataRepresentacion.TEXTOREPRESENTACION);
             this.moralFormGroup.controls['fechaCaducidad'].setValue((dataRepresentacion.FECHACADUCIDAD) ? new Date(dataRepresentacion.FECHACADUCIDAD) : null);
+            this.moralFormGroup.markAllAsTouched();
+            this.moralFormGroup.updateValueAndValidity();
         }
+        this.changeRequired(null, null);
         
-        //this.dataRepresentacion.documentoRepresentacion = dataRepresentacion.documentoRepresentacion;
+        this.dataRepresentacion.documentoRepresentacion = dataRepresentacion.DOCUMENTOS;
+        this.documentoRepresentacionTipo = dataRepresentacion.DOCUMENTOS;
+        this.existedoctoRep = true;
         
     }
 }
