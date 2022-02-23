@@ -201,7 +201,7 @@
                     </div>
                     <div class="col-md-3">
                         <div class="d-flex flex-row-reverse">
-                            <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Imprimir" style="font-size: 11px;" *ngIf="!loading && actualizado" (click)="generatePDF()">
+                            <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Imprimir" matTooltip="Imprimir" style="font-size: 11px;" *ngIf="!loading && actualizado" (click)="generatePDF()">
                                 Imprimir Comprobante <mat-icon style="display: inherit; width: 15px;">print</mat-icon>
                             </button>
                         </div>
@@ -250,6 +250,16 @@
                     </button>
                 </div>
             </div>
+            <div class="col-md-3">
+                <div class="d-flex flex-row-reverse">
+                    <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Imprimir" matTooltip="Imprimir" style="font-size: 11px;" *ngIf="!loadingDerecho && actualizadoCuenta" (click)="generatePDF()">
+                        Imprimir Comprobante <mat-icon style="display: inherit; width: 15px;">print</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="alert alert-info col-md-10 offset-md-1" *ngIf="!loadingDerecho && personaInmueble.length == 0">
+                No hay cuentas asociadas.
+            </div> 
             <div *ngIf="!loadingDerecho">
                 <div  *ngFor="let datoPI of personaInmueble; let i = index">                
                     <div class="row"  *ngIf="!loadingDerecho">

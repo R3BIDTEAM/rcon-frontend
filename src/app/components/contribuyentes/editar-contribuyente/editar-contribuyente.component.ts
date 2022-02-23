@@ -146,6 +146,8 @@ export interface DataActualizacion{
     folio: string;
     idpersona: string;
     usuario: string;
+    after_cuenta: string;
+    before_cuenta: string;
 }
 
 
@@ -207,6 +209,7 @@ export class EditarContribuyenteComponent implements OnInit {
     loadingDerecho = false;
     panelPDF = false;
     actualizado = false;
+    actualizadoCuenta = false;
     accionDomicilio = false;
     accionDomicilioBoletas = false;
     cambioPersona;
@@ -431,12 +434,31 @@ export class EditarContribuyenteComponent implements OnInit {
             .subscribe(
                 (res: any) => {
                     this.loadingDerecho = false;
-                    if(res == "Actualizado"){
+                    if(res.idpersona){
+                        this.actualizadoCuenta = true;
                         this.snackBar.open("Actualización correcta", 'Cerrar', {
                             duration: 10000,
                             horizontalPosition: 'end',
                             verticalPosition: 'top'
                         });
+                        this.dataActualizacion.after_CP = res.after_CP;
+                        this.dataActualizacion.after_Col = res.after_Col;
+                        this.dataActualizacion.after_Direccion = res.after_Direccion;
+                        this.dataActualizacion.after_Nombre = res.after_Nombre;
+                        this.dataActualizacion.after_RFC = res.after_RFC;
+                        this.dataActualizacion.after_cuenta = res.after_cuenta;
+                        this.dataActualizacion.area = res.area;
+                        this.dataActualizacion.at = res.at;
+                        this.dataActualizacion.before_cuenta = res.before_cuenta;
+                        this.dataActualizacion.before_CP = res.before_CP;
+                        this.dataActualizacion.before_Col = res.before_Col;
+                        this.dataActualizacion.before_Direccion = res.before_Direccion;
+                        this.dataActualizacion.before_Nombre = res.before_Nombre;
+                        this.dataActualizacion.before_RFC = res.before_RFC;
+                        this.dataActualizacion.cuentaP = res.cuentaP;
+                        this.dataActualizacion.fechaConsulta = res.fechaConsulta;
+                        this.dataActualizacion.idpersona = res.idpersona;
+                        this.dataActualizacion.usuario = res.usuario;
                         this.getTipoDerecho();
                     }
                     
@@ -499,7 +521,7 @@ export class EditarContribuyenteComponent implements OnInit {
                 },
                 (error) => {
                     this.loadingDerecho = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    this.snackBar.open(error.error, 'Cerrar', {
                         duration: 10000,
                         horizontalPosition: 'end',
                         verticalPosition: 'top'
@@ -933,7 +955,7 @@ export class EditarContribuyenteComponent implements OnInit {
                     }
                 ]
             },
-            {  
+            {
                 layout: 'noBorders',
                 table: {  
                     headerRows: 1,  
@@ -942,7 +964,8 @@ export class EditarContribuyenteComponent implements OnInit {
                         ['', '', { text: 'ANTES', bold: true, alignment: 'right', fontSize: 9 }, { text: 'DESPUÉS', bold: true, fontSize: 9 }],  
                         [ '', '', { text: 'Datos del contribuyente', bold: true, alignment: 'right', fontSize: 9 }, { text: 'Datos del contribuyente', bold: true, fontSize: 9 } ],
                         [ { text: 'Nombre del contribuyente:', fontSize: 9 }, '', { text: this.dataActualizacion.before_Nombre, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_Nombre, fontSize: 9 } ],
-                        [ { text: 'RFC (para personas morales)', fontSize: 9 }, '', { text: this.dataActualizacion.before_RFC, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_RFC, fontSize: 9 } ] 
+                        [ { text: 'RFC (para personas morales):', fontSize: 9 }, '', { text: this.dataActualizacion.before_RFC, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_RFC, fontSize: 9 } ] ,
+                        [ { text: 'Cuenta Catastral:', fontSize: 9 }, '', { text: this.dataActualizacion.before_cuenta, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_cuenta, fontSize: 9 } ]
                     ]  
                 }  
             },
@@ -1076,7 +1099,8 @@ export class EditarContribuyenteComponent implements OnInit {
                         ['', '', { text: 'ANTES', bold: true, alignment: 'right', fontSize: 9 }, { text: 'DESPUÉS', bold: true, fontSize: 9 }],  
                         [ '', '', { text: 'Datos del contribuyente', bold: true, alignment: 'right', fontSize: 9 }, { text: 'Datos del contribuyente', bold: true, fontSize: 9 } ],
                         [ { text: 'Nombre del contribuyente:', fontSize: 9 }, '', { text: this.dataActualizacion.before_Nombre, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_Nombre, fontSize: 9 } ],
-                        [ { text: 'RFC (para personas morales)', fontSize: 9 }, '', { text: this.dataActualizacion.before_RFC, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_RFC, fontSize: 9 } ] 
+                        [ { text: 'RFC (para personas morales):', fontSize: 9 }, '', { text: this.dataActualizacion.before_RFC, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_RFC, fontSize: 9 } ],
+                        [ { text: 'Cuenta Catastral:', fontSize: 9 }, '', { text: this.dataActualizacion.before_cuenta, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_cuenta, fontSize: 9 } ] 
                     ]  
                 }  
             },
