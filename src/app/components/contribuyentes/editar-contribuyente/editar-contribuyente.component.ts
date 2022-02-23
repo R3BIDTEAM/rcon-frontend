@@ -436,6 +436,7 @@ export class EditarContribuyenteComponent implements OnInit {
                     this.loadingDerecho = false;
                     if(res.idpersona){
                         this.actualizadoCuenta = true;
+                        this.actualizado = false;
                         this.snackBar.open("Actualización correcta", 'Cerrar', {
                             duration: 10000,
                             horizontalPosition: 'end',
@@ -504,6 +505,7 @@ export class EditarContribuyenteComponent implements OnInit {
                     
                     if(res.idpersona){
                         this.actualizadoCuenta = true;
+                        this.actualizado = false;
                         this.snackBar.open("Actualización correcta", 'Cerrar', {
                             duration: 10000,
                             horizontalPosition: 'end',
@@ -783,6 +785,7 @@ export class EditarContribuyenteComponent implements OnInit {
                         this.dataActualizacion.usuario = res.usuario;
 
                         this.actualizado = true;
+                        this.actualizadoCuenta = false;
                         this.accionDomicilio = false;
                         this.accionDomicilioBoletas = false;
 
@@ -936,6 +939,8 @@ export class EditarContribuyenteComponent implements OnInit {
     async generatePDF() {
 
         this.dataActualizacion.cuentaP = ((this.dataActualizacion.cuentaP) ? this.dataActualizacion.cuentaP : '');
+        this.dataActualizacion.before_cuenta = ((this.dataActualizacion.before_cuenta) ? this.dataActualizacion.before_cuenta : '');
+        this.dataActualizacion.after_cuenta = ((this.dataActualizacion.after_cuenta) ? this.dataActualizacion.after_cuenta : '');
         let docDefinition = {
           content: [
             {
