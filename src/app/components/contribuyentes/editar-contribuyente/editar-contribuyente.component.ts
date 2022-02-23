@@ -502,12 +502,31 @@ export class EditarContribuyenteComponent implements OnInit {
             .subscribe(
                 (res: any) => {
                     
-                    if(res == "Actualizado"){
+                    if(res.idpersona){
+                        this.actualizadoCuenta = true;
                         this.snackBar.open("Actualización correcta", 'Cerrar', {
                             duration: 10000,
                             horizontalPosition: 'end',
                             verticalPosition: 'top'
                         });
+                        this.dataActualizacion.after_CP = res.after_CP;
+                        this.dataActualizacion.after_Col = res.after_Col;
+                        this.dataActualizacion.after_Direccion = res.after_Direccion;
+                        this.dataActualizacion.after_Nombre = res.after_Nombre;
+                        this.dataActualizacion.after_RFC = res.after_RFC;
+                        this.dataActualizacion.after_cuenta = res.after_cuenta;
+                        this.dataActualizacion.area = res.area;
+                        this.dataActualizacion.at = res.at;
+                        this.dataActualizacion.before_cuenta = res.before_cuenta;
+                        this.dataActualizacion.before_CP = res.before_CP;
+                        this.dataActualizacion.before_Col = res.before_Col;
+                        this.dataActualizacion.before_Direccion = res.before_Direccion;
+                        this.dataActualizacion.before_Nombre = res.before_Nombre;
+                        this.dataActualizacion.before_RFC = res.before_RFC;
+                        this.dataActualizacion.cuentaP = res.cuentaP;
+                        this.dataActualizacion.fechaConsulta = res.fechaConsulta;
+                        this.dataActualizacion.idpersona = res.idpersona;
+                        this.dataActualizacion.usuario = res.usuario;
                         this.getTipoDerecho();
                     }else{
                         this.snackBar.open("Error al actualizar, intente nuevamente.", 'Cerrar', {
