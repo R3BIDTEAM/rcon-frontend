@@ -29,7 +29,8 @@
                     </div>
                         <mat-form-field appearance="outline" class="col-5">
                             <mat-label>Usuario</mat-label>
-                            <input matInput formControlName="usuario" placeholder="Ingrese Usuario" maxlength="250" readonly>
+                            <input matInput formControlName="usuario" placeholder="Ingrese Usuario" maxlength="250" [required]="isRequired" readonly>
+                            <mat-error *ngIf="reporteFormGroup.controls.usuario.errors?.required">Requerido</mat-error>
                         </mat-form-field>
                         <div id="BotonBuscar" Style="display: block">
                             <button mat-icon-button color="primary" (click)="openDialogUsuario();" aria-label="Buscar Usuario" matTooltip="Buscar Usuario">
@@ -49,7 +50,7 @@
                 </div>
                 <div class="col-md-2" style="padding-left: 0px;">
                     <div class="d-flex flex-row-reverse">                       
-                        <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Generar reporte" matTooltip="Generar reporte" (click)="getReporte()"  [disabled]="!search">
+                        <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Generar reporte" matTooltip="Generar reporte" (click)="getReporte()"  [disabled]="reporteFormGroup.invalid">
                             Generar Reporte
                         </button>
                     </div>

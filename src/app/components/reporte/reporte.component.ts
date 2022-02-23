@@ -28,6 +28,7 @@ export class ReporteComponent implements OnInit {
 	downloading;
     rol;
     botonDisabled = false;
+    isRequired = true;
 
 	constructor(
 		private auth: AuthService,
@@ -36,7 +37,13 @@ export class ReporteComponent implements OnInit {
 		private snackBar: MatSnackBar,
 		public dialog: MatDialog,
 		private excelService: ExcelService
-	) { }
+	) {
+        this.reporteFormGroup = this._formBuilder.group({
+			fechaInicio: [null, [Validators.required]],
+            fechaFin: [null, [Validators.required]],
+			usuario: [null, []]
+		});
+     }
 
 	ngOnInit(): void {
 		this.httpOptions = {
@@ -46,18 +53,20 @@ export class ReporteComponent implements OnInit {
 			})
 		};
 
-		this.reporteFormGroup = this._formBuilder.group({
-			fechaInicio: [null, []],
-            fechaFin: [null, []],
-			usuario: [null, []]
-		});
+		
 
         this.rol = this.auth.getSession().userData.rol_nombre;
         if(this.rol == 'SUPERVISOR RCON' || this.rol == 'Administrador'){
             this.botonDisabled = true;
+            this.isRequired = true;
+            console.log("ACÁ ESTA EL BOTON");
         }else{
             this.botonDisabled = false;
+            this.isRequired = false;
         }
+        this.reporteFormGroup.updateValueAndValidity();
+        this.reporteFormGroup.markAsTouched();
+        
 	}
 
     minDate2 = '';
@@ -75,7 +84,9 @@ export class ReporteComponent implements OnInit {
 	clean(){
         this.reporteFormGroup.controls['fechaInicio'].setValue(null);
         this.reporteFormGroup.controls['fechaFin'].setValue(null);
-        this.reporteFormGroup.controls['usuario'].setValue(null);
+        if(this.rol == 'SUPERVISOR RCON' || this.rol == 'Administrador'){
+            this.reporteFormGroup.controls['usuario'].setValue(null);
+        }
 		this.idUsuario = null;
     }
 
