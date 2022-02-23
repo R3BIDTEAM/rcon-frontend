@@ -24,7 +24,7 @@ export class ExcelService {
      */
   public exportAsExcelFile(headers: any[], data: any[], excelFileName: string): void {
     let worksheet: XLSX.WorkSheet;
-    let sheetName = 'Investigación de mercado';
+    let sheetName = 'Hoja 1';
     data.unshift(headers);
     worksheet = XLSX.utils.json_to_sheet(data, {skipHeader: true});
     worksheet['!cols'] = [{wch: 30}, {wch: 40}, {wch: 10}, {wch: 10}, {wch: 40}, {wch: 30}, {wch: 15}, {wch: 10}, {wch: 10}, {wch: 10}];
