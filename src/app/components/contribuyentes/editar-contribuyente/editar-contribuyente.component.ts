@@ -460,6 +460,7 @@ export class EditarContribuyenteComponent implements OnInit {
                         this.dataActualizacion.fechaConsulta = res.fechaConsulta;
                         this.dataActualizacion.idpersona = res.idpersona;
                         this.dataActualizacion.usuario = res.usuario;
+                        this.dataActualizacion.folio = null;
                         this.getTipoDerecho();
                     }
                     
@@ -529,6 +530,7 @@ export class EditarContribuyenteComponent implements OnInit {
                         this.dataActualizacion.fechaConsulta = res.fechaConsulta;
                         this.dataActualizacion.idpersona = res.idpersona;
                         this.dataActualizacion.usuario = res.usuario;
+                        this.dataActualizacion.folio = null;
                         this.getTipoDerecho();
                     }else{
                         this.snackBar.open("Error al actualizar, intente nuevamente.", 'Cerrar', {
@@ -939,8 +941,6 @@ export class EditarContribuyenteComponent implements OnInit {
     async generatePDF() {
 
         this.dataActualizacion.cuentaP = ((this.dataActualizacion.cuentaP) ? this.dataActualizacion.cuentaP : '');
-        this.dataActualizacion.before_cuenta = ((this.dataActualizacion.before_cuenta) ? this.dataActualizacion.before_cuenta : '');
-        this.dataActualizacion.after_cuenta = ((this.dataActualizacion.after_cuenta) ? this.dataActualizacion.after_cuenta : '');
         let docDefinition = {
           content: [
             {
@@ -990,8 +990,7 @@ export class EditarContribuyenteComponent implements OnInit {
                         ['', '', { text: 'ANTES', bold: true, alignment: 'right', fontSize: 9 }, { text: 'DESPUÉS', bold: true, fontSize: 9 }],  
                         [ '', '', { text: 'Datos del contribuyente', bold: true, alignment: 'right', fontSize: 9 }, { text: 'Datos del contribuyente', bold: true, fontSize: 9 } ],
                         [ { text: 'Nombre del contribuyente:', fontSize: 9 }, '', { text: this.dataActualizacion.before_Nombre, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_Nombre, fontSize: 9 } ],
-                        [ { text: 'RFC (para personas morales):', fontSize: 9 }, '', { text: this.dataActualizacion.before_RFC, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_RFC, fontSize: 9 } ] ,
-                        [ { text: 'Cuenta Catastral:', fontSize: 9 }, '', { text: this.dataActualizacion.before_cuenta, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_cuenta, fontSize: 9 } ]
+                        [ { text: 'RFC (para personas morales)', fontSize: 9 }, '', { text: this.dataActualizacion.before_RFC, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_RFC, fontSize: 9 } ] ,
                     ]  
                 }  
             },
@@ -1125,8 +1124,7 @@ export class EditarContribuyenteComponent implements OnInit {
                         ['', '', { text: 'ANTES', bold: true, alignment: 'right', fontSize: 9 }, { text: 'DESPUÉS', bold: true, fontSize: 9 }],  
                         [ '', '', { text: 'Datos del contribuyente', bold: true, alignment: 'right', fontSize: 9 }, { text: 'Datos del contribuyente', bold: true, fontSize: 9 } ],
                         [ { text: 'Nombre del contribuyente:', fontSize: 9 }, '', { text: this.dataActualizacion.before_Nombre, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_Nombre, fontSize: 9 } ],
-                        [ { text: 'RFC (para personas morales):', fontSize: 9 }, '', { text: this.dataActualizacion.before_RFC, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_RFC, fontSize: 9 } ],
-                        [ { text: 'Cuenta Catastral:', fontSize: 9 }, '', { text: this.dataActualizacion.before_cuenta, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_cuenta, fontSize: 9 } ] 
+                        [ { text: 'RFC (para personas morales)', fontSize: 9 }, '', { text: this.dataActualizacion.before_RFC, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_RFC, fontSize: 9 } ],
                     ]  
                 }  
             },
