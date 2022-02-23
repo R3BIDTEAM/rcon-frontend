@@ -767,8 +767,10 @@ export class EditarContribuyenteComponent implements OnInit {
                         this.dataActualizacion.after_Direccion = res.after_Direccion;
                         this.dataActualizacion.after_Nombre = res.after_Nombre;
                         this.dataActualizacion.after_RFC = res.after_RFC;
+                        this.dataActualizacion.after_cuenta = res.after_cuenta;
                         this.dataActualizacion.area = res.area;
                         this.dataActualizacion.at = res.at;
+                        this.dataActualizacion.before_cuenta = res.before_cuenta;
                         this.dataActualizacion.before_CP = res.before_CP;
                         this.dataActualizacion.before_Col = res.before_Col;
                         this.dataActualizacion.before_Direccion = res.before_Direccion;
