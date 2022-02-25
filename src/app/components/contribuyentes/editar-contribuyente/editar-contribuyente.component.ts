@@ -214,6 +214,7 @@ export class EditarContribuyenteComponent implements OnInit {
     accionDomicilioBoletas = false;
     cambioPersona;
     tipoContribuyente;
+    existetipoContribuyente = false;
     actCambioPersona = true;
     isRequired = true;
     selectDisabled = false;
@@ -670,6 +671,7 @@ export class EditarContribuyenteComponent implements OnInit {
                     this.loading = false;
                     console.log("AQUÍ" + res.P_N_S);
                     this.tipoContribuyente = (res.P_N_S) ? res.P_N_S : '';
+                    this.existetipoContribuyente = (res.P_N_S) ? true : false;
                     this.dataContribuyenteResultado = res.contribuyente;
                     console.log("AQUI ENTRO EL RES");
                     console.log(this.dataContribuyenteResultado);
