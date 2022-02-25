@@ -9,7 +9,7 @@
                     </div>
                     <mat-form-field appearance="fill" class="col-5">
                         <mat-label>Fecha Inicio:</mat-label>
-                        <input matInput formControlName="fechaInicio" [matDatepicker]="pickfechaInicio" (dateChange)="fechaTope2()" readonly>
+                        <input matInput formControlName="fechaInicio" [matDatepicker]="pickfechaInicio" [max]="maxDate" (dateChange)="fechaTope2()" readonly>
                         <mat-datepicker-toggle matSuffix [for]="pickfechaInicio"></mat-datepicker-toggle>
                         <mat-datepicker #pickfechaInicio></mat-datepicker>
                         <mat-error *ngIf="reporteFormGroup.controls.fechaInicio.errors?.required">Requerido</mat-error>
@@ -29,8 +29,8 @@
                     </div>
                         <mat-form-field appearance="outline" class="col-5">
                             <mat-label>Usuario</mat-label>
-                            <input matInput formControlName="usuario" placeholder="Ingrese Usuario" maxlength="250" [required]="isRequired" readonly>
-                            <mat-error *ngIf="reporteFormGroup.controls.usuario.errors?.required">Requerido</mat-error>
+                            <input matInput formControlName="usuario" placeholder="Ingrese Usuario" maxlength="250" readonly>
+                            <!-- <mat-error *ngIf="reporteFormGroup.controls.usuario.errors?.required">Requerido</mat-error> -->
                         </mat-form-field>
                         <div id="BotonBuscar" Style="display: block">
                             <button mat-icon-button color="primary" (click)="openDialogUsuario();" aria-label="Buscar Usuario" matTooltip="Buscar Usuario">

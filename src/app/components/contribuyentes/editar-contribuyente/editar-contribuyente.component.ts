@@ -213,6 +213,7 @@ export class EditarContribuyenteComponent implements OnInit {
     accionDomicilio = false;
     accionDomicilioBoletas = false;
     cambioPersona;
+    tipoContribuyente;
     actCambioPersona = true;
     isRequired = true;
     selectDisabled = false;
@@ -285,6 +286,7 @@ export class EditarContribuyenteComponent implements OnInit {
             fecha_def: [null, []],
             celular: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
             email: ['', [Validators.email, Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            texto: [null, []],
         });
 
         this.moralFormGroup = this._formBuilder.group({
@@ -295,6 +297,7 @@ export class EditarContribuyenteComponent implements OnInit {
             fechaInicioOperacion: [null, []],
             idMotivo: ['', []],
             fechaCambio: [null, []],
+            texto: [null, []],
         });
 
         this.cuentaFormGroup = this._formBuilder.group({
@@ -665,6 +668,8 @@ export class EditarContribuyenteComponent implements OnInit {
             .subscribe(
                 (res: any) => {
                     this.loading = false;
+                    console.log("AQUÍ" + res.P_N_S);
+                    this.tipoContribuyente = (res.P_N_S) ? res.P_N_S : '';
                     this.dataContribuyenteResultado = res.contribuyente;
                     console.log("AQUI ENTRO EL RES");
                     console.log(this.dataContribuyenteResultado);

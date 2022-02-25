@@ -58,23 +58,24 @@ export class ReporteComponent implements OnInit {
         this.rol = this.auth.getSession().userData.rol_nombre;
         if(this.rol == 'SUPERVISOR RCON' || this.rol == 'Administrador'){
             this.botonDisabled = true;
-            this.isRequired = true;
+            //this.isRequired = true;
             console.log("ACÁ ESTA EL BOTON");
         }else{
             this.botonDisabled = false;
-            this.isRequired = false;
+            //this.isRequired = false;
         }
-        this.reporteFormGroup.updateValueAndValidity();
-        this.reporteFormGroup.markAsTouched();
+        // this.reporteFormGroup.updateValueAndValidity();
+        // this.reporteFormGroup.markAsTouched();
         
 	}
 
     minDate2 = '';
     maxDate2 = '';
+    maxDate = new Date((new Date().getTime()));
 
     fechaTope2(){
         this.reporteFormGroup.controls['fechaFin'].setValue(null);
-        this.minDate2 = moment(this.reporteFormGroup.controls['fechaInicio'].value).add(2, 'd').format('YYYY-MM-DD');
+        this.minDate2 = moment(this.reporteFormGroup.controls['fechaInicio'].value).add(1, 'd').format('YYYY-MM-DD');
         this.maxDate2 = moment(this.reporteFormGroup.controls['fechaInicio'].value).add(31, 'd').format('YYYY-MM-DD');
     }
 
@@ -157,12 +158,28 @@ export class ReporteComponent implements OnInit {
 
 	downloadInforme(): void {
 		this.downloading = true;
-		let tipo = 'E'
-		let head = [['NUM', 'FECHA', 'CUENTA', 'CAMPO MODIFICADO', 'VALOR ANTERIOR', 'VALOR DESPÚES']];
+		let tipo = '';
+        let head = null;
+        if(this.rol == 'SUPERVISOR RCON' || this.rol == 'Administrador'){
+            head = [['NUM', 'FECHA', 'CUENTA', 'CAMPO MODIFICADO', 'VALOR ANTERIOR', 'VALOR DESPÚES', 'USUARIO', 'ÁREA', 'SUBÁREA']];
+            tipo = 'A';
+            console.log("ACÁ EL TIPO:" + tipo);
+        }else{
+            head = [['NUM', 'FECHA', 'CUENTA', 'CAMPO MODIFICADO', 'VALOR ANTERIOR', 'VALOR DESPÚES']];
+            tipo = 'E';
+            console.log("ACÁ EL TIPO:" + tipo);
+        }
+		
 		let data = [];
 		switch(tipo) {
 			case 'E': {
 				this.dataSource.forEach(element => data.push([element.numero, element.fecha_de_cambio, element.cuenta, element.campo_modificado, element.valor_antes, element.valor_despues]));
+                console.log("ACÁ EL ARRAY:" + tipo);
+				break;
+			}
+            case 'A': {
+				this.dataSource.forEach(element => data.push([element.numero, element.fecha_de_cambio, element.cuenta, element.campo_modificado, element.valor_antes, element.valor_despues, element.nombre_de_usuario, element.area, element.subarea]));
+                console.log("ACÁ EL ARRAY:" + tipo);
 				break;
 			}
 		default: {
