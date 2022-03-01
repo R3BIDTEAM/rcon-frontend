@@ -141,25 +141,11 @@
                             </mat-form-field>
                         </div>
                         <div class="row">
-                            <mat-form-field appearance="outline" class="col-md-6">
-                                <mat-label>Celular:</mat-label>
-                                <input matInput formControlName="celular" [(ngModel)]="contribuyente.celular" maxlength="10" placeholder="Ingrese el Celular">
-                                <mat-error *ngIf="fisicaFormGroup.controls.celular.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?)</mat-error>
-                            </mat-form-field>
-                            <mat-form-field appearance="outline" class="col-md-6" style="margin-left: 0px!important;">
-                                <mat-label>E-mail: *</mat-label>
-                                <input matInput formControlName="email" placeholder="Ingrese el E-mail" [(ngModel)]="contribuyente.email" maxlength="250">
-                                <mat-error *ngIf="fisicaFormGroup.controls.email.errors?.required">Requerido</mat-error>
-                                <mat-error *ngIf="fisicaFormGroup.hasError('email', 'email') && fisicaFormGroup.get('email').touched">El campo correo electrónico debe cumplir la estructura "usuario@dominio".</mat-error>
-                                <mat-error *ngIf="fisicaFormGroup.controls.email.errors?.pattern">El campo correo electrónico debe cumplir la estructura "usuario@dominio".</mat-error>
-                            </mat-form-field>
-                        </div>
-                        <!-- <div class="row">
                             <mat-form-field appearance="outline" class="col-12">
                                 <mat-label>Observaciones:</mat-label>
-                                <textarea matInput formControlName="texto" rows="5" style="text-transform: uppercase;" maxlength="250"></textarea>
+                                <textarea matInput formControlName="texto" [(ngModel)]="contribuyente.texto" rows="5" style="text-transform: uppercase;" maxlength="250"></textarea>
                             </mat-form-field>
-                        </div> -->
+                        </div>
                     </form>
                 </ng-container>
                 <ng-container *ngIf="contribuyente.tipoPersona == 'M'  && !loading">
@@ -212,6 +198,12 @@
                                 <mat-datepicker-toggle matSuffix [for]="pickfechaCambio"></mat-datepicker-toggle>
                                 <mat-datepicker #pickfechaCambio></mat-datepicker>
                             </mat-form-field>                            
+                        </div>
+                        <div class="row">
+                            <mat-form-field appearance="outline" class="col-12">
+                                <mat-label>Observaciones:</mat-label>
+                                <textarea matInput formControlName="texto" [(ngModel)]="contribuyente.texto" rows="5" style="text-transform: uppercase;" maxlength="250"></textarea>
+                            </mat-form-field>
                         </div>
                     </form>
                 </ng-container>

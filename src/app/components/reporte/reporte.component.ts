@@ -161,7 +161,7 @@ export class ReporteComponent implements OnInit {
 		let tipo = '';
         let head = null;
         if(this.rol == 'SUPERVISOR RCON' || this.rol == 'Administrador'){
-            head = [['NUM', 'FECHA', 'CUENTA', 'CAMPO MODIFICADO', 'VALOR ANTERIOR', 'VALOR DESPÚES', 'USUARIO', 'ÁREA', 'SUBÁREA']];
+            head = [['NUM', 'FECHA', 'CUENTA', 'CAMPO MODIFICADO', 'VALOR ANTERIOR', 'VALOR DESPÚES', 'USUARIO', 'ÁREA', 'SUBÁREA', 'OBSERVACIÓN']];
             tipo = 'A';
             console.log("ACÁ EL TIPO:" + tipo);
         }else{
@@ -178,7 +178,7 @@ export class ReporteComponent implements OnInit {
 				break;
 			}
             case 'A': {
-				this.dataSource.forEach(element => data.push([element.numero, element.fecha_de_cambio, element.cuenta, element.campo_modificado, element.valor_antes, element.valor_despues, element.nombre_de_usuario, element.area, element.subarea]));
+				this.dataSource.forEach(element => data.push([element.numero, element.fecha_de_cambio, element.cuenta, element.campo_modificado, element.valor_antes, element.valor_despues, element.nombre_de_usuario, element.area, element.subarea, element.observacion]));
                 console.log("ACÁ EL ARRAY:" + tipo);
 				break;
 			}

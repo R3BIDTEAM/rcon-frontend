@@ -39,6 +39,7 @@ export interface DatosContribuyente {
     idMotivo: number;
     fechaCambio: Date;
     nombre_moral: string;
+    texto: string;
 }
 
 export interface DataRepresentacion {
@@ -305,6 +306,7 @@ export class EditarContribuyenteComponent implements OnInit {
             porcentanje: [null, []],
             cuenta: [null, []],
             tipoDerecho: [null, []],
+            texto: [null, []],
         });
 
         this.idContribuyente = this.route.snapshot.paramMap.get('idcontribuyente');
@@ -669,7 +671,6 @@ export class EditarContribuyenteComponent implements OnInit {
             .subscribe(
                 (res: any) => {
                     this.loading = false;
-                    console.log("AQUÍ" + res.P_N_S);
                     this.tipoContribuyente = (res.P_N_S) ? res.P_N_S : '';
                     this.existetipoContribuyente = (res.P_N_S) ? true : false;
                     this.dataContribuyenteResultado = res.contribuyente;
@@ -712,6 +713,7 @@ export class EditarContribuyenteComponent implements OnInit {
         this.contribuyente.fechaInicioOperacion = (this.dataContribuyenteResultado[0].FECHAINICIOACTIV) ? new Date(this.dataContribuyenteResultado[0].FECHAINICIOACTIV) : null;
         this.contribuyente.idMotivo = this.dataContribuyenteResultado[0].IDMOTIVOSMORAL;
         this.contribuyente.fechaCambio = (this.dataContribuyenteResultado[0].FECHACAMBIOSITUACION) ? new Date(this.dataContribuyenteResultado[0].FECHACAMBIOSITUACION) : null;
+        this.contribuyente.texto = this.dataContribuyenteResultado[0].OBSERVACION;
 
         console.log(this.contribuyente.nombre_moral);
 
@@ -756,7 +758,7 @@ export class EditarContribuyenteComponent implements OnInit {
         query = (this.contribuyente.celular) ? query + '&celular=' + this.contribuyente.celular : query + '&celular=';
         query = (this.contribuyente.email) ? query + '&email=' + this.contribuyente.email : query + '&email=';
         query = (this.contribuyente.actPreponderante) ? query + '&activprincip=' + this.contribuyente.actPreponderante : query + '&activprincip=';
-        // query = (this.contribuyente.nombre_moral) ? query + '&apellidopaterno=' + this.contribuyente.nombre_moral : query + '&apellidopaterno=';
+        query = (this.contribuyente.texto) ? query + '&observacion=' + this.contribuyente.texto.toLocaleUpperCase().trim() : query + '&observacion=';
 
         if(this.contribuyente.tipoPersona === 'F'){
             query = (this.contribuyente.apepaterno) ? query + '&apellidopaterno=' + this.contribuyente.apepaterno.toLocaleUpperCase().trim() : query + '&apellidopaterno=';
@@ -887,6 +889,7 @@ export class EditarContribuyenteComponent implements OnInit {
         query = (this.contribuyente.idMotivo) ? query + '&idmotivosmoral=' + this.contribuyente.idMotivo : query + '&idmotivosmoral=';
         query = (this.contribuyente.fechaInicioOperacion) ? query + '&fechainicioactiv=' + moment(this.contribuyente.fechaInicioOperacion).format('DD-MM-YYYY') : query + '&fechainicioactiv=';
         query = (this.contribuyente.fechaCambio) ? query + '&fechacambiosituacion=' + moment(this.contribuyente.fechaCambio).format('DD-MM-YYYY') : query + '&fechacambiosituacion=';
+        //query = (this.contribuyente.texto) ? query + '&observacion=' + this.contribuyente.texto : query + '&observacion=';
         //cambioTipoPersona?idpersona=4493942&apellidopaterno=Palacios&apellidomaterno=Garcia&nombreF=Telesforo&rfcF=PAGT830626AE0&curp&claveife=&iddocidentif&valdocidentif&fechanacimiento=26-06-1983&fechadefuncion
         //&codtipospersona=M&nombreM=Telesforo Palacios Garcia&activprincipM&idtipomoral&idmotivosmoral&fechainicioactiv&fechacambiosituacion&rfcM=GEC8501014I5&celular&email=
         this.http.post(this.endpoint + 'cambioTipoPersona' + '?' + query, '', this.httpOptions)
