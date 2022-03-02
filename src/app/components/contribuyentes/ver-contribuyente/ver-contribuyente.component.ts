@@ -502,9 +502,12 @@ export class VerContribuyenteComponent implements OnInit {
               this.infoContribuyenteNombre = this.infoContribuyente[0].NOMBRE + ' ' + this.infoContribuyente[0].APELLIDOPATERNO + ' ' + this.infoContribuyente[0].APELLIDOMATERNO;
               this.infoContribuyenteRfc = (this.infoContribuyente[0].RFC) ? 'RFC: ' + this.infoContribuyente[0].RFC : 'CURP: ' + this.infoContribuyente[0].CURP;
               this.consultaCambios();
+              console.log("ACÁ EL RES DEL CONSULTA INFO");
+              console.log(res);
               dialogRef.close();
             }else{
               this.loadingDomicilios = false;
+              dialogRef.close();
               this.snackBar.open('No se encontro información', 'Cerrar', {
                   duration: 10000,
                   horizontalPosition: 'end',
@@ -514,6 +517,7 @@ export class VerContribuyenteComponent implements OnInit {
             
           },
           (error) => {
+              dialogRef.close();
               this.loadingDomicilios = false;
               this.snackBar.open(error.error.mensaje, 'Cerrar', {
                   duration: 10000,
@@ -536,7 +540,6 @@ export class VerContribuyenteComponent implements OnInit {
             this.historicoCambios = res;
             if(this.historicoCambios.length > 0){
               this.generatePDF();
-              dialogRef.close();
             }else{
               this.loadingDomicilios = false;
               this.snackBar.open('No se han encontrado movimientos', 'Cerrar', {
@@ -545,9 +548,12 @@ export class VerContribuyenteComponent implements OnInit {
                   verticalPosition: 'top'
               });
             }
-            
+            console.log("ACÁ EL RES CONSULTA CAMBIO");
+            console.log(res);
+            dialogRef.close();
           },
           (error) => {
+              dialogRef.close();
               this.loadingDomicilios = false;
               this.snackBar.open(error.error.mensaje, 'Cerrar', {
                   duration: 10000,
