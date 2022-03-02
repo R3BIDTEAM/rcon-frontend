@@ -574,13 +574,14 @@ export class VerContribuyenteComponent implements OnInit {
     this.historicoCambios
     let arreglo = [
       [
-        { text: 'Campo Modificado:', fontSize: 9,  bold: true },
+        { text: 'Campo Modificado', fontSize: 9,  bold: true },
         { text: 'Valor Antes', fontSize: 9, bold: true },
         { text: 'Valor despúes', fontSize: 9, bold: true },
         { text: 'Fecha Cambio', fontSize: 9, bold: true },
         { text: 'Nombre de usuario', fontSize: 9, bold: true },
-        { text: 'Área', fontSize: 9, bold: true },
-        { text: 'Subarea', fontSize: 9, bold: true }
+        // { text: 'Área', fontSize: 9, bold: true },
+        // { text: 'Subarea', fontSize: 9, bold: true }
+        { text: 'IP', fontSize: 9, bold: true },
       ],
     ];
 
@@ -594,8 +595,9 @@ export class VerContribuyenteComponent implements OnInit {
           { text: this.historicoCambios[i].valor_despues, fontSize: 9, bold: false },
           { text: this.historicoCambios[i].fecha_de_cambio, fontSize: 9, bold: false },
           { text: this.historicoCambios[i].nombre_de_usuario, fontSize: 9, bold: false },
-          { text: this.historicoCambios[i].area, fontSize: 9, bold: false },
-          { text: this.historicoCambios[i].subarea, fontSize: 9, bold: false }
+          // { text: this.historicoCambios[i].area, fontSize: 9, bold: false },
+          // { text: this.historicoCambios[i].subarea, fontSize: 9, bold: false }
+          { text: this.historicoCambios[i].ip, fontSize: 9, bold: false },
         ],
       );
     }
@@ -650,7 +652,7 @@ export class VerContribuyenteComponent implements OnInit {
         {  
             table: {  
                 headerRows: 1,  
-                widths: ['14%', '14%', '14%', '14%', '14%', '14%', '16%'],  
+                widths: ['18%', '18%', '18%', '14%', '14%', '18%'],  
                 body:   
                     arreglo
                   
