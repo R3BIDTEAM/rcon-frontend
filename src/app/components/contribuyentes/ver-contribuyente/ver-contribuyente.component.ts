@@ -489,8 +489,10 @@ export class VerContribuyenteComponent implements OnInit {
   }
 
   consultaInfoCambios(){
-    this.infoContribuyenteNombre = null;
+    this.infoContribuyenteNombre = '';
     let metodo = 'getInfoContribuyente';
+    let nombreC = '';
+    let apematernoC = '';
     const dialogRef = this.dialog.open(DialogCargaComponent, {
 			width: '800px',
 		});
@@ -498,8 +500,10 @@ export class VerContribuyenteComponent implements OnInit {
       .subscribe(
           (res: any) => {
             this.infoContribuyente = res.contribuyente;
+            nombreC = (this.infoContribuyente[0].NOMBRE) ? this.infoContribuyente[0].NOMBRE : '';
+            apematernoC = (this.infoContribuyente[0].APELLIDOMATERNO) ? this.infoContribuyente[0].APELLIDOMATERNO : '';
             if(this.infoContribuyente[0].IDPERSONA){
-              this.infoContribuyenteNombre = this.infoContribuyente[0].NOMBRE + ' ' + this.infoContribuyente[0].APELLIDOPATERNO + ' ' + this.infoContribuyente[0].APELLIDOMATERNO;
+              this.infoContribuyenteNombre = nombreC + ' ' + this.infoContribuyente[0].APELLIDOPATERNO + ' ' + apematernoC;
               this.infoContribuyenteRfc = (this.infoContribuyente[0].RFC) ? 'RFC: ' + this.infoContribuyente[0].RFC : 'CURP: ' + this.infoContribuyente[0].CURP;
               this.consultaCambios();
               console.log("ACÁ EL RES DEL CONSULTA INFO");
