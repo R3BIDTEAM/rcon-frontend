@@ -596,7 +596,7 @@ export class VerContribuyenteComponent implements OnInit {
         [
           { text: this.historicoCambios[i].campo_modificado, fontSize: 9, bold: false },
           { text: this.historicoCambios[i].valor_antes, fontSize: 9, bold: false },
-          { text: this.historicoCambios[i].valor_despues, fontSize: 9, bold: false },
+          { text: (this.historicoCambios[i].valor_despues) ? this.historicoCambios[i].valor_despues : '', fontSize: 9, bold: false },
           { text: this.historicoCambios[i].fecha_de_cambio, fontSize: 9, bold: false },
           { text: this.historicoCambios[i].nombre_de_usuario, fontSize: 9, bold: false },
           // { text: this.historicoCambios[i].area, fontSize: 9, bold: false },
