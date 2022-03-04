@@ -59,7 +59,7 @@ import { EditarContribuyenteComponent, DialogDomicilioContribuyente, DialogAsent
          DialogPersonalesHistoricoEspecificoContribuyente, DialogHistorialRepC, DialogHistorialRepDetalleC } from './components/contribuyentes/editar-contribuyente/editar-contribuyente.component';
 import { VerHistoricoDomicilioNotarioComponent } from './components/notarios/ver-historico-domicilio-notario/ver-historico-domicilio-notario.component';
 import { DialogDuplicadosComponent, DialogsMensaje, DialogsValidaPerito } from './components/dialog-duplicados/dialog-duplicados.component';
-import { DialogConfirmacionComponent, DialogsCambiaPersona, DialogsAsociarCuenta } from './components/dialog-confirmacion/dialog-confirmacion.component';
+import { DialogConfirmacionComponent, DialogsCambiaPersona, DialogsAsociarCuenta, DialogCuenta } from './components/dialog-confirmacion/dialog-confirmacion.component';
 import { DialogHistorialComponent, DialogHistorialRepDetalleG, DialogDomicilioHistoricoG, DialogDomicilioHistoricoEspecificoG,
           DialogPersonalesHistoricoG, DialogPersonalesHistoricoEspecificoG } from './components/dialog-historial/dialog-historial.component';
 import { ReporteComponent, DialogBuscaUsuario } from './components/reporte/reporte.component';
@@ -182,7 +182,8 @@ import { DialogCargaComponent } from './components/dialog-carga/dialog-carga.com
     ReporteComponent,
     DialogBuscaUsuario,
     DialogCargaComponent,
-    DialogsAsociarCuenta
+    DialogsAsociarCuenta,
+    DialogCuenta
   ],
   imports: [
     BrowserModule,

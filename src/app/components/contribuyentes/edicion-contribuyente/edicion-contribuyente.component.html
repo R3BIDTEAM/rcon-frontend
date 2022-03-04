@@ -207,7 +207,10 @@
                     <ng-container matColumnDef="seleccionar">
                         <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
                         <td mat-cell *matCellDef="let element">
-                            <button mat-stroked-button color="primary" aria-label="Editar Contribuyente" matTooltip="Editar Contribuyente" [routerLink]="['/main/editar-contribuyente', (element.idpersona) ? element.idpersona : element.IDPERSONA]">
+                            <!-- <button mat-stroked-button color="primary" aria-label="Editar Contribuyente" matTooltip="Editar Contribuyente" [routerLink]="['/main/editar-contribuyente', (element.idpersona) ? element.idpersona : element.IDPERSONA]">
+                                Editar
+                            </button> -->
+                            <button mat-stroked-button color="primary" aria-label="Editar Contribuyente" matTooltip="Editar Contribuyente" (click)="editaCuenta(1, (element.idpersona) ? element.idpersona : element.IDPERSONA)">
                                 Editar
                             </button>
                         </td>

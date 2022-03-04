@@ -7,6 +7,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
+import { DialogCuenta } from '@comp/dialog-confirmacion/dialog-confirmacion.component';
 
 export interface DatosContribuyente {  
   identificacion: number;
@@ -55,7 +56,9 @@ export class EdicionContribuyenteComponent implements OnInit {
     private auth: AuthService,
     private http: HttpClient,
     private _formBuilder: FormBuilder,
+    public dialog: MatDialog,
     private snackBar: MatSnackBar,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -107,6 +110,29 @@ export class EdicionContribuyenteComponent implements OnInit {
     //   }
     //   this.contribuyenteFormGroup.updateValueAndValidity();
     // });
+  }
+
+  editaCuenta(mensaje, idpersona){
+    const dialogRef = this.dialog.open(DialogCuenta, {
+      width: '800px',
+      data: {mensaje: mensaje, idpersona: idpersona}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+        console.log("ACÁ RESULT");
+        if(result != false){
+          console.log(result);    
+          switch (result) {
+            case 1:
+              this.router.navigate(['main/editar-contribuyente/' + idpersona]);
+              break;
+            case 2:
+            
+              break;
+            default:
+              break;
+          }
+        }
+    });
   }
 
   /** 

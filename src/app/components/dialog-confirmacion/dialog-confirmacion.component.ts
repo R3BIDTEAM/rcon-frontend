@@ -51,6 +51,31 @@ export class DialogsCambiaPersona {
 
 }
 
+@Component({
+    selector: 'dialog-cuenta',
+    templateUrl: 'dialog-cuenta.html',
+})
+export class DialogCuenta {
+    idpersona;
+    mensaje;
+
+    constructor(
+        public dialog: MatDialog,
+        public dialogRef: MatDialogRef<DialogCuenta>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) { 
+        dialogRef.disableClose = true;
+        console.log("ACÁ LA OPCIÓN");
+        console.log(data);
+        this.mensaje = data.mensaje;
+        
+    }
+
+    ngOnInit(): void {
+       
+    }
+
+}
 
 // DIALOGO PARA ASOCIAR LAS CUENTAS
 export interface DataCuenta {
