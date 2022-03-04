@@ -1,0 +1,111 @@
+<mat-dialog-actions align="end">
+    <button style="border: 0px; background-color: transparent; cursor: pointer;" mat-dialog-close><mat-icon style="color: red;">clear</mat-icon></button>
+</mat-dialog-actions>
+
+<h2 style="margin: 0 0 35px 0; text-align: center;" class="verde-cdmx">Histórico Modificaciones Domicilio:</h2>
+
+    <div class="row">
+        <div class="col-md-4">
+            <mat-form-field appearance="fill" style="width: 100%;">
+                <mat-label>Fecha Desde:</mat-label>
+                <input matInput [matDatepicker]="pickdesde" [(ngModel)]="dataHistoricoModificaciones.fecha_desde">
+                <mat-datepicker-toggle matSuffix [for]="pickdesde"></mat-datepicker-toggle>
+                <mat-datepicker #pickdesde></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field appearance="fill" style="width: 100%;">
+                <mat-label>Fecha Hasta:</mat-label>
+                <input matInput [matDatepicker]="pickhasta" [(ngModel)]="dataHistoricoModificaciones.fecha_hasta">
+                <mat-datepicker-toggle matSuffix [for]="pickhasta"></mat-datepicker-toggle>
+                <mat-datepicker #pickhasta></mat-datepicker>
+            </mat-form-field>
+        </div>
+            <!-- Filtrar -->
+            <div class="col-md-4" style="margin-top: 10px;">
+                <div class="d-flex flex-row-reverse" style="text-align: center;">
+                    <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" style="margin: auto;" (click)="getHistoricoModificaciones()">
+                        Filtrar <mat-icon style="display: inherit; width: 15px;">filter_list</mat-icon>
+                    </button>
+                </div>
+            </div>
+    </div>
+
+
+    <ng-container>
+
+        <div style="padding: 30px; text-align: center;" *ngIf="loading">
+            <mat-spinner style="margin:0 auto;"></mat-spinner>
+            <p>Cargando...</p>
+        </div>
+
+        <div class="row" *ngIf="dataSource.length == 0 && !loading">
+            <div class="col-md-12">
+                <h3 class="verde-cdmx" style="margin-top: 10%;">Lista de notarios:</h3>
+                <div class="alert alert-info" >
+                    No hay Notarios para el filtro seleccionado
+                </div> 
+            </div>
+        </div>
+
+        <div class="row" *ngIf="!loading && dataSource.length > 0">
+            <div class="col-md-12">
+                
+                <table mat-table [dataSource]="dataPaginate">
+
+                    <ng-container matColumnDef="fecha">
+                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="font-size: 14px;"> Fecha </th>
+                        <td mat-cell *matCellDef="let element" class="contenido-tabla"> 
+                            {{ element.MD_FECHADESDE | date:'short' }}
+                            <!-- {{ element.MD_FECHADESDE | date:'YYYY-MM-dd' }} -->
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="descripcion">
+                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="font-size: 14px;"> Descripción </th>
+                        <td mat-cell *matCellDef="let element" class="contenido-tabla"> 
+                            {{ element.CAUSA }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="numero_expediente">
+                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="font-size: 14px;"> Número Expediente </th>
+                        <td mat-cell *matCellDef="let element" class="contenido-tabla"> 
+                            {{ element.NUMEROEXPEDIENTE }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="tipo_tramite">
+                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="font-size: 14px;"> Tipo Trámite </th>
+                        <td mat-cell *matCellDef="let element" class="contenido-tabla"> 
+                            {{ element.TIPOTRAMTE }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="tipo_subtramite">
+                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="font-size: 14px;"> Tipo Subtrámite </th>
+                        <td mat-cell *matCellDef="let element" class="contenido-tabla"> 
+                            {{ element.SUBTIPOTRAMTE }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="detalle">
+                        <th mat-header-cell *matHeaderCellDef class="verde-cdmx" style="font-size: 14px;"> Detalle </th>
+                        <td mat-cell *matCellDef="let element" class="contenido-tabla"> 
+                            <button mat-icon-button type="button" color="primary" aria-label="Ver Detalle" matTooltip="Ver Detalle" (click)="viewHistoricoDomicilioEspecifico(element.IDCHS_MTODESDE)">
+                                <!-- {{element.IDCHS_MTODESDE}}<mat-icon>search</mat-icon> -->
+                                <mat-icon>search</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+                    
+                    
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <mat-paginator #paginator [length]="total" [pageSize]="pageSize" [pageSizeOptions]="[pageSize]" [showFirstLastButtons]="true" (page)="paginado($event)">
+                </mat-paginator>
+            </div>
+        </div>
+        
+    </ng-container>

@@ -113,6 +113,17 @@ export class EdicionContribuyenteComponent implements OnInit {
   }
 
   editaCuenta(mensaje, idpersona){
+    
+    let regionT = (this.cuentaFormGroup.value.region) ? this.cuentaFormGroup.value.region : '';
+    
+    let manzanaT = (this.cuentaFormGroup.value.manzana) ? this.cuentaFormGroup.value.manzana : '';
+    
+    let loteT = (this.cuentaFormGroup.value.lote) ? this.cuentaFormGroup.value.lote : '';
+    
+    let unidadPrivativaT = (this.cuentaFormGroup.value.unidad) ? this.cuentaFormGroup.value.unidad : '';
+
+    let cuenta = regionT + '-' + manzanaT + '-' + loteT + '-' + unidadPrivativaT;
+
     const dialogRef = this.dialog.open(DialogCuenta, {
       width: '800px',
       data: {mensaje: mensaje, idpersona: idpersona}
@@ -126,7 +137,7 @@ export class EdicionContribuyenteComponent implements OnInit {
               this.router.navigate(['main/editar-contribuyente/' + idpersona]);
               break;
             case 2:
-            
+              this.router.navigate(['main/editart-contribuyente/' + idpersona + '/' + cuenta]);
               break;
             default:
               break;

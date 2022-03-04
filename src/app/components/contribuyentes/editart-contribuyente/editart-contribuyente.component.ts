@@ -15,150 +15,148 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import { DialogConfirmacionComponent, DialogsCambiaPersona, DialogsAsociarCuenta } from '@comp/dialog-confirmacion/dialog-confirmacion.component';
 
 export interface DatosContribuyente {
-    tipoPersona: string;
-    apepaterno: string;
-    apematerno: string;
-    nombre: string;
-    rfc: string;
-    curp: string;
-    ine: string;
-    identificacion: number;
-    idedato: string;
-    fecha_naci: Date;
-    fecha_def: Date;
-    celular: string;
-    email: string;
-    registro: string;
-    independiente: boolean;
-    independienteAct: string;
-    fecha_alta: Date;
-    fecha_baja: Date;
-    actPreponderante: string;
-    idTipoPersonaMoral: number;
-    fechaInicioOperacion: Date;
-    idMotivo: number;
-    fechaCambio: Date;
-    nombre_moral: string;
-    texto: string;
-}
-
-export interface DataRepresentacion {
   tipoPersona: string;
+  apepaterno: string;
+  apematerno: string;
   nombre: string;
-  nombre_moral: string;
-  apaterno: string;
-  amaterno: string;
   rfc: string;
   curp: string;
   ine: string;
-  idDocIdent: number;
-  docIdent: string;
-  fechaNacimiento: Date;
-  fechaDefuncion: Date;
+  identificacion: number;
+  idedato: string;
+  fecha_naci: Date;
+  fecha_def: Date;
   celular: string;
   email: string;
+  registro: string;
+  independiente: boolean;
+  independienteAct: string;
+  fecha_alta: Date;
+  fecha_baja: Date;
   actPreponderante: string;
   idTipoPersonaMoral: number;
   fechaInicioOperacion: Date;
   idMotivo: number;
   fechaCambio: Date;
+  nombre_moral: string;
   texto: string;
-  fechaCaducidad: Date;
-  documentoRepresentacion: DataDocumentoRepresentacion;
+}
+
+export interface DataRepresentacion {
+tipoPersona: string;
+nombre: string;
+nombre_moral: string;
+apaterno: string;
+amaterno: string;
+rfc: string;
+curp: string;
+ine: string;
+idDocIdent: number;
+docIdent: string;
+fechaNacimiento: Date;
+fechaDefuncion: Date;
+celular: string;
+email: string;
+actPreponderante: string;
+idTipoPersonaMoral: number;
+fechaInicioOperacion: Date;
+idMotivo: number;
+fechaCambio: Date;
+texto: string;
+fechaCaducidad: Date;
+documentoRepresentacion: DataDocumentoRepresentacion;
 }
 
 export interface DocumentosIdentificativos{
-  id_documento: number;
-  documento: string;
+id_documento: number;
+documento: string;
 }
 
 export interface DataTipoDerecho{
-    codtipoderecho: string;
-    descripcion: string;
+  codtipoderecho: string;
+  descripcion: string;
 }
 
 export interface PersonaInmueble{
-    porcentajeparticipacion: string;
-    codtipoderecho: string;
+  porcentajeparticipacion: string;
+  codtipoderecho: string;
 }
 
 export interface DataDocumentoRepresentacion {
-    codtipodocumento: number;
-    nombreTipoDocumento: string;
-    codtipodocumentojuridico: string;
-    nombreTipoDocumentoJuridico: string;
-    idnotario: number;
-    noNotario: string;
-    ciudadNotario: string;
-    nombreNotario: string;
-    num_escritura: string;
-    fecha: Date;
-    descripcion: string;
-    lugar: string;
-    archivos: Array<{nombre: string, base64: string}>;
+  codtipodocumento: number;
+  nombreTipoDocumento: string;
+  codtipodocumentojuridico: string;
+  nombreTipoDocumentoJuridico: string;
+  idnotario: number;
+  noNotario: string;
+  ciudadNotario: string;
+  nombreNotario: string;
+  num_escritura: string;
+  fecha: Date;
+  descripcion: string;
+  lugar: string;
+  archivos: Array<{nombre: string, base64: string}>;
 }
 export interface DataDomicilio {
-  codtiposdireccion: string;
-  idestado: number;
-  estado: string;
-  idmunicipio: number;
-  idmunicipio2: number;
-  municipio: string;
-  delegacion: string;
-  idciudad: number;
-  ciudad: string;
-  codasentamiento: number;
-  idtipoasentamiento: number;
-  asentamiento: string;
-  codtiposvia: number;
-  idtipovia: number;
-  via: string;
-  idtipolocalidad: number;
-  localidad: string;
-  cp: string;
-  nexterior: string;
-  entrecalle1: string;
-  entrecalle2: string;
-  andador: string;
-  edificio: string;
-  seccion: string;
-  entrada: string;
-  ninterior: string;
-  telefono: string;
-  adicional: string;
-  id_direccion: string;
+codtiposdireccion: string;
+idestado: number;
+estado: string;
+idmunicipio: number;
+idmunicipio2: number;
+municipio: string;
+delegacion: string;
+idciudad: number;
+ciudad: string;
+codasentamiento: number;
+idtipoasentamiento: number;
+asentamiento: string;
+codtiposvia: number;
+idtipovia: number;
+via: string;
+idtipolocalidad: number;
+localidad: string;
+cp: string;
+nexterior: string;
+entrecalle1: string;
+entrecalle2: string;
+andador: string;
+edificio: string;
+seccion: string;
+entrada: string;
+ninterior: string;
+telefono: string;
+adicional: string;
+id_direccion: string;
 }
 
 export interface DataActualizacion{
-    after_CP: string;
-    after_Col: string;
-    after_Direccion: string;
-    after_Nombre: string;
-    after_RFC: string;
-    area: string;
-    at: string;
-    before_CP: string;
-    before_Col: string;
-    before_Direccion: string;
-    before_Nombre: string;
-    before_RFC: string;
-    cuentaP: string;
-    fechaConsulta: string;
-    folio: string;
-    idpersona: string;
-    usuario: string;
-    after_cuenta: string;
-    before_cuenta: string;
+  after_CP: string;
+  after_Col: string;
+  after_Direccion: string;
+  after_Nombre: string;
+  after_RFC: string;
+  area: string;
+  at: string;
+  before_CP: string;
+  before_Col: string;
+  before_Direccion: string;
+  before_Nombre: string;
+  before_RFC: string;
+  cuentaP: string;
+  fechaConsulta: string;
+  folio: string;
+  idpersona: string;
+  usuario: string;
+  after_cuenta: string;
+  before_cuenta: string;
 }
 
-
 @Component({
-  selector: 'app-editar-contribuyente',
-  templateUrl: './editar-contribuyente.component.html',
-  styleUrls: ['./editar-contribuyente.component.css']
+  selector: 'app-editart-contribuyente',
+  templateUrl: './editart-contribuyente.component.html',
+  styleUrls: ['./editart-contribuyente.component.css']
 })
-
-export class EditarContribuyenteComponent implements OnInit {
+export class EditartContribuyenteComponent implements OnInit {
     endpoint = environment.endpoint + 'registro/';
     loading = false;
     loadingDocumentos = false;
@@ -167,6 +165,7 @@ export class EditarContribuyenteComponent implements OnInit {
     moralFormGroup: FormGroup;
     cuentaFormGroup: FormGroup;
     dataContribuyenteResultado;
+    cuentaPredial;
     query;
     idContribuyente;
     idChs;
@@ -183,7 +182,7 @@ export class EditarContribuyenteComponent implements OnInit {
     dataTipoDerecho: DataTipoDerecho[] = [];
     dataDomicilios: DataDomicilio[] = [];
     dataDomicilioEspecifico: DataDomicilio[] = [];
-    displayedColumnsDom: string[] = ['tipoDir','direccion', 'historial', 'editar'];
+    displayedColumnsDom: string[] = ['tipoDir','direccion', 'editar'];
     displayedColumnsDomInm: string[] = ['radio','direccion'];
     displayedColumnsRepdo: string[] = ['representacion','texto','caducidad','editar','eliminar'];
     displayedColumnsInm: string[] = ['inmueble','direccion','domicilio','descripcion','sujeto'];
@@ -197,6 +196,7 @@ export class EditarContribuyenteComponent implements OnInit {
     dataSourceDom = [];
     dataPaginateDom;
     endpointActualiza = environment.endpoint + 'registro/';
+    endpointSimulacion = environment.endpoint + 'simulacion/';
     isIdentificativo;
     idInmueble;
     idDomicilioFP;
@@ -272,7 +272,7 @@ export class EditarContribuyenteComponent implements OnInit {
                 Authorization: this.auth.getSession().token
             })
         };
-     }
+    }
 
     ngOnInit(): void {
         this.fisicaFormGroup = this._formBuilder.group({
@@ -310,6 +310,9 @@ export class EditarContribuyenteComponent implements OnInit {
         });
 
         this.idContribuyente = this.route.snapshot.paramMap.get('idcontribuyente');
+        this.cuentaPredial = this.route.snapshot.paramMap.get('cuenta');
+        console.log(this.route.snapshot.paramMap);
+
         this.getTipoDerecho();
         this.getDataDocumentos();
         this.getContribuyenteDatos();
@@ -321,7 +324,7 @@ export class EditarContribuyenteComponent implements OnInit {
     /** 
      * @param event detecta cuando se presiona una tecla, esta funcion sólo permite que se tecleen valores alfanuméricos, los demás son bloqueados
      */
-    keyPressAlphaNumeric(event) {
+     keyPressAlphaNumeric(event) {
         console.log(event);
         var inp = String.fromCharCode(event.keyCode);
         if (/[a-zA-Z0-9]/.test(inp)) {
@@ -659,9 +662,11 @@ export class EditarContribuyenteComponent implements OnInit {
     * Obtiene los Datos del Contribuyente
     */
     getContribuyenteDatos(){
-        this.query = '&idPersona=' + this.idContribuyente; 
+        this.query = '&idPersona=' + this.idContribuyente + '&cuentaCatastral=' + this.cuentaPredial; 
         this.loading = true;
         console.log(this.endpoint);
+        console.log("GET INFO CONTRIBUYENTE");
+        console.log(this.query);
         this.http.get(this.endpoint + 'getInfoContribuyente?' + this.query, this.httpOptions)
             .subscribe(
                 (res: any) => {
@@ -941,471 +946,9 @@ export class EditarContribuyenteComponent implements OnInit {
     }
 
     /**
-     * Genera el PDF de cambio de datos personales
-     */
-    async generatePDF() {
-
-        this.dataActualizacion.cuentaP = ((this.dataActualizacion.cuentaP) ? this.dataActualizacion.cuentaP : '');
-        let docDefinition = {
-          content: [
-            {
-                image: await this.getBase64ImageFromURL(
-                "assets/img/logo_dependencia_rcon.png"
-              ),
-              width: 450,
-              alignment: 'center',
-            }, 
-            {  
-                text: 'COMPROBANTE DE AVISO DE MODIFICACIÓN A LOS DATOS ADMINISTRATIVOS DEL PADRÓN DE CONTRIBUYENTES DEL IMPUESTO PREDIAL',  
-                fontSize: 9,  
-                alignment: 'center',  
-                color: '#000'  
-            }, 
-            {  
-                text: 'ADMINISTRACIÓN TRIBUTARIA: ' + this.dataActualizacion.at,  
-                fontSize: 9,  
-                alignment: 'left',  
-                color: '#000'  
-            }, 
-            {  
-                text: 'NUMERO DE CUENTA PREDIAL: ' + this.dataActualizacion.cuentaP,  
-                fontSize: 9,  
-                alignment: 'left',  
-                color: '#000'  
-            }, 
-            {
-                canvas: [
-                    {
-                        type: 'line',
-                        color: 'white',
-                        x1: 0,
-                        y1: 5,
-                        x2: 250,
-                        y2: 5,
-                        lineWidth: 0.5
-                    }
-                ]
-            },
-            {
-                layout: 'noBorders',
-                table: {  
-                    headerRows: 1,  
-                    widths: ['30%', '10%', '30%', '30%'],  
-                    body: [  
-                        ['', '', { text: 'ANTES', bold: true, alignment: 'right', fontSize: 9 }, { text: 'DESPUÉS', bold: true, fontSize: 9 }],  
-                        [ '', '', { text: 'Datos del contribuyente', bold: true, alignment: 'right', fontSize: 9 }, { text: 'Datos del contribuyente', bold: true, fontSize: 9 } ],
-                        [ { text: 'Nombre del contribuyente:', fontSize: 9 }, '', { text: this.dataActualizacion.before_Nombre, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_Nombre, fontSize: 9 } ],
-                        [ { text: 'RFC (para personas morales)', fontSize: 9 }, '', { text: this.dataActualizacion.before_RFC, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_RFC, fontSize: 9 } ] ,
-                    ]  
-                }  
-            },
-            {
-                canvas: [
-                    {
-                        type: 'line',
-                        x1: 525,
-                        y1: 20,
-                        x2: 150,
-                        y2: 20,
-                        lineWidth: 0.5
-                    }
-                ]
-            },
-            {  
-                layout: 'noBorders',
-                table: {  
-                    headerRows: 1,  
-                    widths: ['30%', '70%'],  
-                    body: [  
-                        ['', { text: 'NOMBRE Y FIRMA DE CONFORMIDAD DEL CONTRIBUYENTE O REPRESENTANTE LEGAL', bold: true, alignment: 'center', fontSize: 8 }],    
-                    ]  
-                }   
-            },
-            {
-                canvas: [
-                    {
-                        type: 'line',
-                        color: 'white',
-                        x1: 0,
-                        y1: 20,
-                        x2: 250,
-                        y2: 20,
-                        lineWidth: 0.5
-                    }
-                ]
-            },
-            {  
-                layout: 'noBorders',
-                table: {  
-                    headerRows: 1,  
-                    widths: ['20%', '80%'],  
-                    body: [  
-                        [{ text: 'Nombre de usuario:', fontSize: 9 }, { text: this.dataActualizacion.usuario, fontSize: 9 }],  
-                        [{ text: 'Área de consulta:', fontSize: 9 }, { text: this.dataActualizacion.area, fontSize: 9 }],    
-                        [{ text: 'Fecha de consulta:', fontSize: 9 }, { text: this.dataActualizacion.fechaConsulta, fontSize: 9 }],  
-                        [{ text: 'Folio:', fontSize: 9 }, { text: this.dataActualizacion.folio, fontSize: 9 }],    
-                    ]  
-                }  
-            },
-            {
-                canvas: [
-                    {
-                        type: 'line',
-                        color: 'white',
-                        x1: 0,
-                        y1: 10,
-                        x2: 250,
-                        y2: 10,
-                        lineWidth: 0.5
-                    }
-                ]
-            },
-            {  
-                table: {  
-                    headerRows: 1,  
-                    widths: ['100%'],  
-                    body: [  
-                        [{ text: 'DE CONFORMIDAD CON EL ÚLTIMO PÁRRAFO DEL ARTÍCULO 126 DEL CÓDIGO FISCAL PARA LA CIUDAD DE MÉXICO, LOS DATOS CATASTRALES O ADMINISTRATIVOS, CUALESQUIERA QUE ÉSTOS SEAN, SÓLO PRODUCIRÁN EFECTOS FISCALES O CATASTRALES Y NO DE PROPIEDAD.', fontSize: 9 }]    
-                    ]  
-                }  
-            },
-            {
-                canvas: [
-                    {
-                        type: 'line',
-                        color: 'white',
-                        x1: 0,
-                        y1: 10,
-                        x2: 250,
-                        y2: 10,
-                        lineWidth: 0.5
-                    }
-                ]
-            },
-            {
-                image: await this.getBase64ImageFromURL(
-                "assets/img/logo_dependencia_rcon.png"
-              ),
-              width: 450,
-              alignment: 'center',
-            }, 
-            {  
-                text: 'COMPROBANTE DE AVISO DE MODIFICACIÓN A LOS DATOS ADMINISTRATIVOS DEL PADRÓN DE CONTRIBUYENTES DEL IMPUESTO PREDIAL',  
-                fontSize: 9,  
-                alignment: 'center',  
-                color: '#000'  
-            }, 
-            {  
-                text: 'ADMINISTRACIÓN TRIBUTARIA: ' + this.dataActualizacion.at,  
-                fontSize: 9,  
-                alignment: 'left',  
-                color: '#000'  
-            }, 
-            {  
-                text: 'NUMERO DE CUENTA PREDIAL: ' + this.dataActualizacion.cuentaP,  
-                fontSize: 9,  
-                alignment: 'left',  
-                color: '#000'  
-            }, 
-            {
-                canvas: [
-                    {
-                        type: 'line',
-                        color: 'white',
-                        x1: 0,
-                        y1: 5,
-                        x2: 250,
-                        y2: 5,
-                        lineWidth: 0.5
-                    }
-                ]
-            },
-            {  
-                layout: 'noBorders',
-                table: {  
-                    headerRows: 1,  
-                    widths: ['30%', '10%', '30%', '30%'],  
-                    body: [  
-                        ['', '', { text: 'ANTES', bold: true, alignment: 'right', fontSize: 9 }, { text: 'DESPUÉS', bold: true, fontSize: 9 }],  
-                        [ '', '', { text: 'Datos del contribuyente', bold: true, alignment: 'right', fontSize: 9 }, { text: 'Datos del contribuyente', bold: true, fontSize: 9 } ],
-                        [ { text: 'Nombre del contribuyente:', fontSize: 9 }, '', { text: this.dataActualizacion.before_Nombre, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_Nombre, fontSize: 9 } ],
-                        [ { text: 'RFC (para personas morales)', fontSize: 9 }, '', { text: this.dataActualizacion.before_RFC, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_RFC, fontSize: 9 } ],
-                    ]  
-                }  
-            },
-            {
-                canvas: [
-                    {
-                        type: 'line',
-                        x1: 525,
-                        y1: 20,
-                        x2: 150,
-                        y2: 20,
-                        lineWidth: 0.5
-                    }
-                ]
-            },
-            {  
-                layout: 'noBorders',
-                table: {  
-                    headerRows: 1,  
-                    widths: ['30%', '70%'],  
-                    body: [  
-                        ['', { text: 'NOMBRE Y FIRMA DE CONFORMIDAD DEL CONTRIBUYENTE O REPRESENTANTE LEGAL', bold: true, alignment: 'center', fontSize: 8 }],    
-                    ]  
-                }   
-            },
-            {
-                canvas: [
-                    {
-                        type: 'line',
-                        color: 'white',
-                        x1: 0,
-                        y1: 20,
-                        x2: 250,
-                        y2: 20,
-                        lineWidth: 0.5
-                    }
-                ]
-            },
-            {  
-                layout: 'noBorders',
-                table: {  
-                    headerRows: 1,  
-                    widths: ['20%', '80%'],  
-                    body: [  
-                        [{ text: 'Nombre de usuario:', fontSize: 9 }, { text: this.dataActualizacion.usuario, fontSize: 9 }],  
-                        [{ text: 'Área de consulta:', fontSize: 9 }, { text: this.dataActualizacion.area, fontSize: 9 }],    
-                        [{ text: 'Fecha de consulta:', fontSize: 9 }, { text: this.dataActualizacion.fechaConsulta, fontSize: 9 }],  
-                        [{ text: 'Folio:', fontSize: 9 }, { text: this.dataActualizacion.folio, fontSize: 9 }],    
-                    ]  
-                }  
-            },
-            {
-                canvas: [
-                    {
-                        type: 'line',
-                        color: 'white',
-                        x1: 0,
-                        y1: 10,
-                        x2: 250,
-                        y2: 10,
-                        lineWidth: 0.5
-                    }
-                ]
-            },
-            {  
-                table: {  
-                    headerRows: 1,  
-                    widths: ['100%'],  
-                    body: [  
-                        [{ text: 'DE CONFORMIDAD CON EL ÚLTIMO PÁRRAFO DEL ARTÍCULO 126 DEL CÓDIGO FISCAL PARA LA CIUDAD DE MÉXICO, LOS DATOS CATASTRALES O ADMINISTRATIVOS, CUALESQUIERA QUE ÉSTOS SEAN, SÓLO PRODUCIRÁN EFECTOS FISCALES O CATASTRALES Y NO DE PROPIEDAD.', fontSize: 9 }]    
-                    ]  
-                }  
-            },
-            {
-                canvas: [
-                    {
-                        type: 'line',
-                        color: 'white',
-                        x1: 0,
-                        y1: 10,
-                        x2: 250,
-                        y2: 10,
-                        lineWidth: 0.5
-                    }
-                ]
-            },
-          ]
-        };
-    
-        pdfMake.createPdf(docDefinition).open();
-      }
-
-      /**
-      * Genera el PDF de cambio de Domicilio
-      */
-      async generatePDFDomicilio() {
-        let docDefinition = {
-          content: [
-            {
-                image: await this.getBase64ImageFromURL(
-                "assets/img/logo_dependencia_rcon.png"
-              ),
-              width: 450,
-              alignment: 'center',
-            }, 
-            {  
-                text: 'COMPROBANTE DE AVISO DE MODIFICACIÓN AL PADRÓN DE CONTRIBUYENTES DEL IMPUESTO PREDIAL',  
-                fontSize: 9,  
-                alignment: 'center',  
-                color: '#000'  
-            }, 
-            {
-                canvas: [
-                    {
-                        type: 'line',
-                        color: 'white',
-                        x1: 0,
-                        y1: 10,
-                        x2: 250,
-                        y2: 10,
-                        lineWidth: 0.5
-                    }
-                ]
-            },
-            {  
-                text: 'ADMINISTRACIÓN TRIBUTARIA: ' + this.dataActualizacion.at,  
-                fontSize: 9,  
-                alignment: 'left',  
-                color: '#000'  
-            }, 
-            {  
-                text: 'NUMERO DE CUENTA PREDIAL: ' + this.dataActualizacion.cuentaP,  
-                fontSize: 9,  
-                alignment: 'left',  
-                color: '#000'  
-            }, 
-            {
-                canvas: [
-                    {
-                        type: 'line',
-                        color: 'white',
-                        x1: 0,
-                        y1: 5,
-                        x2: 250,
-                        y2: 5,
-                        lineWidth: 0.5
-                    }
-                ]
-            },
-            {  
-                layout: 'noBorders',
-                table: {  
-                    headerRows: 1,  
-                    widths: ['30%', '10%', '30%', '30%'],  
-                    body: [  
-                        ['', '', { text: 'ANTES', bold: true, alignment: 'right', fontSize: 9 }, { text: 'DESPUÉS', bold: true, fontSize: 9 }],  
-                        [ '', '', { text: 'Datos del contribuyente', bold: true, alignment: 'right', fontSize: 9 }, { text: 'Datos del contribuyente', bold: true, fontSize: 9 } ],
-                        [ { text: 'Nombre del contribuyente:', fontSize: 9 }, '', { text: this.dataActualizacion.before_Nombre, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_Nombre, fontSize: 9 } ],
-                        [ { text: 'RFC', fontSize: 9 }, '', { text: this.dataActualizacion.before_RFC, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_RFC, fontSize: 9 } ],
-                        ['', '', { text: 'Datos Administrativos del Inmueble', bold: true, alignment: 'right', fontSize: 9 }, { text: 'Datos Administrativos del Inmueble', bold: true, fontSize: 9 }],
-                        [ { text: 'Domicilio de notificación:', fontSize: 9 }, '', { text: this.dataActualizacion.before_Direccion, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_Direccion, fontSize: 9 } ],
-                        [ { text: 'Colonia:', fontSize: 9 }, '', { text: this.dataActualizacion.before_Col, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_Col, fontSize: 9 } ],
-                        [ { text: 'C.P:', fontSize: 9 }, '', { text: this.dataActualizacion.before_CP, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_CP, fontSize: 9 } ],
-                    ]  
-                }  
-            },
-            {
-                canvas: [
-                    {
-                        type: 'line',
-                        x1: 525,
-                        y1: 20,
-                        x2: 150,
-                        y2: 20,
-                        lineWidth: 0.5
-                    }
-                ]
-            },
-            {  
-                layout: 'noBorders',
-                table: {  
-                    headerRows: 1,  
-                    widths: ['30%', '70%'],  
-                    body: [  
-                        ['', { text: 'NOMBRE Y FIRMA DE CONFORMIDAD DEL CONTRIBUYENTE O REPRESENTANTE LEGAL', bold: true, alignment: 'center', fontSize: 8 }],    
-                    ]  
-                }   
-            },
-            {
-                canvas: [
-                    {
-                        type: 'line',
-                        color: 'white',
-                        x1: 0,
-                        y1: 20,
-                        x2: 250,
-                        y2: 20,
-                        lineWidth: 0.5
-                    }
-                ]
-            },
-            {  
-                layout: 'noBorders',
-                table: {  
-                    headerRows: 1,  
-                    widths: ['20%', '80%'],  
-                    body: [  
-                        [{ text: 'Nombre de usuario:', fontSize: 9 }, { text: this.dataActualizacion.usuario, fontSize: 9 }],  
-                        [{ text: 'Área de consulta:', fontSize: 9 }, { text: this.dataActualizacion.area, fontSize: 9 }],    
-                        [{ text: 'Fecha de consulta:', fontSize: 9 }, { text: this.dataActualizacion.fechaConsulta, fontSize: 9 }],  
-                        [{ text: 'Folio:', fontSize: 9 }, { text: this.dataActualizacion.folio, fontSize: 9 }],    
-                    ]  
-                }  
-            },
-            {
-                canvas: [
-                    {
-                        type: 'line',
-                        color: 'white',
-                        x1: 0,
-                        y1: 10,
-                        x2: 250,
-                        y2: 10,
-                        lineWidth: 0.5
-                    }
-                ]
-            },
-            {  
-                layout: 'noBorders',
-                table: {  
-                    headerRows: 1,  
-                    widths: ['100%'],  
-                    body: [  
-                        [{ text: 'Contribuyente: De conformidad con el artículo 56, inciso b) párrafo segundo del Código Fiscal del Distrito Federal, los avisos que se presenten en forma extemporánea, surtirán sus efectos a partir de la fecha en que sean presentados. Asímismo, se le recuerda que, conforme con el artículo 73, fracción VII, las autoridades competentes a fin de cerciorarse del cumplimiento de las disposiciones que rigen la materia y comprobar infracciones a las mismas, están facultadas para realizar la verificación física, clasificación, valuación o comprobación de toda clase de bienes relacionados con las obligaciones fiscales establecidas en el mencionado Código.', fontSize: 8, alignment: "justify" }]    
-                    ]  
-                }  
-            },
-          ]
-        };
-    
-        pdfMake.createPdf(docDefinition).open();
-      }
-
-      /**
-     * Convierte la imagen para que pueda ser visualizada en el PDF
-     */
-      getBase64ImageFromURL(url) {
-        return new Promise((resolve, reject) => {
-          var img = new Image();
-          img.setAttribute("crossOrigin", "anonymous");
-    
-          img.onload = () => {
-            var canvas = document.createElement("canvas");
-            canvas.width = img.width;
-            canvas.height = img.height;
-    
-            var ctx = canvas.getContext("2d");
-            ctx.drawImage(img, 0, 0);
-    
-            var dataURL = canvas.toDataURL("image/png");
-    
-            resolve(dataURL);
-          };
-    
-          img.onerror = error => {
-            reject(error);
-          };
-    
-          img.src = url;
-        });
-      }
-    
-    /**
      * Obtiene los domicilios registrados de la sociedad domicilios particulares y para recibir notificaciones.
      */
-    getDomicilioContribuyente(){
+     getDomicilioContribuyente(){
         this.loadingDomicilios = true;
         this.loadingInmuebles = true;
         let metodo = 'getDireccionesContribuyente';
@@ -1414,6 +957,37 @@ export class EditarContribuyenteComponent implements OnInit {
                 (res: any) => {
                     this.loadingDomicilios = false;
                     //this.dataSource1 = res.filter(element => element.CODTIPOSDIRECCION !== "N");
+                    this.dataSource1 = res;
+                    this.dataSource2 = res;
+                    this.total1 = this.dataSource1.length;
+                    this.total2 = this.dataSource2.length;
+                    this.dataPaginate1 = this.paginate(this.dataSource1, 15, this.pagina1);
+                    this.dataPaginate2 = this.paginate(this.dataSource2, 15, this.pagina2);
+                    this.getidInmuebles();
+                },
+                (error) => {
+                    this.loadingDomicilios = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
+
+    /**
+     * Obtiene los domicilios registrados de la simulaciónde la sociedad domicilios particulares y para recibir notificaciones.
+     */
+    getDomicilioContribuyenteSimula(){
+        console.log("ACÁ SIMULACIÓN");
+        this.loadingDomicilios = true;
+        this.loadingInmuebles = true;
+        let metodo = 'getDireccionesContribuyente';
+        this.http.get(this.endpointSimulacion + metodo + '?idPersona='+ this.idContribuyente, this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loadingDomicilios = false;
                     this.dataSource1 = res;
                     this.dataSource2 = res;
                     this.total1 = this.dataSource1.length;
@@ -1622,7 +1196,7 @@ export class EditarContribuyenteComponent implements OnInit {
      */
     addDomicilio(i = -1, dataDomicilio = null): void {
         let codtiposdireccion = '';
-        const dialogRef = this.dialog.open(DialogDomicilioContribuyente, {
+        const dialogRef = this.dialog.open(DialogDomicilioContribuyenteT, {
             width: '700px',
             data: {dataDomicilio:dataDomicilio, idContribuyente: this.idContribuyente, codtiposdireccion: codtiposdireccion},
         });
@@ -1668,7 +1242,7 @@ export class EditarContribuyenteComponent implements OnInit {
      */
     addDomicilioBoleta(i = -1, dataDomicilio = null): void {
         let codtiposdireccion = 'N';
-        const dialogRef = this.dialog.open(DialogDomicilioContribuyente, {
+        const dialogRef = this.dialog.open(DialogDomicilioContribuyenteT, {
             width: '700px',
             data: {dataDomicilio:dataDomicilio, idContribuyente: this.idContribuyente, codtiposdireccion: codtiposdireccion},
         });
@@ -1713,7 +1287,7 @@ export class EditarContribuyenteComponent implements OnInit {
      * @param dataDomicilioEspecifico Valor que se enviará para la obtención del registro a editar.
      */
     editDomicilio(dataDomicilioEspecifico): void {
-        const dialogRef = this.dialog.open(DialogDomicilioContribuyente, {
+        const dialogRef = this.dialog.open(DialogDomicilioContribuyenteT, {
             width: '700px',
             data: {dataDomicilioEspecifico:dataDomicilioEspecifico, idContribuyente: this.idContribuyente},
         });
@@ -1749,7 +1323,7 @@ export class EditarContribuyenteComponent implements OnInit {
                 this.actualizado = false;
                 this.loadingDomicilios = true;
                 setTimeout (() => {
-                    this.getDomicilioContribuyente();
+                    this.getDomicilioContribuyenteSimula();
                 }, 1500);
             }
         });
@@ -1761,7 +1335,7 @@ export class EditarContribuyenteComponent implements OnInit {
      */
     editDomicilioBoleta(dataDomicilioEspecifico): void {
         let codtiposdireccion = 'N';
-        const dialogRef = this.dialog.open(DialogDomicilioContribuyente, {
+        const dialogRef = this.dialog.open(DialogDomicilioContribuyenteT, {
             width: '700px',
             data: {dataDomicilioEspecifico:dataDomicilioEspecifico, idContribuyente: this.idContribuyente, codtiposdireccion: codtiposdireccion},
         });
@@ -1805,7 +1379,7 @@ export class EditarContribuyenteComponent implements OnInit {
      * @param idDireccion Valor que se enviará para la obtención de los movimientos sobre ese domicilio
      */
     viewHistoricoDomicilio(idDireccion): void {
-        const dialogRef = this.dialog.open(DialogDomicilioHistoricoContribuyente, {
+        const dialogRef = this.dialog.open(DialogDomicilioHistoricoContribuyenteT, {
             width: '700px',
             data: {idDireccion},
         });
@@ -1818,7 +1392,7 @@ export class EditarContribuyenteComponent implements OnInit {
      * @param idPersona Valor que se enviará para la obtención de los movimientos sobre esa persona
      */
     viewHistoricoDatosPersonales(idPersona): void {
-        const dialogRef = this.dialog.open(DialogPersonalesHistoricoContribuyente, {
+        const dialogRef = this.dialog.open(DialogPersonalesHistoricoContribuyenteT, {
             width: '700px',
             data: {idPersona},
         });
@@ -1832,7 +1406,7 @@ export class EditarContribuyenteComponent implements OnInit {
      * @param dataRepresentante Arreglo de los datos de la representación seleccionada
      */
     addRepresentante(i = -1, dataRepresentante = null): void {
-        const dialogRef = this.dialog.open(DialogRepresentacionC, {
+        const dialogRef = this.dialog.open(DialogRepresentacionCT, {
             width: '700px',
             data: {dataRepresentante : dataRepresentante,
                     datosPerito : this.contribuyente,
@@ -1854,7 +1428,7 @@ export class EditarContribuyenteComponent implements OnInit {
      * @param dataRepresentante Arreglo de los datos de la representación seleccionada
      */
     addRepresentado(i = -1, dataRepresentante = null): void {
-        const dialogRef = this.dialog.open(DialogRepresentadoC, {
+        const dialogRef = this.dialog.open(DialogRepresentadoCT, {
             width: '700px',
             data: {dataRepresentante : dataRepresentante,
                     datosPerito: this.contribuyente,
@@ -2008,7 +1582,7 @@ export class EditarContribuyenteComponent implements OnInit {
      * Abre el dialogo que nos mostrará el historial de las representaciones.
      */
     historialRepresentacion(){
-        const dialogRef = this.dialog.open(DialogHistorialRepC, {
+        const dialogRef = this.dialog.open(DialogHistorialRepCT, {
             width: '700px',
             data: this.idContribuyente,
         });
@@ -2021,7 +1595,6 @@ export class EditarContribuyenteComponent implements OnInit {
         });
     }
 }
-
 
 ///////////////DOMICILIO////////////////
 export interface DataMovimientoDomicilio {
@@ -2047,10 +1620,11 @@ export interface DataMovimientoDomicilio {
 @Component({
   selector: 'app-dialog-domicilio-contribuyente',
   templateUrl: 'app-dialog-domicilio-contribuyente.html',
-  styleUrls: ['./editar-contribuyente.component.css']
+  styleUrls: ['./editart-contribuyente.component.css']
 })
-export class DialogDomicilioContribuyente {
+export class DialogDomicilioContribuyenteT {
   endpointCatalogos = environment.endpoint + 'registro/';
+  endpointSimulacion = environment.endpoint + 'simulacion/';
   //loadingTiposDireccion = false;
   loadingEstados = false;
   loadingMunicipios = false;
@@ -2110,7 +1684,7 @@ export class DialogDomicilioContribuyente {
         private snackBar: MatSnackBar,
         private http: HttpClient,
         private _formBuilder: FormBuilder,
-        public dialogRef: MatDialogRef<DialogDomicilioContribuyente>,
+        public dialogRef: MatDialogRef<DialogDomicilioContribuyenteT>,
         public dialog: MatDialog,
         @Inject(MAT_DIALOG_DATA) public data: any) {
             console.log(data);
@@ -2525,7 +2099,7 @@ export class DialogDomicilioContribuyente {
         console.log('Actualizacion de Direcciones...');
         console.log(query);
     
-        this.http.post(this.endpointCatalogos + query, '', this.httpOptions)
+        this.http.post(this.endpointSimulacion + query, '', this.httpOptions)
             .subscribe(
             
                 (res: any) => {
@@ -2632,7 +2206,7 @@ export class DialogDomicilioContribuyente {
         this.domicilioFormGroup.controls['codtiposvia'].setValue('');
 
         this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
-        const dialogRef = this.dialog.open(DialogMunicipiosContribuyente, {
+        const dialogRef = this.dialog.open(DialogMunicipiosContribuyenteT, {
             width: '700px',
             data: {codEstado : this.dataDomicilio.idestado
             }
@@ -2662,7 +2236,7 @@ export class DialogDomicilioContribuyente {
         this.domicilioFormGroup.controls['codtiposvia'].setValue('');
 
         this.dataDomicilio.idmunicipio2 = this.domicilioFormGroup.value.idmunicipio2;
-        const dialogRef = this.dialog.open(DialogCiudadContribuyente, {
+        const dialogRef = this.dialog.open(DialogCiudadContribuyenteT, {
             width: '700px',
             data: {codEstado : this.dataDomicilio.idestado,
                     codMunicipio : this.dataDomicilio.idmunicipio2
@@ -2692,7 +2266,7 @@ export class DialogDomicilioContribuyente {
         this.dataDomicilio.idmunicipio = this.domicilioFormGroup.value.idmunicipio;
         this.dataDomicilio.idmunicipio2 = this.domicilioFormGroup.value.idmunicipio2;
         this.dataDomicilio.idciudad = (this.domicilioFormGroup.value.idciudad) ? this.domicilioFormGroup.value.idciudad : null;
-        const dialogRef = this.dialog.open(DialogAsentamientoContribuyente, {
+        const dialogRef = this.dialog.open(DialogAsentamientoContribuyenteT, {
             width: '700px',
             data: {codEstado : this.dataDomicilio.idestado,
                     codMunicipio : this.dataDomicilio.idmunicipio,
@@ -2718,7 +2292,7 @@ export class DialogDomicilioContribuyente {
      */
     getVia(){
         this.dataDomicilio.codasentamiento =  this.domicilioFormGroup.value.codasentamiento;
-        const dialogRef = this.dialog.open(DialogViaContribuyente, {
+        const dialogRef = this.dialog.open(DialogViaContribuyenteT, {
             width: '700px',
             data: {codEstado : this.dataDomicilio.idestado,
                     codAsentamiento : this.dataDomicilio.codasentamiento
@@ -2738,105 +2312,105 @@ export class DialogDomicilioContribuyente {
 
 ///////////////MUNICIPIOS//////////////////
 export interface DataMunicipios{
-  codmunicipio: number;
-  codestado: number;
-  municipio: string;
-}
-@Component({
-  selector: 'app-dialog-municipios-contribuyente',
-  templateUrl: 'app-dialog-municipios-contribuyente.html',
-  styleUrls: ['./editar-contribuyente.component.css']
-})
-export class DialogMunicipiosContribuyente {
-  endpoint = environment.endpoint + 'registro/';
-  displayedColumns: string[] = ['coloniaAsentamiento', 'select'];
-  pagina = 1;
-  total = 0;
-  pageSize = 15;
-  optionColonia;
-  loadingBuscaMun = false;
-  dataSource = [];
-  dataPaginate;
-  httpOptions;
-  buscaMunicipios;
-  dataMunicipios: DataMunicipios = {} as DataMunicipios;
-  @ViewChild('paginator') paginator: MatPaginator;
-
-  constructor(
-      private auth: AuthService,
-      private http: HttpClient,
-      private _formBuilder: FormBuilder,
-      public dialog: MatDialog,
-      public dialogRef: MatDialogRef<DialogMunicipiosContribuyente>,
-      @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
-      dialogRef.disableClose = true;
-      this.httpOptions = {
-          headers: new HttpHeaders({
-              'Content-Type': 'application/json',
-              Authorization: this.auth.getSession().token
-          })
-      };
-      this.obtenerMunicipios();
-      console.log(data);
+    codmunicipio: number;
+    codestado: number;
+    municipio: string;
   }
-
-    /**
-     * Limpia los registros de la búsqueda especifica realizada y llama al metodo para obtener todos los municipios
-     */
-    cleanMunicipio(){
-        this.pagina = 1;
-        this.total = 0;
-        this.dataSource = [];
-        this.loadingBuscaMun = false;
-        this.dataPaginate;
-        this.buscaMunicipios = null;
+  @Component({
+    selector: 'app-dialog-municipios-contribuyente',
+    templateUrl: 'app-dialog-municipios-contribuyente.html',
+    styleUrls: ['./editart-contribuyente.component.css']
+  })
+  export class DialogMunicipiosContribuyenteT {
+    endpoint = environment.endpoint + 'registro/';
+    displayedColumns: string[] = ['coloniaAsentamiento', 'select'];
+    pagina = 1;
+    total = 0;
+    pageSize = 15;
+    optionColonia;
+    loadingBuscaMun = false;
+    dataSource = [];
+    dataPaginate;
+    httpOptions;
+    buscaMunicipios;
+    dataMunicipios: DataMunicipios = {} as DataMunicipios;
+    @ViewChild('paginator') paginator: MatPaginator;
+  
+    constructor(
+        private auth: AuthService,
+        private http: HttpClient,
+        private _formBuilder: FormBuilder,
+        public dialog: MatDialog,
+        public dialogRef: MatDialogRef<DialogMunicipiosContribuyenteT>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) {
+        dialogRef.disableClose = true;
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                Authorization: this.auth.getSession().token
+            })
+        };
         this.obtenerMunicipios();
-    }
-
-    /**
-     * Obtiene los municipios de acuerdo al estado seleccionado.
-     */
-  obtenerMunicipios(){
-      this.loadingBuscaMun = true;
-      let criterio = '';
-      let query = '';
-
-      if(this.data.codEstado != 9){
-          criterio = criterio + 'getMunicipiosByEstado';
-          query = query + 'codEstado=' + this.data.codEstado;
-      }else{
-          criterio = '';
-          query = '';
-      }
-
-      console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
-      this.loadingBuscaMun = true;
-      this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
-          .subscribe(
-              (res: any) => {
-                  this.loadingBuscaMun = false;
-                  this.dataSource = res;
-                  this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-                  this.total = this.dataSource.length; 
-                  this.paginator.pageIndex = 0;
-                  console.log(this.dataSource);
-              },
-              (error) => {
-                  this.loadingBuscaMun = false;
-              }
-          );
-  }
-
-    /**
-     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
-     * @param evt Nos da la referencia de la pagina en la que se encuentra
-     */
-    paginado(evt): void{
-        this.pagina = evt.pageIndex + 1;
-        this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+        console.log(data);
     }
   
+      /**
+       * Limpia los registros de la búsqueda especifica realizada y llama al metodo para obtener todos los municipios
+       */
+      cleanMunicipio(){
+          this.pagina = 1;
+          this.total = 0;
+          this.dataSource = [];
+          this.loadingBuscaMun = false;
+          this.dataPaginate;
+          this.buscaMunicipios = null;
+          this.obtenerMunicipios();
+      }
+  
+      /**
+       * Obtiene los municipios de acuerdo al estado seleccionado.
+       */
+    obtenerMunicipios(){
+        this.loadingBuscaMun = true;
+        let criterio = '';
+        let query = '';
+  
+        if(this.data.codEstado != 9){
+            criterio = criterio + 'getMunicipiosByEstado';
+            query = query + 'codEstado=' + this.data.codEstado;
+        }else{
+            criterio = '';
+            query = '';
+        }
+  
+        console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
+        this.loadingBuscaMun = true;
+        this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loadingBuscaMun = false;
+                    this.dataSource = res;
+                    this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                    this.total = this.dataSource.length; 
+                    this.paginator.pageIndex = 0;
+                    console.log(this.dataSource);
+                },
+                (error) => {
+                    this.loadingBuscaMun = false;
+                }
+            );
+    }
+  
+      /**
+       * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+       * @param evt Nos da la referencia de la pagina en la que se encuentra
+       */
+      paginado(evt): void{
+          this.pagina = evt.pageIndex + 1;
+          this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+      }
+    
     /**
      * 
      * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
@@ -2896,506 +2470,506 @@ export class DialogMunicipiosContribuyente {
 
 ///////////////CIUDAD//////////////////
 export interface DataCiudad{
-  codciudad: number;
-  codestado: number;
-  ciudad: string;
-}
-@Component({
-  selector: 'app-dialog-ciudad-contribuyente',
-  templateUrl: 'app-dialog-ciudad-contribuyente.html',
-  styleUrls: ['./editar-contribuyente.component.css']
-})
-export class DialogCiudadContribuyente {
-  endpoint = environment.endpoint + 'registro/';
-  displayedColumns: string[] = ['ciudad', 'select'];
-  pagina = 1;
-  total = 0;
-  pageSize = 15;
-  optionColonia;
-  loadingBuscaCiudad = false;
-  dataSource = [];
-  dataPaginate;
-  httpOptions;
-  buscaCiudad;
-  dataCiudad: DataCiudad = {} as DataCiudad;
-  @ViewChild('paginator') paginator: MatPaginator;
-
-  constructor(
-      private auth: AuthService,
-      private http: HttpClient,
-      private _formBuilder: FormBuilder,
-      public dialog: MatDialog,
-      public dialogRef: MatDialogRef<DialogCiudadContribuyente>,
-      @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
-      dialogRef.disableClose = true;
-      this.httpOptions = {
-          headers: new HttpHeaders({
-              'Content-Type': 'application/json',
-              Authorization: this.auth.getSession().token
-          })
-      };
-      this.obtenerCiudad();
-      console.log(data);
+    codciudad: number;
+    codestado: number;
+    ciudad: string;
   }
-
-    /**
-     * Limpia la búsqueda especifica realizada y llama al método que obtiene todos los registros previamente mostrados.
-     */
-    cleanCiudad(){
-        this.pagina = 1;
-        this.total = 0;
-        this.dataSource = [];
-        this.loadingBuscaCiudad = false;
-        this.dataPaginate;
-        this.buscaCiudad = null;
+  @Component({
+    selector: 'app-dialog-ciudad-contribuyente',
+    templateUrl: 'app-dialog-ciudad-contribuyente.html',
+    styleUrls: ['./editart-contribuyente.component.css']
+  })
+  export class DialogCiudadContribuyenteT {
+    endpoint = environment.endpoint + 'registro/';
+    displayedColumns: string[] = ['ciudad', 'select'];
+    pagina = 1;
+    total = 0;
+    pageSize = 15;
+    optionColonia;
+    loadingBuscaCiudad = false;
+    dataSource = [];
+    dataPaginate;
+    httpOptions;
+    buscaCiudad;
+    dataCiudad: DataCiudad = {} as DataCiudad;
+    @ViewChild('paginator') paginator: MatPaginator;
+  
+    constructor(
+        private auth: AuthService,
+        private http: HttpClient,
+        private _formBuilder: FormBuilder,
+        public dialog: MatDialog,
+        public dialogRef: MatDialogRef<DialogCiudadContribuyenteT>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) {
+        dialogRef.disableClose = true;
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                Authorization: this.auth.getSession().token
+            })
+        };
         this.obtenerCiudad();
-    }
-
-    /**
-     * Obtiene las localidades de acuerdo al estado y municipio seleccionado previamente.
-     */
-    obtenerCiudad(){
-        this.loadingBuscaCiudad = true;
-        let criterio = '';
-        let query = '';
-
-        if(this.data.codEstado != 9){
-            criterio = criterio + 'getCiudadesByNombre';
-            query = query + 'codEstado=' + this.data.codEstado + '&codMunicipio=' + this.data.codMunicipio;
-        }else{
-            criterio = '';
-            query = '';
-        }
-
-        if(this.buscaCiudad){
-            query = query + '&nombre=' + this.buscaCiudad;
-        }
-
-        console.log('CIUDAD!!!!!'+this.endpoint + '?' + query);
-        this.loadingBuscaCiudad = true;
-        this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
-            .subscribe(
-                (res: any) => {
-                    this.loadingBuscaCiudad = false;
-                    this.dataSource = res;
-                    this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-                    this.total = this.dataSource.length; 
-                    this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
-                },
-                (error) => {
-                    this.loadingBuscaCiudad = false;
-                }
-            );
-    }
-
-    /**
-     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
-     * @param evt Nos da la referencia de la pagina en la que se encuentra
-     */
-    paginado(evt): void{
-        this.pagina = evt.pageIndex + 1;
-        this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+        console.log(data);
     }
   
-    /**
-     * Regresa la posición del paginado de acuerdo a los parámetro enviados
-     * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
-     * @param page_size Valor de la cantidad de registros que se pintaran por página.
-     * @param page_number Valor de la página en la cual se encuentra el paginado.
-     * @returns 
-     */
-    paginate(array, page_size, page_number) {
-        return array.slice((page_number - 1) * page_size, page_number * page_size);
-    }
-
-    /**
-     * Obtiene el arreglo de la ciudad seleccionada y almacena los datos para utilizarlos en el registro del domicilio.
-     * @param element Arreglo de los datos del registro seleccionado
-     */
-    selectCiudad(element){
-        console.log(element);
-        this.dataCiudad.ciudad = element.CIUDAD;
-        this.dataCiudad.codciudad = element.CODCIUDAD;
-        this.dataCiudad.codestado = element.CODESTADO;
-    }
-
-  // obtenerAsentamientoPorNombre(){
-  //     this.loadingBuscaCiudad = true;
-  //     let criterio = '';
-  //     let query = '';
-
-  //     if(this.data.codEstado != 9){
-  //         criterio = criterio + 'getMunicipiosByEstado';
-  //         query = query + 'codEstado=' + this.data.codEstado;
-  //     }else{
-  //         criterio = '';
-  //         query = '';
-  //     }
-
-  //     console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
-  //     this.loadingBuscaCiudad = true;
-  //     this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
-  //         .subscribe(
-  //             (res: any) => {
-  //                 this.loadingBuscaCiudad = false;
-  //                 this.dataSource = res;
-  //                 this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-  //                 this.total = this.dataSource.length; 
-  //                 this.paginator.pageIndex = 0;
-  //                 console.log(this.dataSource);
-  //             },
-  //             (error) => {
-  //                 this.loadingBuscaCiudad = false;
-  //             }
-  //         );
-  // }
+      /**
+       * Limpia la búsqueda especifica realizada y llama al método que obtiene todos los registros previamente mostrados.
+       */
+      cleanCiudad(){
+          this.pagina = 1;
+          this.total = 0;
+          this.dataSource = [];
+          this.loadingBuscaCiudad = false;
+          this.dataPaginate;
+          this.buscaCiudad = null;
+          this.obtenerCiudad();
+      }
+  
+      /**
+       * Obtiene las localidades de acuerdo al estado y municipio seleccionado previamente.
+       */
+      obtenerCiudad(){
+          this.loadingBuscaCiudad = true;
+          let criterio = '';
+          let query = '';
+  
+          if(this.data.codEstado != 9){
+              criterio = criterio + 'getCiudadesByNombre';
+              query = query + 'codEstado=' + this.data.codEstado + '&codMunicipio=' + this.data.codMunicipio;
+          }else{
+              criterio = '';
+              query = '';
+          }
+  
+          if(this.buscaCiudad){
+              query = query + '&nombre=' + this.buscaCiudad;
+          }
+  
+          console.log('CIUDAD!!!!!'+this.endpoint + '?' + query);
+          this.loadingBuscaCiudad = true;
+          this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
+              .subscribe(
+                  (res: any) => {
+                      this.loadingBuscaCiudad = false;
+                      this.dataSource = res;
+                      this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                      this.total = this.dataSource.length; 
+                      this.paginator.pageIndex = 0;
+                      console.log(this.dataSource);
+                  },
+                  (error) => {
+                      this.loadingBuscaCiudad = false;
+                  }
+              );
+      }
+  
+      /**
+       * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+       * @param evt Nos da la referencia de la pagina en la que se encuentra
+       */
+      paginado(evt): void{
+          this.pagina = evt.pageIndex + 1;
+          this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+      }
+    
+      /**
+       * Regresa la posición del paginado de acuerdo a los parámetro enviados
+       * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+       * @param page_size Valor de la cantidad de registros que se pintaran por página.
+       * @param page_number Valor de la página en la cual se encuentra el paginado.
+       * @returns 
+       */
+      paginate(array, page_size, page_number) {
+          return array.slice((page_number - 1) * page_size, page_number * page_size);
+      }
+  
+      /**
+       * Obtiene el arreglo de la ciudad seleccionada y almacena los datos para utilizarlos en el registro del domicilio.
+       * @param element Arreglo de los datos del registro seleccionado
+       */
+      selectCiudad(element){
+          console.log(element);
+          this.dataCiudad.ciudad = element.CIUDAD;
+          this.dataCiudad.codciudad = element.CODCIUDAD;
+          this.dataCiudad.codestado = element.CODESTADO;
+      }
+  
+    // obtenerAsentamientoPorNombre(){
+    //     this.loadingBuscaCiudad = true;
+    //     let criterio = '';
+    //     let query = '';
+  
+    //     if(this.data.codEstado != 9){
+    //         criterio = criterio + 'getMunicipiosByEstado';
+    //         query = query + 'codEstado=' + this.data.codEstado;
+    //     }else{
+    //         criterio = '';
+    //         query = '';
+    //     }
+  
+    //     console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
+    //     this.loadingBuscaCiudad = true;
+    //     this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
+    //         .subscribe(
+    //             (res: any) => {
+    //                 this.loadingBuscaCiudad = false;
+    //                 this.dataSource = res;
+    //                 this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+    //                 this.total = this.dataSource.length; 
+    //                 this.paginator.pageIndex = 0;
+    //                 console.log(this.dataSource);
+    //             },
+    //             (error) => {
+    //                 this.loadingBuscaCiudad = false;
+    //             }
+    //         );
+    // }
 }
 
 ///////////////ASENTAMIENTO//////////////////
 export interface DataAsentamiento{
-  codasentamiento: string;
-  asentamiento: string;
-  codigopostal: string;
-  codtiposasentamiento: string;
-}
-@Component({
-  selector: 'app-dialog-asentamiento-contribuyente',
-  templateUrl: 'app-dialog-asentamiento-contribuyente.html',
-  styleUrls: ['./editar-contribuyente.component.css']
-})
-export class DialogAsentamientoContribuyente {
-  endpoint = environment.endpoint + 'registro/';
-  displayedColumns: string[] = ['coloniaAsentamiento', 'select'];
-  pagina = 1;
-  total = 0;
-  pageSize = 15;
-  optionColonia;
-  loading = false;
-  dataSource = [];
-  dataPaginate;
-  httpOptions;
-  buscaAsentamiento;
-  dataAsentamiento: DataAsentamiento = {} as DataAsentamiento;
-  @ViewChild('paginator') paginator: MatPaginator;
-
-  constructor(
-      private auth: AuthService,
-      private http: HttpClient,
-      private _formBuilder: FormBuilder,
-      public dialog: MatDialog,
-      public dialogRef: MatDialogRef<DialogAsentamientoContribuyente>,
-      @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
-      dialogRef.disableClose = true;
-      this.httpOptions = {
-          headers: new HttpHeaders({
-              'Content-Type': 'application/json',
-              Authorization: this.auth.getSession().token
-          })
-      };
-      this.obtenerAsentamiento();
-      console.log(data);
+    codasentamiento: string;
+    asentamiento: string;
+    codigopostal: string;
+    codtiposasentamiento: string;
   }
-
-    /**
-     * Limpia la búsqueda especifica realizada y llama al método que obtiene todos los registros previamente mostrados.
-     */
-    cleanAsentamiento(){
-        this.pagina = 1;
-        this.total = 0;
-        this.dataSource = [];
-        this.loading = false;
-        this.dataPaginate;
-        this.buscaAsentamiento = null;
+  @Component({
+    selector: 'app-dialog-asentamiento-contribuyente',
+    templateUrl: 'app-dialog-asentamiento-contribuyente.html',
+    styleUrls: ['./editart-contribuyente.component.css']
+  })
+  export class DialogAsentamientoContribuyenteT {
+    endpoint = environment.endpoint + 'registro/';
+    displayedColumns: string[] = ['coloniaAsentamiento', 'select'];
+    pagina = 1;
+    total = 0;
+    pageSize = 15;
+    optionColonia;
+    loading = false;
+    dataSource = [];
+    dataPaginate;
+    httpOptions;
+    buscaAsentamiento;
+    dataAsentamiento: DataAsentamiento = {} as DataAsentamiento;
+    @ViewChild('paginator') paginator: MatPaginator;
+  
+    constructor(
+        private auth: AuthService,
+        private http: HttpClient,
+        private _formBuilder: FormBuilder,
+        public dialog: MatDialog,
+        public dialogRef: MatDialogRef<DialogAsentamientoContribuyenteT>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) {
+        dialogRef.disableClose = true;
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                Authorization: this.auth.getSession().token
+            })
+        };
         this.obtenerAsentamiento();
-    }
-
-    /**
-     * Obtiene el asenteamiento de acuerdo al estado, municipio o ciudad.
-     */
-    obtenerAsentamiento(){
-        this.loading = true;
-        let criterio = '';
-        let query = '';
-
-        if(this.data.codEstado == 9){
-            criterio = criterio + 'getColAsentByDelegacion';
-            query = query + 'idDelegacion=' + this.data.codMunicipio;
-        }else{
-            criterio = criterio + 'getAsentamientoByEstado';
-            query = 'codEstado=' + this.data.codEstado + '&codMunicipio=' + this.data.codMunicipio2;
-            query = (this.data.codCiudad) ? query + '&codCiudad=' + this.data.codCiudad : query + '&codCiudad=';
-        }
-
-        console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
-        this.loading = true;
-        this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
-            .subscribe(
-                (res: any) => {
-                    this.loading = false;
-                    this.dataSource = res;
-                    this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-                    this.total = this.dataSource.length; 
-                    this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
-                },
-                (error) => {
-                    this.loading = false;
-                }
-            );
-    }
-
-    /**
-     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
-     * @param evt Nos da la referencia de la pagina en la que se encuentra
-     */
-    paginado(evt): void{
-        this.pagina = evt.pageIndex + 1;
-        this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+        console.log(data);
     }
   
-    /**
-     * Regresa la posición del paginado de acuerdo a los parámetro enviados
-     * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
-     * @param page_size Valor de la cantidad de registros que se pintaran por página.
-     * @param page_number Valor de la página en la cual se encuentra el paginado.
-     * @returns 
-     */
-    paginate(array, page_size, page_number) {
-        return array.slice((page_number - 1) * page_size, page_number * page_size);
-    }
-
-    /**
-     * Se almacenan los valores del registro seleccionado.
-     * @param element Arreglo de los datos del asentamiento.
-     */
-    selectAsentamiento(element){
-        console.log(element);
-        if(element.IDDELEGACION){
-            this.dataAsentamiento.codasentamiento = element.CODIGO;
-            this.dataAsentamiento.asentamiento = element.DESCRIPCION;
-            this.dataAsentamiento.codigopostal = element.CODIGOPOSTAL;
-            this.dataAsentamiento.codtiposasentamiento = element.CODTIPOSASENTAMIENTO;
-        }else if(element.codasentamiento){
-            this.dataAsentamiento.codasentamiento = element.codasentamiento;
-            this.dataAsentamiento.asentamiento = element.asentamiento;
-            this.dataAsentamiento.codigopostal = element.codigopostal;
-            this.dataAsentamiento.codtiposasentamiento = element.codtiposasentamiento;
-        }else{
-            this.dataAsentamiento.codasentamiento = element.CODASENTAMIENTO;
-            this.dataAsentamiento.asentamiento = element.ASENTAMIENTO;
-            this.dataAsentamiento.codigopostal = element.CODIGOPOSTAL;
-            this.dataAsentamiento.codtiposasentamiento = element.CODTIPOSASENTAMIENTO;
-        }
-    }
-
-    /**
-     * Obtiene el asenteamiento de acuerdo al estado, municipio o ciudad.
-     */
-     obtenerAsentamientoByNombre(){
-        this.loading = true;
-        let criterio = '';
-        let query = '';
+      /**
+       * Limpia la búsqueda especifica realizada y llama al método que obtiene todos los registros previamente mostrados.
+       */
+      cleanAsentamiento(){
+          this.pagina = 1;
+          this.total = 0;
+          this.dataSource = [];
+          this.loading = false;
+          this.dataPaginate;
+          this.buscaAsentamiento = null;
+          this.obtenerAsentamiento();
+      }
   
-        if(this.data.codEstado == 9){
-            criterio = criterio + 'getColAsentByDelegacion';
-            query = query + 'idDelegacion=' + this.data.codMunicipio + '&nombre=' + this.buscaAsentamiento;
-        }else{
-            criterio = 'getAsentamientoByNombre';
-            query = query + 'nombre=' + this.buscaAsentamiento + '&codEstado=' + this.data.codEstado + '&codMunicipio=' + this.data.codMunicipio2;
-            query = (this.data.codCiudad) ? query + '&codCiudad=' + this.data.codCiudad : query + '&codCiudad=';
-        }
-        
-        console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
-        this.loading = true;
-        this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
-            .subscribe(
-                (res: any) => {
-                    this.loading = false;
-                    this.dataSource = res;
-                    this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-                    this.total = this.dataSource.length; 
-                    this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
-                },
-                (error) => {
-                    this.loading = false;
-                }
-            );
-    }
+      /**
+       * Obtiene el asenteamiento de acuerdo al estado, municipio o ciudad.
+       */
+      obtenerAsentamiento(){
+          this.loading = true;
+          let criterio = '';
+          let query = '';
+  
+          if(this.data.codEstado == 9){
+              criterio = criterio + 'getColAsentByDelegacion';
+              query = query + 'idDelegacion=' + this.data.codMunicipio;
+          }else{
+              criterio = criterio + 'getAsentamientoByEstado';
+              query = 'codEstado=' + this.data.codEstado + '&codMunicipio=' + this.data.codMunicipio2;
+              query = (this.data.codCiudad) ? query + '&codCiudad=' + this.data.codCiudad : query + '&codCiudad=';
+          }
+  
+          console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
+          this.loading = true;
+          this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
+              .subscribe(
+                  (res: any) => {
+                      this.loading = false;
+                      this.dataSource = res;
+                      this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                      this.total = this.dataSource.length; 
+                      this.paginator.pageIndex = 0;
+                      console.log(this.dataSource);
+                  },
+                  (error) => {
+                      this.loading = false;
+                  }
+              );
+      }
+  
+      /**
+       * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+       * @param evt Nos da la referencia de la pagina en la que se encuentra
+       */
+      paginado(evt): void{
+          this.pagina = evt.pageIndex + 1;
+          this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+      }
+    
+      /**
+       * Regresa la posición del paginado de acuerdo a los parámetro enviados
+       * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+       * @param page_size Valor de la cantidad de registros que se pintaran por página.
+       * @param page_number Valor de la página en la cual se encuentra el paginado.
+       * @returns 
+       */
+      paginate(array, page_size, page_number) {
+          return array.slice((page_number - 1) * page_size, page_number * page_size);
+      }
+  
+      /**
+       * Se almacenan los valores del registro seleccionado.
+       * @param element Arreglo de los datos del asentamiento.
+       */
+      selectAsentamiento(element){
+          console.log(element);
+          if(element.IDDELEGACION){
+              this.dataAsentamiento.codasentamiento = element.CODIGO;
+              this.dataAsentamiento.asentamiento = element.DESCRIPCION;
+              this.dataAsentamiento.codigopostal = element.CODIGOPOSTAL;
+              this.dataAsentamiento.codtiposasentamiento = element.CODTIPOSASENTAMIENTO;
+          }else if(element.codasentamiento){
+              this.dataAsentamiento.codasentamiento = element.codasentamiento;
+              this.dataAsentamiento.asentamiento = element.asentamiento;
+              this.dataAsentamiento.codigopostal = element.codigopostal;
+              this.dataAsentamiento.codtiposasentamiento = element.codtiposasentamiento;
+          }else{
+              this.dataAsentamiento.codasentamiento = element.CODASENTAMIENTO;
+              this.dataAsentamiento.asentamiento = element.ASENTAMIENTO;
+              this.dataAsentamiento.codigopostal = element.CODIGOPOSTAL;
+              this.dataAsentamiento.codtiposasentamiento = element.CODTIPOSASENTAMIENTO;
+          }
+      }
+  
+      /**
+       * Obtiene el asenteamiento de acuerdo al estado, municipio o ciudad.
+       */
+       obtenerAsentamientoByNombre(){
+          this.loading = true;
+          let criterio = '';
+          let query = '';
+    
+          if(this.data.codEstado == 9){
+              criterio = criterio + 'getColAsentByDelegacion';
+              query = query + 'idDelegacion=' + this.data.codMunicipio + '&nombre=' + this.buscaAsentamiento;
+          }else{
+              criterio = 'getAsentamientoByNombre';
+              query = query + 'nombre=' + this.buscaAsentamiento + '&codEstado=' + this.data.codEstado + '&codMunicipio=' + this.data.codMunicipio2;
+              query = (this.data.codCiudad) ? query + '&codCiudad=' + this.data.codCiudad : query + '&codCiudad=';
+          }
+          
+          console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
+          this.loading = true;
+          this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
+              .subscribe(
+                  (res: any) => {
+                      this.loading = false;
+                      this.dataSource = res;
+                      this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                      this.total = this.dataSource.length; 
+                      this.paginator.pageIndex = 0;
+                      console.log(this.dataSource);
+                  },
+                  (error) => {
+                      this.loading = false;
+                  }
+              );
+      }
 }
 
 ///////////////VIA//////////////////
 export interface dataVia{
-  codtiposvia: number;
-  idvia: number;
-  via : string;
-}
-@Component({
-  selector: 'app-dialog-via-contribuyente',
-  templateUrl: 'app-dialog-via-contribuyente.html',
-  styleUrls: ['./editar-contribuyente.component.css']
-})
-export class DialogViaContribuyente {
-  endpoint = environment.endpoint + 'registro/';
-  displayedColumns: string[] = ['via', 'select'];
-  pagina = 1;
-  total = 0;
-  pageSize = 15;
-  optionVia;
-  loadingBuscaVia = false;
-  dataSource = [];
-  dataPaginate;
-  httpOptions;
-  buscaVia;
-  dataVia: dataVia = {} as dataVia;
-  @ViewChild('paginator') paginator: MatPaginator;
-
-  constructor(
-      private auth: AuthService,
-      private http: HttpClient,
-      private _formBuilder: FormBuilder,
-      public dialog: MatDialog,
-      public dialogRef: MatDialogRef<DialogViaContribuyente>,
-      @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
-      dialogRef.disableClose = true;
-      this.httpOptions = {
-          headers: new HttpHeaders({
-              'Content-Type': 'application/json',
-              Authorization: this.auth.getSession().token
-          })
-      };
-      this.obtenerVia();
-      console.log(data);
+    codtiposvia: number;
+    idvia: number;
+    via : string;
   }
-
-    /**
-     * Limpia los registros de la búsqueda especifica realizada y llama al metodo para obtener todos los municipios
-     */
-    cleanVia(){
-        this.pagina = 1;
-        this.total = 0;
-        this.dataSource = [];
-        this.loadingBuscaVia = false;
-        this.dataPaginate;
-        this.buscaVia = null;
+  @Component({
+    selector: 'app-dialog-via-contribuyente',
+    templateUrl: 'app-dialog-via-contribuyente.html',
+    styleUrls: ['./editart-contribuyente.component.css']
+  })
+  export class DialogViaContribuyenteT {
+    endpoint = environment.endpoint + 'registro/';
+    displayedColumns: string[] = ['via', 'select'];
+    pagina = 1;
+    total = 0;
+    pageSize = 15;
+    optionVia;
+    loadingBuscaVia = false;
+    dataSource = [];
+    dataPaginate;
+    httpOptions;
+    buscaVia;
+    dataVia: dataVia = {} as dataVia;
+    @ViewChild('paginator') paginator: MatPaginator;
+  
+    constructor(
+        private auth: AuthService,
+        private http: HttpClient,
+        private _formBuilder: FormBuilder,
+        public dialog: MatDialog,
+        public dialogRef: MatDialogRef<DialogViaContribuyenteT>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) {
+        dialogRef.disableClose = true;
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                Authorization: this.auth.getSession().token
+            })
+        };
         this.obtenerVia();
-    }
-
-    /**
-     * Obtiene las vías de acuerdo al criterio del nombre o por el id de la colonia previamente seleccionada
-     */
-    obtenerVia(){
-        this.loadingBuscaVia = true;
-        let criterio = 'getViasByIdColonia';
-        let query = '';
-
-        if(this.buscaVia){
-            query = query + 'nombre=' + this.buscaVia;
-        }else{
-            query = query + 'nombre';
-        }
-
-        if(this.data.codEstado != 9){
-            query = query + '&idColonia=' + this.data.codAsentamiento;
-        }else{
-            query = query + '&idColonia=' + this.data.codAsentamiento;
-        }
-
-        console.log('VIA!!!!!'+this.endpoint + '?' + query);
-        this.loadingBuscaVia = true;
-        this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
-            .subscribe(
-                (res: any) => {
-                    this.loadingBuscaVia = false;
-                    this.dataSource = res;
-                    this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-                    this.total = this.dataSource.length; 
-                    this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
-                },
-                (error) => {
-                    this.loadingBuscaVia = false;
-                }
-            );
-    }
-
-    /**
-     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
-     * @param evt Nos da la referencia de la pagina en la que se encuentra
-     */
-    paginado(evt): void{
-        this.pagina = evt.pageIndex + 1;
-        this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+        console.log(data);
     }
   
-    /**
-     * Regresa la posición del paginado de acuerdo a los parámetro enviados
-     * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
-     * @param page_size Valor de la cantidad de registros que se pintaran por página.
-     * @param page_number Valor de la página en la cual se encuentra el paginado.
-     * @returns 
-     */
-    paginate(array, page_size, page_number) {
-        return array.slice((page_number - 1) * page_size, page_number * page_size);
-    }
-
-    /**
-     * Obtiene los datos y almacena los datos de la vía seleccionada.
-     * @param element Arreglo de los datos del registro seleccionado
-     */
-    selectVia(element){
-        console.log(element);
-        this.dataVia.codtiposvia = element.codtiposvia;
-        this.dataVia.idvia = element.idvia;
-        this.dataVia.via = element.via;
-    }
-
-    /**
-     * Obtiene los asentamientos por nombre
-     */
-    obtenerAsentamientoPorNombre(){
-        this.loadingBuscaVia = true;
-        let criterio = '';
-        let query = '';
-
-        if(this.data.codEstado != 9){
-            criterio = criterio + 'getMunicipiosByEstado';
-            query = query + 'codEstado=' + this.data.codEstado;
-        }else{
-            criterio = '';
-            query = '';
-        }
-
-        console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
-        this.loadingBuscaVia = true;
-        this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
-            .subscribe(
-                (res: any) => {
-                    this.loadingBuscaVia = false;
-                    this.dataSource = res;
-                    this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-                    this.total = this.dataSource.length; 
-                    this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
-                },
-                (error) => {
-                    this.loadingBuscaVia = false;
-                }
-            );
-    }
+      /**
+       * Limpia los registros de la búsqueda especifica realizada y llama al metodo para obtener todos los municipios
+       */
+      cleanVia(){
+          this.pagina = 1;
+          this.total = 0;
+          this.dataSource = [];
+          this.loadingBuscaVia = false;
+          this.dataPaginate;
+          this.buscaVia = null;
+          this.obtenerVia();
+      }
+  
+      /**
+       * Obtiene las vías de acuerdo al criterio del nombre o por el id de la colonia previamente seleccionada
+       */
+      obtenerVia(){
+          this.loadingBuscaVia = true;
+          let criterio = 'getViasByIdColonia';
+          let query = '';
+  
+          if(this.buscaVia){
+              query = query + 'nombre=' + this.buscaVia;
+          }else{
+              query = query + 'nombre';
+          }
+  
+          if(this.data.codEstado != 9){
+              query = query + '&idColonia=' + this.data.codAsentamiento;
+          }else{
+              query = query + '&idColonia=' + this.data.codAsentamiento;
+          }
+  
+          console.log('VIA!!!!!'+this.endpoint + '?' + query);
+          this.loadingBuscaVia = true;
+          this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
+              .subscribe(
+                  (res: any) => {
+                      this.loadingBuscaVia = false;
+                      this.dataSource = res;
+                      this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                      this.total = this.dataSource.length; 
+                      this.paginator.pageIndex = 0;
+                      console.log(this.dataSource);
+                  },
+                  (error) => {
+                      this.loadingBuscaVia = false;
+                  }
+              );
+      }
+  
+      /**
+       * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+       * @param evt Nos da la referencia de la pagina en la que se encuentra
+       */
+      paginado(evt): void{
+          this.pagina = evt.pageIndex + 1;
+          this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+      }
+    
+      /**
+       * Regresa la posición del paginado de acuerdo a los parámetro enviados
+       * @param array Contiene el arreglo con los datos que se pintaran en la tabla.
+       * @param page_size Valor de la cantidad de registros que se pintaran por página.
+       * @param page_number Valor de la página en la cual se encuentra el paginado.
+       * @returns 
+       */
+      paginate(array, page_size, page_number) {
+          return array.slice((page_number - 1) * page_size, page_number * page_size);
+      }
+  
+      /**
+       * Obtiene los datos y almacena los datos de la vía seleccionada.
+       * @param element Arreglo de los datos del registro seleccionado
+       */
+      selectVia(element){
+          console.log(element);
+          this.dataVia.codtiposvia = element.codtiposvia;
+          this.dataVia.idvia = element.idvia;
+          this.dataVia.via = element.via;
+      }
+  
+      /**
+       * Obtiene los asentamientos por nombre
+       */
+      obtenerAsentamientoPorNombre(){
+          this.loadingBuscaVia = true;
+          let criterio = '';
+          let query = '';
+  
+          if(this.data.codEstado != 9){
+              criterio = criterio + 'getMunicipiosByEstado';
+              query = query + 'codEstado=' + this.data.codEstado;
+          }else{
+              criterio = '';
+              query = '';
+          }
+  
+          console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
+          this.loadingBuscaVia = true;
+          this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
+              .subscribe(
+                  (res: any) => {
+                      this.loadingBuscaVia = false;
+                      this.dataSource = res;
+                      this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                      this.total = this.dataSource.length; 
+                      this.paginator.pageIndex = 0;
+                      console.log(this.dataSource);
+                  },
+                  (error) => {
+                      this.loadingBuscaVia = false;
+                  }
+              );
+      }
 }
 
 ///////////////REPRESENTACION////////////////
 @Component({
     selector: 'app-dialog-representacion',
     templateUrl: 'app-dialog-representacion.html',
-    styleUrls: ['./editar-contribuyente.component.css']
+    styleUrls: ['./editart-contribuyente.component.css']
 })
-export class DialogRepresentacionC {
+export class DialogRepresentacionCT {
     endpoint = environment.endpoint + 'registro/';
     loading = false;
     bloqueo = true;
@@ -3419,7 +2993,7 @@ export class DialogRepresentacionC {
         private _formBuilder: FormBuilder,
         private snackBar: MatSnackBar,
         public dialog: MatDialog,
-        public dialogRef: MatDialogRef<DialogRepresentacionC>,
+        public dialogRef: MatDialogRef<DialogRepresentacionCT>,
         private auth: AuthService,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
@@ -3519,7 +3093,7 @@ export class DialogRepresentacionC {
      * para ser registrado en la representación.
      */
     addPersona(): void {
-        const dialogRef = this.dialog.open(DialogPersonaC, {
+        const dialogRef = this.dialog.open(DialogPersonaCT, {
             width: '700px',
             data: this.tipoPersona
         });
@@ -3560,7 +3134,7 @@ export class DialogRepresentacionC {
      * Abre el dialogo para agregar los ficheros y datos relacionados su registro.
      */
     addDocumento(dataDocumento = null): void {
-        const dialogRef = this.dialog.open(DialogDocumentoC, {
+        const dialogRef = this.dialog.open(DialogDocumentoCT, {
             width: '700px',
             data: {idDocumento: this.idDocumento,
                     insertOrUpdate: this.insertOrUpdate
@@ -3804,9 +3378,9 @@ export class DialogRepresentacionC {
 @Component({
     selector: 'app-dialog-representado',
     templateUrl: 'app-dialog-representado.html',
-    styleUrls: ['./editar-contribuyente.component.css']
+    styleUrls: ['./editart-contribuyente.component.css']
 })
-export class DialogRepresentadoC {
+export class DialogRepresentadoCT {
     endpoint = environment.endpoint + 'registro/';
     loading = false;
     bloqueo = true;
@@ -3833,7 +3407,7 @@ export class DialogRepresentadoC {
         private _formBuilder: FormBuilder,
         private auth: AuthService,
         public dialog: MatDialog,
-        public dialogRef: MatDialogRef<DialogRepresentadoC>,
+        public dialogRef: MatDialogRef<DialogRepresentadoCT>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
         this.httpOptions = {
@@ -3930,7 +3504,7 @@ export class DialogRepresentadoC {
      * para ser registrado en la representación.
      */
     addPersona(): void {
-        const dialogRef = this.dialog.open(DialogPersonaC, {
+        const dialogRef = this.dialog.open(DialogPersonaCT, {
             width: '700px',
             data: this.tipoPersona
         });
@@ -3962,7 +3536,7 @@ export class DialogRepresentadoC {
      * Abre el dialogo para agregar los ficheros y datos relacionados su registro.
      */
     addDocumento(dataDocumento = null): void {
-        const dialogRef = this.dialog.open(DialogDocumentoC, {
+        const dialogRef = this.dialog.open(DialogDocumentoCT, {
             width: '700px',
             data: {idDocumento: this.idDocumento,
                     insertOrUpdate: this.insertOrUpdate
@@ -4197,14 +3771,14 @@ export class DialogRepresentadoC {
         
     }
 }
-  
+
 ///////////////DOCUMENTO////////////////
 @Component({
     selector: 'app-dialog-documento',
     templateUrl: 'app-dialog-documento.html',
-    styleUrls: ['./editar-contribuyente.component.css']
+    styleUrls: ['./editart-contribuyente.component.css']
 })
-export class DialogDocumentoC {
+export class DialogDocumentoCT {
     endpoint = environment.endpoint + 'registro/';
     loadingTiposDocumentoDigital = false;
     loadingTiposDocumentoJuridico = false;
@@ -4232,7 +3806,7 @@ export class DialogDocumentoC {
         private snackBar: MatSnackBar,
         public dialog: MatDialog,
         private auth: AuthService,
-        public dialogRef: MatDialogRef<DialogDocumentoC>,
+        public dialogRef: MatDialogRef<DialogDocumentoCT>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
 
@@ -4331,7 +3905,7 @@ export class DialogDocumentoC {
      * Abre el dialogo para registrar al notario en caso de ser un Poder notarial el documento.
      */
     addNotario(): void {
-        const dialogRef = this.dialog.open(DialogNotarioC, {
+        const dialogRef = this.dialog.open(DialogNotarioCT, {
             width: '700px',
         });
         dialogRef.afterClosed().subscribe(result => {
@@ -4631,9 +4205,9 @@ export interface Notario {
 @Component({
     selector: 'app-dialog-notario',
     templateUrl: 'app-dialog-notario.html',
-    styleUrls: ['./editar-contribuyente.component.css']
+    styleUrls: ['./editart-contribuyente.component.css']
 })
-export class DialogNotarioC {
+export class DialogNotarioCT {
     endpoint = environment.endpoint + 'registro/';
     endpointCatalogos = environment.endpoint + 'registro/';
     pageSize = 15;
@@ -4657,7 +4231,7 @@ export class DialogNotarioC {
     constructor(
         private auth: AuthService,
         private http: HttpClient,
-        public dialogRef: MatDialogRef<DialogNotarioC>,
+        public dialogRef: MatDialogRef<DialogNotarioCT>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
         dialogRef.disableClose = true;
@@ -4815,9 +4389,9 @@ export interface Persona {
 @Component({
     selector: 'app-dialog-persona',
     templateUrl: 'app-dialog-persona.html',
-    styleUrls: ['./editar-contribuyente.component.css']
+    styleUrls: ['./editart-contribuyente.component.css']
 })
-export class DialogPersonaC{
+export class DialogPersonaCT{
     endpoint = environment.endpoint + 'registro/';
     pageSize = 15;
     pagina = 1;
@@ -4846,7 +4420,7 @@ export class DialogPersonaC{
       private auth: AuthService,
       private http: HttpClient,
       private _formBuilder: FormBuilder,
-      public dialogRef: MatDialogRef<DialogPersonaC>,
+      public dialogRef: MatDialogRef<DialogPersonaCT>,
       @Inject(MAT_DIALOG_DATA) public data: any
     ) {
 
@@ -5027,9 +4601,6 @@ export class DialogPersonaC{
     }
 }
 
-
-
-
 /////////////// DOMICILIOS HISTORICO ////////////////
 export interface DataHistorico{
     fecha_desde: Date;
@@ -5039,9 +4610,9 @@ export interface DataHistorico{
 @Component({
     selector: 'app-dialog-domicilio-historico-contribuyente',
     templateUrl: 'app-dialog-domicilio-historico-contribuyente.html',
-    styleUrls: ['./editar-contribuyente.component.css']
+    styleUrls: ['./editart-contribuyente.component.css']
   })
-  export class DialogDomicilioHistoricoContribuyente {
+  export class DialogDomicilioHistoricoContribuyenteT {
     endpoint = environment.endpoint + 'registro/';
     httpOptions;
     idDireccion;
@@ -5059,7 +4630,7 @@ export interface DataHistorico{
         private snackBar: MatSnackBar,
         private http: HttpClient,
         private _formBuilder: FormBuilder,
-        public dialogRef: MatDialogRef<DialogDomicilioHistoricoContribuyente>,
+        public dialogRef: MatDialogRef<DialogDomicilioHistoricoContribuyenteT>,
         public dialog: MatDialog,
         @Inject(MAT_DIALOG_DATA) public data: any) {
             dialogRef.disableClose = true;
@@ -5134,7 +4705,7 @@ export interface DataHistorico{
      * @param dataDomicilioEspecifico Valor del registro seleccionado.
      */
     viewHistoricoDomicilioEspecifico(dataDomicilioEspecifico): void {
-        const dialogRef = this.dialog.open(DialogDomicilioHistoricoEspecificoContribuyente, {
+        const dialogRef = this.dialog.open(DialogDomicilioHistoricoEspecificoContribuyenteT, {
             width: '700px',
             data: { dataDomicilioEspecifico:dataDomicilioEspecifico, idDireccion:this.idDireccion },
         });
@@ -5142,20 +4713,15 @@ export interface DataHistorico{
                 // this.getNotarioDirecciones();
         });
     }
-
-
-  }
-
-
-
+}
 
 /////////////// DOMICILIOS HISTORICO ESPECIFICO ////////////////
 @Component({
     selector: 'app-dialog-domicilio-historico-especifico-contribuyente',
     templateUrl: 'app-dialog-domicilio-historico-especifico-contribuyente.html',
-    styleUrls: ['./editar-contribuyente.component.css']
+    styleUrls: ['./editart-contribuyente.component.css']
   })
-  export class DialogDomicilioHistoricoEspecificoContribuyente {
+  export class DialogDomicilioHistoricoEspecificoContribuyenteT {
     endpointCatalogos = environment.endpoint + 'registro/';
     //loadingTiposDireccion = false;
     loadingEstados = false;
@@ -5214,7 +4780,7 @@ export interface DataHistorico{
         private snackBar: MatSnackBar,
         private http: HttpClient,
         private _formBuilder: FormBuilder,
-        public dialogRef: MatDialogRef<DialogDomicilioHistoricoEspecificoContribuyente>,
+        public dialogRef: MatDialogRef<DialogDomicilioHistoricoEspecificoContribuyenteT>,
         public dialog: MatDialog,
         @Inject(MAT_DIALOG_DATA) public data: any) {
             dialogRef.disableClose = true;
@@ -5469,7 +5035,7 @@ export interface DataHistorico{
      */
     getMunicipios(){
         this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
-        const dialogRef = this.dialog.open(DialogMunicipiosContribuyente, {
+        const dialogRef = this.dialog.open(DialogMunicipiosContribuyenteT, {
             width: '700px',
             data: {codEstado : this.dataDomicilio.idestado
             }
@@ -5491,7 +5057,7 @@ export interface DataHistorico{
      */
     getCiudad(){
         this.dataDomicilio.idmunicipio2 = this.domicilioFormGroup.value.idmunicipio2;
-        const dialogRef = this.dialog.open(DialogCiudadContribuyente, {
+        const dialogRef = this.dialog.open(DialogCiudadContribuyenteT, {
             width: '700px',
             data: {codEstado : this.dataDomicilio.idestado,
                     codMunicipio : this.dataDomicilio.idmunicipio2
@@ -5516,7 +5082,7 @@ export interface DataHistorico{
         this.dataDomicilio.idmunicipio = this.domicilioFormGroup.value.idmunicipio;
         this.dataDomicilio.idmunicipio2 = this.domicilioFormGroup.value.idmunicipio2;
         this.dataDomicilio.idciudad = (this.domicilioFormGroup.value.idciudad) ? this.domicilioFormGroup.value.idciudad : null;
-        const dialogRef = this.dialog.open(DialogAsentamientoContribuyente, {
+        const dialogRef = this.dialog.open(DialogAsentamientoContribuyenteT, {
             width: '700px',
             data: {codEstado : this.dataDomicilio.idestado,
                     codMunicipio : this.dataDomicilio.idmunicipio,
@@ -5542,7 +5108,7 @@ export interface DataHistorico{
      */
     getVia(){
         this.dataDomicilio.codasentamiento =  this.domicilioFormGroup.value.codasentamiento;
-        const dialogRef = this.dialog.open(DialogViaContribuyente, {
+        const dialogRef = this.dialog.open(DialogViaContribuyenteT, {
             width: '700px',
             data: {codEstado : this.dataDomicilio.idestado,
                     codAsentamiento : this.dataDomicilio.codasentamiento
@@ -5558,20 +5124,15 @@ export interface DataHistorico{
             }
         });
     }
-
-
-  }
-
-
-
+}
 
 /////////////// PERSONALES HISTORICO ////////////////
 @Component({
     selector: 'app-dialog-personales-historico-contribuyente',
     templateUrl: 'app-dialog-personales-historico-contribuyente.html',
-    styleUrls: ['./editar-contribuyente.component.css']
+    styleUrls: ['./editart-contribuyente.component.css']
   })
-  export class DialogPersonalesHistoricoContribuyente {
+  export class DialogPersonalesHistoricoContribuyenteT {
     endpoint = environment.endpoint + 'registro/';
     httpOptions;
     idPersona;
@@ -5589,7 +5150,7 @@ export interface DataHistorico{
         private snackBar: MatSnackBar,
         private http: HttpClient,
         private _formBuilder: FormBuilder,
-        public dialogRef: MatDialogRef<DialogPersonalesHistoricoContribuyente>,
+        public dialogRef: MatDialogRef<DialogPersonalesHistoricoContribuyenteT>,
         public dialog: MatDialog,
         @Inject(MAT_DIALOG_DATA) public data: any) {
             dialogRef.disableClose = true;
@@ -5663,7 +5224,7 @@ export interface DataHistorico{
      * @param dataPersonalesEspecifico abre el modal que muestra como se veían la información antes de ser modificada
      */
     viewHistoricoPersonalesEspecifico(dataPersonalesEspecifico): void {
-        const dialogRef = this.dialog.open(DialogPersonalesHistoricoEspecificoContribuyente, {
+        const dialogRef = this.dialog.open(DialogPersonalesHistoricoEspecificoContribuyenteT, {
             width: '700px',
             data: { dataPersonalesEspecifico:dataPersonalesEspecifico, idPersona:this.idPersona },
         });
@@ -5674,152 +5235,151 @@ export interface DataHistorico{
 
 }
 
-
 /////////////// PERSONALES HISTORICO ESPECIFICO ////////////////
 @Component({
     selector: 'app-dialog-personales-historico-especifico-contribuyente',
     templateUrl: 'app-dialog-personales-historico-especifico-contribuyente.html',
-    styleUrls: ['./editar-contribuyente.component.css']
+    styleUrls: ['./editart-contribuyente.component.css']
   })
-export class DialogPersonalesHistoricoEspecificoContribuyente {
-endpoint = environment.endpoint + 'registro/';
-loading = true;
-loadingDocumentos = false;
-idChs;
-idPersona;
-httpOptions;
-fisicaFormGroup: FormGroup;
-moralFormGroup: FormGroup;
-dataContribuyenteResultado;
-query;
-idContribuyente;
-contribuyente: DatosContribuyente = {} as DatosContribuyente;
-dataDocumentos: DocumentosIdentificativos[] = [];
-loadingDomicilios = false;
-dataDomicilioResultado;
-isIdentificativo;
+export class DialogPersonalesHistoricoEspecificoContribuyenteT {
+    endpoint = environment.endpoint + 'registro/';
+    loading = true;
+    loadingDocumentos = false;
+    idChs;
+    idPersona;
+    httpOptions;
+    fisicaFormGroup: FormGroup;
+    moralFormGroup: FormGroup;
+    dataContribuyenteResultado;
+    query;
+    idContribuyente;
+    contribuyente: DatosContribuyente = {} as DatosContribuyente;
+    dataDocumentos: DocumentosIdentificativos[] = [];
+    loadingDomicilios = false;
+    dataDomicilioResultado;
+    isIdentificativo;
 
-constructor(
-    private auth: AuthService,
-    private snackBar: MatSnackBar,
-    private http: HttpClient,
-    private _formBuilder: FormBuilder,
-    public dialogRef: MatDialogRef<DialogPersonalesHistoricoEspecificoContribuyente>,
-    public dialog: MatDialog,
-@Inject(MAT_DIALOG_DATA) public data: any) {
-    dialogRef.disableClose = true;
-    this.httpOptions = {
-        headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-            Authorization: this.auth.getSession().token
-        })
-    };
+    constructor(
+        private auth: AuthService,
+        private snackBar: MatSnackBar,
+        private http: HttpClient,
+        private _formBuilder: FormBuilder,
+        public dialogRef: MatDialogRef<DialogPersonalesHistoricoEspecificoContribuyenteT>,
+        public dialog: MatDialog,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+        dialogRef.disableClose = true;
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                Authorization: this.auth.getSession().token
+            })
+        };
 
-    this.idChs = data.dataPersonalesEspecifico;
-    this.idPersona = data.idPersona;
-    console.log(this.idChs);
-    console.log(this.idPersona);
+        this.idChs = data.dataPersonalesEspecifico;
+        this.idPersona = data.idPersona;
+        console.log(this.idChs);
+        console.log(this.idPersona);
 
-    this.fisicaFormGroup = this._formBuilder.group({
-        nombre: [null, [Validators.required]],
-        apepaterno: [null, [Validators.required]],
-        apematerno: [null, []],
-        rfc: [null, [Validators.required]],
-        curp: [null, [Validators.required]],
-        ine: [null, []],
-        idDocIdent: ['', []],
-        docIdent: [null, []],
-        fecha_naci: [null, []],
-        fecha_def: [null, []],
-        celular: [null, []],
-        email: [null, []],
-    });
+        this.fisicaFormGroup = this._formBuilder.group({
+            nombre: [null, [Validators.required]],
+            apepaterno: [null, [Validators.required]],
+            apematerno: [null, []],
+            rfc: [null, [Validators.required]],
+            curp: [null, [Validators.required]],
+            ine: [null, []],
+            idDocIdent: ['', []],
+            docIdent: [null, []],
+            fecha_naci: [null, []],
+            fecha_def: [null, []],
+            celular: [null, []],
+            email: [null, []],
+        });
 
-    this.moralFormGroup = this._formBuilder.group({
-        nombre_moral: [null, [Validators.required]],
-        rfc: [null, [Validators.required]],
-        actPreponderante: [null, []],
-        idTipoPersonaMoral: ['', []],
-        fechaInicioOperacion: [null, []],
-        idMotivo: ['', []],
-        fechaCambio: [null, []],
-    });
+        this.moralFormGroup = this._formBuilder.group({
+            nombre_moral: [null, [Validators.required]],
+            rfc: [null, [Validators.required]],
+            actPreponderante: [null, []],
+            idTipoPersonaMoral: ['', []],
+            fechaInicioOperacion: [null, []],
+            idMotivo: ['', []],
+            fechaCambio: [null, []],
+        });
 
-    this.getDataDocumentos();
-    this.getContribuyenteDatos();
-}
-
-/**
- * Obtiene los documentos identificativos
- */
-getDataDocumentos(): void{
-    this.loadingDocumentos = true;
-    this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
-    (res: any) => {
-        this.loadingDocumentos = false;
-        this.dataDocumentos = res.CatDocIdentificativos;
-        console.log(this.dataDocumentos);
-    },
-    (error) => {
-        this.loadingDocumentos = false;
+        this.getDataDocumentos();
+        this.getContribuyenteDatos();
     }
-    );
-}
 
-/**
- * Obtiene los datos del contribuyente
- */
-getContribuyenteDatos(){
-    this.query = '&idPersona=' + this.idPersona + '&idChs=' + this.idChs; 
-    this.loading = true;
-    console.log(this.endpoint);
-    this.http.get(this.endpoint + 'getHistoricosPersonaDetalle?' + this.query, this.httpOptions)
-        .subscribe(
-            (res: any) => {
-                this.loading = false;
-                this.dataContribuyenteResultado = res;
-                console.log("AQUI ENTRO EL RES");
-                console.log(this.dataContribuyenteResultado);
-                this.datoDelContribuyente();
-            },
-            (error) => {
-                this.loading = false;
-                this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
-                });
-            }
+    /**
+     * Obtiene los documentos identificativos
+     */
+    getDataDocumentos(): void{
+        this.loadingDocumentos = true;
+        this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
+        (res: any) => {
+            this.loadingDocumentos = false;
+            this.dataDocumentos = res.CatDocIdentificativos;
+            console.log(this.dataDocumentos);
+        },
+        (error) => {
+            this.loadingDocumentos = false;
+        }
         );
-}
+    }
 
-/**
- * Asigna los datos de la consulta a variables
- */
-datoDelContribuyente(){
-    this.contribuyente.tipoPersona = this.dataContribuyenteResultado[0].CODTIPOSPERSONA;
-    this.contribuyente.nombre  = this.dataContribuyenteResultado[0].NOMBRE;
-    this.contribuyente.nombre_moral  = this.dataContribuyenteResultado[0].APELLIDOPATERNO;
-    this.contribuyente.apepaterno = this.dataContribuyenteResultado[0].APELLIDOPATERNO;
-    this.contribuyente.apematerno = this.dataContribuyenteResultado[0].APELLIDOMATERNO;
-    this.contribuyente.rfc = this.dataContribuyenteResultado[0].RFC;
-    this.contribuyente.curp = this.dataContribuyenteResultado[0].CURP;
-    this.contribuyente.ine = this.dataContribuyenteResultado[0].CLAVEIFE;
-    this.contribuyente.identificacion = this.dataContribuyenteResultado[0].IDDOCIDENTIF;
-    this.contribuyente.idedato = this.dataContribuyenteResultado[0].VALDOCIDENTIF;
-    this.contribuyente.fecha_naci = (this.dataContribuyenteResultado[0].FECHANACIMIENTO) ? new Date(this.dataContribuyenteResultado[0].FECHANACIMIENTO) : null;
-    this.contribuyente.fecha_def = (this.dataContribuyenteResultado[0].FECHADEFUNCION) ? new Date(this.dataContribuyenteResultado[0].FECHADEFUNCION) : null;
-    this.contribuyente.celular = this.dataContribuyenteResultado[0].CELULAR;
-    this.contribuyente.email = this.dataContribuyenteResultado[0].EMAIL;
-    this.contribuyente.actPreponderante = this.dataContribuyenteResultado[0].ACTIVPRINCIP;
-    this.contribuyente.idTipoPersonaMoral = this.dataContribuyenteResultado[0].IDTIPOMORAL;
-    this.contribuyente.fechaInicioOperacion = (this.dataContribuyenteResultado[0].MD_FECHADESDE) ? new Date(this.dataContribuyenteResultado[0].MD_FECHADESDE) : null;
-    this.contribuyente.idMotivo = this.dataContribuyenteResultado[0].IDMOTIVOSMORAL;
-    this.contribuyente.fechaCambio = (this.dataContribuyenteResultado[0].MD_FECHAHASTA) ? new Date(this.dataContribuyenteResultado[0].MD_FECHAHASTA) : null;
+    /**
+     * Obtiene los datos del contribuyente
+     */
+    getContribuyenteDatos(){
+        this.query = '&idPersona=' + this.idPersona + '&idChs=' + this.idChs; 
+        this.loading = true;
+        console.log(this.endpoint);
+        this.http.get(this.endpoint + 'getHistoricosPersonaDetalle?' + this.query, this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loading = false;
+                    this.dataContribuyenteResultado = res;
+                    console.log("AQUI ENTRO EL RES");
+                    console.log(this.dataContribuyenteResultado);
+                    this.datoDelContribuyente();
+                },
+                (error) => {
+                    this.loading = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
 
-    console.log(this.contribuyente.tipoPersona);
-    
-}
+    /**
+     * Asigna los datos de la consulta a variables
+     */
+    datoDelContribuyente(){
+        this.contribuyente.tipoPersona = this.dataContribuyenteResultado[0].CODTIPOSPERSONA;
+        this.contribuyente.nombre  = this.dataContribuyenteResultado[0].NOMBRE;
+        this.contribuyente.nombre_moral  = this.dataContribuyenteResultado[0].APELLIDOPATERNO;
+        this.contribuyente.apepaterno = this.dataContribuyenteResultado[0].APELLIDOPATERNO;
+        this.contribuyente.apematerno = this.dataContribuyenteResultado[0].APELLIDOMATERNO;
+        this.contribuyente.rfc = this.dataContribuyenteResultado[0].RFC;
+        this.contribuyente.curp = this.dataContribuyenteResultado[0].CURP;
+        this.contribuyente.ine = this.dataContribuyenteResultado[0].CLAVEIFE;
+        this.contribuyente.identificacion = this.dataContribuyenteResultado[0].IDDOCIDENTIF;
+        this.contribuyente.idedato = this.dataContribuyenteResultado[0].VALDOCIDENTIF;
+        this.contribuyente.fecha_naci = (this.dataContribuyenteResultado[0].FECHANACIMIENTO) ? new Date(this.dataContribuyenteResultado[0].FECHANACIMIENTO) : null;
+        this.contribuyente.fecha_def = (this.dataContribuyenteResultado[0].FECHADEFUNCION) ? new Date(this.dataContribuyenteResultado[0].FECHADEFUNCION) : null;
+        this.contribuyente.celular = this.dataContribuyenteResultado[0].CELULAR;
+        this.contribuyente.email = this.dataContribuyenteResultado[0].EMAIL;
+        this.contribuyente.actPreponderante = this.dataContribuyenteResultado[0].ACTIVPRINCIP;
+        this.contribuyente.idTipoPersonaMoral = this.dataContribuyenteResultado[0].IDTIPOMORAL;
+        this.contribuyente.fechaInicioOperacion = (this.dataContribuyenteResultado[0].MD_FECHADESDE) ? new Date(this.dataContribuyenteResultado[0].MD_FECHADESDE) : null;
+        this.contribuyente.idMotivo = this.dataContribuyenteResultado[0].IDMOTIVOSMORAL;
+        this.contribuyente.fechaCambio = (this.dataContribuyenteResultado[0].MD_FECHAHASTA) ? new Date(this.dataContribuyenteResultado[0].MD_FECHAHASTA) : null;
+
+        console.log(this.contribuyente.tipoPersona);
+        
+    }
 
 }
 
@@ -5832,9 +5392,9 @@ export interface DataHistoricoRep{
 @Component({
     selector: 'app-dialog-historialRep',
     templateUrl: 'app-dialog-historialRep.html',
-    styleUrls: ['./editar-contribuyente.component.css']
+    styleUrls: ['./editart-contribuyente.component.css']
 })
-export class DialogHistorialRepC {
+export class DialogHistorialRepCT {
     endpoint = environment.endpoint + 'registro/';
     httpOptions;
     dataDoc = [];
@@ -5855,7 +5415,7 @@ export class DialogHistorialRepC {
         private snackBar: MatSnackBar,
         public dialog: MatDialog,
         private auth: AuthService,
-        public dialogRef: MatDialogRef<DialogHistorialRepC>,
+        public dialogRef: MatDialogRef<DialogHistorialRepCT>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
 
@@ -5936,7 +5496,7 @@ export class DialogHistorialRepC {
         console.log("ACA EL IDCSH");
         console.log(element);
         this.idChs = element;
-        const dialogRef = this.dialog.open(DialogHistorialRepDetalleC, {
+        const dialogRef = this.dialog.open(DialogHistorialRepDetalleCT, {
             width: '700px',
             data: this.idChs
         });
@@ -5957,9 +5517,9 @@ export interface DataHistoricoRep{
 @Component({
     selector: 'app-dialog-historialRepDetalle',
     templateUrl: 'app-dialog-historialRepDetalle.html',
-    styleUrls: ['./editar-contribuyente.component.css']
+    styleUrls: ['./editart-contribuyente.component.css']
 })
-export class DialogHistorialRepDetalleC {
+export class DialogHistorialRepDetalleCT {
     endpoint = environment.endpoint + 'registro/';
     httpOptions;
     dataDoc = [];
@@ -6014,7 +5574,7 @@ export class DialogHistorialRepDetalleC {
         private snackBar: MatSnackBar,
         public dialog: MatDialog,
         private auth: AuthService,
-        public dialogRef: MatDialogRef<DialogHistorialRepDetalleC>,
+        public dialogRef: MatDialogRef<DialogHistorialRepDetalleCT>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
 
@@ -6135,6 +5695,4 @@ export class DialogHistorialRepDetalleC {
             
             
     }
-
-  
 }

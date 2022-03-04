@@ -64,6 +64,10 @@ import { DialogHistorialComponent, DialogHistorialRepDetalleG, DialogDomicilioHi
           DialogPersonalesHistoricoG, DialogPersonalesHistoricoEspecificoG } from './components/dialog-historial/dialog-historial.component';
 import { ReporteComponent, DialogBuscaUsuario } from './components/reporte/reporte.component';
 import { DialogCargaComponent } from './components/dialog-carga/dialog-carga.component';
+import { EditartContribuyenteComponent, DialogAsentamientoContribuyenteT, DialogCiudadContribuyenteT, DialogDocumentoCT, DialogDomicilioContribuyenteT,
+          DialogDomicilioHistoricoContribuyenteT, DialogDomicilioHistoricoEspecificoContribuyenteT, DialogHistorialRepCT, DialogHistorialRepDetalleCT,
+          DialogMunicipiosContribuyenteT, DialogNotarioCT, DialogPersonaCT, DialogPersonalesHistoricoContribuyenteT,
+          DialogPersonalesHistoricoEspecificoContribuyenteT, DialogRepresentacionCT, DialogRepresentadoCT, DialogViaContribuyenteT } from './components/contribuyentes/editart-contribuyente/editart-contribuyente.component';
 
 @NgModule({
   declarations: [
@@ -183,7 +187,24 @@ import { DialogCargaComponent } from './components/dialog-carga/dialog-carga.com
     DialogBuscaUsuario,
     DialogCargaComponent,
     DialogsAsociarCuenta,
-    DialogCuenta
+    DialogCuenta,
+    EditartContribuyenteComponent,
+    DialogAsentamientoContribuyenteT,
+    DialogCiudadContribuyenteT,
+    DialogDocumentoCT,
+    DialogDomicilioContribuyenteT,
+    DialogDomicilioHistoricoContribuyenteT,
+    DialogDomicilioHistoricoEspecificoContribuyenteT,
+    DialogHistorialRepCT,
+    DialogHistorialRepDetalleCT,
+    DialogMunicipiosContribuyenteT,
+    DialogNotarioCT,
+    DialogPersonaCT,
+    DialogPersonalesHistoricoContribuyenteT,
+    DialogPersonalesHistoricoEspecificoContribuyenteT,
+    DialogRepresentacionCT,
+    DialogRepresentadoCT,
+    DialogViaContribuyenteT
   ],
   imports: [
     BrowserModule,

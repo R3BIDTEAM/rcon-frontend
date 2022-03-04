@@ -1,0 +1,50 @@
+<h1 mat-dialog-title>Búsqueda Asentamientos</h1>
+<div mat-dialog-content>
+
+    <ng-container>
+        <div class="row">
+            <mat-form-field class="col-3">
+                <mat-label>Colonia:</mat-label>
+                <input matInput [(ngModel)]="buscaAsentamiento">
+            </mat-form-field>
+            <button mat-icon-button color="primary" aria-label="Busqueda" matTooltip="Buscar" (click)="obtenerAsentamientoByNombre()">
+                <mat-icon>search</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" aria-label="Limpiar Filtros" matTooltip="Limpiar Filtros" (click)="cleanAsentamiento()">
+                <mat-icon>clear</mat-icon>
+            </button>
+        </div>
+        <div style="padding: 30px; text-align: center;" *ngIf="loading">
+            <mat-spinner style="margin:0 auto;"></mat-spinner>
+            <p>Cargando...</p>
+        </div>
+        <div class="alert alert-info" *ngIf="dataSource.length == 0 && !loading">
+            No hay registro para el filtro seleccionado
+        </div> 
+        <table mat-table [dataSource]="dataPaginate" *ngIf="!loading && dataSource.length > 0">
+            <ng-container matColumnDef="coloniaAsentamiento">
+                <th mat-header-cell *matHeaderCellDef> Colonia / Asentamiento </th>
+                <td mat-cell *matCellDef="let element"> 
+                    {{ ((element.ASENTAMIENTO) ? element.ASENTAMIENTO : (element.asentamiento) ? element.asentamiento : element.DESCRIPCION) }}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="select">
+                <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-radio-group [(ngModel)]="optionColonia">
+                        <mat-radio-button [value]="element" (change)="selectAsentamiento(element)"></mat-radio-button>
+                    </mat-radio-group>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator #paginator [length]="total" [pageSize]="pageSize" [pageSizeOptions]="[pageSize]" [showFirstLastButtons]="true" (page)="paginado($event)">
+        </mat-paginator>
+    </ng-container>
+
+</div>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cerrar</button>
+    <button mat-flat-button color="primary" [mat-dialog-close]="dataAsentamiento">Aceptar</button>
+</mat-dialog-actions>
