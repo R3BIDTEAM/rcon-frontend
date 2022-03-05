@@ -410,7 +410,7 @@
                                         {{panelDomPredial ? 'Cerrar' : 'Ver'}} los datos de los Domicilios
                                     </mat-panel-description>
                                 </mat-expansion-panel-header>
-                                <div class="row" style="margin-bottom: 15px;">
+                                <div class="row" style="margin-bottom: 15px;" *ngIf="!loadingDomicilios">
                                     <div class="col-md-4">
                                         <button mat-stroked-button aria-label="Domicilios" class="boton-n-representacion" color="primary" (click)="verificaDomicilioInmueble()" [disabled]="(selectIdPersonaI || selectIdDireccion)">
                                             Guardar Dirección <mat-icon style="display: inherit; width: 25px;">update</mat-icon>
@@ -619,7 +619,7 @@
                                                 </div> 
                                                 <table mat-table [dataSource]="dataSource4" *ngIf="!loadingRepresentante && dataSource4.length > 0" width="100%">
                                                     <ng-container matColumnDef="representacion">
-                                                        <th mat-header-cell *matHeaderCellDef width="15%" > Tipo Dirección </th>
+                                                        <th mat-header-cell *matHeaderCellDef width="15%" > Representante </th>
                                                         <td mat-cell *matCellDef="let element" width="15%" >
                                                             {{ element.APELLIDOPATERNO }} {{ element.APELLIDOMATERNO }} {{ element.NOMBRE }}
                                                         </td>
@@ -699,7 +699,7 @@
                                                 </div> 
                                                 <table mat-table [dataSource]="dataSource5" *ngIf="!loadingRepresentado && dataSource5.length > 0" width="100%">
                                                     <ng-container matColumnDef="representacion">
-                                                        <th mat-header-cell *matHeaderCellDef width="15%" > Tipo Dirección </th>
+                                                        <th mat-header-cell *matHeaderCellDef width="15%" > Representado </th>
                                                         <td mat-cell *matCellDef="let element" width="15%" >
                                                             {{ element.APELLIDOPATERNO }} {{ element.APELLIDOMATERNO }} {{ element.NOMBRE }}
                                                         </td>

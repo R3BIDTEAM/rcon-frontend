@@ -3,18 +3,24 @@
     <div class="row" *ngIf="mensaje == 1">
         <div class="col-md-1"></div>
         <div class="col-md-8">
-            <h3>¿Modificar solo esta cuenta o todas.?</h3>
+            <h3>¿Desea editar sólo la cuenta ingresada?</h3>
         </div>
     </div>
-    <div class="row" *ngIf="mensaje == 2">
+    <div class="row" *ngIf="mensaje == 3">
         <div class="col-md-1"></div>
         <div class="col-md-8">
-            <h3>¿Todas?</h3>
+            <h3>
+                El contribuyente indicado posee más 
+                de una cuenta asociada, cualquier edición realizada afectará todas las cuentas asociadas. En 
+                caso de querer editar una cuenta específica del contribuyente, realice la búsqueda por medio 
+                de la cuenta requerida.
+            </h3>
         </div>
     </div>
 </div>
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Cerrar</button>
-    <button mat-flat-button color="primary" [mat-dialog-close]="1">Todas</button>
-    <button mat-flat-button color="primary" [mat-dialog-close]="2">Solo esta</button>
+    <button mat-flat-button color="primary" [mat-dialog-close]="1" *ngIf="mensaje !== 3">EDITAR TODAS LAS CUENTAS</button>
+    <button mat-flat-button color="primary" [mat-dialog-close]="2" *ngIf="mensaje !== 3">EDITAR SÓLO ESTA CUENTA</button>
+    <button mat-flat-button color="primary" [mat-dialog-close]="3" *ngIf="mensaje == 3">ACEPTAR</button>
 </mat-dialog-actions>

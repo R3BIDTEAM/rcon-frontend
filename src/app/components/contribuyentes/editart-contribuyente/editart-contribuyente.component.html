@@ -410,7 +410,7 @@
                                         {{panelDomPredial ? 'Cerrar' : 'Ver'}} los datos de los Domicilios
                                     </mat-panel-description>
                                 </mat-expansion-panel-header>
-                                <div class="row" style="margin-bottom: 15px;">
+                                <div class="row" style="margin-bottom: 15px;" *ngIf="!loadingDomicilios">
                                     <div class="col-md-4">
                                         <button mat-stroked-button aria-label="Domicilios" class="boton-n-representacion" color="primary" (click)="verificaDomicilioInmueble()" [disabled]="(selectIdPersonaI || selectIdDireccion)">
                                             Guardar Dirección <mat-icon style="display: inherit; width: 25px;">update</mat-icon>
@@ -536,11 +536,11 @@
                                     <br>
                                     <div class="row" *ngIf="!loadingRepresentante">
                                         <div class="col-4">
-                                            <h3>Agregar
+                                            <!-- <h3>Agregar
                                                 <button mat-flat-button type="button" color="primary" aria-label="Agregar" matTooltip="Agregar" class="little-button" (click)="addRepresentante()">
                                                     <mat-icon style="color: #FFF!important;">add</mat-icon>
                                                 </button>
-                                            </h3>
+                                            </h3> -->
                                         </div>
                                         <div class="col-4"></div>
                                         <div class="col-4"></div>                    
@@ -557,7 +557,7 @@
                                                 </div> 
                                                 <table mat-table [dataSource]="dataSource4" *ngIf="!loadingRepresentante && dataSource4.length > 0" width="100%">
                                                     <ng-container matColumnDef="representacion">
-                                                        <th mat-header-cell *matHeaderCellDef width="15%" > Tipo Dirección </th>
+                                                        <th mat-header-cell *matHeaderCellDef width="15%" > Representante </th>
                                                         <td mat-cell *matCellDef="let element" width="15%" >
                                                             {{ element.APELLIDOPATERNO }} {{ element.APELLIDOMATERNO }} {{ element.NOMBRE }}
                                                         </td>
@@ -574,14 +574,14 @@
                                                             {{ element.FECHACADUCIDAD }}
                                                         </td>
                                                     </ng-container>
-                                                    <ng-container matColumnDef="editar">
+                                                    <!-- <ng-container matColumnDef="editar">
                                                         <th mat-header-cell *matHeaderCellDef width="75%"> Editar </th>
                                                         <td mat-cell *matCellDef="let element" width="75%">
                                                             <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar" (click)="addRepresentante(null, element)">
                                                                 <mat-icon>edit</mat-icon>
                                                             </button>
                                                         </td>
-                                                    </ng-container>
+                                                    </ng-container> -->
                                                     <ng-container matColumnDef="eliminar">
                                                         <th mat-header-cell *matHeaderCellDef> Eliminar </th>
                                                         <td mat-cell *matCellDef="let element">
@@ -616,11 +616,11 @@
                                     <br>
                                     <div class="row" *ngIf="!loadingRepresentado">
                                         <div class="col-4">
-                                            <h3>Representados
+                                            <!-- <h3>Representados
                                                 <button mat-flat-button type="button" color="primary" aria-label="Agregar" matTooltip="Agregar" class="little-button" (click)="addRepresentado()">
                                                     <mat-icon style="color: #FFF!important;">add</mat-icon>
                                                 </button>
-                                            </h3>
+                                            </h3> -->
                                         </div>
                                         <div class="col-4"></div>
                                         <div class="col-4"></div>                    
@@ -637,7 +637,7 @@
                                                 </div> 
                                                 <table mat-table [dataSource]="dataSource5" *ngIf="!loadingRepresentado && dataSource5.length > 0" width="100%">
                                                     <ng-container matColumnDef="representacion">
-                                                        <th mat-header-cell *matHeaderCellDef width="15%" > Tipo Dirección </th>
+                                                        <th mat-header-cell *matHeaderCellDef width="15%" > Representado </th>
                                                         <td mat-cell *matCellDef="let element" width="15%" >
                                                             {{ element.APELLIDOPATERNO }} {{ element.APELLIDOMATERNO }} {{ element.NOMBRE }}
                                                         </td>
@@ -654,14 +654,14 @@
                                                             {{ element.FECHACADUCIDAD }}
                                                         </td>
                                                     </ng-container>
-                                                    <ng-container matColumnDef="editar">
+                                                    <!-- <ng-container matColumnDef="editar">
                                                         <th mat-header-cell *matHeaderCellDef width="75%"> Editar </th>
                                                         <td mat-cell *matCellDef="let element" width="75%">
                                                             <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar" (click)="addRepresentado(null, element)">
                                                                 <mat-icon>edit</mat-icon>
                                                             </button>
                                                         </td>
-                                                    </ng-container>
+                                                    </ng-container> -->
                                                     <ng-container matColumnDef="eliminar">
                                                         <th mat-header-cell *matHeaderCellDef> Eliminar </th>
                                                         <td mat-cell *matCellDef="let element">

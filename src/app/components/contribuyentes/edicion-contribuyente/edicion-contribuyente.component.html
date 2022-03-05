@@ -207,10 +207,13 @@
                     <ng-container matColumnDef="seleccionar">
                         <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
                         <td mat-cell *matCellDef="let element">
-                            <!-- <button mat-stroked-button color="primary" aria-label="Editar Contribuyente" matTooltip="Editar Contribuyente" [routerLink]="['/main/editar-contribuyente', (element.idpersona) ? element.idpersona : element.IDPERSONA]">
+                            <button mat-stroked-button *ngIf="element.NUMEROCUENTAS < 2" color="primary" aria-label="Editar Contribuyente" matTooltip="Editar Contribuyente" [routerLink]="['/main/editar-contribuyente', (element.idpersona) ? element.idpersona : element.IDPERSONA]">
                                 Editar
-                            </button> -->
-                            <button mat-stroked-button color="primary" aria-label="Editar Contribuyente" matTooltip="Editar Contribuyente" (click)="editaCuenta(1, (element.idpersona) ? element.idpersona : element.IDPERSONA)">
+                            </button>
+                            <button mat-stroked-button *ngIf="element.NUMEROCUENTAS > 1 && tipoBusqueda == 'cuenta'" color="primary" aria-label="Editar Contribuyente" matTooltip="Editar Contribuyente" (click)="editaCuenta(1, (element.idpersona) ? element.idpersona : element.IDPERSONA)">
+                                Editar
+                            </button>
+                            <button mat-stroked-button *ngIf="element.NUMEROCUENTAS > 1 && tipoBusqueda == 'contribuyente'" color="primary" aria-label="Editar Contribuyente" matTooltip="Editar Contribuyente" (click)="mensajeCuenta(3, (element.idpersona) ? element.idpersona : element.IDPERSONA)">
                                 Editar
                             </button>
                         </td>

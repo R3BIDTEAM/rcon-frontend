@@ -184,7 +184,7 @@ export class EditartContribuyenteComponent implements OnInit {
     dataDomicilioEspecifico: DataDomicilio[] = [];
     displayedColumnsDom: string[] = ['tipoDir','direccion', 'editar'];
     displayedColumnsDomInm: string[] = ['radio','direccion'];
-    displayedColumnsRepdo: string[] = ['representacion','texto','caducidad','editar','eliminar'];
+    displayedColumnsRepdo: string[] = ['representacion','texto','caducidad','eliminar'];
     displayedColumnsInm: string[] = ['inmueble','direccion','domicilio','descripcion','sujeto'];
     displayedColumnsDataRep: string[] = ['fechaCaducidad','texto','caducidad'];
     loadingDomicilios = false;
@@ -365,7 +365,9 @@ export class EditartContribuyenteComponent implements OnInit {
      */
     getInfoPersonaInmueble(){
         this.loadingDerecho = true;
-        this.http.get(this.endpoint + 'getCasPersonaInmueble?idPersona=' + this.idContribuyente, this.httpOptions)
+        let metodo = 'getCasPersonaInmueble';
+        let param = 'idPersona=' + this.idContribuyente + '&cuentaCatastral=' + this.cuentaPredial;
+        this.http.get(this.endpointSimulacion + metodo + '?' + param, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingDerecho = false;
@@ -397,8 +399,8 @@ export class EditartContribuyenteComponent implements OnInit {
         let varPorcentaje = (this.personaInmueble[i].porcentajeparticipacion) ? this.personaInmueble[i].porcentajeparticipacion : '';
         let queryP = 'idPersona=' + this.idContribuyente + '&codTipoDerecho=' + this.personaInmueble[i].codtipoderecho 
                     + '&porcentajeParticipacion=' + varPorcentaje + '&idPersonaInmueble=' + idpersonainmueble;
-        console.log(this.endpoint + 'updatePersonaInmueble?');
-        this.http.post(this.endpoint + 'updatePersonaInmueble' + '?' + queryP, '', this.httpOptions)
+        console.log(this.endpointSimulacion + 'updatePersonaInmueble?');
+        this.http.post(this.endpointSimulacion + 'updatePersonaInmueble' + '?' + queryP, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingDerecho = false;
@@ -408,7 +410,7 @@ export class EditartContribuyenteComponent implements OnInit {
                             horizontalPosition: 'end',
                             verticalPosition: 'top'
                         });
-                        this.getDomicilioContribuyente();
+                        this.getInfoPersonaInmueble();
                     }
                     
                 },
@@ -433,12 +435,12 @@ export class EditartContribuyenteComponent implements OnInit {
         this.loadingDerecho = true;
         console.log(this.personaInmueble);
         let queryP = 'idpersonainmueble=' + idpersonainmueble;
-        console.log(this.endpoint + 'borrarAsociaCuentaContrib?');
-        this.http.post(this.endpoint + 'borrarAsociaCuentaContrib' + '?' + queryP, '', this.httpOptions)
+        console.log(this.endpointSimulacion + 'borrarAsociaCuentaContrib?');
+        this.http.post(this.endpointSimulacion + 'borrarAsociaCuentaContrib' + '?' + queryP, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingDerecho = false;
-                    if(res.idpersona){
+                    if(res){
                         this.actualizadoCuenta = true;
                         this.actualizado = false;
                         this.snackBar.open("Actualización correcta", 'Cerrar', {
@@ -502,9 +504,9 @@ export class EditartContribuyenteComponent implements OnInit {
         let queryP = 'idPersona=' + this.idContribuyente + '&region=' + dataCuenta.region + '&manzana=' + dataCuenta.manzana 
                     + '&lote=' + dataCuenta.lote + '&unidadPrivativa=' + dataCuenta.unidad
                     + '&digitoVerificador=' + dataCuenta.digito + '&codtipoderecho=' + dataCuenta.codDerecho + '&porcenparticipacion=' + dataCuenta.porcentaje;
-        console.log(this.endpoint + 'insertAsociaCuentaContrib?');
+        console.log(this.endpointSimulacion + 'insertAsociaCuentaContrib?');
         console.log(queryP);
-        this.http.post(this.endpoint + 'insertAsociaCuentaContrib' + '?' + queryP, '', this.httpOptions)
+        this.http.post(this.endpointSimulacion + 'insertAsociaCuentaContrib' + '?' + queryP, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
                     
@@ -1012,7 +1014,9 @@ export class EditartContribuyenteComponent implements OnInit {
      */
     getidInmuebles(){
         this.loadingInmuebles = true;
-        this.http.get(this.endpointActualiza + 'getInmuebles' + '?idPersona='+ this.idContribuyente, this.httpOptions)
+        let metodoI = 'getInmuebles';
+        let paramI = 'idPersona=' + this.idContribuyente + '&cuentaCatastral=' + this.cuentaPredial;
+        this.http.get(this.endpointSimulacion + metodoI + '?' + paramI, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingInmuebles = false;
@@ -1081,14 +1085,16 @@ export class EditartContribuyenteComponent implements OnInit {
     insertaDomicilioInmueble(){
         this.loadingDomicilios = true;
         this.loadingInmuebles = true;
+        
         let queryDPI = 'idPersona=' + this.idContribuyente + '&idDireccion=' + this.idDireccionI + '&idPersonaInmueble=' + this.idPersonaInmueble;
         console.log("INSERTAR LA DIRECCIÓN DEL INMUEBLE");
-        console.log(this.endpoint + 'InsertarInmuebleDomicilioFiscal' + '?' + queryDPI);
-        this.http.post(this.endpoint + 'InsertarInmuebleDomicilioFiscal' + '?' + queryDPI, '', this.httpOptions)
+        console.log(this.endpointSimulacion + 'InsertarInmuebleDomicilioFiscal' + '?' + queryDPI);
+        this.http.post(this.endpointSimulacion + 'InsertarInmuebleDomicilioFiscal' + '?' + queryDPI, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
                     if(res.length > 0){
-                        this.getDomicilioContribuyente();
+                        this.getDomicilioContribuyenteSimula();
+                        this.selectIdPersonaI = true;
                         this.snackBar.open('Actualización correcta', 'Cerrar', {
                             duration: 10000,
                             horizontalPosition: 'end',
@@ -1204,33 +1210,12 @@ export class EditartContribuyenteComponent implements OnInit {
             if(result){
                 console.log(result);
 
-                this.dataActualizacion.after_CP = result.after_CP;
-                this.dataActualizacion.after_Col = result.after_Col;
-                this.dataActualizacion.after_Direccion = result.after_Direccion;
-                this.dataActualizacion.after_Nombre = result.after_Nombre;
-                this.dataActualizacion.after_RFC = result.after_RFC;
-                this.dataActualizacion.area = result.area;
-                this.dataActualizacion.at = result.at;
-                this.dataActualizacion.before_CP = result.before_CP;
-                this.dataActualizacion.before_Col = result.before_Col;
-                this.dataActualizacion.before_Direccion = result.before_Direccion;
-                this.dataActualizacion.before_Nombre = result.before_Nombre;
-                this.dataActualizacion.before_RFC = result.before_RFC;
-                this.dataActualizacion.cuentaP = result.cuentaP;
-                this.dataActualizacion.fechaConsulta = result.fechaConsulta;
-                this.dataActualizacion.folio = result.folio;
-                this.dataActualizacion.idpersona = result.idpersona;
-                this.dataActualizacion.usuario = result.usuario;
-                
-                console.log(this.dataActualizacion.after_CP);
-                console.log(this.dataActualizacion.after_Nombre);
-
                 this.accionDomicilio = true;
                 this.accionDomicilioBoletas = false;
                 this.actualizado = false;
                 this.loadingDomicilios = true;
                 setTimeout (() => {
-                    this.getDomicilioContribuyente();
+                    this.getDomicilioContribuyenteSimula();
                 }, 1500);
             }
             
@@ -1250,30 +1235,10 @@ export class EditartContribuyenteComponent implements OnInit {
             if(result){
                 console.log(result);
 
-                this.dataActualizacion.after_CP = result.after_CP;
-                this.dataActualizacion.after_Col = result.after_Col;
-                this.dataActualizacion.after_Direccion = result.after_Direccion;
-                this.dataActualizacion.after_Nombre = result.after_Nombre;
-                this.dataActualizacion.after_RFC = result.after_RFC;
-                this.dataActualizacion.area = result.area;
-                this.dataActualizacion.at = result.at;
-                this.dataActualizacion.before_CP = result.before_CP;
-                this.dataActualizacion.before_Col = result.before_Col;
-                this.dataActualizacion.before_Direccion = result.before_Direccion;
-                this.dataActualizacion.before_Nombre = result.before_Nombre;
-                this.dataActualizacion.before_RFC = result.before_RFC;
-                this.dataActualizacion.cuentaP = result.cuentaP;
-                this.dataActualizacion.fechaConsulta = result.fechaConsulta;
-                this.dataActualizacion.folio = result.folio;
-                this.dataActualizacion.idpersona = result.idpersona;
-                this.dataActualizacion.usuario = result.usuario;
-                
-                console.log(this.dataActualizacion.after_CP);
-                console.log(this.dataActualizacion.after_Nombre);
-
                 this.accionDomicilio = false;
                 this.accionDomicilioBoletas = true;
                 this.actualizado = false;
+                this.loadingDomicilios = true;
                 setTimeout (() => {
                     this.getDomicilioContribuyente();
                 }, 1500);
@@ -1451,19 +1416,23 @@ export class EditartContribuyenteComponent implements OnInit {
      * @param tipo Valor del tipo de representación de acuerdo al valor seleccionara el método correspondiente.
      */
     eliminarRepresentacion(element,tipo){
-        let queryDelRep = 'idRepresentacion=' + element.IDREPRESENTACION;
+        this.loadingRepresentante = true;
+        this.loadingRepresentado = true;
+        let queryDelRep = 'idRepresentacion=' + element.IDREPRESENTACION + '&idPersona=' + this.idContribuyente;
         console.log(element);
-        console.log(this.endpointActualiza + 'deleteRepresentacion?' + queryDelRep);
-        this.http.post(this.endpointActualiza + 'deleteRepresentacion?' + queryDelRep, '', this.httpOptions)
+        console.log(this.endpointSimulacion + 'deleteRepresentacion?' + queryDelRep);
+        this.http.post(this.endpointSimulacion + 'deleteRepresentacion?' + queryDelRep, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
                     console.log("ELIMINADO");
                     console.log(res);
                     if(res){
                         if(tipo == 1){
-                            this.getRepresentacion();
+                            this.loadingRepresentado = false;
+                            this.getRepresentacionSimula();
                         }else{
-                            this.getRepresentado();
+                            this.loadingRepresentante = false;
+                            this.getRepresentadoSimula();
                         }
                         this.snackBar.open("Se ha eliminado la representación", 'Cerrar', {
                             duration: 10000,
@@ -1515,6 +1484,31 @@ export class EditartContribuyenteComponent implements OnInit {
     }
 
     /**
+     * Obtiene las representaciónes simuladas del contribuyente
+     */
+     getRepresentacionSimula(){
+        this.loadingRepresentante = true;
+        let queryRep = 'rep=Representantes&idPersona=' + this.idContribuyente;
+        this.http.get(this.endpointSimulacion + 'getRepresentacionContribuyente?' + queryRep, this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loadingRepresentante = false;
+                    this.dataSource4 = res;
+                    this.total4 = this.dataSource4.length;
+                    this.dataPaginate4 = this.paginate(this.dataSource4, 15, this.pagina4);
+                },
+                (error) => {
+                    this.loadingRepresentante = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
+
+    /**
      * Método del paginado que nos dira la posición del paginado y los datos a mostrar
      * @param evt Nos da la referencia de la pagina en la que se encuentra
      */
@@ -1531,6 +1525,34 @@ export class EditartContribuyenteComponent implements OnInit {
         let queryRepdo = 'rep=Representado&idPersona=' + this.idContribuyente;
         console.log(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRepdo);
         this.http.get(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRepdo, this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loadingRepresentado = false;
+                    this.dataSource5 = res;
+                    console.log("ACA ENTRO EL REPRESENTADO");
+                    console.log(res);
+                    this.total5 = this.dataSource5.length;
+                    this.dataPaginate5 = this.paginate(this.dataSource5, 15, this.pagina5);
+                },
+                (error) => {
+                    this.loadingRepresentado = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
+
+    /**
+     * Obtienen los representados de la sociedad.
+     */
+     getRepresentadoSimula(){
+        this.loadingRepresentado = true;
+        let queryRepdo = 'rep=Representado&idPersona=' + this.idContribuyente;
+        console.log(this.endpointSimulacion + 'getRepresentacionContribuyente?' + queryRepdo);
+        this.http.get(this.endpointSimulacion + 'getRepresentacionContribuyente?' + queryRepdo, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingRepresentado = false;
@@ -1676,6 +1698,7 @@ export class DialogDomicilioContribuyenteT {
   loadingDireccionEspecifica = false;
   iddomicilio;
   iddireccion;
+  idPersonaT;
   blockButtons = true;
   lafinal: DataMovimientoDomicilio[] = [];
 
@@ -1754,6 +1777,7 @@ export class DialogDomicilioContribuyenteT {
             if(data.dataDomicilioEspecifico){
                 console.log("recibimos data seteado1"+data.dataDomicilioEspecifico);
                 this.loadingDireccionEspecifica = true;
+                this.idPersonaT = data.idContribuyente;
                 setTimeout(() => {
                     this.getDireccionEspecifica();
                 }, 5000);
@@ -1766,7 +1790,8 @@ export class DialogDomicilioContribuyenteT {
     getDireccionEspecifica(){
         
         let metodo = 'getDireccionById';
-        this.http.get(this.endpointCatalogos + metodo + '?idDireccion='+ this.iddireccion, this.httpOptions)
+        let param = 'idDireccion='+ this.iddireccion + '&idPersona=' + this.idPersonaT;
+        this.http.get(this.endpointSimulacion + metodo + '?' + param, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingDireccionEspecifica = false;
@@ -1774,7 +1799,7 @@ export class DialogDomicilioContribuyenteT {
                     console.log('domicilio único encontrado');
                     console.log(this.dataDomicilioEspecifico);
                     setTimeout(() => {
-                        this.setDataDomicilio(this.dataDomicilioEspecifico[0]);    
+                        this.setDataDomicilio(this.dataDomicilioEspecifico);    
                     }, 500);
                     
                 },
@@ -2018,32 +2043,14 @@ export class DialogDomicilioContribuyenteT {
         console.log('EL SUPER QUERY!!!!!!');
         console.log(query);
         
-        this.http.post(this.endpointCatalogos + query, '', this.httpOptions)
+        this.http.post(this.endpointSimulacion + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
                     console.log("Aquí se inserta una nueva Dirección");
                     console.log(res);
                     console.log(this.codtiposdireccion);
 
-                    this.dataMovimientoDomicilio.after_CP = res.after_CP;
-                    this.dataMovimientoDomicilio.after_Col = res.after_Col;
-                    this.dataMovimientoDomicilio.after_Direccion = res.after_Direccion;
-                    this.dataMovimientoDomicilio.after_Nombre = res.after_Nombre;
-                    this.dataMovimientoDomicilio.after_RFC = res.after_RFC;
-                    this.dataMovimientoDomicilio.area = res.area;
-                    this.dataMovimientoDomicilio.at = res.at;
-                    this.dataMovimientoDomicilio.before_CP = res.before_CP;
-                    this.dataMovimientoDomicilio.before_Col = res.before_Col;
-                    this.dataMovimientoDomicilio.before_Direccion = res.before_Direccion;
-                    this.dataMovimientoDomicilio.before_Nombre = res.before_Nombre;
-                    this.dataMovimientoDomicilio.before_RFC = res.before_RFC;
-                    this.dataMovimientoDomicilio.cuentaP = res.cuentaP;
-                    this.dataMovimientoDomicilio.fechaConsulta = res.fechaConsulta;
-                    this.dataMovimientoDomicilio.folio = res.folio;
-                    this.dataMovimientoDomicilio.idpersona = res.idpersona;
-                    this.dataMovimientoDomicilio.usuario = res.usuario;
-
-                    this.dialogRef.close(this.dataMovimientoDomicilio);
+                    this.dialogRef.close(1);
                     this.loadingEstados = false;
                     this.snackBar.open('Registro exitoso', 'Cerrar', {
                         duration: 10000,

@@ -860,6 +860,8 @@ export class EditarSociedadComponent implements OnInit {
      * @param tipo Valor del tipo de representación de acuerdo al valor seleccionara el método correspondiente.
      */
     eliminarRepresentacion(element,tipo){
+        this.loadingRepresentante = true;
+        this.loadingRepresentado = true;
         let queryDelRep = 'idRepresentacion=' + element.IDREPRESENTACION;
         console.log(element);
         console.log(this.endpointActualiza + 'deleteRepresentacion?' + queryDelRep);
@@ -870,8 +872,10 @@ export class EditarSociedadComponent implements OnInit {
                     console.log(res);
                     if(res){
                         if(tipo == 1){
+                            this.loadingRepresentado = false;
                             this.getRepresentacion();
                         }else{
+                            this.loadingRepresentante = false;
                             this.getRepresentado();
                         }
                         this.snackBar.open("Se ha eliminado la representación", 'Cerrar', {

@@ -112,6 +112,11 @@ export class EdicionContribuyenteComponent implements OnInit {
     // });
   }
 
+  /**
+   * Nos mostrará la ventana para modificar los datos en una o más cuentas.
+   * @param mensaje Valor para mostrar el mensaje en pantalla.
+   * @param idpersona Id de la persona.
+   */
   editaCuenta(mensaje, idpersona){
     
     let regionT = (this.cuentaFormGroup.value.region) ? this.cuentaFormGroup.value.region : '';
@@ -146,6 +151,31 @@ export class EdicionContribuyenteComponent implements OnInit {
     });
   }
 
+  /**
+   * Mostrará en panatalla el mensaje de advertencia donde se le mencionara que cada cambio afectará a las cuentas asociadas.
+   * @param mensaje Valor para mostrar el mensaje en pantalla.
+   * @param idpersona Id de la persona.
+   */
+   mensajeCuenta(mensaje, idpersona){
+    
+    const dialogRef = this.dialog.open(DialogCuenta, {
+      width: '800px',
+      data: {mensaje: mensaje, idpersona: idpersona}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+        console.log("ACÁ RESULT");
+        if(result != false){
+          console.log(result);    
+          switch (result) {
+            case 3:
+              this.router.navigate(['main/editar-contribuyente/' + idpersona]);
+              break;
+            default:
+              break;
+          }
+        }
+    });
+  }
   /** 
   * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
   */
