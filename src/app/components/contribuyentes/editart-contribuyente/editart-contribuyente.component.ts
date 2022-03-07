@@ -768,9 +768,9 @@ export class EditartContribuyenteComponent implements OnInit {
             query = (this.contribuyente.nombre_moral) ? query + '&apellidopaterno=' + this.contribuyente.nombre_moral.toLocaleUpperCase().trim() : query + '&apellidopaterno=';
         }
 
-        query = query + '&idExpediente&idpersona='  + this.idContribuyente;
+        query = query + '&idExpediente&idPersona='  + this.idContribuyente;
 
-        this.http.post(this.endpoint + 'actualizaContribuyente' + '?' + query, '', this.httpOptions)
+        this.http.post(this.endpointSimulacion + 'insertarContribuyente' + '?' + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
