@@ -232,7 +232,7 @@
                     </div>
                     <div class="col-md-2" *ngIf="actCambioPersona">
                         <div class="d-flex flex-row-reverse">
-                            <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Actualizar" matTooltip="Actualizar" (click)="actualizarContribuyente()" *ngIf="!loading" [disabled]="(contribuyente.tipoPersona == 'F' ? fisicaFormGroup.invalid : moralFormGroup.invalid)">
+                            <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Actualizar" matTooltip="Actualizar" (click)="confirmaCambio(8)" *ngIf="!loading" [disabled]="(contribuyente.tipoPersona == 'F' ? fisicaFormGroup.invalid : moralFormGroup.invalid)">
                                 Guardar <mat-icon style="display: inherit; width: 25px;">update</mat-icon>
                             </button>
                         </div>

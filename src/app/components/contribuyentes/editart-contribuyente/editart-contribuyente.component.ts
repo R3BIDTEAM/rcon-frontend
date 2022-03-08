@@ -264,7 +264,8 @@ export class EditartContribuyenteComponent implements OnInit {
         private _formBuilder: FormBuilder,
         private snackBar: MatSnackBar,
         public dialog: MatDialog,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private routerL: Router
     ) {
         this.httpOptions = {
             headers: new HttpHeaders({
@@ -509,44 +510,7 @@ export class EditartContribuyenteComponent implements OnInit {
         this.http.post(this.endpointSimulacion + 'insertAsociaCuentaContrib' + '?' + queryP, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
-                    
-                    if(res.idpersona){
-                        this.actualizadoCuenta = true;
-                        this.actualizado = false;
-                        this.snackBar.open("Actualización correcta", 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
-                        });
-                        this.dataActualizacion.after_CP = res.after_CP;
-                        this.dataActualizacion.after_Col = res.after_Col;
-                        this.dataActualizacion.after_Direccion = res.after_Direccion;
-                        this.dataActualizacion.after_Nombre = res.after_Nombre;
-                        this.dataActualizacion.after_RFC = res.after_RFC;
-                        this.dataActualizacion.after_cuenta = res.after_cuenta;
-                        this.dataActualizacion.area = res.area;
-                        this.dataActualizacion.at = res.at;
-                        this.dataActualizacion.before_cuenta = res.before_cuenta;
-                        this.dataActualizacion.before_CP = res.before_CP;
-                        this.dataActualizacion.before_Col = res.before_Col;
-                        this.dataActualizacion.before_Direccion = res.before_Direccion;
-                        this.dataActualizacion.before_Nombre = res.before_Nombre;
-                        this.dataActualizacion.before_RFC = res.before_RFC;
-                        this.dataActualizacion.cuentaP = res.cuentaP;
-                        this.dataActualizacion.fechaConsulta = res.fechaConsulta;
-                        this.dataActualizacion.idpersona = res.idpersona;
-                        this.dataActualizacion.usuario = res.usuario;
-                        this.dataActualizacion.folio = null;
-                        this.getTipoDerecho();
-                    }else{
-                        this.snackBar.open("Error al actualizar, intente nuevamente.", 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
-                        });
-                        this.loadingDerecho = false;
-                    }
-                    
+                    this.routerL.navigate(['main/editar-contribuyente/' + res]);
                 },
                 (error) => {
                     this.loadingDerecho = false;
@@ -777,26 +741,26 @@ export class EditartContribuyenteComponent implements OnInit {
                     console.log("CONTRIBUYENTE ACTUALIZADO");
                     console.log(res);
             
-                        this.dataActualizacion.after_CP = res.after_CP;
-                        this.dataActualizacion.after_Col = res.after_Col;
-                        this.dataActualizacion.after_Direccion = res.after_Direccion;
-                        this.dataActualizacion.after_Nombre = res.after_Nombre;
-                        this.dataActualizacion.after_RFC = res.after_RFC;
-                        this.dataActualizacion.after_cuenta = res.after_cuenta;
-                        this.dataActualizacion.area = res.area;
-                        this.dataActualizacion.at = res.at;
-                        this.dataActualizacion.before_cuenta = res.before_cuenta;
-                        this.dataActualizacion.before_CP = res.before_CP;
-                        this.dataActualizacion.before_Col = res.before_Col;
-                        this.dataActualizacion.before_Direccion = res.before_Direccion;
-                        this.dataActualizacion.before_Nombre = res.before_Nombre;
-                        this.dataActualizacion.before_RFC = res.before_RFC;
-                        this.dataActualizacion.cuentaP = res.cuentaP;
-                        this.dataActualizacion.fechaConsulta = res.fechaConsulta;
-                        this.dataActualizacion.folio = res.folio;
-                        this.dataActualizacion.idpersona = res.idpersona;
-                        this.dataActualizacion.usuario = res.usuario;
-
+                        // this.dataActualizacion.after_CP = res.after_CP;
+                        // this.dataActualizacion.after_Col = res.after_Col;
+                        // this.dataActualizacion.after_Direccion = res.after_Direccion;
+                        // this.dataActualizacion.after_Nombre = res.after_Nombre;
+                        // this.dataActualizacion.after_RFC = res.after_RFC;
+                        // this.dataActualizacion.after_cuenta = res.after_cuenta;
+                        // this.dataActualizacion.area = res.area;
+                        // this.dataActualizacion.at = res.at;
+                        // this.dataActualizacion.before_cuenta = res.before_cuenta;
+                        // this.dataActualizacion.before_CP = res.before_CP;
+                        // this.dataActualizacion.before_Col = res.before_Col;
+                        // this.dataActualizacion.before_Direccion = res.before_Direccion;
+                        // this.dataActualizacion.before_Nombre = res.before_Nombre;
+                        // this.dataActualizacion.before_RFC = res.before_RFC;
+                        // this.dataActualizacion.cuentaP = res.cuentaP;
+                        // this.dataActualizacion.fechaConsulta = res.fechaConsulta;
+                        // this.dataActualizacion.folio = res.folio;
+                        // this.dataActualizacion.idpersona = res.idpersona;
+                        // this.dataActualizacion.usuario = res.usuario;
+                        this.routerL.navigate(['main/editar-contribuyente/' + res]);
                         this.actualizado = true;
                         this.actualizadoCuenta = false;
                         this.accionDomicilio = false;
@@ -848,6 +812,9 @@ export class EditartContribuyenteComponent implements OnInit {
                         break;
                     case 7:
                         this.actualizaPersonaInmueble(element,tipo);
+                        break;
+                    case 8:
+                        this.actualizarContribuyente();
                         break;
                     default:
                         break;
