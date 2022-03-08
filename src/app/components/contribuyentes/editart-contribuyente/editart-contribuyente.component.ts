@@ -760,7 +760,7 @@ export class EditartContribuyenteComponent implements OnInit {
                         // this.dataActualizacion.folio = res.folio;
                         // this.dataActualizacion.idpersona = res.idpersona;
                         // this.dataActualizacion.usuario = res.usuario;
-                        //this.routerL.navigate(['main/editar-contribuyente/' + res]);
+                        this.routerL.navigate(['main/editar-contribuyente/' + res]);
                         this.actualizado = true;
                         this.actualizadoCuenta = false;
                         this.accionDomicilio = false;
