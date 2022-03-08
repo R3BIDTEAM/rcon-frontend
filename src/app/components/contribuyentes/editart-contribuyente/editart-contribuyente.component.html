@@ -140,12 +140,12 @@
                                 <mat-error *ngIf="fisicaFormGroup.controls.email.errors?.pattern">El campo correo electrónico debe cumplir la estructura "usuario@dominio".</mat-error>
                             </mat-form-field>
                         </div>
-                        <div class="row">
+                        <!-- <div class="row">
                             <mat-form-field appearance="outline" class="col-12">
                                 <mat-label>Observaciones:</mat-label>
                                 <textarea matInput formControlName="texto" [(ngModel)]="contribuyente.texto" rows="5" style="text-transform: uppercase;" maxlength="250"></textarea>
                             </mat-form-field>
-                        </div>
+                        </div> -->
                     </form>
                 </ng-container>
                 <ng-container *ngIf="contribuyente.tipoPersona == 'M'  && !loading">
@@ -199,12 +199,12 @@
                                 <mat-datepicker #pickfechaCambio></mat-datepicker>
                             </mat-form-field>                            
                         </div>
-                        <div class="row">
+                        <!-- <div class="row">
                             <mat-form-field appearance="outline" class="col-12">
                                 <mat-label>Observaciones:</mat-label>
                                 <textarea matInput formControlName="texto" [(ngModel)]="contribuyente.texto" rows="5" style="text-transform: uppercase;" maxlength="250"></textarea>
                             </mat-form-field>
-                        </div>
+                        </div> -->
                     </form>
                 </ng-container>
                 <br>
