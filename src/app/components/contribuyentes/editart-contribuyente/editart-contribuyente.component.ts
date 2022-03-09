@@ -858,6 +858,8 @@ export class EditartContribuyenteComponent implements OnInit {
         query = (this.contribuyente.idMotivo) ? query + '&idmotivosmoral=' + this.contribuyente.idMotivo : query + '&idmotivosmoral=';
         query = (this.contribuyente.fechaInicioOperacion) ? query + '&fechainicioactiv=' + moment(this.contribuyente.fechaInicioOperacion).format('DD-MM-YYYY') : query + '&fechainicioactiv=';
         query = (this.contribuyente.fechaCambio) ? query + '&fechacambiosituacion=' + moment(this.contribuyente.fechaCambio).format('DD-MM-YYYY') : query + '&fechacambiosituacion=';
+        query = (this.contribuyente.fechaCambio) ? query + '&fechacambiosituacion=' + moment(this.contribuyente.fechaCambio).format('DD-MM-YYYY') : query + '&fechacambiosituacion=';
+        query = query + '&idPersona=' + this.idContribuyente;
         //query = (this.contribuyente.texto) ? query + '&observacion=' + this.contribuyente.texto : query + '&observacion=';
         //cambioTipoPersona?idpersona=4493942&apellidopaterno=Palacios&apellidomaterno=Garcia&nombreF=Telesforo&rfcF=PAGT830626AE0&curp&claveife=&iddocidentif&valdocidentif&fechanacimiento=26-06-1983&fechadefuncion
         //&codtipospersona=M&nombreM=Telesforo Palacios Garcia&activprincipM&idtipomoral&idmotivosmoral&fechainicioactiv&fechacambiosituacion&rfcM=GEC8501014I5&celular&email=
@@ -873,23 +875,7 @@ export class EditartContribuyenteComponent implements OnInit {
                         horizontalPosition: 'end',
                         verticalPosition: 'top'
                     });
-                    this.dataActualizacion.after_CP = res.after_CP;
-                    this.dataActualizacion.after_Col = res.after_Col;
-                    this.dataActualizacion.after_Direccion = res.after_Direccion;
-                    this.dataActualizacion.after_Nombre = res.after_Nombre;
-                    this.dataActualizacion.after_RFC = res.after_RFC;
-                    this.dataActualizacion.area = res.area;
-                    this.dataActualizacion.at = res.at;
-                    this.dataActualizacion.before_CP = res.before_CP;
-                    this.dataActualizacion.before_Col = res.before_Col;
-                    this.dataActualizacion.before_Direccion = res.before_Direccion;
-                    this.dataActualizacion.before_Nombre = res.before_Nombre;
-                    this.dataActualizacion.before_RFC = res.before_RFC;
-                    this.dataActualizacion.cuentaP = res.cuentaP;
-                    this.dataActualizacion.fechaConsulta = res.fechaConsulta;
-                    this.dataActualizacion.folio = res.folio;
-                    this.dataActualizacion.idpersona = res.idpersona;
-                    this.dataActualizacion.usuario = res.usuario;
+                    this.routerL.navigate(['main/editar-contribuyente/' + res]);
 
                     this.actualizado = true;
                     this.accionDomicilio = false;
