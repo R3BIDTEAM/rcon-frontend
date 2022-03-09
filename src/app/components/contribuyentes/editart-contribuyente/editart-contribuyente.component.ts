@@ -861,7 +861,7 @@ export class EditartContribuyenteComponent implements OnInit {
         //query = (this.contribuyente.texto) ? query + '&observacion=' + this.contribuyente.texto : query + '&observacion=';
         //cambioTipoPersona?idpersona=4493942&apellidopaterno=Palacios&apellidomaterno=Garcia&nombreF=Telesforo&rfcF=PAGT830626AE0&curp&claveife=&iddocidentif&valdocidentif&fechanacimiento=26-06-1983&fechadefuncion
         //&codtipospersona=M&nombreM=Telesforo Palacios Garcia&activprincipM&idtipomoral&idmotivosmoral&fechainicioactiv&fechacambiosituacion&rfcM=GEC8501014I5&celular&email=
-        this.http.post(this.endpoint + 'cambioTipoPersona' + '?' + query, '', this.httpOptions)
+        this.http.post(this.endpointSimulacion + 'cambioTipoPersona' + '?' + query, '', this.httpOptions)
         .subscribe(
             (res: any) => {
                 this.loading = false;
