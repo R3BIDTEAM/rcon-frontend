@@ -962,6 +962,25 @@ export class EditartContribuyenteComponent implements OnInit {
             );
     }
 
+    
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
+     paginado1(evt): void{
+        this.pagina1 = evt.pageIndex + 1;
+        this.dataPaginate1 = this.paginate(this.dataSource1, 15, this.pagina1);
+    }
+
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
+    paginado2(evt): void{
+        this.pagina1 = evt.pageIndex + 1;
+        this.dataPaginate2 = this.paginate(this.dataSource2, 15, this.pagina2);
+    }
+
     /**
      * Obtiene los inmuebles de la persona
      */
@@ -979,8 +998,8 @@ export class EditartContribuyenteComponent implements OnInit {
                     this.dataSource3 = res;
                     console.log(res.length);
                     console.log(this.dataSource3);
-                    this.dataPaginate3 = this.paginate(this.dataSource3, 15, this.paginaDom);
-                    this.total3 = this.dataPaginate3.length; 
+                    this.dataPaginate3 = this.paginate(this.dataSource3, 15, this.pagina3);
+                    this.total3 = this.dataSource3.length; 
                     this.paginator.pageIndex = 0;
                     console.log("AQUI ENTRO EL RES DEL INMUEBLE!");
                     console.log(this.dataSource3);
@@ -995,6 +1014,15 @@ export class EditartContribuyenteComponent implements OnInit {
                     });
                 }
             );
+    }
+
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
+    paginado3(evt): void{
+        this.pagina3 = evt.pageIndex + 1;
+        this.dataPaginate3 = this.paginate(this.dataSource3, 15, this.pagina3);
     }
 
     /**
@@ -1088,15 +1116,6 @@ export class EditartContribuyenteComponent implements OnInit {
     }
 
     /**
-     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
-     * @param evt Nos da la referencia de la pagina en la que se encuentra
-     */
-     paginado3(evt): void{
-        this.pagina3 = evt.pageIndex + 1;
-        this.dataSource3 = this.paginate(this.dataSource3, 15, this.pagina3);
-    }
-
-    /**
      * @param iddireccion obtiene la direccion especifica con el id que recibe
      */
     getDireccionEspecifica(iddireccion){
@@ -1121,24 +1140,6 @@ export class EditartContribuyenteComponent implements OnInit {
                     });
                 }
             );
-    }
-
-    /**
-     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
-     * @param evt Nos da la referencia de la pagina en la que se encuentra
-     */
-    paginado1(evt): void{
-        this.pagina1 = evt.pageIndex + 1;
-        this.dataSource1 = this.paginate(this.dataSource1, 15, this.pagina1);
-    }
-
-    /**
-     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
-     * @param evt Nos da la referencia de la pagina en la que se encuentra
-     */
-    paginado2(evt): void{
-        this.pagina1 = evt.pageIndex + 1;
-        this.dataSource1 = this.paginate(this.dataSource1, 15, this.pagina1);
     }
 
     /**
@@ -1467,7 +1468,7 @@ export class EditartContribuyenteComponent implements OnInit {
      */
     paginado4(evt): void{
         this.pagina4 = evt.pageIndex + 1;
-        this.dataSource4 = this.paginate(this.dataSource4, 15, this.pagina4);
+        this.dataPaginate4 = this.paginate(this.dataSource4, 15, this.pagina4);
     }
 
     /**
@@ -1532,7 +1533,7 @@ export class EditartContribuyenteComponent implements OnInit {
      */
     paginado5(evt): void{
         this.pagina5 = evt.pageIndex + 1;
-        this.dataSource5 = this.paginate(this.dataSource5, 15, this.pagina5);
+        this.dataPaginate5 = this.paginate(this.dataSource5, 15, this.pagina5);
     }
 
     /**
@@ -1540,8 +1541,8 @@ export class EditartContribuyenteComponent implements OnInit {
      * @param evt Nos da la referencia de la pagina en la que se encuentra
      */
      paginado6(evt): void{
-        this.pagina5 = evt.pageIndex + 1;
-        this.dataSource5 = this.paginate(this.dataSource5, 15, this.pagina5);
+        this.pagina6 = evt.pageIndex + 1;
+        this.dataPaginate4 = this.paginate(this.dataSource4, 15, this.pagina6);
     }
 
     /**
@@ -1549,8 +1550,8 @@ export class EditartContribuyenteComponent implements OnInit {
      * @param evt Nos da la referencia de la pagina en la que se encuentra
      */
      paginado7(evt): void{
-        this.pagina5 = evt.pageIndex + 1;
-        this.dataSource5 = this.paginate(this.dataSource5, 15, this.pagina5);
+        this.pagina7 = evt.pageIndex + 1;
+        this.dataPaginate5 = this.paginate(this.dataSource5, 15, this.pagina7);
     }
 
     /**

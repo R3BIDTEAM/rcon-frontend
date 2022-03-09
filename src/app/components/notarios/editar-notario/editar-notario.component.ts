@@ -427,7 +427,7 @@ export class EditarNotarioComponent implements OnInit {
 
     paginado1(evt): void{
         this.pagina1 = evt.pageIndex + 1;
-        this.dataSource1 = this.paginate(this.dataSource1, 15, this.pagina1);
+        this.dataPaginate1 = this.paginate(this.dataSource1, 15, this.pagina1);
     }
     
     paginate(array, page_size, page_number) {

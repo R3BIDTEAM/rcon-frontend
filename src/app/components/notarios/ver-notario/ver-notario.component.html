@@ -126,7 +126,7 @@
                     <div class="alert alert-info" *ngIf="!loadingDomicilios && dataSource.length == 0">
                         No hay direcciones asociadas.
                     </div> 
-                    <table mat-table [dataSource]="dataSource" *ngIf="!loadingDomicilios && dataSource.length > 0" width="100%">
+                    <table mat-table [dataSource]="dataPaginate" *ngIf="!loadingDomicilios && dataSource.length > 0" width="100%">
                         
                         <ng-container matColumnDef="direccion">
                             <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="70%"> Dirección </th>

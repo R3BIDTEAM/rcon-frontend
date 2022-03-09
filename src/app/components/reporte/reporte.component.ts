@@ -158,35 +158,38 @@ export class ReporteComponent implements OnInit {
 
 	downloadInforme(): void {
 		this.downloading = true;
-		let tipo = '';
-        let head = null;
-        if(this.rol == 'SUPERVISOR RCON' || this.rol == 'Administrador'){
-            head = [['NUM', 'FECHA', 'CUENTA', 'CAMPO MODIFICADO', 'VALOR ANTERIOR', 'VALOR DESPÚES', 'USUARIO', 'ÁREA', 'SUBÁREA', 'OBSERVACIÓN']];
-            tipo = 'A';
-            console.log("ACÁ EL TIPO:" + tipo);
-        }else{
-            head = [['NUM', 'FECHA', 'CUENTA', 'CAMPO MODIFICADO', 'VALOR ANTERIOR', 'VALOR DESPÚES']];
-            tipo = 'E';
-            console.log("ACÁ EL TIPO:" + tipo);
-        }
-		
+        let head = [['NUM', 'FECHA', 'CUENTA', 'CAMPO MODIFICADO', 'VALOR ANTERIOR', 'VALOR DESPÚES', 'USUARIO', 'ÁREA', 'SUBÁREA', 'OBSERVACIÓN']];
+		// let tipo = '';
+        // let head = null;
+        // if(this.rol == 'SUPERVISOR RCON' || this.rol == 'Administrador'){
+        //     head = [['NUM', 'FECHA', 'CUENTA', 'CAMPO MODIFICADO', 'VALOR ANTERIOR', 'VALOR DESPÚES', 'USUARIO', 'ÁREA', 'SUBÁREA', 'OBSERVACIÓN']];
+        //     tipo = 'A';
+        //     console.log("ACÁ EL TIPO:" + tipo);
+        // }else{
+        //     head = [['NUM', 'FECHA', 'CUENTA', 'CAMPO MODIFICADO', 'VALOR ANTERIOR', 'VALOR DESPÚES']];
+        //     tipo = 'E';
+        //     console.log("ACÁ EL TIPO:" + tipo);
+        // }
 		let data = [];
-		switch(tipo) {
-			case 'E': {
-				this.dataSource.forEach(element => data.push([element.numero, element.fecha_de_cambio, element.cuenta, element.campo_modificado, element.valor_antes, element.valor_despues]));
-                console.log("ACÁ EL ARRAY:" + tipo);
-				break;
-			}
-            case 'A': {
-				this.dataSource.forEach(element => data.push([element.numero, element.fecha_de_cambio, element.cuenta, element.campo_modificado, element.valor_antes, element.valor_despues, element.nombre_de_usuario, element.area, element.subarea, element.observacion]));
-                console.log("ACÁ EL ARRAY:" + tipo);
-				break;
-			}
-		default: {
-			this.dataSource.forEach(element => data.push([element.numero, element.fecha_de_cambio, element.cuenta, element.campo_modificado, element.valor_antes, element.valor_despues]));
-			break; 
-		   } 
-		}     
+        this.dataSource.forEach(element => data.push([element.numero, element.fecha_de_cambio, element.cuenta, element.campo_modificado, element.valor_antes, element.valor_despues, element.nombre_de_usuario, element.area, element.subarea, element.observacion]));
+        		
+		
+		// switch(tipo) {
+		// 	case 'E': {
+		// 		this.dataSource.forEach(element => data.push([element.numero, element.fecha_de_cambio, element.cuenta, element.campo_modificado, element.valor_antes, element.valor_despues]));
+        //         console.log("ACÁ EL ARRAY:" + tipo);
+		// 		break;
+		// 	}
+        //     case 'A': {
+		// 		this.dataSource.forEach(element => data.push([element.numero, element.fecha_de_cambio, element.cuenta, element.campo_modificado, element.valor_antes, element.valor_despues, element.nombre_de_usuario, element.area, element.subarea, element.observacion]));
+        //         console.log("ACÁ EL ARRAY:" + tipo);
+		// 		break;
+		// 	}
+		// default: {
+		// 	this.dataSource.forEach(element => data.push([element.numero, element.fecha_de_cambio, element.cuenta, element.campo_modificado, element.valor_antes, element.valor_despues]));
+		// 	break; 
+		//    } 
+		// }
 
 		let fechasR = moment(this.reporteFormGroup.value.fechaInicio).format('YYYY-MM-DD') + '_' + moment(this.reporteFormGroup.value.fechaFin).format('YYYY-MM-DD');
 		this.excelService.exportAsExcelFile(head[0], data, 'Rep_Mov_' + fechasR);

@@ -567,6 +567,7 @@ export class EditarSociedadComponent implements OnInit {
                     this.total2 = this.dataSource2.length;
                     this.dataPaginate1 = this.paginate(this.dataSource1, 15, this.pagina1);
                     this.dataPaginate2 = this.paginate(this.dataSource2, 15, this.pagina2);
+                    this.getidInmuebles();
                 },
                 (error) => {
                     this.loadingDomicilios = false;
@@ -579,36 +580,13 @@ export class EditarSociedadComponent implements OnInit {
             );
     }
 
-    // getDireccionEspecifica(iddireccion){
-    //     this.loadingDireccionEspecifica = true;
-    //     let metodo = 'getDireccionById';
-    //     this.http.get(this.endpointActualiza + metodo + '?idDireccion='+ iddireccion, this.httpOptions)
-    //         .subscribe(
-    //             (res: any) => {
-    //                 this.loadingDireccionEspecifica = false;
-    //                 this.dataDomicilioEspecifico = res;
-    //                 this.editDomicilio(this.dataDomicilioEspecifico);
-    //                 console.log('domicilio único encontrado 319');
-    //                 console.log(this.dataDomicilioEspecifico);
-    //             },
-    //             (error) => {
-    //                 this.loadingDireccionEspecifica = false;
-    //                 this.snackBar.open(error.error.mensaje, 'Cerrar', {
-    //                     duration: 10000,
-    //                     horizontalPosition: 'end',
-    //                     verticalPosition: 'top'
-    //                 });
-    //             }
-    //         );
-    // }
-
     /**
      * Método del paginado que nos dira la posición del paginado y los datos a mostrar
      * @param evt Nos da la referencia de la pagina en la que se encuentra
      */
     paginado1(evt): void{
         this.pagina1 = evt.pageIndex + 1;
-        this.dataSource1 = this.paginate(this.dataSource1, 15, this.pagina1);
+        this.dataPaginate1 = this.paginate(this.dataSource1, 15, this.pagina1);
     }
 
     /**
@@ -616,19 +594,9 @@ export class EditarSociedadComponent implements OnInit {
      * @param evt Nos da la referencia de la pagina en la que se encuentra
      */
     paginado2(evt): void{
-        this.pagina1 = evt.pageIndex + 1;
-        this.dataSource1 = this.paginate(this.dataSource1, 15, this.pagina1);
+        this.pagina2 = evt.pageIndex + 1;
+        this.dataPaginate2 = this.paginate(this.dataSource2, 15, this.pagina2);
     }
-
-    /**
-     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
-     * @param evt Nos da la referencia de la pagina en la que se encuentra
-     */
-     paginado3(evt): void{
-        this.pagina3 = evt.pageIndex + 1;
-        this.dataSource3 = this.paginate(this.dataSource3, 15, this.pagina3);
-    }
-
 
     getidInmuebles(){
         let metodo = 'getDireccionesInmueble';
@@ -641,21 +609,11 @@ export class EditarSociedadComponent implements OnInit {
                     this.dataSource3 = res;
                     console.log(res.length);
                     console.log(this.dataSource3);
-                    this.dataPaginate3 = this.paginate(this.dataSource3, 15, this.paginaDom);
-                    this.total = this.dataPaginate3.length; 
+                    this.dataPaginate3 = this.paginate(this.dataSource3, 15, this.pagina3);
+                    this.total3 = this.dataSource3.length; 
                     this.paginator.pageIndex = 0;
                     console.log("AQUI ENTRO EL RES WEE");
                     console.log(this.dataSource3);
-                    // this.loadingInmuebles = false;
-                    // console.log("AQUI ENTRO IDINMUEBLE!!!");
-                    // console.log(res);
-                    // //console.log(res[0].idinmueble);
-                    // if(res.length > 0){
-                    //     this.idInmueble = res[0].idinmueble;
-                    // }else{
-                    //     this.idInmueble = null;
-                    // }
-                    // this.getInmuebles();
                 },
                 (error) => {
                     this.loadingInmuebles = false;
@@ -668,33 +626,14 @@ export class EditarSociedadComponent implements OnInit {
             );
     }
 
-    // getInmuebles(){
-    //     this.http.get(this.endpointActualiza + 'getDireccionesInmueble?' + 'idInmueble='+ this.idInmueble, this.httpOptions)
-    //         .subscribe(
-    //             (res: any) => {
-    //                 this.loadingDomicilios = false;
-    //                 console.log("AQUI ENTRO EL INMUEBLE!!!");
-    //                 console.log(res);
-                    
-    //                 this.dataSource3 = res;
-    //                 console.log(res.length);
-    //                 console.log(this.dataSource3);
-    //                 this.dataPaginate3 = this.paginate(this.dataSource3, 15, this.paginaDom);
-    //                 this.total = this.dataPaginate3.length; 
-    //                 this.paginator.pageIndex = 0;
-    //                 console.log("AQUI ENTRO EL RES WEE");
-    //             },
-    //             (error) => {
-    //                 this.loadingDomicilios = false;
-    //                 this.snackBar.open(error.error.mensaje, 'Cerrar', {
-    //                     duration: 10000,
-    //                     horizontalPosition: 'end',
-    //                     verticalPosition: 'top'
-    //                 });
-    //             }
-    //         );
-    // }
-
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
+     paginado3(evt): void{
+        this.pagina3 = evt.pageIndex + 1;
+        this.dataPaginate3 = this.paginate(this.dataSource3, 15, this.pagina3);
+    }
 
     /**
      * Abre el dialogo que registrara un nuevo domicilio
@@ -933,7 +872,7 @@ export class EditarSociedadComponent implements OnInit {
      */
     paginado4(evt): void{
         this.pagina4 = evt.pageIndex + 1;
-        this.dataSource4 = this.paginate(this.dataSource4, 15, this.pagina4);
+        this.dataPaginate4 = this.paginate(this.dataSource4, 15, this.pagina4);
     }
 
     /**
@@ -970,7 +909,7 @@ export class EditarSociedadComponent implements OnInit {
      */
     paginado5(evt): void{
         this.pagina5 = evt.pageIndex + 1;
-        this.dataSource5 = this.paginate(this.dataSource5, 15, this.pagina5);
+        this.dataPaginate5 = this.paginate(this.dataSource5, 15, this.pagina5);
     }
 
     /**
@@ -978,8 +917,8 @@ export class EditarSociedadComponent implements OnInit {
      * @param evt Nos da la referencia de la pagina en la que se encuentra
      */
      paginado6(evt): void{
-        this.pagina5 = evt.pageIndex + 1;
-        this.dataSource5 = this.paginate(this.dataSource5, 15, this.pagina5);
+        this.pagina6 = evt.pageIndex + 1;
+        this.dataPaginate4 = this.paginate(this.dataSource4, 15, this.pagina6);
     }
 
     /**
@@ -987,8 +926,8 @@ export class EditarSociedadComponent implements OnInit {
      * @param evt Nos da la referencia de la pagina en la que se encuentra
      */
      paginado7(evt): void{
-        this.pagina5 = evt.pageIndex + 1;
-        this.dataSource5 = this.paginate(this.dataSource5, 15, this.pagina5);
+        this.pagina7 = evt.pageIndex + 1;
+        this.dataPaginate5 = this.paginate(this.dataSource5, 15, this.pagina7);
     }
 
     ///////////////////////////// DATOS PERITOS - SOCIEDAD //////////////////////////

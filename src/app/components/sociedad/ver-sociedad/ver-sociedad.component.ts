@@ -193,6 +193,24 @@ export class VerSociedadComponent implements OnInit {
         );
     }
 
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
+    paginado1(evt): void{
+        this.pagina1 = evt.pageIndex + 1;
+        this.dataPaginate1 = this.paginate(this.dataSource1, 15, this.pagina1);
+    }
+
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
+    paginado2(evt): void{
+        this.pagina2 = evt.pageIndex + 1;
+        this.dataPaginate2 = this.paginate(this.dataSource2, 15, this.pagina2);
+    }
+
     getidInmuebles(){
         let metodo = 'getDireccionesInmueble';
         this.http.get(this.endpointActualiza + 'getInmuebles' + '?idPersona='+ this.idSociedad, this.httpOptions)
@@ -204,21 +222,11 @@ export class VerSociedadComponent implements OnInit {
                     this.dataSource3 = res;
                     console.log(res.length);
                     console.log(this.dataSource3);
-                    this.dataPaginate3 = this.paginate(this.dataSource3, 15, this.paginaDom);
-                    this.total = this.dataPaginate3.length; 
+                    this.dataPaginate3 = this.paginate(this.dataSource3, 15, this.pagina3);
+                    this.total3 = this.dataSource3.length; 
                     this.paginator.pageIndex = 0;
                     console.log("AQUI ENTRO EL RES WEE");
                     console.log(this.dataSource3);
-                    // this.loadingInmuebles = false;
-                    // console.log("AQUI ENTRO IDINMUEBLE!!!");
-                    // console.log(res);
-                    // //console.log(res[0].idinmueble);
-                    // if(res.length > 0){
-                    //     this.idInmueble = res[0].idinmueble;
-                    // }else{
-                    //     this.idInmueble = null;
-                    // }
-                    // this.getInmuebles();
                 },
                 (error) => {
                     this.loadingInmuebles = false;
@@ -229,6 +237,15 @@ export class VerSociedadComponent implements OnInit {
                     });
                 }
             );
+    }
+
+    /**
+     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
+     * @param evt Nos da la referencia de la pagina en la que se encuentra
+     */
+     paginado3(evt): void{
+        this.pagina3 = evt.pageIndex + 1;
+        this.dataPaginate3 = this.paginate(this.dataSource3, 15, this.pagina3);
     }
 
     /**
@@ -293,36 +310,9 @@ export class VerSociedadComponent implements OnInit {
      * Método del paginado que nos dira la posición del paginado y los datos a mostrar
      * @param evt Nos da la referencia de la pagina en la que se encuentra
      */
-     paginado1(evt): void{
-        this.pagina1 = evt.pageIndex + 1;
-        this.dataSource1 = this.paginate(this.dataSource1, 15, this.pagina1);
-    }
-
-    /**
-     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
-     * @param evt Nos da la referencia de la pagina en la que se encuentra
-     */
-    paginado2(evt): void{
-        this.pagina1 = evt.pageIndex + 1;
-        this.dataSource1 = this.paginate(this.dataSource1, 15, this.pagina1);
-    }
-
-    /**
-     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
-     * @param evt Nos da la referencia de la pagina en la que se encuentra
-     */
-     paginado3(evt): void{
-        this.pagina3 = evt.pageIndex + 1;
-        this.dataSource3 = this.paginate(this.dataSource3, 15, this.pagina3);
-    }
-
-    /**
-     * Método del paginado que nos dira la posición del paginado y los datos a mostrar
-     * @param evt Nos da la referencia de la pagina en la que se encuentra
-     */
      paginado4(evt): void{
         this.pagina4 = evt.pageIndex + 1;
-        this.dataSource4 = this.paginate(this.dataSource4, 15, this.pagina4);
+        this.dataPaginate4 = this.paginate(this.dataSource4, 15, this.pagina4);
     }
 
     /**
@@ -331,7 +321,7 @@ export class VerSociedadComponent implements OnInit {
      */
      paginado5(evt): void{
         this.pagina5 = evt.pageIndex + 1;
-        this.dataSource5 = this.paginate(this.dataSource5, 15, this.pagina5);
+        this.dataPaginate5 = this.paginate(this.dataSource5, 15, this.pagina5);
     }
 
     paginate(array, page_size, page_number) {
