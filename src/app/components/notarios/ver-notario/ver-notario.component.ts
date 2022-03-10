@@ -74,7 +74,7 @@ export class VerNotarioComponent implements OnInit {
   endpointEstados = environment.endpoint + 'registro/';
   pagina = 1;
   total = 0;
-  pageSize = 10;
+  pageSize = 15;
   loading = false;
   dataSource = [];
   dataPaginate = [];
