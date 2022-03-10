@@ -977,7 +977,7 @@ export class EditartContribuyenteComponent implements OnInit {
      * @param evt Nos da la referencia de la pagina en la que se encuentra
      */
     paginado2(evt): void{
-        this.pagina1 = evt.pageIndex + 1;
+        this.pagina2 = evt.pageIndex + 1;
         this.dataPaginate2 = this.paginate(this.dataSource2, 15, this.pagina2);
     }
 
