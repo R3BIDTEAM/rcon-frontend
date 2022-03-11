@@ -227,6 +227,7 @@ export class EditartContribuyenteComponent implements OnInit {
     selectIdPersonaI = true;
     mensajeConfirma;
     minDate;
+    getSimula = false;
     @ViewChild('paginator') paginator: MatPaginator;
     
     /*Paginado*/
@@ -276,6 +277,8 @@ export class EditartContribuyenteComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.cuentaPredial = '';
+        console.log("VARIABLE CLEAN" + this.cuentaPredial);
         this.fisicaFormGroup = this._formBuilder.group({
             nombre: [null,  []],
             apepaterno: [null, [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
@@ -312,7 +315,8 @@ export class EditartContribuyenteComponent implements OnInit {
 
         this.idContribuyente = this.route.snapshot.paramMap.get('idcontribuyente');
         this.cuentaPredial = this.route.snapshot.paramMap.get('cuenta');
-        console.log(this.route.snapshot.paramMap);
+        console.log("VARIABLE");
+        console.log(this.cuentaPredial);
 
         this.getTipoDerecho();
         this.getDataDocumentos();
@@ -348,7 +352,11 @@ export class EditartContribuyenteComponent implements OnInit {
                     this.dataTipoDerecho = res;
                     console.log("DERECHO");
                     console.log(this.dataTipoDerecho);
-                    this.getInfoPersonaInmueble();
+                    if(this.getSimula){
+                        this.getInfoPersonaInmuebleSimula();
+                    }else{
+                        this.getInfoPersonaInmueble();
+                    }
                 },
                 (error) => {
                     this.loadingDerecho = false;
@@ -365,6 +373,32 @@ export class EditartContribuyenteComponent implements OnInit {
      * Obtiene la información del inmueble de la persona
      */
     getInfoPersonaInmueble(){
+        this.loadingDerecho = true;
+        let metodo = 'getCasPersonaInmueble';
+        let param = 'idPersona=' + this.idContribuyente + '&cuentaCatastral=' + this.cuentaPredial;
+        this.http.get(this.endpoint + metodo + '?' + param, this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loadingDerecho = false;
+                    this.personaInmueble = res;
+                    console.log("DERECHO DATOS");
+                    console.log(this.personaInmueble);
+                },
+                (error) => {
+                    this.loadingDerecho = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
+
+    /**
+     * Obtiene la información del inmueble de la persona
+     */
+    getInfoPersonaInmuebleSimula(){
         this.loadingDerecho = true;
         let metodo = 'getCasPersonaInmueble';
         let param = 'idPersona=' + this.idContribuyente + '&cuentaCatastral=' + this.cuentaPredial;
@@ -411,7 +445,8 @@ export class EditartContribuyenteComponent implements OnInit {
                             horizontalPosition: 'end',
                             verticalPosition: 'top'
                         });
-                        this.getInfoPersonaInmueble();
+                        this.getSimula = true;
+                        this.getInfoPersonaInmuebleSimula();
                     }
                     
                 },
@@ -449,25 +484,7 @@ export class EditartContribuyenteComponent implements OnInit {
                             horizontalPosition: 'end',
                             verticalPosition: 'top'
                         });
-                        this.dataActualizacion.after_CP = res.after_CP;
-                        this.dataActualizacion.after_Col = res.after_Col;
-                        this.dataActualizacion.after_Direccion = res.after_Direccion;
-                        this.dataActualizacion.after_Nombre = res.after_Nombre;
-                        this.dataActualizacion.after_RFC = res.after_RFC;
-                        this.dataActualizacion.after_cuenta = res.after_cuenta;
-                        this.dataActualizacion.area = res.area;
-                        this.dataActualizacion.at = res.at;
-                        this.dataActualizacion.before_cuenta = res.before_cuenta;
-                        this.dataActualizacion.before_CP = res.before_CP;
-                        this.dataActualizacion.before_Col = res.before_Col;
-                        this.dataActualizacion.before_Direccion = res.before_Direccion;
-                        this.dataActualizacion.before_Nombre = res.before_Nombre;
-                        this.dataActualizacion.before_RFC = res.before_RFC;
-                        this.dataActualizacion.cuentaP = res.cuentaP;
-                        this.dataActualizacion.fechaConsulta = res.fechaConsulta;
-                        this.dataActualizacion.idpersona = res.idpersona;
-                        this.dataActualizacion.usuario = res.usuario;
-                        this.dataActualizacion.folio = null;
+                        this.getSimula = true;
                         this.getTipoDerecho();
                     }
                     
@@ -949,7 +966,7 @@ export class EditartContribuyenteComponent implements OnInit {
                     this.total2 = this.dataSource2.length;
                     this.dataPaginate1 = this.paginate(this.dataSource1, 15, this.pagina1);
                     this.dataPaginate2 = this.paginate(this.dataSource2, 15, this.pagina2);
-                    this.getidInmuebles();
+                    this.getidInmueblesSimula();
                 },
                 (error) => {
                     this.loadingDomicilios = false;
@@ -985,6 +1002,38 @@ export class EditartContribuyenteComponent implements OnInit {
      * Obtiene los inmuebles de la persona
      */
     getidInmuebles(){
+        this.loadingInmuebles = true;
+        let metodoI = 'getInmuebles';
+        let paramI = 'idPersona=' + this.idContribuyente + '&cuentaCatastral=' + this.cuentaPredial;
+        this.http.get(this.endpoint + metodoI + '?' + paramI, this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.loadingInmuebles = false;
+                    console.log("AQUI ENTRO IDINMUEBLE!!!");
+                    console.log(res);
+
+                    this.dataSource3 = res;
+                    console.log(res.length);
+                    console.log(this.dataSource3);
+                    this.dataPaginate3 = this.paginate(this.dataSource3, 15, this.pagina3);
+                    this.total3 = this.dataSource3.length; 
+                    this.paginator.pageIndex = 0;
+                    console.log("AQUI ENTRO EL RES DEL INMUEBLE!");
+                    console.log(this.dataSource3);
+
+                },
+                (error) => {
+                    this.loadingInmuebles = false;
+                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        duration: 10000,
+                        horizontalPosition: 'end',
+                        verticalPosition: 'top'
+                    });
+                }
+            );
+    }
+
+    getidInmueblesSimula(){
         this.loadingInmuebles = true;
         let metodoI = 'getInmuebles';
         let paramI = 'idPersona=' + this.idContribuyente + '&cuentaCatastral=' + this.cuentaPredial;
