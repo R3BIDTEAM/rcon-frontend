@@ -87,6 +87,12 @@ export class MenuComponent implements OnInit {
                 this.peritos = this.peritos.filter(item=>{return (item.nombre == 'Consulta de peritos')});
                 this.sociedad = this.sociedad.filter(item=>{return (item.nombre == 'Consulta de sociedad')});
             break;
+            case "EDITOR RCON":
+                this.contribuyentes = this.contribuyentes.filter(item=>{return (item.nombre !== 'Consulta de contribuyente')});
+                this.notarios = this.notarios.filter(item=>{return (item.nombre !== 'Consulta de notario')});
+                this.peritos = this.peritos.filter(item=>{return (item.nombre !== 'Consulta de peritos')});
+                this.sociedad = this.sociedad.filter(item=>{return (item.nombre !== 'Consulta de sociedad')});
+            break;
             default:
             break;
         }
