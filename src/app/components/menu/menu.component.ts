@@ -76,10 +76,10 @@ export class MenuComponent implements OnInit {
                 this.sociedad = this.sociedad.filter(item=>{return (item.nombre == 'Consulta de sociedad')});
             break;
             case "CONSULTOR RCON":
-                this.contribuyentes = this.contribuyentes.filter(item=>{return (item.nombre == 'Consulta de contribuyente')});
                 this.notarios = this.notarios.filter(item=>{return (item.nombre == 'Consulta de notario')});
                 this.peritos = this.peritos.filter(item=>{return (item.nombre == 'Consulta de peritos')});
                 this.sociedad = this.sociedad.filter(item=>{return (item.nombre == 'Consulta de sociedad')});
+                this.contribuyentes = [];
             break;
             case "AUDITORIA RCON":
                 this.contribuyentes = this.contribuyentes.filter(item=>{return (item.nombre == 'Consulta de contribuyente')});
@@ -88,10 +88,22 @@ export class MenuComponent implements OnInit {
                 this.sociedad = this.sociedad.filter(item=>{return (item.nombre == 'Consulta de sociedad')});
             break;
             case "EDITOR RCON":
-                this.contribuyentes = this.contribuyentes.filter(item=>{return (item.nombre !== 'Consulta de contribuyente')});
                 this.notarios = this.notarios.filter(item=>{return (item.nombre !== 'Consulta de notario')});
                 this.peritos = this.peritos.filter(item=>{return (item.nombre !== 'Consulta de peritos')});
                 this.sociedad = this.sociedad.filter(item=>{return (item.nombre !== 'Consulta de sociedad')});
+                this.contribuyentes = [];
+            break;
+            case "CONSULTOR CONT RCON":
+                this.contribuyentes = this.contribuyentes.filter(item=>{return (item.nombre == 'Consulta de contribuyente')});
+                this.notarios = [];
+                this.peritos = [];
+                this.sociedad = [];
+            break;
+            case "EDITOR CONT RCON":
+                this.contribuyentes = this.contribuyentes.filter(item=>{return (item.nombre !== 'Consulta de contribuyente')});
+                this.notarios = [];
+                this.peritos = [];
+                this.sociedad = [];
             break;
             default:
             break;
