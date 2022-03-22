@@ -80,6 +80,7 @@ export interface DataTipoDerecho{
 export interface PersonaInmueble{
     porcentajeparticipacion: string;
     codtipoderecho: string;
+    observacionC: string;
 }
 
 export interface DataDocumentoRepresentacion {
@@ -172,6 +173,7 @@ export class EditarContribuyenteComponent implements OnInit {
     idChs;
     panelDomicilio = false;
     panelDomPredial = false;
+    panelObservacionC = false;
     panelBienes = false;
     panelDatosRepre = false;
     dataRepresentantes: DataRepresentacion[] = [];
@@ -391,13 +393,14 @@ export class EditarContribuyenteComponent implements OnInit {
         console.log("INMUEBLES INPUTS");
         console.log(this.personaInmueble[i].porcentajeparticipacion);
         console.log(this.personaInmueble[i].codtipoderecho);
-        
+        console.log(this.personaInmueble[i].observacionC);
         this.loadingDerecho = true;
         console.log(this.personaInmueble);
         let varPorcentaje = (this.personaInmueble[i].porcentajeparticipacion) ? this.personaInmueble[i].porcentajeparticipacion : '';
         let queryP = 'idPersona=' + this.idContribuyente + '&codTipoDerecho=' + this.personaInmueble[i].codtipoderecho 
-                    + '&porcentajeParticipacion=' + varPorcentaje + '&idPersonaInmueble=' + idpersonainmueble;
+                    + '&porcentajeParticipacion=' + varPorcentaje + '&idPersonaInmueble=' + idpersonainmueble + '&observacion=' + this.personaInmueble[i].observacionC.toUpperCase();
         console.log(this.endpoint + 'updatePersonaInmueble?');
+        console.log(queryP);
         this.http.post(this.endpoint + 'updatePersonaInmueble' + '?' + queryP, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
@@ -426,14 +429,15 @@ export class EditarContribuyenteComponent implements OnInit {
     /**
      * Actualiza la información del inmueble.
      */
-    desasociarCuenta(idpersonainmueble){
+    desasociarCuenta(i,idpersonainmueble){
         console.log("BORRAR INMUEBLES INPUTS");
         console.log(idpersonainmueble);
-        
+        console.log(this.personaInmueble[i].observacionC);
         this.loadingDerecho = true;
         console.log(this.personaInmueble);
-        let queryP = 'idpersonainmueble=' + idpersonainmueble;
+        let queryP = 'idpersonainmueble=' + idpersonainmueble + '&obervacion=' + this.personaInmueble[i].observacionC.toUpperCase();
         console.log(this.endpoint + 'borrarAsociaCuentaContrib?');
+        console.log(queryP);
         this.http.post(this.endpoint + 'borrarAsociaCuentaContrib' + '?' + queryP, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
@@ -501,7 +505,8 @@ export class EditarContribuyenteComponent implements OnInit {
         console.log("ACÁ EL QUERY DE LA CUENTA");
         let queryP = 'idPersona=' + this.idContribuyente + '&region=' + dataCuenta.region + '&manzana=' + dataCuenta.manzana 
                     + '&lote=' + dataCuenta.lote + '&unidadPrivativa=' + dataCuenta.unidad
-                    + '&digitoVerificador=' + dataCuenta.digito + '&codtipoderecho=' + dataCuenta.codDerecho + '&porcenparticipacion=' + dataCuenta.porcentaje;
+                    + '&digitoVerificador=' + dataCuenta.digito + '&codtipoderecho=' + dataCuenta.codDerecho 
+                    + '&porcenparticipacion=' + dataCuenta.porcentaje + '&observacion=' + dataCuenta.observacion;
         console.log(this.endpoint + 'insertAsociaCuentaContrib?');
         console.log(queryP);
         this.http.post(this.endpoint + 'insertAsociaCuentaContrib' + '?' + queryP, '', this.httpOptions)
@@ -846,7 +851,7 @@ export class EditarContribuyenteComponent implements OnInit {
                         this.eliminarRepresentacion(element,tipo);
                         break;
                     case 5:
-                        this.desasociarCuenta(element);
+                        this.desasociarCuenta(element,tipo);
                         break;
                     case 7:
                         this.actualizaPersonaInmueble(element,tipo);
@@ -3741,7 +3746,6 @@ export class DialogRepresentacionC {
         //actualizarRepresentaciontextorepresentacion=Texto Representacion Prueba 33&fechacaducidad=Fri Dec 31 2021 00:00:00 GMT-0600 (hora estándar central)&idRepresentacion=14&idDocumentoDigital=17646226
         console.log("QUERY ACTUALIZA");
         console.log(queryActRep);
-        //return;
         this.http.post(this.endpoint + 'actualizarRepresentacion?' + queryActRep, '', this.httpOptions).subscribe(
             (res: any) => {
                 this.snackBar.open('SE HA ACTUALIZADO EL REPRESENTADO', 'Cerrar', {
@@ -4515,7 +4519,6 @@ export class DialogDocumentoC {
         dataFichero = dataFichero.split("data:application/pdf;base64,");
         console.log("split");
         console.log(dataFichero);
-        //return;
         const blob = this.b64toBlob(dataFichero[1], 'application/pdf');
         FileSaver.saveAs(blob, this.descargaFichero[0].nombre);
     }

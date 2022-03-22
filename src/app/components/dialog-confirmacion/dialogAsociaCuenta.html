@@ -46,13 +46,17 @@
                     <input matInput #porcentaje formControlName="porcentaje" placeholder="Ingrese el porcentaje de Participación" pattern="^[1-9][0-9]?$|^100$" maxlength="3">
                     <mat-error *ngIf="cuentaFormGroup.controls.porcentaje.errors?.pattern">Valor de 1-100</mat-error>
                 </mat-form-field>
-                <mat-form-field appearance="outline" class="col-md-5" style="margin-left: 0px!important;">
+                <mat-form-field appearance="outline" class="col-md-4" style="margin-left: 0px!important;">
                     <mat-label>Tipo de Derecho</mat-label>
                         <mat-select [class.spinner]="loadingDerecho" formControlName="codDerecho">
                             <mat-option *ngFor="let tipoDerecho of dataTipoDerecho" [value]="tipoDerecho.codtipoderecho">
                                 {{tipoDerecho.descripcion}}
                             </mat-option>
                         </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-md-4">
+                    <mat-label>Observaciones:</mat-label>
+                    <textarea matInput #observacion formControlName="observacion" rows="2" style="text-transform: uppercase;" maxlength="250"></textarea>
                 </mat-form-field>
             </div>
         </form>

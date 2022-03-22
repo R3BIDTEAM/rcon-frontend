@@ -300,7 +300,7 @@
                         </mat-form-field>
                         <div class="col-md-2">
                             <div class="d-flex flex-row-reverse" style="text-align: center!important; padding-top: 12px;">
-                                <button mat-stroked-button class="boton-n-representacion" color="danger" aria-label="Guardar Porcentaje" matTooltip="Guardar Porcentaje" (click)="confirmaCambio(5,personaInmueble[i].idpersonainmueble)" style="margin: auto!important;">
+                                <button mat-stroked-button class="boton-n-representacion" color="danger" aria-label="Guardar Porcentaje" matTooltip="Guardar Porcentaje" (click)="confirmaCambio(5,i,personaInmueble[i].idpersonainmueble)" style="margin: auto!important;">
                                     Desasociar <mat-icon style="display: inherit; width: 15px;">delete</mat-icon>
                                 </button>   
                             </div>
@@ -313,6 +313,30 @@
                                     Guardar <mat-icon style="display: inherit; width: 15px;">update</mat-icon>
                                 </button>   
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-md-11 offset-md-1">
+                        <div class="row">
+                            <mat-card-content>
+                                <mat-accordion>
+                                    <mat-expansion-panel (opened)="panelObservacionC = true" (closed)="panelObservacionC = false">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title style="padding-right: 275px;">
+                                                Observaciones
+                                            </mat-panel-title>
+                                            <mat-panel-description>
+                                                {{panelObservacionC ? 'Ver' : 'Ver'}} observaciones
+                                            </mat-panel-description>
+                                        </mat-expansion-panel-header>
+                                        <div class="row">
+                                            <mat-form-field appearance="outline" class="col-12">
+                                                <mat-label>Observaciones:</mat-label>
+                                                <textarea matInput #observacionC="ngModel" name="observacionC" [(ngModel)]="personaInmueble[i].observacionC" rows="2" style="text-transform: uppercase;" maxlength="250"></textarea>
+                                            </mat-form-field>
+                                        </div>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                            </mat-card-content>
                         </div>
                     </div>
                 </div>

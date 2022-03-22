@@ -86,6 +86,7 @@ export interface DataCuenta {
     porcentaje: string;
     digito: string;
     codDerecho: string;
+    observacion: string;
 }
 export interface DataTipoDerecho{
     codtipoderecho: string;
@@ -133,6 +134,7 @@ export class DialogsAsociarCuenta {
             digito: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(1)]],
             porcentaje: [null, []],
             codDerecho: [null, [Validators.required]],
+            observacion: [null, []],
         });
 
         this.getTipoDerecho();
@@ -197,6 +199,7 @@ export class DialogsAsociarCuenta {
         this.dataCuenta.digito = this.cuentaFormGroup.value.digito;
         this.dataCuenta.porcentaje = this.cuentaFormGroup.value.porcentaje;
         this.dataCuenta.codDerecho = this.cuentaFormGroup.value.codDerecho;
+        this.dataCuenta.observacion = this.cuentaFormGroup.value.observacion.toUpperCase();
         console.log("ACÁ LA INFORMACIÓN");
         console.log(this.dataCuenta);
         this.dialogRef.close(this.dataCuenta);
