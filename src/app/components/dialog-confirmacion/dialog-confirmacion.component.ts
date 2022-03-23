@@ -192,6 +192,7 @@ export class DialogsAsociarCuenta {
     }
 
     guardarCuenta(){
+        let observacion = (this.cuentaFormGroup.value.observacion) ? this.cuentaFormGroup.value.observacion.toUpperCase() : '';
         this.dataCuenta.region = this.cuentaFormGroup.value.region;
         this.dataCuenta.manzana = this.cuentaFormGroup.value.manzana;
         this.dataCuenta.lote = this.cuentaFormGroup.value.lote;
@@ -199,7 +200,7 @@ export class DialogsAsociarCuenta {
         this.dataCuenta.digito = this.cuentaFormGroup.value.digito;
         this.dataCuenta.porcentaje = this.cuentaFormGroup.value.porcentaje;
         this.dataCuenta.codDerecho = this.cuentaFormGroup.value.codDerecho;
-        this.dataCuenta.observacion = this.cuentaFormGroup.value.observacion.toUpperCase();
+        this.dataCuenta.observacion = observacion;
         console.log("ACÁ LA INFORMACIÓN");
         console.log(this.dataCuenta);
         this.dialogRef.close(this.dataCuenta);

@@ -396,9 +396,10 @@ export class EditarContribuyenteComponent implements OnInit {
         console.log(this.personaInmueble[i].observacionC);
         this.loadingDerecho = true;
         console.log(this.personaInmueble);
+        let observacionA = (this.personaInmueble[i].observacionC) ? this.personaInmueble[i].observacionC.toUpperCase() : '';
         let varPorcentaje = (this.personaInmueble[i].porcentajeparticipacion) ? this.personaInmueble[i].porcentajeparticipacion : '';
         let queryP = 'idPersona=' + this.idContribuyente + '&codTipoDerecho=' + this.personaInmueble[i].codtipoderecho 
-                    + '&porcentajeParticipacion=' + varPorcentaje + '&idPersonaInmueble=' + idpersonainmueble + '&observacion=' + this.personaInmueble[i].observacionC.toUpperCase();
+                    + '&porcentajeParticipacion=' + varPorcentaje + '&idPersonaInmueble=' + idpersonainmueble + '&observacion=' + observacionA;
         console.log(this.endpoint + 'updatePersonaInmueble?');
         console.log(queryP);
         this.http.post(this.endpoint + 'updatePersonaInmueble' + '?' + queryP, '', this.httpOptions)
@@ -435,7 +436,8 @@ export class EditarContribuyenteComponent implements OnInit {
         console.log(this.personaInmueble[i].observacionC);
         this.loadingDerecho = true;
         console.log(this.personaInmueble);
-        let queryP = 'idpersonainmueble=' + idpersonainmueble + '&obervacion=' + this.personaInmueble[i].observacionC.toUpperCase();
+        let observacionB = (this.personaInmueble[i].observacionC) ? this.personaInmueble[i].observacionC.toUpperCase() : '';
+        let queryP = 'idpersonainmueble=' + idpersonainmueble + '&obervacion=' + observacionB;
         console.log(this.endpoint + 'borrarAsociaCuentaContrib?');
         console.log(queryP);
         this.http.post(this.endpoint + 'borrarAsociaCuentaContrib' + '?' + queryP, '', this.httpOptions)
