@@ -437,7 +437,7 @@ export class EditarContribuyenteComponent implements OnInit {
         this.loadingDerecho = true;
         console.log(this.personaInmueble);
         let observacionB = (this.personaInmueble[i].observacionC) ? this.personaInmueble[i].observacionC.toUpperCase() : '';
-        let queryP = 'idpersonainmueble=' + idpersonainmueble + '&obervacion=' + observacionB;
+        let queryP = 'idpersonainmueble=' + idpersonainmueble + '&observacion=' + observacionB;
         console.log(this.endpoint + 'borrarAsociaCuentaContrib?');
         console.log(queryP);
         this.http.post(this.endpoint + 'borrarAsociaCuentaContrib' + '?' + queryP, '', this.httpOptions)
