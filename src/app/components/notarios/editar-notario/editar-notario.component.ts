@@ -241,7 +241,7 @@ export class EditarNotarioComponent implements OnInit {
      *  Si se selecciona alguna opción desbloqueará el input del número del documento.
      * @param event Valor del option
      */
-     seleccionaDocto(event){
+    seleccionaDocto(event){
         this.selectDisabled = true;
         this.selectCedula = false;
         this.selectPasaporte = false;
@@ -266,7 +266,10 @@ export class EditarNotarioComponent implements OnInit {
 
         if(this.datosGenerales.otro_documento === null || this.datosGenerales.otro_documento === ''){
             this.datosGenerales.numero_documento = '';
-            }
+        }
+
+        this.personaFormGroup.markAsTouched();
+        this.personaFormGroup.updateValueAndValidity();
     }
 
     changeRequired(): void {
@@ -360,6 +363,22 @@ export class EditarNotarioComponent implements OnInit {
         console.log(this.datosGenerales.fecha_nacimiento);
         
         this.minDate = (moment(this.datosGenerales.fecha_nacimiento).add(2, 'd').format('YYYY-MM-DD'));
+
+        if(this.datosGenerales.otro_documento == '1'){
+            this.selectCedula = true;
+        }
+
+        if(this.datosGenerales.otro_documento == '2'){
+            this.selectPasaporte = true;
+        }
+
+        if(this.datosGenerales.otro_documento == '3'){
+            this.selectLicencia = true;
+        }
+
+        if(this.datosGenerales.otro_documento == '6'){
+            this.selectNSS = true;
+        }
         console.log("ACA EL CHAGE REQUIRED");
         this.changeRequired();
     }

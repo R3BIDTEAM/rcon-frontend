@@ -317,6 +317,9 @@ export class EditarPeritosComponent implements OnInit {
         if(this.datoPeritos.identificacion == 6){
             this.selectNSS = true;
         }
+
+        this.peritoPersonaFormGroup.markAsTouched();
+        this.peritoPersonaFormGroup.updateValueAndValidity();
     }
 
     /**
@@ -411,8 +414,25 @@ export class EditarPeritosComponent implements OnInit {
         }else{
             this.datoPeritos.independiente = false;
         }
-        this.changeRequired();
+
+        if(this.datoPeritos.identificacion == 1){
+            this.selectCedula = true;
+        }
+
+        if(this.datoPeritos.identificacion == 2){
+            this.selectPasaporte = true;
+        }
+
+        if(this.datoPeritos.identificacion == 3){
+            this.selectLicencia = true;
+        }
+
+        if(this.datoPeritos.identificacion == 6){
+            this.selectNSS = true;
+        }
+
         this.minDate = (moment(this.datoPeritos.fecha_naci).add(2, 'd').format('YYYY-MM-DD'));
+        this.changeRequired();
     }
 
 

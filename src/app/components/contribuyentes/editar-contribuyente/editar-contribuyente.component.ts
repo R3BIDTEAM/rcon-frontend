@@ -631,6 +631,9 @@ export class EditarContribuyenteComponent implements OnInit {
         if(this.contribuyente.identificacion == 6){
             this.selectNSS = true;
         }
+
+        this.fisicaFormGroup.markAsTouched();
+        this.fisicaFormGroup.updateValueAndValidity();
     }
 
     /**
@@ -727,7 +730,21 @@ export class EditarContribuyenteComponent implements OnInit {
         this.contribuyente.texto = this.dataContribuyenteResultado[0].OBSERVACION;
 
         console.log(this.contribuyente.nombre_moral);
+        if(this.contribuyente.identificacion == 1){
+            this.selectCedula = true;
+        }
 
+        if(this.contribuyente.identificacion == 2){
+            this.selectPasaporte = true;
+        }
+
+        if(this.contribuyente.identificacion == 3){
+            this.selectLicencia = true;
+        }
+
+        if(this.contribuyente.identificacion == 6){
+            this.selectNSS = true;
+        }
         this.minDate = (moment(this.contribuyente.fecha_naci).add(2, 'd').format('YYYY-MM-DD'));
         // alert(moment(this.contribuyente.fecha_naci).format('YYYY-MM-DD'));
         this.changeRequired();
