@@ -13,6 +13,7 @@ import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";  
 pdfMake.vfs = pdfFonts.pdfMake.vfs; 
 import { DialogConfirmacionComponent, DialogsCambiaPersona, DialogsAsociarCuenta } from '@comp/dialog-confirmacion/dialog-confirmacion.component';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 export interface DatosContribuyente {
     tipoPersona: string;
@@ -701,7 +702,7 @@ export class EditarContribuyenteComponent implements OnInit {
     * Asigna los valores de la consulta a las variables del formulario
     */
     datoDelContribuyente(){
-        if(this.rol == 'EDITOR RCON' || this.rol == 'Administrador'){
+        if(this.rol == 'EDITOR RCON' || this.rol == 'Administrador' || this.rol == 'EDITOR CONT RCON'){
             this.existeObservacion = false;
             console.log("ACÁ ESTA EL BOTON");
         }else{
