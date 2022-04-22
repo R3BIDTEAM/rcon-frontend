@@ -143,8 +143,8 @@
                         <mat-error *ngIf="peritoPersonaFormGroup.controls.celular.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?)</mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-5">
-                        <mat-label>E-mail: *</mat-label>
-                        <input matInput type="email" [email]="true" placeholder="Ingrese E-mail" [(ngModel)]="datoPeritos.email" formControlName="email" [readonly]="inserto" maxlength="250">
+                        <mat-label>Correo: *</mat-label>
+                        <input matInput type="email" [email]="true" placeholder="Ingrese Correo" [(ngModel)]="datoPeritos.email" formControlName="email" [readonly]="inserto" maxlength="250">
                         <mat-error *ngIf="peritoPersonaFormGroup.controls.email.errors?.required">Requerido</mat-error>
                         <mat-error *ngIf="peritoPersonaFormGroup.hasError('email', 'email') && peritoPersonaFormGroup.get('email').touched">El campo correo electrónico debe cumplir la estructura "usuario@dominio".</mat-error>
                         <mat-error *ngIf="peritoPersonaFormGroup.controls.email.errors?.pattern">El campo correo electrónico debe cumplir la estructura "usuario@dominio".</mat-error>
@@ -172,7 +172,7 @@
                     </div>
                     <mat-form-field appearance="fill" class="col-5">
                         <mat-label>Fecha Inicio:</mat-label>
-                        <input matInput formControlName="fechaInicio" [matDatepicker]="pickfechaInicio" [(ngModel)]="datoPeritos.fecha_alta" [disabled]="inserto" (dateChange)="fechaTope2()" readonly>
+                        <input matInput formControlName="fechaInicio" [matDatepicker]="pickfechaInicio" [(ngModel)]="datoPeritos.fecha_alta" [disabled]="true" (dateChange)="fechaTope2()" readonly>
                         <mat-datepicker-toggle matSuffix [for]="pickfechaInicio"></mat-datepicker-toggle>
                         <mat-datepicker #pickfechaInicio></mat-datepicker>
                     </mat-form-field>
@@ -187,8 +187,8 @@
                     <div class="col-1 text-center">
                     </div>
                     <mat-form-field appearance="outline" class="col-5">
-                        <mat-label>Login: *</mat-label>
-                        <input matInput formControlName="login" [readonly]="inserto" maxlength="10" style="text-transform: uppercase;" placeholder="Ingrese Login">
+                        <mat-label>Login:</mat-label>
+                        <input matInput formControlName="login" [readonly]="inserto || independienteRead" maxlength="10" style="text-transform: uppercase;" [required]="independiente" placeholder="Ingrese Login">
                         <mat-error *ngIf="peritoPersonaFormGroup.controls.login.errors?.required">Requerido</mat-error>
                         <mat-error *ngIf="peritoPersonaFormGroup.controls.login.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
                     </mat-form-field>
@@ -210,7 +210,7 @@
                 </div>
                 <div class="col-md-2" *ngIf="!btnNuevo">
                     <div class="d-flex flex-row-reverse">
-                        <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" (click)="consulta_previa()" [disabled]="peritoPersonaFormGroup.invalid">
+                        <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar" (click)="mensajeIndependiente()" [disabled]="peritoPersonaFormGroup.invalid">
                             Guardar
                         </button>
                     </div>

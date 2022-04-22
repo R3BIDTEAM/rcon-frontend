@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox'; 
+import Swal from 'sweetalert2';
 import * as moment from 'moment';
 import { DialogDuplicadosComponent, DialogsMensaje, DialogsValidaPerito } from '@comp/dialog-duplicados/dialog-duplicados.component';
 
@@ -62,6 +63,9 @@ export class AltaPeritosComponent implements OnInit {
     selectLicencia = false;
     selectNSS = false;
     buscadoEscrito: number = 0;
+    diaHoy = new Date();
+    independiente = false;
+    independienteRead = true;
     constructor(
         private http: HttpClient,
         private _formBuilder: FormBuilder,
@@ -98,9 +102,11 @@ export class AltaPeritosComponent implements OnInit {
             registro: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             fechaInicio: [null, []],
             fechaFin: [null, []],
-            login: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]]
+            login: ['', []]
         });
         this.datoPeritos.independiente = 'N';
+        
+        this.datoPeritos.fecha_alta = this.diaHoy;
         this.getDataDocumentosIdentificativos();
     }
 
@@ -211,11 +217,45 @@ export class AltaPeritosComponent implements OnInit {
     isIndependiente(dato){
         if(dato.checked){
             this.datoPeritos.independiente = 'S';
+            this.independiente = true;
+            this.independienteRead = false;
         }else{
             this.datoPeritos.independiente = 'N';
+            this.independiente = false;
+            this.independienteRead = true;
+            this.peritoPersonaFormGroup.controls['login'].setValue('');
         }
+        this.peritoPersonaFormGroup.updateValueAndValidity();
+        this.peritoPersonaFormGroup.markAsTouched();
     }
 
+    mensajeIndependiente(){
+        console.log("ACÁ EL VALOR DEL CHECK")
+        console.log(this.datoPeritos.independiente);
+        if(this.datoPeritos.independiente === 'N'){
+            Swal.fire({
+                title: '¡ATENCIÓN!',
+                text: "Seleccione continuar para guardar el perito como auxiliar",
+                icon: 'warning',
+                showCancelButton: true,
+                cancelButtonColor: '#9f2241',
+                confirmButtonColor: '#9f2241',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Continuar',
+                customClass: {
+                    actions: 'my-actions',
+                    cancelButton: 'order-1 right-gap',
+                    confirmButton: 'order-2'
+                  }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.consulta_previa();
+                }
+            });
+        }else{
+            this.consulta_previa();
+        }
+    }
     /**
      * Consulta si existe un registro con los mismos datos que se están ingresando para evitar la duplicidad,
      * de coincidir los datos con un registro existente nos mostrará un dialogo con los datos existentes,

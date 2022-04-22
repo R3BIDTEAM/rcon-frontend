@@ -103,8 +103,8 @@
                         <mat-error *ngIf="fisicaFormGroup.controls.celular.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?) </mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-5">
-                        <mat-label>E-mail:*</mat-label>
-                        <input matInput placeholder="INGRESE E-MAIL" formControlName="email" [readonly]="insUp" maxlength="250">
+                        <mat-label>Correo:*</mat-label>
+                        <input matInput placeholder="INGRESE Correo" formControlName="email" [readonly]="insUp" maxlength="250">
                         <mat-error *ngIf="fisicaFormGroup.controls.email.errors?.required">Requerido</mat-error>
                         <mat-error *ngIf="fisicaFormGroup.hasError('email', 'email') && fisicaFormGroup.get('email').touched">Correo invalido</mat-error>
                         <mat-error *ngIf="fisicaFormGroup.controls.email.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?) </mat-error>

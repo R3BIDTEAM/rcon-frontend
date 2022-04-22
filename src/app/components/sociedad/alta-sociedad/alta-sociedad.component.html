@@ -71,8 +71,8 @@
 
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-6">
-                                <mat-label>E-Mail *</mat-label>
-                                <input matInput type="email" [email]="true" [disabled]="inserto" [readonly]="inserto" formControlName="email" maxlength="250" placeholder="Ingrese E-mail">
+                                <mat-label>Correo *</mat-label>
+                                <input matInput type="email" [email]="true" [disabled]="inserto" [readonly]="inserto" formControlName="email" maxlength="250" placeholder="Ingrese Correo">
                                 <mat-error *ngIf="sociedadFormGroup.controls.email.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="sociedadFormGroup.hasError('email', 'email') && sociedadFormGroup.get('email').touched">El campo correo electrónico debe cumplir la estructura "usuario@dominio".</mat-error>
                                 <mat-error *ngIf="sociedadFormGroup.controls.email.errors?.pattern">El campo correo electrónico debe cumplir la estructura "usuario@dominio".</mat-error>

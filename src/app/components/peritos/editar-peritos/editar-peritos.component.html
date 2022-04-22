@@ -160,8 +160,8 @@
                         </div>
                         <div class="col-md-4">
                             <mat-form-field appearance="outline" style="width: 100%;">
-                                <mat-label>E-Mail *</mat-label>
-                                <input matInput placeholder="Ingrese E-mail" [(ngModel)]="datoPeritos.email" formControlName="email" maxlength="250">
+                                <mat-label>Correo *</mat-label>
+                                <input matInput placeholder="Ingrese Correo" [(ngModel)]="datoPeritos.email" formControlName="email" maxlength="250">
                                 <mat-error *ngIf="peritoPersonaFormGroup.controls.email.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="peritoPersonaFormGroup.hasError('email', 'email') && peritoPersonaFormGroup.get('email').touched">El campo correo electrónico debe cumplir la estructura "usuario@dominio".</mat-error>
                                 <mat-error *ngIf="peritoPersonaFormGroup.controls.email.errors?.pattern">El campo correo electrónico debe cumplir la estructura "usuario@dominio".</mat-error>
