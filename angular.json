@@ -30,6 +30,10 @@
             ],
             "scripts": [
               "./node_modules/node-forge/dist/forge.min.js"
+            ],
+            "allowedCommonJsDependencies": [
+              "xlsx",
+              "js-sha1"
             ]
           },
           "configurations": {

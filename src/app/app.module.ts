@@ -68,6 +68,7 @@ import { EditartContribuyenteComponent, DialogAsentamientoContribuyenteT, Dialog
           DialogDomicilioHistoricoContribuyenteT, DialogDomicilioHistoricoEspecificoContribuyenteT, DialogHistorialRepCT, DialogHistorialRepDetalleCT,
           DialogMunicipiosContribuyenteT, DialogNotarioCT, DialogPersonaCT, DialogPersonalesHistoricoContribuyenteT,
           DialogPersonalesHistoricoEspecificoContribuyenteT, DialogRepresentacionCT, DialogRepresentadoCT, DialogViaContribuyenteT } from './components/contribuyentes/editart-contribuyente/editart-contribuyente.component';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [
@@ -216,6 +217,7 @@ import { EditartContribuyenteComponent, DialogAsentamientoContribuyenteT, Dialog
     ReactiveFormsModule,
     AvatarModule,
     NgxMatFileInputModule,
+    NgxSpinnerModule,
     NgxMaskModule.forRoot(),
   ],
   entryComponents: [

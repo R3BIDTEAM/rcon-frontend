@@ -33,6 +33,7 @@
     "moment": "^2.29.1",
     "ngx-avatar": "^4.0.0",
     "ngx-mask": "^11.1.5",
+    "ngx-spinner": "^11.0.2",
     "node-forge": "^0.10.0",
     "pdfmake": "^0.1.71",
     "rxjs": "~6.6.3",
