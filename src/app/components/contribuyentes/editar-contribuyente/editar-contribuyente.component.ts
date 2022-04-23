@@ -13,7 +13,7 @@ import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";  
 pdfMake.vfs = pdfFonts.pdfMake.vfs; 
 import { DialogConfirmacionComponent, DialogsCambiaPersona, DialogsAsociarCuenta } from '@comp/dialog-confirmacion/dialog-confirmacion.component';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import Swal from 'sweetalert2';
 
 export interface DatosContribuyente {
     tipoPersona: string;
@@ -2510,11 +2510,14 @@ export class DialogDomicilioContribuyente {
 
                     this.dialogRef.close(this.dataMovimientoDomicilio);
                     this.loadingEstados = false;
-                    this.snackBar.open('Registro exitoso', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'CORRECTO',
+                          text: "Registro exitoso",
+                          icon: 'success',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 },
                 (error) => {
                     this.dialogRef.close();
@@ -2592,11 +2595,14 @@ export class DialogDomicilioContribuyente {
                     console.log("AQUI dataMovimientoDomicilio");
                     console.log(this.dataMovimientoDomicilio);
 
-                    this.snackBar.open('Actualización Correcta', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'CORRECTO',
+                          text: "Actualización Correcta",
+                          icon: 'success',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                     this.dialogRef.close(this.dataMovimientoDomicilio);
                     this.loadingEstados = false;
                 },
@@ -3728,11 +3734,14 @@ export class DialogRepresentacionC {
             console.log(JSON.stringify(payload));
             this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
                 (res: any) => {
-                    this.snackBar.open('REGISTRO EXITOSO', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'CORRECTO',
+                          text: "REGISTRO EXITOSO",
+                          icon: 'success',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                     console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTECIÓN");
                     console.log(res);
                     this.loading = false;
@@ -3768,11 +3777,14 @@ export class DialogRepresentacionC {
         console.log(queryActRep);
         this.http.post(this.endpoint + 'actualizarRepresentacion?' + queryActRep, '', this.httpOptions).subscribe(
             (res: any) => {
-                this.snackBar.open('SE HA ACTUALIZADO EL REPRESENTADO', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
-                });
+                Swal.fire(
+                    {
+                      title: 'CORRECTO',
+                      text: "SE HA ACTUALIZADO EL REPRESENTADO",
+                      icon: 'success',
+                      confirmButtonText: 'Cerrar'
+                    }
+                );
                 console.log("AQUI ENTRO LAS RESPUESTA DEL POST ACT REPRESENTADO");
                 console.log(res);
                 let fin = true;
