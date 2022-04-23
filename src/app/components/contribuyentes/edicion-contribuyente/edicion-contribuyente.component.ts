@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { DialogCuenta } from '@comp/dialog-confirmacion/dialog-confirmacion.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 export interface DatosContribuyente {  
   identificacion: number;
@@ -58,7 +59,8 @@ export class EdicionContribuyenteComponent implements OnInit {
     private _formBuilder: FormBuilder,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private spinner: NgxSpinnerService,
   ) { }
 
   ngOnInit(): void {
@@ -294,6 +296,7 @@ export class EdicionContribuyenteComponent implements OnInit {
         }
         
         if(busca){
+            this.spinner.show();
             this.loadingResponse = true;
             this.busqueda = true;
             this.pagina = 1;
@@ -350,6 +353,7 @@ export class EdicionContribuyenteComponent implements OnInit {
 
             this.http.get(this.endpointBusqueda + '?' + this.queryParamFiltros, this.httpOptions).subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loadingResponse = false;
                     this.data = res;
                     this.dataSource = this.paginate(this.data, this.pageSize, this.pagina);
@@ -359,6 +363,7 @@ export class EdicionContribuyenteComponent implements OnInit {
                     console.log(res);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingResponse = false;
                     this.dataSource = [];
                 }
