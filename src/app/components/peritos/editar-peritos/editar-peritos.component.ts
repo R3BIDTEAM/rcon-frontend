@@ -10,6 +10,8 @@ import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@ang
 import * as moment from 'moment';
 import * as FileSaver from 'file-saver';
 import { DialogConfirmacionComponent } from '@comp/dialog-confirmacion/dialog-confirmacion.component';
+import Swal from 'sweetalert2';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 export interface DatosPeritos {
     apepaterno: string;
@@ -228,6 +230,7 @@ export class EditarPeritosComponent implements OnInit {
         public dialog: MatDialog,
         private auth: AuthService,
         private route: ActivatedRoute,
+        private spinner: NgxSpinnerService
     ) {
         this.peritoPersonaFormGroup = this._formBuilder.group({
             apellidopaterno: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
@@ -279,14 +282,17 @@ export class EditarPeritosComponent implements OnInit {
     * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
     */
      getDataDocumentosIdentificativos(): void{
+        this.spinner.show();
         this.loadingDocumentosIdentificativos = true;
         this.http.get(this.endpointActualiza + 'getCatalogos', this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingDocumentosIdentificativos = false;
                 this.documentos = res.CatDocIdentificativos;
+                this.spinner.hide();
             },
             (error) => {
                 this.loadingDocumentosIdentificativos = false;
+                this.spinner.hide();
             }
         );
     }
@@ -360,6 +366,7 @@ export class EditarPeritosComponent implements OnInit {
      * Obtiene los datos del perito consultado.
      */
     getPeritoDatos(){
+        this.spinner.show();
         this.query = 'obtenerSociedades=1&idPerito=' + this.idPerito; 
         this.loadingDatosPerito = true;
         console.log(this.endpoint + '?' + this.query);
@@ -378,11 +385,18 @@ export class EditarPeritosComponent implements OnInit {
                 },
                 (error) => {
                     this.loadingDatosPerito = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
+                    this.spinner.hide();
                 }
             );
     }
@@ -433,6 +447,7 @@ export class EditarPeritosComponent implements OnInit {
 
         this.minDate = (moment(this.datoPeritos.fecha_naci).add(2, 'd').format('YYYY-MM-DD'));
         this.changeRequired();
+        this.spinner.hide();
     }
 
 
@@ -486,10 +501,16 @@ export class EditarPeritosComponent implements OnInit {
                 },
                 (error) => {
                     this.loadingDomicilios = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );
@@ -549,10 +570,16 @@ export class EditarPeritosComponent implements OnInit {
                 },
                 (error) => {
                     this.loadingInmuebles = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );
@@ -610,25 +637,43 @@ export class EditarPeritosComponent implements OnInit {
                         console.log('ACTUALIZOOOOO!')
                         // console.log(this.loadingDatosPerito);
                         // console.log(res);
-                        this.snackBar.open('Guardado exitoso', 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
+                        // this.snackBar.open('Guardado exitoso', 'Cerrar', {
+                        //     duration: 10000,
+                        //     horizontalPosition: 'end',
+                        //     verticalPosition: 'top'
+                        // });
+                        Swal.fire({
+                            title: 'CORRECTO',
+                            text: 'Guardado exitoso',
+                            icon: 'success',
+                            confirmButtonText: 'Cerrar'
                         });
                     }else{
-                        this.snackBar.open(res.error.mensaje, 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
+                        // this.snackBar.open(res.error.mensaje, 'Cerrar', {
+                        //     duration: 10000,
+                        //     horizontalPosition: 'end',
+                        //     verticalPosition: 'top'
+                        // });
+                        Swal.fire({
+                            title: 'ERROR',
+                            text: res.error.mensaje,
+                            icon: 'error',
+                            confirmButtonText: 'Cerrar'
                         });
                     }                    
                 },
                 (error) => {
                     this.loadingDatosPerito = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );
@@ -702,25 +747,43 @@ export class EditarPeritosComponent implements OnInit {
                 console.log("Cambio de persona");
                 console.log(res);
                 if(res){
-                    this.snackBar.open('Actualización correcta', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open('Actualización correcta', 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'CORRECTO',
+                        text: 'Actualización correcta',
+                        icon: 'success',
+                        confirmButtonText: 'Cerrar'
                     });
                 }else{
-                    this.snackBar.open('Se ha presentado un problema intente más tarde', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open('Se ha presentado un problema intente más tarde', 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: 'Se ha presentado un problema intente más tarde',
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             },
             (error) => {
                 this.loadingDatosPerito = false;
-                this.snackBar.open('Se ha presentado un problema intente más tarde', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
+                // this.snackBar.open('Se ha presentado un problema intente más tarde', 'Cerrar', {
+                //     duration: 10000,
+                //     horizontalPosition: 'end',
+                //     verticalPosition: 'top'
+                // });
+                Swal.fire({
+                    title: 'ERROR',
+                    text: 'Se ha presentado un problema intente más tarde',
+                    icon: 'error',
+                    confirmButtonText: 'Cerrar'
                 });
             }
         );
@@ -765,19 +828,31 @@ export class EditarPeritosComponent implements OnInit {
                     console.log(res);
                     this.loadingDatosPerito = false;
                     if(res.idPerito !== null || res.idPerito !== ''){
-                        this.snackBar.open("Guardado correcto", 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
+                        // this.snackBar.open("Guardado correcto", 'Cerrar', {
+                        //     duration: 10000,
+                        //     horizontalPosition: 'end',
+                        //     verticalPosition: 'top'
+                        // });
+                        Swal.fire({
+                            title: 'CORRECTO',
+                            text: 'Guardado correcto',
+                            icon: 'success',
+                            confirmButtonText: 'Cerrar'
                         });
                     }
                 },
                 (error) => {
                     this.loadingDatosPerito = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );
@@ -921,25 +996,43 @@ export class EditarPeritosComponent implements OnInit {
                             this.loadingRepresentante = false;
                             this.getRepresentado();
                         }
-                        this.snackBar.open("Se ha eliminado la representación", 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
+                        // this.snackBar.open("Se ha eliminado la representación", 'Cerrar', {
+                        //     duration: 10000,
+                        //     horizontalPosition: 'end',
+                        //     verticalPosition: 'top'
+                        // });
+                        Swal.fire({
+                            title: 'CORRECTO',
+                            text: 'Se ha eliminado la representación',
+                            icon: 'success',
+                            confirmButtonText: 'Cerrar'
                         });
                         
                     }else{
-                        this.snackBar.open("Ocorrio un error al eliminar, intentelo nuevamente", 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
+                        // this.snackBar.open("Ocorrio un error al eliminar, intentelo nuevamente", 'Cerrar', {
+                        //     duration: 10000,
+                        //     horizontalPosition: 'end',
+                        //     verticalPosition: 'top'
+                        // });
+                        Swal.fire({
+                            title: 'ERROR',
+                            text: 'Ocurrió un error al eliminar, intentelo nuevamente',
+                            icon: 'error',
+                            confirmButtonText: 'Cerrar'
                         });
                     }
                 },
                 (error) => {
-                    this.snackBar.open("Ocorrio un error al eliminar, intentelo nuevamente", 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open("Ocorrio un error al eliminar, intentelo nuevamente", 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: 'Ocurrió un error al eliminar, intentelo nuevamente',
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );
@@ -995,10 +1088,16 @@ export class EditarPeritosComponent implements OnInit {
                 },
                 (error) => {
                     this.loadingRepresentante = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );
@@ -1032,10 +1131,16 @@ export class EditarPeritosComponent implements OnInit {
                 },
                 (error) => {
                     this.loadingRepresentado = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );
@@ -1121,10 +1226,16 @@ export class EditarPeritosComponent implements OnInit {
                 },
                 (error) => {
                     this.loadingDatosPerito = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );     
@@ -1539,10 +1650,16 @@ export class DialogDomicilioPerito {
                 },
                 (error) => {
                     this.loadingDireccionEspecifica = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );
@@ -1779,20 +1896,32 @@ export class DialogDomicilioPerito {
             .subscribe( 
                 (res: any) => {
                     console.log(res);
-                    this.snackBar.open('Registro exitoso', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open('Registro exitoso', 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'CORRECTO',
+                        text: 'Registro exitoso',
+                        icon: 'success',
+                        confirmButtonText: 'Cerrar'
                     });
                     this.dialogRef.close(res.idpersona);
                     this.loadingEstados = false;
                 },
                 (error) => {
                     this.dialogRef.close();
-                    this.snackBar.open('Ocurrio un error al Insertar la dirección, intente nuevemente', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open('Ocurrio un error al Insertar la dirección, intente nuevemente', 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: 'Ocurrio un error al Insertar la dirección, intente nuevamente',
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );
@@ -1840,20 +1969,32 @@ export class DialogDomicilioPerito {
                 (res: any) => {
                     console.log("AQUI ACTUALIZO");
                     console.log(res);
-                    this.snackBar.open('Actualización Correcta', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open('Actualización Correcta', 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'CORRECTO',
+                        text: 'Actualización Correcta',
+                        icon: 'success',
+                        confirmButtonText: 'Cerrar'
                     });
                     this.dialogRef.close(res.idpersona);
                     this.loadingEstados = false;
                 },
                 (error) => {
                     this.dialogRef.close();
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );
@@ -2656,6 +2797,7 @@ export class DialogRepresentacionPeritos {
         public dialog: MatDialog,
         public dialogRef: MatDialogRef<DialogRepresentacionPeritos>,
         private auth: AuthService,
+        private spinner: NgxSpinnerService,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
         
@@ -2917,10 +3059,16 @@ export class DialogRepresentacionPeritos {
             
             this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
                 (res: any) => {
-                    this.snackBar.open('REGISTRO EXITOSO', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open('REGISTRO EXITOSO', 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'CORRECTO',
+                        text: 'REGISTRO EXITOSO',
+                        icon: 'success',
+                        confirmButtonText: 'Cerrar'
                     });
                     console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTECIÓN");
                     console.log(res);
@@ -2928,10 +3076,16 @@ export class DialogRepresentacionPeritos {
                     this.dialogRef.close(res);
                 },
                 (error) => {
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 });
         }
@@ -2942,6 +3096,7 @@ export class DialogRepresentacionPeritos {
      * Actualiza la información de la representación seleccionada.
      */
     updateRepresentacion(){
+        this.spinner.show();
         let queryActRep = '';
 
         queryActRep = (this.dataRepresentacion.texto) ? queryActRep + 'textorepresentacion=' + this.dataRepresentacion.texto : queryActRep + 'textorepresentacion=';
@@ -2954,23 +3109,37 @@ export class DialogRepresentacionPeritos {
         console.log(queryActRep);
         this.http.post(this.endpoint + 'actualizarRepresentacion?' + queryActRep, '', this.httpOptions).subscribe(
             (res: any) => {
-                this.snackBar.open('SE HA ACTUALIZADO EL REPRESENTADO', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
+                // this.snackBar.open('SE HA ACTUALIZADO EL REPRESENTADO', 'Cerrar', {
+                //     duration: 10000,
+                //     horizontalPosition: 'end',
+                //     verticalPosition: 'top'
+                // });
+                Swal.fire({
+                    title: 'CORRECTO',
+                    text: 'SE HA ACTUALIZADO EL REPRESENTADO',
+                    icon: 'success',
+                    confirmButtonText: 'Cerrar'
                 });
                 console.log("AQUI ENTRO LAS RESPUESTA DEL POST ACT REPRESENTADO");
                 console.log(res);
                 let fin = true;
                 this.dialogRef.close(fin);
+                this.spinner.hide();
             },
             (error) => {
                 this.dialogRef.close();
-                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
+                // this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                //     duration: 10000,
+                //     horizontalPosition: 'end',
+                //     verticalPosition: 'top'
+                // });
+                Swal.fire({
+                    title: 'ERROR',
+                    text: 'ERROR INTENTELO MÁS TARDE',
+                    icon: 'error',
+                    confirmButtonText: 'Cerrar'
                 });
+                this.spinner.hide();
             });
     }
 
@@ -3315,10 +3484,16 @@ export class DialogRepresentadoPeritos {
             
             this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
                 (res: any) => {
-                    this.snackBar.open('REGISTRO EXITOSO', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open('REGISTRO EXITOSO', 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'CORRECTO',
+                        text: 'REGISTRO EXITOSO',
+                        icon: 'success',
+                        confirmButtonText: 'Cerrar'
                     });
                     console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTADO");
                     console.log(res);
@@ -3327,10 +3502,16 @@ export class DialogRepresentadoPeritos {
                 },
                 (error) => {
                     this.dialogRef.close()
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 });
         }
@@ -3356,10 +3537,16 @@ export class DialogRepresentadoPeritos {
 
         this.http.post(this.endpoint + 'actualizarRepresentacion?' + queryActRep, '', this.httpOptions).subscribe(
             (res: any) => {
-                this.snackBar.open('SE HA ACTUALIZADO EL REPRESENTADO', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
+                // this.snackBar.open('SE HA ACTUALIZADO EL REPRESENTADO', 'Cerrar', {
+                //     duration: 10000,
+                //     horizontalPosition: 'end',
+                //     verticalPosition: 'top'
+                // });
+                Swal.fire({
+                    title: 'CORRECTO',
+                    text: 'SE HA ACTUALIZADO EL REPRESENTADO',
+                    icon: 'success',
+                    confirmButtonText: 'Cerrar'
                 });
                 console.log("AQUI ENTRO LAS RESPUESTA DEL POST ACT REPRESENTADO");
                 console.log(res);
@@ -3368,10 +3555,16 @@ export class DialogRepresentadoPeritos {
             },
             (error) => {
                 this.dialogRef.close();
-                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
+                // this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                //     duration: 10000,
+                //     horizontalPosition: 'end',
+                //     verticalPosition: 'top'
+                // });
+                Swal.fire({
+                    title: 'ERROR',
+                    text: 'ERROR INTENTELO MÁS TARDE',
+                    icon: 'error',
+                    confirmButtonText: 'Cerrar'
                 });
             });
     }
@@ -3576,10 +3769,16 @@ export class DialogDocumentoPerito {
                         }));
                     };
                 }else{
-                    this.snackBar.open('Su archivo excede el tamaño permido de maximo 5MB', 'Cerrar', {
-                        duration: 5000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open('Su archivo excede el tamaño permido de maximo 5MB', 'Cerrar', {
+                    //     duration: 5000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: 'Su archivo excede el tamaño permido de maximo 5MB',
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                     event.target.value = '';
                 }
@@ -3627,10 +3826,16 @@ export class DialogDocumentoPerito {
                 this.setDoc();
             },
             (error) => {
-                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
+                // this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                //     duration: 10000,
+                //     horizontalPosition: 'end',
+                //     verticalPosition: 'top'
+                // });
+                Swal.fire({
+                    title: 'ERROR',
+                    text: 'ERROR INTENTELO MÁS TARDE',
+                    icon: 'error',
+                    confirmButtonText: 'Cerrar'
                 });
             });
     }
@@ -3677,10 +3882,16 @@ export class DialogDocumentoPerito {
                 this.convertirDoc();
             },
             (error) => {
-                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
+                // this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                //     duration: 10000,
+                //     horizontalPosition: 'end',
+                //     verticalPosition: 'top'
+                // });
+                Swal.fire({
+                    title: 'ERROR',
+                    text: 'ERROR INTENTELO MÁS TARDE',
+                    icon: 'error',
+                    confirmButtonText: 'Cerrar'
                 });
             });
     }
@@ -3734,20 +3945,32 @@ export class DialogDocumentoPerito {
 
         this.http.post( this.endpoint + 'borrarFichero?lista=' + element.idficherodocumento, '', this.httpOptions ). subscribe (
             (res: any) => {
-                this.snackBar.open('SE HA HA BORRADO EL DOCTO', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
+                // this.snackBar.open('SE HA HA BORRADO EL DOCTO', 'Cerrar', {
+                //     duration: 10000,
+                //     horizontalPosition: 'end',
+                //     verticalPosition: 'top'
+                // });
+                Swal.fire({
+                    title: 'CORRECTO',
+                    text: 'SE HA HA BORRADO EL DOCUMENTO',
+                    icon: 'success',
+                    confirmButtonText: 'Cerrar'
                 });
                 this.dataDoc.splice(i,1);
                 console.log("AQUI ENTRO LAS RESPUESTA DEL BORRADO");
                 console.log(res);
             },
             (error) => {
-                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
+                // this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                //     duration: 10000,
+                //     horizontalPosition: 'end',
+                //     verticalPosition: 'top'
+                // });
+                Swal.fire({
+                    title: 'ERROR',
+                    text: 'ERROR INTENTELO MÁS TARDE',
+                    icon: 'error',
+                    confirmButtonText: 'Cerrar'
                 });
             });
     }
@@ -3773,26 +3996,44 @@ export class DialogDocumentoPerito {
         this.http.post( this.endpoint + 'actualizarDocumentos', payload, this.httpOptions ). subscribe (
             (res: any) => {
                 if(res === true){
-                    this.snackBar.open('SE HA ACTUALIZADO CORRECTAMENTE LA INFORMACIÓN', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open('SE HA ACTUALIZADO CORRECTAMENTE LA INFORMACIÓN', 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'CORRECTO',
+                        text: 'SE HA ACTUALIZADO CORRECTAMENTE LA INFORMACIÓN',
+                        icon: 'success',
+                        confirmButtonText: 'Cerrar'
                     });
                     console.log("RESPUESTA DE LA ACTUALIZACIÓN");
                     console.log(res);
                 }else{
-                    this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: 'ERROR INTENTELO MÁS TARDE',
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             },
             (error) => {
-                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
+                // this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                //     duration: 10000,
+                //     horizontalPosition: 'end',
+                //     verticalPosition: 'top'
+                // });
+                Swal.fire({
+                    title: 'ERROR',
+                    text: 'ERROR INTENTELO MÁS TARDE',
+                    icon: 'error',
+                    confirmButtonText: 'Cerrar'
                 });
             });
     }
@@ -4460,10 +4701,16 @@ export class DialogHistorialRep {
                 },
                 (error) => {
                     this.loadingH = false;
-                    this.snackBar.open("Ha ocurrido un problema al obtener el historial", 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open("Ha ocurrido un problema al obtener el historial", 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: 'Ha ocurrido un problema al obtener el historial',
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );
@@ -4617,10 +4864,16 @@ export class DialogHistorialRepDetalle {
                 },
                 (error) => {
                     this.loadingH = false;
-                    this.snackBar.open("Ha ocurrido un problema al obtener el detalle", 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open("Ha ocurrido un problema al obtener el detalle", 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: 'Ha ocurrido un problema al obtener el detalle',
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );
@@ -4768,10 +5021,16 @@ export interface DataHistorico{
                 },
                 (error) => {
                     this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );
@@ -4977,10 +5236,16 @@ export interface DataHistorico{
                 (error) => {
                     this.loadingDireccionEspecifica = false;
                     console.log('no furula');
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );

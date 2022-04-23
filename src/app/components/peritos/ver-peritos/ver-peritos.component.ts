@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DialogHistorialComponent } from '@comp/dialog-historial/dialog-historial.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogDomicilioHistoricoG } from '@comp/dialog-historial/dialog-historial.component';
+import Swal from 'sweetalert2';
 
 export interface DatosPeritos {
     apepaterno: string;
@@ -169,10 +170,16 @@ export class VerPeritosComponent implements OnInit {
                 },
                 (error) => {
                     this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );
@@ -197,10 +204,16 @@ export class VerPeritosComponent implements OnInit {
             },
             (error) => {
                 this.loadingDomicilios = false;
-                this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
+                // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                //     duration: 10000,
+                //     horizontalPosition: 'end',
+                //     verticalPosition: 'top'
+                // });
+                Swal.fire({
+                    title: 'ERROR',
+                    text: error.error.mensaje,
+                    icon: 'error',
+                    confirmButtonText: 'Cerrar'
                 });
             }
         );
@@ -243,10 +256,16 @@ export class VerPeritosComponent implements OnInit {
                 },
                 (error) => {
                     this.loadingInmuebles = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );
@@ -306,10 +325,16 @@ export class VerPeritosComponent implements OnInit {
             },
             (error) => {
                 this.loadingRepresentante = false;
-                this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
+                // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                //     duration: 10000,
+                //     horizontalPosition: 'end',
+                //     verticalPosition: 'top'
+                // });
+                Swal.fire({
+                    title: 'ERROR',
+                    text: error.error.mensaje,
+                    icon: 'error',
+                    confirmButtonText: 'Cerrar'
                 });
             }
         );
@@ -334,10 +359,16 @@ export class VerPeritosComponent implements OnInit {
             },
             (error) => {
                 this.loadingRepresentado = false;
-                this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
+                // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                //     duration: 10000,
+                //     horizontalPosition: 'end',
+                //     verticalPosition: 'top'
+                // });
+                Swal.fire({
+                    title: 'ERROR',
+                    text: error.error.mensaje,
+                    icon: 'error',
+                    confirmButtonText: 'Cerrar'
                 });
             }
         );
