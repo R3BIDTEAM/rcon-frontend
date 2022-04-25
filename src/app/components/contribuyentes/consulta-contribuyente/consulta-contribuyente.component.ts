@@ -3,10 +3,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '@env/environment';
 import { AuthService } from '@serv/auth.service';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 export interface DatosContribuyente {  
   identificacion: number;
@@ -53,6 +52,7 @@ export class ConsultaContribuyenteComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private http: HttpClient,
+    private spinner: NgxSpinnerService,
     private _formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
   ) { }
@@ -112,14 +112,17 @@ export class ConsultaContribuyenteComponent implements OnInit {
   * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
   */
   getDataDocumentosIdentificativos(): void{
+    this.spinner.show();
     this.loadingDocumentosIdentificativos = true;
     this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
       (res: any) => {
+        this.spinner.hide();
         this.loadingDocumentosIdentificativos = false;
         this.documentos = res.CatDocIdentificativos;
         // console.log(this.documentos);
       },
       (error) => {
+        this.spinner.hide();
         this.loadingDocumentosIdentificativos = false;
       }
     );
@@ -225,6 +228,7 @@ export class ConsultaContribuyenteComponent implements OnInit {
         
         if(busca){
             this.loadingResponse = true;
+            this.spinner.show();
             this.busqueda = true;
             this.pagina = 1;
             this.queryParamFiltros = '';
@@ -279,17 +283,19 @@ export class ConsultaContribuyenteComponent implements OnInit {
             }
 
             this.http.get(this.endpointBusqueda + '?' + this.queryParamFiltros, this.httpOptions).subscribe(
-                (res: any) => {
-                    this.loadingResponse = false;
-                    this.data = res;
-                    this.dataSource = this.paginate(this.data, this.pageSize, this.pagina);
-                    this.total = this.data.length;
-                    this.paginator.pageIndex = 0;
-                },
-                (error) => {
-                    this.loadingResponse = false;
-                    this.dataSource = [];
-                }
+              (res: any) => {
+                this.spinner.hide();
+                this.loadingResponse = false;
+                this.data = res;
+                this.dataSource = this.paginate(this.data, this.pageSize, this.pagina);
+                this.total = this.data.length;
+                this.paginator.pageIndex = 0;
+              },
+              (error) => {
+                this.spinner.hide();
+                this.loadingResponse = false;
+                this.dataSource = [];
+              }
             );
         }
     }

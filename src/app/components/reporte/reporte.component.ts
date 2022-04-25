@@ -9,6 +9,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import * as moment from 'moment';
 import { ExcelService } from '@serv/excel.service';
 import { DialogCargaComponent } from '@comp/dialog-carga/dialog-carga.component';
+import { NgxSpinnerService } from 'ngx-spinner';
+import Swal from 'sweetalert2';
 
 @Component({
 	selector: 'app-reporte',
@@ -33,6 +35,7 @@ export class ReporteComponent implements OnInit {
 	constructor(
 		private auth: AuthService,
 		private http: HttpClient,
+        private spinner: NgxSpinnerService,
 		private _formBuilder: FormBuilder,
 		private snackBar: MatSnackBar,
 		public dialog: MatDialog,
@@ -52,8 +55,6 @@ export class ReporteComponent implements OnInit {
 			  Authorization: this.auth.getSession().token
 			})
 		};
-
-		
 
         this.rol = this.auth.getSession().userData.rol_nombre;
         if(this.rol == 'SUPERVISOR RCON' || this.rol == 'Administrador'){
@@ -109,6 +110,7 @@ export class ReporteComponent implements OnInit {
     }
 
 	getReporte(){
+        this.spinner.show();
 		let query = '';
         let busquedaDatos = 'getCambiosContribuyenteGen';
 		
@@ -130,6 +132,7 @@ export class ReporteComponent implements OnInit {
 		this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loading = false;
                     dialogRef.close();
                     if(!res.mensaje){
@@ -145,6 +148,7 @@ export class ReporteComponent implements OnInit {
                     }
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loading = false;
 					dialogRef.close();
 					this.snackBar.open(error.error.mensaje, 'Cerrar', {
@@ -231,6 +235,7 @@ export class DialogBuscaUsuario {
         private auth: AuthService,
         private http: HttpClient,
         private _formBuilder: FormBuilder,
+        private spinner: NgxSpinnerService,
         public dialogRef: MatDialogRef<DialogBuscaUsuario>,
         @Inject(MAT_DIALOG_DATA) public data: any){
             dialogRef.disableClose = true;
@@ -282,6 +287,7 @@ export class DialogBuscaUsuario {
      * Obtiene el o los registros de los contribuyentes existentes.
      */
 	getUsuario(){
+        this.spinner.show();
         let query = 'page=1';
         let busquedaDatos = '';
 
@@ -295,13 +301,13 @@ export class DialogBuscaUsuario {
             query = query + '&login=' + this.personaFormGroup.value.usuario.toLocaleUpperCase();
         }
 
-
 		//?page=1&rfc=PERM820418S81&login=PERM820418&name=MARIO FERNANDO PEREZ SALINAS
         console.log(this.endpoint + busquedaDatos + '?' + query);
         this.loading = true;
         this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loading = false;
                     this.dataSource = res.data;
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
@@ -310,6 +316,15 @@ export class DialogBuscaUsuario {
                     console.log(this.dataSource);
                 },
                 (error) => {
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'error',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
+                    this.spinner.hide();
                     this.loading = false;
                 }
             );

@@ -13,6 +13,7 @@ import { DialogHistorialComponent, DialogDomicilioHistoricoG, DialogPersonalesHi
 import pdfMake from "pdfmake/build/pdfmake";  
 import pdfFonts from "pdfmake/build/vfs_fonts";  
 pdfMake.vfs = pdfFonts.pdfMake.vfs; 
+import { NgxSpinnerService } from 'ngx-spinner';
 
 export interface DataRepresentacion {
   tipoPersona: string;
@@ -118,6 +119,7 @@ export class VerContribuyenteComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private auth: AuthService,
+    private spinner: NgxSpinnerService,
     private _formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
     public dialog: MatDialog,
@@ -206,14 +208,17 @@ export class VerContribuyenteComponent implements OnInit {
     * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
     */
   getDataDocumentos(): void{
+    this.spinner.show();
     this.loadingDocumentos = true;
     this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
       (res: any) => {
+        this.spinner.hide();
         this.loadingDocumentos = false;
         this.dataDocumentos = res.CatDocIdentificativos;
         console.log(this.dataDocumentos);
       },
       (error) => {
+        this.spinner.hide();
         this.loadingDocumentos = false;
       }
     );
@@ -223,56 +228,61 @@ export class VerContribuyenteComponent implements OnInit {
     * Obtiene los Datos del Contribuyente
     */
   getContribuyenteDatos(){
+    this.spinner.show();
     this.query = '&idPersona=' + this.idContribuyente; 
     this.loading = true;
     console.log(this.endpoint);
     this.http.get(this.endpoint + 'getInfoContribuyente?' + this.query, this.httpOptions)
-        .subscribe(
-            (res: any) => {
-                this.loading = false;
-                this.dataContribuyenteResultado = res.contribuyente;
-                console.log("AQUI ENTRO EL RES");
-                console.log(this.dataContribuyenteResultado);
-                this.datoDelContribuyente();
-            },
-            (error) => {
-                this.loading = false;
-                this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
-                });
-            }
-        );
+      .subscribe(
+        (res: any) => {
+          this.spinner.hide();
+          this.loading = false;
+          this.dataContribuyenteResultado = res.contribuyente;
+          console.log("AQUI ENTRO EL RES");
+          console.log(this.dataContribuyenteResultado);
+          this.datoDelContribuyente();
+        },
+        (error) => {
+          this.spinner.hide();
+          this.loading = false;
+          this.snackBar.open(error.error.mensaje, 'Cerrar', {
+              duration: 10000,
+              horizontalPosition: 'end',
+              verticalPosition: 'top'
+          });
+        }
+      );
   }
 
   /**
   * Obtiene los domicilios registrados de la sociedad domicilios particulares y para recibir notificaciones.
   */
   getDomicilioContribuyente(){
+    this.spinner.show();
     this.loadingDomicilios = true;
     let metodo = 'getDireccionesContribuyente';
     this.http.get(this.endpoint + metodo + '?idPersona='+ this.idContribuyente, this.httpOptions)
       .subscribe(
-          (res: any) => {
-              this.loadingDomicilios = false;
-
-              this.dataSource1 = res.filter(element => element.CODTIPOSDIRECCION !== "N");
-              this.dataSource2 = res.filter(element => element.CODTIPOSDIRECCION === "N");
-              this.total1 = this.dataSource1.length;
-              this.total2 = this.dataSource2.length;
-              this.dataPaginate1 = this.paginate(this.dataSource1, 15, this.pagina1);
-              this.dataPaginate2 = this.paginate(this.dataSource2, 15, this.pagina2);
-              this.getidInmuebles();
-          },
-          (error) => {
-              this.loadingDomicilios = false;
-              this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                  duration: 10000,
-                  horizontalPosition: 'end',
-                  verticalPosition: 'top'
-              });
-          }
+        (res: any) => {
+          this.spinner.hide();
+          this.loadingDomicilios = false;
+          this.dataSource1 = res.filter(element => element.CODTIPOSDIRECCION !== "N");
+          this.dataSource2 = res.filter(element => element.CODTIPOSDIRECCION === "N");
+          this.total1 = this.dataSource1.length;
+          this.total2 = this.dataSource2.length;
+          this.dataPaginate1 = this.paginate(this.dataSource1, 15, this.pagina1);
+          this.dataPaginate2 = this.paginate(this.dataSource2, 15, this.pagina2);
+          this.getidInmuebles();
+        },
+        (error) => {
+          this.spinner.hide();
+          this.loadingDomicilios = false;
+          this.snackBar.open(error.error.mensaje, 'Cerrar', {
+              duration: 10000,
+              horizontalPosition: 'end',
+              verticalPosition: 'top'
+          });
+        }
       );
   }
 
@@ -298,33 +308,35 @@ export class VerContribuyenteComponent implements OnInit {
   * Obtiene los inmuebles de la persona
   */
   getidInmuebles(){
+    this.spinner.show();
     this.loadingInmuebles = true;
     this.http.get(this.endpoint + 'getInmuebles' + '?idPersona='+ this.idContribuyente, this.httpOptions)
-        .subscribe(
-            (res: any) => {
-                this.loadingInmuebles = false;
-                console.log("AQUI ENTRO IDINMUEBLE!!!");
-                console.log(res);
+      .subscribe(
+        (res: any) => {
+          this.spinner.hide();
+          this.loadingInmuebles = false;
+          console.log("AQUI ENTRO IDINMUEBLE!!!");
+          console.log(res);
 
-                this.dataSource3 = res;
-                console.log(res.length);
-                console.log(this.dataSource3);
-                this.dataPaginate3 = this.paginate(this.dataSource3, 15, this.pagina3);
-                this.total3 = this.dataSource3.length; 
-                this.paginator.pageIndex = 0;
-                console.log("AQUI ENTRO EL RES DEL INMUEBLE!");
-                console.log(this.dataSource3);
-
-            },
-            (error) => {
-                this.loadingInmuebles = false;
-                this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
-                });
-            }
-        );
+          this.dataSource3 = res;
+          console.log(res.length);
+          console.log(this.dataSource3);
+          this.dataPaginate3 = this.paginate(this.dataSource3, 15, this.pagina3);
+          this.total3 = this.dataSource3.length; 
+          this.paginator.pageIndex = 0;
+          console.log("AQUI ENTRO EL RES DEL INMUEBLE!");
+          console.log(this.dataSource3);
+        },
+        (error) => {
+          this.spinner.hide();
+          this.loadingInmuebles = false;
+          this.snackBar.open(error.error.mensaje, 'Cerrar', {
+              duration: 10000,
+              horizontalPosition: 'end',
+              verticalPosition: 'top'
+          });
+        }
+      );
   }
 
   /**
@@ -340,53 +352,59 @@ export class VerContribuyenteComponent implements OnInit {
   * Obtiene las representaciónes del contribuyente
   */
   getRepresentacion(){
-  this.loadingRepresentante = true;
-  let queryRep = 'rep=Representantes&idPersona=' + this.idContribuyente;
-  this.http.get(this.endpoint + 'getRepresentacionContribuyente?' + queryRep, this.httpOptions)
-    .subscribe(
+    this.spinner.show();
+    this.loadingRepresentante = true;
+    let queryRep = 'rep=Representantes&idPersona=' + this.idContribuyente;
+    this.http.get(this.endpoint + 'getRepresentacionContribuyente?' + queryRep, this.httpOptions)
+      .subscribe(
         (res: any) => {
-            this.loadingRepresentante = false;
-            this.dataSource4 = res;
-            this.total4 = this.dataSource4.length;
-            this.dataPaginate4 = this.paginate(this.dataSource4, 15, this.pagina4);
+          this.spinner.hide
+          this.loadingRepresentante = false;
+          this.dataSource4 = res;
+          this.total4 = this.dataSource4.length;
+          this.dataPaginate4 = this.paginate(this.dataSource4, 15, this.pagina4);
         },
         (error) => {
-            this.loadingRepresentante = false;
-            this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                duration: 10000,
-                horizontalPosition: 'end',
-                verticalPosition: 'top'
-            });
+          this.spinner.hide
+          this.loadingRepresentante = false;
+          this.snackBar.open(error.error.mensaje, 'Cerrar', {
+              duration: 10000,
+              horizontalPosition: 'end',
+              verticalPosition: 'top'
+          });
         }
-    );
+      );
   }
 
   /**
   * Obtienen los representados de la sociedad.
   */
   getRepresentado(){
-  this.loadingRepresentado = true;
-  let queryRepdo = 'rep=Representado&idPersona=' + this.idContribuyente;
-  console.log(this.endpoint + 'getRepresentacionContribuyente?' + queryRepdo);
-  this.http.get(this.endpoint + 'getRepresentacionContribuyente?' + queryRepdo, this.httpOptions)
-    .subscribe(
+    this.spinner.show();
+    this.loadingRepresentado = true;
+    let queryRepdo = 'rep=Representado&idPersona=' + this.idContribuyente;
+    console.log(this.endpoint + 'getRepresentacionContribuyente?' + queryRepdo);
+    this.http.get(this.endpoint + 'getRepresentacionContribuyente?' + queryRepdo, this.httpOptions)
+      .subscribe(
         (res: any) => {
-            this.loadingRepresentado = false;
-            this.dataSource5 = res;
-            console.log("ACA ENTRO EL REPRESENTADO");
-            console.log(res);
-            this.total5 = this.dataSource5.length;
-            this.dataPaginate5 = this.paginate(this.dataSource5, 15, this.pagina5);
+          this.spinner.hide();
+          this.loadingRepresentado = false;
+          this.dataSource5 = res;
+          console.log("ACA ENTRO EL REPRESENTADO");
+          console.log(res);
+          this.total5 = this.dataSource5.length;
+          this.dataPaginate5 = this.paginate(this.dataSource5, 15, this.pagina5);
         },
         (error) => {
-            this.loadingRepresentado = false;
-            this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                duration: 10000,
-                horizontalPosition: 'end',
-                verticalPosition: 'top'
-            });
+          this.spinner.hide();
+          this.loadingRepresentado = false;
+          this.snackBar.open(error.error.mensaje, 'Cerrar', {
+              duration: 10000,
+              horizontalPosition: 'end',
+              verticalPosition: 'top'
+          });
         }
-    );
+      );
   }
 
   /**
@@ -488,6 +506,7 @@ export class VerContribuyenteComponent implements OnInit {
   }
 
   consultaInfoCambios(){
+    this.spinner.show();
     this.infoContribuyenteNombre = '';
     let metodo = 'getInfoContribuyente';
     let nombreC = '';
@@ -498,6 +517,7 @@ export class VerContribuyenteComponent implements OnInit {
     this.http.get(this.endpoint + metodo + '?idPersona=' + this.idContribuyente, this.httpOptions)
       .subscribe(
           (res: any) => {
+            this.spinner.hide();
             this.infoContribuyente = res.contribuyente;
             nombreC = (this.infoContribuyente[0].NOMBRE) ? this.infoContribuyente[0].NOMBRE : '';
             apematernoC = (this.infoContribuyente[0].APELLIDOMATERNO) ? this.infoContribuyente[0].APELLIDOMATERNO : '';
@@ -520,13 +540,14 @@ export class VerContribuyenteComponent implements OnInit {
             
           },
           (error) => {
-              dialogRef.close();
-              this.loadingDomicilios = false;
-              this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                  duration: 10000,
-                  horizontalPosition: 'end',
-                  verticalPosition: 'top'
-              });
+            this.spinner.hide();
+            dialogRef.close();
+            this.loadingDomicilios = false;
+            this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                duration: 10000,
+                horizontalPosition: 'end',
+                verticalPosition: 'top'
+            });
           }
       );
   }

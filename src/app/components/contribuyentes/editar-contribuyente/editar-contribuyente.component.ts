@@ -14,6 +14,7 @@ import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs; 
 import { DialogConfirmacionComponent, DialogsCambiaPersona, DialogsAsociarCuenta } from '@comp/dialog-confirmacion/dialog-confirmacion.component';
 import Swal from 'sweetalert2';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 export interface DatosContribuyente {
     tipoPersona: string;
@@ -100,35 +101,35 @@ export interface DataDocumentoRepresentacion {
     archivos: Array<{nombre: string, base64: string}>;
 }
 export interface DataDomicilio {
-  codtiposdireccion: string;
-  idestado: number;
-  estado: string;
-  idmunicipio: number;
-  idmunicipio2: number;
-  municipio: string;
-  delegacion: string;
-  idciudad: number;
-  ciudad: string;
-  codasentamiento: number;
-  idtipoasentamiento: number;
-  asentamiento: string;
-  codtiposvia: number;
-  idtipovia: number;
-  via: string;
-  idtipolocalidad: number;
-  localidad: string;
-  cp: string;
-  nexterior: string;
-  entrecalle1: string;
-  entrecalle2: string;
-  andador: string;
-  edificio: string;
-  seccion: string;
-  entrada: string;
-  ninterior: string;
-  telefono: string;
-  adicional: string;
-  id_direccion: string;
+    codtiposdireccion: string;
+    idestado: number;
+    estado: string;
+    idmunicipio: number;
+    idmunicipio2: number;
+    municipio: string;
+    delegacion: string;
+    idciudad: number;
+    ciudad: string;
+    codasentamiento: number;
+    idtipoasentamiento: number;
+    asentamiento: string;
+    codtiposvia: number;
+    idtipovia: number;
+    via: string;
+    idtipolocalidad: number;
+    localidad: string;
+    cp: string;
+    nexterior: string;
+    entrecalle1: string;
+    entrecalle2: string;
+    andador: string;
+    edificio: string;
+    seccion: string;
+    entrada: string;
+    ninterior: string;
+    telefono: string;
+    adicional: string;
+    id_direccion: string;
 }
 
 export interface DataActualizacion{
@@ -269,7 +270,8 @@ export class EditarContribuyenteComponent implements OnInit {
         private _formBuilder: FormBuilder,
         private snackBar: MatSnackBar,
         public dialog: MatDialog,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private spinner: NgxSpinnerService,
     ) {
         this.httpOptions = {
             headers: new HttpHeaders({
@@ -343,6 +345,7 @@ export class EditarContribuyenteComponent implements OnInit {
      */
     getTipoDerecho(){
         this.loadingDerecho = true;
+        this.spinner.show();
         this.http.get(this.endpoint + 'getCatTiposDerecho', this.httpOptions)
             .subscribe(
                 (res: any) => {
@@ -354,11 +357,16 @@ export class EditarContribuyenteComponent implements OnInit {
                 },
                 (error) => {
                     this.loadingDerecho = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    this.spinner.hide();
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'error',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
+                    
                 }
             );
     }
@@ -368,6 +376,7 @@ export class EditarContribuyenteComponent implements OnInit {
      */
     getInfoPersonaInmueble(){
         this.loadingDerecho = true;
+        this.spinner.show();
         this.http.get(this.endpoint + 'getCasPersonaInmueble?idPersona=' + this.idContribuyente, this.httpOptions)
             .subscribe(
                 (res: any) => {
@@ -375,14 +384,19 @@ export class EditarContribuyenteComponent implements OnInit {
                     this.personaInmueble = res;
                     console.log("DERECHO DATOS");
                     console.log(this.personaInmueble);
+                    this.spinner.hide();
                 },
                 (error) => {
                     this.loadingDerecho = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    this.spinner.hide();
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'warning',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
@@ -391,6 +405,7 @@ export class EditarContribuyenteComponent implements OnInit {
      * Actualiza la información del inmueble.
      */
     actualizaPersonaInmueble(i,idpersonainmueble){
+        this.spinner.show();
         console.log("INMUEBLES INPUTS");
         console.log(this.personaInmueble[i].porcentajeparticipacion);
         console.log(this.personaInmueble[i].codtipoderecho);
@@ -408,22 +423,30 @@ export class EditarContribuyenteComponent implements OnInit {
                 (res: any) => {
                     this.loadingDerecho = false;
                     if(res == "Actualizado"){
-                        this.snackBar.open("Actualización correcta", 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
-                        });
+                        Swal.fire(
+                            {
+                              title: 'CORRECTO',
+                              text: "Actualización correcta",
+                              icon: 'success',
+                              confirmButtonText: 'Cerrar'
+                            }
+                        );
+                        this.spinner.hide();
                         this.getInfoPersonaInmueble();
                     }
                     
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingDerecho = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'warning',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
@@ -432,6 +455,7 @@ export class EditarContribuyenteComponent implements OnInit {
      * Actualiza la información del inmueble.
      */
     desasociarCuenta(i,idpersonainmueble){
+        this.spinner.show();
         console.log("BORRAR INMUEBLES INPUTS");
         console.log(idpersonainmueble);
         console.log(this.personaInmueble[i].observacionC);
@@ -448,11 +472,15 @@ export class EditarContribuyenteComponent implements OnInit {
                     if(res.idpersona){
                         this.actualizadoCuenta = true;
                         this.actualizado = false;
-                        this.snackBar.open("Actualización correcta", 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
-                        });
+                        Swal.fire(
+                            {
+                              title: 'CORRECTO',
+                              text: "Actualización correcta",
+                              icon: 'success',
+                              confirmButtonText: 'Cerrar'
+                            }
+                        );
+                        this.spinner.hide();
                         this.dataActualizacion.after_CP = res.after_CP;
                         this.dataActualizacion.after_Col = res.after_Col;
                         this.dataActualizacion.after_Direccion = res.after_Direccion;
@@ -478,11 +506,15 @@ export class EditarContribuyenteComponent implements OnInit {
                 },
                 (error) => {
                     this.loadingDerecho = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    this.spinner.hide();
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'warning',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
@@ -504,6 +536,7 @@ export class EditarContribuyenteComponent implements OnInit {
     }
 
     asociarCuenta(dataCuenta){
+        this.spinner.show();
         this.loadingDerecho = true;
         console.log("ACÁ EL QUERY DE LA CUENTA");
         let queryP = 'idPersona=' + this.idContribuyente + '&region=' + dataCuenta.region + '&manzana=' + dataCuenta.manzana 
@@ -519,11 +552,15 @@ export class EditarContribuyenteComponent implements OnInit {
                     if(res.idpersona){
                         this.actualizadoCuenta = true;
                         this.actualizado = false;
-                        this.snackBar.open("Actualización correcta", 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
-                        });
+                        Swal.fire(
+                            {
+                              title: 'CORRECTO',
+                              text: "Actualización correcta",
+                              icon: 'success',
+                              confirmButtonText: 'Cerrar'
+                            }
+                        );
+                        this.spinner.hide();
                         this.dataActualizacion.after_CP = res.after_CP;
                         this.dataActualizacion.after_Col = res.after_Col;
                         this.dataActualizacion.after_Direccion = res.after_Direccion;
@@ -545,22 +582,35 @@ export class EditarContribuyenteComponent implements OnInit {
                         this.dataActualizacion.folio = null;
                         this.getTipoDerecho();
                     }else{
-                        this.snackBar.open("Error al actualizar, intente nuevamente.", 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
-                        });
+                        Swal.fire(
+                            {
+                              title: 'SIN RESULTADO',
+                              text: "Error al actualizar, intente nuevamente.",
+                              icon: 'warning',
+                              confirmButtonText: 'Cerrar'
+                            }
+                        );
+                        this.spinner.hide();
                         this.loadingDerecho = false;
                     }
                     
                 },
                 (error) => {
                     this.loadingDerecho = false;
-                    this.snackBar.open(error.error, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    this.spinner.hide();
+                    // this.snackBar.open(error.error, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error,
+                          icon: 'error',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
@@ -656,14 +706,17 @@ export class EditarContribuyenteComponent implements OnInit {
     * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
     */
     getDataDocumentos(): void{
+        this.spinner.show();
         this.loadingDocumentos = true;
         this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingDocumentos = false;
                 this.dataDocumentos = res.CatDocIdentificativos;
                 console.log(this.dataDocumentos);
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingDocumentos = false;
             }
         );
@@ -674,6 +727,7 @@ export class EditarContribuyenteComponent implements OnInit {
     */
     getContribuyenteDatos(){
         this.query = '&idPersona=' + this.idContribuyente; 
+        this.spinner.show();
         this.loading = true;
         console.log(this.endpoint);
         this.http.get(this.endpoint + 'getInfoContribuyente?' + this.query, this.httpOptions)
@@ -685,15 +739,20 @@ export class EditarContribuyenteComponent implements OnInit {
                     this.dataContribuyenteResultado = res.contribuyente;
                     console.log("AQUI ENTRO EL RES");
                     console.log(this.dataContribuyenteResultado);
+                    this.spinner.hide();
                     this.datoDelContribuyente();
                 },
                 (error) => {
                     this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    this.spinner.hide();
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'warning',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
@@ -749,6 +808,7 @@ export class EditarContribuyenteComponent implements OnInit {
         this.minDate = (moment(this.contribuyente.fecha_naci).add(2, 'd').format('YYYY-MM-DD'));
         // alert(moment(this.contribuyente.fecha_naci).format('YYYY-MM-DD'));
         this.changeRequired();
+        this.spinner.hide();
     }
 
     /**
@@ -768,7 +828,7 @@ export class EditarContribuyenteComponent implements OnInit {
         let query = '';
         this.loading = true;
         this.actualizado = false;
-
+        this.spinner.show();
         query = (this.contribuyente.tipoPersona) ? query + '&codtipospersona=' + this.contribuyente.tipoPersona : query + '&codtipospersona=';
         query = (this.contribuyente.nombre) ? query + '&nombre=' + this.contribuyente.nombre.toLocaleUpperCase().trim() : query + '&nombre=';
         query = (this.contribuyente.idTipoPersonaMoral) ? query + '&idtipomoral=' + this.contribuyente.idTipoPersonaMoral : query + '&idtipomoral=';
@@ -803,46 +863,53 @@ export class EditarContribuyenteComponent implements OnInit {
                     this.loading = false;
                     console.log("CONTRIBUYENTE ACTUALIZADO");
                     console.log(res);
-            
-                        this.dataActualizacion.after_CP = res.after_CP;
-                        this.dataActualizacion.after_Col = res.after_Col;
-                        this.dataActualizacion.after_Direccion = res.after_Direccion;
-                        this.dataActualizacion.after_Nombre = res.after_Nombre;
-                        this.dataActualizacion.after_RFC = res.after_RFC;
-                        this.dataActualizacion.after_cuenta = res.after_cuenta;
-                        this.dataActualizacion.area = res.area;
-                        this.dataActualizacion.at = res.at;
-                        this.dataActualizacion.before_cuenta = res.before_cuenta;
-                        this.dataActualizacion.before_CP = res.before_CP;
-                        this.dataActualizacion.before_Col = res.before_Col;
-                        this.dataActualizacion.before_Direccion = res.before_Direccion;
-                        this.dataActualizacion.before_Nombre = res.before_Nombre;
-                        this.dataActualizacion.before_RFC = res.before_RFC;
-                        this.dataActualizacion.cuentaP = res.cuentaP;
-                        this.dataActualizacion.fechaConsulta = res.fechaConsulta;
-                        this.dataActualizacion.folio = res.folio;
-                        this.dataActualizacion.idpersona = res.idpersona;
-                        this.dataActualizacion.usuario = res.usuario;
+                    this.spinner.hide();
+                    this.dataActualizacion.after_CP = res.after_CP;
+                    this.dataActualizacion.after_Col = res.after_Col;
+                    this.dataActualizacion.after_Direccion = res.after_Direccion;
+                    this.dataActualizacion.after_Nombre = res.after_Nombre;
+                    this.dataActualizacion.after_RFC = res.after_RFC;
+                    this.dataActualizacion.after_cuenta = res.after_cuenta;
+                    this.dataActualizacion.area = res.area;
+                    this.dataActualizacion.at = res.at;
+                    this.dataActualizacion.before_cuenta = res.before_cuenta;
+                    this.dataActualizacion.before_CP = res.before_CP;
+                    this.dataActualizacion.before_Col = res.before_Col;
+                    this.dataActualizacion.before_Direccion = res.before_Direccion;
+                    this.dataActualizacion.before_Nombre = res.before_Nombre;
+                    this.dataActualizacion.before_RFC = res.before_RFC;
+                    this.dataActualizacion.cuentaP = res.cuentaP;
+                    this.dataActualizacion.fechaConsulta = res.fechaConsulta;
+                    this.dataActualizacion.folio = res.folio;
+                    this.dataActualizacion.idpersona = res.idpersona;
+                    this.dataActualizacion.usuario = res.usuario;
 
-                        this.actualizado = true;
-                        this.actualizadoCuenta = false;
-                        this.accionDomicilio = false;
-                        this.accionDomicilioBoletas = false;
+                    this.actualizado = true;
+                    this.actualizadoCuenta = false;
+                    this.accionDomicilio = false;
+                    this.accionDomicilioBoletas = false;
 
                     console.log(this.dataActualizacion);
-                    this.snackBar.open('guardado correcto', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'CORRECTO',
+                          text: "Guardado correcto",
+                          icon: 'success',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 },
                 (error) => {
                     this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    this.spinner.hide();
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'warning',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
@@ -891,7 +958,7 @@ export class EditarContribuyenteComponent implements OnInit {
         let query = 'idpersona=' + this.idContribuyente;
         this.loading = true;
         this.actualizado = false;
-
+        this.spinner.show();
         query = (this.contribuyente.tipoPersona) ? query + '&codtipospersona=' + this.contribuyente.tipoPersona : query + '&codtipospersona=';
 
         if(this.contribuyente.tipoPersona === 'F'){
@@ -927,12 +994,16 @@ export class EditarContribuyenteComponent implements OnInit {
                 this.loading = false;
                 console.log("Cambio de persona");
                 console.log(res);
+                this.spinner.hide();
                 if(res){
-                    this.snackBar.open('Actualización correcta', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'CORRECTO',
+                          text: "Actualización correcta",
+                          icon: 'success',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                     this.dataActualizacion.after_CP = res.after_CP;
                     this.dataActualizacion.after_Col = res.after_Col;
                     this.dataActualizacion.after_Direccion = res.after_Direccion;
@@ -956,20 +1027,27 @@ export class EditarContribuyenteComponent implements OnInit {
                     this.accionDomicilioBoletas = false;
                     this.actCambioPersona = true;
                 }else{
-                    this.snackBar.open('Se ha presentado un problema intente más tarde', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: "Se ha presentado un problema intente más tarde",
+                          icon: 'warning',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             },
             (error) => {
                 this.loading = false;
-                this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
-                });
+                this.spinner.hide();
+                Swal.fire(
+                    {
+                      title: 'SIN RESULTADO',
+                      text: error.error.mensaje,
+                      icon: 'warning',
+                      confirmButtonText: 'Cerrar'
+                    }
+                );
             }
         );
     }
@@ -1442,11 +1520,13 @@ export class EditarContribuyenteComponent implements OnInit {
     getDomicilioContribuyente(){
         this.loadingDomicilios = true;
         this.loadingInmuebles = true;
+        this.spinner.show();
         let metodo = 'getDireccionesContribuyente';
         this.http.get(this.endpointActualiza + metodo + '?idPersona='+ this.idContribuyente, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingDomicilios = false;
+                    this.spinner.hide();
                     //this.dataSource1 = res.filter(element => element.CODTIPOSDIRECCION !== "N");
                     this.dataSource1 = res;
                     this.dataSource2 = res;
@@ -1457,12 +1537,16 @@ export class EditarContribuyenteComponent implements OnInit {
                     this.getidInmuebles();
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingDomicilios = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'warning',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
@@ -1490,13 +1574,14 @@ export class EditarContribuyenteComponent implements OnInit {
      */
     getidInmuebles(){
         this.loadingInmuebles = true;
+        this.spinner.show();
         this.http.get(this.endpointActualiza + 'getInmuebles' + '?idPersona='+ this.idContribuyente, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingInmuebles = false;
                     console.log("AQUI ENTRO IDINMUEBLE!!!");
                     console.log(res);
-
+                    this.spinner.hide();
                     this.dataSource3 = res;
                     console.log(res.length);
                     console.log(this.dataSource3);
@@ -1509,11 +1594,15 @@ export class EditarContribuyenteComponent implements OnInit {
                 },
                 (error) => {
                     this.loadingInmuebles = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    this.spinner.hide();
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'warning',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
@@ -1568,39 +1657,51 @@ export class EditarContribuyenteComponent implements OnInit {
     insertaDomicilioInmueble(){
         this.loadingDomicilios = true;
         this.loadingInmuebles = true;
+        this.spinner.show();
         let queryDPI = 'idPersona=' + this.idContribuyente + '&idDireccion=' + this.idDireccionI + '&idPersonaInmueble=' + this.idPersonaInmueble;
         console.log("INSERTAR LA DIRECCIÓN DEL INMUEBLE");
         console.log(this.endpoint + 'InsertarInmuebleDomicilioFiscal' + '?' + queryDPI);
         this.http.post(this.endpoint + 'InsertarInmuebleDomicilioFiscal' + '?' + queryDPI, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     if(res.length > 0){
                         this.getDomicilioContribuyente();
                         this.selectIdPersonaI = true;
-                        this.snackBar.open('Actualización correcta', 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
-                        });
+                        Swal.fire(
+                            {
+                              title: 'CORRECTO',
+                              text: "Actualización correcta",
+                              icon: 'success',
+                              confirmButtonText: 'Cerrar'
+                            }
+                        );
                     }else{
-                        this.snackBar.open('No se pudo registrar intente nuevamente', 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
-                        });
+                        Swal.fire(
+                            {
+                              title: 'SIN RESULTADO',
+                              text: "Se ha presentado un problema intente más tarde",
+                              icon: 'warning',
+                              confirmButtonText: 'Cerrar'
+                            }
+                        );
                     }
                     this.loadingDomicilios = false;
                     this.loadingInmuebles = false;
                     console.log(res);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingDomicilios = false;
                     this.loadingInmuebles = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'warning',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
@@ -1609,11 +1710,14 @@ export class EditarContribuyenteComponent implements OnInit {
      * Inserta la nueva dirección fiscal del inmuble.
      */
     actualizaDomicilioInmueble(){
-        this.snackBar.open('El inmueble ya cuenta con una dirección registrada.', 'Cerrar', {
-            duration: 10000,
-            horizontalPosition: 'end',
-            verticalPosition: 'top'
-        });
+        Swal.fire(
+            {
+              title: '¡ATENCIÓN!',
+              text: "El inmueble ya cuenta con una dirección registrada.",
+              icon: 'warning',
+              confirmButtonText: 'Cerrar'
+            }
+        );
     }
 
     /**
@@ -1622,10 +1726,12 @@ export class EditarContribuyenteComponent implements OnInit {
     getDireccionEspecifica(iddireccion){
         this.loadingDireccionEspecifica = true;
         let metodo = 'getDireccionById';
+        this.spinner.show();
         this.http.get(this.endpointActualiza + metodo + '?idDireccion='+ iddireccion, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     // alert('entro');
+                    this.spinner.hide();
                     this.loadingDireccionEspecifica = false;
                     this.dataDomicilioEspecifico = res;
                     this.editDomicilio(this.dataDomicilioEspecifico);
@@ -1633,12 +1739,16 @@ export class EditarContribuyenteComponent implements OnInit {
                     console.log(this.dataDomicilioEspecifico);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingDireccionEspecifica = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'warning',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
@@ -1914,6 +2024,7 @@ export class EditarContribuyenteComponent implements OnInit {
     eliminarRepresentacion(element,tipo){
         this.loadingRepresentante = true;
         this.loadingRepresentado = true;
+        this.spinner.show();
         let queryDelRep = 'idRepresentacion=' + element.IDREPRESENTACION;
         console.log(element);
         console.log(this.endpointActualiza + 'deleteRepresentacion?' + queryDelRep);
@@ -1930,26 +2041,34 @@ export class EditarContribuyenteComponent implements OnInit {
                             this.loadingRepresentante = false;
                             this.getRepresentado();
                         }
-                        this.snackBar.open("Se ha eliminado la representación", 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
-                        });
-                        
+                        Swal.fire(
+                            {
+                              title: 'CORRECTO',
+                              text: "Se ha eliminado la representación",
+                              icon: 'success',
+                              confirmButtonText: 'Cerrar'
+                            }
+                        );
                     }else{
-                        this.snackBar.open("Ocorrio un error al eliminar, intentelo nuevamente", 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
-                        });
+                        Swal.fire(
+                            {
+                              title: 'ERROR',
+                              text: "Ocurrio un error al eliminar, intentelo nuevamente",
+                              icon: 'error',
+                              confirmButtonText: 'Cerrar'
+                            }
+                        );
                     }
                 },
                 (error) => {
-                    this.snackBar.open("Ocorrio un error al eliminar, intentelo nuevamente", 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'ERROR',
+                          text: error.error.mensaje,
+                          icon: 'error',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
@@ -1959,6 +2078,7 @@ export class EditarContribuyenteComponent implements OnInit {
      */
     getRepresentacion(){
         this.loadingRepresentante = true;
+        this.spinner.show();
         let queryRep = 'rep=Representantes&idPersona=' + this.idContribuyente;
         this.http.get(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRep, this.httpOptions)
             .subscribe(
@@ -1967,14 +2087,19 @@ export class EditarContribuyenteComponent implements OnInit {
                     this.dataSource4 = res;
                     this.total4 = this.dataSource4.length;
                     this.dataPaginate4 = this.paginate(this.dataSource4, 15, this.pagina4);
+                    this.spinner.hide();
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingRepresentante = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'warning',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
@@ -1993,6 +2118,7 @@ export class EditarContribuyenteComponent implements OnInit {
      */
     getRepresentado(){
         this.loadingRepresentado = true;
+        this.spinner.show();
         let queryRepdo = 'rep=Representado&idPersona=' + this.idContribuyente;
         console.log(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRepdo);
         this.http.get(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRepdo, this.httpOptions)
@@ -2004,14 +2130,19 @@ export class EditarContribuyenteComponent implements OnInit {
                     console.log(res);
                     this.total5 = this.dataSource5.length;
                     this.dataPaginate5 = this.paginate(this.dataSource5, 15, this.pagina5);
+                    this.spinner.hide();
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingRepresentado = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'warning',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
@@ -2149,6 +2280,7 @@ export class DialogDomicilioContribuyente {
         private snackBar: MatSnackBar,
         private http: HttpClient,
         private _formBuilder: FormBuilder,
+        private spinner: NgxSpinnerService,
         public dialogRef: MatDialogRef<DialogDomicilioContribuyente>,
         public dialog: MatDialog,
         @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -2229,7 +2361,7 @@ export class DialogDomicilioContribuyente {
      * Realiza la búsqueda del domicilio por el id Dirección
      * */  
     getDireccionEspecifica(){
-        
+        this.spinner.show();
         let metodo = 'getDireccionById';
         this.http.get(this.endpointCatalogos + metodo + '?idDireccion='+ this.iddireccion, this.httpOptions)
             .subscribe(
@@ -2244,12 +2376,16 @@ export class DialogDomicilioContribuyente {
                     
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingDireccionEspecifica = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'warning',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
@@ -2275,14 +2411,17 @@ export class DialogDomicilioContribuyente {
      * Obtiene el catálogo de estados de la república mexicana. 
      */
     getDataEstados(): void {
+        this.spinner.show();
         this.loadingEstados = true;
         this.http.get(this.endpointCatalogos + 'getEstados', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingEstados = false;
                 this.estados = res;
                 this.getAlcaldia();
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingEstados = false;
             }
         );
@@ -2292,16 +2431,19 @@ export class DialogDomicilioContribuyente {
      * Obtiene el catálogo de la alcaldia.
      */
      getAlcaldia(){
+        this.spinner.show();
         let busquedaMunCol = 'getDelegaciones';
         this.loadingMunicipios = true;
         this.http.get(this.endpointCatalogos + busquedaMunCol, this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingMunicipios = false;
                 this.municipios = res;
                 console.log('GETDELEG');
                 console.log(res);
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingMunicipios = false;
             }
         );
@@ -2312,6 +2454,7 @@ export class DialogDomicilioContribuyente {
      * @param event Valor que se recibe para la obtención de las alcaldias o municipios.
      */
      getDataMunicipios(event): void {
+        this.spinner.show();
         if(event.value != 9){
             this.domicilioFormGroup.controls['idmunicipio2'].setValue('');
             this.domicilioFormGroup.controls['municipio'].setValue('');
@@ -2339,8 +2482,10 @@ export class DialogDomicilioContribuyente {
                 this.municipios = res;
                 console.log('GETDELEG');
                 console.log(res);
+                this.spinner.hide();
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingMunicipios = false;
             }
         );
@@ -2351,14 +2496,17 @@ export class DialogDomicilioContribuyente {
      */
     getDataTiposAsentamiento(): void {
         this.loadingTiposAsentamiento = true;
+        this.spinner.show();
         this.http.get(this.endpointCatalogos + 'getTiposAsentamiento', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingTiposAsentamiento = false;
                 this.tiposAsentamiento = res;
                 console.log('AQUI EL ASENTAMIENTO SELECT');
                 console.log(this.tiposAsentamiento);
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingTiposAsentamiento = false;
             }
         );
@@ -2369,8 +2517,10 @@ export class DialogDomicilioContribuyente {
      */
     getDataTiposVia(): void {
         this.loadingTiposVia = true;
+        this.spinner.show();
         this.http.get(this.endpointCatalogos + 'getTiposVia', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingTiposVia = false;
                 this.tiposVia = res;
                 console.log('AQUI EL TIPOS VIA SELECT');
@@ -2378,6 +2528,7 @@ export class DialogDomicilioContribuyente {
                 console.log(this.codtiposdireccion);
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingTiposVia = false;
             }
         );
@@ -2388,14 +2539,17 @@ export class DialogDomicilioContribuyente {
      */
     getDataTiposLocalidad(): void {
         this.loadingTiposLocalidad = true;
+        this.spinner.show();
         this.http.get(this.endpointCatalogos + 'getTiposLocalidad', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingTiposLocalidad = false;
                 this.tiposLocalidad = res;
                 console.log('AQUI EL TIPOS LOCALIDAD');
                 console.log(this.tiposLocalidad);
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingTiposLocalidad = false;
             }
         );
@@ -2405,6 +2559,7 @@ export class DialogDomicilioContribuyente {
      * Almacena los datos del formulario del domicilio y de acuerdo al valor inserta o actualiza
      */
     getDataDomicilio(): void {
+        this.spinner.show();
         this.loadingEstados = true;
         this.blockButtons = false;
         //this.dataDomicilio.idtipodireccion = this.domicilioFormGroup.value.idtipodireccion;
@@ -2518,14 +2673,19 @@ export class DialogDomicilioContribuyente {
                           confirmButtonText: 'Cerrar'
                         }
                     );
+                    this.spinner.hide();
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.dialogRef.close();
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'ERROR',
+                          text: error.error.mensaje,
+                          icon: 'error',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
@@ -2605,14 +2765,19 @@ export class DialogDomicilioContribuyente {
                     );
                     this.dialogRef.close(this.dataMovimientoDomicilio);
                     this.loadingEstados = false;
+                    this.spinner.hide();
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.dialogRef.close();
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'ERROR',
+                          text: error.error.mensaje,
+                          icon: 'error',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
@@ -2657,6 +2822,7 @@ export class DialogDomicilioContribuyente {
                 this.domicilioFormGroup.controls['ciudad'].setValue(data.CIUDAD);
                 this.domicilioFormGroup.controls['idciudad'].setValue(data.CODCIUDAD);
             }
+            this.spinner.hide();
         }, 500);
         this.dataDomicilio.delegacion = data.DELEGACION;
     }
@@ -2811,6 +2977,7 @@ export class DialogMunicipiosContribuyente {
       private auth: AuthService,
       private http: HttpClient,
       private _formBuilder: FormBuilder,
+      private spinner: NgxSpinnerService,
       public dialog: MatDialog,
       public dialogRef: MatDialogRef<DialogMunicipiosContribuyente>,
       @Inject(MAT_DIALOG_DATA) public data: any
@@ -2846,7 +3013,7 @@ export class DialogMunicipiosContribuyente {
       this.loadingBuscaMun = true;
       let criterio = '';
       let query = '';
-
+      this.spinner.show();
       if(this.data.codEstado != 9){
           criterio = criterio + 'getMunicipiosByEstado';
           query = query + 'codEstado=' + this.data.codEstado;
@@ -2860,6 +3027,7 @@ export class DialogMunicipiosContribuyente {
       this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
           .subscribe(
               (res: any) => {
+                  this.spinner.hide();
                   this.loadingBuscaMun = false;
                   this.dataSource = res;
                   this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
@@ -2868,6 +3036,7 @@ export class DialogMunicipiosContribuyente {
                   console.log(this.dataSource);
               },
               (error) => {
+                  this.spinner.hide();
                   this.loadingBuscaMun = false;
               }
           );
@@ -2908,6 +3077,7 @@ export class DialogMunicipiosContribuyente {
      * Obtiene el municipio deseado por el criterio del nombre.
      */
     obtenerMunicipiosPorNombre(){
+        this.spinner.show();
         this.loadingBuscaMun = true;
         let criterio = '';
         let query = '';
@@ -2925,6 +3095,7 @@ export class DialogMunicipiosContribuyente {
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loadingBuscaMun = false;
                     this.dataSource = res;
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
@@ -2933,6 +3104,7 @@ export class DialogMunicipiosContribuyente {
                     console.log(this.dataSource);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingBuscaMun = false;
                 }
             );
@@ -2968,6 +3140,7 @@ export class DialogCiudadContribuyente {
   constructor(
       private auth: AuthService,
       private http: HttpClient,
+      private spinner: NgxSpinnerService,
       private _formBuilder: FormBuilder,
       public dialog: MatDialog,
       public dialogRef: MatDialogRef<DialogCiudadContribuyente>,
@@ -3001,6 +3174,7 @@ export class DialogCiudadContribuyente {
      * Obtiene las localidades de acuerdo al estado y municipio seleccionado previamente.
      */
     obtenerCiudad(){
+        this.spinner.show();
         this.loadingBuscaCiudad = true;
         let criterio = '';
         let query = '';
@@ -3022,6 +3196,7 @@ export class DialogCiudadContribuyente {
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loadingBuscaCiudad = false;
                     this.dataSource = res;
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
@@ -3030,6 +3205,7 @@ export class DialogCiudadContribuyente {
                     console.log(this.dataSource);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingBuscaCiudad = false;
                 }
             );
@@ -3128,6 +3304,7 @@ export class DialogAsentamientoContribuyente {
   constructor(
       private auth: AuthService,
       private http: HttpClient,
+      private spinner: NgxSpinnerService,
       private _formBuilder: FormBuilder,
       public dialog: MatDialog,
       public dialogRef: MatDialogRef<DialogAsentamientoContribuyente>,
@@ -3161,6 +3338,7 @@ export class DialogAsentamientoContribuyente {
      * Obtiene el asenteamiento de acuerdo al estado, municipio o ciudad.
      */
     obtenerAsentamiento(){
+        this.spinner.show();
         this.loading = true;
         let criterio = '';
         let query = '';
@@ -3179,6 +3357,7 @@ export class DialogAsentamientoContribuyente {
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loading = false;
                     this.dataSource = res;
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
@@ -3187,6 +3366,7 @@ export class DialogAsentamientoContribuyente {
                     console.log(this.dataSource);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loading = false;
                 }
             );
@@ -3243,7 +3423,7 @@ export class DialogAsentamientoContribuyente {
         this.loading = true;
         let criterio = '';
         let query = '';
-  
+        this.spinner.show();
         if(this.data.codEstado == 9){
             criterio = criterio + 'getColAsentByDelegacion';
             query = query + 'idDelegacion=' + this.data.codMunicipio + '&nombre=' + this.buscaAsentamiento;
@@ -3258,6 +3438,7 @@ export class DialogAsentamientoContribuyente {
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loading = false;
                     this.dataSource = res;
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
@@ -3266,6 +3447,7 @@ export class DialogAsentamientoContribuyente {
                     console.log(this.dataSource);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loading = false;
                 }
             );
@@ -3301,6 +3483,7 @@ export class DialogViaContribuyente {
   constructor(
       private auth: AuthService,
       private http: HttpClient,
+      private spinner: NgxSpinnerService,
       private _formBuilder: FormBuilder,
       public dialog: MatDialog,
       public dialogRef: MatDialogRef<DialogViaContribuyente>,
@@ -3334,6 +3517,7 @@ export class DialogViaContribuyente {
      * Obtiene las vías de acuerdo al criterio del nombre o por el id de la colonia previamente seleccionada
      */
     obtenerVia(){
+        this.spinner.show();
         this.loadingBuscaVia = true;
         let criterio = 'getViasByIdColonia';
         let query = '';
@@ -3355,6 +3539,7 @@ export class DialogViaContribuyente {
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loadingBuscaVia = false;
                     this.dataSource = res;
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
@@ -3363,6 +3548,7 @@ export class DialogViaContribuyente {
                     console.log(this.dataSource);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingBuscaVia = false;
                 }
             );
@@ -3406,7 +3592,7 @@ export class DialogViaContribuyente {
         this.loadingBuscaVia = true;
         let criterio = '';
         let query = '';
-
+        this.spinner.show();
         if(this.data.codEstado != 9){
             criterio = criterio + 'getMunicipiosByEstado';
             query = query + 'codEstado=' + this.data.codEstado;
@@ -3420,6 +3606,7 @@ export class DialogViaContribuyente {
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loadingBuscaVia = false;
                     this.dataSource = res;
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
@@ -3428,6 +3615,7 @@ export class DialogViaContribuyente {
                     console.log(this.dataSource);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingBuscaVia = false;
                 }
             );
@@ -3463,6 +3651,7 @@ export class DialogRepresentacionC {
         private http: HttpClient,
         private _formBuilder: FormBuilder,
         private snackBar: MatSnackBar,
+        private spinner: NgxSpinnerService,
         public dialog: MatDialog,
         public dialogRef: MatDialogRef<DialogRepresentacionC>,
         private auth: AuthService,
@@ -3522,14 +3711,17 @@ export class DialogRepresentacionC {
     * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
     */
     getDataDocumentos(): void{
+        this.spinner.show();
         this.loadingDocumentos = true;
         this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingDocumentos = false;
                 this.dataDocumentos = res.CatDocIdentificativos;
                 console.log(this.dataDocumentos);
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingDocumentos = false;
             }
         );
@@ -3631,6 +3823,7 @@ export class DialogRepresentacionC {
      * @returns Regresa el arreglo de los datos que fueron registrados en el formulario de la representación.
      */
     getDataRepresentacion(): DataRepresentacion {
+        this.spinner.show();
         this.loading = true;
         this.bloqueo = false;
         this.dataRepresentacion.tipoPersona = this.tipoPersona;
@@ -3734,6 +3927,7 @@ export class DialogRepresentacionC {
             console.log(JSON.stringify(payload));
             this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
                 (res: any) => {
+                    this.spinner.hide();
                     Swal.fire(
                         {
                           title: 'CORRECTO',
@@ -3748,12 +3942,16 @@ export class DialogRepresentacionC {
                     this.dialogRef.close(res);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.dialogRef.close();
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'warning',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 });
         }
         return this.dataRepresentacion;
@@ -3763,6 +3961,7 @@ export class DialogRepresentacionC {
      * Actualiza la información de la representación seleccionada.
      */
     updateRepresentacion(){
+        this.spinner.show();
         console.log("ACTUALIZA");
         let queryActRep = '';
 
@@ -3777,6 +3976,7 @@ export class DialogRepresentacionC {
         console.log(queryActRep);
         this.http.post(this.endpoint + 'actualizarRepresentacion?' + queryActRep, '', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 Swal.fire(
                     {
                       title: 'CORRECTO',
@@ -3791,12 +3991,16 @@ export class DialogRepresentacionC {
                 this.dialogRef.close(fin);
             },
             (error) => {
+                this.spinner.hide();
                 this.dialogRef.close();
-                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
-                });
+                Swal.fire(
+                    {
+                      title: 'SIN RESULTADO',
+                      text: error.error.mensaje,
+                      icon: 'warning',
+                      confirmButtonText: 'Cerrar'
+                    }
+                );
             });
     }
 
@@ -3880,6 +4084,7 @@ export class DialogRepresentadoC {
     constructor(
         private http: HttpClient,
         private snackBar: MatSnackBar,
+        private spinner: NgxSpinnerService,
         private _formBuilder: FormBuilder,
         private auth: AuthService,
         public dialog: MatDialog,
@@ -3940,14 +4145,17 @@ export class DialogRepresentadoC {
     * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
     */
     getDataDocumentos(): void{
+        this.spinner.show();
         this.loadingDocumentos = true;
         this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingDocumentos = false;
                 this.dataDocumentos = res.CatDocIdentificativos;
                 console.log(this.dataDocumentos);
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingDocumentos = false;
             }
         );
@@ -4038,6 +4246,7 @@ export class DialogRepresentadoC {
      * @returns Regresa el arreglo de los datos que fueron registrados en el formulario de la representación.
      */
     getDataRepresentacion(): DataRepresentacion {
+        this.spinner.show();
         this.loading = true;
         this.bloqueo = false;
         this.dataRepresentacion.tipoPersona = this.tipoPersona;
@@ -4140,23 +4349,31 @@ export class DialogRepresentadoC {
             console.log(JSON.stringify(payload));
             this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
                 (res: any) => {
-                    this.snackBar.open('REGISTRO EXITOSO', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    this.spinner.hide();
+                    Swal.fire(
+                        {
+                          title: 'CORRECTO',
+                          text: "Registro exitoso",
+                          icon: 'success',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                     console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTADO");
                     console.log(res);
                     this.loading = false;
                     this.dialogRef.close(res);
                 },
                 (error) => {
-                    this.dialogRef.close()
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    this.spinner.hide();
+                    this.dialogRef.close();
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'warning',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 });
         }
 
@@ -4167,6 +4384,7 @@ export class DialogRepresentadoC {
      * Actualiza la información de la representación seleccionada.
      */
     updateRepresentacion(){
+        this.spinner.show();
         let queryActRep = '';
 
         queryActRep = (this.dataRepresentacion.texto) ? queryActRep + 'textorepresentacion=' + this.dataRepresentacion.texto : queryActRep + 'textorepresentacion=';
@@ -4179,23 +4397,31 @@ export class DialogRepresentadoC {
         console.log(queryActRep);
         this.http.post(this.endpoint + 'actualizarRepresentacion?' + queryActRep, '', this.httpOptions).subscribe(
             (res: any) => {
-                this.snackBar.open('SE HA ACTUALIZADO EL REPRESENTADO', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
-                });
+                this.spinner.hide();
+                Swal.fire(
+                    {
+                      title: 'CORRECTO',
+                      text: "SE HA ACTUALIZADO EL REPRESENTADO",
+                      icon: 'success',
+                      confirmButtonText: 'Cerrar'
+                    }
+                );
                 console.log("AQUI ENTRO LAS RESPUESTA DEL POST ACT REPRESENTADO");
                 console.log(res);
                 let fin = true;
                 this.dialogRef.close(fin);
             },
             (error) => {
+                this.spinner.hide();
                 this.dialogRef.close();
-                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
-                });
+                Swal.fire(
+                    {
+                      title: 'SIN RESULTADO',
+                      text: "ERROR INTENTELO MÁS TARDE",
+                      icon: 'error',
+                      confirmButtonText: 'Cerrar'
+                    }
+                );
             });
     }
 
@@ -4279,6 +4505,7 @@ export class DialogDocumentoC {
     constructor(
         private http: HttpClient,
         private _formBuilder: FormBuilder,
+        private spinner: NgxSpinnerService,
         private snackBar: MatSnackBar,
         public dialog: MatDialog,
         private auth: AuthService,
@@ -4340,13 +4567,16 @@ export class DialogDocumentoC {
      * Obtiene los tipos de Documentos Digitales
      */
     getDataTiposDocumentoDigital(): void {
+        this.spinner.show();
         this.loadingTiposDocumentoDigital = true;
         this.http.get(this.endpoint, this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingTiposDocumentoDigital = false;
                 this.tiposDocumentoDigital = res;
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingTiposDocumentoDigital = false;
             }
         );
@@ -4358,12 +4588,15 @@ export class DialogDocumentoC {
      */
     getDataTiposDocumentoJuridico(): void {
         this.loadingTiposDocumentoJuridico = true;
+        this.spinner.show();
         this.http.get(this.endpoint, this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingTiposDocumentoJuridico = false;
                 this.tiposDocumentoJuridico = res;
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingTiposDocumentoJuridico = false;
             }
         );
@@ -4433,11 +4666,14 @@ export class DialogDocumentoC {
                         }));
                     };
                 }else{
-                    this.snackBar.open('Su archivo excede el tamaño permido de maximo 5MB', 'Cerrar', {
-                        duration: 5000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: '¡ATENCIÓN!',
+                          text: "Su archivo excede el tamaño permido de maximo 5MB",
+                          icon: 'warning',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                     event.target.value = '';
                 }
             }
@@ -4474,9 +4710,10 @@ export class DialogDocumentoC {
      * @param idDocumento2 Valor del idDocumento utilizado para la búsqueda del mismo
      */
     setDataDocumento(idDocumento2): void {
-
+        this.spinner.show();
         this.http.post(this.endpoint + 'infoDocumentos?idDocumentoDigital=' + idDocumento2, '', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 console.log("AQUI ENTRO EL RESULTADO DEL DOCUMENTO");
                 this.dataDocumentoSet = res;
                 console.log(this.dataDocumentoSet.infoDocumento[0].iddocumentodigital);
@@ -4484,11 +4721,15 @@ export class DialogDocumentoC {
                 this.setDoc();
             },
             (error) => {
-                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
-                });
+                this.spinner.hide();
+                Swal.fire(
+                    {
+                      title: 'SIN RESULTADO',
+                      text: "ERROR INTENTELO MÁS TARDE",
+                      icon: 'error',
+                      confirmButtonText: 'Cerrar'
+                    }
+                );
             });
     }
 
@@ -4522,12 +4763,13 @@ export class DialogDocumentoC {
      * @param element Arreglo de los datos del registro seleccionado.
      */
     descargarDoc(element){
-
+        this.spinner.show();
         console.log("ACA EL DESCARGAR FICHERO");
         console.log(element);
 
         this.http.get( this.endpoint + 'getFichero?idFichero=' + element.idficherodocumento, this.httpOptions ). subscribe (
             (res: any) => {
+                this.spinner.hide();
                 this.descargaFichero = res;
                 console.log("EL RES DEL FICHERO");
                 console.log(this.descargaFichero);
@@ -4535,11 +4777,15 @@ export class DialogDocumentoC {
                 this.convertirDoc();
             },
             (error) => {
-                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
-                });
+                this.spinner.hide();
+                Swal.fire(
+                    {
+                      title: 'SIN RESULTADO',
+                      text: "ERROR INTENTELO MÁS TARDE",
+                      icon: 'error',
+                      confirmButtonText: 'Cerrar'
+                    }
+                );
             });
     }
 
@@ -4586,26 +4832,32 @@ export class DialogDocumentoC {
     eliminarDoc(element, i){
         console.log("ACA EL ELIMINAR FICHERO");
         console.log(element);
-
-        
-
+        this.spinner.show();
         this.http.post( this.endpoint + 'borrarFichero?lista=' + element.idficherodocumento, '', this.httpOptions ). subscribe (
             (res: any) => {
-                this.snackBar.open('SE HA HA BORRADO EL DOCTO', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
-                });
+                this.spinner.hide();
+                Swal.fire(
+                    {
+                      title: 'CORRECTO',
+                      text: "SE HA HA BORRADO EL DOCTO",
+                      icon: 'success',
+                      confirmButtonText: 'Cerrar'
+                    }
+                );
                 this.dataDoc.splice(i,1);
                 console.log("AQUI ENTRO LAS RESPUESTA DEL BORRADO");
                 console.log(res);
             },
             (error) => {
-                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
-                });
+                this.spinner.hide();
+                Swal.fire(
+                    {
+                      title: 'SIN RESULTADO',
+                      text: "ERROR INTENTELO MÁS TARDE",
+                      icon: 'error',
+                      confirmButtonText: 'Cerrar'
+                    }
+                );
             });
     }
 
@@ -4613,6 +4865,7 @@ export class DialogDocumentoC {
      * Actualiza los datos relacionados con el documento.
      */
     updateDocto(){
+        this.spinner.show();
         this.canSend = true;
         const payload = {
             "documento": {
@@ -4629,28 +4882,39 @@ export class DialogDocumentoC {
         console.log(JSON.stringify(payload));
         this.http.post( this.endpoint + 'actualizarDocumentos', payload, this.httpOptions ). subscribe (
             (res: any) => {
+                this.spinner.hide();
                 if(res === true){
-                    this.snackBar.open('SE HA ACTUALIZADO CORRECTAMENTE LA INFORMACIÓN', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'CORRECTO',
+                          text: "SE HA ACTUALIZADO CORRECTAMENTE LA INFORMACIÓN",
+                          icon: 'success',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                     console.log("RESPUESTA DE LA ACTUALIZACIÓN");
                     console.log(res);
                 }else{
-                    this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: "ERROR INTENTELO MÁS TARDE",
+                          icon: 'error',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             },
             (error) => {
-                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
-                });
+                this.spinner.hide();
+                Swal.fire(
+                    {
+                      title: 'SIN RESULTADO',
+                      text: "ERROR INTENTELO MÁS TARDE",
+                      icon: 'error',
+                      confirmButtonText: 'Cerrar'
+                    }
+                );
             });
     }
 }
@@ -4705,6 +4969,7 @@ export class DialogNotarioC {
   
     constructor(
         private auth: AuthService,
+        private spinner: NgxSpinnerService,
         private http: HttpClient,
         public dialogRef: MatDialogRef<DialogNotarioC>,
         @Inject(MAT_DIALOG_DATA) public data: any
@@ -4725,13 +4990,16 @@ export class DialogNotarioC {
      * Obtiene el catálogo de los estados de la república Mexicana.
      */
     getDataEstados(): void {
+        this.spinner.show();
         this.loadingEstados = true;
         this.http.get(this.endpointCatalogos + 'getEstados', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingEstados = false;
                 this.estados = res;
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingEstados = false;
             }
         );
@@ -4741,6 +5009,7 @@ export class DialogNotarioC {
      * Obtiene los datos del notario de acuerdo a los parametros dados en la búsqueda.
      */
     getDataNotarios(): void {
+        this.spinner.show();
         this.loading = true;
         this.isBusqueda = true;
         this.optionNotario = undefined;
@@ -4781,6 +5050,7 @@ export class DialogNotarioC {
         
         this.http.get(this.endpoint + metodoN + '?' + this.queryParamFiltros, this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loading = false;
                 this.dataNotarios = res;
                 this.dataSource = this.paginate(this.dataNotarios, this.pageSize, this.pagina);
@@ -4788,6 +5058,7 @@ export class DialogNotarioC {
                 this.paginator.pageIndex = 0;
             },
             (error) => {
+                this.spinner.hide();
                 this.loading = false;
                 this.dataSource = [];
             });
@@ -4894,6 +5165,7 @@ export class DialogPersonaC{
     constructor(
       private auth: AuthService,
       private http: HttpClient,
+      private spinner: NgxSpinnerService,
       private _formBuilder: FormBuilder,
       public dialogRef: MatDialogRef<DialogPersonaC>,
       @Inject(MAT_DIALOG_DATA) public data: any
@@ -4932,14 +5204,17 @@ export class DialogPersonaC{
     * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
     */
      getDataDocumentos(): void{
+        this.spinner.show();
         this.loadingDocumentos = true;
         this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingDocumentos = false;
                 this.dataDocumentos = res.CatDocIdentificativos;
                 console.log(this.dataDocumentos);
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingDocumentos = false;
             }
         );
@@ -4968,6 +5243,7 @@ export class DialogPersonaC{
      * Obtiene a la persona sea física o moral por datos identificativos o personales.
      */
     getDataPersonas(): void {
+        this.spinner.show();
         this.loading = true;
         this.isBusqueda = true;
         this.optionPersona = undefined;
@@ -5012,6 +5288,7 @@ export class DialogPersonaC{
   
         this.http.get(this.endpointBusqueda + '?' + this.queryParamFiltros, this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loading = false;
                 this.dataPersonas = res;
                 this.dataSource = this.paginate(this.dataPersonas, this.pageSize, this.pagina);
@@ -5019,6 +5296,7 @@ export class DialogPersonaC{
                 this.paginator.pageIndex = 0;
             },
             (error) => {
+                this.spinner.hide();
                 this.loading = false;
                 this.dataSource = [];
             }
@@ -5107,6 +5385,7 @@ export interface DataHistorico{
         private auth: AuthService,
         private snackBar: MatSnackBar,
         private http: HttpClient,
+        private spinner: NgxSpinnerService,
         private _formBuilder: FormBuilder,
         public dialogRef: MatDialogRef<DialogDomicilioHistoricoContribuyente>,
         public dialog: MatDialog,
@@ -5129,7 +5408,7 @@ export interface DataHistorico{
      */
     getHistoricoModificaciones(){
         let query = '';
-      
+        this.spinner.show();
         query = (this.dataHistoricoModificaciones.fecha_desde) ? query + '&fechaDesde=' + moment(this.dataHistoricoModificaciones.fecha_desde).format('DD-MM-YYYY') : query + '&fechaDesde=';
         query = (this.dataHistoricoModificaciones.fecha_hasta) ? query + '&fechaHasta=' + moment(this.dataHistoricoModificaciones.fecha_hasta).format('DD-MM-YYYY') : query + '&fechaHasta=';
         query = query + '&idDireccion=' + this.idDireccion;
@@ -5141,6 +5420,7 @@ export interface DataHistorico{
         this.http.get(this.endpoint + metodo + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loading = false;
                     this.dataSource = res;
                     console.log(this.dataSource);
@@ -5148,12 +5428,16 @@ export interface DataHistorico{
                     this.dataPaginate = this.paginate(this.dataSource, 10, this.pagina);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'warning',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
@@ -5263,6 +5547,7 @@ export interface DataHistorico{
         private snackBar: MatSnackBar,
         private http: HttpClient,
         private _formBuilder: FormBuilder,
+        private spinner: NgxSpinnerService,
         public dialogRef: MatDialogRef<DialogDomicilioHistoricoEspecificoContribuyente>,
         public dialog: MatDialog,
         @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -5282,6 +5567,9 @@ export interface DataHistorico{
             this.dataDomicilio = {} as DataDomicilio;
             this.dataDomicilioEspecifico = {} as DataDomicilio;
             this.getDataEstados();
+            this.getDataTiposAsentamiento();
+            this.getDataTiposVia();
+            this.getDataTiposLocalidad();
             this.getDireccionEspecifica();
                 this.domicilioFormGroup = this._formBuilder.group({
                     ///idtipodireccion: ['', Validators.required],
@@ -5333,9 +5621,6 @@ export interface DataHistorico{
                         console.log("recibimos data seteado1");
                         // this.domicilioFormGroup['cp'].disable();
                     }
-                    this.getDataTiposAsentamiento();
-                    this.getDataTiposVia();
-                    this.getDataTiposLocalidad();
         }
 
     /**
@@ -5343,11 +5628,13 @@ export interface DataHistorico{
      */  
     getDireccionEspecifica(){
         console.log('entro');
+        this.spinner.show();
         this.loadingDireccionEspecifica = true;
         let metodo = 'getHistoricosDireccionDetalle';
         this.http.get(this.endpointCatalogos + metodo + '?idChs=' + this.idChs + '&idDireccion=' + this.idDireccion, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loadingDireccionEspecifica = false;
                     this.dataDomicilioEspecifico = res;
                     this.setDataDomicilio(this.dataDomicilioEspecifico[0]);
@@ -5355,13 +5642,17 @@ export interface DataHistorico{
                     console.log(this.dataDomicilioEspecifico);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingDireccionEspecifica = false;
                     console.log('no furula');
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'warning',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
@@ -5380,13 +5671,16 @@ export interface DataHistorico{
      * Obtiene el catálogo de los estados de la república Mexicana.
      */
     getDataEstados(): void {
+        this.spinner.show();
         this.loadingEstados = true;
         this.http.get(this.endpointCatalogos + 'getEstados', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingEstados = false;
                 this.estados = res;
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingEstados = false;
             }
         );
@@ -5399,17 +5693,20 @@ export interface DataHistorico{
     getDataMunicipios(event): void {
         this.botonMunicipio = false;
         let busquedaMunCol = '';
+        this.spinner.show();
         // busquedaMunCol = 'getDelegaciones';
         busquedaMunCol = (event.value == 9) ? 'getDelegaciones' : 'getMunicipiosByEstado?codEstado=' + event.value;
         this.loadingMunicipios = true;
         this.http.get(this.endpointCatalogos + busquedaMunCol, this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingMunicipios = false;
                 this.municipios = res;
                 console.log('GETDELEG');
                 console.log(res);
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingMunicipios = false;
             }
         );
@@ -5420,14 +5717,17 @@ export interface DataHistorico{
      */
     getDataTiposAsentamiento(): void {
         this.loadingTiposAsentamiento = true;
+        this.spinner.show();
         this.http.get(this.endpointCatalogos + 'getTiposAsentamiento', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingTiposAsentamiento = false;
                 this.tiposAsentamiento = res;
                 console.log('AQUI EL ASENTAMIENTO SELECT');
                 console.log(this.tiposAsentamiento);
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingTiposAsentamiento = false;
             }
         );
@@ -5437,9 +5737,11 @@ export interface DataHistorico{
      * Obtiene el catálogo de las vías
      */
     getDataTiposVia(): void {
+        this.spinner.show();
         this.loadingTiposVia = true;
         this.http.get(this.endpointCatalogos + 'getTiposVia', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingTiposVia = false;
                 this.tiposVia = res;
                 console.log('AQUI EL TIPOS VIA SELECT');
@@ -5447,6 +5749,7 @@ export interface DataHistorico{
                 console.log(this.codtiposdireccion);
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingTiposVia = false;
             }
         );
@@ -5457,14 +5760,17 @@ export interface DataHistorico{
      */
     getDataTiposLocalidad(): void {
         this.loadingTiposLocalidad = true;
+        this.spinner.show();
         this.http.get(this.endpointCatalogos + 'getTiposLocalidad', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingTiposLocalidad = false;
                 this.tiposLocalidad = res;
                 console.log('AQUI EL TIPOS LOCALIDAD');
                 console.log(this.tiposLocalidad);
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingTiposLocalidad = false;
             }
         );
@@ -5637,6 +5943,7 @@ export interface DataHistorico{
         private auth: AuthService,
         private snackBar: MatSnackBar,
         private http: HttpClient,
+        private spinner: NgxSpinnerService,
         private _formBuilder: FormBuilder,
         public dialogRef: MatDialogRef<DialogPersonalesHistoricoContribuyente>,
         public dialog: MatDialog,
@@ -5659,18 +5966,19 @@ export interface DataHistorico{
      */
     getHistoricoModificaciones(){
         let query = '';
-      
+        this.spinner.show();
         query = (this.dataHistoricoModificaciones.fecha_desde) ? query + '&fechaDesde=' + moment(this.dataHistoricoModificaciones.fecha_desde).format('DD-MM-YYYY') : query + '&fechaDesde=';
         query = (this.dataHistoricoModificaciones.fecha_hasta) ? query + '&fechaHasta=' + moment(this.dataHistoricoModificaciones.fecha_hasta).format('DD-MM-YYYY') : query + '&fechaHasta=';
         query = query + '&idPersona=' + this.idPersona;
 
-        query = query.substr(1);
+        //query = query.substr(1);
 
         this.loading = true;
         let metodo = 'getHistoricosPersona';
         this.http.get(this.endpoint + metodo + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loading = false;
                     this.dataSource = res;
                     console.log(this.dataSource);
@@ -5678,12 +5986,16 @@ export interface DataHistorico{
                     this.dataPaginate = this.paginate(this.dataSource, 10, this.pagina);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'warning',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
@@ -5752,6 +6064,7 @@ constructor(
     private auth: AuthService,
     private snackBar: MatSnackBar,
     private http: HttpClient,
+    private spinner: NgxSpinnerService,
     private _formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<DialogPersonalesHistoricoEspecificoContribuyente>,
     public dialog: MatDialog,
@@ -5802,14 +6115,17 @@ constructor(
  * Obtiene los documentos identificativos
  */
 getDataDocumentos(): void{
+    this.spinner.show();
     this.loadingDocumentos = true;
     this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
     (res: any) => {
+        this.spinner.hide();
         this.loadingDocumentos = false;
         this.dataDocumentos = res.CatDocIdentificativos;
         console.log(this.dataDocumentos);
     },
     (error) => {
+        this.spinner.hide();
         this.loadingDocumentos = false;
     }
     );
@@ -5819,12 +6135,14 @@ getDataDocumentos(): void{
  * Obtiene los datos del contribuyente
  */
 getContribuyenteDatos(){
+    this.spinner.show();
     this.query = '&idPersona=' + this.idPersona + '&idChs=' + this.idChs; 
     this.loading = true;
     console.log(this.endpoint);
     this.http.get(this.endpoint + 'getHistoricosPersonaDetalle?' + this.query, this.httpOptions)
         .subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loading = false;
                 this.dataContribuyenteResultado = res;
                 console.log("AQUI ENTRO EL RES");
@@ -5832,12 +6150,16 @@ getContribuyenteDatos(){
                 this.datoDelContribuyente();
             },
             (error) => {
+                this.spinner.hide();
                 this.loading = false;
-                this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
-                });
+                Swal.fire(
+                    {
+                      title: 'SIN RESULTADO',
+                      text: error.error.mensaje,
+                      icon: 'warning',
+                      confirmButtonText: 'Cerrar'
+                    }
+                );
             }
         );
 }
@@ -5902,6 +6224,7 @@ export class DialogHistorialRepC {
         private http: HttpClient,
         private _formBuilder: FormBuilder,
         private snackBar: MatSnackBar,
+        private spinner: NgxSpinnerService,
         public dialog: MatDialog,
         private auth: AuthService,
         public dialogRef: MatDialogRef<DialogHistorialRepC>,
@@ -5928,7 +6251,7 @@ export class DialogHistorialRepC {
      */
     getHistorialRepresentacion(){
         let query = '';
-      
+        this.spinner.show();
 
         query = 'idPersona=' + this.idPersona;
         query = (this.dataHistoricoRep.fecha_desde) ? query + '&fechaDesde=' + moment(this.dataHistoricoRep.fecha_desde).format('DD-MM-YYYY') : query + '&fechaDesde=';
@@ -5940,6 +6263,7 @@ export class DialogHistorialRepC {
         this.http.get(this.endpoint + metodo + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loadingH = false;
                     this.dataSource = res;
                     console.log(this.dataSource);
@@ -5947,12 +6271,16 @@ export class DialogHistorialRepC {
                     this.dataPaginate = this.paginate(this.dataSource, 10, this.pagina);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingH = false;
-                    this.snackBar.open("Ha ocurrido un problema al obtener el historial", 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: "Ha ocurrido un problema al obtener el historial",
+                          icon: 'error',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
@@ -6061,6 +6389,7 @@ export class DialogHistorialRepDetalleC {
         private http: HttpClient,
         private _formBuilder: FormBuilder,
         private snackBar: MatSnackBar,
+        private spinner: NgxSpinnerService,
         public dialog: MatDialog,
         private auth: AuthService,
         public dialogRef: MatDialogRef<DialogHistorialRepDetalleC>,
@@ -6087,7 +6416,7 @@ export class DialogHistorialRepDetalleC {
      */
     getHistorialRepresentacionDetalle(){
         let query = '';
-
+        this.spinner.show();
         query = 'idChs=' + this.idChs;
 
         this.loadingH = true;
@@ -6095,6 +6424,7 @@ export class DialogHistorialRepDetalleC {
         this.http.get(this.endpoint + metodo + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loadingH = false;
                     console.log("RESULTADO DEL DETALLE REP");
                     console.log(res);
@@ -6104,12 +6434,16 @@ export class DialogHistorialRepDetalleC {
                     this.setDetalle();
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingH = false;
-                    this.snackBar.open("Ha ocurrido un problema al obtener el detalle", 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: "Ha ocurrido un problema al obtener el detalle",
+                          icon: 'error',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
