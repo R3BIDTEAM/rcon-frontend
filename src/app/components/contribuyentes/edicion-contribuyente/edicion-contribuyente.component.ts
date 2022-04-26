@@ -187,6 +187,7 @@ export class EdicionContribuyenteComponent implements OnInit {
     this.loadingDocumentosIdentificativos = true;
     this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
       (res: any) => {
+        this.spinner.hide();
         this.loadingDocumentosIdentificativos = false;
         this.documentos = res.CatDocIdentificativos;
         // console.log(this.documentos);

@@ -555,7 +555,7 @@ export class EditarContribuyenteComponent implements OnInit {
                         Swal.fire(
                             {
                               title: 'CORRECTO',
-                              text: "Actualización correcta",
+                              text: "Asociación correcta",
                               icon: 'success',
                               confirmButtonText: 'Cerrar'
                             }
@@ -606,7 +606,7 @@ export class EditarContribuyenteComponent implements OnInit {
                     Swal.fire(
                         {
                           title: 'SIN RESULTADO',
-                          text: error.error,
+                          text: "Error al asociar.",
                           icon: 'error',
                           confirmButtonText: 'Cerrar'
                         }
@@ -739,7 +739,6 @@ export class EditarContribuyenteComponent implements OnInit {
                     this.dataContribuyenteResultado = res.contribuyente;
                     console.log("AQUI ENTRO EL RES");
                     console.log(this.dataContribuyenteResultado);
-                    this.spinner.hide();
                     this.datoDelContribuyente();
                 },
                 (error) => {
@@ -1597,9 +1596,9 @@ export class EditarContribuyenteComponent implements OnInit {
                     this.spinner.hide();
                     Swal.fire(
                         {
-                          title: 'SIN RESULTADO',
+                          title: 'ERROR',
                           text: error.error.mensaje,
-                          icon: 'warning',
+                          icon: 'error',
                           confirmButtonText: 'Cerrar'
                         }
                     );
@@ -1696,9 +1695,9 @@ export class EditarContribuyenteComponent implements OnInit {
                     this.loadingInmuebles = false;
                     Swal.fire(
                         {
-                          title: 'SIN RESULTADO',
+                          title: 'ERROR',
                           text: error.error.mensaje,
-                          icon: 'warning',
+                          icon: 'error',
                           confirmButtonText: 'Cerrar'
                         }
                     );
@@ -3009,38 +3008,38 @@ export class DialogMunicipiosContribuyente {
     /**
      * Obtiene los municipios de acuerdo al estado seleccionado.
      */
-  obtenerMunicipios(){
-      this.loadingBuscaMun = true;
-      let criterio = '';
-      let query = '';
-      this.spinner.show();
-      if(this.data.codEstado != 9){
-          criterio = criterio + 'getMunicipiosByEstado';
-          query = query + 'codEstado=' + this.data.codEstado;
-      }else{
-          criterio = '';
-          query = '';
-      }
+    obtenerMunicipios(){
+        this.loadingBuscaMun = true;
+        let criterio = '';
+        let query = '';
+        this.spinner.show();
+        if(this.data.codEstado != 9){
+            criterio = criterio + 'getMunicipiosByEstado';
+            query = query + 'codEstado=' + this.data.codEstado;
+        }else{
+            criterio = '';
+            query = '';
+        }
 
-      console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
-      this.loadingBuscaMun = true;
-      this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
-          .subscribe(
-              (res: any) => {
-                  this.spinner.hide();
-                  this.loadingBuscaMun = false;
-                  this.dataSource = res;
-                  this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-                  this.total = this.dataSource.length; 
-                  this.paginator.pageIndex = 0;
-                  console.log(this.dataSource);
-              },
-              (error) => {
-                  this.spinner.hide();
-                  this.loadingBuscaMun = false;
-              }
-          );
-  }
+        console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
+        this.loadingBuscaMun = true;
+        this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
+            .subscribe(
+                (res: any) => {
+                    this.spinner.hide();
+                    this.loadingBuscaMun = false;
+                    this.dataSource = res;
+                    this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                    this.total = this.dataSource.length; 
+                    this.paginator.pageIndex = 0;
+                    console.log(this.dataSource);
+                },
+                (error) => {
+                    this.spinner.hide();
+                    this.loadingBuscaMun = false;
+                }
+            );
+    }
 
     /**
      * Método del paginado que nos dira la posición del paginado y los datos a mostrar
@@ -3301,25 +3300,25 @@ export class DialogAsentamientoContribuyente {
   dataAsentamiento: DataAsentamiento = {} as DataAsentamiento;
   @ViewChild('paginator') paginator: MatPaginator;
 
-  constructor(
-      private auth: AuthService,
-      private http: HttpClient,
-      private spinner: NgxSpinnerService,
-      private _formBuilder: FormBuilder,
-      public dialog: MatDialog,
-      public dialogRef: MatDialogRef<DialogAsentamientoContribuyente>,
-      @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
-      dialogRef.disableClose = true;
-      this.httpOptions = {
-          headers: new HttpHeaders({
-              'Content-Type': 'application/json',
-              Authorization: this.auth.getSession().token
-          })
-      };
-      this.obtenerAsentamiento();
-      console.log(data);
-  }
+    constructor(
+        private auth: AuthService,
+        private http: HttpClient,
+        private spinner: NgxSpinnerService,
+        private _formBuilder: FormBuilder,
+        public dialog: MatDialog,
+        public dialogRef: MatDialogRef<DialogAsentamientoContribuyente>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) {
+        dialogRef.disableClose = true;
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                Authorization: this.auth.getSession().token
+            })
+        };
+        this.obtenerAsentamiento();
+        console.log(data);
+    }
 
     /**
      * Limpia la búsqueda especifica realizada y llama al método que obtiene todos los registros previamente mostrados.
@@ -3480,25 +3479,25 @@ export class DialogViaContribuyente {
   dataVia: dataVia = {} as dataVia;
   @ViewChild('paginator') paginator: MatPaginator;
 
-  constructor(
-      private auth: AuthService,
-      private http: HttpClient,
-      private spinner: NgxSpinnerService,
-      private _formBuilder: FormBuilder,
-      public dialog: MatDialog,
-      public dialogRef: MatDialogRef<DialogViaContribuyente>,
-      @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
-      dialogRef.disableClose = true;
-      this.httpOptions = {
-          headers: new HttpHeaders({
-              'Content-Type': 'application/json',
-              Authorization: this.auth.getSession().token
-          })
-      };
-      this.obtenerVia();
-      console.log(data);
-  }
+    constructor(
+        private auth: AuthService,
+        private http: HttpClient,
+        private spinner: NgxSpinnerService,
+        private _formBuilder: FormBuilder,
+        public dialog: MatDialog,
+        public dialogRef: MatDialogRef<DialogViaContribuyente>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) {
+        dialogRef.disableClose = true;
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                Authorization: this.auth.getSession().token
+            })
+        };
+        this.obtenerVia();
+        console.log(data);
+    }
 
     /**
      * Limpia los registros de la búsqueda especifica realizada y llama al metodo para obtener todos los municipios
@@ -5475,12 +5474,7 @@ export interface DataHistorico{
                 // this.getNotarioDirecciones();
         });
     }
-
-
-  }
-
-
-
+}
 
 /////////////// DOMICILIOS HISTORICO ESPECIFICO ////////////////
 @Component({
@@ -5913,11 +5907,7 @@ export interface DataHistorico{
             }
         });
     }
-
-
-  }
-
-
+}
 
 
 /////////////// PERSONALES HISTORICO ////////////////
@@ -6515,9 +6505,5 @@ export class DialogHistorialRepDetalleC {
                 this.idMotivoRdo = this.dataRepresentacion.infoRepresentado[0].IDMOTIVOSMORAL;
                 this.fechaCambioRdo = ((this.dataRepresentacion.infoRepresentado[0].FECHACAMBIOSITUACION) ? new Date(this.dataRepresentacion.infoRepresentado[0].FECHACAMBIOSITUACION) : null);
             }
-            
-            
     }
-
-  
 }
