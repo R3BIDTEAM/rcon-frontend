@@ -10,6 +10,8 @@ import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@ang
 import {MatCheckboxModule} from '@angular/material/checkbox'; 
 import * as moment from 'moment';
 import { DialogDuplicadosComponent, DialogsMensaje } from '@comp/dialog-duplicados/dialog-duplicados.component';
+import Swal from 'sweetalert2';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
     selector: 'app-alta-sociedad',
@@ -44,7 +46,8 @@ export class AltaSociedadComponent implements OnInit {
         public dialog: MatDialog,
         private auth: AuthService,
         private route: ActivatedRoute,
-        private router:Router
+        private router:Router,
+        private spinner: NgxSpinnerService
     ) { }
 
     /**
@@ -101,6 +104,7 @@ export class AltaSociedadComponent implements OnInit {
      * de no existir coincidencias registrará la nueva sociedad.
      */
     consulta_previa(){
+        this.spinner.show();
         this.razonSocial = this.sociedadFormGroup.value.razonSocial.toLocaleUpperCase();
         this.rfc = this.sociedadFormGroup.value.rfc.toLocaleUpperCase();
         this.registro = this.sociedadFormGroup.value.registro.toLocaleUpperCase();
@@ -143,11 +147,18 @@ export class AltaSociedadComponent implements OnInit {
                     },
                     (error) => {
                         this.loading = false;
-                        this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
+                        // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        //     duration: 10000,
+                        //     horizontalPosition: 'end',
+                        //     verticalPosition: 'top'
+                        // });
+                        Swal.fire({
+                            title: 'ERROR',
+                            text: error.error.mensaje,
+                            icon: 'error',
+                            confirmButtonText: 'Cerrar'
                         });
+                        this.spinner.hide();
                     }
                 );
         }else{
@@ -211,6 +222,7 @@ export class AltaSociedadComponent implements OnInit {
      * Abre el dialogo que nos muestra los registros existentes.
      */
     validaDialogRedirect(res){
+        this.spinner.hide();
         const dialogRef = this.dialog.open(DialogsMensaje, {
             width: '850px',
             data: {
@@ -229,7 +241,7 @@ export class AltaSociedadComponent implements OnInit {
      * Registra los datos de la nueva sociedad.
      */
     guardaSociedad(){
-
+        this.spinner.show();
         let query = 'idPersona';
         this.loading = true;
         
@@ -258,20 +270,34 @@ export class AltaSociedadComponent implements OnInit {
                     this.btnDisabled = false;
                     console.log("AQUI ENTRO EL RES DEL NUEVO PERITO");
                     console.log(res);
-                    this.snackBar.open('guardado correcto - ' + res.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open('guardado correcto - ' + res.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'CORRECTO',
+                        text: res.mensaje,
+                        icon: 'success',
+                        confirmButtonText: 'Cerrar'
                     });
+                    this.spinner.hide();
                 },
                 (error) => {
                     console.log(error.error);
                     this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
+                    this.spinner.hide();
                 }
             );
     }
@@ -328,6 +354,7 @@ export class DialogSociedad {
             private snackBar: MatSnackBar,
             private auth: AuthService,
             private route: ActivatedRoute,
+            private spinner: NgxSpinnerService,
             public dialogRef: MatDialogRef<DialogSociedad>,
             @Inject(MAT_DIALOG_DATA) public data: any
         ) {
@@ -402,6 +429,7 @@ export class DialogSociedad {
      * Realiza la búsqueda de una sociedad existente de acuerdo a los críterios que pueden ser datos identificativos o personales.
      */
     getSociedad(){
+        this.spinner.show();
         let query = '';
         let busquedaDatos = '';
         if( this.razonSocial ){
@@ -430,14 +458,22 @@ export class DialogSociedad {
                     this.total = this.dataSource.length; 
                     this.paginator.pageIndex = 0;
                     console.log(res);
+                    this.spinner.hide();
                 },
                 (error) => {
                     this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
+                    this.spinner.hide();
                 }
             );
     }
@@ -507,6 +543,7 @@ export class DialogsValidacionSociedad {
         private auth: AuthService,
         public dialog: MatDialog,
         private router:Router,
+        private spinner: NgxSpinnerService,
         public dialogRef: MatDialogRef<DialogsValidacionSociedad>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) { 
@@ -589,6 +626,7 @@ export class DialogsValidacionSociedad {
      * Abre el dialogo que nos muestra los registros existentes.
      */
      validaDialog(res){
+        this.spinner.hide();
         const dialogRef = this.dialog.open(DialogsMensaje, {
             width: '850px',
             data: {

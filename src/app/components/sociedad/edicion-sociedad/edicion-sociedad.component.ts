@@ -5,6 +5,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { environment } from '@env/environment'
 import { AuthService } from '@serv/auth.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
     selector: 'app-edicion-sociedad',
@@ -33,7 +35,8 @@ export class EdicionSociedadComponent implements OnInit {
         private http: HttpClient,
         private snackBar: MatSnackBar,
         private auth: AuthService,
-        private _formBuilder: FormBuilder
+        private _formBuilder: FormBuilder,
+        private spinner: NgxSpinnerService
     ) { }
     
     /**
@@ -98,6 +101,7 @@ export class EdicionSociedadComponent implements OnInit {
      * Obtiene el o los registros de la sociedad de acuerdo al críterio de búsqueda que pueden ser datos identificativos o personales.
      */
     getSociedad(){
+        this.spinner.show();
         if(this.search){
             let query = '';
             let busquedaDatos = '';
@@ -130,14 +134,22 @@ export class EdicionSociedadComponent implements OnInit {
                         this.total = this.dataSource.length; 
                         this.paginator.pageIndex = 0;
                         console.log(res);
+                        this.spinner.hide();
                     },
                     (error) => {
                         this.loading = false;
-                        this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
+                        // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        //     duration: 10000,
+                        //     horizontalPosition: 'end',
+                        //     verticalPosition: 'top'
+                        // });
+                        Swal.fire({
+                            title: 'ERROR',
+                            text: error.error.mensaje,
+                            icon: 'error',
+                            confirmButtonText: 'Cerrar'
                         });
+                        this.spinner.hide();
                     }
                 );
         }

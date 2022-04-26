@@ -7,6 +7,8 @@ import { AuthService } from '@serv/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
     selector: 'app-consulta-sociedad',
@@ -36,8 +38,8 @@ export class ConsultaSociedadComponent implements OnInit {
         private snackBar: MatSnackBar,
         private auth: AuthService,
         private route: ActivatedRoute,
-        private _formBuilder: FormBuilder
-        
+        private _formBuilder: FormBuilder,
+        private spinner: NgxSpinnerService
     ) { }
 
     /**
@@ -106,6 +108,7 @@ export class ConsultaSociedadComponent implements OnInit {
      * Obtiene el o los registros de la sociedad de acuerdo al críterio de búsqueda que pueden ser datos identificativos o personales.
      */
     getSociedad(){
+    this.spinner.show();
         if(this.search){
             let query = '';
             let busquedaDatos = '';
@@ -138,14 +141,22 @@ export class ConsultaSociedadComponent implements OnInit {
                         this.total = this.dataSource.length; 
                         this.paginator.pageIndex = 0;
                         console.log(res);
+                        this.spinner.hide();
                     },
                     (error) => {
                         this.loading = false;
-                        this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
+                        // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        //     duration: 10000,
+                        //     horizontalPosition: 'end',
+                        //     verticalPosition: 'top'
+                        // });
+                        Swal.fire({
+                            title: 'ERROR',
+                            text: error.error.mensaje,
+                            icon: 'error',
+                            confirmButtonText: 'Cerrar'
                         });
+                        this.spinner.hide();
                     }
                 );
         }

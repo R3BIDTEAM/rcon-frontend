@@ -9,6 +9,7 @@ import { DialogHistorialComponent } from '@comp/dialog-historial/dialog-historia
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogDomicilioHistoricoG } from '@comp/dialog-historial/dialog-historial.component';
 import Swal from 'sweetalert2';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 export interface DatosPeritos {
     apepaterno: string;
@@ -106,7 +107,8 @@ export class VerPeritosComponent implements OnInit {
         private snackBar: MatSnackBar,
         private auth: AuthService,
         public dialog: MatDialog,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private spinner: NgxSpinnerService
     ) { }
 
     /**
@@ -152,6 +154,7 @@ export class VerPeritosComponent implements OnInit {
      * Obtiene los datos del perito consultado.
      */
     getPeritoDatos(){
+        this.spinner.show();
         this.query = 'obtenerSociedades=1&idPerito=' + this.idPerito; 
         this.loading = true;
         console.log(this.endpoint);
@@ -356,6 +359,7 @@ export class VerPeritosComponent implements OnInit {
                 console.log(res);
                 this.total5 = this.dataSource5.length;
                 this.dataPaginate5 = this.paginate(this.dataSource5, 15, this.pagina5);
+                this.spinner.hide();
             },
             (error) => {
                 this.loadingRepresentado = false;
@@ -370,6 +374,7 @@ export class VerPeritosComponent implements OnInit {
                     icon: 'error',
                     confirmButtonText: 'Cerrar'
                 });
+                this.spinner.hide();
             }
         );
     }

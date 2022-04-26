@@ -10,6 +10,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import * as moment from 'moment';
 import * as FileSaver from 'file-saver';
 import { DialogConfirmacionComponent } from '@comp/dialog-confirmacion/dialog-confirmacion.component';
+import Swal from 'sweetalert2';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 export interface DatosSociedad {
     razonSocial: string;
@@ -202,7 +204,8 @@ export class EditarSociedadComponent implements OnInit {
         private _formBuilder: FormBuilder,
         private snackBar: MatSnackBar,
         public dialog: MatDialog,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private spinner: NgxSpinnerService
     ) { }
 
     /**
@@ -268,6 +271,7 @@ export class EditarSociedadComponent implements OnInit {
      * Obtiene los datos identificativos y personales de la sociedad.
      */
     getSociedadDatos(){
+        this.spinner.show();
         this.query = 'idSociedad=' + this.idSociedad; 
         this.loading = true;
         console.log(this.endpoint);
@@ -282,11 +286,18 @@ export class EditarSociedadComponent implements OnInit {
                 },
                 (error) => {
                     this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
+                    this.spinner.hide();
                 }
             );
     }
@@ -306,14 +317,22 @@ export class EditarSociedadComponent implements OnInit {
                     console.log("RES PERITOS SOCIEDAD");
                     console.log(this.total);
                     this.datosDeLaSociedad();
+                    this.spinner.hide();
                 },
                 (error) => {
                     this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
+                    this.spinner.hide();
                 }
             );
     }
@@ -322,6 +341,7 @@ export class EditarSociedadComponent implements OnInit {
      * Guarda la nueva información de la sociedad ya sean sus datos personales o identificativos.
      */
     guardaSociedad(){
+        this.spinner.show();
         let query = 'codtipospersona=M&nombre=';
         this.loading = true;
         
@@ -350,19 +370,33 @@ export class EditarSociedadComponent implements OnInit {
                     this.loading = false;
                     console.log("AQUI ACTUALIZO");
                     console.log(res);
-                    this.snackBar.open('guardado correcto', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open('guardado correcto', 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'CORRECTO',
+                        text: 'Guardado correcto',
+                        icon: 'success',
+                        confirmButtonText: 'Cerrar'
                     });
+                    this.spinner.hide();
                 },
                 (error) => {
                     this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
+                    this.spinner.hide();
                 }
             );
     }
@@ -444,25 +478,43 @@ export class EditarSociedadComponent implements OnInit {
                 console.log("Cambio de persona");
                 console.log(res);
                 if(res){
-                    this.snackBar.open('Actualización correcta', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open('Actualización correcta', 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'CORRECTO',
+                        text: 'Actualización correcta',
+                        icon: 'success',
+                        confirmButtonText: 'Cerrar'
                     });
                 }else{
-                    this.snackBar.open('Se ha presentado un problema intente más tarde', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open('Se ha presentado un problema intente más tarde', 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: 'Se ha presentado un problema, intente más tarde',
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             },
             (error) => {
                 this.loading = false;
-                this.snackBar.open('Se ha presentado un problema intente más tarde', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
+                // this.snackBar.open('Se ha presentado un problema intente más tarde', 'Cerrar', {
+                //     duration: 10000,
+                //     horizontalPosition: 'end',
+                //     verticalPosition: 'top'
+                // });
+                Swal.fire({
+                    title: 'ERROR',
+                    text: 'Se ha presentado un problema, intente más tarde',
+                    icon: 'error',
+                    confirmButtonText: 'Cerrar'
                 });
             }
         );
@@ -511,7 +563,7 @@ export class EditarSociedadComponent implements OnInit {
      * Actualiza los datos correspondientes a la Sociedad.
      */
     actualizaSociedad(){
-        
+        this.spinner.show();
         let query = '';
         this.loading = true;
         query = 'idPersona=' + this.idSociedad;
@@ -538,14 +590,22 @@ export class EditarSociedadComponent implements OnInit {
                     // this.total = this.dataSource.length; 
                     // this.paginator.pageIndex = 0;
                     console.log(res);
+                    this.spinner.hide();
                 },
                 (error) => {
                     this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
+                    this.spinner.hide();
                 }
             );
     }
@@ -571,10 +631,16 @@ export class EditarSociedadComponent implements OnInit {
                 },
                 (error) => {
                     this.loadingDomicilios = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );
@@ -617,10 +683,16 @@ export class EditarSociedadComponent implements OnInit {
                 },
                 (error) => {
                     this.loadingInmuebles = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );
@@ -639,6 +711,7 @@ export class EditarSociedadComponent implements OnInit {
      * Abre el dialogo que registrara un nuevo domicilio
      */
     addDomicilio(): void {
+        this.spinner.show();
         let codtiposdireccion = '';
         const dialogRef = this.dialog.open(DialogDomicilioSociedad, {
             width: '700px',
@@ -672,6 +745,7 @@ export class EditarSociedadComponent implements OnInit {
      * Abre el dialogo que registrara un nuevo domicilio con notificación
      */
     addDomicilioBoleta(): void {
+        this.spinner.show();
         let codtiposdireccion = 'N';
         const dialogRef = this.dialog.open(DialogDomicilioSociedad, {
             width: '700px',
@@ -754,6 +828,7 @@ export class EditarSociedadComponent implements OnInit {
      * @param dataRepresentante Arreglo de los datos de la representación seleccionada
      */
     addRepresentante(dataRepresentante = null): void {
+        this.spinner.show();
         const dialogRef = this.dialog.open(DialogRepresentacionSociedad, {
             width: '700px',
             data: {dataRepresentante : dataRepresentante,
@@ -776,6 +851,7 @@ export class EditarSociedadComponent implements OnInit {
      * @param dataRepresentante Arreglo de los datos de la representación seleccionada
      */
     addRepresentado(dataRepresentante = null): void {
+        this.spinner.show();
         const dialogRef = this.dialog.open(DialogRepresentadoSociedad, {
             width: '700px',
             data: {dataRepresentante : dataRepresentante,
@@ -817,25 +893,43 @@ export class EditarSociedadComponent implements OnInit {
                             this.loadingRepresentante = false;
                             this.getRepresentado();
                         }
-                        this.snackBar.open("Se ha eliminado la representación", 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
+                        // this.snackBar.open("Se ha eliminado la representación", 'Cerrar', {
+                        //     duration: 10000,
+                        //     horizontalPosition: 'end',
+                        //     verticalPosition: 'top'
+                        // });
+                        Swal.fire({
+                            title: 'CORRECTO',
+                            text: 'Se ha eliminado la representación',
+                            icon: 'success',
+                            confirmButtonText: 'Cerrar'
                         });
                         
                     }else{
-                        this.snackBar.open("Ocorrio un error al eliminar, intentelo nuevamente", 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
+                        // this.snackBar.open("Ocorrio un error al eliminar, intentelo nuevamente", 'Cerrar', {
+                        //     duration: 10000,
+                        //     horizontalPosition: 'end',
+                        //     verticalPosition: 'top'
+                        // });
+                        Swal.fire({
+                            title: 'ERROR',
+                            text: 'Ocorrio un error al eliminar, intentelo nuevamente',
+                            icon: 'error',
+                            confirmButtonText: 'Cerrar'
                         });
                     }
                 },
                 (error) => {
-                    this.snackBar.open("Ocorrio un error al eliminar, intentelo nuevamente", 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open("Ocorrio un error al eliminar, intentelo nuevamente", 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: 'Ocorrio un error al eliminar, intentelo nuevamente',
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );
@@ -857,10 +951,16 @@ export class EditarSociedadComponent implements OnInit {
                 },
                 (error) => {
                     this.loadingRepresentante = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );
@@ -894,10 +994,16 @@ export class EditarSociedadComponent implements OnInit {
                 },
                 (error) => {
                     this.loadingRepresentado = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );
@@ -935,6 +1041,7 @@ export class EditarSociedadComponent implements OnInit {
      * Abre el dialog d
      */
     buscarPeritoPersona(){
+        this.spinner.show();
         const dialogRef = this.dialog.open(DialogSociedadPerito, {
             width: '700px',
         });
@@ -954,6 +1061,7 @@ export class EditarSociedadComponent implements OnInit {
      * Inserta el registro del perito ligado a la sociedad.
      */
     insertaPeritoSociedad(){
+        this.spinner.show();
         this.loading = true;
         let queryPS = 'idPersona=' + this.idPeritoD + '&idSociedad=' + this.idSociedad;
         this.http.post(this.endpointActualiza + 'insertarPeritoSoci?' + queryPS, '', this.httpOptions)
@@ -961,27 +1069,47 @@ export class EditarSociedadComponent implements OnInit {
                 (res: any) => {
                     console.log(res);
                     if(res){
-                        this.snackBar.open("Se ha registrado correctamente", 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
+                        // this.snackBar.open("Se ha registrado correctamente", 'Cerrar', {
+                        //     duration: 10000,
+                        //     horizontalPosition: 'end',
+                        //     verticalPosition: 'top'
+                        // });
+                        Swal.fire({
+                            title: 'CORRECTO',
+                            text: 'Se ha registrado correctamente',
+                            icon: 'success',
+                            confirmButtonText: 'Cerrar'
                         });
                         this.getPeritosSociedad();
                     }else{
-                        this.snackBar.open("Ha ocurrido un problema, intentelo más tarde", 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
+                        // this.snackBar.open("Ha ocurrido un problema, intentelo más tarde", 'Cerrar', {
+                        //     duration: 10000,
+                        //     horizontalPosition: 'end',
+                        //     verticalPosition: 'top'
+                        // });
+                        Swal.fire({
+                            title: 'ERROR',
+                            text: 'Ha ocurrido un problema, intentelo más tarde',
+                            icon: 'error',
+                            confirmButtonText: 'Cerrar'
                         });
+                        this.spinner.hide();
                     }
                 },
                 (error) => {
                     this.loadingDatosPerito = false;
-                    this.snackBar.open("Ha ocurrido un problema, intentelo más tarde", 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open("Ha ocurrido un problema, intentelo más tarde", 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: 'Ha ocurrido un problema, intentelo más tarde',
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
+                    this.spinner.hide();
                 }
             );     
     }
@@ -999,17 +1127,29 @@ export class EditarSociedadComponent implements OnInit {
             .subscribe(
                 (res: any) => {
                     if(res){
-                        this.snackBar.open("Se ha eliminado correctamente", 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
+                        // this.snackBar.open("Se ha eliminado correctamente", 'Cerrar', {
+                        //     duration: 10000,
+                        //     horizontalPosition: 'end',
+                        //     verticalPosition: 'top'
+                        // });
+                        Swal.fire({
+                            title: 'CORRECTO',
+                            text: 'Se ha eliminado correctamente',
+                            icon: 'success',
+                            confirmButtonText: 'Cerrar'
                         });
                         this.getPeritosSociedad();
                     }else{
-                        this.snackBar.open("Ha ocurrido un problema, intentelo más tarde", 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
+                        // this.snackBar.open("Ha ocurrido un problema, intentelo más tarde", 'Cerrar', {
+                        //     duration: 10000,
+                        //     horizontalPosition: 'end',
+                        //     verticalPosition: 'top'
+                        // });
+                        Swal.fire({
+                            title: 'ERROR',
+                            text: 'Ha ocurrido un problema, intentelo más tarde',
+                            icon: 'error',
+                            confirmButtonText: 'Cerrar'
                         });
                     }
                 },
@@ -1186,10 +1326,16 @@ export class DialogBuscaSociedad {
                 },
                 (error) => {
                     this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );
@@ -1300,6 +1446,7 @@ export class DialogDomicilioSociedad {
         private snackBar: MatSnackBar,
         private http: HttpClient,
         private _formBuilder: FormBuilder,
+        private spinner: NgxSpinnerService,
         public dialogRef: MatDialogRef<DialogDomicilioSociedad>,
         public dialog: MatDialog,
         @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -1391,14 +1538,22 @@ export class DialogDomicilioSociedad {
                     setTimeout(() => {
                         this.setDataDomicilio(this.dataDomicilioEspecifico[0]);    
                     }, 500);
+                    this.spinner.hide();
                 },
                 (error) => {
                     this.loadingDireccionEspecifica = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
+                    this.spinner.hide();
                 }
             );
     }
@@ -1449,9 +1604,11 @@ export class DialogDomicilioSociedad {
                 this.municipios = res;
                 console.log('GETDELEG');
                 console.log(res);
+                this.spinner.hide();
             },
             (error) => {
                 this.loadingMunicipios = false;
+                this.spinner.hide();
             }
         );
     }
@@ -1554,6 +1711,7 @@ export class DialogDomicilioSociedad {
      * Almacena los datos del formulario del domicilio y de acuerdo al valor inserta o actualiza
      */
     getDataDomicilio(): void {
+        this.spinner.show();
         this.loadingEstados = true;
         this.blockButtons = false;
         this.dataDomicilio.idestado = this.domicilioFormGroup.value.idestado;
@@ -1639,20 +1797,34 @@ export class DialogDomicilioSociedad {
                     this.dialogRef.close(res.idpersona);
                     this.loadingEstados = false;
                     if(res){
-                      this.snackBar.open('Registro exitoso', 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
-                        });
+                    //   this.snackBar.open('Registro exitoso', 'Cerrar', {
+                    //         duration: 10000,
+                    //         horizontalPosition: 'end',
+                    //         verticalPosition: 'top'
+                    //     });
+                    Swal.fire({
+                        title: 'CORRECTO',
+                        text: 'Registro exitoso',
+                        icon: 'success',
+                        confirmButtonText: 'Cerrar'
+                    });
+                    this.spinner.hide();
                     }
                 },
                 (error) => {
                     this.dialogRef.close();
-                    this.snackBar.open('Ocurrio un error al Insertar la dirección, intente nuevemente', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open('Ocurrio un error al Insertar la dirección, intente nuevemente', 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: 'Ocurrio un error al Insertar la dirección, intente nuevemente',
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
+                    this.spinner.hide();
                 }
             );
     }
@@ -1702,19 +1874,33 @@ export class DialogDomicilioSociedad {
                     console.log(res);
                     this.dialogRef.close(res.idpersona);
                     this.loadingEstados = false;
-                    this.snackBar.open('Actualización Correcta', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open('Actualización Correcta', 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'CORRECTO',
+                        text: 'Actualización Correcta',
+                        icon: 'success',
+                        confirmButtonText: 'Cerrar'
                     });
+                    this.spinner.hide();
                 },
                 (error) => {
                     this.dialogRef.close();
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
+                    this.spinner.hide();
                 }
             );
     }
@@ -2519,6 +2705,7 @@ export class DialogRepresentacionSociedad {
         private snackBar: MatSnackBar,
         public dialog: MatDialog,
         private auth: AuthService,
+        private spinner: NgxSpinnerService,
         public dialogRef: MatDialogRef<DialogRepresentacionSociedad>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
@@ -2582,9 +2769,11 @@ export class DialogRepresentacionSociedad {
                 this.loadingDocumentosIdentificativos= false;
                 this.dataDocumentos = res.CatDocIdentificativos;
                 console.log(this.dataDocumentos);
+                this.spinner.hide();
             },
             (error) => {
                 this.loadingDocumentosIdentificativos = false;
+                this.spinner.hide();
             }
         );
     }
@@ -2679,6 +2868,7 @@ export class DialogRepresentacionSociedad {
      * @returns Regresa el arreglo de los datos que fueron registrados en el formulario de la representación.
      */
     getDataRepresentacion(): DataRepresentacion {
+        this.spinner.show();
         this.loading = true;
         this.bloqueo = false;
         this.dataRepresentacion.tipoPersona = this.tipoPersona;
@@ -2782,23 +2972,37 @@ export class DialogRepresentacionSociedad {
             console.log(JSON.stringify(payload));
             this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
                 (res: any) => {
-                    this.snackBar.open('REGISTRO EXITOSO', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open('REGISTRO EXITOSO', 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'CORRECTO',
+                        text: 'Registro exitoso',
+                        icon: 'success',
+                        confirmButtonText: 'Cerrar'
                     });
                     console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTECIÓN");
                     console.log(res);
                     this.loading = false;
                     this.dialogRef.close(res);
+                    this.spinner.hide();
                 },
                 (error) => {
                     this.dialogRef.close();
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
+                    this.spinner.hide();
                 });
         }        
         return this.dataRepresentacion;
@@ -2821,10 +3025,16 @@ export class DialogRepresentacionSociedad {
         console.log(queryActRep);
         this.http.post(this.endpoint + 'actualizarRepresentacion?' + queryActRep, '', this.httpOptions).subscribe(
             (res: any) => {
-                this.snackBar.open('SE HA ACTUALIZADO EL REPRESENTADO', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
+                // this.snackBar.open('SE HA ACTUALIZADO EL REPRESENTADO', 'Cerrar', {
+                //     duration: 10000,
+                //     horizontalPosition: 'end',
+                //     verticalPosition: 'top'
+                // });
+                Swal.fire({
+                    title: 'CORRECTO',
+                    text: 'SE HA ACTUALIZADO EL REPRESENTADO',
+                    icon: 'success',
+                    confirmButtonText: 'Cerrar'
                 });
                 console.log("AQUI ENTRO LAS RESPUESTA DEL POST ACT REPRESENTADO");
                 console.log(res);
@@ -2833,10 +3043,16 @@ export class DialogRepresentacionSociedad {
             },
             (error) => {
                 this.dialogRef.close();
-                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
+                // this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                //     duration: 10000,
+                //     horizontalPosition: 'end',
+                //     verticalPosition: 'top'
+                // });
+                Swal.fire({
+                    title: 'ERROR',
+                    text: 'ERROR INTENTELO MÁS TARDE',
+                    icon: 'error',
+                    confirmButtonText: 'Cerrar'
                 });
             });
     }
@@ -2924,6 +3140,7 @@ export class DialogRepresentadoSociedad {
         private _formBuilder: FormBuilder,
         public dialog: MatDialog,
         private auth: AuthService,
+        private spinner: NgxSpinnerService,
         public dialogRef: MatDialogRef<DialogRepresentadoSociedad>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
@@ -2985,9 +3202,11 @@ export class DialogRepresentadoSociedad {
                 this.loadingDocumentosIdentificativos= false;
                 this.dataDocumentos = res.CatDocIdentificativos;
                 console.log(this.dataDocumentos);
+                this.spinner.hide();
             },
             (error) => {
                 this.loadingDocumentosIdentificativos = false;
+                this.spinner.hide();
             }
         );
     }
@@ -3079,6 +3298,7 @@ export class DialogRepresentadoSociedad {
      * @returns Regresa el arreglo de los datos que fueron registrados en el formulario de la representación.
      */
     getDataRepresentacion(): DataRepresentacion {
+        this.spinner.show();
         this.loading = true;
         this.bloqueo = false;
         this.dataRepresentacion.tipoPersona = this.tipoPersona;
@@ -3182,23 +3402,37 @@ export class DialogRepresentadoSociedad {
             console.log(JSON.stringify(payload));
             this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
                 (res: any) => {
-                    this.snackBar.open('REGISTRO EXITOSO', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open('REGISTRO EXITOSO', 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'CORRECTO',
+                        text: 'REGISTRO EXITOSO',
+                        icon: 'success',
+                        confirmButtonText: 'Cerrar'
                     });
                     console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTECIÓN");
                     console.log(res);
                     this.loading = false;
                     this.dialogRef.close(res);
+                    this.spinner.hide();
                 },
                 (error) => {
                     this.dialogRef.close();
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
+                    this.spinner.hide();
                 });
         }
 
@@ -3223,10 +3457,16 @@ export class DialogRepresentadoSociedad {
 
         this.http.post(this.endpoint + 'actualizarRepresentacion?' + queryActRep, '', this.httpOptions).subscribe(
             (res: any) => {
-                this.snackBar.open('SE HA ACTUALIZADO EL REPRESENTADO', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
+                // this.snackBar.open('SE HA ACTUALIZADO EL REPRESENTADO', 'Cerrar', {
+                //     duration: 10000,
+                //     horizontalPosition: 'end',
+                //     verticalPosition: 'top'
+                // });
+                Swal.fire({
+                    title: 'CORRECTO',
+                    text: 'SE HA ACTUALIZADO EL REPRESENTADO',
+                    icon: 'success',
+                    confirmButtonText: 'Cerrar'
                 });
                 console.log("AQUI ENTRO LAS RESPUESTA DEL POST ACT REPRESENTADO");
                 console.log(res);
@@ -3235,10 +3475,16 @@ export class DialogRepresentadoSociedad {
             },
             (error) => {
                 this.dialogRef.close();
-                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
+                // this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                //     duration: 10000,
+                //     horizontalPosition: 'end',
+                //     verticalPosition: 'top'
+                // });
+                Swal.fire({
+                    title: 'ERROR',
+                    text: 'ERROR INTENTELO MÁS TARDE',
+                    icon: 'error',
+                    confirmButtonText: 'Cerrar'
                 });
             });
     }
@@ -3444,10 +3690,16 @@ export class DialogDocumentoSociedad {
                         }));
                     };
                 }else{
-                    this.snackBar.open('Su archivo excede el tamaño permido de maximo 5MB', 'Cerrar', {
-                        duration: 5000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open('Su archivo excede el tamaño permido de maximo 5MB', 'Cerrar', {
+                    //     duration: 5000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: 'Su archivo excede el tamaño permido de maximo 5MB',
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                     event.target.value = '';
                 }
@@ -3495,10 +3747,16 @@ export class DialogDocumentoSociedad {
                 this.setDoc();
             },
             (error) => {
-                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
+                // this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                //     duration: 10000,
+                //     horizontalPosition: 'end',
+                //     verticalPosition: 'top'
+                // });
+                Swal.fire({
+                    title: 'ERROR',
+                    text: 'ERROR INTENTELO MÁS TARDE',
+                    icon: 'error',
+                    confirmButtonText: 'Cerrar'
                 });
             });
     }
@@ -3546,10 +3804,16 @@ export class DialogDocumentoSociedad {
                 this.convertirDoc();
             },
             (error) => {
-                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
+                // this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                //     duration: 10000,
+                //     horizontalPosition: 'end',
+                //     verticalPosition: 'top'
+                // });
+                Swal.fire({
+                    title: 'ERROR',
+                    text: 'ERROR INTENTELO MÁS TARDE',
+                    icon: 'error',
+                    confirmButtonText: 'Cerrar'
                 });
             });
     }
@@ -3600,20 +3864,32 @@ export class DialogDocumentoSociedad {
 
         this.http.post( this.endpoint + 'borrarFichero?lista=' + element.idficherodocumento, '', this.httpOptions ). subscribe (
             (res: any) => {
-                this.snackBar.open('SE HA HA BORRADO EL DOCTO', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
+                // this.snackBar.open('SE HA HA BORRADO EL DOCTO', 'Cerrar', {
+                //     duration: 10000,
+                //     horizontalPosition: 'end',
+                //     verticalPosition: 'top'
+                // });
+                Swal.fire({
+                    title: 'CORRECTO',
+                    text: 'SE HA HA BORRADO EL DOCTO',
+                    icon: 'success',
+                    confirmButtonText: 'Cerrar'
                 });
                 this.dataDoc.splice(i,1);
                 console.log("AQUI ENTRO LAS RESPUESTA DEL BORRADO");
                 console.log(res);
             },
             (error) => {
-                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
+                // this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                //     duration: 10000,
+                //     horizontalPosition: 'end',
+                //     verticalPosition: 'top'
+                // });
+                Swal.fire({
+                    title: 'ERROR',
+                    text: 'ERROR INTENTELO MÁS TARDE',
+                    icon: 'error',
+                    confirmButtonText: 'Cerrar'
                 });
             });
     }
@@ -3639,26 +3915,44 @@ export class DialogDocumentoSociedad {
         this.http.post( this.endpoint + 'actualizarDocumentos', payload, this.httpOptions ). subscribe (
             (res: any) => {
                 if(res === true){
-                    this.snackBar.open('SE HA ACTUALIZADO CORRECTAMENTE LA INFORMACIÓN', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open('SE HA ACTUALIZADO CORRECTAMENTE LA INFORMACIÓN', 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'CORRECTO',
+                        text: 'SE HA ACTUALIZADO CORRECTAMENTE LA INFORMACIÓN',
+                        icon: 'success',
+                        confirmButtonText: 'Cerrar'
                     });
                     console.log("RESPUESTA DE LA ACTUALIZACIÓN");
                     console.log(res);
                 }else{
-                    this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: 'ERROR INTENTELO MÁS TARDE',
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             },
             (error) => {
-                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
+                // this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
+                //     duration: 10000,
+                //     horizontalPosition: 'end',
+                //     verticalPosition: 'top'
+                // });
+                Swal.fire({
+                    title: 'ERROR',
+                    text: 'ERROR INTENTELO MÁS TARDE',
+                    icon: 'error',
+                    confirmButtonText: 'Cerrar'
                 });
             });
     }
@@ -3715,6 +4009,7 @@ export class DialogNotarioSociedad {
     constructor(
         private auth: AuthService,
         private http: HttpClient,
+        private spinner: NgxSpinnerService,
         public dialogRef: MatDialogRef<DialogNotarioSociedad>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
@@ -3750,6 +4045,7 @@ export class DialogNotarioSociedad {
      * Obtiene los datos del notario de acuerdo a los parametros dados en la búsqueda.
      */
     getDataNotarios(): void {
+        this.spinner.show();
         this.loading = true;
         this.isBusqueda = true;
         this.optionNotario = undefined;
@@ -3795,10 +4091,12 @@ export class DialogNotarioSociedad {
                 this.dataSource = this.paginate(this.dataNotarios, this.pageSize, this.pagina);
                 this.total = this.dataNotarios.length;
                 this.paginator.pageIndex = 0;
+                this.spinner.hide();
             },
             (error) => {
                 this.loading = false;
                 this.dataSource = [];
+                this.spinner.hide();
             });
     }
     
@@ -4140,6 +4438,7 @@ export class DialogSociedadPerito {
         private auth: AuthService,
         private http: HttpClient,
         private _formBuilder: FormBuilder,
+        private spinner: NgxSpinnerService,
         public dialogRef: MatDialogRef<DialogSociedadPerito>,
         @Inject(MAT_DIALOG_DATA) public data: any){
             dialogRef.disableClose = true;
@@ -4162,9 +4461,11 @@ export class DialogSociedadPerito {
                 this.loadingDocumentosIdentificativos= false;
                 this.dataDocumentos = res.CatDocIdentificativos;
                 console.log(this.dataDocumentos);
+                this.spinner.hide();
             },
             (error) => {
                 this.loadingDocumentosIdentificativos = false;
+                this.spinner.hide();
             }
         );
     }
@@ -4221,6 +4522,7 @@ export class DialogSociedadPerito {
      * Realiza la búsqueda del perito a asociar con la sociedad.
      */
     getPerito2(){
+        this.spinner.show();
         let query = '';
         let busquedaDatos = '';
 
@@ -4269,9 +4571,11 @@ export class DialogSociedadPerito {
                     this.total = this.dataSource.length; 
                     this.paginator.pageIndex = 0;
                     console.log(this.dataSource);
+                    this.spinner.hide();
                 },
                 (error) => {
                     this.loading = false;
+                    this.spinner.hide();
                 }
             );
     }
@@ -4394,10 +4698,16 @@ export class DialogHistorialRepS {
                 },
                 (error) => {
                     this.loadingH = false;
-                    this.snackBar.open("Ha ocurrido un problema al obtener el historial", 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open("Ha ocurrido un problema al obtener el historial", 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: 'Ha ocurrido un problema al obtener el historial',
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );
@@ -4551,10 +4861,16 @@ export class DialogHistorialRepDetalleS {
                 },
                 (error) => {
                     this.loadingH = false;
-                    this.snackBar.open("Ha ocurrido un problema al obtener el detalle", 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open("Ha ocurrido un problema al obtener el detalle", 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: 'Ha ocurrido un problema al obtener el detalle',
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );
@@ -4703,10 +5019,16 @@ export interface DataHistorico{
                 },
                 (error) => {
                     this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );
@@ -4912,10 +5234,16 @@ export interface DataHistorico{
                 (error) => {
                     this.loadingDireccionEspecifica = false;
                     console.log('no furula');
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );

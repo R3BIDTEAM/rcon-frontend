@@ -7,6 +7,7 @@ import { AuthService } from '@serv/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 export interface DocumentosIdentificativos{
     id_documento: number;
@@ -58,7 +59,8 @@ export class EdicionPeritosComponent implements OnInit {
         private snackBar: MatSnackBar,
         private auth: AuthService,
         private route: ActivatedRoute,
-        private _formBuilder: FormBuilder
+        private _formBuilder: FormBuilder,
+        private spinner: NgxSpinnerService
     ) { }
 
     /**
@@ -91,14 +93,17 @@ export class EdicionPeritosComponent implements OnInit {
     * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
     */
      getDataDocumentosIdentificativos(): void{
+        this.spinner.show();
         this.loadingDocumentosIdentificativos = true;
         this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingDocumentosIdentificativos = false;
                 this.documentos = res.CatDocIdentificativos;
+                this.spinner.hide();
             },
             (error) => {
                 this.loadingDocumentosIdentificativos = false;
+                this.spinner.hide();
             }
         );
     }
@@ -195,6 +200,7 @@ export class EdicionPeritosComponent implements OnInit {
      * Obtiene el o los registros del perito de acuerdo al críterio de búsqueda que pueden ser datos identificativos o personales.
      */
     getPerito(){
+        this.spinner.show();
         if(this.search){
             let query = '';
             let busquedaDatos = '';
@@ -243,6 +249,7 @@ export class EdicionPeritosComponent implements OnInit {
                         this.total = this.dataSource.length; 
                         this.paginator.pageIndex = 0;
                         console.log(this.dataSource);
+                        this.spinner.hide();
                     },
                     (error) => {
                         this.loading = false;
@@ -257,6 +264,7 @@ export class EdicionPeritosComponent implements OnInit {
                             icon: 'error',
                             confirmButtonText: 'Cerrar'
                         });
+                        this.spinner.hide();
                     }
                 );
         }
