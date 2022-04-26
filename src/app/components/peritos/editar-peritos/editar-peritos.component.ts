@@ -382,6 +382,7 @@ export class EditarPeritosComponent implements OnInit {
                     console.log("AQUI ENTRO EL RES WEE");
                     console.log(this.dataPeritoResultado);
                     this.datoDelPerito();
+                    this.spinner.hide();
                 },
                 (error) => {
                     this.loadingDatosPerito = false;
@@ -798,6 +799,7 @@ export class EditarPeritosComponent implements OnInit {
     }
 
     actualizaPeritoEspecifico(){
+        this.spinner.show();
         this.loadingDatosPerito  = true;
         let queryAcPeritoEsp = '';
         let checkIndi = '';
@@ -839,6 +841,7 @@ export class EditarPeritosComponent implements OnInit {
                             icon: 'success',
                             confirmButtonText: 'Cerrar'
                         });
+                        this.spinner.hide();
                     }
                 },
                 (error) => {
@@ -854,6 +857,7 @@ export class EditarPeritosComponent implements OnInit {
                         icon: 'error',
                         confirmButtonText: 'Cerrar'
                     });
+                    this.spinner.hide();
                 }
             );
     }
@@ -862,6 +866,7 @@ export class EditarPeritosComponent implements OnInit {
      * Abre el dialogo que registrara un nuevo domicilio
      */
     addDomicilio(i = -1, dataDomicilio = null): void {
+        this.spinner.show();
         let codtiposdireccion = '';
         const dialogRef = this.dialog.open(DialogDomicilioPerito, {
             width: '700px',
@@ -913,6 +918,7 @@ export class EditarPeritosComponent implements OnInit {
      * Abre el dialogo que registrara un nuevo domicilio con notificación
      */
     addDomicilioBoleta(i = -1, dataDomicilio = null): void {
+        this.spinner.show();
         let codtiposdireccion = 'N';
         const dialogRef = this.dialog.open(DialogDomicilioPerito, {
             width: '700px',
@@ -933,6 +939,7 @@ export class EditarPeritosComponent implements OnInit {
      * @param dataRepresentante Arreglo de los datos de la representación seleccionada
      */
     addRepresentante(i = -1, dataRepresentante = null): void {
+        this.spinner.show();
         const dialogRef = this.dialog.open(DialogRepresentacionPeritos, {
             width: '700px',
             data: {dataRepresentante : dataRepresentante,
@@ -955,6 +962,7 @@ export class EditarPeritosComponent implements OnInit {
      * @param dataRepresentante Arreglo de los datos de la representación seleccionada
      */
     addRepresentado(i = -1, dataRepresentante = null): void {
+        this.spinner.show();
         const dialogRef = this.dialog.open(DialogRepresentadoPeritos, {
             width: '700px',
             data: {dataRepresentante : dataRepresentante,
@@ -1212,6 +1220,7 @@ export class EditarPeritosComponent implements OnInit {
      * Registra la sociedad previamente consultada al perito.
      */
     insertaPeritoSociedad(){
+        this.spinner.show();
         this.loadingDatosPerito = true;
         let queryPS = 'idPersona=' + this.idPerito + '&idSociedad=' + this.dataSociedadAsociada[0].idsociedad;
         this.http.post(this.endpointActualiza + 'insertarPeritoSoci?' + queryPS, '', this.httpOptions)
@@ -1237,6 +1246,7 @@ export class EditarPeritosComponent implements OnInit {
                         icon: 'error',
                         confirmButtonText: 'Cerrar'
                     });
+                    this.spinner.hide();
                 }
             );     
     }
@@ -1556,6 +1566,7 @@ export class DialogDomicilioPerito {
         private snackBar: MatSnackBar,
         private http: HttpClient,
         private _formBuilder: FormBuilder,
+        private spinner: NgxSpinnerService,
         public dialogRef: MatDialogRef<DialogDomicilioPerito>,
         public dialog: MatDialog,
         @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -1711,9 +1722,11 @@ export class DialogDomicilioPerito {
                 this.municipios = res;
                 console.log('GETDELEG');
                 console.log(res);
+                this.spinner.hide();
             },
             (error) => {
                 this.loadingMunicipios = false;
+                this.spinner.hide();
             }
         );
     }
@@ -1859,7 +1872,7 @@ export class DialogDomicilioPerito {
      * Guarda el registro del nuevo domicilio.
      */
     guardaDomicilio(){
-        
+        this.spinner.show();
         let query = 'insertarDireccion?idPersona=' + this.data.idPerito;
 
         query = (this.dataDomicilio.codtiposvia) ? query + '&codtiposvia=' + this.dataDomicilio.codtiposvia : query + '&codtiposvia=';
@@ -1909,6 +1922,7 @@ export class DialogDomicilioPerito {
                     });
                     this.dialogRef.close(res.idpersona);
                     this.loadingEstados = false;
+                    this.spinner.hide();
                 },
                 (error) => {
                     this.dialogRef.close();
@@ -1923,6 +1937,7 @@ export class DialogDomicilioPerito {
                         icon: 'error',
                         confirmButtonText: 'Cerrar'
                     });
+                    this.spinner.hide();
                 }
             );
     }
@@ -2856,15 +2871,18 @@ export class DialogRepresentacionPeritos {
     * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
     */
     getDataDocumentos(): void{
+        this.spinner.show();
         this.loadingDocumentosIdentificativos = true;
         this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingDocumentosIdentificativos = false;
                 this.dataDocumentos = res.CatDocIdentificativos;
                 console.log(this.dataDocumentos);
+                this.spinner.hide();
             },
             (error) => {
                 this.loadingDocumentosIdentificativos = false;
+                this.spinner.hide();
             }
         );
     }
@@ -2954,6 +2972,7 @@ export class DialogRepresentacionPeritos {
      * @returns Regresa el arreglo de los datos que fueron registrados en el formulario de la representación.
      */
     getDataRepresentacion(): DataRepresentacion {
+        this.spinner.show();
         this.loading = true;
         this.bloqueo = false;
         this.dataRepresentacion.tipoPersona = this.tipoPersona;
@@ -3074,6 +3093,7 @@ export class DialogRepresentacionPeritos {
                     console.log(res);
                     this.loading = false;
                     this.dialogRef.close(res);
+                    this.spinner.hide();
                 },
                 (error) => {
                     // this.snackBar.open(error.error.mensaje, 'Cerrar', {
@@ -3087,6 +3107,7 @@ export class DialogRepresentacionPeritos {
                         icon: 'error',
                         confirmButtonText: 'Cerrar'
                     });
+                    this.spinner.hide();
                 });
         }
         return this.dataRepresentacion;
@@ -3225,6 +3246,7 @@ export class DialogRepresentadoPeritos {
         private _formBuilder: FormBuilder,
         private auth: AuthService,
         public dialog: MatDialog,
+        private spinner: NgxSpinnerService,
         public dialogRef: MatDialogRef<DialogRepresentadoPeritos>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
@@ -3285,9 +3307,11 @@ export class DialogRepresentadoPeritos {
                 this.loadingDocumentosIdentificativos = false;
                 this.dataDocumentos = res.CatDocIdentificativos;
                 console.log(this.dataDocumentos);
+                this.spinner.hide();
             },
             (error) => {
                 this.loadingDocumentosIdentificativos = false;
+                this.spinner.hide();
             }
         );
     }
@@ -3379,6 +3403,7 @@ export class DialogRepresentadoPeritos {
      * @returns Regresa el arreglo de los datos que fueron registrados en el formulario de la representación.
      */
     getDataRepresentacion(): DataRepresentacion {
+        this.spinner.show();
         this.loading = true;
         this.bloqueo = false;
         this.dataRepresentacion.tipoPersona = this.tipoPersona;
@@ -3499,6 +3524,7 @@ export class DialogRepresentadoPeritos {
                     console.log(res);
                     this.loading = false;
                     this.dialogRef.close(res);
+                    this.spinner.hide();
                 },
                 (error) => {
                     this.dialogRef.close()
@@ -3513,6 +3539,7 @@ export class DialogRepresentadoPeritos {
                         icon: 'error',
                         confirmButtonText: 'Cerrar'
                     });
+                    this.spinner.hide();
                 });
         }
 
@@ -4090,6 +4117,7 @@ export class DialogNotarioPeritos {
     constructor(
         private auth: AuthService,
         private http: HttpClient,
+        private spinner: NgxSpinnerService,
         public dialogRef: MatDialogRef<DialogNotarioPeritos>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
@@ -4125,6 +4153,7 @@ export class DialogNotarioPeritos {
      * Obtiene los datos del notario de acuerdo a los parametros dados en la búsqueda.
      */
     getDataNotarios(): void {
+        this.spinner.show();
         this.loading = true;
         this.isBusqueda = true;
         this.optionNotario = undefined;
@@ -4170,10 +4199,12 @@ export class DialogNotarioPeritos {
                 this.dataSource = this.paginate(this.dataNotarios, this.pageSize, this.pagina);
                 this.total = this.dataNotarios.length;
                 this.paginator.pageIndex = 0;
+                this.spinner.hide();
             },
             (error) => {
                 this.loading = false;
                 this.dataSource = [];
+                this.spinner.hide();
             });
     }
   
@@ -4278,6 +4309,7 @@ export class DialogPersonaPeritos {
       private auth: AuthService,
       private http: HttpClient,
       private _formBuilder: FormBuilder,
+      private spinner: NgxSpinnerService,
       public dialogRef: MatDialogRef<DialogPersonaPeritos>,
       @Inject(MAT_DIALOG_DATA) public data: any
     ) {
@@ -4314,15 +4346,18 @@ export class DialogPersonaPeritos {
     * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
     */
     getDataDocumentos(): void{
+        this.spinner.show();
         this.loadingDocumentosIdentificativos= true;
         this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingDocumentosIdentificativos= false;
                 this.dataDocumentos = res.CatDocIdentificativos;
                 console.log(this.dataDocumentos);
+                this.spinner.hide();
             },
             (error) => {
                 this.loadingDocumentosIdentificativos = false;
+                this.spinner.hide();
             }
         );
     }
@@ -4349,6 +4384,7 @@ export class DialogPersonaPeritos {
      * Obtiene a la persona sea física o moral por datos identificativos o personales.
      */
     getDataPersonas(): void {
+        this.spinner.show();
         this.loading = true;
         this.isBusqueda = true;
         this.optionPersona = undefined;
@@ -4398,10 +4434,12 @@ export class DialogPersonaPeritos {
                 this.dataSource = this.paginate(this.dataPersonas, this.pageSize, this.pagina);
                 this.total = this.dataPersonas.length;
                 this.paginator.pageIndex = 0;
+                this.spinner.hide();
             },
             (error) => {
                 this.loading = false;
                 this.dataSource = [];
+                this.spinner.hide();
             }
         );
     }
@@ -4495,6 +4533,7 @@ export class DialogSociedadAsociada {
     constructor(
         private auth: AuthService,
         private http: HttpClient,
+        private spinner: NgxSpinnerService,
         public dialogRef: MatDialogRef<DialogSociedadAsociada>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
@@ -4551,6 +4590,7 @@ export class DialogSociedadAsociada {
      * Obtiene la sociedad de acuerdo al críterio de búsqueda que puede ser datos identificativos o personales.
      */
     getSociedad(){
+        this.spinner.show();
         let query = '';
         let busquedaDatos = '';
         if( this.razonSocial ){
@@ -4582,9 +4622,11 @@ export class DialogSociedadAsociada {
                     this.total = this.dataSource.length; 
                     this.paginator.pageIndex = 0;
                     console.log(res);
+                    this.spinner.hide();
                 },
                 (error) => {
                     this.loading = false;
+                    this.spinner.hide();
                 }
             );
     }

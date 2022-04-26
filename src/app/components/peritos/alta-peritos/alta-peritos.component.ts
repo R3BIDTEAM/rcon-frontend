@@ -9,6 +9,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox'; 
 import Swal from 'sweetalert2';
+import { NgxSpinnerService } from 'ngx-spinner';
 import * as moment from 'moment';
 import { DialogDuplicadosComponent, DialogsMensaje, DialogsValidaPerito } from '@comp/dialog-duplicados/dialog-duplicados.component';
 
@@ -73,7 +74,8 @@ export class AltaPeritosComponent implements OnInit {
         public dialog: MatDialog,
         private auth: AuthService,
         private route: ActivatedRoute,
-        private router:Router
+        private router:Router,
+        private spinner: NgxSpinnerService
     ) {}
 
     /**
@@ -114,15 +116,18 @@ export class AltaPeritosComponent implements OnInit {
     * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
     */
     getDataDocumentosIdentificativos(): void{
+        this.spinner.show();
         this.loadingDocumentosIdentificativos = true;
         this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
             (res: any) => {
                 this.loadingDocumentosIdentificativos = false;
                 this.documentos = res.CatDocIdentificativos;
                 // console.log(this.documentos);
+                this.spinner.hide();
             },
             (error) => {
                 this.loadingDocumentosIdentificativos = false;
+                this.spinner.hide();
             }
         );
     }
@@ -262,6 +267,7 @@ export class AltaPeritosComponent implements OnInit {
      * de no existir coincidencias registrará el nuevo perito.
      */
     consulta_previa(){
+        this.spinner.show();
         if(this.buscadoEscrito == 0){
             this.datoPeritos.registro = (this.peritoPersonaFormGroup.value.registro) ? this.peritoPersonaFormGroup.value.registro.toLocaleUpperCase().trim() : null;
             this.datoPeritos.fecha_alta = (this.peritoPersonaFormGroup.value.fechaInicio) ? this.peritoPersonaFormGroup.value.fechaInicio : null;
@@ -316,11 +322,18 @@ export class AltaPeritosComponent implements OnInit {
                     },
                     (error) => {
                         this.loading = false;
-                        this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
+                        // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                        //     duration: 10000,
+                        //     horizontalPosition: 'end',
+                        //     verticalPosition: 'top'
+                        // });
+                        Swal.fire({
+                            title: 'ERROR',
+                            text: error.error.mensaje,
+                            icon: 'error',
+                            confirmButtonText: 'Cerrar'
                         });
+                        this.spinner.hide();
                     }
                 );
         }else{
@@ -332,6 +345,7 @@ export class AltaPeritosComponent implements OnInit {
      * Abre el dialogo que nos muestra los registros existentes para editar o confirmar si queremos continuar con el registro.
      */
     validaDialog(res){
+        this.spinner.hide();
         const dialogRef = this.dialog.open(DialogsValidacionPerito, {
             width: '850px',
             data: {
@@ -404,21 +418,35 @@ export class AltaPeritosComponent implements OnInit {
                     this.inserto = true;
                     console.log("AQUI ENTRO EL RES DEL NUEVO PERITO");
                     console.log(res);
-                    this.snackBar.open('guardado correcto - ' + res.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open('guardado correcto - ' + res.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'CORRECTO',
+                        text: 'Guardado correcto - ' + res.mensaje,
+                        icon: 'success',
+                        confirmButtonText: 'Cerrar'
                     });
                     this.btnNuevo = true;
+                    this.spinner.hide();
                 },
                 (error) => {
                     this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                     this.btnNuevo = false;
+                    this.spinner.hide();
                 }
             );
     }
@@ -476,10 +504,12 @@ export class AltaPeritosComponent implements OnInit {
      * Abre el dialogo para realizar la búsqueda de un contribuyente existente.
      */
     openDialogPerito(){
+        this.spinner.show();
         const dialogRef = this.dialog.open(DialogAltaBusca, {
             width: '700px',
         });
         dialogRef.afterClosed().subscribe(result => {
+            this.spinner.show();
             if(result){
                 console.log("RESULTADO DEL NUEVO NOMBRE");
                 console.log(result);
@@ -490,7 +520,9 @@ export class AltaPeritosComponent implements OnInit {
                 setTimeout (() => {
                     this.puebaform(result);
                 }, 500);
+                this.spinner.hide();
             }
+            this.spinner.hide();
         });
     }
 
@@ -600,6 +632,7 @@ export class DialogAltaBusca {
         private auth: AuthService,
         private http: HttpClient,
         private _formBuilder: FormBuilder,
+        private spinner: NgxSpinnerService,
         public dialogRef: MatDialogRef<DialogAltaBusca>,
         @Inject(MAT_DIALOG_DATA) public data: any){
             dialogRef.disableClose = true;
@@ -685,9 +718,11 @@ export class DialogAltaBusca {
                 this.loadingDocumentos = false;
                 this.dataDocumentos = res.CatDocIdentificativos;
                 console.log(this.dataDocumentos);
+                this.spinner.hide();
             },
             (error) => {
                 this.loadingDocumentos = false;
+                this.spinner.hide();
             }
         );
     }
@@ -736,6 +771,7 @@ export class DialogAltaBusca {
      * Obtiene el o los registros de los contribuyentes existentes.
      */
     getPerito2(){
+        this.spinner.show();
         let query = '';
         let busquedaDatos = '';
 
@@ -784,9 +820,11 @@ export class DialogAltaBusca {
                     this.total = this.dataSource.length; 
                     this.paginator.pageIndex = 0;
                     console.log(this.dataSource);
+                    this.spinner.hide();
                 },
                 (error) => {
                     this.loading = false;
+                    this.spinner.hide();
                 }
             );
     }

@@ -7,6 +7,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { DialogHistorialComponent, DialogDomicilioHistoricoG } from '@comp/dialog-historial/dialog-historial.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 export interface DatosSociedad {
     razonSocial: string;
@@ -87,7 +89,8 @@ export class VerSociedadComponent implements OnInit {
         private snackBar: MatSnackBar,
         private auth: AuthService,
         public dialog: MatDialog,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private spinner: NgxSpinnerService
     ) { }
 
     ngOnInit(): void {
@@ -109,6 +112,7 @@ export class VerSociedadComponent implements OnInit {
     }
 
     getSociedadDatos(){
+        this.spinner.show();
         this.query = 'idSociedad=' + this.idSociedad; 
         this.loading = true;
         console.log(this.endpoint);
@@ -123,11 +127,18 @@ export class VerSociedadComponent implements OnInit {
                 },
                 (error) => {
                     this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
+                    this.spinner.hide();
                 }
             );
     }
@@ -144,14 +155,22 @@ export class VerSociedadComponent implements OnInit {
                     console.log("OTRO RES");
                     console.log(this.total);
                     this.datosDeLaSociedad();
+                    this.spinner.hide();
                 },
                 (error) => {
                     this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
+                    this.spinner.hide();
                 }
             );
     }
@@ -184,11 +203,18 @@ export class VerSociedadComponent implements OnInit {
             },
             (error) => {
                 this.loadingDomicilios = false;
-                this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
+                // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                //     duration: 10000,
+                //     horizontalPosition: 'end',
+                //     verticalPosition: 'top'
+                // });
+                Swal.fire({
+                    title: 'ERROR',
+                    text: error.error.mensaje,
+                    icon: 'error',
+                    confirmButtonText: 'Cerrar'
                 });
+                this.spinner.hide();
             }
         );
     }
@@ -230,11 +256,18 @@ export class VerSociedadComponent implements OnInit {
                 },
                 (error) => {
                     this.loadingInmuebles = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
+                    this.spinner.hide();
                 }
             );
     }
@@ -264,11 +297,18 @@ export class VerSociedadComponent implements OnInit {
                 },
                 (error) => {
                     this.loadingRepresentante = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
+                    this.spinner.hide();
                 }
             );
     }
@@ -292,11 +332,18 @@ export class VerSociedadComponent implements OnInit {
                 },
                 (error) => {
                     this.loadingRepresentado = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                    //     duration: 10000,
+                    //     horizontalPosition: 'end',
+                    //     verticalPosition: 'top'
+                    // });
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
+                    this.spinner.hide();
                 }
             );
     }
