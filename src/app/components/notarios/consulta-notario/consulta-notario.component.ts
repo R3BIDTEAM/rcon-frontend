@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import * as moment from 'moment';
+import Swal from 'sweetalert2';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 export interface Filtros {
   apellido_paterno: string;
@@ -71,6 +73,7 @@ export class ConsultaNotarioComponent implements OnInit {
     private auth: AuthService,
     private router: Router,
     private _formBuilder: FormBuilder,
+    private spinner: NgxSpinnerService,
   ) { 
     
   }
@@ -120,14 +123,17 @@ export class ConsultaNotarioComponent implements OnInit {
   * Obtiene el nombre de los Estados para llenar el el Select de Estados
   */
   getDataEstados(): void {
+    this.spinner.show();
     this.loadingEstados = true;
     this.http.get(this.endpoint + 'getEstados', this.httpOptions).subscribe(
       (res: any) => {
+        this.spinner.hide();
         this.loadingEstados = false;
         this.estados = res;
         // console.log(this.estados);
       },
       (error) => {
+        this.spinner.hide();
         this.loadingEstados = false;
       }
     );
@@ -137,14 +143,17 @@ export class ConsultaNotarioComponent implements OnInit {
   * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
   */
   getDataDocumentosIdentificativos(): void{
+    this.spinner.show();
     this.loadingDocumentosIdentificativos = true;
     this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
       (res: any) => {
+        this.spinner.hide();
         this.loadingDocumentosIdentificativos = false;
         this.documentos = res.CatDocIdentificativos;
         // console.log(this.documentos);
       },
       (error) => {
+        this.spinner.hide();
         this.loadingDocumentosIdentificativos = false;
       }
     );
@@ -230,6 +239,7 @@ export class ConsultaNotarioComponent implements OnInit {
      */
     getData(): void {
         if(this.search){
+            this.spinner.show();
             let query = '';
             let busquedaDatos = '';
 
@@ -278,20 +288,22 @@ export class ConsultaNotarioComponent implements OnInit {
                 this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
                     .subscribe(
                         (res: any) => {
-                            this.loading = false;
-                            this.dataSource = res;
-                            this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-                            this.total = this.dataSource.length; 
-                            // this.paginator.pageIndex = 0;
-                            // console.log(this.dataSource);
+                          this.spinner.hide();
+                          this.loading = false;
+                          this.dataSource = res;
+                          this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+                          this.total = this.dataSource.length; 
+                          // this.paginator.pageIndex = 0;
+                          // console.log(this.dataSource);
                         },
                         (error) => {
-                            this.loading = false;
-                            this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                                duration: 10000,
-                                horizontalPosition: 'end',
-                                verticalPosition: 'top'
-                            });
+                          this.spinner.hide();
+                          this.loading = false;
+                          this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                              duration: 10000,
+                              horizontalPosition: 'end',
+                              verticalPosition: 'top'
+                          });
                         }
                     );
         }

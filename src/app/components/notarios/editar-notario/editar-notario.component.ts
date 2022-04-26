@@ -11,6 +11,8 @@ import * as moment from 'moment';
 import { DialogConfirmacionComponent } from '@comp/dialog-confirmacion/dialog-confirmacion.component';
 import { isEmptyExpression } from '@angular/compiler';
 import { EMPTY } from 'rxjs';
+import Swal from 'sweetalert2';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 export interface DatosNotario {
   no_notario: string;
@@ -172,7 +174,8 @@ export class EditarNotarioComponent implements OnInit {
         private snackBar: MatSnackBar,
         private auth: AuthService,
         private route: ActivatedRoute,
-        public dialog: MatDialog
+        public dialog: MatDialog,
+        private spinner: NgxSpinnerService,
     ) { }
 
     ngOnInit(): void {
@@ -224,14 +227,17 @@ export class EditarNotarioComponent implements OnInit {
     * @example obtiene los nombres de los estados
     */
     getDataEstados(): void {
+        this.spinner.show();
         this.loadingEstados = true;
         this.http.get(this.endpointEstados + 'getEstados', this.httpOptions).subscribe(
         (res: any) => {
+            this.spinner.hide();
             this.loadingEstados = false;
             this.estados = res;
             console.log(this.estados);
         },
         (error) => {
+            this.spinner.hide();
             this.loadingEstados = false;
         }
         );
@@ -288,14 +294,17 @@ export class EditarNotarioComponent implements OnInit {
     * Esta funcion sirve para traer los docuemntos que llenan el select de otro Documento identificativo
     */
     getDataDocumentosIdentificativos(): void{
+        this.spinner.show();
         this.loadingDocumentosIdentificativos = true;
         this.http.get(this.endpointEstados + 'getCatalogos', this.httpOptions).subscribe(
         (res: any) => {
+            this.spinner.hide();
             this.loadingDocumentosIdentificativos = false;
             this.documentos = res.CatDocIdentificativos;
             console.log(this.documentos);
         },
         (error) => {
+            this.spinner.hide();
             this.loadingDocumentosIdentificativos = false;
         }
         );
@@ -314,12 +323,14 @@ export class EditarNotarioComponent implements OnInit {
     * Trae la información guardada del notario seleccionado (Datos personales, direcciones, etc..)
     */
     getNotarioDatos(){
+        this.spinner.show();
         this.query = 'infoExtra=true&idPersona=' + this.idNotario; 
         this.loading = true;
         console.log(this.endpoint);
         this.http.get(this.endpoint + '?' + this.query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loading = false;
                     this.dataNotarioResultado = res.notario;
                     console.log("AQUI ENTRO EL RES");
@@ -327,12 +338,16 @@ export class EditarNotarioComponent implements OnInit {
                     this.datoDelNotario();
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'error',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
@@ -394,11 +409,13 @@ export class EditarNotarioComponent implements OnInit {
     * Trae la información guardada de las direcciones que están dadas de alta para éste notario
     */
     getNotarioDirecciones(){
+        this.spinner.show();
         this.loadingDomicilios = true;
         let metodo = 'getDireccionesContribuyente';
         this.http.get(this.endpointEstados + metodo + '?idPersona='+ this.idNotario, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loadingDomicilios = false;
                     this.dataSource1 = res;
                     this.total1 = this.dataSource1.length;
@@ -407,12 +424,16 @@ export class EditarNotarioComponent implements OnInit {
                     // console.log(this.dataSource1);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingDomicilios = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'error',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
@@ -421,11 +442,13 @@ export class EditarNotarioComponent implements OnInit {
     * @param iddireccion Es el identificador de la dirección seleccionada en la tabla de direcciones agregadas
     */
     getDireccionEspecifica(iddireccion){
+        this.spinner.show();
         this.loadingDireccionEspecifica = true;
         let metodo = 'getDireccionById';
         this.http.get(this.endpointEstados + metodo + '?idDireccion='+ iddireccion, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     // alert('entro');
                     this.loadingDireccionEspecifica = false;
                     this.dataDomicilioEspecifico = res;
@@ -434,12 +457,16 @@ export class EditarNotarioComponent implements OnInit {
                     // console.log(this.dataDomicilioEspecifico);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingDireccionEspecifica = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'error',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
@@ -459,7 +486,7 @@ export class EditarNotarioComponent implements OnInit {
     */
     actualizarDatosNotario(){
         let query = '';
-
+        this.spinner.show();
         query = 'idPersona=' + this.idNotario;
         query = (this.datosNotario.no_notario) ? query + '&numNotario=' + this.datosNotario.no_notario : query + '&numNotario=';
         query = (this.datosNotario.estado) ? query + '&codEstado=' + this.datosNotario.estado : query + '&codEstado=';
@@ -467,21 +494,29 @@ export class EditarNotarioComponent implements OnInit {
         this.http.post(this.endpointEstados + 'actualizarNotario?' + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     console.log(res);
                     this.loadingDatosNotario = false;
-                    this.snackBar.open('Datos de Notario actualizados correctamente', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'CORRECTO',
+                          text: "Datos de Notario actualizados correctamente",
+                          icon: 'success',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingDatosNotario = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'error',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
@@ -491,6 +526,7 @@ export class EditarNotarioComponent implements OnInit {
     * Actualiza la información del notario que fue cambiada en Datos Personales del Notario (Nombre, apellidos, teléfono, RFC, etc...)
     */
     actualizarDatosGenerales(){
+        this.spinner.show();
         let query = '';
         this.loading = true;
         query = 'codtipospersona=F';
@@ -512,21 +548,29 @@ export class EditarNotarioComponent implements OnInit {
         this.http.post(this.endpointEstados + 'actualizaContribuyente?' + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     console.log(res);
                     this.loading = false;
-                    this.snackBar.open('Datos de Notario actualizados correctamente', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'CORRECTO',
+                          text: "Datos de Notario actualizados correctamente",
+                          icon: 'success',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'error',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );  
 
@@ -552,6 +596,7 @@ export class EditarNotarioComponent implements OnInit {
     * Cambia el Tipo de Persona de Moral a Física o visceversa
     */
     cambiarTipoPersona(){
+        this.spinner.show();
         let query = 'idpersona=' + this.idNotario;
         this.loading = true;
 
@@ -585,30 +630,41 @@ export class EditarNotarioComponent implements OnInit {
         this.http.post(this.endpointEstados + 'cambioTipoPersona' + '?' + query, '', this.httpOptions)
         .subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loading = false;
                 console.log("Cambio de persona");
                 console.log(res);
                 if(res){
-                    this.snackBar.open('Actualización correcta', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'CORRECTO',
+                          text: "Actualización correcta",
+                          icon: 'success',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }else{
-                    this.snackBar.open('Se ha presentado un problema intente más tarde', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: "Se ha presentado un problema intente más tarde",
+                          icon: 'error',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             },
             (error) => {
+                this.spinner.hide();
                 this.loading = false;
-                this.snackBar.open('Se ha presentado un problema intente más tarde', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
-                });
+                Swal.fire(
+                    {
+                      title: 'SIN RESULTADO',
+                      text: error.error.mensaje,
+                      icon: 'error',
+                      confirmButtonText: 'Cerrar'
+                    }
+                );
             }
         );
     }
@@ -765,6 +821,7 @@ export class DialogDomiciliosNotario {
             private http: HttpClient,
             private _formBuilder: FormBuilder,
             public dialogRef: MatDialogRef<DialogDomiciliosNotario>,
+            private spinner: NgxSpinnerService,
             public dialog: MatDialog,
         @Inject(MAT_DIALOG_DATA) public data: any) {
         dialogRef.disableClose = true;
@@ -845,11 +902,12 @@ export class DialogDomiciliosNotario {
     * Obtiene la dirección especifica guardada para éste notario
     */
     getDireccionEspecifica(){
-
+        this.spinner.show();
         let metodo = 'getDireccionById';
         this.http.get(this.endpointCatalogos + metodo + '?idDireccion='+ this.iddireccion, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loadingDireccionEspecifica = false;
                     this.dataDomicilioEspecifico = res;
                     console.log('domicilio único encontrado');
@@ -859,12 +917,16 @@ export class DialogDomiciliosNotario {
                     }, 500);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingDireccionEspecifica = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'error',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
@@ -886,14 +948,17 @@ export class DialogDomiciliosNotario {
     * Obtiene los nombres de los Estados para el select de Selección de estado
     */
     getDataEstados(): void {
+        this.spinner.show();
         this.loadingEstados = true;
         this.http.get(this.endpointCatalogos + 'getEstados', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingEstados = false;
                 this.estados = res;
                 this.getAlcaldia();
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingEstados = false;
             }
         );
@@ -903,16 +968,19 @@ export class DialogDomiciliosNotario {
      * Obtiene el catálogo de la alcaldia.
      */
      getAlcaldia(){
+        this.spinner.show();
         let busquedaMunCol = 'getDelegaciones';
         this.loadingMunicipios = true;
         this.http.get(this.endpointCatalogos + busquedaMunCol, this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingMunicipios = false;
                 this.municipios = res;
                 console.log('GETDELEG');
                 console.log(res);
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingMunicipios = false;
             }
         );
@@ -923,6 +991,7 @@ export class DialogDomiciliosNotario {
      * @param event Valor que se recibe para la obtención de las alcaldias o municipios.
      */
      getDataMunicipios(event): void {
+        this.spinner.show();
         if(event.value != 9){
             this.domicilioFormGroup.controls['idmunicipio2'].setValue('');
             this.domicilioFormGroup.controls['municipio'].setValue('');
@@ -946,12 +1015,14 @@ export class DialogDomiciliosNotario {
         this.loadingMunicipios = true;
         this.http.get(this.endpointCatalogos + busquedaMunCol, this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingMunicipios = false;
                 this.municipios = res;
                 console.log('GETDELEG');
                 console.log(res);
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingMunicipios = false;
             }
         );
@@ -961,15 +1032,18 @@ export class DialogDomiciliosNotario {
      * Obtiene el catálogo de los asentamientos.
      */
     getDataTiposAsentamiento(): void {
+        this.spinner.show();
         this.loadingTiposAsentamiento = true;
         this.http.get(this.endpointCatalogos + 'getTiposAsentamiento', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingTiposAsentamiento = false;
                 this.tiposAsentamiento = res;
                 console.log('AQUI EL ASENTAMIENTO SELECT');
                 console.log(this.tiposAsentamiento);
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingTiposAsentamiento = false;
             }
         );
@@ -979,9 +1053,11 @@ export class DialogDomiciliosNotario {
      * Obtiene el catálogo de las vías
      */
     getDataTiposVia(): void {
+        this.spinner.show();
         this.loadingTiposVia = true;
         this.http.get(this.endpointCatalogos + 'getTiposVia', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingTiposVia = false;
                 this.tiposVia = res;
                 console.log('AQUI EL TIPOS VIA SELECT');
@@ -989,6 +1065,7 @@ export class DialogDomiciliosNotario {
                 console.log(this.codtiposdireccion);
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingTiposVia = false;
             }
         );
@@ -998,15 +1075,18 @@ export class DialogDomiciliosNotario {
      * Obtiene el catálogo de los tipos de localidad
      */
     getDataTiposLocalidad(): void {
+        this.spinner.show();
         this.loadingTiposLocalidad = true;
         this.http.get(this.endpointCatalogos + 'getTiposLocalidad', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingTiposLocalidad = false;
                 this.tiposLocalidad = res;
                 console.log('AQUI EL TIPOS LOCALIDAD');
                 console.log(this.tiposLocalidad);
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingTiposLocalidad = false;
             }
         );
@@ -1016,6 +1096,7 @@ export class DialogDomiciliosNotario {
      * Almacena los datos del formulario del domicilio y de acuerdo al valor inserta o actualiza
      */
     getDataDomicilio(): void {
+        this.spinner.show();
         this.loadingEstados = true;
         this.blockButtons = false;
         //this.dataDomicilio.idtipodireccion = this.domicilioFormGroup.value.idtipodireccion;
@@ -1099,22 +1180,30 @@ export class DialogDomiciliosNotario {
         this.http.post(this.endpointCatalogos + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     console.log(res);
-                    this.snackBar.open('Registro exitoso', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'CORRECTO',
+                          text: "Registro exitoso",
+                          icon: 'success',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                     this.dialogRef.close(res.idpersona);
                     this.loadingEstados = false;
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.dialogRef.close();
-                    this.snackBar.open('Ocurrio un error al Insertar la dirección, intente nuevemente', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'error',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
@@ -1124,7 +1213,7 @@ export class DialogDomiciliosNotario {
     * Actualiza un domicilio que ya se encuentra dado de alta
     */
     actualizarDomicilio(){
-        
+        this.spinner.show();
         let query = 'actualizarDireccion?idPersona=' + this.data.idNotario + '&idDireccion=' + this.iddireccion;
 
         query = (this.dataDomicilio.codtiposvia) ? query + '&codtiposvia=' + this.dataDomicilio.codtiposvia : query + '&codtiposvia=';
@@ -1160,23 +1249,31 @@ export class DialogDomiciliosNotario {
         this.http.post(this.endpointCatalogos + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     console.log("AQUI ACTUALIZO");
                     console.log(res);
-                    this.snackBar.open('Actualización Correcta', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'CORRECTO',
+                          text: "Actualización Correcta",
+                          icon: 'success',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                     this.dialogRef.close(res.idpersona);
                     this.loadingEstados = false;
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.dialogRef.close();
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'error',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
@@ -1377,6 +1474,7 @@ export class DialogMunicipiosNotario {
         private auth: AuthService,
         private http: HttpClient,
         private _formBuilder: FormBuilder,
+        private spinner: NgxSpinnerService,
         public dialog: MatDialog,
         public dialogRef: MatDialogRef<DialogMunicipiosNotario>,
         @Inject(MAT_DIALOG_DATA) public data: any
@@ -1409,6 +1507,7 @@ export class DialogMunicipiosNotario {
     * Obtiene los municipios 
     */
     obtenerMunicipios(){
+        this.spinner.show();
         this.loadingBuscaMun = true;
         let criterio = '';
         let query = '';
@@ -1427,6 +1526,7 @@ export class DialogMunicipiosNotario {
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loadingBuscaMun = false;
                     this.dataSource = res;
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
@@ -1435,6 +1535,7 @@ export class DialogMunicipiosNotario {
                     console.log(this.dataSource);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingBuscaMun = false;
                 }
             );
@@ -1460,6 +1561,7 @@ export class DialogMunicipiosNotario {
     * Obtiene los municipios según el estado seleccionado
     */
     obtenerMunicipiosPorNombre(){
+        this.spinner.show();
         this.loadingBuscaMun = true;
         let criterio = '';
         let query = '';
@@ -1477,6 +1579,7 @@ export class DialogMunicipiosNotario {
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loadingBuscaMun = false;
                     this.dataSource = res;
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
@@ -1485,6 +1588,7 @@ export class DialogMunicipiosNotario {
                     console.log(this.dataSource);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingBuscaMun = false;
                 }
             );
@@ -1522,6 +1626,7 @@ export class DialogCiudadNotario {
         private auth: AuthService,
         private http: HttpClient,
         private _formBuilder: FormBuilder,
+        private spinner: NgxSpinnerService,
         public dialog: MatDialog,
         public dialogRef: MatDialogRef<DialogCiudadNotario>,
         @Inject(MAT_DIALOG_DATA) public data: any
@@ -1554,6 +1659,7 @@ export class DialogCiudadNotario {
     * Obtiene la ciudad según el estado seleccionado
     */
     obtenerCiudad(){
+        this.spinner.show();
         this.loadingBuscaCiudad = true;
         let criterio = '';
         let query = '';
@@ -1575,6 +1681,7 @@ export class DialogCiudadNotario {
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loadingBuscaCiudad = false;
                     this.dataSource = res;
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
@@ -1583,6 +1690,7 @@ export class DialogCiudadNotario {
                     console.log(this.dataSource);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingBuscaCiudad = false;
                 }
             );
@@ -1638,6 +1746,7 @@ export class DialogAsentamientoNotario {
         private auth: AuthService,
         private http: HttpClient,
         private _formBuilder: FormBuilder,
+        private spinner: NgxSpinnerService,
         public dialog: MatDialog,
         public dialogRef: MatDialogRef<DialogAsentamientoNotario>,
         @Inject(MAT_DIALOG_DATA) public data: any
@@ -1667,6 +1776,7 @@ export class DialogAsentamientoNotario {
     * Obtiene la colonia según el estado seleccionado
     */
     obtenerAsentamiento(){
+        this.spinner.show();
         this.loading = true;
         let criterio = '';
         let query = '';
@@ -1685,6 +1795,7 @@ export class DialogAsentamientoNotario {
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loading = false;
                     this.dataSource = res;
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
@@ -1693,6 +1804,7 @@ export class DialogAsentamientoNotario {
                     console.log(this.dataSource);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loading = false;
                 }
             );
@@ -1731,6 +1843,7 @@ export class DialogAsentamientoNotario {
      * Obtiene el asenteamiento de acuerdo al estado, municipio o ciudad.
      */
     obtenerAsentamientoByNombre(){
+        this.spinner.show();
         this.loading = true;
         let criterio = '';
         let query = '';
@@ -1749,6 +1862,7 @@ export class DialogAsentamientoNotario {
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loading = false;
                     this.dataSource = res;
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
@@ -1757,6 +1871,7 @@ export class DialogAsentamientoNotario {
                     console.log(this.dataSource);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loading = false;
                 }
             );
@@ -1794,6 +1909,7 @@ export class DialogViaNotario {
         private auth: AuthService,
         private http: HttpClient,
         private _formBuilder: FormBuilder,
+        private spinner: NgxSpinnerService,
         public dialog: MatDialog,
         public dialogRef: MatDialogRef<DialogViaNotario>,
         @Inject(MAT_DIALOG_DATA) public data: any
@@ -1826,6 +1942,7 @@ export class DialogViaNotario {
     * Obtiene la calle según la colonia seleccionada 
     */
     obtenerVia(){
+        this.spinner.show();
         this.loadingBuscaVia = true;
         let criterio = 'getViasByIdColonia';
         let query = '';
@@ -1847,6 +1964,7 @@ export class DialogViaNotario {
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loadingBuscaVia = false;
                     this.dataSource = res;
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
@@ -1855,6 +1973,7 @@ export class DialogViaNotario {
                     console.log(this.dataSource);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingBuscaVia = false;
                 }
             );
@@ -1877,6 +1996,7 @@ export class DialogViaNotario {
     }
 
     obtenerAsentamientoPorNombre(){
+        this.spinner.show();
         this.loadingBuscaVia = true;
         let criterio = '';
         let query = '';
@@ -1894,6 +2014,7 @@ export class DialogViaNotario {
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loadingBuscaVia = false;
                     this.dataSource = res;
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
@@ -1902,6 +2023,7 @@ export class DialogViaNotario {
                     console.log(this.dataSource);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingBuscaVia = false;
                 }
             );
@@ -1939,6 +2061,7 @@ export interface DataHistorico{
         private snackBar: MatSnackBar,
         private http: HttpClient,
         private _formBuilder: FormBuilder,
+        private spinner: NgxSpinnerService,
         public dialogRef: MatDialogRef<DialogDomicilioHistoricoNotario>,
         public dialog: MatDialog,
         @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -1960,7 +2083,7 @@ export interface DataHistorico{
     */
     getHistoricoModificaciones(){
         let query = '';
-      
+        this.spinner.show();
         query = (this.dataHistoricoModificaciones.fecha_desde) ? query + '&fechaDesde=' + moment(this.dataHistoricoModificaciones.fecha_desde).format('DD-MM-YYYY') : query + '&fechaDesde=';
         query = (this.dataHistoricoModificaciones.fecha_hasta) ? query + '&fechaHasta=' + moment(this.dataHistoricoModificaciones.fecha_hasta).format('DD-MM-YYYY') : query + '&fechaHasta=';
         query = query + '&idDireccion=' + this.idDireccion;
@@ -1972,6 +2095,7 @@ export interface DataHistorico{
         this.http.get(this.endpoint + metodo + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loading = false;
                     this.dataSource = res;
                     console.log(this.dataSource);
@@ -1979,12 +2103,16 @@ export interface DataHistorico{
                     this.dataPaginate = this.paginate(this.dataSource, 10, this.pagina);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'error',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
@@ -2080,6 +2208,7 @@ export interface DataHistorico{
         private snackBar: MatSnackBar,
         private http: HttpClient,
         private _formBuilder: FormBuilder,
+        private spinner: NgxSpinnerService,
         public dialogRef: MatDialogRef<DialogDomicilioHistoricoEspecificoNotario>,
         public dialog: MatDialog,
         @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -2160,12 +2289,14 @@ export interface DataHistorico{
     * Obtiene la dirección especifica seleccionada
     */
     getDireccionEspecifica(){
+        this.spinner.show();
         console.log('entro');
         this.loadingDireccionEspecifica = true;
         let metodo = 'getHistoricosDireccionDetalle';
         this.http.get(this.endpointCatalogos + metodo + '?idChs=' + this.idChs + '&idDireccion=' + this.idDireccion, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loadingDireccionEspecifica = false;
                     this.dataDomicilioEspecifico = res;
                     this.setDataDomicilio(this.dataDomicilioEspecifico[0]);
@@ -2173,13 +2304,16 @@ export interface DataHistorico{
                     console.log(this.dataDomicilioEspecifico);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingDireccionEspecifica = false;
-                    console.log('no furula');
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'error',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
@@ -2194,13 +2328,16 @@ export interface DataHistorico{
     * Obtiene el nombre de los estados
     */
     getDataEstados(): void {
+        this.spinner.show();
         this.loadingEstados = true;
         this.http.get(this.endpointCatalogos + 'getEstados', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingEstados = false;
                 this.estados = res;
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingEstados = false;
             }
         );
@@ -2210,6 +2347,7 @@ export interface DataHistorico{
     * Obtiene el nombre de los muncipios de cada estado o alcaldías en caso de la Ciudad de México
     */
     getDataMunicipios(event): void {
+        this.spinner.show();
         this.botonMunicipio = false;
         let busquedaMunCol = '';
         // busquedaMunCol = 'getDelegaciones';
@@ -2217,12 +2355,14 @@ export interface DataHistorico{
         this.loadingMunicipios = true;
         this.http.get(this.endpointCatalogos + busquedaMunCol, this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingMunicipios = false;
                 this.municipios = res;
                 console.log('GETDELEG');
                 console.log(res);
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingMunicipios = false;
             }
         );
@@ -2232,15 +2372,18 @@ export interface DataHistorico{
     * Obtiene las colonias de los estados y/o delegaciones
     */
     getDataTiposAsentamiento(): void {
+        this.spinner.show();
         this.loadingTiposAsentamiento = true;
         this.http.get(this.endpointCatalogos + 'getTiposAsentamiento', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingTiposAsentamiento = false;
                 this.tiposAsentamiento = res;
                 console.log('AQUI EL ASENTAMIENTO SELECT');
                 console.log(this.tiposAsentamiento);
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingTiposAsentamiento = false;
             }
         );
@@ -2250,9 +2393,11 @@ export interface DataHistorico{
     * Obtiene las calles de las colonias
     */
     getDataTiposVia(): void {
+        this.spinner.show();
         this.loadingTiposVia = true;
         this.http.get(this.endpointCatalogos + 'getTiposVia', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingTiposVia = false;
                 this.tiposVia = res;
                 console.log('AQUI EL TIPOS VIA SELECT');
@@ -2260,6 +2405,7 @@ export interface DataHistorico{
                 console.log(this.codtiposdireccion);
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingTiposVia = false;
             }
         );
@@ -2269,15 +2415,18 @@ export interface DataHistorico{
     * Obtiene los tipos de localidad
     */
     getDataTiposLocalidad(): void {
+        this.spinner.show();
         this.loadingTiposLocalidad = true;
         this.http.get(this.endpointCatalogos + 'getTiposLocalidad', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.show();
                 this.loadingTiposLocalidad = false;
                 this.tiposLocalidad = res;
                 console.log('AQUI EL TIPOS LOCALIDAD');
                 console.log(this.tiposLocalidad);
             },
             (error) => {
+                this.spinner.show();
                 this.loadingTiposLocalidad = false;
             }
         );
@@ -2442,6 +2591,7 @@ export interface DataHistorico{
         private snackBar: MatSnackBar,
         private http: HttpClient,
         private _formBuilder: FormBuilder,
+        private spinner: NgxSpinnerService,
         public dialogRef: MatDialogRef<DialogPersonalesHistoricoNotario>,
         public dialog: MatDialog,
         @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -2463,7 +2613,7 @@ export interface DataHistorico{
     */
     getHistoricoModificaciones(){
         let query = '';
-      
+        this.spinner.show();
         query = (this.dataHistoricoModificaciones.fecha_desde) ? query + '&fechaDesde=' + moment(this.dataHistoricoModificaciones.fecha_desde).format('DD-MM-YYYY') : query + '&fechaDesde=';
         query = (this.dataHistoricoModificaciones.fecha_hasta) ? query + '&fechaHasta=' + moment(this.dataHistoricoModificaciones.fecha_hasta).format('DD-MM-YYYY') : query + '&fechaHasta=';
         query = query + '&idPersona=' + this.idPersona;
@@ -2475,6 +2625,7 @@ export interface DataHistorico{
         this.http.get(this.endpoint + metodo + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loading = false;
                     this.dataSource = res;
                     console.log(this.dataSource);
@@ -2482,12 +2633,16 @@ export interface DataHistorico{
                     this.dataPaginate = this.paginate(this.dataSource, 10, this.pagina);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'error',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }

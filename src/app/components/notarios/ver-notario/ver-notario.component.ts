@@ -7,6 +7,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { DialogDomicilioHistoricoG } from '@comp/dialog-historial/dialog-historial.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 export interface DatosNotario {
   no_notario: string;
@@ -102,7 +104,8 @@ export class VerNotarioComponent implements OnInit {
     private snackBar: MatSnackBar,
     private auth: AuthService,
     public dialog: MatDialog,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private spinner: NgxSpinnerService,
   ) { }
 
   ngOnInit(): void {
@@ -127,14 +130,17 @@ export class VerNotarioComponent implements OnInit {
   * Obtiene el nombre de los Estados para llenar el el Select de Estados
   */
   getDataEstados(): void {
+    this.spinner.show();
     this.loadingEstados = true;
     this.http.get(this.endpointEstados + 'getEstados', this.httpOptions).subscribe(
       (res: any) => {
+        this.spinner.hide();
         this.loadingEstados = false;
         this.estados = res;
         console.log(this.estados);
       },
       (error) => {
+        this.spinner.hide();
         this.loadingEstados = false;
       }
     );
@@ -144,14 +150,17 @@ export class VerNotarioComponent implements OnInit {
   * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
   */
   getDataDocumentosIdentificativos(): void{
+    this.spinner.show();
     this.loadingDocumentosIdentificativos = true;
     this.http.get(this.endpointEstados + 'getCatalogos', this.httpOptions).subscribe(
       (res: any) => {
+        this.spinner.hide();
         this.loadingDocumentosIdentificativos = false;
         this.documentos = res.CatDocIdentificativos;
         console.log(this.documentos);
       },
       (error) => {
+        this.spinner.hide();
         this.loadingDocumentosIdentificativos = false;
       }
     );
@@ -161,12 +170,14 @@ export class VerNotarioComponent implements OnInit {
   * Trae la información guardada del notario seleccionado (Datos personales, direcciones, etc..)
   */
   getNotarioDatos(){
+      this.spinner.show();
       this.query = 'infoExtra=true&idPersona=' + this.idNotario; 
       this.loading = true;
       console.log(this.endpoint);
       this.http.get(this.endpoint + '?' + this.query, this.httpOptions)
           .subscribe(
               (res: any) => {
+                  this.spinner.hide();
                   this.loading = false;
                   this.dataNotarioResultado = res.notario;
                   // this.dataSource = res.direcciones;
@@ -178,6 +189,7 @@ export class VerNotarioComponent implements OnInit {
                   this.datoDelNotario();
               },
               (error) => {
+                  this.spinner.hide();
                   this.loading = false;
                   this.snackBar.open(error.error.mensaje, 'Cerrar', {
                       duration: 10000,
@@ -224,28 +236,31 @@ export class VerNotarioComponent implements OnInit {
   * Trae la información guardada de las direcciones que están dadas de alta para éste notario
   */
   getNotarioDirecciones(){
-      this.query = '&idPersona=' + this.idNotario; 
-      this.loadingDomicilios = true;
-      console.log(this.endpoint);
-      this.http.get(this.endpointEstados + 'getDireccionesContribuyente?' + this.query, this.httpOptions)
-          .subscribe(
-              (res: any) => {
-                  this.loadingDomicilios = false;
-                  this.dataSource = res;
-                  this.total = this.dataSource.length; 
-                  this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-                  console.log("AQUI ENTRO EL RES");
-                  console.log(this.dataNotarioDireccionesResultado);
-              },
-              (error) => {
-                  this.loading = false;
-                  this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                      duration: 10000,
-                      horizontalPosition: 'end',
-                      verticalPosition: 'top'
-                  });
-              }
-          );
+    this.spinner.show();
+    this.query = '&idPersona=' + this.idNotario; 
+    this.loadingDomicilios = true;
+    console.log(this.endpoint);
+    this.http.get(this.endpointEstados + 'getDireccionesContribuyente?' + this.query, this.httpOptions)
+      .subscribe(
+          (res: any) => {
+            this.spinner.hide();
+            this.loadingDomicilios = false;
+            this.dataSource = res;
+            this.total = this.dataSource.length; 
+            this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
+            console.log("AQUI ENTRO EL RES");
+            console.log(this.dataNotarioDireccionesResultado);
+          },
+          (error) => {
+            this.spinner.hide();
+            this.loading = false;
+            this.snackBar.open(error.error.mensaje, 'Cerrar', {
+                duration: 10000,
+                horizontalPosition: 'end',
+                verticalPosition: 'top'
+            });
+          }
+      );
   }
 
   paginado(evt): void{

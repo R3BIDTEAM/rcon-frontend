@@ -9,6 +9,8 @@ import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@ang
 import { MatPaginator } from '@angular/material/paginator';
 import * as moment from 'moment';
 import { DialogDuplicadosComponent } from '@comp/dialog-duplicados/dialog-duplicados.component';
+import Swal from 'sweetalert2';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 export interface Filtros {
     no_notario: string;
@@ -69,6 +71,7 @@ export class AltaNotarioComponent implements OnInit {
         private _formBuilder: FormBuilder,
         private snackBar: MatSnackBar,
         public dialog: MatDialog,
+        private spinner: NgxSpinnerService,
     ) { }
 
     ngOnInit(): void {
@@ -151,14 +154,17 @@ export class AltaNotarioComponent implements OnInit {
     * Obtiene el nombre de los Estados para llenar el el Select de Estados
     */
     getDataEstados(): void {
+        this.spinner.show();
         this.loadingEstados = true;
         this.http.get(this.endpoint + 'getEstados', this.httpOptions).subscribe(
         (res: any) => {
+            this.spinner.hide();
             this.loadingEstados = false;
             this.estados = res;
             // console.log(this.estados);
         },
         (error) => {
+            this.spinner.hide();
             this.loadingEstados = false;
         }
         );
@@ -198,14 +204,17 @@ export class AltaNotarioComponent implements OnInit {
     * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
     */
     getDataDocumentosIdentificativos(): void{
+        this.spinner.show();
         this.loadingDocumentosIdentificativos = true;
         this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
         (res: any) => {
+            this.spinner.hide();
             this.loadingDocumentosIdentificativos = false;
             this.documentos = res.CatDocIdentificativos;
             // console.log(this.documentos);
         },
         (error) => {
+            this.spinner.hide();
             this.loadingDocumentosIdentificativos = false;
         }
         );
@@ -244,7 +253,7 @@ export class AltaNotarioComponent implements OnInit {
     * Consulta que se realiza antes de realizar el alta de un notario para verificar si éste ya existe en base de datos
     */
     consulta_previa(){
-
+        this.spinner.show();
         let query = '';
         let busquedaDatos = 'getContribuyentesSimilares';
 
@@ -270,6 +279,7 @@ export class AltaNotarioComponent implements OnInit {
         this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loading = false;
                     console.log(res);
                     console.log("CON");
@@ -280,12 +290,16 @@ export class AltaNotarioComponent implements OnInit {
                     }
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'error',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }//NO SE USA
@@ -313,6 +327,7 @@ export class AltaNotarioComponent implements OnInit {
     * Guarda la información del Notario que se está dando de alta
     */
     guardarNotario(){
+        this.spinner.show();
         let query = 'idPersona';
         this.loading = true;
 
@@ -338,31 +353,42 @@ export class AltaNotarioComponent implements OnInit {
         this.http.post(this.endpoint + 'insertarNotario' + '?' + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loading = false;
                     // console.log("NOTARIO GUARDADO");
                     // console.log(res);
                     if(res.original){
-                        this.snackBar.open(res.original.mensaje, 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
-                        });
+                        Swal.fire(
+                            {
+                              title: '¡ATENCIÓN!',
+                              text: res.original.mensaje,
+                              icon: 'error',
+                              confirmButtonText: 'Cerrar'
+                            }
+                        );
                     }else{
-                        this.snackBar.open('Notario Dado de Alta Correctamente', 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
-                        });
+                        Swal.fire(
+                            {
+                              title: 'CORRECTO',
+                              text: "Notario Dado de Alta Correctamente",
+                              icon: 'success',
+                              confirmButtonText: 'Cerrar'
+                            }
+                        );
                         this.btnDisabled = false;
                     }
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'error',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
 
@@ -439,6 +465,7 @@ export class DialogBuscarNotarioAlta {
     private http: HttpClient,
     private auth: AuthService,
     private route: ActivatedRoute,
+    private spinner: NgxSpinnerService,
     private snackBar: MatSnackBar,
     public dialog: MatDialog,
     private _formBuilder: FormBuilder,
@@ -475,14 +502,17 @@ export class DialogBuscarNotarioAlta {
     * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
     */
     getDataDocumentosIdentificativos(): void{
+        this.spinner.show();
         this.loadingDocumentosIdentificativos = true;
         this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingDocumentosIdentificativos = false;
                 this.documentos = res.CatDocIdentificativos;
                 // console.log(this.documentos);
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingDocumentosIdentificativos = false;
             }
         );
@@ -577,6 +607,7 @@ export class DialogBuscarNotarioAlta {
     * Obtiene la información una vez llenados los filtros y realizado la búsqueda
     */
     getData(): void {
+        this.spinner.show();
         let query = '';
         let busquedaDatos = '';
         this.notarioSeleccionado = false;
@@ -620,6 +651,7 @@ export class DialogBuscarNotarioAlta {
             this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
                 .subscribe(
                     (res: any) => {
+                        this.spinner.hide();
                         this.loading = false;
                         this.dataSource = res;
                         this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
@@ -628,12 +660,16 @@ export class DialogBuscarNotarioAlta {
                         console.log(this.dataSource);
                     },
                     (error) => {
+                        this.spinner.hide();
                         this.loading = false;
-                        this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
-                        });
+                        Swal.fire(
+                            {
+                              title: 'SIN RESULTADO',
+                              text: error.error.mensaje,
+                              icon: 'error',
+                              confirmButtonText: 'Cerrar'
+                            }
+                        );
                     }
                 );
         
