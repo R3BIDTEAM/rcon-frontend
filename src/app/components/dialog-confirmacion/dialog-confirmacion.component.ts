@@ -32,6 +32,7 @@ export class DialogConfirmacionComponent implements OnInit {
 @Component({
     selector: 'dialog-confirmaTipoPersona',
     templateUrl: 'dialog-confirmaTipoPersona.html',
+    styleUrls: ['./dialog-confirmacion.component.css']
 })
 export class DialogsCambiaPersona {
     registro;
@@ -54,6 +55,7 @@ export class DialogsCambiaPersona {
 @Component({
     selector: 'dialog-cuenta',
     templateUrl: 'dialog-cuenta.html',
+    styleUrls: ['./dialog-confirmacion.component.css']
 })
 export class DialogCuenta {
     idpersona;
@@ -95,6 +97,7 @@ export interface DataTipoDerecho{
 @Component({
     selector: 'dialogAsociaCuenta',
     templateUrl: 'dialogAsociaCuenta.html',
+    styleUrls: ['./dialog-confirmacion.component.css']
 })
 export class DialogsAsociarCuenta {
     endpoint = environment.endpoint + 'registro/';

@@ -64,6 +64,7 @@ export class DialogDuplicadosComponent implements OnInit {
 @Component({
     selector: 'dialog-mensaje',
     templateUrl: 'dialog-mensaje.html',
+    styleUrls: ['./dialog-duplicados.component.css']
 })
 export class DialogsMensaje {
     registro;
@@ -95,6 +96,7 @@ export class DialogsMensaje {
 @Component({
     selector: 'dialog-valida-perito',
     templateUrl: 'dialog-valida-perito.html',
+    styleUrls: ['./dialog-duplicados.component.css']
 })
 export class DialogsValidaPerito {
     endpoint = environment.endpoint + 'registro/';
