@@ -90,50 +90,58 @@
                     </ng-container> -->
                     <ng-container *ngIf="contribuyenteFormGroup.controls.tipo_persona.value == 'F'">
                         <div class="row">
-                            <mat-form-field appearance="outline"  class="col-4">
+                            <mat-form-field appearance="outline" class="col-4">
                                 <mat-label>Apellido paterno / Razón Social:</mat-label>
-                                <input matInput formControlName="apaterno" (keyup)="clearInputsIdentNoIdent(false)" maxlength="250"  placeholder="Ingrese el apellido paterno" (keydown.enter)="getData()" style="text-transform: uppercase;">
-                                <!-- <mat-error *ngIf="contribuyenteFormGroup.controls.apaterno.errors?.required">Requerido</mat-error> -->
-                                <mat-error *ngIf="contribuyenteFormGroup.controls.apaterno.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
+                                <input matInput formControlName="apaterno" (keyup)="clearInputsIdentNoIdent(false)" maxlength="250" placeholder="Ingrese el apellido paterno" (keydown.enter)="verificaBusqueda()" style="text-transform: uppercase;">
+                                <!-- <mat-error *ngIf="contribuyenteFormGroup.controls.apaterno.errors?.required">Requerido</mat-error>
+                                <mat-error *ngIf="contribuyenteFormGroup.controls.apaterno.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error> -->
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-4">
                                 <mat-label>Apellido materno:</mat-label>
-                                <input matInput formControlName="amaterno" (keyup)="clearInputsIdentNoIdent(false)" maxlength="250"  placeholder="Ingrese el apellido materno" (keydown.enter)="getData()" style="text-transform: uppercase;">
-                                <mat-error *ngIf="contribuyenteFormGroup.controls.amaterno.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
+                                <input matInput formControlName="amaterno" (keyup)="clearInputsIdentNoIdent(false)" maxlength="250" placeholder="Ingrese el apellido materno" (keydown.enter)="verificaBusqueda()" style="text-transform: uppercase;">
+                                <!-- <mat-error *ngIf="contribuyenteFormGroup.controls.amaterno.errors?.required">Requerido</mat-error>
+                                <mat-error *ngIf="contribuyenteFormGroup.controls.amaterno.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error> -->
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-4">
                                 <mat-label>Nombre:</mat-label>
-                                <input matInput formControlName="nombre" (keyup)="clearInputsIdentNoIdent(false)" maxlength="250"  placeholder="Ingrese el nombre" (keydown.enter)="getData()" style="text-transform: uppercase;">
-                                <mat-error *ngIf="contribuyenteFormGroup.controls.nombre.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
+                                <input matInput formControlName="nombre" (keyup)="clearInputsIdentNoIdent(false)" maxlength="250" placeholder="Ingrese el nombre" (keydown.enter)="verificaBusqueda()" style="text-transform: uppercase;">
+                                <!-- <mat-error *ngIf="contribuyenteFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
+                                <mat-error *ngIf="contribuyenteFormGroup.controls.nombre.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error> -->
                             </mat-form-field>
                         </div>
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-4">
                                 <mat-label>RFC:</mat-label>
-                                <!-- <input matInput formControlName="rfc" (keyup)="clearInputsIdentNoIdent(true)" maxlength="13"  placeholder="Ingrese el RFC" pattern="^([A-ZÑ&]{4})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" (keydown.enter)="getData()" style="text-transform: uppercase;" onkeyup="this.value = this.value.toUpperCase();"> -->
-                                <input matInput formControlName="rfc" (keyup)="clearInputsIdentNoIdent(true)" maxlength="13"  placeholder="Ingrese el RFC" (keydown.enter)="getData()" style="text-transform: uppercase;" onkeyup="this.value = this.value.toUpperCase();">
+                                <!-- <input matInput formControlName="rfc" (keyup)="clearInputsIdentNoIdent(true)" maxlength="13"  pattern="^([A-Z,Ñ,&]{4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})$" placeholder="Ingrese el RFC" (keydown.enter)="verificaBusqueda()" style="text-transform: uppercase;" onkeyup="this.value = this.value.toUpperCase();"> -->
+                                <input matInput formControlName="rfc" (keyup)="clearInputsIdentNoIdent(true)" maxlength="13"  placeholder="Ingrese el RFC" (keydown.enter)="verificaBusqueda()" style="text-transform: uppercase;" onkeyup="this.value = this.value.toUpperCase();">
+                                <!-- <mat-error *ngIf="contribuyenteFormGroup.controls.rfc.errors?.required">Requerido</mat-error> -->
                                 <!-- <mat-error *ngIf="contribuyenteFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 4 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error> -->
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-4">
                                 <mat-label>CURP:</mat-label>
-                                <input matInput formControlName="curp" (keyup)="clearInputsIdentNoIdent(true)" maxlength="18"  placeholder="Ingrese el CURP" pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$" (keydown.enter)="getData()" style="text-transform: uppercase;" onkeyup="this.value = this.value.toUpperCase();">
-                                <mat-error *ngIf="contribuyenteFormGroup.controls.curp.errors?.pattern">El campo CURP debe contener 4 letras mayúsculas, 6 números, H o M, 5 letras mayúsculas, 1 alfanumérico y 1 número.</mat-error>
+                                <!-- <input matInput formControlName="curp" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250"  pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$" placeholder="Ingrese el CURP" (keydown.enter)="verificaBusqueda()" style="text-transform: uppercase;" onkeyup="this.value = this.value.toUpperCase();"> -->
+                                <input matInput formControlName="curp" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250" placeholder="Ingrese el CURP" (keydown.enter)="verificaBusqueda()" style="text-transform: uppercase;" onkeyup="this.value = this.value.toUpperCase();">
+                                <!-- <mat-error *ngIf="contribuyenteFormGroup.controls.curp.errors?.required">Requerido</mat-error>
+                                <mat-error *ngIf="contribuyenteFormGroup.controls.curp.errors?.pattern">El campo CURP debe contener 4 letras mayúsculas, 6 números, H o M, 5 letras mayúsculas, 1 alfanumérico y 1 número.</mat-error> -->
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-4">
                                 <mat-label>Clave INE:</mat-label>
-                                <input matInput formControlName="ine" (keyup)="clearInputsIdentNoIdent(true)" pattern="[a-zA-Z]{6}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])(?:0[1-9]|[12]\d|3[0123])[hmHM]{1}\d{3}" maxlength="250"  placeholder="Ingrese el INE" (keydown.enter)="getData()" style="text-transform: uppercase;">
-                                <mat-error *ngIf="contribuyenteFormGroup.controls.ine.errors?.pattern">El campo INE debe contener 6 letras mayúsculas, 8 números, H o M y 3 números.</mat-error>
+                                <!-- <input matInput formControlName="ine" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250" pattern="[a-zA-Z]{6}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])(?:0[1-9]|[12]\d|3[0123])[hmHM]{1}\d{3}" placeholder="Ingrese el INE" (keydown.enter)="verificaBusqueda()" style="text-transform: uppercase;"> -->
+                                <input matInput formControlName="ine" (keyup)="clearInputsIdentNoIdent(true)" maxlength="250" placeholder="Ingrese el INE" (keydown.enter)="verificaBusqueda()" style="text-transform: uppercase;">
+                                <!-- <mat-error *ngIf="contribuyenteFormGroup.controls.ine.errors?.required">Requerido</mat-error>
+                                <mat-error *ngIf="contribuyenteFormGroup.controls.ine.errors?.pattern">El campo INE debe contener 6 letras mayúsculas, 8 números, H o M y 3 números.</mat-error> -->
                             </mat-form-field>
                         </div>
                         <div class="row">
                             <mat-form-field appearance="fill" class="col-4">
                                 <mat-label>Otro documento identificativo:</mat-label>
+                                <!-- <mat-select formControlName="iddocumentoidentificativo" [class.spinner]="loadingDocumentosIdentificativos" (selectionChange)="clearInputsIdentNoIdent(true)"> -->
                                 <mat-select formControlName="iddocumentoidentificativo" [class.spinner]="loadingDocumentosIdentificativos" [(ngModel)]="contribuyente.identificacion" (selectionChange)="seleccionaDocto($event)">
                                     <mat-option *ngFor="let documento of documentos" [value]="documento.IDDOCIDENTIF">
                                         {{ documento.DESCRIPCION }}
                                     </mat-option>
                                 </mat-select>
-                                <mat-error *ngIf="contribuyenteFormGroup.controls.iddocumentoidentificativo.errors?.required">Requerido</mat-error>
+                                <!-- <mat-error *ngIf="contribuyenteFormGroup.controls.iddocumentoidentificativo.errors?.required">Requerido</mat-error> -->
                             </mat-form-field>
                             <!-- <mat-form-field appearance="outline" class="col-4"  *ngIf="selectDisabled">
                                 <mat-label>Número Documento</mat-label>
@@ -142,23 +150,27 @@
                             </mat-form-field> -->
                             <mat-form-field appearance="outline" class="col-5"  *ngIf="selectCedula">
                                 <mat-label>Número Documento</mat-label>                        
-                                    <input matInput formControlName="documentoidentificativo" [(ngModel)]="contribuyente.idedato" [disabled]="inserto" pattern="\d{8}" placeholder="Ingrese número documento" maxlength="8" style="text-transform: uppercase;">
-                                    <mat-error *ngIf="contribuyenteFormGroup.controls.documentoidentificativo.errors?.pattern">El número de cédula debe contener 8 dígitos en caso de tener 7 debe incluir un "0"</mat-error>                        
+                                <input matInput formControlName="documentoidentificativo" [(ngModel)]="contribuyente.idedato" [disabled]="inserto" placeholder="Ingrese número documento" maxlength="8" style="text-transform: uppercase;">    
+                                <!-- <input matInput formControlName="documentoidentificativo" [(ngModel)]="contribuyente.idedato" [disabled]="inserto" pattern="\d{8}" placeholder="Ingrese número documento" maxlength="8" style="text-transform: uppercase;"> -->
+                                    <!-- <mat-error *ngIf="contribuyenteFormGroup.controls.documentoidentificativo.errors?.pattern">El número de cédula debe contener 8 dígitos en caso de tener 7 debe incluir un "0"</mat-error>                         -->
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-5"  *ngIf="selectPasaporte">
                                 <mat-label>Número Documento</mat-label>                        
-                                    <input matInput formControlName="documentoidentificativo" [(ngModel)]="contribuyente.idedato" [disabled]="inserto" pattern="\d{1,8}" placeholder="Ingrese número documento" maxlength="8" style="text-transform: uppercase;">
-                                    <mat-error *ngIf="contribuyenteFormGroup.controls.documentoidentificativo.errors?.pattern">El número del pasaporte no debe ser mayor a 8 dígitos</mat-error>                        
+                                <input matInput formControlName="documentoidentificativo" [(ngModel)]="contribuyente.idedato" [disabled]="inserto" placeholder="Ingrese número documento" maxlength="8" style="text-transform: uppercase;">    
+                                <!-- <input matInput formControlName="documentoidentificativo" [(ngModel)]="contribuyente.idedato" [disabled]="inserto" pattern="\d{1,8}" placeholder="Ingrese número documento" maxlength="8" style="text-transform: uppercase;"> -->
+                                    <!-- <mat-error *ngIf="contribuyenteFormGroup.controls.documentoidentificativo.errors?.pattern">El número del pasaporte no debe ser mayor a 8 dígitos</mat-error>                         -->
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-5"  *ngIf="selectLicencia">
                                 <mat-label>Número Documento</mat-label>                        
-                                    <input matInput formControlName="documentoidentificativo" [(ngModel)]="contribuyente.idedato" [disabled]="inserto" pattern="^\S{10}" placeholder="Ingrese número documento" maxlength="10" style="text-transform: uppercase;">
-                                    <mat-error *ngIf="contribuyenteFormGroup.controls.documentoidentificativo.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?)</mat-error>                        
+                                <input matInput formControlName="documentoidentificativo" [(ngModel)]="contribuyente.idedato" [disabled]="inserto" placeholder="Ingrese número documento" maxlength="10" style="text-transform: uppercase;">    
+                                <!-- <input matInput formControlName="documentoidentificativo" [(ngModel)]="contribuyente.idedato" [disabled]="inserto" pattern="^\S{10}" placeholder="Ingrese número documento" maxlength="10" style="text-transform: uppercase;"> -->
+                                    <!-- <mat-error *ngIf="contribuyenteFormGroup.controls.documentoidentificativo.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?)</mat-error>                         -->
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-5"  *ngIf="selectNSS">
                                 <mat-label>Número Documento</mat-label>                        
-                                    <input matInput formControlName="documentoidentificativo" [(ngModel)]="contribuyente.idedato" [disabled]="inserto" pattern="\d{11}" placeholder="Ingrese número documento" maxlength="11" style="text-transform: uppercase;">
-                                    <mat-error *ngIf="contribuyenteFormGroup.controls.documentoidentificativo.errors?.pattern">El número de seguro social (NSS) debe contener 11 números</mat-error>                        
+                                <input matInput formControlName="documentoidentificativo" [(ngModel)]="contribuyente.idedato" [disabled]="inserto" placeholder="Ingrese número documento" maxlength="11" style="text-transform: uppercase;">    
+                                <!-- <input matInput formControlName="documentoidentificativo" [(ngModel)]="contribuyente.idedato" [disabled]="inserto" pattern="\d{11}" placeholder="Ingrese número documento" maxlength="11" style="text-transform: uppercase;"> -->
+                                    <!-- <mat-error *ngIf="contribuyenteFormGroup.controls.documentoidentificativo.errors?.pattern">El número de seguro social (NSS) debe contener 11 números</mat-error>                         -->
                             </mat-form-field>
                         </div>
                     </ng-container>
@@ -170,7 +182,7 @@
                         <!-- <button mat-icon-button color="primary" aria-label="Buscar" matTooltip="Buscar" [disabled]="(tipoBusqueda) ? ((tipoBusqueda == 'cuenta') ? cuentaFormGroup.invalid : contribuyenteFormGroup.invalid) : true" (click)="getData()" style="margin: auto;">
                             <mat-icon>search</mat-icon>
                         </button> -->
-                        <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Busqueda" matTooltip="Buscar" [disabled]="(tipoBusqueda) ? ((tipoBusqueda == 'cuenta') ? cuentaFormGroup.invalid : contribuyenteFormGroup.invalid) : true" (click)="getData()" style="margin: auto;">
+                        <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Busqueda" matTooltip="Buscar" [disabled]="(tipoBusqueda) ? ((tipoBusqueda == 'cuenta') ? cuentaFormGroup.invalid : contribuyenteFormGroup.invalid) : true" (click)="verificaBusqueda()" style="margin: auto;">
                             Buscar
                         </button>
                     </div>

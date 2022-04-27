@@ -136,8 +136,8 @@
                                 <mat-label>Correo: *</mat-label>
                                 <input matInput formControlName="email" placeholder="Ingrese el Correo" [(ngModel)]="contribuyente.email" maxlength="250">
                                 <mat-error *ngIf="fisicaFormGroup.controls.email.errors?.required">Requerido</mat-error>
-                                <mat-error *ngIf="fisicaFormGroup.hasError('email', 'email') && fisicaFormGroup.get('email').touched">El campo correo electrónico debe cumplir la estructura "usuario@dominio".</mat-error>
-                                <mat-error *ngIf="fisicaFormGroup.controls.email.errors?.pattern">El campo correo electrónico debe cumplir la estructura "usuario@dominio".</mat-error>
+                                <mat-error *ngIf="fisicaFormGroup.hasError('email', 'email') && fisicaFormGroup.get('email').touched">El campo correo electrónico debe cumplir la estructura "usuario@dominio" y sin espacios al inicio o final.</mat-error>
+                                <!-- <mat-error *ngIf="fisicaFormGroup.controls.email.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?)</mat-error> -->
                             </mat-form-field>
                         </div>
                         <div class="row">

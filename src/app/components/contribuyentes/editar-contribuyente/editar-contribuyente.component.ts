@@ -284,7 +284,7 @@ export class EditarContribuyenteComponent implements OnInit {
 
     ngOnInit(): void {
         this.fisicaFormGroup = this._formBuilder.group({
-            nombre: [null,  []],
+            nombre: [null,  [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             apepaterno: [null, [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             apematerno: [null, [Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             rfc: [null, []],
@@ -295,7 +295,7 @@ export class EditarContribuyenteComponent implements OnInit {
             fecha_naci: [null, []],
             fecha_def: [null, []],
             celular: [null, [Validators.pattern("^\\w+(\\s+\\w+)*$")]],
-            email: ['', [Validators.email, Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
+            email: ['', [Validators.email, Validators.required]],
             texto: [null, []],
         });
 

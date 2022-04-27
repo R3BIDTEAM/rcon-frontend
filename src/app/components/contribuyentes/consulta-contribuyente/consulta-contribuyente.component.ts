@@ -6,6 +6,7 @@ import { AuthService } from '@serv/auth.service';
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { NgxSpinnerService } from 'ngx-spinner';
+import Swal from 'sweetalert2';
 
 export interface DatosContribuyente {  
   identificacion: number;
@@ -194,6 +195,7 @@ export class ConsultaContribuyenteComponent implements OnInit {
     this.selectPasaporte = false;
     this.selectLicencia = false;
     this.selectNSS = false;
+    this.isIdentificativo = true;
 
     console.log("LO QUE SE SELECCIONO "+this.contribuyente.identificacion);
 
@@ -214,91 +216,147 @@ export class ConsultaContribuyenteComponent implements OnInit {
     }
   }
 
-    /**
-     * Obtiene los valores de la consulta
-     */
-    getData(): void { 
-        let busca: boolean = false;
-        
-        if(this.tipoBusqueda == 'cuenta'){
-            busca = this.cuentaFormGroup.valid;
-        }else{
-            busca = this.contribuyenteFormGroup.valid;
-        }
-        
-        if(busca){
-            this.loadingResponse = true;
-            this.spinner.show();
-            this.busqueda = true;
-            this.pagina = 1;
-            this.queryParamFiltros = '';
-            this.endpointBusqueda = '';
-
-            if(this.tipoBusqueda == 'cuenta'){
-            this.endpointBusqueda = this.endpoint + 'getContribuyenteByCuenta';
-                if(this.cuentaFormGroup.value.region)
-                this.queryParamFiltros = this.queryParamFiltros + '&region=' + this.cuentaFormGroup.value.region;
-                if(this.cuentaFormGroup.value.manzana)
-                this.queryParamFiltros = this.queryParamFiltros + '&manzana=' + this.cuentaFormGroup.value.manzana;
-                if(this.cuentaFormGroup.value.lote)
-                this.queryParamFiltros = this.queryParamFiltros + '&lote=' + this.cuentaFormGroup.value.lote;
-                if(this.cuentaFormGroup.value.unidad)
-                this.queryParamFiltros = this.queryParamFiltros + '&unidadPrivativa=' + this.cuentaFormGroup.value.unidad;
-            } else {
-            if(this.contribuyenteFormGroup.value.tipo_persona == 'M'){
-                if(this.isIdentificativo){
-                this.endpointBusqueda = this.endpoint + 'getMoralIdentificativos';
-                if(this.contribuyenteFormGroup.value.rfc)
-                    this.queryParamFiltros = this.queryParamFiltros + '&rfc=' + this.contribuyenteFormGroup.value.rfc;
-                } else {
-                this.endpointBusqueda = this.endpoint + 'getPersonaMoral';
-                if(this.contribuyenteFormGroup.value.nombre)
-                    this.queryParamFiltros = this.queryParamFiltros + '&razonSocial=' + this.contribuyenteFormGroup.value.nombre + '&filtroApellidoPaterno=0';
-                }
-            } else {
-                if(this.isIdentificativo){
-                this.endpointBusqueda = this.endpoint + 'getIdentificativos';
-                if(this.contribuyenteFormGroup.value.curp)
-                    this.queryParamFiltros = this.queryParamFiltros + '&curp=' + this.contribuyenteFormGroup.value.curp;
-                if(this.contribuyenteFormGroup.value.rfc)
-                    this.queryParamFiltros = this.queryParamFiltros + '&rfc=' + this.contribuyenteFormGroup.value.rfc;
-                if(this.contribuyenteFormGroup.value.ine)
-                    this.queryParamFiltros = this.queryParamFiltros + '&claveife=' + this.contribuyenteFormGroup.value.ine;
-                if(this.contribuyenteFormGroup.value.iddocumentoidentificativo != '')
-                    this.queryParamFiltros = this.queryParamFiltros + '&iddocidentif=' + this.contribuyenteFormGroup.value.iddocumentoidentificativo;
-                if(this.contribuyenteFormGroup.value.documentoidentificativo)
-                    this.queryParamFiltros = this.queryParamFiltros + '&valdocidentif=' + this.contribuyenteFormGroup.value.documentoidentificativo;
-
-                this.queryParamFiltros = this.queryParamFiltros + '&coincidenTodos=false';        
-                } else {
-                this.endpointBusqueda = this.endpoint + 'getContribuyente';
-                if(this.contribuyenteFormGroup.value.nombre)
-                    this.queryParamFiltros = this.queryParamFiltros + '&nombre=' + this.contribuyenteFormGroup.value.nombre + '&filtroNombre=0';
-                if(this.contribuyenteFormGroup.value.apaterno)
-                    this.queryParamFiltros = this.queryParamFiltros + '&apellidoPaterno=' + this.contribuyenteFormGroup.value.apaterno + '&filtroApellidoPaterno=0';
-                if(this.contribuyenteFormGroup.value.amaterno)
-                    this.queryParamFiltros = this.queryParamFiltros + '&apellidoMaterno=' + this.contribuyenteFormGroup.value.amaterno + '&filtroApellidoMaterno=0';
-                }
-            }
-            }
-
-            this.http.get(this.endpointBusqueda + '?' + this.queryParamFiltros, this.httpOptions).subscribe(
-              (res: any) => {
-                this.spinner.hide();
-                this.loadingResponse = false;
-                this.data = res;
-                this.dataSource = this.paginate(this.data, this.pageSize, this.pagina);
-                this.total = this.data.length;
-                this.paginator.pageIndex = 0;
-              },
-              (error) => {
-                this.spinner.hide();
-                this.loadingResponse = false;
-                this.dataSource = [];
-              }
-            );
-        }
+  /**
+   * Verifica que no exista un dato vacio.
+   */
+   verificaBusqueda(): void{
+    if(this.tipoBusqueda == 'cuenta'){
+      if(this.cuentaFormGroup.value.region !== '' || this.cuentaFormGroup.value.region !== undefined || this.cuentaFormGroup.value.region !== null ||
+        this.cuentaFormGroup.value.manzana !== '' || this.cuentaFormGroup.value.manzana !== undefined || this.cuentaFormGroup.value.manzana !== null ||
+        this.cuentaFormGroup.value.lote !== '' || this.cuentaFormGroup.value.lote !== undefined || this.cuentaFormGroup.value.lote !== null ||
+        this.cuentaFormGroup.value.unidad !== '' || this.cuentaFormGroup.value.unidad !== undefined || this.cuentaFormGroup.value.unidad !== null
+      ){
+        this.getData();
+      }else{
+        Swal.fire(
+          {
+            title: '¡ATENCIÓN!',
+            text: "Ingres un dato para buscar",
+            icon: 'warning',
+            confirmButtonText: 'Cerrar'
+          }
+        );
+      }
+    } else {
+      if(
+        (this.contribuyenteFormGroup.value.rfc !== null && this.contribuyenteFormGroup.value.rfc !== '') ||
+        (this.contribuyenteFormGroup.value.nombre !== null && this.contribuyenteFormGroup.value.nombre !== '') ||
+        (this.contribuyenteFormGroup.value.curp !== null && this.contribuyenteFormGroup.value.curp !== '') ||
+        (this.contribuyenteFormGroup.value.rfc !== null && this.contribuyenteFormGroup.value.rfc !== '') ||
+        (this.contribuyenteFormGroup.value.ine !== null && this.contribuyenteFormGroup.value.ine !== '') ||
+        (this.contribuyenteFormGroup.value.iddocumentoidentificativo !== undefined && this.contribuyenteFormGroup.value.documentoidentificativo !== '') ||
+        (this.contribuyenteFormGroup.value.documentoidentificativo !== null && this.contribuyenteFormGroup.value.documentoidentificativo !== '') ||
+        (this.contribuyenteFormGroup.value.apaterno !== null && this.contribuyenteFormGroup.value.apaterno !== '') ||
+        (this.contribuyenteFormGroup.value.amaterno !== null && this.contribuyenteFormGroup.value.amaterno !== '')
+      ){
+        this.getData();
+        console.log(this.contribuyenteFormGroup.value.rfc);
+        console.log(this.contribuyenteFormGroup.value.nombre);
+        console.log(this.contribuyenteFormGroup.value.curp);
+        console.log(this.contribuyenteFormGroup.value.rfc);
+        console.log(this.contribuyenteFormGroup.value.ine);
+        console.log(this.contribuyenteFormGroup.value.iddocumentoidentificativo);
+        console.log(this.contribuyenteFormGroup.value.documentoidentificativo);
+        console.log(this.contribuyenteFormGroup.value.apaterno);
+        console.log(this.contribuyenteFormGroup.value.amaterno);
+      }else{
+        Swal.fire(
+          {
+            title: '¡ATENCIÓN!',
+            text: "Ingres un dato para buscar",
+            icon: 'warning',
+            confirmButtonText: 'Cerrar'
+          }
+        );
+      }
     }
+  }
+
+  /**
+   * Obtiene los valores de la consulta
+   */
+  getData(): void { 
+    let busca: boolean = false;
+    
+    if(this.tipoBusqueda == 'cuenta'){
+        busca = this.cuentaFormGroup.valid;
+    }else{
+        busca = this.contribuyenteFormGroup.valid;
+    }
+      
+    if(busca){
+        this.loadingResponse = true;
+        this.spinner.show();
+        this.busqueda = true;
+        this.pagina = 1;
+        this.queryParamFiltros = '';
+        this.endpointBusqueda = '';
+
+        if(this.tipoBusqueda == 'cuenta'){
+        this.endpointBusqueda = this.endpoint + 'getContribuyenteByCuenta';
+            if(this.cuentaFormGroup.value.region)
+            this.queryParamFiltros = this.queryParamFiltros + '&region=' + this.cuentaFormGroup.value.region;
+            if(this.cuentaFormGroup.value.manzana)
+            this.queryParamFiltros = this.queryParamFiltros + '&manzana=' + this.cuentaFormGroup.value.manzana;
+            if(this.cuentaFormGroup.value.lote)
+            this.queryParamFiltros = this.queryParamFiltros + '&lote=' + this.cuentaFormGroup.value.lote;
+            if(this.cuentaFormGroup.value.unidad)
+            this.queryParamFiltros = this.queryParamFiltros + '&unidadPrivativa=' + this.cuentaFormGroup.value.unidad;
+        } else {
+        if(this.contribuyenteFormGroup.value.tipo_persona == 'M'){
+            if(this.isIdentificativo){
+            this.endpointBusqueda = this.endpoint + 'getMoralIdentificativos';
+            if(this.contribuyenteFormGroup.value.rfc)
+                this.queryParamFiltros = this.queryParamFiltros + '&rfc=' + this.contribuyenteFormGroup.value.rfc;
+            } else {
+            this.endpointBusqueda = this.endpoint + 'getPersonaMoral';
+            if(this.contribuyenteFormGroup.value.nombre)
+                this.queryParamFiltros = this.queryParamFiltros + '&razonSocial=' + this.contribuyenteFormGroup.value.nombre + '&filtroApellidoPaterno=0';
+            }
+        } else {
+            if(this.isIdentificativo){
+            this.endpointBusqueda = this.endpoint + 'getIdentificativos';
+            if(this.contribuyenteFormGroup.value.curp)
+                this.queryParamFiltros = this.queryParamFiltros + '&curp=' + this.contribuyenteFormGroup.value.curp;
+            if(this.contribuyenteFormGroup.value.rfc)
+                this.queryParamFiltros = this.queryParamFiltros + '&rfc=' + this.contribuyenteFormGroup.value.rfc;
+            if(this.contribuyenteFormGroup.value.ine)
+                this.queryParamFiltros = this.queryParamFiltros + '&claveife=' + this.contribuyenteFormGroup.value.ine;
+            if(this.contribuyenteFormGroup.value.iddocumentoidentificativo != '')
+                this.queryParamFiltros = this.queryParamFiltros + '&iddocidentif=' + this.contribuyenteFormGroup.value.iddocumentoidentificativo;
+            if(this.contribuyenteFormGroup.value.documentoidentificativo)
+                this.queryParamFiltros = this.queryParamFiltros + '&valdocidentif=' + this.contribuyenteFormGroup.value.documentoidentificativo;
+
+            this.queryParamFiltros = this.queryParamFiltros + '&coincidenTodos=false';        
+            } else {
+            this.endpointBusqueda = this.endpoint + 'getContribuyente';
+            if(this.contribuyenteFormGroup.value.nombre)
+                this.queryParamFiltros = this.queryParamFiltros + '&nombre=' + this.contribuyenteFormGroup.value.nombre + '&filtroNombre=0';
+            if(this.contribuyenteFormGroup.value.apaterno)
+                this.queryParamFiltros = this.queryParamFiltros + '&apellidoPaterno=' + this.contribuyenteFormGroup.value.apaterno + '&filtroApellidoPaterno=0';
+            if(this.contribuyenteFormGroup.value.amaterno)
+                this.queryParamFiltros = this.queryParamFiltros + '&apellidoMaterno=' + this.contribuyenteFormGroup.value.amaterno + '&filtroApellidoMaterno=0';
+            }
+        }
+        }
+
+        this.http.get(this.endpointBusqueda + '?' + this.queryParamFiltros, this.httpOptions).subscribe(
+          (res: any) => {
+            this.spinner.hide();
+            this.loadingResponse = false;
+            this.data = res;
+            this.dataSource = this.paginate(this.data, this.pageSize, this.pagina);
+            this.total = this.data.length;
+            this.paginator.pageIndex = 0;
+          },
+          (error) => {
+            this.spinner.hide();
+            this.loadingResponse = false;
+            this.dataSource = [];
+          }
+        );
+    }
+  }
 
   /**
   * Método del paginado que nos dira la posición del paginado y los datos a mostrar
