@@ -4201,6 +4201,7 @@ export class DialogPersonaSociedad {
       private auth: AuthService,
       private http: HttpClient,
       private _formBuilder: FormBuilder,
+      private spinner: NgxSpinnerService,
       public dialogRef: MatDialogRef<DialogPersonaSociedad>,
       @Inject(MAT_DIALOG_DATA) public data: any
     ) {
@@ -4273,6 +4274,7 @@ export class DialogPersonaSociedad {
      * Obtiene a la persona sea física o moral por datos identificativos o personales.
      */
     getDataPersonas(): void {
+        this.spinner.show();
         this.loading = true;
         this.isBusqueda = true;
         this.optionPersona = undefined;
@@ -4324,10 +4326,12 @@ export class DialogPersonaSociedad {
                 this.dataSource = this.paginate(this.dataPersonas, this.pageSize, this.pagina);
                 this.total = this.dataPersonas.length;
                 this.paginator.pageIndex = 0;
+                this.spinner.hide();
             },
             (error) => {
                 this.loading = false;
                 this.dataSource = [];
+                this.spinner.hide();
             }
         );
     }
