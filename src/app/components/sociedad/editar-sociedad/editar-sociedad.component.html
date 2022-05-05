@@ -732,7 +732,7 @@
                                     <div class="col-md-5">
                                         <mat-form-field appearance="fill" style="width: 100%;">
                                             <mat-label>Fecha Alta</mat-label>
-                                            <input matInput [matDatepicker]="fechaAlta" [(ngModel)]="datosSociedad.fecha_alta">
+                                            <input matInput [matDatepicker]="fechaAlta" [(ngModel)]="datosSociedad.fecha_alta" [disabled]="true">
                                             <mat-datepicker-toggle matSuffix [for]="fechaAlta"></mat-datepicker-toggle>
                                             <mat-datepicker #fechaAlta></mat-datepicker>
                                         </mat-form-field>
