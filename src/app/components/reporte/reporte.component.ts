@@ -140,22 +140,28 @@ export class ReporteComponent implements OnInit {
                         console.log(this.dataSource);
                         this.downloadInforme();
                     }else{
-                        this.snackBar.open(res.mensaje, 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
-                        });
+                        Swal.fire(
+                            {
+                              title: 'SIN RESULTADO',
+                              text: res.mensaje,
+                              icon: 'warning',
+                              confirmButtonText: 'Cerrar'
+                            }
+                        );
                     }
                 },
                 (error) => {
                     this.spinner.hide();
                     this.loading = false;
 					dialogRef.close();
-					this.snackBar.open(error.error.mensaje, 'Cerrar', {
-						duration: 10000,
-						horizontalPosition: 'end',
-						verticalPosition: 'top'
-					});
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'error',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
 	}

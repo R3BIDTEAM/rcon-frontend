@@ -821,7 +821,7 @@ export class EditarPeritosComponent implements OnInit {
 
         queryAcPeritoEsp = queryAcPeritoEsp + '&independiente=' + checkIndi;
 
-        queryAcPeritoEsp = (this.datoPeritos.fecha_baja) ? queryAcPeritoEsp + '&fechaBaja=' + moment(this.datoPeritos.fecha_baja).format('DD-MM-YYYY') : queryAcPeritoEsp + '&fechaBaja';
+        queryAcPeritoEsp = (this.datoPeritos.fecha_baja) ? queryAcPeritoEsp + '&fechaBaja=' + moment(this.datoPeritos.fecha_baja).format('YYYY-MM-DD') : queryAcPeritoEsp + '&fechaBaja';
 
         console.log(this.endpointActualiza + 'actualizarPerito?' + queryAcPeritoEsp);
         this.http.post(this.endpointActualiza + 'actualizarPerito?' + queryAcPeritoEsp, '', this.httpOptions)
@@ -830,11 +830,6 @@ export class EditarPeritosComponent implements OnInit {
                     console.log(res);
                     this.loadingDatosPerito = false;
                     if(res.idPerito !== null || res.idPerito !== ''){
-                        // this.snackBar.open("Guardado correcto", 'Cerrar', {
-                        //     duration: 10000,
-                        //     horizontalPosition: 'end',
-                        //     verticalPosition: 'top'
-                        // });
                         Swal.fire({
                             title: 'CORRECTO',
                             text: 'Guardado correcto',
@@ -846,11 +841,6 @@ export class EditarPeritosComponent implements OnInit {
                 },
                 (error) => {
                     this.loadingDatosPerito = false;
-                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                    //     duration: 10000,
-                    //     horizontalPosition: 'end',
-                    //     verticalPosition: 'top'
-                    // });
                     Swal.fire({
                         title: 'ERROR',
                         text: error.error.mensaje,

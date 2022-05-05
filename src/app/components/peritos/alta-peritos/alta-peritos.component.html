@@ -188,7 +188,7 @@
                     </div>
                     <mat-form-field appearance="outline" class="col-5">
                         <mat-label>Login:</mat-label>
-                        <input matInput formControlName="login" [readonly]="inserto || independienteRead" maxlength="10" style="text-transform: uppercase;" [required]="independiente" placeholder="Ingrese Login">
+                        <input matInput formControlName="login" [readonly]="inserto || independienteRead" maxlength="10" style="text-transform: uppercase;" placeholder="Ingrese Login">
                         <mat-error *ngIf="peritoPersonaFormGroup.controls.login.errors?.required">Requerido</mat-error>
                         <mat-error *ngIf="peritoPersonaFormGroup.controls.login.errors?.pattern">Existe un espacio al inicio y/o final del nombre</mat-error>
                     </mat-form-field>

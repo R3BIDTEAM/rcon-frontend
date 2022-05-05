@@ -286,11 +286,6 @@ export class EditarSociedadComponent implements OnInit {
                 },
                 (error) => {
                     this.loading = false;
-                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                    //     duration: 10000,
-                    //     horizontalPosition: 'end',
-                    //     verticalPosition: 'top'
-                    // });
                     Swal.fire({
                         title: 'ERROR',
                         text: error.error.mensaje,
@@ -478,11 +473,6 @@ export class EditarSociedadComponent implements OnInit {
                 console.log("Cambio de persona");
                 console.log(res);
                 if(res){
-                    // this.snackBar.open('Actualización correcta', 'Cerrar', {
-                    //     duration: 10000,
-                    //     horizontalPosition: 'end',
-                    //     verticalPosition: 'top'
-                    // });
                     Swal.fire({
                         title: 'CORRECTO',
                         text: 'Actualización correcta',
@@ -490,11 +480,6 @@ export class EditarSociedadComponent implements OnInit {
                         confirmButtonText: 'Cerrar'
                     });
                 }else{
-                    // this.snackBar.open('Se ha presentado un problema intente más tarde', 'Cerrar', {
-                    //     duration: 10000,
-                    //     horizontalPosition: 'end',
-                    //     verticalPosition: 'top'
-                    // });
                     Swal.fire({
                         title: 'ERROR',
                         text: 'Se ha presentado un problema, intente más tarde',
@@ -505,11 +490,6 @@ export class EditarSociedadComponent implements OnInit {
             },
             (error) => {
                 this.loading = false;
-                // this.snackBar.open('Se ha presentado un problema intente más tarde', 'Cerrar', {
-                //     duration: 10000,
-                //     horizontalPosition: 'end',
-                //     verticalPosition: 'top'
-                // });
                 Swal.fire({
                     title: 'ERROR',
                     text: 'Se ha presentado un problema, intente más tarde',
@@ -594,11 +574,6 @@ export class EditarSociedadComponent implements OnInit {
                 },
                 (error) => {
                     this.loading = false;
-                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                    //     duration: 10000,
-                    //     horizontalPosition: 'end',
-                    //     verticalPosition: 'top'
-                    // });
                     Swal.fire({
                         title: 'ERROR',
                         text: error.error.mensaje,
@@ -631,11 +606,6 @@ export class EditarSociedadComponent implements OnInit {
                 },
                 (error) => {
                     this.loadingDomicilios = false;
-                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                    //     duration: 10000,
-                    //     horizontalPosition: 'end',
-                    //     verticalPosition: 'top'
-                    // });
                     Swal.fire({
                         title: 'ERROR',
                         text: error.error.mensaje,
@@ -683,11 +653,6 @@ export class EditarSociedadComponent implements OnInit {
                 },
                 (error) => {
                     this.loadingInmuebles = false;
-                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                    //     duration: 10000,
-                    //     horizontalPosition: 'end',
-                    //     verticalPosition: 'top'
-                    // });
                     Swal.fire({
                         title: 'ERROR',
                         text: error.error.mensaje,
@@ -893,11 +858,6 @@ export class EditarSociedadComponent implements OnInit {
                             this.loadingRepresentante = false;
                             this.getRepresentado();
                         }
-                        // this.snackBar.open("Se ha eliminado la representación", 'Cerrar', {
-                        //     duration: 10000,
-                        //     horizontalPosition: 'end',
-                        //     verticalPosition: 'top'
-                        // });
                         Swal.fire({
                             title: 'CORRECTO',
                             text: 'Se ha eliminado la representación',
@@ -906,11 +866,6 @@ export class EditarSociedadComponent implements OnInit {
                         });
                         
                     }else{
-                        // this.snackBar.open("Ocorrio un error al eliminar, intentelo nuevamente", 'Cerrar', {
-                        //     duration: 10000,
-                        //     horizontalPosition: 'end',
-                        //     verticalPosition: 'top'
-                        // });
                         Swal.fire({
                             title: 'ERROR',
                             text: 'Ocorrio un error al eliminar, intentelo nuevamente',
@@ -920,11 +875,6 @@ export class EditarSociedadComponent implements OnInit {
                     }
                 },
                 (error) => {
-                    // this.snackBar.open("Ocorrio un error al eliminar, intentelo nuevamente", 'Cerrar', {
-                    //     duration: 10000,
-                    //     horizontalPosition: 'end',
-                    //     verticalPosition: 'top'
-                    // });
                     Swal.fire({
                         title: 'ERROR',
                         text: 'Ocorrio un error al eliminar, intentelo nuevamente',
@@ -951,11 +901,6 @@ export class EditarSociedadComponent implements OnInit {
                 },
                 (error) => {
                     this.loadingRepresentante = false;
-                    // this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                    //     duration: 10000,
-                    //     horizontalPosition: 'end',
-                    //     verticalPosition: 'top'
-                    // });
                     Swal.fire({
                         title: 'ERROR',
                         text: error.error.mensaje,
@@ -1069,24 +1014,13 @@ export class EditarSociedadComponent implements OnInit {
                 (res: any) => {
                     console.log(res);
                     if(res){
-                        // this.snackBar.open("Se ha registrado correctamente", 'Cerrar', {
-                        //     duration: 10000,
-                        //     horizontalPosition: 'end',
-                        //     verticalPosition: 'top'
-                        // });
                         Swal.fire({
                             title: 'CORRECTO',
                             text: 'Se ha registrado correctamente',
                             icon: 'success',
                             confirmButtonText: 'Cerrar'
                         });
-                        this.getPeritosSociedad();
                     }else{
-                        // this.snackBar.open("Ha ocurrido un problema, intentelo más tarde", 'Cerrar', {
-                        //     duration: 10000,
-                        //     horizontalPosition: 'end',
-                        //     verticalPosition: 'top'
-                        // });
                         Swal.fire({
                             title: 'ERROR',
                             text: 'Ha ocurrido un problema, intentelo más tarde',
@@ -1095,14 +1029,10 @@ export class EditarSociedadComponent implements OnInit {
                         });
                         this.spinner.hide();
                     }
+                    this.getPeritosSociedad();
                 },
                 (error) => {
                     this.loadingDatosPerito = false;
-                    // this.snackBar.open("Ha ocurrido un problema, intentelo más tarde", 'Cerrar', {
-                    //     duration: 10000,
-                    //     horizontalPosition: 'end',
-                    //     verticalPosition: 'top'
-                    // });
                     Swal.fire({
                         title: 'ERROR',
                         text: 'Ha ocurrido un problema, intentelo más tarde',
@@ -1127,11 +1057,6 @@ export class EditarSociedadComponent implements OnInit {
             .subscribe(
                 (res: any) => {
                     if(res){
-                        // this.snackBar.open("Se ha eliminado correctamente", 'Cerrar', {
-                        //     duration: 10000,
-                        //     horizontalPosition: 'end',
-                        //     verticalPosition: 'top'
-                        // });
                         Swal.fire({
                             title: 'CORRECTO',
                             text: 'Se ha eliminado correctamente',
@@ -1140,11 +1065,6 @@ export class EditarSociedadComponent implements OnInit {
                         });
                         this.getPeritosSociedad();
                     }else{
-                        // this.snackBar.open("Ha ocurrido un problema, intentelo más tarde", 'Cerrar', {
-                        //     duration: 10000,
-                        //     horizontalPosition: 'end',
-                        //     verticalPosition: 'top'
-                        // });
                         Swal.fire({
                             title: 'ERROR',
                             text: 'Ha ocurrido un problema, intentelo más tarde',
@@ -4572,6 +4492,7 @@ export class DialogSociedadPerito {
                     this.paginator.pageIndex = 0;
                     console.log(this.dataSource);
                     this.spinner.hide();
+                    console.log(res);
                 },
                 (error) => {
                     this.loading = false;
@@ -4606,19 +4527,19 @@ export class DialogSociedadPerito {
      */
     peritoPersonaSelected(element){
         console.log(element);
-        this.datoPeritoPersona.idperito = element.IDPERITO;
-        this.datoPeritoPersona.nombre = element.NOMBRE;
-        this.datoPeritoPersona.apepaterno = element.APELLIDOPATERNO;
-        this.datoPeritoPersona.apematerno = element.APELLIDOMATERNO;
-        this.datoPeritoPersona.rfc = element.RFC;
-        this.datoPeritoPersona.curp = element.CURP;
-        this.datoPeritoPersona.ine = element.CLAVEIFE;
-        this.datoPeritoPersona.identificacion = element.IDDOCIDENTIF;
-        this.datoPeritoPersona.idedato = element.DESCDOCIDENTIF;
-        this.datoPeritoPersona.fecha_naci = element.FECHANACIMIENTO;
-        this.datoPeritoPersona.fecha_def = element.FECHADEFUNCION;
-        this.datoPeritoPersona.celular = element.CELULAR;
-        this.datoPeritoPersona.email = element.EMAIL;
+        this.datoPeritoPersona.idperito = ((element.IDPERITO) ? element.IDPERITO : element.idperito );
+        this.datoPeritoPersona.nombre = ((element.NOMBRE) ? element.NOMBRE : element.nombre );
+        this.datoPeritoPersona.apepaterno = ((element.APELLIDOPATERNO) ? element.APELLIDOPATERNO : element.apellidopaterno );
+        this.datoPeritoPersona.apematerno = ((element.APELLIDOMATERNO) ? element.APELLIDOMATERNO : element.apellidomaterno );
+        this.datoPeritoPersona.rfc = ((element.RFC) ? element.RFC : element.rfc );
+        this.datoPeritoPersona.curp = ((element.CURP) ? element.CURP : element.curp  );
+        this.datoPeritoPersona.ine = ((element.CLAVEIFE) ? element.CLAVEIFE : element.claveife );
+        this.datoPeritoPersona.identificacion = ((element.IDDOCIDENTIF) ? element.IDDOCIDENTIF : element.iddocidentif );
+        this.datoPeritoPersona.idedato = ((element.DESCDOCIDENTIF) ? element.DESCDOCIDENTIF : element.descdocidentif );
+        this.datoPeritoPersona.fecha_naci = ((element.FECHANACIMIENTO) ? element.FECHANACIMIENTO : element.fechanacimiento );
+        this.datoPeritoPersona.fecha_def = ((element.FECHADEFUNCION) ? element.FECHADEFUNCION : element.fechadefuncion );
+        this.datoPeritoPersona.celular = ((element.CELULAR) ? element.CELULAR : element.celular );
+        this.datoPeritoPersona.email = ((element.EMAIL) ? element.EMAIL : element.email );
     }
 }
 

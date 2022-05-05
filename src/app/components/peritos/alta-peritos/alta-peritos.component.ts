@@ -222,11 +222,9 @@ export class AltaPeritosComponent implements OnInit {
     isIndependiente(dato){
         if(dato.checked){
             this.datoPeritos.independiente = 'S';
-            this.independiente = true;
             this.independienteRead = false;
         }else{
             this.datoPeritos.independiente = 'N';
-            this.independiente = false;
             this.independienteRead = true;
             this.peritoPersonaFormGroup.controls['login'].setValue('');
         }

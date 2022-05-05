@@ -125,7 +125,7 @@
                             </mat-form-field>
                             <mat-form-field appearance="outline"  class="col-5">
                                 <mat-label>Correo: *</mat-label>
-                                <input matInput formControlName="email" [(ngModel)]="contribuyente.email" [readonly]="inserto" maxlength="250"  placeholder="Ingrese el email">
+                                <input matInput formControlName="email" [(ngModel)]="contribuyente.email" [readonly]="inserto" maxlength="250"  placeholder="Ingrese el correo">
                                 <!-- <mat-error *ngIf="fisicaFormGroup.controls.email.errors?.required">Requerido</mat-error> -->
                                 <mat-error *ngIf="fisicaFormGroup.hasError('email', 'email') && fisicaFormGroup.get('email').touched">El campo correo electrónico debe cumplir la estructura "usuario@dominio".</mat-error>
                                 <mat-error *ngIf="fisicaFormGroup.controls.email.errors?.pattern">El campo correo electrónico debe cumplir la estructura "usuario@dominio".</mat-error>
