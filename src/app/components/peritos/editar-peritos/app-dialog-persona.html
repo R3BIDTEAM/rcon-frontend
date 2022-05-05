@@ -101,12 +101,12 @@
         </div>
         <table mat-table [dataSource]="dataSource" *ngIf="dataSource.length > 0 && !loading">
             <ng-container matColumnDef="nombre">
-                <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                <td mat-cell *matCellDef="let element"> {{element.APELLIDOPATERNO}} {{element.APELLIDOMATERNO}}, {{element.NOMBRE}}</td>
+                <th mat-header-cell *matHeaderCellDef style="text-align: center; padding-left: 0px;"> Nombre </th>
+                <td mat-cell *matCellDef="let element" style="text-align: center; padding-left: 0px;"> {{element.APELLIDOPATERNO}} {{element.APELLIDOMATERNO}}, {{element.NOMBRE}}</td>
             </ng-container>
             <ng-container matColumnDef="datos_identificativos">
-                <th mat-header-cell *matHeaderCellDef> Datos Identificativos </th>
-                <td mat-cell *matCellDef="let element">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Datos Identificativos </th>
+                <td mat-cell *matCellDef="let element" style="text-align: center;">
                     {{(element.RFC) ? ('RFC: ' + element.RFC) : ''}}
                     <br>
                     {{(element.CURP) ? ('CURP: ' + element.CURP) : ''}}
@@ -115,9 +115,9 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="select">
-                <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
-                <td mat-cell *matCellDef="let element">
-                    <mat-radio-group [(ngModel)]="optionPersona">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center; padding-right: 0px;"> Seleccionar </th>
+                <td mat-cell *matCellDef="let element" style="text-align: center; padding-right: 0px;">
+                    <mat-radio-group [(ngModel)]="optionPersona" style="margin: auto;">
                         <mat-radio-button [value]="element" (change)="personaSelected(element)"></mat-radio-button>
                     </mat-radio-group>
                 </td>

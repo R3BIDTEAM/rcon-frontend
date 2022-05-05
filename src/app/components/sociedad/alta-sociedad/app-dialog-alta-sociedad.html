@@ -67,17 +67,17 @@
             </div> 
             <table mat-table [dataSource]="dataPaginate" *ngIf="!loading && dataSource.length > 0">
                 <ng-container matColumnDef="razon">
-                    <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                    <td mat-cell *matCellDef="let element">{{ element.APELLIDOPATERNO }}</td>
+                    <th mat-header-cell *matHeaderCellDef style="text-align: center; padding-left: 0px;"> Nombre </th>
+                    <td mat-cell *matCellDef="let element" style="text-align: center; padding-left: 0px;">{{ element.APELLIDOPATERNO }}</td>
                 </ng-container>
                 <ng-container matColumnDef="rfc">
-                    <th mat-header-cell *matHeaderCellDef> RFC </th>
-                    <td mat-cell *matCellDef="let element">{{ element.RFC }}</td>
+                    <th mat-header-cell *matHeaderCellDef style="text-align: center;"> RFC </th>
+                    <td mat-cell *matCellDef="let element" style="text-align: center;">{{ element.RFC }}</td>
                 </ng-container>
                 <ng-container matColumnDef="select">
-                    <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
-                    <td mat-cell *matCellDef="let element">
-                        <mat-radio-group [(ngModel)]="optionPeritoPersona">
+                    <th mat-header-cell *matHeaderCellDef style="text-align: center; padding-right: 0px;"> Seleccionar </th>
+                    <td mat-cell *matCellDef="let element" style="text-align: center; padding-right: 0px;">
+                        <mat-radio-group [(ngModel)]="optionPeritoPersona" style="margin: auto;">
                             <mat-radio-button [value]="element" (change)="sociedadSelected(element)"></mat-radio-button>
                         </mat-radio-group>
                     </td>
