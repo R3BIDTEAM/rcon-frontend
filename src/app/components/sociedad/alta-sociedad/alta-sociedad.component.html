@@ -56,7 +56,7 @@
                         <div class="row">
                                 <mat-form-field appearance="fill" class="col-6">
                                     <mat-label>Fecha Alta</mat-label>
-                                    <input matInput readonly [matDatepicker]="pickini"  [disabled]="inserto" formControlName="fecha_alta" (dateChange)="fechaTope()" readonly>
+                                    <input matInput readonly [matDatepicker]="pickini"  [disabled]="true" formControlName="fecha_alta" (dateChange)="fechaTope()" readonly>
                                     <mat-datepicker-toggle matSuffix [for]="pickini"></mat-datepicker-toggle>
                                     <mat-datepicker #pickini></mat-datepicker>
                                 </mat-form-field>

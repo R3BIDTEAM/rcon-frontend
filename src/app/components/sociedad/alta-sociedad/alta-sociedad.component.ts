@@ -37,6 +37,7 @@ export class AltaSociedadComponent implements OnInit {
     dataSource = [];
     btnDisabled = true;
     buscadoEscrito: number = 0;
+    diaHoy = new Date();
     @ViewChild('paginator') paginator: MatPaginator;
 
     constructor(
@@ -72,6 +73,8 @@ export class AltaSociedadComponent implements OnInit {
             email: ['', [Validators.email, Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
             login: ['', [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
           });
+
+          this.sociedadFormGroup.controls['fecha_alta'].setValue(this.diaHoy);
     }
 
 
