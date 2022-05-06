@@ -112,9 +112,9 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="select">
-                <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
-                <td mat-cell *matCellDef="let element">
-                    <mat-radio-group [(ngModel)]="optionPersona">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Seleccionar </th>
+                <td mat-cell *matCellDef="let element" style="text-align: center;">
+                    <mat-radio-group [(ngModel)]="optionPersona" style="margin: auto;">
                         <mat-radio-button [value]="element" (change)="personaSelected(element)"></mat-radio-button>
                     </mat-radio-group>
                 </td>
