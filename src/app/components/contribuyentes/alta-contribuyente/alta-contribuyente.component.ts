@@ -10,6 +10,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import * as moment from 'moment';
 import { DialogDuplicadosComponent } from '@comp/dialog-duplicados/dialog-duplicados.component';
 import Swal from 'sweetalert2';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 const trimValidator: ValidatorFn = (control: FormControl) => {
     if (control.value.startsWith(' ')) {
@@ -201,6 +202,7 @@ export class AltaContribuyenteComponent implements OnInit {
         private snackBar: MatSnackBar,
         public dialog: MatDialog,
         private route: ActivatedRoute,
+        private spinner: NgxSpinnerService
     ) { 
         this.contribuyente.tipoPersona = 'F';
     }
@@ -407,6 +409,7 @@ export class AltaContribuyenteComponent implements OnInit {
     }
 
     guardarContribuyente(){
+        this.spinner.show();
         let query = '';
         this.loading = true;
 
@@ -433,6 +436,7 @@ export class AltaContribuyenteComponent implements OnInit {
         this.http.post(this.endpoint + 'insertarContribuyente' + '?' + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loading = false;
                     this.btnDisabled = false;
                     this.domInsertCont = true;
@@ -451,6 +455,7 @@ export class AltaContribuyenteComponent implements OnInit {
                     });
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loading = false;
                     Swal.fire({
                         title: 'ERROR',
@@ -467,6 +472,7 @@ export class AltaContribuyenteComponent implements OnInit {
     * Genera el comprobante de algún movimiento realizado
     */
     printComprobante(){
+        this.spinner.show();
         let query = '';
         this.loading = true;
 
@@ -475,12 +481,14 @@ export class AltaContribuyenteComponent implements OnInit {
         this.http.get(this.endpoint + 'infoComprobante' + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loading = false;
                     console.log("Generando PDF");
                     console.log(res);
                     this.resultadoAlta = res;
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loading = false;
                     Swal.fire({
                         title: 'ERROR',
@@ -556,6 +564,7 @@ export class AltaContribuyenteComponent implements OnInit {
      * Obtiene los domicilios registrados de la sociedad domicilios particulares y para recibir notificaciones.
      */
      getDomicilioContribuyente(){
+        this.spinner.show();
         this.loadingDomicilios = true;
         let metodo = 'getDireccionesContribuyente';
         console.log(this.endpoint + metodo + '?idPersona='+ this.idPersona);
@@ -563,7 +572,7 @@ export class AltaContribuyenteComponent implements OnInit {
             .subscribe(
                 (res: any) => {
                     this.loadingDomicilios = false;
-
+                    this.spinner.hide();
                     this.dataSource1 = res.filter(element => element.CODTIPOSDIRECCION !== "N");
                     this.dataSource2 = res.filter(element => element.CODTIPOSDIRECCION === "N");
                     this.total1 = this.dataSource1.length;
@@ -572,6 +581,7 @@ export class AltaContribuyenteComponent implements OnInit {
                     this.dataPaginate2 = this.paginate(this.dataSource2, 15, this.pagina2);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingDomicilios = false;
                     Swal.fire({
                         title: 'ERROR',
@@ -657,17 +667,20 @@ export class AltaContribuyenteComponent implements OnInit {
      * Obtiene las representaciónes del contribuyente
      */
      getRepresentacion(){
+        this.spinner.show();
         this.loadingRepresentante = true;
         let queryRep = 'rep=Representantes&idPersona=' + this.idPersona;
         this.http.get(this.endpoint + 'getRepresentacionContribuyente?' + queryRep, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loadingRepresentante = false;
                     this.dataSource4 = res;
                     this.total4 = this.dataSource4.length;
                     this.dataPaginate4 = this.paginate(this.dataSource4, 15, this.pagina4);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingRepresentante = false;
                     Swal.fire({
                         title: 'ERROR',
@@ -692,12 +705,14 @@ export class AltaContribuyenteComponent implements OnInit {
      * Obtienen los representados de la sociedad.
      */
     getRepresentado(){
+        this.spinner.show();
         this.loadingRepresentado = true;
         let queryRepdo = 'rep=Representado&idPersona=' + this.idPersona;
         console.log(this.endpoint + 'getRepresentacionContribuyente?' + queryRepdo);
         this.http.get(this.endpoint + 'getRepresentacionContribuyente?' + queryRepdo, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loadingRepresentado = false;
                     this.dataSource5 = res;
                     console.log("ACA ENTRO EL REPRESENTADO");
@@ -706,6 +721,7 @@ export class AltaContribuyenteComponent implements OnInit {
                     this.dataPaginate5 = this.paginate(this.dataSource5, 15, this.pagina5);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingRepresentado = false;
                     Swal.fire({
                         title: 'ERROR',
@@ -770,6 +786,7 @@ export class DialogDomicilioAlta {
         private snackBar: MatSnackBar,
         private http: HttpClient,
         private _formBuilder: FormBuilder,
+        private spinner: NgxSpinnerService,
         public dialogRef: MatDialogRef<DialogDomicilioAlta>,
         public dialog: MatDialog,
         @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -848,14 +865,17 @@ export class DialogDomicilioAlta {
     * Obtiene el nombre de los Estados para llenar el el Select de Estados
     */
     getDataEstados(): void {
+        this.spinner.show();
         this.loadingEstados = true;
         this.http.get(this.endpointCatalogos + 'getEstados', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingEstados = false;
                 this.estados = res;
                 this.getAlcaldia();
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingEstados = false;
             }
         );
@@ -865,16 +885,19 @@ export class DialogDomicilioAlta {
      * Obtiene el catálogo de la alcaldia.
      */
      getAlcaldia(){
+        this.spinner.show();
         let busquedaMunCol = 'getDelegaciones';
         this.loadingMunicipios = true;
         this.http.get(this.endpointCatalogos + busquedaMunCol, this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingMunicipios = false;
                 this.municipios = res;
                 console.log('GETDELEG');
                 console.log(res);
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingMunicipios = false;
             }
         );
@@ -884,6 +907,7 @@ export class DialogDomicilioAlta {
     * Obtiene el nombre de los Municipios de cada estado, o los de las delegaciones si es la CDMX
     */
     getDataMunicipios(event): void {
+        this.spinner.show();
         if(event.value != 9){
             this.domicilioFormGroup.controls['idmunicipio2'].setValue('');
             this.domicilioFormGroup.controls['municipio'].setValue('');
@@ -906,12 +930,14 @@ export class DialogDomicilioAlta {
         this.loadingMunicipios = true;
         this.http.get(this.endpointCatalogos + busquedaMunCol, this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingMunicipios = false;
                 this.municipios = res;
                 console.log('GETDELEG');
                 console.log(res);
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingMunicipios = false;
             }
         );
@@ -921,15 +947,18 @@ export class DialogDomicilioAlta {
     * Obtiene el nombre de las colonias dependiendo de la delegación o municipio
     */
     getDataTiposAsentamiento(): void {
+        this.spinner.show();
         this.loadingTiposAsentamiento = true;
         this.http.get(this.endpointCatalogos + 'getTiposAsentamiento', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingTiposAsentamiento = false;
                 this.tiposAsentamiento = res;
                 console.log('AQUI EL ASENTAMIENTO SELECT');
                 console.log(this.tiposAsentamiento);
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingTiposAsentamiento = false;
             }
         );
@@ -939,9 +968,11 @@ export class DialogDomicilioAlta {
     * Obtiene el nombre de las calles dependiendo la colonia seleccionada
     */
     getDataTiposVia(): void {
+        this.spinner.show();
         this.loadingTiposVia = true;
         this.http.get(this.endpointCatalogos + 'getTiposVia', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingTiposVia = false;
                 this.tiposVia = res;
                 console.log('AQUI EL TIPOS VIA SELECT');
@@ -949,6 +980,7 @@ export class DialogDomicilioAlta {
                 console.log(this.codtiposdireccion);
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingTiposVia = false;
             }
         );
@@ -958,15 +990,18 @@ export class DialogDomicilioAlta {
     * Obtiene el tipo de localidades que existen para llenar el combo select
     */
     getDataTiposLocalidad(): void {
+        this.spinner.show();
         this.loadingTiposLocalidad = true;
         this.http.get(this.endpointCatalogos + 'getTiposLocalidad', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingTiposLocalidad = false;
                 this.tiposLocalidad = res;
                 console.log('AQUI EL TIPOS LOCALIDAD');
                 console.log(this.tiposLocalidad);
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingTiposLocalidad = false;
             }
         );
@@ -1016,7 +1051,7 @@ export class DialogDomicilioAlta {
     * Guarda el domicilio que se agrega
     */
     guardaDomicilio(){
-        
+        this.spinner.show();
         let query = 'insertarDireccion?idPersona=' + this.data.idPerito;
 
         query = (this.dataDomicilio.codtiposvia) ? query + '&codtiposvia=' + this.dataDomicilio.codtiposvia : query + '&codtiposvia=';
@@ -1073,10 +1108,12 @@ export class DialogDomicilioAlta {
                             confirmButtonText: 'Cerrar'
                         });
                     }
+                    this.spinner.hide();
                     this.loadingEstados = false;
                     this.dialogRef.close();
                 },
                 (error) => {
+                    this.spinner.hide();
                     Swal.fire({
                         title: 'ERROR',
                         text: error.error.mensaje,
@@ -1271,6 +1308,7 @@ export class DialogMunicipiosAlta {
         private auth: AuthService,
         private http: HttpClient,
         private _formBuilder: FormBuilder,
+        private spinner: NgxSpinnerService,
         public dialog: MatDialog,
         public dialogRef: MatDialogRef<DialogMunicipiosAlta>,
         @Inject(MAT_DIALOG_DATA) public data: any
@@ -1300,6 +1338,7 @@ export class DialogMunicipiosAlta {
     * Obtiene los municipios
     */
     obtenerMunicipios(){
+        this.spinner.show();
         this.loadingBuscaMun = true;
         let criterio = '';
         let query = '';
@@ -1317,6 +1356,7 @@ export class DialogMunicipiosAlta {
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loadingBuscaMun = false;
                     this.dataSource = res;
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
@@ -1325,6 +1365,7 @@ export class DialogMunicipiosAlta {
                     console.log(this.dataSource);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingBuscaMun = false;
                 }
             );
@@ -1364,6 +1405,7 @@ export class DialogMunicipiosAlta {
     * Obtiene los nombres de los municipios
     */
     obtenerMunicipiosPorNombre(){
+        this.spinner.show();
         this.loadingBuscaMun = true;
         let criterio = '';
         let query = '';
@@ -1381,6 +1423,7 @@ export class DialogMunicipiosAlta {
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loadingBuscaMun = false;
                     this.dataSource = res;
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
@@ -1389,6 +1432,7 @@ export class DialogMunicipiosAlta {
                     console.log(this.dataSource);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingBuscaMun = false;
                 }
             );
@@ -1425,6 +1469,7 @@ export class DialogCiudadAlta {
         private auth: AuthService,
         private http: HttpClient,
         private _formBuilder: FormBuilder,
+        private spinner: NgxSpinnerService,
         public dialog: MatDialog,
         public dialogRef: MatDialogRef<DialogCiudadAlta>,
         @Inject(MAT_DIALOG_DATA) public data: any
@@ -1454,6 +1499,7 @@ export class DialogCiudadAlta {
     * Obtiene las sociedades
     */
     obtenerCiudad(){
+        this.spinner.show();
         this.loadingBuscaCiudad = true;
         let criterio = '';
         let query = '';
@@ -1475,6 +1521,7 @@ export class DialogCiudadAlta {
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loadingBuscaCiudad = false;
                     this.dataSource = res;
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
@@ -1483,6 +1530,7 @@ export class DialogCiudadAlta {
                     console.log(this.dataSource);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingBuscaCiudad = false;
                 }
             );
@@ -1551,6 +1599,7 @@ export class DialogAsentamientoAlta {
         private auth: AuthService,
         private http: HttpClient,
         private _formBuilder: FormBuilder,
+        private spinner: NgxSpinnerService,
         public dialog: MatDialog,
         public dialogRef: MatDialogRef<DialogAsentamientoAlta>,
         @Inject(MAT_DIALOG_DATA) public data: any
@@ -1580,6 +1629,7 @@ export class DialogAsentamientoAlta {
     * Obtiene las colonias
     */
     obtenerAsentamiento(){
+        this.spinner.show();
         this.loading = true;
         let criterio = '';
         let query = '';
@@ -1598,6 +1648,7 @@ export class DialogAsentamientoAlta {
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loading = false;
                     this.dataSource = res;
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
@@ -1606,6 +1657,7 @@ export class DialogAsentamientoAlta {
                     console.log(this.dataSource);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loading = false;
                 }
             );
@@ -1658,6 +1710,7 @@ export class DialogAsentamientoAlta {
      * Obtiene el asenteamiento de acuerdo al estado, municipio o ciudad.
      */
     obtenerAsentamientoByNombre(){
+        this.spinner.show();
         this.loading = true;
         let criterio = '';
         let query = '';
@@ -1676,6 +1729,7 @@ export class DialogAsentamientoAlta {
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loading = false;
                     this.dataSource = res;
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
@@ -1684,6 +1738,7 @@ export class DialogAsentamientoAlta {
                     console.log(this.dataSource);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loading = false;
                 }
             );
@@ -1722,6 +1777,7 @@ export class DialogViaAlta {
         private auth: AuthService,
         private http: HttpClient,
         private _formBuilder: FormBuilder,
+        private spinner: NgxSpinnerService,
         public dialog: MatDialog,
         public dialogRef: MatDialogRef<DialogViaAlta>,
         @Inject(MAT_DIALOG_DATA) public data: any
@@ -1751,6 +1807,7 @@ export class DialogViaAlta {
     * Obtiene las calles
     */
     obtenerVia(){
+        this.spinner.show();
         this.loadingBuscaVia = true;
         let criterio = 'getViasByIdColonia';
         let query = '';
@@ -1772,6 +1829,7 @@ export class DialogViaAlta {
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loadingBuscaVia = false;
                     this.dataSource = res;
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
@@ -1780,6 +1838,7 @@ export class DialogViaAlta {
                     console.log(this.dataSource);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingBuscaVia = false;
                 }
             );
@@ -1820,6 +1879,7 @@ export class DialogViaAlta {
     * Obtiene las colonias por nombre
     */
     obtenerAsentamientoPorNombre(){
+        this.spinner.show();
         this.loadingBuscaVia = true;
         let criterio = '';
         let query = '';
@@ -1837,6 +1897,7 @@ export class DialogViaAlta {
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loadingBuscaVia = false;
                     this.dataSource = res;
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
@@ -1845,6 +1906,7 @@ export class DialogViaAlta {
                     console.log(this.dataSource);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loadingBuscaVia = false;
                 }
             );
@@ -1876,6 +1938,7 @@ export class DialogRepresentacionAltaC {
     constructor(
         private http: HttpClient,
         private _formBuilder: FormBuilder,
+        private spinner: NgxSpinnerService,
         private snackBar: MatSnackBar,
         public dialog: MatDialog,
         public dialogRef: MatDialogRef<DialogRepresentacionAltaC>,
@@ -1930,15 +1993,18 @@ export class DialogRepresentacionAltaC {
     /** 
     * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
     */
-     getDataDocumentos(): void{
+    getDataDocumentos(): void{
+        this.spinner.show();
         this.loadingDocumentos = true;
         this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingDocumentos = false;
                 this.dataDocumentos = res.CatDocIdentificativos;
                 console.log(this.dataDocumentos);
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingDocumentos = false;
             }
         );
@@ -2019,6 +2085,7 @@ export class DialogRepresentacionAltaC {
     * @returns Regresa el arreglo de los datos que fueron registrados en el formulario de la representación.
     */
     getDataRepresentacion(): DataRepresentacion {
+        this.spinner.show();
         this.loading = true;
         this.bloqueo = false;
         this.dataRepresentacion.tipoPersona = this.tipoPersona;
@@ -2119,6 +2186,7 @@ export class DialogRepresentacionAltaC {
         console.log(JSON.stringify(payload));
         this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
             (res: any) => {
+                this.spinner.hide();
                 if(res){
                     Swal.fire({
                         title: 'CORRECTO',
@@ -2143,6 +2211,7 @@ export class DialogRepresentacionAltaC {
                 console.log(res);
             },
             (error) => {
+                this.spinner.hide();
                 Swal.fire({
                     title: 'ERROR',
                     text: error.error.mensaje,
@@ -2218,6 +2287,7 @@ export class DialogRepresentadoAltaC {
         private http: HttpClient,
         private snackBar: MatSnackBar,
         private _formBuilder: FormBuilder,
+        private spinner: NgxSpinnerService,
         private auth: AuthService,
         public dialog: MatDialog,
         public dialogRef: MatDialogRef<DialogRepresentadoAltaC>,
@@ -2272,14 +2342,17 @@ export class DialogRepresentadoAltaC {
     * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
     */
      getDataDocumentos(): void{
+        this.spinner.show();
         this.loadingDocumentos = true;
         this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingDocumentos = false;
                 this.dataDocumentos = res.CatDocIdentificativos;
                 console.log(this.dataDocumentos);
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingDocumentos = false;
             }
         );
@@ -2360,6 +2433,7 @@ export class DialogRepresentadoAltaC {
      * @returns Regresa el arreglo de los datos que fueron registrados en el formulario de la representación.
      */
     getDataRepresentacion(): DataRepresentacion {
+        this.spinner.show();
         this.loading = true;
         this.bloqueo = false;
         this.dataRepresentacion.tipoPersona = this.tipoPersona;
@@ -2462,6 +2536,7 @@ export class DialogRepresentadoAltaC {
         }else{
             this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
                 (res: any) => {
+                    this.spinner.hide();
                     Swal.fire({
                         title: 'CORRECTO',
                         text: "Registro exitoso.",
@@ -2474,6 +2549,7 @@ export class DialogRepresentadoAltaC {
                     this.dialogRef.close(res);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.dialogRef.close();
                     Swal.fire({
                         title: 'ERROR',
@@ -2491,12 +2567,13 @@ export class DialogRepresentadoAltaC {
      * Inserta un registro de representación.
      */
     insertRepresentacion(payload){
-        
+        this.spinner.show();
         console.log(payload);
         console.log("INSERTA");
         //return;
         this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
             (res: any) => {
+                this.spinner.hide();
                 Swal.fire({
                     title: 'CORRECTO',
                     text: "SE HA INSERTADO EL REPRESENTADO.",
@@ -2507,6 +2584,7 @@ export class DialogRepresentadoAltaC {
                 console.log(res);
             },
             (error) => {
+                this.spinner.hide();
                 Swal.fire({
                     title: 'ERROR',
                     text: error.error.mensaje,
@@ -2521,6 +2599,7 @@ export class DialogRepresentadoAltaC {
      */
     updateRepresentacion(payload){
         console.log("ACTUALIZA");
+        this.spinner.hide();
         return;
         console.log(JSON.stringify(payload));
         this.http.post(this.endpoint + 'insertarRepresentacion' + payload, '', this.httpOptions).subscribe(
@@ -2612,6 +2691,7 @@ export class DialogDocumentoAltaC {
     constructor(
         private http: HttpClient,
         private _formBuilder: FormBuilder,
+        private spinner: NgxSpinnerService,
         private snackBar: MatSnackBar,
         public dialog: MatDialog,
         private auth: AuthService,
@@ -2667,26 +2747,32 @@ export class DialogDocumentoAltaC {
     }
   
     getDataTiposDocumentoDigital(): void {
+        this.spinner.show();
         this.loadingTiposDocumentoDigital = true;
         this.http.get(this.endpoint, this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingTiposDocumentoDigital = false;
                 this.tiposDocumentoDigital = res;
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingTiposDocumentoDigital = false;
             }
         );
     }
   
     getDataTiposDocumentoJuridico(): void {
+        this.spinner.show();
         this.loadingTiposDocumentoJuridico = true;
         this.http.get(this.endpoint, this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingTiposDocumentoJuridico = false;
                 this.tiposDocumentoJuridico = res;
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingTiposDocumentoJuridico = false;
             }
         );
@@ -2794,9 +2880,10 @@ export class DialogDocumentoAltaC {
      * @param idDocumento Valor del idDocumento utilizado para la búsqueda del mismo
      */
     setDataDocumento(idDocumento): void {
-
+        this.spinner.show();
         this.http.post(this.endpoint + 'infoDocumentos?idDocumentoDigital=' + idDocumento, '', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 console.log("AQUI ENTRO EL RESULTADO DEL DOCUMENTO");
                 this.dataDocumentoSet = res;
                 console.log(this.dataDocumentoSet.infoDocumento[0].iddocumentodigital);
@@ -2804,6 +2891,7 @@ export class DialogDocumentoAltaC {
                 this.setDoc();
             },
             (error) => {
+                this.spinner.hide();
                 Swal.fire({
                     title: 'ERROR',
                     text: "ERROR INTENTELO MÁS TARDE",
@@ -2900,6 +2988,7 @@ export class DialogNotarioAltaC {
     constructor(
         private auth: AuthService,
         private http: HttpClient,
+        private spinner: NgxSpinnerService,
         public dialogRef: MatDialogRef<DialogNotarioAltaC>,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
@@ -2919,13 +3008,16 @@ export class DialogNotarioAltaC {
      * Obtiene el catálogo de los estados de la república Mexicana.
      */
     getDataEstados(): void {
+        this.spinner.show();
         this.loadingEstados = true;
         this.http.get(this.endpointCatalogos + 'getEstados', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingEstados = false;
                 this.estados = res;
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingEstados = false;
             }
         );
@@ -2935,6 +3027,7 @@ export class DialogNotarioAltaC {
      * Obtiene los datos del notario de acuerdo a los parametros dados en la búsqueda.
      */
     getDataNotarios(): void {
+        this.spinner.show();
         this.loading = true;
         this.isBusqueda = true;
         this.optionNotario = undefined;
@@ -2975,6 +3068,7 @@ export class DialogNotarioAltaC {
         
         this.http.get(this.endpoint + metodoN + '?' + this.queryParamFiltros, this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loading = false;
                 this.dataNotarios = res;
                 this.dataSource = this.paginate(this.dataNotarios, this.pageSize, this.pagina);
@@ -2982,6 +3076,7 @@ export class DialogNotarioAltaC {
                 this.paginator.pageIndex = 0;
             },
             (error) => {
+                this.spinner.hide();
                 this.loading = false;
                 this.dataSource = [];
             });
@@ -3071,6 +3166,7 @@ export class DialogPersonaAltaC {
       private auth: AuthService,
       private http: HttpClient,
       private _formBuilder: FormBuilder,
+      private spinner: NgxSpinnerService,
       public dialogRef: MatDialogRef<DialogPersonaAltaC>,
       @Inject(MAT_DIALOG_DATA) public data: any
     ) {
@@ -3122,14 +3218,17 @@ export class DialogPersonaAltaC {
     * Obtiene los Documentos Identificativos para llenar el Select de Documentos Identificativos
     */
     getDataDocumentos(): void{
+        this.spinner.show();
         this.loadingDocumentos = true;
         this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loadingDocumentos = false;
                 this.dataDocumentos = res.CatDocIdentificativos;
                 console.log(this.dataDocumentos);
             },
             (error) => {
+                this.spinner.hide();
                 this.loadingDocumentos = false;
             }
         );
@@ -3158,6 +3257,7 @@ export class DialogPersonaAltaC {
      * Obtiene a la persona sea física o moral por datos identificativos o personales.
      */
     getDataPersonas(): void {
+        this.spinner.show();
         this.loading = true;
         this.isBusqueda = true;
         this.optionPersona = undefined;
@@ -3205,6 +3305,7 @@ export class DialogPersonaAltaC {
   
         this.http.get(this.endpointBusqueda + '?' + this.queryParamFiltros, this.httpOptions).subscribe(
             (res: any) => {
+                this.spinner.hide();
                 this.loading = false;
                 this.dataPersonas = res;
                 this.dataSource = this.paginate(this.dataPersonas, this.pageSize, this.pagina);
@@ -3212,6 +3313,7 @@ export class DialogPersonaAltaC {
                 this.paginator.pageIndex = 0;
             },
             (error) => {
+                this.spinner.hide();
                 this.loading = false;
                 this.dataSource = [];
             }
