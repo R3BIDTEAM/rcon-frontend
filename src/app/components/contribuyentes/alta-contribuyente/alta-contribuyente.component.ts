@@ -9,6 +9,7 @@ import { FormBuilder, FormArray, FormGroup, FormControl, Validators, ValidatorFn
 import { MatPaginator } from '@angular/material/paginator';
 import * as moment from 'moment';
 import { DialogDuplicadosComponent } from '@comp/dialog-duplicados/dialog-duplicados.component';
+import Swal from 'sweetalert2';
 
 const trimValidator: ValidatorFn = (control: FormControl) => {
     if (control.value.startsWith(' ')) {
@@ -379,10 +380,11 @@ export class AltaContribuyenteComponent implements OnInit {
                 },
                 (error) => {
                     this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );
@@ -405,10 +407,6 @@ export class AltaContribuyenteComponent implements OnInit {
     }
 
     guardarContribuyente(){
-        console.log("Sirve");
-        // registro/insertarContribuyente?codtipospersona=F&nombre=JONATHAN GIOVANNI&activprincip&idtipomoral&idmotivosmoral&fechainicioactiv&fechacambiosituacion=&rfc=PAGJ830626&apellidopaterno=PALACIOS&apellidomaterno=GOMEZ&curp=PAGJ830626HMCLMN06&claveife=PLGMJN83062615H500&iddocidentif=1&valdocidentif&fechanacimiento=&fechadefuncion&celular=&email=jpalacios@mail.com&idExpediente=36
-        // insertarContribuyente?codtipospersona=M&nombre=&activprincip=RRRRR&idtipomoral=&idmotivosmoral=&fechainicioactiv=22-02-2002&fechacambio&rfc=PAGJ830626aaa&apellidopaterno=JON SAa&apellidomaterno=DA45545&curp=&claveife=&iddocidentif=1&valdocidentif&fechanacimiento=&fechadefuncion&celular=&email=&idExpediente=
-        // insertarContribuyente?&codtipospersona=F&nombre=JOEL&activprincip=&idtipomoral=&idmotivosmoral=&fechainicioactiv=&fechacambiosituacion=&rfc=HEVH900629HD5&apellidopaterno=HERRERA&apellidomaterno=VALADEZ&curp=&claveife=&iddocidentif=&valdocidentif=&fechanacimiento=29-06-1990&fechadefuncion=&celular=566566455&email=hj@mail.com&activprincip=&idExpediente
         let query = '';
         this.loading = true;
 
@@ -430,7 +428,6 @@ export class AltaContribuyenteComponent implements OnInit {
         query = (this.contribuyente.celular) ? query + '&celular=' + this.contribuyente.celular.trim() : query + '&celular=';
         query = (this.contribuyente.email) ? query + '&email=' + this.contribuyente.email.trim() : query + '&email=';
         query = (this.contribuyente.actPreponderante) ? query + '&activprincip=' + this.contribuyente.actPreponderante.toLocaleUpperCase().trim() : query + '&activprincip=';
-        // query = (this.contribuyente.nombre_moral) ? query + '&apellidopaterno=' + this.contribuyente.nombre_moral : query + '&apellidopaterno=';
         query = query + '&idExpediente';
         
         this.http.post(this.endpoint + 'insertarContribuyente' + '?' + query, '', this.httpOptions)
@@ -438,8 +435,6 @@ export class AltaContribuyenteComponent implements OnInit {
                 (res: any) => {
                     this.loading = false;
                     this.btnDisabled = false;
-                    console.log("CONTRIBUYENTE GUARDADO");
-                    console.log(res);
                     this.domInsertCont = true;
                     this.inserto = true
                     this.idPersona = res[0].idpersona;
@@ -448,18 +443,20 @@ export class AltaContribuyenteComponent implements OnInit {
                     console.log(res[0].idpersona);
                     console.log(this.idChs);
                     this.setDatosContribuyente();
-                    this.snackBar.open('guardado correcto', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    Swal.fire({
+                        title: 'CORRECTO',
+                        text: "El contribuyente fue dado de alta correctamente.",
+                        icon: 'success',
+                        confirmButtonText: 'Cerrar'
                     });
                 },
                 (error) => {
                     this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );
@@ -482,18 +479,14 @@ export class AltaContribuyenteComponent implements OnInit {
                     console.log("Generando PDF");
                     console.log(res);
                     this.resultadoAlta = res;
-                    this.snackBar.open('guardado correcto', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
                 },
                 (error) => {
                     this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );
@@ -580,10 +573,11 @@ export class AltaContribuyenteComponent implements OnInit {
                 },
                 (error) => {
                     this.loadingDomicilios = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );
@@ -675,10 +669,11 @@ export class AltaContribuyenteComponent implements OnInit {
                 },
                 (error) => {
                     this.loadingRepresentante = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );
@@ -712,10 +707,11 @@ export class AltaContribuyenteComponent implements OnInit {
                 },
                 (error) => {
                     this.loadingRepresentado = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 }
             );
@@ -1063,22 +1059,30 @@ export class DialogDomicilioAlta {
                 (res: any) => {
                     console.log(res);
                     if(res.original){
-                        this.snackBar.open('Ocurrio un error al Insertar la dirección, intente nuevemente', 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
+                        Swal.fire({
+                            title: 'ERROR',
+                            text: "Ocurrio un error al Insertar la dirección, intente nuevemente",
+                            icon: 'error',
+                            confirmButtonText: 'Cerrar'
                         });
                     }else if(res.IDPERSONA){
-                        this.snackBar.open('Registro exitoso', 'Cerrar', {
-                            duration: 10000,
-                            horizontalPosition: 'end',
-                            verticalPosition: 'top'
+                        Swal.fire({
+                            title: 'CORRECTO',
+                            text: "Registro exitoso.",
+                            icon: 'success',
+                            confirmButtonText: 'Cerrar'
                         });
                     }
                     this.loadingEstados = false;
                     this.dialogRef.close();
                 },
                 (error) => {
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
+                    });
                 }
             );
     }
@@ -2116,30 +2120,34 @@ export class DialogRepresentacionAltaC {
         this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
             (res: any) => {
                 if(res){
-                    this.snackBar.open('REGISTRO EXITOSO', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    Swal.fire({
+                        title: 'CORRECTO',
+                        text: "Registro exitoso.",
+                        icon: 'success',
+                        confirmButtonText: 'Cerrar'
                     });
                     this.loading = false;
                     this.dialogRef.close(res);
                 }else if(res.mensaje){
                     this.dialogRef.close();
-                    this.snackBar.open(res.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    Swal.fire({
+                        title: '¡ATENCIÓN!',
+                        text: res.mensaje,
+                        icon: 'warning',
+                        confirmButtonText: 'Cerrar'
                     });
+
                 }
                 
                 console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTECIÓN");
                 console.log(res);
             },
             (error) => {
-                this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
+                Swal.fire({
+                    title: 'ERROR',
+                    text: error.error.mensaje,
+                    icon: 'error',
+                    confirmButtonText: 'Cerrar'
                 });
             });
         
@@ -2454,10 +2462,11 @@ export class DialogRepresentadoAltaC {
         }else{
             this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
                 (res: any) => {
-                    this.snackBar.open('REGISTRO EXITOSO', 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    Swal.fire({
+                        title: 'CORRECTO',
+                        text: "Registro exitoso.",
+                        icon: 'success',
+                        confirmButtonText: 'Cerrar'
                     });
                     console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTADO");
                     console.log(res);
@@ -2466,10 +2475,11 @@ export class DialogRepresentadoAltaC {
                 },
                 (error) => {
                     this.dialogRef.close();
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    Swal.fire({
+                        title: 'ERROR',
+                        text: error.error.mensaje,
+                        icon: 'error',
+                        confirmButtonText: 'Cerrar'
                     });
                 });
         }
@@ -2487,19 +2497,21 @@ export class DialogRepresentadoAltaC {
         //return;
         this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
             (res: any) => {
-                this.snackBar.open('SE HA INSERTADO EL REPRESENTADO', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
+                Swal.fire({
+                    title: 'CORRECTO',
+                    text: "SE HA INSERTADO EL REPRESENTADO.",
+                    icon: 'success',
+                    confirmButtonText: 'Cerrar'
                 });
                 console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTADO");
                 console.log(res);
             },
             (error) => {
-                this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
+                Swal.fire({
+                    title: 'ERROR',
+                    text: error.error.mensaje,
+                    icon: 'error',
+                    confirmButtonText: 'Cerrar'
                 });
             });
     }
@@ -2513,19 +2525,21 @@ export class DialogRepresentadoAltaC {
         console.log(JSON.stringify(payload));
         this.http.post(this.endpoint + 'insertarRepresentacion' + payload, '', this.httpOptions).subscribe(
             (res: any) => {
-                this.snackBar.open('SE HA INSERTADO TODO', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
+                Swal.fire({
+                    title: 'CORRECTO',
+                    text: "Actualización correcta.",
+                    icon: 'success',
+                    confirmButtonText: 'Cerrar'
                 });
                 console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTECIÓN");
                 console.log(res);
             },
             (error) => {
-                this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
+                Swal.fire({
+                    title: 'ERROR',
+                    text: error.error.mensaje,
+                    icon: 'error',
+                    confirmButtonText: 'Cerrar'
                 });
             });
     }
@@ -2742,10 +2756,11 @@ export class DialogDocumentoAltaC {
                         }));
                     };
                 }else{
-                    this.snackBar.open('Su archivo excede el tamaño permido de maximo 5MB', 'Cerrar', {
-                        duration: 5000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
+                    Swal.fire({
+                        title: '¡ATENCIÓN!',
+                        text: "Su archivo excede el tamaño permido de maximo 5MB",
+                        icon: 'warning',
+                        confirmButtonText: 'Cerrar'
                     });
                     event.target.value = '';
                 }
@@ -2789,10 +2804,11 @@ export class DialogDocumentoAltaC {
                 this.setDoc();
             },
             (error) => {
-                this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
-                    duration: 10000,
-                    horizontalPosition: 'end',
-                    verticalPosition: 'top'
+                Swal.fire({
+                    title: 'ERROR',
+                    text: "ERROR INTENTELO MÁS TARDE",
+                    icon: 'error',
+                    confirmButtonText: 'Cerrar'
                 });
             });
 
