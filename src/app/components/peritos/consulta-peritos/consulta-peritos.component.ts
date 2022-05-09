@@ -32,15 +32,15 @@ export class ConsultaPeritosComponent implements OnInit {
     nombrePerito;
     filtroNombre;
     search = false;
-    appaterno;
-    apmaterno
-    nombre;
-    rfc;
-    curp;
-    ine;
-    registro;
-    identificacion;
-    idedato;
+    appaterno: any = null;
+    apmaterno: any = null
+    nombre: any = null;
+    rfc: any = null;
+    curp: any = null;
+    ine: any = null;
+    registro: any = null;
+    identificacion: any = null;
+    idedato: any = null;
     isIdentificativo;
     consPeritoFormGroup: FormGroup;
     documentos: DocumentosIdentificativos[] = [];

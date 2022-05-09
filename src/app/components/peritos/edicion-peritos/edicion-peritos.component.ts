@@ -32,16 +32,16 @@ export class EdicionPeritosComponent implements OnInit {
     nombrePerito;
     filtroNombre;
     search = false;
-    appaterno;
-    apmaterno
-    nombre;
-    rfc;
-    curp;
-    ine;
-    registro;
-    identificacion;
-    idedato;
-    isIdentificativo;
+    appaterno: any = null;
+    apmaterno: any = null;
+    nombre: any = null;
+    rfc: any = null;
+    curp: any = null;
+    ine: any = null;
+    registro: any = null;
+    identificacion: any = null;
+    idedato: any = null;
+    isIdentificativo: any = null;
     panelDomicilio = false;
     panelDomPredial = false;
     panelBienes = false;
