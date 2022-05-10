@@ -3166,8 +3166,8 @@ export class DialogRepresentacionPeritos {
         this.tipoPersona = dataRepresentacion.CODTIPOPERSONA;
         if(this.tipoPersona == 'F'){
             this.fisicaFormGroup.controls['nombre'].setValue(dataRepresentacion.NOMBRE);
-            this.fisicaFormGroup.controls['apaterno'].setValue(dataRepresentacion.APELLIDOMATERNO);
-            this.fisicaFormGroup.controls['amaterno'].setValue(dataRepresentacion.APELLIDOPATERNO);
+            this.fisicaFormGroup.controls['apaterno'].setValue(dataRepresentacion.APELLIDOPATERNO);
+            this.fisicaFormGroup.controls['amaterno'].setValue(dataRepresentacion.APELLIDOMATERNO);
             this.fisicaFormGroup.controls['rfc'].setValue(dataRepresentacion.RFC);
             this.fisicaFormGroup.controls['curp'].setValue(dataRepresentacion.CURP);
             this.fisicaFormGroup.controls['ine'].setValue(dataRepresentacion.CLAVEIFE);
@@ -3598,8 +3598,8 @@ export class DialogRepresentadoPeritos {
         this.tipoPersona = dataRepresentacion.CODTIPOPERSONA;
         if(this.tipoPersona == 'F'){
             this.fisicaFormGroup.controls['nombre'].setValue(dataRepresentacion.NOMBRE);
-            this.fisicaFormGroup.controls['apaterno'].setValue(dataRepresentacion.APELLIDOMATERNO);
-            this.fisicaFormGroup.controls['amaterno'].setValue(dataRepresentacion.APELLIDOPATERNO);
+            this.fisicaFormGroup.controls['apaterno'].setValue(dataRepresentacion.APELLIDOPATERNO);
+            this.fisicaFormGroup.controls['amaterno'].setValue(dataRepresentacion.APELLIDOMATERNO);
             this.fisicaFormGroup.controls['rfc'].setValue(dataRepresentacion.RFC);
             this.fisicaFormGroup.controls['curp'].setValue(dataRepresentacion.CURP);
             this.fisicaFormGroup.controls['ine'].setValue(dataRepresentacion.CLAVEIFE);
@@ -4933,8 +4933,8 @@ export class DialogHistorialRepDetalle {
             this.tipoPersonaRep = this.dataRepresentacion.infoRepresentante[0].CODTIPOSPERSONA;
             if(this.tipoPersonaRep == 'F'){
                 this.nombreR = this.dataRepresentacion.infoRepresentante[0].NOMBRE;
-                this.apaternoR = this.dataRepresentacion.infoRepresentante[0].APELLIDOMATERNO;
-                this.amaternoR = this.dataRepresentacion.infoRepresentante[0].APELLIDOPATERNO;
+                this.apaternoR = this.dataRepresentacion.infoRepresentante[0].APELLIDOPATERNO;
+                this.amaternoR = this.dataRepresentacion.infoRepresentante[0].APELLIDOMATERNO;
                 this.rfcR = this.dataRepresentacion.infoRepresentante[0].RFC;
                 this.curpR = this.dataRepresentacion.infoRepresentante[0].CURP;
                 this.ineR = this.dataRepresentacion.infoRepresentante[0].CLAVEIFE;
@@ -4959,8 +4959,8 @@ export class DialogHistorialRepDetalle {
             this.tipoPersonaRepdo = this.dataRepresentacion.infoRepresentado[0].CODTIPOSPERSONA;
             if(this.tipoPersonaRepdo == 'F'){
                 this.nombreRdo = this.dataRepresentacion.infoRepresentado[0].NOMBRE;
-                this.apaternoRdo = this.dataRepresentacion.infoRepresentado[0].APELLIDOMATERNO;
-                this.amaternoRdo = this.dataRepresentacion.infoRepresentado[0].APELLIDOPATERNO;
+                this.apaternoRdo = this.dataRepresentacion.infoRepresentado[0].APELLIDOPATERNO;
+                this.amaternoRdo = this.dataRepresentacion.infoRepresentado[0].APELLIDOMATERNO;
                 this.rfcRdo = this.dataRepresentacion.infoRepresentado[0].RFC;
                 this.curpRdo = this.dataRepresentacion.infoRepresentado[0].CURP;
                 this.ineRdo = this.dataRepresentacion.infoRepresentado[0].CLAVEIFE;
