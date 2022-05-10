@@ -14,6 +14,7 @@ import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";  
 pdfMake.vfs = pdfFonts.pdfMake.vfs; 
 import { NgxSpinnerService } from 'ngx-spinner';
+import Swal from 'sweetalert2';
 
 export interface DataRepresentacion {
   tipoPersona: string;
@@ -85,6 +86,7 @@ export class VerContribuyenteComponent implements OnInit {
   infoContribuyenteNombre;
   infoContribuyenteCurp;
   infoContribuyenteRfc;
+  rol;
   @ViewChild('paginator') paginator: MatPaginator;
 
   /*Paginado*/
@@ -127,6 +129,7 @@ export class VerContribuyenteComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.rol = this.auth.getSession().userData.rol_nombre;
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -245,10 +248,11 @@ export class VerContribuyenteComponent implements OnInit {
         (error) => {
           this.spinner.hide();
           this.loading = false;
-          this.snackBar.open(error.error.mensaje, 'Cerrar', {
-              duration: 10000,
-              horizontalPosition: 'end',
-              verticalPosition: 'top'
+          Swal.fire({
+            title: 'ERROR',
+            text: error.error.mensaje,
+            icon: 'error',
+            confirmButtonText: 'Cerrar'
           });
         }
       );
@@ -277,10 +281,11 @@ export class VerContribuyenteComponent implements OnInit {
         (error) => {
           this.spinner.hide();
           this.loadingDomicilios = false;
-          this.snackBar.open(error.error.mensaje, 'Cerrar', {
-              duration: 10000,
-              horizontalPosition: 'end',
-              verticalPosition: 'top'
+          Swal.fire({
+            title: 'ERROR',
+            text: error.error.mensaje,
+            icon: 'error',
+            confirmButtonText: 'Cerrar'
           });
         }
       );
@@ -330,10 +335,11 @@ export class VerContribuyenteComponent implements OnInit {
         (error) => {
           this.spinner.hide();
           this.loadingInmuebles = false;
-          this.snackBar.open(error.error.mensaje, 'Cerrar', {
-              duration: 10000,
-              horizontalPosition: 'end',
-              verticalPosition: 'top'
+          Swal.fire({
+            title: 'ERROR',
+            text: error.error.mensaje,
+            icon: 'error',
+            confirmButtonText: 'Cerrar'
           });
         }
       );
@@ -367,10 +373,11 @@ export class VerContribuyenteComponent implements OnInit {
         (error) => {
           this.spinner.hide
           this.loadingRepresentante = false;
-          this.snackBar.open(error.error.mensaje, 'Cerrar', {
-              duration: 10000,
-              horizontalPosition: 'end',
-              verticalPosition: 'top'
+          Swal.fire({
+            title: 'ERROR',
+            text: error.error.mensaje,
+            icon: 'error',
+            confirmButtonText: 'Cerrar'
           });
         }
       );
@@ -398,10 +405,11 @@ export class VerContribuyenteComponent implements OnInit {
         (error) => {
           this.spinner.hide();
           this.loadingRepresentado = false;
-          this.snackBar.open(error.error.mensaje, 'Cerrar', {
-              duration: 10000,
-              horizontalPosition: 'end',
-              verticalPosition: 'top'
+          Swal.fire({
+            title: 'ERROR',
+            text: error.error.mensaje,
+            icon: 'error',
+            confirmButtonText: 'Cerrar'
           });
         }
       );
@@ -511,9 +519,9 @@ export class VerContribuyenteComponent implements OnInit {
     let metodo = 'getInfoContribuyente';
     let nombreC = '';
     let apematernoC = '';
-    const dialogRef = this.dialog.open(DialogCargaComponent, {
-			width: '800px',
-		});
+    // const dialogRef = this.dialog.open(DialogCargaComponent, {
+		// 	width: '800px',
+		// });
     this.http.get(this.endpoint + metodo + '?idPersona=' + this.idContribuyente, this.httpOptions)
       .subscribe(
           (res: any) => {
@@ -527,26 +535,29 @@ export class VerContribuyenteComponent implements OnInit {
               this.consultaCambios();
               console.log("ACÁ EL RES DEL CONSULTA INFO");
               console.log(res);
-              dialogRef.close();
+              //dialogRef.close();
             }else{
               this.loadingDomicilios = false;
-              dialogRef.close();
-              this.snackBar.open('No se encontro información', 'Cerrar', {
-                  duration: 10000,
-                  horizontalPosition: 'end',
-                  verticalPosition: 'top'
+              //dialogRef.close();
+              this.spinner.hide();
+              Swal.fire({
+                title: 'ERROR',
+                text: "No se encontro información",
+                icon: 'error',
+                confirmButtonText: 'Cerrar'
               });
             }
             
           },
           (error) => {
             this.spinner.hide();
-            dialogRef.close();
+            //dialogRef.close();
             this.loadingDomicilios = false;
-            this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                duration: 10000,
-                horizontalPosition: 'end',
-                verticalPosition: 'top'
+            Swal.fire({
+              title: 'ERROR',
+              text: "No se encontro información",
+              icon: 'error',
+              confirmButtonText: 'Cerrar'
             });
           }
       );
@@ -554,78 +565,132 @@ export class VerContribuyenteComponent implements OnInit {
 
   consultaCambios(){
     let metodo = 'getCambiosContribuyente';
-    const dialogRef = this.dialog.open(DialogCargaComponent, {
-			width: '800px',
-		});
+    this.spinner.show();
+    // const dialogRef = this.dialog.open(DialogCargaComponent, {
+		// 	width: '800px',
+		// });
     //this.http.get(this.endpoint + metodo + '?idPersona=4493213', this.httpOptions)
     this.http.get(this.endpoint + metodo + '?idPersona=' + this.idContribuyente, this.httpOptions)
       .subscribe(
           (res: any) => {
+            this.spinner.hide();
             this.historicoCambios = res;
             if(this.historicoCambios.length > 0){
               this.generatePDF();
             }else{
               this.loadingDomicilios = false;
-              this.snackBar.open('No se han encontrado movimientos', 'Cerrar', {
-                  duration: 10000,
-                  horizontalPosition: 'end',
-                  verticalPosition: 'top'
+              Swal.fire({
+                title: '¡ATENCIÓN!',
+                text: "No se han encontrado movimientos",
+                icon: 'warning',
+                confirmButtonText: 'Cerrar'
               });
             }
             console.log("ACÁ EL RES CONSULTA CAMBIO");
             console.log(res);
-            dialogRef.close();
+            //dialogRef.close();
           },
           (error) => {
-              dialogRef.close();
+              //dialogRef.close();
+              this.spinner.hide();
               this.loadingDomicilios = false;
-              this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                  duration: 10000,
-                  horizontalPosition: 'end',
-                  verticalPosition: 'top'
+              Swal.fire({
+                title: 'ERROR',
+                text: error.error.mensaje,
+                icon: 'error',
+                confirmButtonText: 'Cerrar'
               });
           }
       );
   }
 
   /**
-      * Genera el PDF de histórico cambios
-      */
+  * Genera el PDF de histórico cambios
+  */
   async generatePDF() {
     
     let i = 0;
     //let eldos = [['1','2','3','4','5','6','7'],['1','2','3','4','5','6','7'],['1','2','3','4','5','6','7']];
     this.historicoCambios
-    let arreglo = [
-      [
-        { text: 'Campo Modificado', fontSize: 9,  bold: true },
-        { text: 'Valor Antes', fontSize: 9, bold: true },
-        { text: 'Valor despúes', fontSize: 9, bold: true },
-        { text: 'Fecha Cambio', fontSize: 9, bold: true },
-        { text: 'Nombre de usuario', fontSize: 9, bold: true },
-        // { text: 'Área', fontSize: 9, bold: true },
-        // { text: 'Subarea', fontSize: 9, bold: true }
-        { text: 'IP', fontSize: 9, bold: true },
-      ],
-    ];
+    let arreglo = [];    
+    if(this.rol == 'SUPERVISOR RCON' || this.rol == 'Administrador'){
+      arreglo = [
+        [
+          { text: 'Campo Modificado', fontSize: 9,  bold: true },
+          { text: 'Valor Antes', fontSize: 9, bold: true },
+          { text: 'Valor despúes', fontSize: 9, bold: true },
+          { text: 'Fecha Cambio', fontSize: 9, bold: true },
+          { text: 'Nombre de usuario', fontSize: 9, bold: true },
+          // { text: 'Área', fontSize: 9, bold: true },
+          // { text: 'Subarea', fontSize: 9, bold: true }
+          { text: 'IP', fontSize: 9, bold: true },
+        ],
+      ];
+    }else{
+      arreglo = [
+        [
+          { text: 'Campo Modificado', fontSize: 9,  bold: true },
+          { text: 'Valor Antes', fontSize: 9, bold: true },
+          { text: 'Valor despúes', fontSize: 9, bold: true },
+          { text: 'Fecha Cambio', fontSize: 9, bold: true },
+        ],
+      ];
+    }
+    
 
     for (let i = 0; i < this.historicoCambios.length; i++) {
       //console.log(this.historicoCambios[i].campo_modificado);
       //arreglo.push([{ text:eldos[i][0], fontSize: 9,  bold: true }, { text: eldos[i][1], fontSize: 9, bold: true }, { text: eldos[i][2], fontSize: 9, bold: true }, { text: eldos[i][3], fontSize: 9, bold: true }, { text: eldos[i][4], fontSize: 9, bold: true }, { text: eldos[i][5], fontSize: 9, bold: true }, { text: eldos[i][6], fontSize: 9, bold: true }],  );
-      arreglo.push(
-        [
-          { text: this.historicoCambios[i].campo_modificado, fontSize: 9, bold: false },
-          { text: this.historicoCambios[i].valor_antes, fontSize: 9, bold: false },
-          { text: (this.historicoCambios[i].valor_despues) ? this.historicoCambios[i].valor_despues : '', fontSize: 9, bold: false },
-          { text: this.historicoCambios[i].fecha_de_cambio, fontSize: 9, bold: false },
-          { text: this.historicoCambios[i].nombre_de_usuario, fontSize: 9, bold: false },
-          // { text: this.historicoCambios[i].area, fontSize: 9, bold: false },
-          // { text: this.historicoCambios[i].subarea, fontSize: 9, bold: false }
-          { text: this.historicoCambios[i].ip, fontSize: 9, bold: false },
-        ],
-      );
+      if(this.rol == 'SUPERVISOR RCON' || this.rol == 'Administrador'){
+        arreglo.push(
+          [
+            { text: this.historicoCambios[i].campo_modificado, fontSize: 9, bold: false },
+            { text: this.historicoCambios[i].valor_antes, fontSize: 9, bold: false },
+            { text: (this.historicoCambios[i].valor_despues) ? this.historicoCambios[i].valor_despues : '', fontSize: 9, bold: false },
+            { text: this.historicoCambios[i].fecha_de_cambio, fontSize: 9, bold: false },
+            { text: this.historicoCambios[i].nombre_de_usuario, fontSize: 9, bold: false },
+            // { text: this.historicoCambios[i].area, fontSize: 9, bold: false },
+            // { text: this.historicoCambios[i].subarea, fontSize: 9, bold: false }
+            { text: this.historicoCambios[i].ip, fontSize: 9, bold: false },
+          ],
+        );
+      }else{
+        arreglo.push(
+          [
+            { text: this.historicoCambios[i].campo_modificado, fontSize: 9, bold: false },
+            { text: this.historicoCambios[i].valor_antes, fontSize: 9, bold: false },
+            { text: (this.historicoCambios[i].valor_despues) ? this.historicoCambios[i].valor_despues : '', fontSize: 9, bold: false },
+            { text: this.historicoCambios[i].fecha_de_cambio, fontSize: 9, bold: false },
+          ],
+        );
+      }
     }
-    
+    let tabla1 = {};
+    if(this.rol == 'SUPERVISOR RCON' || this.rol == 'Administrador'){
+      tabla1 = 
+        {
+          table: 
+            {  
+            headerRows: 1,  
+            widths: ['18%', '18%', '18%', '14%', '14%', '18%'],  
+            body:   
+                arreglo
+              
+            }
+        }
+    }else{
+      tabla1 = 
+        {
+          table: 
+            {  
+            headerRows: 1,  
+            widths: ['25%', '25%', '25%', '25%'],  
+            body:   
+                arreglo
+              
+            }
+        }
+    }
     let docDefinition = {
       content: [
         {
@@ -673,15 +738,8 @@ export class VerContribuyenteComponent implements OnInit {
               }
           ]
       },
-        {  
-            table: {  
-                headerRows: 1,  
-                widths: ['18%', '18%', '18%', '14%', '14%', '18%'],  
-                body:   
-                    arreglo
-                  
-            }  
-        },
+        tabla1  
+      ,
         {
             canvas: [
                 {
