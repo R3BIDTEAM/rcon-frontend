@@ -658,6 +658,14 @@ export class DialogBuscarNotarioAlta {
                         this.total = this.dataSource.length; 
                         this.paginator.pageIndex = 0;
                         console.log(this.dataSource);
+                        if (res.length === 0) {
+                            Swal.fire({
+                                title: 'SIN RESULTADO',
+                                text: "No se encontraron datos.",
+                                icon: 'error',
+                                confirmButtonText: 'Cerrar'
+                            });
+                        }
                     },
                     (error) => {
                         this.spinner.hide();

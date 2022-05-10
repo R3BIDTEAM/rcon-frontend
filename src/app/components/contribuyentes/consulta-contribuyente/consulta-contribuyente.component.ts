@@ -348,11 +348,25 @@ export class ConsultaContribuyenteComponent implements OnInit {
             this.dataSource = this.paginate(this.data, this.pageSize, this.pagina);
             this.total = this.data.length;
             this.paginator.pageIndex = 0;
+            if (res.length === 0) {
+              Swal.fire({
+                title: 'SIN RESULTADO',
+                text: "No se encontraron datos.",
+                icon: 'error',
+                confirmButtonText: 'Cerrar'
+              });
+            }
           },
           (error) => {
             this.spinner.hide();
             this.loadingResponse = false;
             this.dataSource = [];
+            Swal.fire({
+              title: 'ERROR',
+              text: error.error.mensaje,
+              icon: 'error',
+              confirmButtonText: 'Cerrar'
+            });
           }
         );
     }

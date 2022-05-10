@@ -252,6 +252,14 @@ export class ConsultaPeritosComponent implements OnInit {
                         this.paginator.pageIndex = 0;
                         console.log(this.dataSource);
                         this.spinner.hide();
+                        if (res.length === 0) {
+                            Swal.fire({
+                                title: 'SIN RESULTADO',
+                                text: "No se encontraron datos.",
+                                icon: 'error',
+                                confirmButtonText: 'Cerrar'
+                            });
+                        }
                     },
                     (error) => {
                         this.loading = false;

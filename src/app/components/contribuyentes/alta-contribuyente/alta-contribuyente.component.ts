@@ -280,7 +280,27 @@ export class AltaContribuyenteComponent implements OnInit {
         this.selectCedula = false;
         this.selectPasaporte = false;
         this.selectLicencia = false;
-        this.selectNSS = false;        
+        this.selectNSS = false;
+        this.dataSource1 = [];
+        this.total1 = 0;
+        this.pagina1= 1;
+        this.dataPaginate1;
+        this.dataSource2 = [];
+        this.total2 = 0;
+        this.pagina2= 1;
+        this.dataPaginate2;
+        this.dataSource3 = [];
+        this.total3 = 0;
+        this.pagina3= 1;
+        this.dataPaginate3;
+        this.dataSource4 = [];
+        this.total4 = 0;
+        this.pagina4= 1;
+        this.dataPaginate4;
+        this.dataSource5 = [];
+        this.total5 = 0;
+        this.pagina5= 1;
+        this.dataPaginate5;
     }
 
     /**

@@ -293,16 +293,23 @@ export class ConsultaNotarioComponent implements OnInit {
                           this.dataSource = res;
                           this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                           this.total = this.dataSource.length; 
-                          // this.paginator.pageIndex = 0;
-                          // console.log(this.dataSource);
+                          if (res.length === 0) {
+                            Swal.fire({
+                              title: 'SIN RESULTADO',
+                              text: "No se encontraron datos.",
+                              icon: 'error',
+                              confirmButtonText: 'Cerrar'
+                            });
+                          }
                         },
                         (error) => {
                           this.spinner.hide();
                           this.loading = false;
-                          this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                              duration: 10000,
-                              horizontalPosition: 'end',
-                              verticalPosition: 'top'
+                          Swal.fire({
+                            title: 'ERROR',
+                            text: error.error.mensaje,
+                            icon: 'error',
+                            confirmButtonText: 'Cerrar'
                           });
                         }
                     );
