@@ -787,4 +787,5 @@ export class VerContribuyenteComponent implements OnInit {
       img.src = url;
     });
   }
+  
 }

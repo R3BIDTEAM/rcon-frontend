@@ -5927,7 +5927,7 @@ export interface DataHistorico{
     total = 0;
     pageSize = 10;
     dataPaginate;
-    loading = true;
+    loading = false;
     
     constructor(
         private auth: AuthService,
@@ -5947,7 +5947,7 @@ export interface DataHistorico{
             };
         
             this.idPersona = data.idPersona;
-            this.getHistoricoModificaciones();
+            //this.getHistoricoModificaciones();
     
         }
 

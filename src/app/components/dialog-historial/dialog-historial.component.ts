@@ -8,6 +8,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import * as moment from 'moment';
+import Swal from 'sweetalert2';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 export interface DataHistoricoRep{
     fecha_desde: Date;
@@ -811,6 +813,7 @@ export class DialogDomicilioHistoricoEspecificoG {
         private snackBar: MatSnackBar,
         private http: HttpClient,
         private _formBuilder: FormBuilder,
+        private spinner: NgxSpinnerService,
         public dialogRef: MatDialogRef<DialogPersonalesHistoricoG>,
         public dialog: MatDialog,
         @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -823,7 +826,7 @@ export class DialogDomicilioHistoricoEspecificoG {
             };
         
             this.idPersona = data.idPersona;
-            this.getHistoricoModificaciones();
+            //this.getHistoricoModificaciones();
     
         }
 
@@ -832,7 +835,7 @@ export class DialogDomicilioHistoricoEspecificoG {
      */
     getHistoricoModificaciones(){
         let query = '';
-      
+        this.spinner.show();
         query = (this.dataHistoricoModificaciones.fecha_desde) ? query + '&fechaDesde=' + moment(this.dataHistoricoModificaciones.fecha_desde).format('DD-MM-YYYY') : query + '&fechaDesde=';
         query = (this.dataHistoricoModificaciones.fecha_hasta) ? query + '&fechaHasta=' + moment(this.dataHistoricoModificaciones.fecha_hasta).format('DD-MM-YYYY') : query + '&fechaHasta=';
         query = query + '&idPersona=' + this.idPersona;
@@ -844,6 +847,7 @@ export class DialogDomicilioHistoricoEspecificoG {
         this.http.get(this.endpoint + metodo + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loading = false;
                     this.dataSource = res;
                     console.log(this.dataSource);
@@ -851,12 +855,16 @@ export class DialogDomicilioHistoricoEspecificoG {
                     this.dataPaginate = this.paginate(this.dataSource, 10, this.pagina);
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'warning',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
@@ -955,6 +963,7 @@ export class DialogPersonalesHistoricoEspecificoG {
         private auth: AuthService,
         private snackBar: MatSnackBar,
         private http: HttpClient,
+        private spinner: NgxSpinnerService,
         private _formBuilder: FormBuilder,
         public dialogRef: MatDialogRef<DialogPersonalesHistoricoEspecificoG>,
         public dialog: MatDialog,
@@ -1005,14 +1014,17 @@ export class DialogPersonalesHistoricoEspecificoG {
      * Obtiene los documentos identificativos
      */
     getDataDocumentos(): void{
+        this.spinner.show();
         this.loadingDocumentos = true;
         this.http.get(this.endpoint + 'getCatalogos', this.httpOptions).subscribe(
         (res: any) => {
+            this.spinner.hide();
             this.loadingDocumentos = false;
             this.dataDocumentos = res.CatDocIdentificativos;
             console.log(this.dataDocumentos);
         },
         (error) => {
+            this.spinner.hide();
             this.loadingDocumentos = false;
         }
         );
@@ -1022,12 +1034,14 @@ export class DialogPersonalesHistoricoEspecificoG {
      * Obtiene los datos del contribuyente
      */
     getContribuyenteDatos(){
+        this.spinner.show();
         this.query = '&idPersona=' + this.idPersona + '&idChs=' + this.idChs; 
         this.loading = true;
         console.log(this.endpoint);
         this.http.get(this.endpoint + 'getHistoricosPersonaDetalle?' + this.query, this.httpOptions)
             .subscribe(
                 (res: any) => {
+                    this.spinner.hide();
                     this.loading = false;
                     this.dataContribuyenteResultado = res;
                     console.log("AQUI ENTRO EL RES");
@@ -1035,12 +1049,16 @@ export class DialogPersonalesHistoricoEspecificoG {
                     this.datoDelContribuyente();
                 },
                 (error) => {
+                    this.spinner.hide();
                     this.loading = false;
-                    this.snackBar.open(error.error.mensaje, 'Cerrar', {
-                        duration: 10000,
-                        horizontalPosition: 'end',
-                        verticalPosition: 'top'
-                    });
+                    Swal.fire(
+                        {
+                          title: 'SIN RESULTADO',
+                          text: error.error.mensaje,
+                          icon: 'warning',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }
             );
     }
