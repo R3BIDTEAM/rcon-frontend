@@ -806,7 +806,7 @@ export class DialogDomicilioHistoricoEspecificoG {
     total = 0;
     pageSize = 10;
     dataPaginate;
-    loading = true;
+    loading = false;
     
     constructor(
         private auth: AuthService,
