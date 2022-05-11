@@ -1295,6 +1295,7 @@ export interface DatosPeritoPersona {
     fecha_def: Date;
     celular: string;
     email: string;
+    activprincip: string;
 }
 @Component({
     selector: 'app-dialog-buscaPerito',
@@ -1511,6 +1512,7 @@ export class DialogBuscaPerito {
         this.datoPeritoPersona.fecha_def = element.FECHADEFUNCION;
         this.datoPeritoPersona.celular = element.CELULAR;
         this.datoPeritoPersona.email = element.EMAIL;
+        this.datoPeritoPersona.activprincip = element.ACTIVPRINCIP;
     }
 }
 
@@ -2921,10 +2923,13 @@ export class DialogRepresentacionPeritos {
                     this.fisicaFormGroup.controls['ine'].setValue(result.ine);
                     this.fisicaFormGroup.controls['idDocIdent'].setValue(result.idDocIdent);
                     this.fisicaFormGroup.controls['docIdent'].setValue(result.docIdent);
+                    this.fisicaFormGroup.controls['email'].setValue(result.email);
+                    this.fisicaFormGroup.controls['celular'].setValue(result.celular);
                     this.fisicaFormGroup.markAllAsTouched();
                 } else {
                     this.moralFormGroup.controls['nombre'].setValue(result.apaterno);
                     this.moralFormGroup.controls['rfc'].setValue(result.rfc);
+                    this.moralFormGroup.controls['actPreponderante'].setValue(result.activprincip);
                     this.moralFormGroup.markAllAsTouched();
                 }
                 this.changeRequired(null, null);
@@ -3352,10 +3357,13 @@ export class DialogRepresentadoPeritos {
                     this.fisicaFormGroup.controls['ine'].setValue(result.ine);
                     this.fisicaFormGroup.controls['idDocIdent'].setValue(result.idDocIdent);
                     this.fisicaFormGroup.controls['docIdent'].setValue(result.docIdent);
+                    this.fisicaFormGroup.controls['email'].setValue(result.email);
+                    this.fisicaFormGroup.controls['celular'].setValue(result.celular);
                     this.fisicaFormGroup.markAllAsTouched();
                 } else {
                     this.moralFormGroup.controls['nombre'].setValue(result.apaterno);
                     this.moralFormGroup.controls['rfc'].setValue(result.rfc);
+                    this.fisicaFormGroup.controls['actPreponderante'].setValue(result.activprincip);
                     this.moralFormGroup.markAllAsTouched();
                 }
                 this.changeRequired(null, null);
@@ -4265,6 +4273,9 @@ export interface Persona {
     ine: string;
     idDocIdent: number;
     docIdent: string;
+    email: string;
+    celular: string;
+    activprincip: string;
 }
 @Component({
     selector: 'app-dialog-persona',
@@ -4482,6 +4493,9 @@ export class DialogPersonaPeritos {
         this.persona.ine = element.CLAVEIFE;
         this.persona.idDocIdent = element.IDDOCIDENTIF;
         this.persona.docIdent = element.VALDOCIDENTIF;
+        this.persona.email = element.EMAIL;
+        this.persona.celular = element.CELULAR;
+        this.persona.activprincip = element.ACTIVPRINCIP;
     }
 }
 
