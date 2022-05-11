@@ -589,8 +589,6 @@ export class DialogBuscarNotarioAlta {
     * Verifica que haya campos llenos para habilitar el botón de búsqueda
     */
     validateSearch(){
-        console.log("ACA EL NUMERO");
-        console.log(this.dataNotarioSeleccionado.numero_documento);
         this.search = (
                 this.apellido_paterno ||
                 this.apellido_materno ||
