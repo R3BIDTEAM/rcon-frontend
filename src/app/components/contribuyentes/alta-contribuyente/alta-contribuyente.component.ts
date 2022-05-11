@@ -2066,10 +2066,13 @@ export class DialogRepresentacionAltaC {
                     this.fisicaFormGroup.controls['ine'].setValue(result.ine);
                     this.fisicaFormGroup.controls['idDocIdent'].setValue(result.idDocIdent);
                     this.fisicaFormGroup.controls['docIdent'].setValue(result.docIdent);
+                    this.fisicaFormGroup.controls['celular'].setValue(result.celular);
+                    this.fisicaFormGroup.controls['email'].setValue(result.email);
                     this.fisicaFormGroup.markAllAsTouched();
                 } else {
                     this.moralFormGroup.controls['nombre'].setValue(result.apaterno);
                     this.moralFormGroup.controls['rfc'].setValue(result.rfc);
+                    this.moralFormGroup.controls['actPreponderante'].setValue(result.activprincip);
                     this.moralFormGroup.markAllAsTouched();
                 }
             }
@@ -2414,10 +2417,13 @@ export class DialogRepresentadoAltaC {
                     this.fisicaFormGroup.controls['ine'].setValue(result.ine);
                     this.fisicaFormGroup.controls['idDocIdent'].setValue(result.idDocIdent);
                     this.fisicaFormGroup.controls['docIdent'].setValue(result.docIdent);
+                    this.fisicaFormGroup.controls['celular'].setValue(result.celular);
+                    this.fisicaFormGroup.controls['email'].setValue(result.email);
                     this.fisicaFormGroup.markAllAsTouched();
                 } else {
                     this.moralFormGroup.controls['nombre'].setValue(result.apaterno);
                     this.moralFormGroup.controls['rfc'].setValue(result.rfc);
+                    this.moralFormGroup.controls['actPreponderante'].setValue(result.activprincip);
                     this.moralFormGroup.markAllAsTouched();
                 }
                 this.changeRequired();
@@ -3151,6 +3157,9 @@ export interface Persona {
     ine: string;
     idDocIdent: number;
     docIdent: string;
+    email: string;
+    celular: string;
+    activprincip: string;
 }
 @Component({
     selector: 'app-dialog-persona',
@@ -3388,5 +3397,8 @@ export class DialogPersonaAltaC {
         this.persona.ine = element.CLAVEIFE;
         this.persona.idDocIdent = element.IDDOCIDENTIF;
         this.persona.docIdent = element.VALDOCIDENTIF;
+        this.persona.email = element.EMAIL;
+        this.persona.celular = element.CELULAR;
+        this.persona.activprincip = element.ACTIVPRINCIP;
     }
 }
