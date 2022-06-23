@@ -5963,6 +5963,16 @@ export interface DataHistorico{
     
         }
 
+        minDate2 = '';
+        maxDate2 = '';
+        maxDate = new Date((new Date().getTime()));
+    
+        fechaTope2(){
+            this.dataHistoricoModificaciones.fecha_hasta = null;
+            this.minDate2 = moment(this.dataHistoricoModificaciones.fecha_desde).add(1, 'd').format('YYYY-MM-DD');
+            this.maxDate2 = moment(this.dataHistoricoModificaciones.fecha_hasta).add(31, 'd').format('YYYY-MM-DD');
+        }
+
     /**
      * Obtiene el histórico de mofificaciones
      */

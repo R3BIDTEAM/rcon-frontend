@@ -8,7 +8,7 @@
         <div class="col-md-4">
             <mat-form-field appearance="fill" style="width: 100%;">
                 <mat-label>Fecha Desde:</mat-label>
-                <input matInput [matDatepicker]="pickdesde" [(ngModel)]="dataHistoricoModificaciones.fecha_desde">
+                <input matInput [matDatepicker]="pickdesde" [max]="maxDate" (dateChange)="fechaTope2()" [(ngModel)]="dataHistoricoModificaciones.fecha_desde">
                 <mat-datepicker-toggle matSuffix [for]="pickdesde"></mat-datepicker-toggle>
                 <mat-datepicker #pickdesde></mat-datepicker>
             </mat-form-field>
@@ -16,7 +16,7 @@
         <div class="col-md-4">
             <mat-form-field appearance="fill" style="width: 100%;">
                 <mat-label>Fecha Hasta:</mat-label>
-                <input matInput [matDatepicker]="pickhasta" [(ngModel)]="dataHistoricoModificaciones.fecha_hasta">
+                <input matInput [matDatepicker]="pickhasta" [min]="minDate2" [max]="maxDate2" [(ngModel)]="dataHistoricoModificaciones.fecha_hasta">
                 <mat-datepicker-toggle matSuffix [for]="pickhasta"></mat-datepicker-toggle>
                 <mat-datepicker #pickhasta></mat-datepicker>
             </mat-form-field>
