@@ -1468,16 +1468,16 @@ export class EditarContribuyenteComponent implements OnInit {
                     }
                 ]
             },
-            {  
-                layout: 'noBorders',
-                table: {  
-                    headerRows: 1,  
-                    widths: ['100%'],  
-                    body: [  
-                        [{ text: 'Contribuyente: De conformidad con el artículo 56, inciso b) párrafo segundo del Código Fiscal del Distrito Federal, los avisos que se presenten en forma extemporánea, surtirán sus efectos a partir de la fecha en que sean presentados. Asímismo, se le recuerda que, conforme con el artículo 73, fracción VII, las autoridades competentes a fin de cerciorarse del cumplimiento de las disposiciones que rigen la materia y comprobar infracciones a las mismas, están facultadas para realizar la verificación física, clasificación, valuación o comprobación de toda clase de bienes relacionados con las obligaciones fiscales establecidas en el mencionado Código.', fontSize: 8, alignment: "justify" }]    
-                    ]  
-                }  
-            },
+            // {  
+            //     layout: 'noBorders',
+            //     table: {  
+            //         headerRows: 1,  
+            //         widths: ['100%'],  
+            //         body: [  
+            //             [{ text: 'Contribuyente: De conformidad con el artículo 56, inciso b) párrafo segundo del Código Fiscal del Distrito Federal, los avisos que se presenten en forma extemporánea, surtirán sus efectos a partir de la fecha en que sean presentados. Asímismo, se le recuerda que, conforme con el artículo 73, fracción VII, las autoridades competentes a fin de cerciorarse del cumplimiento de las disposiciones que rigen la materia y comprobar infracciones a las mismas, están facultadas para realizar la verificación física, clasificación, valuación o comprobación de toda clase de bienes relacionados con las obligaciones fiscales establecidas en el mencionado Código.', fontSize: 8, alignment: "justify" }]    
+            //         ]  
+            //     }  
+            // },
             {
                 image: await this.getBase64ImageFromURL(
                 "assets/img/logo_dependencia_rcon.png"
