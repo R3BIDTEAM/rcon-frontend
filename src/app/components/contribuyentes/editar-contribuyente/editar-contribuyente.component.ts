@@ -1348,7 +1348,7 @@ export class EditarContribuyenteComponent implements OnInit {
             }, 
             {  
                 text: 'COMPROBANTE DE AVISO DE MODIFICACIÓN AL PADRÓN DE CONTRIBUYENTES DEL IMPUESTO PREDIAL',  
-                fontSize: 9,  
+                fontSize: 8,  
                 alignment: 'center',  
                 color: '#000'  
             }, 
@@ -1367,13 +1367,13 @@ export class EditarContribuyenteComponent implements OnInit {
             },
             {  
                 text: 'ADMINISTRACIÓN TRIBUTARIA: ' + this.dataActualizacion.at,  
-                fontSize: 9,  
+                fontSize: 8,  
                 alignment: 'left',  
                 color: '#000'  
             }, 
             {  
                 text: 'NUMERO DE CUENTA PREDIAL: ' + this.dataActualizacion.cuentaP,  
-                fontSize: 9,  
+                fontSize: 8,  
                 alignment: 'left',  
                 color: '#000'  
             }, 
@@ -1396,14 +1396,14 @@ export class EditarContribuyenteComponent implements OnInit {
                     headerRows: 1,  
                     widths: ['30%', '10%', '30%', '30%'],  
                     body: [  
-                        ['', '', { text: 'ANTES', bold: true, alignment: 'right', fontSize: 9 }, { text: 'DESPUÉS', bold: true, fontSize: 9 }],  
-                        [ '', '', { text: 'Datos del contribuyente', bold: true, alignment: 'right', fontSize: 9 }, { text: 'Datos del contribuyente', bold: true, fontSize: 9 } ],
-                        [ { text: 'Nombre del contribuyente:', fontSize: 9 }, '', { text: this.dataActualizacion.before_Nombre, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_Nombre, fontSize: 9 } ],
-                        [ { text: 'RFC', fontSize: 9 }, '', { text: this.dataActualizacion.before_RFC, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_RFC, fontSize: 9 } ],
-                        ['', '', { text: 'Datos Administrativos del Inmueble', bold: true, alignment: 'right', fontSize: 9 }, { text: 'Datos Administrativos del Inmueble', bold: true, fontSize: 9 }],
-                        [ { text: 'Domicilio de notificación:', fontSize: 9 }, '', { text: this.dataActualizacion.before_Direccion, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_Direccion, fontSize: 9 } ],
-                        [ { text: 'Colonia:', fontSize: 9 }, '', { text: this.dataActualizacion.before_Col, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_Col, fontSize: 9 } ],
-                        [ { text: 'C.P:', fontSize: 9 }, '', { text: this.dataActualizacion.before_CP, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_CP, fontSize: 9 } ],
+                        ['', '', { text: 'ANTES', bold: true, alignment: 'right', fontSize: 8 }, { text: 'DESPUÉS', bold: true, fontSize: 8 }],  
+                        [ '', '', { text: 'Datos del contribuyente', bold: true, alignment: 'right', fontSize: 8 }, { text: 'Datos del contribuyente', bold: true, fontSize: 8 } ],
+                        [ { text: 'Nombre del contribuyente:', fontSize: 8 }, '', { text: this.dataActualizacion.before_Nombre, fontSize: 8, alignment: 'right' }, { text: this.dataActualizacion.after_Nombre, fontSize: 8 } ],
+                        [ { text: 'RFC', fontSize: 8 }, '', { text: this.dataActualizacion.before_RFC, fontSize: 8, alignment: 'right' }, { text: this.dataActualizacion.after_RFC, fontSize: 8 } ],
+                        ['', '', { text: 'Datos Administrativos del Inmueble', bold: true, alignment: 'right', fontSize: 8 }, { text: 'Datos Administrativos del Inmueble', bold: true, fontSize: 8 }],
+                        [ { text: 'Domicilio de notificación:', fontSize: 8 }, '', { text: this.dataActualizacion.before_Direccion, fontSize: 8, alignment: 'right' }, { text: this.dataActualizacion.after_Direccion, fontSize: 8 } ],
+                        [ { text: 'Colonia:', fontSize: 8 }, '', { text: this.dataActualizacion.before_Col, fontSize: 8, alignment: 'right' }, { text: this.dataActualizacion.after_Col, fontSize: 8 } ],
+                        [ { text: 'C.P:', fontSize: 8 }, '', { text: this.dataActualizacion.before_CP, fontSize: 8, alignment: 'right' }, { text: this.dataActualizacion.after_CP, fontSize: 8 } ],
                     ]  
                 }  
             },
@@ -1448,149 +1448,10 @@ export class EditarContribuyenteComponent implements OnInit {
                     headerRows: 1,  
                     widths: ['20%', '80%'],  
                     body: [  
-                        [{ text: 'Nombre de usuario:', fontSize: 9 }, { text: this.dataActualizacion.usuario, fontSize: 9 }],  
-                        [{ text: 'Área de consulta:', fontSize: 9 }, { text: this.dataActualizacion.area, fontSize: 9 }],    
-                        [{ text: 'Fecha de consulta:', fontSize: 9 }, { text: this.dataActualizacion.fechaConsulta, fontSize: 9 }],  
-                        [{ text: 'Folio:', fontSize: 9 }, { text: this.dataActualizacion.folio, fontSize: 9 }],    
-                    ]  
-                }  
-            },
-            {
-                canvas: [
-                    {
-                        type: 'line',
-                        color: 'white',
-                        x1: 0,
-                        y1: 10,
-                        x2: 250,
-                        y2: 10,
-                        lineWidth: 0.5
-                    }
-                ]
-            },
-            // {  
-            //     layout: 'noBorders',
-            //     table: {  
-            //         headerRows: 1,  
-            //         widths: ['100%'],  
-            //         body: [  
-            //             [{ text: 'Contribuyente: De conformidad con el artículo 56, inciso b) párrafo segundo del Código Fiscal del Distrito Federal, los avisos que se presenten en forma extemporánea, surtirán sus efectos a partir de la fecha en que sean presentados. Asímismo, se le recuerda que, conforme con el artículo 73, fracción VII, las autoridades competentes a fin de cerciorarse del cumplimiento de las disposiciones que rigen la materia y comprobar infracciones a las mismas, están facultadas para realizar la verificación física, clasificación, valuación o comprobación de toda clase de bienes relacionados con las obligaciones fiscales establecidas en el mencionado Código.', fontSize: 8, alignment: "justify" }]    
-            //         ]  
-            //     }  
-            // },
-            {
-                image: await this.getBase64ImageFromURL(
-                "assets/img/logo_dependencia_rcon.png"
-              ),
-              width: 450,
-              alignment: 'center',
-            }, 
-            {  
-                text: 'COMPROBANTE DE AVISO DE MODIFICACIÓN AL PADRÓN DE CONTRIBUYENTES DEL IMPUESTO PREDIAL',  
-                fontSize: 9,  
-                alignment: 'center',  
-                color: '#000'  
-            }, 
-            {
-                canvas: [
-                    {
-                        type: 'line',
-                        color: 'white',
-                        x1: 0,
-                        y1: 10,
-                        x2: 250,
-                        y2: 10,
-                        lineWidth: 0.5
-                    }
-                ]
-            },
-            {  
-                text: 'ADMINISTRACIÓN TRIBUTARIA: ' + this.dataActualizacion.at,  
-                fontSize: 9,  
-                alignment: 'left',  
-                color: '#000'  
-            }, 
-            {  
-                text: 'NUMERO DE CUENTA PREDIAL: ' + this.dataActualizacion.cuentaP,  
-                fontSize: 9,  
-                alignment: 'left',  
-                color: '#000'  
-            }, 
-            {
-                canvas: [
-                    {
-                        type: 'line',
-                        color: 'white',
-                        x1: 0,
-                        y1: 5,
-                        x2: 250,
-                        y2: 5,
-                        lineWidth: 0.5
-                    }
-                ]
-            },
-            {  
-                layout: 'noBorders',
-                table: {  
-                    headerRows: 1,  
-                    widths: ['30%', '10%', '30%', '30%'],  
-                    body: [  
-                        ['', '', { text: 'ANTES', bold: true, alignment: 'right', fontSize: 9 }, { text: 'DESPUÉS', bold: true, fontSize: 9 }],  
-                        [ '', '', { text: 'Datos del contribuyente', bold: true, alignment: 'right', fontSize: 9 }, { text: 'Datos del contribuyente', bold: true, fontSize: 9 } ],
-                        [ { text: 'Nombre del contribuyente:', fontSize: 9 }, '', { text: this.dataActualizacion.before_Nombre, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_Nombre, fontSize: 9 } ],
-                        [ { text: 'RFC', fontSize: 9 }, '', { text: this.dataActualizacion.before_RFC, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_RFC, fontSize: 9 } ],
-                        ['', '', { text: 'Datos Administrativos del Inmueble', bold: true, alignment: 'right', fontSize: 9 }, { text: 'Datos Administrativos del Inmueble', bold: true, fontSize: 9 }],
-                        [ { text: 'Domicilio de notificación:', fontSize: 9 }, '', { text: this.dataActualizacion.before_Direccion, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_Direccion, fontSize: 9 } ],
-                        [ { text: 'Colonia:', fontSize: 9 }, '', { text: this.dataActualizacion.before_Col, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_Col, fontSize: 9 } ],
-                        [ { text: 'C.P:', fontSize: 9 }, '', { text: this.dataActualizacion.before_CP, fontSize: 9, alignment: 'right' }, { text: this.dataActualizacion.after_CP, fontSize: 9 } ],
-                    ]  
-                }  
-            },
-            {
-                canvas: [
-                    {
-                        type: 'line',
-                        x1: 525,
-                        y1: 20,
-                        x2: 150,
-                        y2: 20,
-                        lineWidth: 0.5
-                    }
-                ]
-            },
-            {  
-                layout: 'noBorders',
-                table: {  
-                    headerRows: 1,  
-                    widths: ['30%', '70%'],  
-                    body: [  
-                        ['', { text: 'NOMBRE Y FIRMA DE CONFORMIDAD DEL CONTRIBUYENTE O REPRESENTANTE LEGAL', bold: true, alignment: 'center', fontSize: 8 }],    
-                    ]  
-                }   
-            },
-            {
-                canvas: [
-                    {
-                        type: 'line',
-                        color: 'white',
-                        x1: 0,
-                        y1: 20,
-                        x2: 250,
-                        y2: 20,
-                        lineWidth: 0.5
-                    }
-                ]
-            },
-            {  
-                layout: 'noBorders',
-                table: {  
-                    headerRows: 1,  
-                    widths: ['20%', '80%'],  
-                    body: [  
-                        [{ text: 'Nombre de usuario:', fontSize: 9 }, { text: this.dataActualizacion.usuario, fontSize: 9 }],  
-                        [{ text: 'Área de consulta:', fontSize: 9 }, { text: this.dataActualizacion.area, fontSize: 9 }],    
-                        [{ text: 'Fecha de consulta:', fontSize: 9 }, { text: this.dataActualizacion.fechaConsulta, fontSize: 9 }],  
-                        [{ text: 'Folio:', fontSize: 9 }, { text: this.dataActualizacion.folio, fontSize: 9 }],    
+                        [{ text: 'Nombre de usuario:', fontSize: 8 }, { text: this.dataActualizacion.usuario, fontSize: 8 }],  
+                        [{ text: 'Área de consulta:', fontSize: 8 }, { text: this.dataActualizacion.area, fontSize: 8 }],    
+                        [{ text: 'Fecha de consulta:', fontSize: 8 }, { text: this.dataActualizacion.fechaConsulta, fontSize: 8 }],  
+                        [{ text: 'Folio:', fontSize: 8 }, { text: this.dataActualizacion.folio, fontSize: 8 }],    
                     ]  
                 }  
             },
@@ -1613,7 +1474,146 @@ export class EditarContribuyenteComponent implements OnInit {
                     headerRows: 1,  
                     widths: ['100%'],  
                     body: [  
-                        [{ text: 'Contribuyente: De conformidad con el artículo 56, inciso b) párrafo segundo del Código Fiscal del Distrito Federal, los avisos que se presenten en forma extemporánea, surtirán sus efectos a partir de la fecha en que sean presentados. Asímismo, se le recuerda que, conforme con el artículo 73, fracción VII, las autoridades competentes a fin de cerciorarse del cumplimiento de las disposiciones que rigen la materia y comprobar infracciones a las mismas, están facultadas para realizar la verificación física, clasificación, valuación o comprobación de toda clase de bienes relacionados con las obligaciones fiscales establecidas en el mencionado Código.', fontSize: 8, alignment: "justify" }]    
+                        [{ text: 'Contribuyente: De conformidad con el artículo 56, inciso b) párrafo segundo del Código Fiscal del Distrito Federal, los avisos que se presenten en forma extemporánea, surtirán sus efectos a partir de la fecha en que sean presentados. Asímismo, se le recuerda que, conforme con el artículo 73, fracción VII, las autoridades competentes a fin de cerciorarse del cumplimiento de las disposiciones que rigen la materia y comprobar infracciones a las mismas, están facultadas para realizar la verificación física, clasificación, valuación o comprobación de toda clase de bienes relacionados con las obligaciones fiscales establecidas en el mencionado Código.', fontSize: 7, alignment: "justify" }]    
+                    ]  
+                }  
+            },
+            {
+                image: await this.getBase64ImageFromURL(
+                "assets/img/logo_dependencia_rcon.png"
+              ),
+              width: 450,
+              alignment: 'center',
+            }, 
+            {  
+                text: 'COMPROBANTE DE AVISO DE MODIFICACIÓN AL PADRÓN DE CONTRIBUYENTES DEL IMPUESTO PREDIAL',  
+                fontSize: 8,  
+                alignment: 'center',  
+                color: '#000'  
+            }, 
+            {
+                canvas: [
+                    {
+                        type: 'line',
+                        color: 'white',
+                        x1: 0,
+                        y1: 10,
+                        x2: 250,
+                        y2: 10,
+                        lineWidth: 0.5
+                    }
+                ]
+            },
+            {  
+                text: 'ADMINISTRACIÓN TRIBUTARIA: ' + this.dataActualizacion.at,  
+                fontSize: 8,  
+                alignment: 'left',  
+                color: '#000'  
+            }, 
+            {  
+                text: 'NUMERO DE CUENTA PREDIAL: ' + this.dataActualizacion.cuentaP,  
+                fontSize: 8,  
+                alignment: 'left',  
+                color: '#000'  
+            }, 
+            {
+                canvas: [
+                    {
+                        type: 'line',
+                        color: 'white',
+                        x1: 0,
+                        y1: 5,
+                        x2: 250,
+                        y2: 5,
+                        lineWidth: 0.5
+                    }
+                ]
+            },
+            {  
+                layout: 'noBorders',
+                table: {  
+                    headerRows: 1,  
+                    widths: ['30%', '10%', '30%', '30%'],  
+                    body: [  
+                        ['', '', { text: 'ANTES', bold: true, alignment: 'right', fontSize: 8 }, { text: 'DESPUÉS', bold: true, fontSize: 8 }],  
+                        [ '', '', { text: 'Datos del contribuyente', bold: true, alignment: 'right', fontSize: 8 }, { text: 'Datos del contribuyente', bold: true, fontSize: 8 } ],
+                        [ { text: 'Nombre del contribuyente:', fontSize: 8 }, '', { text: this.dataActualizacion.before_Nombre, fontSize: 8, alignment: 'right' }, { text: this.dataActualizacion.after_Nombre, fontSize: 8 } ],
+                        [ { text: 'RFC', fontSize: 8 }, '', { text: this.dataActualizacion.before_RFC, fontSize: 8, alignment: 'right' }, { text: this.dataActualizacion.after_RFC, fontSize: 8 } ],
+                        ['', '', { text: 'Datos Administrativos del Inmueble', bold: true, alignment: 'right', fontSize: 8 }, { text: 'Datos Administrativos del Inmueble', bold: true, fontSize: 8 }],
+                        [ { text: 'Domicilio de notificación:', fontSize: 8 }, '', { text: this.dataActualizacion.before_Direccion, fontSize: 8, alignment: 'right' }, { text: this.dataActualizacion.after_Direccion, fontSize: 8 } ],
+                        [ { text: 'Colonia:', fontSize: 8 }, '', { text: this.dataActualizacion.before_Col, fontSize: 8, alignment: 'right' }, { text: this.dataActualizacion.after_Col, fontSize: 8 } ],
+                        [ { text: 'C.P:', fontSize: 8 }, '', { text: this.dataActualizacion.before_CP, fontSize: 8, alignment: 'right' }, { text: this.dataActualizacion.after_CP, fontSize: 8 } ],
+                    ]  
+                }  
+            },
+            {
+                canvas: [
+                    {
+                        type: 'line',
+                        x1: 525,
+                        y1: 20,
+                        x2: 150,
+                        y2: 20,
+                        lineWidth: 0.5
+                    }
+                ]
+            },
+            {  
+                layout: 'noBorders',
+                table: {  
+                    headerRows: 1,  
+                    widths: ['30%', '70%'],  
+                    body: [  
+                        ['', { text: 'NOMBRE Y FIRMA DE CONFORMIDAD DEL CONTRIBUYENTE O REPRESENTANTE LEGAL', bold: true, alignment: 'center', fontSize: 7 }],    
+                    ]  
+                }   
+            },
+            {
+                canvas: [
+                    {
+                        type: 'line',
+                        color: 'white',
+                        x1: 0,
+                        y1: 20,
+                        x2: 250,
+                        y2: 20,
+                        lineWidth: 0.5
+                    }
+                ]
+            },
+            {  
+                layout: 'noBorders',
+                table: {  
+                    headerRows: 1,  
+                    widths: ['20%', '80%'],  
+                    body: [  
+                        [{ text: 'Nombre de usuario:', fontSize: 8 }, { text: this.dataActualizacion.usuario, fontSize: 8 }],  
+                        [{ text: 'Área de consulta:', fontSize: 8 }, { text: this.dataActualizacion.area, fontSize: 8 }],    
+                        [{ text: 'Fecha de consulta:', fontSize: 8 }, { text: this.dataActualizacion.fechaConsulta, fontSize: 8 }],  
+                        [{ text: 'Folio:', fontSize: 8 }, { text: this.dataActualizacion.folio, fontSize: 8 }],    
+                    ]  
+                }  
+            },
+            {
+                canvas: [
+                    {
+                        type: 'line',
+                        color: 'white',
+                        x1: 0,
+                        y1: 10,
+                        x2: 250,
+                        y2: 10,
+                        lineWidth: 0.5
+                    }
+                ]
+            },
+            {  
+                layout: 'noBorders',
+                table: {  
+                    headerRows: 1,  
+                    widths: ['100%'],  
+                    body: [  
+                        [{ text: 'Contribuyente: De conformidad con el artículo 56, inciso b) párrafo segundo del Código Fiscal del Distrito Federal, los avisos que se presenten en forma extemporánea, surtirán sus efectos a partir de la fecha en que sean presentados. Asímismo, se le recuerda que, conforme con el artículo 73, fracción VII, las autoridades competentes a fin de cerciorarse del cumplimiento de las disposiciones que rigen la materia y comprobar infracciones a las mismas, están facultadas para realizar la verificación física, clasificación, valuación o comprobación de toda clase de bienes relacionados con las obligaciones fiscales establecidas en el mencionado Código.', fontSize: 7, alignment: "justify" }]    
                     ]  
                 }  
             },
