@@ -1335,7 +1335,7 @@ export class EditarContribuyenteComponent implements OnInit {
 
       /**
       * Genera el PDF de cambio de Domicilio
-      */
+      */ 
       async generatePDFDomicilio() {
         this.dataActualizacion.cuentaP = ((this.dataActualizacion.cuentaP) ? this.dataActualizacion.cuentaP : '');
         let docDefinition = {
