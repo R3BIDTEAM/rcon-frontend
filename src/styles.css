@@ -274,3 +274,8 @@ table {
     border-color: #9C2348!important;
     border: 1px solid #9C2348!important;
   }
+
+  .mat-calendar-body-selected {
+    background-color: #9C2348!important;
+    color: white;
+}
