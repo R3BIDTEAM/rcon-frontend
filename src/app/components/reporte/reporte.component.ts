@@ -77,7 +77,7 @@ export class ReporteComponent implements OnInit {
     fechaTope2(){
         this.reporteFormGroup.controls['fechaFin'].setValue(null);
         this.minDate2 = moment(this.reporteFormGroup.controls['fechaInicio'].value).add(1, 'd').format('YYYY-MM-DD');
-        this.maxDate2 = moment(this.reporteFormGroup.controls['fechaInicio'].value).add(31, 'd').format('YYYY-MM-DD');
+        this.maxDate2 = moment(this.reporteFormGroup.controls['fechaInicio'].value).add(2, 'd').format('YYYY-MM-DD');
     }
 
 	/**
