@@ -10,7 +10,7 @@
 	# RewriteCond %{HTTPS} !on
   	# RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 	# --
-	RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} !^/ovica-backend
+	RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} !^/rcon-backend
 	RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
 	RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
 
