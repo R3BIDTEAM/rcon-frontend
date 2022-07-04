@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  closeSession: false,
+  closeSession: false, 
   baseHref: '/',
   appName: 'RCON',
   // endpoint:'http://ovica.linesolutions.tech/rcon-backend/public/api/v1/',
