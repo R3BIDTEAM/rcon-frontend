@@ -7,7 +7,7 @@ export const environment = {
   closeSession: false,
   baseHref: '/',
   appName: 'RCON',
-  //endpoint:'http://ovica.linesolutions.tech/rcon-backend/public/api/v1/',
+  // endpoint:'http://ovica.linesolutions.tech/rcon-backend/public/api/v1/',
   endpoint: 'http://localhost:8000/api/v1/',
   ssoEndpoint: 'http://ovica.linesolutions.tech/sso-backend/public/api/v1/',
   ssoRemember: 'http://ovica.linesolutions.tech/sso/recordar-password',

@@ -274,3 +274,24 @@ table {
     border-color: #9C2348!important;
     border: 1px solid #9C2348!important;
   }
+
+  .mat-calendar-body-selected {
+    background-color: #9C2348!important;
+    color: white;
+  }
+
+  .mat-button:hover, .mat-icon-button:hover, .mat-stroked-button:hover{
+    color: #9C2348!important;
+  }
+
+  .mat-button:active, .mat-icon-button:active, .mat-stroked-button:active{
+    color: #9C2348!important;
+  }
+
+  .mat-button:target, .mat-icon-button:target, .mat-stroked-button:target{
+    color: #9C2348!important;
+  }
+
+  .mat-datepicker-toggle-active{
+    color: #9C2348!important;
+  }
