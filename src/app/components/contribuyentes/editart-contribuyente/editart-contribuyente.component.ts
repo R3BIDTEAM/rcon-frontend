@@ -13,6 +13,7 @@ import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";  
 pdfMake.vfs = pdfFonts.pdfMake.vfs; 
 import { DialogConfirmacionComponent, DialogsCambiaPersona, DialogsAsociarCuenta } from '@comp/dialog-confirmacion/dialog-confirmacion.component';
+import { DialogCuenta } from '@comp/dialog-confirmacion/dialog-confirmacion.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 
@@ -280,6 +281,7 @@ export class EditartContribuyenteComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.mensajeCuenta(4,null)
         this.cuentaPredial = '';
         console.log("VARIABLE CLEAN" + this.cuentaPredial);
         this.fisicaFormGroup = this._formBuilder.group({
@@ -329,6 +331,24 @@ export class EditartContribuyenteComponent implements OnInit {
         this.getRepresentado();
     }
 
+    /**
+   * Mostrará en panatalla el mensaje de advertencia donde se le mencionara que cada cambio afectará a las cuentas asociadas.
+   * @param mensaje Valor para mostrar el mensaje en pantalla.
+   * @param idpersona Id de la persona.
+   */
+    mensajeCuenta(mensaje, idpersona){
+    
+        const dialogRef = this.dialog.open(DialogCuenta, {
+        width: '800px',
+        data: {mensaje: mensaje, idpersona: idpersona}
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            //console.log("ACÁ RESULT");
+            if(result != false){
+                console.log(result);    
+            }
+        });
+    }
     /** 
      * @param event detecta cuando se presiona una tecla, esta funcion sólo permite que se tecleen valores alfanuméricos, los demás son bloqueados
      */

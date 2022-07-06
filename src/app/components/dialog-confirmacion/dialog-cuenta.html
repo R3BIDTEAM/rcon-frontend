@@ -17,10 +17,16 @@
             </h3>
         </div>
     </div>
+    <div class="row" *ngIf="mensaje == 4">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <h3>Para poder editar este contribuyente, debe dar clic en Guardar, para proceder a editar la cuenta seleccionada.</h3>
+        </div>
+    </div>
 </div>
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Cerrar</button>
-    <button mat-flat-button color="primary" [mat-dialog-close]="1" *ngIf="mensaje !== 3">EDITAR TODAS LAS CUENTAS</button>
-    <button mat-flat-button color="primary" [mat-dialog-close]="2" *ngIf="mensaje !== 3">EDITAR SÓLO ESTA CUENTA</button>
-    <button mat-flat-button color="primary" [mat-dialog-close]="3" *ngIf="mensaje == 3">ACEPTAR</button>
+    <button mat-flat-button color="primary" [mat-dialog-close]="1" *ngIf="mensaje === 1">EDITAR TODAS LAS CUENTAS</button>
+    <button mat-flat-button color="primary" [mat-dialog-close]="2" *ngIf="mensaje === 1">EDITAR SÓLO ESTA CUENTA</button>
+    <button mat-flat-button color="primary" [mat-dialog-close]="3" *ngIf="mensaje === 3">ACEPTAR</button>
 </mat-dialog-actions>
