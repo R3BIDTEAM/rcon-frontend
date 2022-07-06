@@ -343,7 +343,7 @@ export class EditartContribuyenteComponent implements OnInit {
         data: {mensaje: mensaje, idpersona: idpersona}
         });
         dialogRef.afterClosed().subscribe(result => {
-            console.log("ACÁ RESULT");
+            //console.log("ACÁ RESULT");
             if(result != false){
                 console.log(result);    
             }
