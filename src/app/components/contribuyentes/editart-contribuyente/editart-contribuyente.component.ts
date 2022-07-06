@@ -281,7 +281,7 @@ export class EditartContribuyenteComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.mensajeConfirma(4,null)
+        this.mensajeCuenta(4,null)
         this.cuentaPredial = '';
         console.log("VARIABLE CLEAN" + this.cuentaPredial);
         this.fisicaFormGroup = this._formBuilder.group({
