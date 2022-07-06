@@ -19,7 +19,7 @@
                 <div class="row" *ngIf="!loading">
                     <mat-form-field appearance="fill" class="col-6">
                         <mat-label>Tipo de persona:</mat-label>
-                        <mat-select [(ngModel)]="contribuyente.tipoPersona" (selectionChange)="actualizaPersona($event.value)">
+                        <mat-select [(ngModel)]="contribuyente.tipoPersona" (selectionChange)="actualizaPersona($event.value)" [disabled]="true">
                             <mat-option value="F">Física</mat-option>
                             <mat-option value="M">Moral</mat-option>
                         </mat-select>
@@ -37,7 +37,7 @@
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-md-12">
                                 <mat-label>Nombre: *</mat-label>
-                                <input matInput formControlName="nombre" [(ngModel)]="contribuyente.nombre" placeholder="Ingrese el Nombre" style="text-transform: uppercase;" maxlength="250">
+                                <input matInput formControlName="nombre" [(ngModel)]="contribuyente.nombre" placeholder="Ingrese el Nombre" style="text-transform: uppercase;" maxlength="250" readonly>
                                 <mat-error *ngIf="fisicaFormGroup.controls.nombre.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="fisicaFormGroup.controls.nombre.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
                             </mat-form-field>
@@ -45,26 +45,26 @@
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-md-6">
                                 <mat-label>Apellido Paterno: *</mat-label>
-                                <input matInput formControlName="apepaterno" [(ngModel)]="contribuyente.apepaterno" placeholder="Ingrese el Apellido Paterno" style="text-transform: uppercase;" maxlength="250">
+                                <input matInput formControlName="apepaterno" [(ngModel)]="contribuyente.apepaterno" placeholder="Ingrese el Apellido Paterno" style="text-transform: uppercase;" maxlength="250" readonly>
                                 <mat-error *ngIf="fisicaFormGroup.controls.apepaterno.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="fisicaFormGroup.controls.apepaterno.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-md-6" style="margin-left: 0px!important;">
                                 <mat-label>Apellido Materno:</mat-label>
-                                <input matInput formControlName="apematerno" [(ngModel)]="contribuyente.apematerno" placeholder="Ingrese el Apellido Materno" style="text-transform: uppercase;" maxlength="250">
+                                <input matInput formControlName="apematerno" [(ngModel)]="contribuyente.apematerno" placeholder="Ingrese el Apellido Materno" style="text-transform: uppercase;" maxlength="250" readonly>
                                 <mat-error *ngIf="fisicaFormGroup.controls.apematerno.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-md-6">
                                 <mat-label>RFC: **</mat-label>
-                                <input matInput formControlName="rfc" (keyup)="changeRequired()" placeholder="Ingrese el RFC" [(ngModel)]="contribuyente.rfc" [required]="isRequired" pattern="^([A-ZÑ&]{4})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" maxlength="13" style="text-transform: uppercase;" onkeyup="this.value = this.value.toUpperCase();">
+                                <input matInput formControlName="rfc" (keyup)="changeRequired()" placeholder="Ingrese el RFC" [(ngModel)]="contribuyente.rfc" [required]="isRequired" pattern="^([A-ZÑ&]{4})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" maxlength="13" style="text-transform: uppercase;" onkeyup="this.value = this.value.toUpperCase();" readonly>
                                 <mat-error *ngIf="fisicaFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="fisicaFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 4 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-md-6" style="margin-left: 0px!important;">
                                 <mat-label>CURP: **</mat-label>
-                                <input matInput formControlName="curp" (keyup)="changeRequired()" placeholder="Ingrese el CURP" [(ngModel)]="contribuyente.curp" [required]="isRequired" pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$" maxlength="18" style="text-transform: uppercase;" onkeyup="this.value = this.value.toUpperCase();">
+                                <input matInput formControlName="curp" (keyup)="changeRequired()" placeholder="Ingrese el CURP" [(ngModel)]="contribuyente.curp" [required]="isRequired" pattern="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$" maxlength="18" style="text-transform: uppercase;" onkeyup="this.value = this.value.toUpperCase();" readonly>
                                 <mat-error *ngIf="fisicaFormGroup.controls.curp.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="fisicaFormGroup.controls.curp.errors?.pattern">CURP no valido</mat-error>
                             </mat-form-field>
@@ -72,14 +72,14 @@
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-md-6">
                                 <mat-label>Clave INE:</mat-label>
-                                <input matInput formControlName="ine" [(ngModel)]="contribuyente.ine" placeholder="Ingrese el INE" pattern="[a-zA-Z]{6}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])(?:0[1-9]|[12]\d|3[0123])[hmHM]{1}\d{3}" style="text-transform: uppercase;" maxlength="18">
+                                <input matInput formControlName="ine" [(ngModel)]="contribuyente.ine" placeholder="Ingrese el INE" pattern="[a-zA-Z]{6}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])(?:0[1-9]|[12]\d|3[0123])[hmHM]{1}\d{3}" style="text-transform: uppercase;" maxlength="18" readonly>
                                 <mat-error *ngIf="fisicaFormGroup.controls.ine.errors?.pattern">El campo INE debe contener 6 letras mayúsculas, 8 números, H o M y 3 números.</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
                             <mat-form-field appearance="fill" class="col-md-6">
                                 <mat-label>Otro Documento:</mat-label>
-                                <mat-select formControlName="idDocIdent" [class.spinner]="loadingDocumentos" [(ngModel)]="contribuyente.identificacion" (selectionChange)="seleccionaDocto($event)">
+                                <mat-select formControlName="idDocIdent" [class.spinner]="loadingDocumentos" [(ngModel)]="contribuyente.identificacion" (selectionChange)="seleccionaDocto($event)" [disabled]="true">
                                     <mat-option *ngFor="let documento of dataDocumentos" [value]="documento.IDDOCIDENTIF">
                                         {{ documento.DESCRIPCION }}
                                     </mat-option>
@@ -93,22 +93,22 @@
 
                             <mat-form-field appearance="outline" class="col-5"  *ngIf="selectCedula">
                                 <mat-label>Número Documento</mat-label>                        
-                                    <input matInput formControlName="docIdent" [(ngModel)]="contribuyente.idedato" [disabled]="inserto" pattern="\d{8}" placeholder="Ingrese número documento" maxlength="8" style="text-transform: uppercase;">
+                                    <input matInput formControlName="docIdent" [(ngModel)]="contribuyente.idedato" [disabled]="inserto" pattern="\d{8}" placeholder="Ingrese número documento" maxlength="8" style="text-transform: uppercase;" readonly>
                                     <mat-error *ngIf="fisicaFormGroup.controls.docIdent.errors?.pattern">El número de cédula debe contener 8 dígitos en caso de tener 7 debe incluir un "0"</mat-error>                        
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-5"  *ngIf="selectPasaporte">
                                 <mat-label>Número Documento</mat-label>                        
-                                    <input matInput formControlName="docIdent" [(ngModel)]="contribuyente.idedato" [disabled]="inserto" pattern="\d{1,8}" placeholder="Ingrese número documento" maxlength="8" style="text-transform: uppercase;">
+                                    <input matInput formControlName="docIdent" [(ngModel)]="contribuyente.idedato" [disabled]="inserto" pattern="\d{1,8}" placeholder="Ingrese número documento" maxlength="8" style="text-transform: uppercase;" readonly>
                                     <mat-error *ngIf="fisicaFormGroup.controls.docIdent.errors?.pattern">El número del pasaporte no debe ser mayor a 8 dígitos</mat-error>                        
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-5"  *ngIf="selectLicencia">
                                 <mat-label>Número Documento</mat-label>                        
-                                    <input matInput formControlName="docIdent" [(ngModel)]="contribuyente.idedato" [disabled]="inserto" pattern="^\S{10}" placeholder="Ingrese número documento" maxlength="10" style="text-transform: uppercase;">
+                                    <input matInput formControlName="docIdent" [(ngModel)]="contribuyente.idedato" [disabled]="inserto" pattern="^\S{10}" placeholder="Ingrese número documento" maxlength="10" style="text-transform: uppercase;" readonly>
                                     <mat-error *ngIf="fisicaFormGroup.controls.docIdent.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?)</mat-error>                        
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-5"  *ngIf="selectNSS">
                                 <mat-label>Número Documento</mat-label>                        
-                                    <input matInput formControlName="docIdent" [(ngModel)]="contribuyente.idedato" [disabled]="inserto" pattern="\d{11}" placeholder="Ingrese número documento" maxlength="11" style="text-transform: uppercase;">
+                                    <input matInput formControlName="docIdent" [(ngModel)]="contribuyente.idedato" [disabled]="inserto" pattern="\d{11}" placeholder="Ingrese número documento" maxlength="11" style="text-transform: uppercase;" readonly>
                                     <mat-error *ngIf="fisicaFormGroup.controls.docIdent.errors?.pattern">El número de seguro social (NSS) debe contener 11 números</mat-error>                        
                             </mat-form-field>
                         </div>
@@ -129,12 +129,12 @@
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-md-6">
                                 <mat-label>Celular:</mat-label>
-                                <input matInput formControlName="celular" [(ngModel)]="contribuyente.celular" maxlength="10" placeholder="Ingrese el Celular">
+                                <input matInput formControlName="celular" [(ngModel)]="contribuyente.celular" maxlength="10" placeholder="Ingrese el Celular" readonly>
                                 <mat-error *ngIf="fisicaFormGroup.controls.celular.errors?.pattern">Existe un espacio al inicio y/o final de la cadena o algún caracter invalido (*/-_|!¡¿?)</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-md-6" style="margin-left: 0px!important;">
                                 <mat-label>Correo: *</mat-label>
-                                <input matInput formControlName="email" placeholder="Ingrese el Correo" [(ngModel)]="contribuyente.email" maxlength="250">
+                                <input matInput formControlName="email" placeholder="Ingrese el Correo" [(ngModel)]="contribuyente.email" maxlength="250" readonly>
                                 <mat-error *ngIf="fisicaFormGroup.controls.email.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="fisicaFormGroup.hasError('email', 'email') && fisicaFormGroup.get('email').touched">El campo correo electrónico debe cumplir la estructura "usuario@dominio".</mat-error>
                                 <mat-error *ngIf="fisicaFormGroup.controls.email.errors?.pattern">El campo correo electrónico debe cumplir la estructura "usuario@dominio".</mat-error>
@@ -153,7 +153,7 @@
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-12">
                                 <mat-label>Nombre: *</mat-label>
-                                <input matInput formControlName="nombre_moral" [(ngModel)]="contribuyente.nombre_moral" placeholder="Ingrese el Nombre" style="text-transform: uppercase;" maxlength="250">
+                                <input matInput formControlName="nombre_moral" [(ngModel)]="contribuyente.nombre_moral" placeholder="Ingrese el Nombre" style="text-transform: uppercase;" maxlength="250" readonly>
                                 <mat-error *ngIf="moralFormGroup.controls.nombre_moral.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="moralFormGroup.controls.nombre_moral.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
                             </mat-form-field>
@@ -161,26 +161,26 @@
                         <div class="row">
                             <mat-form-field appearance="outline" class="col-6">
                                 <mat-label>RFC: *</mat-label>
-                                <input matInput formControlName="rfc" (keyup)="changeRequired()" placeholder="Ingrese el RFC" [(ngModel)]="contribuyente.rfc" pattern="^([A-ZÑ&]{3})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" [required]="isRequired" style="text-transform: uppercase;" onkeyup="this.value = this.value.toUpperCase();" maxlength="12">
+                                <input matInput formControlName="rfc" (keyup)="changeRequired()" placeholder="Ingrese el RFC" [(ngModel)]="contribuyente.rfc" pattern="^([A-ZÑ&]{3})?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$" [required]="isRequired" style="text-transform: uppercase;" onkeyup="this.value = this.value.toUpperCase();" maxlength="12" readonly>
                                 <mat-error *ngIf="moralFormGroup.controls.rfc.errors?.required">Requerido</mat-error>
                                 <mat-error *ngIf="moralFormGroup.controls.rfc.errors?.pattern">El campo RFC debe contener 3 letras mayúsculas, 6 números y 3 alfanuméricos de la homoclave.</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-6" style="margin-left: 0px!important;">
                                 <mat-label>Act. preponderante: *</mat-label>
-                                <input matInput formControlName="actPreponderante" [(ngModel)]="contribuyente.actPreponderante" placeholder="Ingrese la Act. preponderante" style="text-transform: uppercase;">
+                                <input matInput formControlName="actPreponderante" [(ngModel)]="contribuyente.actPreponderante" placeholder="Ingrese la Act. preponderante" style="text-transform: uppercase;" readonly>
                                 <mat-error *ngIf="moralFormGroup.controls.actPreponderante.errors?.pattern">Existe un espacio al inicio y/o final de la cadena (cadena mínima de 3 caracteres)</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="row">
                             <mat-form-field appearance="fill" class="col-6">
                                 <mat-label>Tipo de persona moral</mat-label>
-                                <mat-select formControlName="idTipoPersonaMoral">
+                                <mat-select formControlName="idTipoPersonaMoral" [disabled]="true">
                                     <mat-option value=""></mat-option>
                                 </mat-select>
                             </mat-form-field>
                             <mat-form-field appearance="fill" class="col-6" style="margin-left: 0px!important;">
                                 <mat-label>Fecha de inicio de operación:</mat-label>
-                                <input matInput readonly formControlName="fechaInicioOperacion" [matDatepicker]="pickfechaInicioOperacion" [(ngModel)]="contribuyente.fechaInicioOperacion" placeholder="Ingrese Fecha de inicio de operación">
+                                <input matInput readonly formControlName="fechaInicioOperacion" [matDatepicker]="pickfechaInicioOperacion" [(ngModel)]="contribuyente.fechaInicioOperacion" placeholder="Ingrese Fecha de inicio de operación" [disabled]="true">
                                 <mat-datepicker-toggle matSuffix [for]="pickfechaInicioOperacion"></mat-datepicker-toggle>
                                 <mat-datepicker #pickfechaInicioOperacion></mat-datepicker>
                             </mat-form-field>                            
@@ -188,13 +188,13 @@
                         <div class="row">
                             <mat-form-field appearance="fill" class="col-6">
                                 <mat-label>Motivo del cambio de situación</mat-label>
-                                <mat-select formControlName="idMotivo" >
+                                <mat-select formControlName="idMotivo" [disabled]="true">
                                     <mat-option value=""></mat-option>
                                 </mat-select>
                             </mat-form-field>
                             <mat-form-field appearance="fill" class="col-6" style="margin-left: 0px!important;">
                                 <mat-label>Fecha de cambio de situación:</mat-label>
-                                <input matInput readonly formControlName="fechaCambio" [matDatepicker]="pickfechaCambio" [(ngModel)]="contribuyente.fechaCambio" placeholder="Ingrese Fecha de cambio de situación">
+                                <input matInput readonly formControlName="fechaCambio" [matDatepicker]="pickfechaCambio" [(ngModel)]="contribuyente.fechaCambio" placeholder="Ingrese Fecha de cambio de situación" [disabled]="true">
                                 <mat-datepicker-toggle matSuffix [for]="pickfechaCambio"></mat-datepicker-toggle>
                                 <mat-datepicker #pickfechaCambio></mat-datepicker>
                             </mat-form-field>                            
@@ -262,7 +262,7 @@
             </div>
             <div class="row" style="margin-bottom: 15px;"  *ngIf="!loadingDerecho">
                 <div class="col-md-4 offset-md-1">
-                    <button mat-stroked-button aria-label="Asociar" style="background-color: #9F2241; color: #FFF!important;" (click)="addCuenta()">
+                    <button mat-stroked-button aria-label="Asociar" style="background-color: #9F2241; color: #FFF!important;" (click)="addCuenta()" [disabled]="true">
                         Agregar Cuenta <mat-icon style="display: inherit; width: 15px; color: #FFF!important;">add</mat-icon>
                     </button>
                 </div>
@@ -309,7 +309,7 @@
                             <div class="d-flex flex-row-reverse" style="text-align: center!important; padding-top: 12px;">
                                 <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar Porcentaje" 
                                         matTooltip="Guardar Porcentaje" (click)="confirmaCambio(7,i,personaInmueble[i].idpersonainmueble)" 
-                                        style="margin: auto!important;" [disabled]="porcentaje.invalid">
+                                        style="margin: auto!important;" [disabled]="porcentaje.invalid" [disabled]="true">
                                     Guardar <mat-icon style="display: inherit; width: 15px;">update</mat-icon>
                                 </button>   
                             </div>
@@ -341,7 +341,7 @@
                                 </mat-expansion-panel-header>
                                 <div class="row" style="margin-bottom: 15px; padding-left: 0% !important; padding-right: 0% !important;">
                                     <div class="col-md-4">
-                                        <button mat-stroked-button aria-label="Domicilios" style="background-color: #9F2241; color: #FFF!important;" (click)="addDomicilio()">
+                                        <button mat-stroked-button aria-label="Domicilios" style="background-color: #9F2241; color: #FFF!important;" (click)="addDomicilio()" [disabled]="true">
                                             Domicilios <mat-icon style="display: inherit; width: 15px; color: #FFF!important;">add</mat-icon>
                                         </button>
                                     </div>
@@ -384,7 +384,7 @@
                                                 <ng-container matColumnDef="editar">
                                                     <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="10%" style="text-align: center; font-size: 14px;"> Editar </th>
                                                     <td mat-cell *matCellDef="let element" style="text-align: center;">
-                                                        <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar" (click)="editDomicilio(element.IDDIRECCION)">
+                                                        <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar" (click)="editDomicilio(element.IDDIRECCION)" [disabled]="true">
                                                             <mat-icon>edit</mat-icon>
                                                         </button>
                                                     </td>
@@ -412,7 +412,8 @@
                                 </mat-expansion-panel-header>
                                 <div class="row" style="margin-bottom: 15px;" *ngIf="!loadingDomicilios">
                                     <div class="col-md-4">
-                                        <button mat-stroked-button aria-label="Domicilios" class="boton-n-representacion" color="primary" (click)="insertaDomicilioInmueble()" [disabled]="(selectIdPersonaI || selectIdDireccion)">
+                                        <!-- <button mat-stroked-button aria-label="Domicilios" class="boton-n-representacion" color="primary" (click)="insertaDomicilioInmueble()" [disabled]="(selectIdPersonaI || selectIdDireccion)"> -->
+                                        <button mat-stroked-button aria-label="Domicilios" class="boton-n-representacion" color="primary" (click)="insertaDomicilioInmueble()" [disabled]="true">
                                             Guardar Dirección <mat-icon style="display: inherit; width: 25px;">update</mat-icon>
                                         </button>
                                     </div>
