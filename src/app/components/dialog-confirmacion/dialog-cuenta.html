@@ -26,7 +26,7 @@
 </div>
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Cerrar</button>
-    <button mat-flat-button color="primary" [mat-dialog-close]="1" *ngIf="mensaje !== 3">EDITAR TODAS LAS CUENTAS</button>
-    <button mat-flat-button color="primary" [mat-dialog-close]="2" *ngIf="mensaje !== 3">EDITAR SÓLO ESTA CUENTA</button>
-    <button mat-flat-button color="primary" [mat-dialog-close]="3" *ngIf="mensaje == 3">ACEPTAR</button>
+    <button mat-flat-button color="primary" [mat-dialog-close]="1" *ngIf="mensaje === 1">EDITAR TODAS LAS CUENTAS</button>
+    <button mat-flat-button color="primary" [mat-dialog-close]="2" *ngIf="mensaje === 1">EDITAR SÓLO ESTA CUENTA</button>
+    <button mat-flat-button color="primary" [mat-dialog-close]="3" *ngIf="mensaje === 3">ACEPTAR</button>
 </mat-dialog-actions>
