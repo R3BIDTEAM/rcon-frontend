@@ -19,7 +19,7 @@
                 <div class="row" *ngIf="!loading">
                     <mat-form-field appearance="fill" class="col-6">
                         <mat-label>Tipo de persona:</mat-label>
-                        <mat-select [(ngModel)]="contribuyente.tipoPersona" (selectionChange)="actualizaPersona($event.value)" [disabled]="true">
+                        <mat-select [(ngModel)]="contribuyente.tipoPersona" (selectionChange)="actualizaPersona($event.value)">
                             <mat-option value="F">Física</mat-option>
                             <mat-option value="M">Moral</mat-option>
                         </mat-select>
@@ -115,13 +115,13 @@
                         <div class="row">
                             <mat-form-field appearance="fill" class="col-md-6">
                                 <mat-label>Fecha Nacimiento:</mat-label>
-                                <input matInput readonly formControlName="fecha_naci" [matDatepicker]="pickfechaNacimiento" [(ngModel)]="contribuyente.fecha_naci" placeholder="Ingrese Fecha Nacimiento" (dateChange)="fechaTope()">
+                                <input matInput readonly formControlName="fecha_naci" [matDatepicker]="pickfechaNacimiento" [(ngModel)]="contribuyente.fecha_naci" placeholder="Ingrese Fecha Nacimiento" (dateChange)="fechaTope()" readonly>
                                 <mat-datepicker-toggle matSuffix [for]="pickfechaNacimiento"></mat-datepicker-toggle>
                                 <mat-datepicker #pickfechaNacimiento></mat-datepicker>
                             </mat-form-field>
                             <mat-form-field appearance="fill" class="col-md-6" style="margin-left: 0px!important;">
                                 <mat-label>Fecha Defunción:</mat-label>
-                                <input matInput readonly formControlName="fecha_def" [matDatepicker]="pickfechaDefuncion" [(ngModel)]="contribuyente.fecha_def" placeholder="Ingrese Fecha Defunción" [min]="minDate">
+                                <input matInput readonly formControlName="fecha_def" [matDatepicker]="pickfechaDefuncion" [(ngModel)]="contribuyente.fecha_def" placeholder="Ingrese Fecha Defunción" [min]="minDate" readonly>
                                 <mat-datepicker-toggle matSuffix [for]="pickfechaDefuncion"></mat-datepicker-toggle>
                                 <mat-datepicker #pickfechaDefuncion></mat-datepicker>
                             </mat-form-field>
@@ -188,7 +188,7 @@
                         <div class="row">
                             <mat-form-field appearance="fill" class="col-6">
                                 <mat-label>Motivo del cambio de situación</mat-label>
-                                <mat-select formControlName="idMotivo">
+                                <mat-select formControlName="idMotivo" >
                                     <mat-option value=""></mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -262,7 +262,7 @@
             </div>
             <div class="row" style="margin-bottom: 15px;"  *ngIf="!loadingDerecho">
                 <div class="col-md-4 offset-md-1">
-                    <button mat-stroked-button aria-label="Asociar" style="background-color: #9F2241; color: #FFF!important;" (click)="addCuenta()" [disabled]="true">
+                    <button mat-stroked-button aria-label="Asociar" style="background-color: #9F2241; color: #FFF!important;" (click)="addCuenta()">
                         Agregar Cuenta <mat-icon style="display: inherit; width: 15px; color: #FFF!important;">add</mat-icon>
                     </button>
                 </div>
@@ -287,12 +287,12 @@
                         <mat-form-field appearance="outline" class="col-md-1">
                             <mat-label>Porcentaje:</mat-label>
                             <input matInput class="form-control" #porcentaje="ngModel" name="porcentaje" [value]="datoPI.porcentajeparticipacion" maxlength="3" 
-                                    [(ngModel)]="personaInmueble[i].porcentajeparticipacion" pattern="^[1-9][0-9]?$|^100$" readonly>
+                                    [(ngModel)]="personaInmueble[i].porcentajeparticipacion" pattern="^[1-9][0-9]?$|^100$">
                             <mat-error *ngIf="porcentaje.errors?.pattern">Valor de 1-100</mat-error>
                         </mat-form-field>
                         <mat-form-field appearance="outline" class="col-md-3" style="margin-left: 0px!important;">
                             <mat-label>Tipo de Derecho</mat-label>
-                                <mat-select [class.spinner]="loadingDerecho" [(ngModel)]="personaInmueble[i].codtipoderecho" [disabled]="true">
+                                <mat-select [class.spinner]="loadingDerecho" [(ngModel)]="personaInmueble[i].codtipoderecho">
                                     <mat-option *ngFor="let tipoDerecho of dataTipoDerecho" [value]="tipoDerecho.codtipoderecho">
                                         {{tipoDerecho.descripcion}}
                                     </mat-option>
@@ -309,7 +309,7 @@
                             <div class="d-flex flex-row-reverse" style="text-align: center!important; padding-top: 12px;">
                                 <button mat-stroked-button class="boton-n-representacion" color="primary" aria-label="Guardar Porcentaje" 
                                         matTooltip="Guardar Porcentaje" (click)="confirmaCambio(7,i,personaInmueble[i].idpersonainmueble)" 
-                                        style="margin: auto!important;" [disabled]="porcentaje.invalid" [disabled]="true">
+                                        style="margin: auto!important;" [disabled]="porcentaje.invalid">
                                     Guardar <mat-icon style="display: inherit; width: 15px;">update</mat-icon>
                                 </button>   
                             </div>
@@ -341,7 +341,7 @@
                                 </mat-expansion-panel-header>
                                 <div class="row" style="margin-bottom: 15px; padding-left: 0% !important; padding-right: 0% !important;">
                                     <div class="col-md-4">
-                                        <button mat-stroked-button aria-label="Domicilios" style="background-color: #9F2241; color: #FFF!important;" (click)="addDomicilio()" [disabled]="true">
+                                        <button mat-stroked-button aria-label="Domicilios" style="background-color: #9F2241; color: #FFF!important;" (click)="addDomicilio()">
                                             Domicilios <mat-icon style="display: inherit; width: 15px; color: #FFF!important;">add</mat-icon>
                                         </button>
                                     </div>
@@ -384,7 +384,7 @@
                                                 <ng-container matColumnDef="editar">
                                                     <th mat-header-cell *matHeaderCellDef class="verde-cdmx" width="10%" style="text-align: center; font-size: 14px;"> Editar </th>
                                                     <td mat-cell *matCellDef="let element" style="text-align: center;">
-                                                        <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar" (click)="editDomicilio(element.IDDIRECCION)" [disabled]="true">
+                                                        <button mat-icon-button type="button" color="primary" aria-label="Editar" matTooltip="Editar" (click)="editDomicilio(element.IDDIRECCION)">
                                                             <mat-icon>edit</mat-icon>
                                                         </button>
                                                     </td>
@@ -412,8 +412,7 @@
                                 </mat-expansion-panel-header>
                                 <div class="row" style="margin-bottom: 15px;" *ngIf="!loadingDomicilios">
                                     <div class="col-md-4">
-                                        <!-- <button mat-stroked-button aria-label="Domicilios" class="boton-n-representacion" color="primary" (click)="insertaDomicilioInmueble()" [disabled]="(selectIdPersonaI || selectIdDireccion)"> -->
-                                        <button mat-stroked-button aria-label="Domicilios" class="boton-n-representacion" color="primary" (click)="insertaDomicilioInmueble()" [disabled]="true">
+                                        <button mat-stroked-button aria-label="Domicilios" class="boton-n-representacion" color="primary" (click)="insertaDomicilioInmueble()" [disabled]="(selectIdPersonaI || selectIdDireccion)">
                                             Guardar Dirección <mat-icon style="display: inherit; width: 25px;">update</mat-icon>
                                         </button>
                                     </div>
