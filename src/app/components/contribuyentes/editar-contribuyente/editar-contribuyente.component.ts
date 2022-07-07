@@ -740,6 +740,10 @@ export class EditarContribuyenteComponent implements OnInit {
                     console.log("AQUI ENTRO EL RES");
                     console.log(this.dataContribuyenteResultado);
                     this.datoDelContribuyente();
+                    if(res.infoComprobante){
+                        console.log("AQUI INFO COMPROBANTE");
+                        this.actualizadoCuenta = true;
+                    }
                 },
                 (error) => {
                     this.loading = false;
