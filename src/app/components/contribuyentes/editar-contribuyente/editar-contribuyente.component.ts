@@ -740,6 +740,29 @@ export class EditarContribuyenteComponent implements OnInit {
                     console.log("AQUI ENTRO EL RES");
                     console.log(this.dataContribuyenteResultado);
                     this.datoDelContribuyente();
+                    if(res.infoComprobante){
+                        console.log("AQUI INFO COMPROBANTE");
+                        this.dataActualizacion.after_CP = res.infoComprobante.after_CP;
+                        this.dataActualizacion.after_Col = res.infoComprobante.after_Col;
+                        this.dataActualizacion.after_Direccion = res.infoComprobante.after_Direccion;
+                        this.dataActualizacion.after_Nombre = res.infoComprobante.after_Nombre;
+                        this.dataActualizacion.after_RFC = res.infoComprobante.after_RFC;
+                        this.dataActualizacion.after_cuenta = res.infoComprobante.after_cuenta;
+                        this.dataActualizacion.area = res.infoComprobante.area;
+                        this.dataActualizacion.at = res.infoComprobante.at;
+                        this.dataActualizacion.before_cuenta = res.infoComprobante.before_cuenta;
+                        this.dataActualizacion.before_CP = res.infoComprobante.before_CP;
+                        this.dataActualizacion.before_Col = res.infoComprobante.before_Col;
+                        this.dataActualizacion.before_Direccion = res.infoComprobante.before_Direccion;
+                        this.dataActualizacion.before_Nombre = res.infoComprobante.before_Nombre;
+                        this.dataActualizacion.before_RFC = res.infoComprobante.before_RFC;
+                        this.dataActualizacion.cuentaP = res.infoComprobante.cuentaP;
+                        this.dataActualizacion.fechaConsulta = res.infoComprobante.fechaConsulta;
+                        this.dataActualizacion.folio = res.infoComprobante.folio;
+                        this.dataActualizacion.idpersona = res.infoComprobante.idpersona;
+                        this.dataActualizacion.usuario = res.infoComprobante.usuario;
+                        this.actualizado = true;
+                    }
                 },
                 (error) => {
                     this.loading = false;
