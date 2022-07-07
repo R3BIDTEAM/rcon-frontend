@@ -742,25 +742,25 @@ export class EditarContribuyenteComponent implements OnInit {
                     this.datoDelContribuyente();
                     if(res.infoComprobante){
                         console.log("AQUI INFO COMPROBANTE");
-                        this.dataActualizacion.after_CP = res.after_CP;
-                        this.dataActualizacion.after_Col = res.after_Col;
-                        this.dataActualizacion.after_Direccion = res.after_Direccion;
-                        this.dataActualizacion.after_Nombre = res.after_Nombre;
-                        this.dataActualizacion.after_RFC = res.after_RFC;
-                        this.dataActualizacion.after_cuenta = res.after_cuenta;
-                        this.dataActualizacion.area = res.area;
-                        this.dataActualizacion.at = res.at;
-                        this.dataActualizacion.before_cuenta = res.before_cuenta;
-                        this.dataActualizacion.before_CP = res.before_CP;
-                        this.dataActualizacion.before_Col = res.before_Col;
-                        this.dataActualizacion.before_Direccion = res.before_Direccion;
-                        this.dataActualizacion.before_Nombre = res.before_Nombre;
-                        this.dataActualizacion.before_RFC = res.before_RFC;
-                        this.dataActualizacion.cuentaP = res.cuentaP;
-                        this.dataActualizacion.fechaConsulta = res.fechaConsulta;
-                        this.dataActualizacion.folio = res.folio;
-                        this.dataActualizacion.idpersona = res.idpersona;
-                        this.dataActualizacion.usuario = res.usuario;
+                        this.dataActualizacion.after_CP = res.infoComprobante.after_CP;
+                        this.dataActualizacion.after_Col = res.infoComprobante.after_Col;
+                        this.dataActualizacion.after_Direccion = res.infoComprobante.after_Direccion;
+                        this.dataActualizacion.after_Nombre = res.infoComprobante.after_Nombre;
+                        this.dataActualizacion.after_RFC = res.infoComprobante.after_RFC;
+                        this.dataActualizacion.after_cuenta = res.infoComprobante.after_cuenta;
+                        this.dataActualizacion.area = res.infoComprobante.area;
+                        this.dataActualizacion.at = res.infoComprobante.at;
+                        this.dataActualizacion.before_cuenta = res.infoComprobante.before_cuenta;
+                        this.dataActualizacion.before_CP = res.infoComprobante.before_CP;
+                        this.dataActualizacion.before_Col = res.infoComprobante.before_Col;
+                        this.dataActualizacion.before_Direccion = res.infoComprobante.before_Direccion;
+                        this.dataActualizacion.before_Nombre = res.infoComprobante.before_Nombre;
+                        this.dataActualizacion.before_RFC = res.infoComprobante.before_RFC;
+                        this.dataActualizacion.cuentaP = res.infoComprobante.cuentaP;
+                        this.dataActualizacion.fechaConsulta = res.infoComprobante.fechaConsulta;
+                        this.dataActualizacion.folio = res.infoComprobante.folio;
+                        this.dataActualizacion.idpersona = res.infoComprobante.idpersona;
+                        this.dataActualizacion.usuario = res.infoComprobante.usuario;
                         this.actualizado = true;
                     }
                 },
