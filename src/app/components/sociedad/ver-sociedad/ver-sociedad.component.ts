@@ -104,7 +104,6 @@ export class VerSociedadComponent implements OnInit {
             this.Auditor = true; 
         }
         this.idSociedad = this.route.snapshot.paramMap.get('idsociedad');
-        console.log(this.idSociedad);
         this.getSociedadDatos();
         this.getDomicilioSociedad();
         this.getRepresentacion();
@@ -115,14 +114,11 @@ export class VerSociedadComponent implements OnInit {
         this.spinner.show();
         this.query = 'idSociedad=' + this.idSociedad; 
         this.loading = true;
-        console.log(this.endpoint);
         this.http.get(this.endpoint + '?' + this.query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     //this.loading = false;
                     this.dataSocedadResultado = res[0];
-                    console.log("AQUI ENTRO EL RES");
-                    console.log(this.dataSocedadResultado);
                     this.getPeritosSociedad();
                 },
                 (error) => {
@@ -152,8 +148,6 @@ export class VerSociedadComponent implements OnInit {
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                     this.total = this.dataPaginate.length; 
                     this.paginator.pageIndex = 0;
-                    console.log("OTRO RES");
-                    console.log(this.total);
                     this.datosDeLaSociedad();
                     this.spinner.hide();
                 },
@@ -242,17 +236,10 @@ export class VerSociedadComponent implements OnInit {
         this.http.get(this.endpointActualiza + 'getInmuebles' + '?idPersona='+ this.idSociedad, this.httpOptions)
             .subscribe(
                 (res: any) => {
-                    console.log("AQUI ENTRO EL INMUEBLE!!!");
-                    console.log(res);
-                    
                     this.dataSource3 = res;
-                    console.log(res.length);
-                    console.log(this.dataSource3);
                     this.dataPaginate3 = this.paginate(this.dataSource3, 15, this.pagina3);
                     this.total3 = this.dataSource3.length; 
                     this.paginator.pageIndex = 0;
-                    console.log("AQUI ENTRO EL RES WEE");
-                    console.log(this.dataSource3);
                 },
                 (error) => {
                     this.loadingInmuebles = false;
@@ -319,14 +306,11 @@ export class VerSociedadComponent implements OnInit {
      getRepresentado(){
         this.loadingRepresentado = true;
         let queryRepdo = 'rep=Representado&idPersona=' + this.idSociedad;
-        console.log(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRepdo);
         this.http.get(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRepdo, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingRepresentado = false;
                     this.dataSource5 = res;
-                    console.log("ACA ENTRO EL REPRESENTADO");
-                    console.log(res);
                     this.total5 = this.dataSource5.length;
                     this.dataPaginate5 = this.paginate(this.dataSource5, 15, this.pagina5);
                 },
