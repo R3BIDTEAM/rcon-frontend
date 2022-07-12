@@ -133,16 +133,11 @@ export class AltaSociedadComponent implements OnInit {
 
             //query = query + '&claveife&actividadPrincip=';
             this.loading = true;
-            console.log("RESULTADO DE LA BUSQUEDA");
-            console.log(this.endpoint);
-            console.log(query);
             this.http.get(this.endpointPrevia + busquedaDatos + '?' + query, this.httpOptions)
                 .subscribe(
                     (res: any) => {
                         this.loading = false;
                         if(res.length > 0){
-                            console.log("RES SOCIEDAD");
-                            console.log(res);
                             this.validaDialog(res);
                         }else{
                             this.guardaSociedad();
@@ -175,14 +170,11 @@ export class AltaSociedadComponent implements OnInit {
         
         query = query + '&rfc=' + this.rfc;
 
-        console.log(this.endpointPrevia + busquedaDatos + '?' + query);
         this.loading = true;
         this.http.get(this.endpointPrevia + busquedaDatos + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
-                    console.log("RES DEL ELEMENT BUSQUEDA PERITO 111 !!!");
-                    console.log(res);
                     if(res.length > 0){
                         this.validaDialogRedirect(res);
                     }else{
@@ -208,12 +200,9 @@ export class AltaSociedadComponent implements OnInit {
             }
         });
         dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
             if(result === 1){
                 this.guardaSociedad();
             }else if(result !== 1 && result !== 2){
-                console.log("RESULT DEL VALIDADO SIN ENCOTRAR COMO PERITO");
-                console.log(result);
                 this.sociedadFormGroup.controls['razonSocial'].setValue(result.razon_social);
                 this.sociedadFormGroup.controls['rfc'].setValue(result.rfc);
                 this.buscadoEscrito = 1;
@@ -264,20 +253,12 @@ export class AltaSociedadComponent implements OnInit {
 
         query = query + '&codtiposPersona=M&persona&idExpediente';
 
-        console.log(this.endpoint + '?' + query);
         this.http.post(this.endpoint + '?' + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
                     this.inserto = true;
                     this.btnDisabled = false;
-                    console.log("AQUI ENTRO EL RES DEL NUEVO PERITO");
-                    console.log(res);
-                    // this.snackBar.open('guardado correcto - ' + res.mensaje, 'Cerrar', {
-                    //     duration: 10000,
-                    //     horizontalPosition: 'end',
-                    //     verticalPosition: 'top'
-                    // });
                     Swal.fire({
                         title: 'CORRECTO',
                         text: res.mensaje,
@@ -287,7 +268,6 @@ export class AltaSociedadComponent implements OnInit {
                     this.spinner.hide();
                 },
                 (error) => {
-                    console.log(error.error);
                     this.loading = false;
                     // this.snackBar.open(error.error.mensaje, 'Cerrar', {
                     //     duration: 10000,
@@ -317,7 +297,6 @@ export class AltaSociedadComponent implements OnInit {
                 this.sociedadFormGroup.controls['razonSocial'].setValue(result.razonSocial);
                 this.sociedadFormGroup.controls['rfc'].setValue(result.rfc);
                 this.buscadoEscrito = 1;
-                console.log(result);
             }
         });
     }
@@ -386,7 +365,6 @@ export class DialogSociedad {
      * Reinicia los valores del paginado.
      */
      clean(): void{
-        console.log("ENTREEEEE EN CLEAN");
         this.razonSocial = null;
         this.rfc = null;
         this.loading = false;
@@ -451,7 +429,6 @@ export class DialogSociedad {
         query = query.substr(1);
 
         this.loading = true;
-        console.log(this.endpoint);
         this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
@@ -460,7 +437,6 @@ export class DialogSociedad {
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                     this.total = this.dataSource.length; 
                     this.paginator.pageIndex = 0;
-                    console.log(res);
                     this.spinner.hide();
                     if (res.length === 0) {
                         Swal.fire({
@@ -514,7 +490,6 @@ export class DialogSociedad {
      * @param element Arreglo de los datos de la sociedad seleccionada
      */
     sociedadSelected(element){
-        console.log(element);
         this.sociedadDialog.razonSocial = element.APELLIDOPATERNO;
         this.sociedadDialog.rfc = element.RFC;
     }
@@ -559,9 +534,6 @@ export class DialogsValidacionSociedad {
         @Inject(MAT_DIALOG_DATA) public data: any
     ) { 
         dialogRef.disableClose = true;
-        console.log("ACA EL RES DEL VALIDADOR PERITO");
-        console.log(data);
-        console.log(data.dataSource.registro);
         this.bandeja = data.bandeja;
         this.buscadoEscrito = data.buscadoEscrito;
         
@@ -576,8 +548,6 @@ export class DialogsValidacionSociedad {
             })
         };
         this.bandeja = this.data.bandeja;
-        console.log("ESTA ES LA DATA DEL DIALOG DUPLICADOS");
-        console.log(this.data.dataSource.length);
         this.dataSource = this.data.dataSource;
         this.dataPaginate = this.paginate(this.data.dataSource, this.pageSize, this.pagina);
         this.total = this.data.dataSource.length; 
@@ -610,14 +580,11 @@ export class DialogsValidacionSociedad {
 
         query = query + 'idSociedad=' + element.IDPERSONA;
 
-        console.log(this.endpoint + busquedaDatos + '?' + query);
         this.loading = true;
         this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
-                    console.log("RES DEL ELEMENT BUSQUEDA PERITO!!!");
-                    console.log(res);
                     if(res.length > 0){
                         this.dialogRef.close();
                         this.validaDialog(res);
@@ -647,8 +614,6 @@ export class DialogsValidacionSociedad {
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result === true){
-                console.log("EL ID SOCIEDAD DEL MENSAJE CHECK");
-                console.log(res[0].IDSOCIEDAD);
                 let navegar = '/main/editar-sociedad/' + res[0].IDSOCIEDAD;
                 this.router.navigate([navegar]);
             }

@@ -124,7 +124,6 @@ export class EdicionSociedadComponent implements OnInit {
             query = query.substr(1);
 
             this.loading = true;
-            console.log(this.endpoint);
             this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
                 .subscribe(
                     (res: any) => {
@@ -133,7 +132,6 @@ export class EdicionSociedadComponent implements OnInit {
                         this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                         this.total = this.dataSource.length; 
                         this.paginator.pageIndex = 0;
-                        console.log(res);
                         this.spinner.hide();
                         if (res.length === 0) {
                             Swal.fire({
