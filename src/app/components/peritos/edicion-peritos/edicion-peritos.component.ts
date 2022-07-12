@@ -155,7 +155,6 @@ export class EdicionPeritosComponent implements OnInit {
      */
      seleccionaDocto(){
        
-        console.log("LO QUE SE SELECCIONO "+this.identificacion);
         this.selectDisabled = true;
         this.selectCedula = false;
         this.selectPasaporte = false;
@@ -238,7 +237,6 @@ export class EdicionPeritosComponent implements OnInit {
 
             query = query.substr(1);
 
-            console.log(this.endpoint + busquedaDatos + '?' + query);
             this.loading = true;
             this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
                 .subscribe(
@@ -248,7 +246,6 @@ export class EdicionPeritosComponent implements OnInit {
                         this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                         this.total = this.dataSource.length; 
                         this.paginator.pageIndex = 0;
-                        console.log(this.dataSource);
                         this.spinner.hide();
                         if (res.length === 0) {
                             Swal.fire({

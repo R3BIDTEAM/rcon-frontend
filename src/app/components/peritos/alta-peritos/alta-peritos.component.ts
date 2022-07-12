@@ -122,7 +122,6 @@ export class AltaPeritosComponent implements OnInit {
             (res: any) => {
                 this.loadingDocumentosIdentificativos = false;
                 this.documentos = res.CatDocIdentificativos;
-                // console.log(this.documentos);
                 this.spinner.hide();
             },
             (error) => {
@@ -182,7 +181,6 @@ export class AltaPeritosComponent implements OnInit {
             this.isRequired = false;
         }​​​​​​​​
 
-        console.log(this.peritoPersonaFormGroup.value.rfc);
         this.peritoPersonaFormGroup.markAsTouched();
         this.peritoPersonaFormGroup.updateValueAndValidity();
     }
@@ -233,8 +231,6 @@ export class AltaPeritosComponent implements OnInit {
     }
 
     mensajeIndependiente(){
-        console.log("ACÁ EL VALOR DEL CHECK")
-        console.log(this.datoPeritos.independiente);
         if(this.datoPeritos.independiente === 'N'){
             Swal.fire({
                 title: '¡ATENCIÓN!',
@@ -303,15 +299,11 @@ export class AltaPeritosComponent implements OnInit {
 
             //query = query + '&actividadPrincip=';
 
-            console.log(this.endpoint + busquedaDatos + '?' + query);
             this.loading = true;
             this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
                 .subscribe(
                     (res: any) => {
                         this.loading = false;
-                        console.log(res);
-                        console.log("EL RES DE LA VALIDACIÓN CONSULTA");
-                        console.log(res.length);
                         if(res.length > 0){
                             this.validaDialog(res);
                         }else{
@@ -354,13 +346,11 @@ export class AltaPeritosComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result !== 1 && result !== 2){
-                console.log("RESULT DEL VALIDADO SIN ENCOTRAR COMO PERITO");
-                console.log(result);
                 this.puebaform(result);
             }else if(result == 1){
                 this.guardaPerito();
             }else{
-                console.log("RESULT NADA");
+               
             }
         });
     }
@@ -408,14 +398,11 @@ export class AltaPeritosComponent implements OnInit {
 
         query = (this.datoPeritos.login) ? query + '&login=' + this.datoPeritos.login : query + '&login=';
 
-        console.log(this.datoPeritos.independiente);
         this.http.post(this.endpoint + metodo + '?' + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
                     this.inserto = true;
-                    console.log("AQUI ENTRO EL RES DEL NUEVO PERITO");
-                    console.log(res);
                     // this.snackBar.open('guardado correcto - ' + res.mensaje, 'Cerrar', {
                     //     duration: 10000,
                     //     horizontalPosition: 'end',
@@ -459,14 +446,11 @@ export class AltaPeritosComponent implements OnInit {
 
         query = (this.datoPeritos.ine) ? query + '&claveife=' + this.datoPeritos.ine : query + '&claveife=';
 
-        console.log(this.endpoint + busquedaDatos + '?' + query);
         this.loading = true;
         this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
-                    console.log("RES DEL ELEMENT BUSQUEDA PERITO 111!!!");
-                    console.log(res);
                     if(res.length > 0){
                         this.validaDialog2(res);
                     }else{
@@ -492,7 +476,6 @@ export class AltaPeritosComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
-                console.log(result);
                 //this.guardaPerito();
             }
         });
@@ -509,9 +492,6 @@ export class AltaPeritosComponent implements OnInit {
         dialogRef.afterClosed().subscribe(result => {
             this.spinner.show();
             if(result){
-                console.log("RESULTADO DEL NUEVO NOMBRE");
-                console.log(result);
-                console.log(result.apepaterno);
                 if(result.identificacion !== null){
                     this.selectDisabled = true;
                 }
@@ -670,8 +650,6 @@ export class DialogAltaBusca {
         this.selectLicencia = false;
         this.selectNSS = false;
 
-        console.log("LO QUE SE SELECCIONO "+this.identificacion);
-
         if(this.identificacion === '1'){
             this.selectCedula = true;
         }
@@ -715,7 +693,6 @@ export class DialogAltaBusca {
             (res: any) => {
                 this.loadingDocumentos = false;
                 this.dataDocumentos = res.CatDocIdentificativos;
-                console.log(this.dataDocumentos);
                 this.spinner.hide();
             },
             (error) => {
@@ -807,7 +784,6 @@ export class DialogAltaBusca {
 
         query = query.substr(1);
 
-        console.log(this.endpoint + busquedaDatos + '?' + query);
         this.loading = true;
         this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
             .subscribe(
@@ -817,7 +793,6 @@ export class DialogAltaBusca {
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                     this.total = this.dataSource.length; 
                     this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
                     this.spinner.hide();
                     if (res.length === 0) {
                         Swal.fire({
@@ -868,7 +843,6 @@ export class DialogAltaBusca {
      * @param element Arreglo de los datos del perito seleccionado
      */
     peritoPersonaSelected(element){
-        console.log(element);
         this.idperito = element.IDPERITO;
         this.datoPeritoPersona.nombre = element.NOMBRE;
         this.datoPeritoPersona.apepaterno = element.APELLIDOPATERNO;
@@ -944,9 +918,6 @@ export class DialogsValidacionPerito {
         @Inject(MAT_DIALOG_DATA) public data: any
     ) { 
         dialogRef.disableClose = true;
-        console.log("ACA EL RES DEL VALIDADOR PERITO 222");
-        console.log(data);
-        console.log(data.dataSource.registro);
         this.bandeja = data.bandeja;
         this.buscadoEscrito = data.buscadoEscrito;
         // if(data.bandeja == 3){
@@ -965,8 +936,6 @@ export class DialogsValidacionPerito {
             })
         };
         this.bandeja = this.data.bandeja;
-        console.log("ESTA ES LA DATA DEL DIALOG DUPLICADOS 222");
-        console.log(this.data.dataSource.length);
         this.dataSource = this.data.dataSource;
         this.dataPaginate = this.paginate(this.data.dataSource, this.pageSize, this.pagina);
         this.total = this.data.dataSource.length; 
@@ -995,14 +964,11 @@ export class DialogsValidacionPerito {
 
         // query = (element.CLAVEIFE) ? query + '&claveife=' + element.CLAVEIFE : query + '&claveife=';
 
-        console.log(this.endpoint + busquedaDatos + '?' + query);
         this.loading = true;
         this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
-                    console.log("RES DEL ELEMENT BUSQUEDA PERITO 222!!!");
-                    console.log(res);
                     if(res.dsPeritos){
                         if(res.dsPeritos.length > 0){
                             this.dialogRef.close();
@@ -1010,8 +976,6 @@ export class DialogsValidacionPerito {
                         }
                     }else if(res.mensaje){
                         //this.guardaPerito();
-                        console.log("ACA EL RES DEL EXISTE PERITO")
-                        console.log(element);
                         this.datosPeritoValida.nombre = element.NOMBRE;
                         this.datosPeritoValida.apepaterno = element.APELLIDOPATERNO;
                         this.datosPeritoValida.apematerno = element.APELLIDOMATERNO;
@@ -1047,8 +1011,6 @@ export class DialogsValidacionPerito {
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result === true){
-                console.log("EL ID PERITO DEL MENSAJE CHECK");
-                console.log(res[0].IDPERITO);
                 let navegar = '/main/editar-peritos/' + res[0].IDPERITO;
                 this.router.navigate([navegar]);
             }

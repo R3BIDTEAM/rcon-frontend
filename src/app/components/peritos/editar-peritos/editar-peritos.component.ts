@@ -269,7 +269,6 @@ export class EditarPeritosComponent implements OnInit {
             })
         };
         this.idPerito = this.route.snapshot.paramMap.get('idperito');
-        console.log(this.idPerito);
         this.getDataDocumentosIdentificativos();
         this.getPeritoDatos();
         this.getDomicilioPerito();
@@ -357,7 +356,6 @@ export class EditarPeritosComponent implements OnInit {
             this.isRequired = false;
         }​​​​​​​​
 
-        console.log(this.peritoPersonaFormGroup.value.rfc);
         this.peritoPersonaFormGroup.markAsTouched();
         this.peritoPersonaFormGroup.updateValueAndValidity();
     }
@@ -369,7 +367,6 @@ export class EditarPeritosComponent implements OnInit {
         this.spinner.show();
         this.query = 'obtenerSociedades=1&idPerito=' + this.idPerito; 
         this.loadingDatosPerito = true;
-        console.log(this.endpoint + '?' + this.query);
         this.http.get(this.endpoint + '?' + this.query, this.httpOptions)
             .subscribe(
                 (res: any) => {
@@ -379,8 +376,6 @@ export class EditarPeritosComponent implements OnInit {
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                     this.total = this.dataPaginate.length; 
                     this.paginator.pageIndex = 0;
-                    console.log("AQUI ENTRO EL RES WEE");
-                    console.log(this.dataPeritoResultado);
                     this.datoDelPerito();
                     this.spinner.hide();
                 },
@@ -473,9 +468,7 @@ export class EditarPeritosComponent implements OnInit {
     *  el valor puede ser F de Física o M de moral.
      */
     actualizaPersona(event){
-        console.log(event)
         this.actCambioPersona = (event == this.cambioPersona) ? true : false;
-        console.log(this.actCambioPersona);
         if(this.datoPeritos.tipoPersona == 'M'){
             this.datoPeritos.nombre_moral = this.datoPeritos.apepaterno + ' ' + this.datoPeritos.apematerno + ' ' + this.datoPeritos.nombre;
         }
@@ -556,17 +549,11 @@ export class EditarPeritosComponent implements OnInit {
             .subscribe(
                 (res: any) => {
                     this.loadingInmuebles = false;
-                    console.log("AQUI ENTRO IDINMUEBLE!!!");
-                    console.log(res);
 
                     this.dataSource3 = res;
-                    console.log(res.length);
-                    console.log(this.dataSource3);
                     this.dataPaginate3 = this.paginate(this.dataSource3, 15, this.pagina3);
                     this.total = this.dataSource3.length; 
                     this.paginator.pageIndex = 0;
-                    console.log("AQUI ENTRO EL RES DEL INMUEBLE!");
-                    console.log(this.dataSource3);
 
                 },
                 (error) => {
@@ -629,15 +616,11 @@ export class EditarPeritosComponent implements OnInit {
 
         this.query = 'codtipospersona=F&' + this.idPerito; 
         this.loadingDatosPerito = true;
-        console.log(this.endpointActualiza);
         this.http.post(this.endpointActualiza + 'actualizaContribuyente?' + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
                     if(res.idpersona){
                         this.loadingDatosPerito = false;
-                        console.log('ACTUALIZOOOOO!')
-                        // console.log(this.loadingDatosPerito);
-                        // console.log(res);
                         // this.snackBar.open('Guardado exitoso', 'Cerrar', {
                         //     duration: 10000,
                         //     horizontalPosition: 'end',
@@ -682,7 +665,6 @@ export class EditarPeritosComponent implements OnInit {
 
     confirmaCambio(evento = null, element = null, tipo = null): void {
         this.mensajeConfirma = evento;
-        console.log(this.mensajeConfirma);
         const dialogRef = this.dialog.open(DialogConfirmacionComponent, {
             width: '700px',
             data: this.mensajeConfirma
@@ -745,8 +727,6 @@ export class EditarPeritosComponent implements OnInit {
         .subscribe(
             (res: any) => {
                 this.loadingDatosPerito = false;
-                console.log("Cambio de persona");
-                console.log(res);
                 if(res){
                     // this.snackBar.open('Actualización correcta', 'Cerrar', {
                     //     duration: 10000,
@@ -803,7 +783,6 @@ export class EditarPeritosComponent implements OnInit {
         this.loadingDatosPerito  = true;
         let queryAcPeritoEsp = '';
         let checkIndi = '';
-        console.log(this.datoPeritos.independiente + ' - ' +this.datoPeritos.independienteAct);
         if(this.datoPeritos.independiente == true && this.datoPeritos.independienteAct == undefined){
             checkIndi = 'S';
         }else if(this.datoPeritos.independiente == false && this.datoPeritos.independienteAct == undefined){
@@ -814,7 +793,6 @@ export class EditarPeritosComponent implements OnInit {
             checkIndi = 'N';
         }
 
-        console.log(checkIndi);
         queryAcPeritoEsp = queryAcPeritoEsp + 'idPerito=' + this.idPerito;
 
         queryAcPeritoEsp = (this.datoPeritos.registro) ? queryAcPeritoEsp + '&registro=' + this.datoPeritos.registro.toLocaleUpperCase() : queryAcPeritoEsp + '&registro=';
@@ -823,11 +801,9 @@ export class EditarPeritosComponent implements OnInit {
 
         queryAcPeritoEsp = (this.datoPeritos.fecha_baja) ? queryAcPeritoEsp + '&fechaBaja=' + moment(this.datoPeritos.fecha_baja).format('YYYY-MM-DD') : queryAcPeritoEsp + '&fechaBaja';
 
-        console.log(this.endpointActualiza + 'actualizarPerito?' + queryAcPeritoEsp);
         this.http.post(this.endpointActualiza + 'actualizarPerito?' + queryAcPeritoEsp, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
-                    console.log(res);
                     this.loadingDatosPerito = false;
                     if(res.idPerito !== null || res.idPerito !== ''){
                         Swal.fire({
@@ -979,13 +955,9 @@ export class EditarPeritosComponent implements OnInit {
         this.loadingRepresentante = true;
         this.loadingRepresentado = true;
         let queryDelRep = 'idRepresentacion=' + element.IDREPRESENTACION;
-        console.log(element);
-        console.log(this.endpointActualiza + 'deleteRepresentacion?' + queryDelRep);
         this.http.post(this.endpointActualiza + 'deleteRepresentacion?' + queryDelRep, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
-                    console.log("ELIMINADO");
-                    console.log(res);
                     if(res){
                         if(tipo == 1){
                             this.loadingRepresentado = false;
@@ -1046,9 +1018,6 @@ export class EditarPeritosComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
-                console.log("RESULTADO DEL NUEVO NOMBRE");
-                console.log(result);
-                console.log(result.apepaterno);
                 this.datoPeritos.apepaterno = result.apepaterno;
                 this.datoPeritos.apematerno = result.apematerno;
                 this.datoPeritos.nombre  = result.nombre;
@@ -1079,8 +1048,6 @@ export class EditarPeritosComponent implements OnInit {
                 (res: any) => {
                     this.loadingRepresentante = false;
                     this.dataSource4 = res;
-                    console.log("RES REPRESNTADO!!!!!!!!!");
-                    console.log(res);
                     this.total4 = this.dataSource4.length;
                     this.dataPaginate4 = this.paginate(this.dataSource4, 15, this.pagina4);
                 },
@@ -1116,14 +1083,11 @@ export class EditarPeritosComponent implements OnInit {
     getRepresentado(){
         this.loadingRepresentado = true;
         let queryRepdo = 'rep=Representado&idPersona=' + this.idPerito;
-        console.log(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRepdo);
         this.http.get(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRepdo, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingRepresentado = false;
                     this.dataSource5 = res;
-                    console.log("ACA ENTRO EL REPRESENTADO");
-                    console.log(res);
                     this.total5 = this.dataSource5.length;
                     this.dataPaginate5 = this.paginate(this.dataSource5, 15, this.pagina5);
                 },
@@ -1199,8 +1163,6 @@ export class EditarPeritosComponent implements OnInit {
         dialogRef.afterClosed().subscribe(result => {
             if(result){
                 this.dataSociedadAsociada.push(result);
-                console.log("AQUI EL RESULTADOOOOO PERITO SOCIEDAD");
-                console.log(this.dataSociedadAsociada);
                 this.insertaPeritoSociedad();
             }
         });
@@ -1216,12 +1178,9 @@ export class EditarPeritosComponent implements OnInit {
         this.http.post(this.endpointActualiza + 'insertarPeritoSoci?' + queryPS, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
-                    console.log(res);
                     //this.loadingDatosPerito = false;
                     this.getPeritoDatos();
                     this.dataSociedadAsociada.pop()
-                    console.log("AQUI BORROR");
-                    console.log(this.dataSociedadAsociada);
                 },
                 (error) => {
                     this.loadingDatosPerito = false;
@@ -1252,7 +1211,6 @@ export class EditarPeritosComponent implements OnInit {
             .subscribe(
                 (res: any) => {
                     //this.loadingDatosPerito = false;
-                    console.log(res);
                     this.getPeritoDatos();
                 },
                 (error) => {
@@ -1271,7 +1229,6 @@ export class EditarPeritosComponent implements OnInit {
             .subscribe(
                 (res: any) => {
                     //this.loadingDatosPerito = false;
-                    console.log(res);
                     this.getPeritoDatos();
                 },
                 (error) => {
@@ -1358,7 +1315,6 @@ export class DialogBuscaPerito {
             (res: any) => {
                 this.loadingDocumentosIdentificativos= false;
                 this.dataDocumentos = res.CatDocIdentificativos;
-                console.log(this.dataDocumentos);
             },
             (error) => {
                 this.loadingDocumentosIdentificativos = false;
@@ -1455,7 +1411,6 @@ export class DialogBuscaPerito {
 
         query = query.substr(1);
 
-        console.log(this.endpoint + busquedaDatos + '?' + query);
         this.loading = true;
         this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
             .subscribe(
@@ -1465,7 +1420,6 @@ export class DialogBuscaPerito {
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                     this.total = this.dataSource.length; 
                     this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
                 },
                 (error) => {
                     this.loading = false;
@@ -1498,7 +1452,6 @@ export class DialogBuscaPerito {
      * @param element Arreglo de los datos del perito seleccionado.
      */
     peritoPersonaSelected(element){
-        console.log(element);
         this.idperito = element.IDPERITO;
         this.datoPeritoPersona.nombre = element.NOMBRE;
         this.datoPeritoPersona.apepaterno = element.APELLIDOPATERNO;
@@ -1562,7 +1515,6 @@ export class DialogDomicilioPerito {
         public dialogRef: MatDialogRef<DialogDomicilioPerito>,
         public dialog: MatDialog,
         @Inject(MAT_DIALOG_DATA) public data: any) {
-            console.log(data);
             dialogRef.disableClose = true;
             this.httpOptions = {
                 headers: new HttpHeaders({
@@ -1626,7 +1578,6 @@ export class DialogDomicilioPerito {
             });
         
             if(data.dataDomicilioEspecifico){
-                console.log("recibimos data seteado1"+data.dataDomicilioEspecifico);
                 this.loadingDireccionEspecifica = true;
                 setTimeout(() => {
                     this.getDireccionEspecifica();
@@ -1645,8 +1596,6 @@ export class DialogDomicilioPerito {
                 (res: any) => {
                     this.loadingDireccionEspecifica = false;
                     this.dataDomicilioEspecifico = res;
-                    console.log('domicilio único encontrado');
-                    console.log(this.dataDomicilioEspecifico);
                     setTimeout(() => {
                         this.setDataDomicilio(this.dataDomicilioEspecifico[0]);    
                     }, 500);
@@ -1712,8 +1661,6 @@ export class DialogDomicilioPerito {
             (res: any) => {
                 this.loadingMunicipios = false;
                 this.municipios = res;
-                console.log('GETDELEG');
-                console.log(res);
                 this.spinner.hide();
             },
             (error) => {
@@ -1752,8 +1699,6 @@ export class DialogDomicilioPerito {
             (res: any) => {
                 this.loadingMunicipios = false;
                 this.municipios = res;
-                console.log('GETDELEG');
-                console.log(res);
             },
             (error) => {
                 this.loadingMunicipios = false;
@@ -1770,8 +1715,6 @@ export class DialogDomicilioPerito {
             (res: any) => {
                 this.loadingTiposAsentamiento = false;
                 this.tiposAsentamiento = res;
-                console.log('AQUI EL ASENTAMIENTO SELECT');
-                console.log(this.tiposAsentamiento);
             },
             (error) => {
                 this.loadingTiposAsentamiento = false;
@@ -1788,9 +1731,6 @@ export class DialogDomicilioPerito {
             (res: any) => {
                 this.loadingTiposVia = false;
                 this.tiposVia = res;
-                console.log('AQUI EL TIPOS VIA SELECT');
-                console.log(this.tiposVia);
-                console.log(this.codtiposdireccion);
             },
             (error) => {
                 this.loadingTiposVia = false;
@@ -1807,8 +1747,6 @@ export class DialogDomicilioPerito {
             (res: any) => {
                 this.loadingTiposLocalidad = false;
                 this.tiposLocalidad = res;
-                console.log('AQUI EL TIPOS LOCALIDAD');
-                console.log(this.tiposLocalidad);
             },
             (error) => {
                 this.loadingTiposLocalidad = false;
@@ -1893,14 +1831,11 @@ export class DialogDomicilioPerito {
         query = (this.codtiposdireccion) ? query + '&codtiposdireccion=' + this.codtiposdireccion : query + '&codtiposdireccion=';
         query = (this.dataDomicilio.adicional) ? query + '&indicacionesadicionales=' + this.dataDomicilio.adicional.toLocaleUpperCase().trim() : query + '&indicacionesadicionales=';
         query = (this.dataDomicilio.ninterior) ? query + '&numerointerior=' + this.dataDomicilio.ninterior.trim() : query + '&numerointerior=';
-        
-        console.log('EL SUPER QUERY!!!!!!');
-        console.log(query);
+ 
 
         this.http.post(this.endpointCatalogos + query, '', this.httpOptions)
             .subscribe( 
                 (res: any) => {
-                    console.log(res);
                     // this.snackBar.open('Registro exitoso', 'Cerrar', {
                     //     duration: 10000,
                     //     horizontalPosition: 'end',
@@ -1968,14 +1903,10 @@ export class DialogDomicilioPerito {
         query = (this.dataDomicilio.adicional) ? query + '&indicacionesadicionales=' + this.dataDomicilio.adicional : query + '&indicacionesadicionales=';
         query = (this.dataDomicilio.ninterior) ? query + '&numerointerior=' + this.dataDomicilio.ninterior : query + '&numerointerior=';
         
-        console.log('Actualizacion de Direcciones...');
-        console.log(query);
         
         this.http.post(this.endpointCatalogos + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
-                    console.log("AQUI ACTUALIZO");
-                    console.log(res);
                     // this.snackBar.open('Actualización Correcta', 'Cerrar', {
                     //     duration: 10000,
                     //     horizontalPosition: 'end',
@@ -2012,8 +1943,6 @@ export class DialogDomicilioPerito {
      * @param data Arreglo con los datos del registro seleccionado.
      */
     setDataDomicilio(data): void {
-        console.log("ACA EL COD DATA ESPE");
-        console.log(data);
        
         this.domicilioFormGroup.controls['idestado'].setValue(data.CODESTADO);
         this.domicilioFormGroup.updateValueAndValidity();
@@ -2075,8 +2004,6 @@ export class DialogDomicilioPerito {
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
-                console.log("MUNICIPIOS!!!!!!!");
-                console.log(result);
                 this.domicilioFormGroup.controls['idmunicipio2'].setValue(result.codmunicipio);
                 this.domicilioFormGroup.controls['municipio'].setValue(result.municipio);
                 this.botonCiudad = false;
@@ -2107,8 +2034,6 @@ export class DialogDomicilioPerito {
         dialogRef.afterClosed().subscribe(result => {
             if(result){
                 this.botonAsentamiento = false;
-                console.log("CIUDAD!!!!!!!");
-                console.log(result);
                 this.domicilioFormGroup.controls['idciudad'].setValue(result.codciudad);
                 this.domicilioFormGroup.controls['ciudad'].setValue(result.ciudad);
             }
@@ -2139,8 +2064,6 @@ export class DialogDomicilioPerito {
         dialogRef.afterClosed().subscribe(result => {
             if(result){
                 this.botonVia = false;
-                console.log("ASENTAMIENTO!!!!!!!");
-                console.log(result);
                 this.domicilioFormGroup.controls['codasentamiento'].setValue(result.codasentamiento);
                 this.domicilioFormGroup.controls['asentamiento'].setValue(result.asentamiento);
                 this.domicilioFormGroup.controls['idtipoasentamiento'].setValue(result.codtiposasentamiento);
@@ -2162,8 +2085,6 @@ export class DialogDomicilioPerito {
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
-                console.log("VIA!!!!!!!");
-                console.log(result);
                 this.domicilioFormGroup.controls['codtiposvia'].setValue(result.codtiposvia);
                 this.domicilioFormGroup.controls['idtipovia'].setValue(result.idvia);
                 this.domicilioFormGroup.controls['via'].setValue(result.via);
@@ -2215,7 +2136,6 @@ export class DialogMunicipios {
             })
         };
         this.obtenerMunicipios();
-        console.log(data);
     }
 
     /**
@@ -2247,7 +2167,6 @@ export class DialogMunicipios {
             query = '';
         }
 
-        console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
         this.loadingBuscaMun = true;
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
@@ -2257,7 +2176,6 @@ export class DialogMunicipios {
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                     this.total = this.dataSource.length; 
                     this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
                 },
                 (error) => {
                     this.loadingBuscaMun = false;
@@ -2290,7 +2208,6 @@ export class DialogMunicipios {
      * @param element Arreglo de los datos del municipio seleccionado
      */
     selectMunicipios(element){
-        console.log(element);
         this.btnAceptar = false;
         this.dataMunicipios.codestado = element.CODESTADO;
         this.dataMunicipios.codmunicipio = element.CODMUNICIPIO;
@@ -2304,7 +2221,6 @@ export class DialogMunicipios {
         this.loadingBuscaMun = true;
         let criterio = '';
         let query = '';
-        console.log(this.buscaMunicipios);
         if(this.data.codEstado != 9){
             criterio = criterio + 'getMunicipiosByNombre';
             query = query + 'codEstado=' + this.data.codEstado + '&municipio=' + this.buscaMunicipios.toLocaleUpperCase();
@@ -2313,7 +2229,6 @@ export class DialogMunicipios {
             query = '';
         }
 
-        console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
         this.loadingBuscaMun = true;
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
@@ -2323,7 +2238,6 @@ export class DialogMunicipios {
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                     this.total = this.dataSource.length; 
                     this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
                 },
                 (error) => {
                     this.loadingBuscaMun = false;
@@ -2375,7 +2289,6 @@ export class DialogCiudad {
             })
         };
         this.obtenerCiudad();
-        console.log(data);
     }
 
     /**
@@ -2411,7 +2324,6 @@ export class DialogCiudad {
             query = query + '&nombre=' + this.buscaCiudad.toLocaleUpperCase();
         }
 
-        console.log('CIUDAD!!!!!'+this.endpoint + '?' + query);
         this.loadingBuscaCiudad = true;
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
@@ -2421,7 +2333,6 @@ export class DialogCiudad {
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                     this.total = this.dataSource.length; 
                     this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
                 },
                 (error) => {
                     this.loadingBuscaCiudad = false;
@@ -2454,7 +2365,6 @@ export class DialogCiudad {
      * @param element Arreglo de los datos del registro seleccionado
      */
     selectCiudad(element){
-        console.log(element);
         this.btnAceptar = false;
         this.dataCiudad.ciudad = element.CIUDAD;
         this.dataCiudad.codciudad = element.CODCIUDAD;
@@ -2508,7 +2418,6 @@ export class DialogAsentamiento {
             })
         };
         this.obtenerAsentamiento();
-        console.log(data);
     }
 
     /**
@@ -2541,7 +2450,6 @@ export class DialogAsentamiento {
             query = (this.data.codCiudad) ? query + '&codCiudad=' + this.data.codCiudad : query + '&codCiudad=';
         }
 
-        console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
         this.loading = true;
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
@@ -2551,7 +2459,6 @@ export class DialogAsentamiento {
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                     this.total = this.dataSource.length; 
                     this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
                 },
                 (error) => {
                     this.loading = false;
@@ -2584,7 +2491,6 @@ export class DialogAsentamiento {
      * @param element Arreglo de los datos del asentamiento.
      */
     selectAsentamiento(element){
-        console.log(element);
         this.btnAceptar = false;
         if(element.IDDELEGACION){
             this.dataAsentamiento.codasentamiento = element.CODIGO;
@@ -2621,7 +2527,6 @@ export class DialogAsentamiento {
             query = (this.data.codCiudad) ? query + '&codCiudad=' + this.data.codCiudad : query + '&codCiudad=';
         }
         
-        console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
         this.loading = true;
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
@@ -2631,7 +2536,6 @@ export class DialogAsentamiento {
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                     this.total = this.dataSource.length; 
                     this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
                 },
                 (error) => {
                     this.loading = false;
@@ -2683,7 +2587,6 @@ export class DialogVia {
             })
         };
         this.obtenerVia();
-        console.log(data);
     }
 
     /**
@@ -2719,7 +2622,6 @@ export class DialogVia {
             query = query + '&idColonia=' + this.data.codAsentamiento;
         }
 
-        console.log('VIA!!!!!'+this.endpoint + '?' + query);
         this.loadingBuscaVia = true;
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
@@ -2729,7 +2631,6 @@ export class DialogVia {
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                     this.total = this.dataSource.length; 
                     this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
                 },
                 (error) => {
                     this.loadingBuscaVia = false;
@@ -2762,7 +2663,6 @@ export class DialogVia {
      * @param element Arreglo de los datos del registro seleccionado
      */
     selectVia(element){
-        console.log(element);
         this.btnAceptar = false;
         this.dataVia.codtiposvia = element.codtiposvia;
         this.dataVia.idvia = element.idvia;
@@ -2837,8 +2737,6 @@ export class DialogRepresentacionPeritos {
             texto: [null, []],
             fechaCaducidad: [null, []],
         });
-        console.log("ACA LA DATA DEL DIALOG REPRESENTACION");
-        console.log(data);
         if(data.dataRepresentante){
             this.setDataRepresentacion(data.dataRepresentante);
             this.idDocumento = data.dataRepresentante.IDDOCUMENTOREPRESENTACION;
@@ -2869,7 +2767,6 @@ export class DialogRepresentacionPeritos {
             (res: any) => {
                 this.loadingDocumentosIdentificativos = false;
                 this.dataDocumentos = res.CatDocIdentificativos;
-                console.log(this.dataDocumentos);
                 this.spinner.hide();
             },
             (error) => {
@@ -2896,7 +2793,6 @@ export class DialogRepresentacionPeritos {
             this.isRequired = false;
         }​​​​​​​​
 
-        console.log(this.fisicaFormGroup.value.rfc);
         this.fisicaFormGroup.markAsTouched();
         this.fisicaFormGroup.updateValueAndValidity();
     }
@@ -2999,8 +2895,6 @@ export class DialogRepresentacionPeritos {
         }
         this.idPersonaRepresentacion = (this.idPersonaRepresentacion) ? this.idPersonaRepresentacion : null;
 
-        console.log('AQUIII EL JSON PRESENTACION');
-        console.log(this.dataRepresentacion);
 
         if(this.insertOrUpdate == 2){
             this.updateRepresentacion();            
@@ -3068,9 +2962,6 @@ export class DialogRepresentacionPeritos {
                 }
             };
             
-            console.log("PAYLOAAAAAAAAAAAAAD!");
-            console.log(JSON.stringify(payload));
-            
             this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
                 (res: any) => {
                     // this.snackBar.open('REGISTRO EXITOSO', 'Cerrar', {
@@ -3084,8 +2975,6 @@ export class DialogRepresentacionPeritos {
                         icon: 'success',
                         confirmButtonText: 'Cerrar'
                     });
-                    console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTECIÓN");
-                    console.log(res);
                     this.loading = false;
                     this.dialogRef.close(res);
                     this.spinner.hide();
@@ -3121,8 +3010,6 @@ export class DialogRepresentacionPeritos {
 
         queryActRep = queryActRep + '&idRepresentacion=' + this.idRepresentacion + '&idDocumentoDigital=' + this.idDocumento;
 
-        console.log("QUERY ACTUALIZA");
-        console.log(queryActRep);
         this.http.post(this.endpoint + 'actualizarRepresentacion?' + queryActRep, '', this.httpOptions).subscribe(
             (res: any) => {
                 // this.snackBar.open('SE HA ACTUALIZADO EL REPRESENTADO', 'Cerrar', {
@@ -3136,8 +3023,6 @@ export class DialogRepresentacionPeritos {
                     icon: 'success',
                     confirmButtonText: 'Cerrar'
                 });
-                console.log("AQUI ENTRO LAS RESPUESTA DEL POST ACT REPRESENTADO");
-                console.log(res);
                 let fin = true;
                 this.dialogRef.close(fin);
                 this.spinner.hide();
@@ -3164,8 +3049,6 @@ export class DialogRepresentacionPeritos {
      * @param dataRepresentacion Arreglo con los datos del registro seleccionado.
      */
     setDataRepresentacion(dataRepresentacion): void {
-        console.log("ACA ENTRO EL SLECCIONADO REPRESENTACION");
-        console.log(dataRepresentacion);
         (dataRepresentacion.RFC) ? this.changeRequired('curp', 'rfc') : this.changeRequired('rfc', 'curp');
         
         this.tipoPersona = dataRepresentacion.CODTIPOPERSONA;
@@ -3301,7 +3184,6 @@ export class DialogRepresentadoPeritos {
             (res: any) => {
                 this.loadingDocumentosIdentificativos = false;
                 this.dataDocumentos = res.CatDocIdentificativos;
-                console.log(this.dataDocumentos);
                 this.spinner.hide();
             },
             (error) => {
@@ -3330,7 +3212,6 @@ export class DialogRepresentadoPeritos {
             this.isRequired = false;
         }​​​​​​​​
 
-        console.log(this.fisicaFormGroup.value.rfc);
         this.fisicaFormGroup.markAsTouched();
         this.fisicaFormGroup.updateValueAndValidity();
     }
@@ -3433,8 +3314,6 @@ export class DialogRepresentadoPeritos {
         }
 
         this.idPersonaRepresentacion = (this.idPersonaRepresentacion) ? this.idPersonaRepresentacion : null;
-        console.log('AQUIII EL JSON DEL REPRESENTADO');
-        console.log(this.dataRepresentacion);
 
         if(this.insertOrUpdate == 2){
             this.updateRepresentacion();            
@@ -3501,9 +3380,6 @@ export class DialogRepresentadoPeritos {
                     documentos: this.dataRepresentacion.documentoRepresentacion.archivos
                 }
             };
-
-            console.log("PAYLOAAAAAAAAAAAAAD!");
-            console.log(JSON.stringify(payload));
             
             this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
                 (res: any) => {
@@ -3518,8 +3394,6 @@ export class DialogRepresentadoPeritos {
                         icon: 'success',
                         confirmButtonText: 'Cerrar'
                     });
-                    console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTADO");
-                    console.log(res);
                     this.loading = false;
                     this.dialogRef.close(res);
                     this.spinner.hide();
@@ -3548,7 +3422,7 @@ export class DialogRepresentadoPeritos {
      * Actualiza la información de la representación seleccionada.
      */
     updateRepresentacion(){
-        console.log("ACTUALIZA");
+
         let queryActRep = '';
 
         queryActRep = (this.dataRepresentacion.texto) ? queryActRep + 'textorepresentacion=' + this.dataRepresentacion.texto : queryActRep + 'textorepresentacion=';
@@ -3557,8 +3431,6 @@ export class DialogRepresentadoPeritos {
 
         queryActRep = queryActRep + '&idRepresentacion=' + this.idRepresentacion + '&idDocumentoDigital=' + this.idDocumento;
 
-        console.log("QUERY ACTUALIZA");
-        console.log(queryActRep);
 
         this.http.post(this.endpoint + 'actualizarRepresentacion?' + queryActRep, '', this.httpOptions).subscribe(
             (res: any) => {
@@ -3573,8 +3445,7 @@ export class DialogRepresentadoPeritos {
                     icon: 'success',
                     confirmButtonText: 'Cerrar'
                 });
-                console.log("AQUI ENTRO LAS RESPUESTA DEL POST ACT REPRESENTADO");
-                console.log(res);
+               
                 let fin = true;
                 this.dialogRef.close(fin);
             },
@@ -3599,8 +3470,7 @@ export class DialogRepresentadoPeritos {
      * @param dataRepresentacion Arreglo con los datos del registro seleccionado.
      */
     setDataRepresentacion(dataRepresentacion): void {
-        console.log("ACA ENTRO EL SLECCIONADO REPRESENTACION");
-        console.log(dataRepresentacion);
+      
         (dataRepresentacion.RFC) ? this.changeRequired('curp', 'rfc') : this.changeRequired('rfc', 'curp');
         
         this.tipoPersona = dataRepresentacion.CODTIPOPERSONA;
@@ -3719,15 +3589,13 @@ export class DialogDocumentoPerito {
         }
             this.infoDocumentoFormGroup.updateValueAndValidity();
         });
-        console.log(this.tiposDocumentoFormGroup.controls.codtipodocumentojuridico);
+     
         if(data.idDocumento){
             this.setDataDocumento(data.idDocumento);
             this.insertOrUpdate = data.insertOrUpdate;
             this.idDocumento = data.idDocumento;
             this.insUp = true;
         }
-        console.log("ACA EL DATA DEL DOCU DIALOG");
-        console.log(data);
     }
 
     /**
@@ -3844,10 +3712,7 @@ export class DialogDocumentoPerito {
 
         this.http.post(this.endpoint + 'infoDocumentos?idDocumentoDigital=' + idDocumento2, '', this.httpOptions).subscribe(
             (res: any) => {
-                console.log("AQUI ENTRO EL RESULTADO DEL DOCUMENTO");
                 this.dataDocumentoSet = res;
-                console.log(this.dataDocumentoSet.infoDocumento[0].iddocumentodigital);
-                console.log(res);
                 this.setDoc();
             },
             (error) => {
@@ -3869,8 +3734,6 @@ export class DialogDocumentoPerito {
      * Se almacenan los datos relacionados con el documento cuando se ha seleccionado la opción de editar documento.
      */
     setDoc(){
-        console.log("LA FECHA NO SE DEJA");
-        console.log(this.fechaDocto);
 
         this.tiposDocumentoFormGroup.controls['codtipodocumentojuridico'].setValue(this.dataDocumentoSet.infoDocumento[0].codtipodocumentojuridico);
         if(this.dataDocumentoSet.infoDocumento[0].codtipodocumentojuridico == 'PN'){
@@ -3884,8 +3747,7 @@ export class DialogDocumentoPerito {
         this.infoDocumentoFormGroup.controls['fecha'].setValue(new Date(this.dataDocumentoSet.infoDocumento[0].fecha));
         this.infoDocumentoFormGroup.controls['descripcion'].setValue(this.dataDocumentoSet.infoDocumento[0].descripcion);
         this.infoDocumentoFormGroup.controls['lugar'].setValue(this.dataDocumentoSet.infoDocumento[0].lugar);
-
-        console.log(this.fechaDocto);    
+ 
         this.dataDoc = this.dataDocumentoSet.infoFicheros;
     }
 
@@ -3895,15 +3757,9 @@ export class DialogDocumentoPerito {
      */
     descargarDoc(element){
 
-        console.log("ACA EL DESCARGAR FICHERO");
-        console.log(element);
-
         this.http.get( this.endpoint + 'getFichero?idFichero=' + element.idficherodocumento, this.httpOptions ). subscribe (
             (res: any) => {
                 this.descargaFichero = res;
-                console.log("EL RES DEL FICHERO");
-                console.log(this.descargaFichero);
-                console.log(this.descargaFichero[0].binariodatos);
                 this.convertirDoc();
             },
             (error) => {
@@ -3927,9 +3783,6 @@ export class DialogDocumentoPerito {
     convertirDoc(){
         let dataFichero = this.descargaFichero[0].binariodatos;
         dataFichero = dataFichero.split("data:application/pdf;base64,");
-        console.log("split");
-        console.log(dataFichero);
-        //return;
         const blob = this.b64toBlob(dataFichero[1], 'application/pdf');
         FileSaver.saveAs(blob, this.descargaFichero[0].nombre);
     }
@@ -3963,10 +3816,6 @@ export class DialogDocumentoPerito {
      * @param i Valor del index del registro seleccionado.
      */
     eliminarDoc(element, i){
-        console.log("ACA EL ELIMINAR FICHERO");
-        console.log(element);
-
-        
 
         this.http.post( this.endpoint + 'borrarFichero?lista=' + element.idficherodocumento, '', this.httpOptions ). subscribe (
             (res: any) => {
@@ -3982,8 +3831,6 @@ export class DialogDocumentoPerito {
                     confirmButtonText: 'Cerrar'
                 });
                 this.dataDoc.splice(i,1);
-                console.log("AQUI ENTRO LAS RESPUESTA DEL BORRADO");
-                console.log(res);
             },
             (error) => {
                 // this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
@@ -4016,8 +3863,6 @@ export class DialogDocumentoPerito {
             }
         };
         
-        
-        console.log(JSON.stringify(payload));
         this.http.post( this.endpoint + 'actualizarDocumentos', payload, this.httpOptions ). subscribe (
             (res: any) => {
                 if(res === true){
@@ -4032,8 +3877,6 @@ export class DialogDocumentoPerito {
                         icon: 'success',
                         confirmButtonText: 'Cerrar'
                     });
-                    console.log("RESPUESTA DE LA ACTUALIZACIÓN");
-                    console.log(res);
                 }else{
                     // this.snackBar.open('ERROR INTENTELO MÁS TARDE', 'Cerrar', {
                     //     duration: 10000,
@@ -4353,7 +4196,6 @@ export class DialogPersonaPeritos {
             (res: any) => {
                 this.loadingDocumentosIdentificativos= false;
                 this.dataDocumentos = res.CatDocIdentificativos;
-                console.log(this.dataDocumentos);
                 this.spinner.hide();
             },
             (error) => {
@@ -4616,7 +4458,6 @@ export class DialogSociedadAsociada {
         query = query.substr(1);
 
         this.loading = true;
-        console.log(this.endpoint);
         this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
@@ -4625,7 +4466,6 @@ export class DialogSociedadAsociada {
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                     this.total = this.dataSource.length; 
                     this.paginator.pageIndex = 0;
-                    console.log(res);
                     this.spinner.hide();
                 },
                 (error) => {
@@ -4661,7 +4501,6 @@ export class DialogSociedadAsociada {
      * @returns Regresa el arreglo de la sociedad.
      */
     sociedadSelected(element): DataSociedadAsociadaDialog {
-        console.log(element);
         this.dataSociedadAsociadaDialog.rfc = element.RFC;
         this.dataSociedadAsociadaDialog.registro = element.REGISTRO;
         this.dataSociedadAsociadaDialog.razonSocial = element.RAZONSOCIAL;
@@ -4716,8 +4555,6 @@ export class DialogHistorialRep {
             })
         };
 
-        console.log("ACA EL EL HISTORIAL");
-        console.log(data);
         this.idPersona = data;
         this.getHistorialRepresentacion();
     }
@@ -4741,7 +4578,6 @@ export class DialogHistorialRep {
                 (res: any) => {
                     this.loadingH = false;
                     this.dataSource = res;
-                    console.log(this.dataSource);
                     this.total = this.dataSource.length;
                     this.dataPaginate = this.paginate(this.dataSource, 10, this.pagina);
                 },
@@ -4787,8 +4623,6 @@ export class DialogHistorialRep {
      * @param element Id de la representcación con la cual se realizará la búsqueda.
      */
     historicoDetalle(element){
-        console.log("ACA EL IDCSH");
-        console.log(element);
         this.idChs = element;
         const dialogRef = this.dialog.open(DialogHistorialRepDetalle, {
             width: '700px',
@@ -4881,8 +4715,6 @@ export class DialogHistorialRepDetalle {
             })
         };
 
-        console.log("ACA EL EL HISTORIAL");
-        console.log(data);
         this.idChs = data;
         this.getHistorialRepresentacionDetalle();
     }
@@ -4901,11 +4733,7 @@ export class DialogHistorialRepDetalle {
             .subscribe(
                 (res: any) => {
                     this.loadingH = false;
-                    console.log("RESULTADO DEL DETALLE REP");
-                    console.log(res);
                     this.dataRepresentacion = res;
-                    console.log(this.dataRepresentacion.infoRepresentante.CAUSA);
-                    console.log(this.dataRepresentacion.infoRepresentante[0].CAUSA);
                     this.setDetalle();
                 },
                 (error) => {
@@ -4929,9 +4757,6 @@ export class DialogHistorialRepDetalle {
      * Almacena los datos de la búsqueda realizada para mostrar en el formulario.
      */
     setDetalle(){
-            console.log("ACA ENTRO EL SLECCIONADO REPRESENTACION");
-            console.log(this.dataRepresentacion.infoRepresentante[0]);
-            console.log(this.dataRepresentacion.infoDocumento.infoDocumento[0].codtipodocumentojuridico);
             //(this.dataRepresentacion.infoRepresentante[0].RFC) ? this.changeRequired('curp', 'rfc') : this.changeRequired('rfc', 'curp');
 
             ///////////////// DATOS DEL DOCUMENTO ////////////////////////
@@ -5061,7 +4886,6 @@ export interface DataHistorico{
                 (res: any) => {
                     this.loading = false;
                     this.dataSource = res;
-                    console.log(this.dataSource);
                     this.total = this.dataSource.length;
                     this.dataPaginate = this.paginate(this.dataSource, 10, this.pagina);
                 },
@@ -5201,8 +5025,6 @@ export interface DataHistorico{
 
             this.idChs = data.dataDomicilioEspecifico;
             this.idDireccion = data.idDireccion;
-            console.log(this.idChs);
-            console.log(this.idDireccion);
             this.codtiposdireccion = data.codtiposdireccion;
             this.dataDomicilio = {} as DataDomicilio;
             this.dataDomicilioEspecifico = {} as DataDomicilio;
@@ -5254,8 +5076,6 @@ export interface DataHistorico{
                 });
         
                     if(data){
-                        console.log(data.dataDomicilioEspecifico);
-                        console.log("recibimos data seteado1");
                         // this.domicilioFormGroup['cp'].disable();
                     }
                     this.getDataTiposAsentamiento();
@@ -5267,7 +5087,6 @@ export interface DataHistorico{
      * Obtiene el domicilio seleccionado.
      */
     getDireccionEspecifica(){
-        console.log('entro');
         this.loadingDireccionEspecifica = true;
         let metodo = 'getHistoricosDireccionDetalle';
         this.http.get(this.endpointCatalogos + metodo + '?idChs=' + this.idChs + '&idDireccion=' + this.idDireccion, this.httpOptions)
@@ -5276,12 +5095,9 @@ export interface DataHistorico{
                     this.loadingDireccionEspecifica = false;
                     this.dataDomicilioEspecifico = res;
                     this.setDataDomicilio(this.dataDomicilioEspecifico[0]);
-                    console.log('domicilio único encontrado');
-                    console.log(this.dataDomicilioEspecifico);
                 },
                 (error) => {
                     this.loadingDireccionEspecifica = false;
-                    console.log('no furula');
                     // this.snackBar.open(error.error.mensaje, 'Cerrar', {
                     //     duration: 10000,
                     //     horizontalPosition: 'end',
@@ -5336,8 +5152,6 @@ export interface DataHistorico{
             (res: any) => {
                 this.loadingMunicipios = false;
                 this.municipios = res;
-                console.log('GETDELEG');
-                console.log(res);
             },
             (error) => {
                 this.loadingMunicipios = false;
@@ -5354,8 +5168,6 @@ export interface DataHistorico{
             (res: any) => {
                 this.loadingTiposAsentamiento = false;
                 this.tiposAsentamiento = res;
-                console.log('AQUI EL ASENTAMIENTO SELECT');
-                console.log(this.tiposAsentamiento);
             },
             (error) => {
                 this.loadingTiposAsentamiento = false;
@@ -5372,9 +5184,6 @@ export interface DataHistorico{
             (res: any) => {
                 this.loadingTiposVia = false;
                 this.tiposVia = res;
-                console.log('AQUI EL TIPOS VIA SELECT');
-                console.log(this.tiposVia);
-                console.log(this.codtiposdireccion);
             },
             (error) => {
                 this.loadingTiposVia = false;
@@ -5391,8 +5200,6 @@ export interface DataHistorico{
             (res: any) => {
                 this.loadingTiposLocalidad = false;
                 this.tiposLocalidad = res;
-                console.log('AQUI EL TIPOS LOCALIDAD');
-                console.log(this.tiposLocalidad);
             },
             (error) => {
                 this.loadingTiposLocalidad = false;
@@ -5405,9 +5212,6 @@ export interface DataHistorico{
      * @param data Arreglo con los datos del registro seleccionado.
      */
     setDataDomicilio(data): void {
-        console.log("ACA EL COD DATA ESPE");
-        console.log(data);
-        // console.log("ACA EL COD ESTADO SETEADO"+data.dataDomicilioEspecifico.CODESTADO);
        
         this.domicilioFormGroup.controls['idestado'].setValue(data.CODESTADO);
         this.getDataMunicipios({value: this.domicilioFormGroup.value.idestado});
@@ -5455,8 +5259,6 @@ export interface DataHistorico{
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
-                console.log("MUNICIPIOS!!!!!!!");
-                console.log(result);
                 this.domicilioFormGroup.controls['idmunicipio2'].setValue(result.codmunicipio);
                 this.domicilioFormGroup.controls['municipio'].setValue(result.municipio);
                 this.botonCiudad = false;
@@ -5479,8 +5281,6 @@ export interface DataHistorico{
         dialogRef.afterClosed().subscribe(result => {
             if(result){
                 this.botonAsentamiento = false;
-                console.log("CIUDAD!!!!!!!");
-                console.log(result);
                 this.domicilioFormGroup.controls['idciudad'].setValue(result.codciudad);
                 this.domicilioFormGroup.controls['ciudad'].setValue(result.ciudad);
             }
@@ -5506,8 +5306,6 @@ export interface DataHistorico{
         dialogRef.afterClosed().subscribe(result => {
             if(result){
                 this.botonVia = false;
-                console.log("ASENTAMIENTO!!!!!!!");
-                console.log(result);
                 this.domicilioFormGroup.controls['codasentamiento'].setValue(result.codasentamiento);
                 this.domicilioFormGroup.controls['asentamiento'].setValue(result.asentamiento);
                 this.domicilioFormGroup.controls['idtipoasentamiento'].setValue(result.codtiposasentamiento);
@@ -5529,8 +5327,6 @@ export interface DataHistorico{
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
-                console.log("VIA!!!!!!!");
-                console.log(result);
                 this.domicilioFormGroup.controls['codtiposvia'].setValue(result.codtiposvia);
                 this.domicilioFormGroup.controls['idtipovia'].setValue(result.idvia);
                 this.domicilioFormGroup.controls['via'].setValue(result.via);

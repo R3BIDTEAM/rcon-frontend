@@ -170,7 +170,6 @@ export class ConsultaPeritosComponent implements OnInit {
      * @param event Valor del option
      */
     seleccionaDocto(){
-        console.log("LO QUE SE SELECCIONO "+this.identificacion);
         this.selectDisabled = true;
         this.selectCedula = false;
         this.selectPasaporte = false;
@@ -200,8 +199,6 @@ export class ConsultaPeritosComponent implements OnInit {
     getPerito(){
         this.spinner.show();
         if(this.search){
-
-            console.log(this.search);
         
         
             let query = '';
@@ -241,7 +238,6 @@ export class ConsultaPeritosComponent implements OnInit {
             query = query.substr(1);
 
             this.loading = true;
-            console.log(this.endpoint + busquedaDatos + '?' + query);
             this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
                 .subscribe(
                     (res: any) => {
@@ -250,7 +246,6 @@ export class ConsultaPeritosComponent implements OnInit {
                         this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                         this.total = this.dataSource.length; 
                         this.paginator.pageIndex = 0;
-                        console.log(this.dataSource);
                         this.spinner.hide();
                         if (res.length === 0) {
                             Swal.fire({
