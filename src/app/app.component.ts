@@ -17,9 +17,10 @@ export class AppComponent {
     this.isAuth = this.auth.isAuthenticated();
     /* Para cerrar sesion si esta inactivo*/
     console.log(this.auth.getSession());
-    this.bnIdle.startWatching(900).subscribe((isInactive) => {
+    this.bnIdle.startWatching(20).subscribe((isInactive) => {
       if(isInactive) {
         if(environment.closeSession){
+          console.log("ACA VA EL CIERRE")
           this.auth.closeSession();
         }
       }
