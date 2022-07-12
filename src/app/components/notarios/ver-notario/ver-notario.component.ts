@@ -119,7 +119,7 @@ export class VerNotarioComponent implements OnInit {
       this.Auditor = true; 
   }
     this.idNotario = this.route.snapshot.paramMap.get('idnotario');
-    console.log(this.idNotario);
+
     this.getNotarioDatos();
     this.getNotarioDirecciones();
     this.getDataEstados();
@@ -137,7 +137,7 @@ export class VerNotarioComponent implements OnInit {
         this.spinner.hide();
         this.loadingEstados = false;
         this.estados = res;
-        console.log(this.estados);
+
       },
       (error) => {
         this.spinner.hide();
@@ -157,7 +157,7 @@ export class VerNotarioComponent implements OnInit {
         this.spinner.hide();
         this.loadingDocumentosIdentificativos = false;
         this.documentos = res.CatDocIdentificativos;
-        console.log(this.documentos);
+
       },
       (error) => {
         this.spinner.hide();
@@ -173,7 +173,7 @@ export class VerNotarioComponent implements OnInit {
       this.spinner.show();
       this.query = 'infoExtra=true&idPersona=' + this.idNotario; 
       this.loading = true;
-      console.log(this.endpoint);
+
       this.http.get(this.endpoint + '?' + this.query, this.httpOptions)
           .subscribe(
               (res: any) => {
@@ -184,8 +184,6 @@ export class VerNotarioComponent implements OnInit {
                   // this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                   // this.total = this.dataPaginate.length; 
                   // this.paginator.pageIndex = 0;
-                  console.log("AQUI ENTRO EL RES");
-                  console.log(this.dataNotarioResultado);
                   this.datoDelNotario();
               },
               (error) => {
@@ -218,9 +216,6 @@ export class VerNotarioComponent implements OnInit {
       this.datosNotario.fecha_defuncion = (this.dataNotarioResultado[0].FECHADEFUNCION) ? new Date(this.dataNotarioResultado[0].FECHADEFUNCION) : null;
       this.datosNotario.celular = this.dataNotarioResultado[0].CELULAR;
       this.datosNotario.email = this.dataNotarioResultado[0].EMAIL;
-
-      console.log(this.datosNotario.fecha_nacimiento);
-      
   }
   // paginado(evt): void{
   //     this.pagina = evt.pageIndex + 1;
@@ -239,7 +234,7 @@ export class VerNotarioComponent implements OnInit {
     this.spinner.show();
     this.query = '&idPersona=' + this.idNotario; 
     this.loadingDomicilios = true;
-    console.log(this.endpoint);
+
     this.http.get(this.endpointEstados + 'getDireccionesContribuyente?' + this.query, this.httpOptions)
       .subscribe(
           (res: any) => {
@@ -248,8 +243,8 @@ export class VerNotarioComponent implements OnInit {
             this.dataSource = res;
             this.total = this.dataSource.length; 
             this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
-            console.log("AQUI ENTRO EL RES");
-            console.log(this.dataNotarioDireccionesResultado);
+
+
           },
           (error) => {
             this.spinner.hide();

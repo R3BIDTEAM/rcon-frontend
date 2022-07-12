@@ -60,7 +60,7 @@ export class ReporteComponent implements OnInit {
         if(this.rol == 'SUPERVISOR RCON' || this.rol == 'Administrador'){
             this.botonDisabled = true;
             //this.isRequired = true;
-            console.log("ACÁ ESTA EL BOTON");
+
         }else{
             this.botonDisabled = false;
             //this.isRequired = false;
@@ -101,8 +101,6 @@ export class ReporteComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
-                console.log("RESULTADO DEL USUARIO");
-                console.log(result);
                 this.reporteFormGroup.controls['usuario'].setValue(result.usuario);
 				this.idUsuario = result.idusuario
             }
@@ -137,7 +135,7 @@ export class ReporteComponent implements OnInit {
                     dialogRef.close();
                     if(!res.mensaje){
                         this.dataSource = res;
-                        console.log(this.dataSource);
+
                         this.downloadInforme();
                     }else{
                         Swal.fire(
@@ -174,11 +172,11 @@ export class ReporteComponent implements OnInit {
         // if(this.rol == 'SUPERVISOR RCON' || this.rol == 'Administrador'){
         //     head = [['NUM', 'FECHA', 'CUENTA', 'CAMPO MODIFICADO', 'VALOR ANTERIOR', 'VALOR DESPÚES', 'USUARIO', 'ÁREA', 'SUBÁREA', 'OBSERVACIÓN']];
         //     tipo = 'A';
-        //     console.log("ACÁ EL TIPO:" + tipo);
+
         // }else{
         //     head = [['NUM', 'FECHA', 'CUENTA', 'CAMPO MODIFICADO', 'VALOR ANTERIOR', 'VALOR DESPÚES']];
         //     tipo = 'E';
-        //     console.log("ACÁ EL TIPO:" + tipo);
+
         // }
 		let data = [];
         this.dataSource.forEach(element => data.push([element.numero, element.fecha_de_cambio, element.cuenta, element.campo_modificado, element.valor_antes, element.valor_despues, element.nombre_de_usuario, element.area, element.subarea, element.observacion]));
@@ -187,12 +185,12 @@ export class ReporteComponent implements OnInit {
 		// switch(tipo) {
 		// 	case 'E': {
 		// 		this.dataSource.forEach(element => data.push([element.numero, element.fecha_de_cambio, element.cuenta, element.campo_modificado, element.valor_antes, element.valor_despues]));
-        //         console.log("ACÁ EL ARRAY:" + tipo);
+
 		// 		break;
 		// 	}
         //     case 'A': {
 		// 		this.dataSource.forEach(element => data.push([element.numero, element.fecha_de_cambio, element.cuenta, element.campo_modificado, element.valor_antes, element.valor_despues, element.nombre_de_usuario, element.area, element.subarea, element.observacion]));
-        //         console.log("ACÁ EL ARRAY:" + tipo);
+
 		// 		break;
 		// 	}
 		// default: {
@@ -308,7 +306,7 @@ export class DialogBuscaUsuario {
         }
 
 		//?page=1&rfc=PERM820418S81&login=PERM820418&name=MARIO FERNANDO PEREZ SALINAS
-        console.log(this.endpoint + busquedaDatos + '?' + query);
+
         this.loading = true;
         this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
             .subscribe(
@@ -319,7 +317,7 @@ export class DialogBuscaUsuario {
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                     this.total = this.dataSource.length; 
                     this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
+
                 },
                 (error) => {
                     Swal.fire(
@@ -361,7 +359,7 @@ export class DialogBuscaUsuario {
      * @param element Arreglo de los datos del perito seleccionado
      */
     usuarioSelected(element){
-        console.log(element);
+
         this.datoPeritoPersona.idusuario = element.idusuario;
         this.datoPeritoPersona.usuario = element.login;
 

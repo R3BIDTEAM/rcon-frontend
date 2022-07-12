@@ -137,9 +137,8 @@ export class EdicionContribuyenteComponent implements OnInit {
       data: {mensaje: mensaje, idpersona: idpersona}
     });
     dialogRef.afterClosed().subscribe(result => {
-        console.log("ACÁ RESULT");
+
         if(result != false){
-          console.log(result);    
           switch (result) {
             case 1:
               this.router.navigate(['main/editar-contribuyente/' + idpersona]);
@@ -166,9 +165,9 @@ export class EdicionContribuyenteComponent implements OnInit {
       data: {mensaje: mensaje, idpersona: idpersona}
     });
     dialogRef.afterClosed().subscribe(result => {
-        console.log("ACÁ RESULT");
+
         if(result != false){
-          console.log(result);    
+
           switch (result) {
             case 3:
               this.router.navigate(['main/editar-contribuyente/' + idpersona]);
@@ -190,7 +189,7 @@ export class EdicionContribuyenteComponent implements OnInit {
         this.spinner.hide();
         this.loadingDocumentosIdentificativos = false;
         this.documentos = res.CatDocIdentificativos;
-        // console.log(this.documentos);
+
       },
       (error) => {
         this.spinner.hide();
@@ -251,7 +250,7 @@ export class EdicionContribuyenteComponent implements OnInit {
     this.selectNSS = false;
     this.isIdentificativo = true;
 
-    console.log("LO QUE SE SELECCIONO "+this.contribuyente.identificacion);
+
 
     if(this.contribuyente.identificacion == 1){
         this.selectCedula = true;

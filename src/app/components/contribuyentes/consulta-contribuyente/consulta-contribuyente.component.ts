@@ -120,7 +120,6 @@ export class ConsultaContribuyenteComponent implements OnInit {
         this.spinner.hide();
         this.loadingDocumentosIdentificativos = false;
         this.documentos = res.CatDocIdentificativos;
-        // console.log(this.documentos);
       },
       (error) => {
         this.spinner.hide();
@@ -197,8 +196,6 @@ export class ConsultaContribuyenteComponent implements OnInit {
     this.selectNSS = false;
     this.isIdentificativo = true;
 
-    console.log("LO QUE SE SELECCIONO "+this.contribuyente.identificacion);
-
     if(this.contribuyente.identificacion == 1){
         this.selectCedula = true;
     }
@@ -250,15 +247,6 @@ export class ConsultaContribuyenteComponent implements OnInit {
         (this.contribuyenteFormGroup.value.amaterno !== null && this.contribuyenteFormGroup.value.amaterno !== '')
       ){
         this.getData();
-        console.log(this.contribuyenteFormGroup.value.rfc);
-        console.log(this.contribuyenteFormGroup.value.nombre);
-        console.log(this.contribuyenteFormGroup.value.curp);
-        console.log(this.contribuyenteFormGroup.value.rfc);
-        console.log(this.contribuyenteFormGroup.value.ine);
-        console.log(this.contribuyenteFormGroup.value.iddocumentoidentificativo);
-        console.log(this.contribuyenteFormGroup.value.documentoidentificativo);
-        console.log(this.contribuyenteFormGroup.value.apaterno);
-        console.log(this.contribuyenteFormGroup.value.amaterno);
       }else{
         Swal.fire(
           {

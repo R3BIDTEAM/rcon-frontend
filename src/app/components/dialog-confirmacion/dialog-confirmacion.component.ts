@@ -21,7 +21,7 @@ export class DialogConfirmacionComponent implements OnInit {
     ) {
         dialogRef.disableClose = true;
         this.mensajeConfirma = data;
-        console.log(this.mensajeConfirma);
+        
     }
 
     ngOnInit(): void {
@@ -43,7 +43,7 @@ export class DialogsCambiaPersona {
         @Inject(MAT_DIALOG_DATA) public data: any
     ) { 
         dialogRef.disableClose = true;
-        console.log(data);
+        
         
     }
 
@@ -67,8 +67,6 @@ export class DialogCuenta {
         @Inject(MAT_DIALOG_DATA) public data: any
     ) { 
         dialogRef.disableClose = true;
-        console.log("ACÁ LA OPCIÓN");
-        console.log(data);
         this.mensaje = data.mensaje;
         
     }
@@ -117,7 +115,7 @@ export class DialogsAsociarCuenta {
         @Inject(MAT_DIALOG_DATA) public data: any
     ) { 
         dialogRef.disableClose = true;
-        console.log(data);
+        
         
     }
 
@@ -153,8 +151,6 @@ export class DialogsAsociarCuenta {
                 (res: any) => {
                     this.loadingDerecho = false;
                     this.dataTipoDerecho = res;
-                    console.log("DERECHO");
-                    console.log(this.dataTipoDerecho);
                 },
                 (error) => {
                     this.loadingDerecho = false;
@@ -176,7 +172,7 @@ export class DialogsAsociarCuenta {
     */
      confirmaCambio(evento = null, element = null, tipo = null): void {
         this.mensajeConfirma = evento;
-        console.log(this.mensajeConfirma);
+        
         const dialogRef = this.dialog.open(DialogConfirmacionComponent, {
             width: '700px',
             data: this.mensajeConfirma
@@ -204,8 +200,6 @@ export class DialogsAsociarCuenta {
         this.dataCuenta.porcentaje = this.cuentaFormGroup.value.porcentaje;
         this.dataCuenta.codDerecho = this.cuentaFormGroup.value.codDerecho;
         this.dataCuenta.observacion = observacion;
-        console.log("ACÁ LA INFORMACIÓN");
-        console.log(this.dataCuenta);
         this.dialogRef.close(this.dataCuenta);
     }
 

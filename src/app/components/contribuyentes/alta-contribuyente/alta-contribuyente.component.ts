@@ -314,8 +314,6 @@ export class AltaContribuyenteComponent implements OnInit {
         this.selectLicencia = false;
         this.selectNSS = false;
 
-        console.log("LO QUE SE SELECCIONO "+this.contribuyente.idDocIdent);
-
         if(this.contribuyente.idDocIdent == 1){
             this.selectCedula = true;
         }
@@ -343,7 +341,6 @@ export class AltaContribuyenteComponent implements OnInit {
             this.isRequired = false;
         }​​​​​​​​
 
-        console.log(this.fisicaFormGroup.value.rfc);
         this.fisicaFormGroup.markAsTouched();
         this.fisicaFormGroup.updateValueAndValidity();
     }
@@ -357,7 +354,6 @@ export class AltaContribuyenteComponent implements OnInit {
             (res: any) => {
                 this.loadingDocumentos = false;
                 this.dataDocumentos = res.CatDocIdentificativos;
-                console.log(this.dataDocumentos);
             },
             (error) => {
                 this.loadingDocumentos = false;
@@ -386,14 +382,11 @@ export class AltaContribuyenteComponent implements OnInit {
 
         query = (this.contribuyente.actPreponderante) ? query + '&actividadPrincip=' + this.contribuyente.actPreponderante : query + '&actividadPrincip=';
 
-        console.log(this.endpoint + busquedaDatos + '?' + query);
         this.loading = true;
         this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loading = false;
-                    console.log(res);
-                    console.log("CON");
                     if(res.length > 0){
                         this.validaDialog(res);
                     }else{
@@ -422,7 +415,6 @@ export class AltaContribuyenteComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
-                console.log(result);
                 this.guardarContribuyente();
             }
         });
@@ -464,8 +456,6 @@ export class AltaContribuyenteComponent implements OnInit {
                     this.idPersona = res[0].idpersona;
                     this.idChs = res[0].idchs;
                     this.resultadoAlta = res;
-                    console.log(res[0].idpersona);
-                    console.log(this.idChs);
                     this.setDatosContribuyente();
                     Swal.fire({
                         title: 'CORRECTO',
@@ -503,8 +493,6 @@ export class AltaContribuyenteComponent implements OnInit {
                 (res: any) => {
                     this.spinner.hide();
                     this.loading = false;
-                    console.log("Generando PDF");
-                    console.log(res);
                     this.resultadoAlta = res;
                 },
                 (error) => {
@@ -542,8 +530,6 @@ export class AltaContribuyenteComponent implements OnInit {
         this.datosContribuyente.idmotivosmoral = this.resultadoAlta[0].idmotivosmoral;
         this.datosContribuyente.fechacambiosituacion = this.resultadoAlta[0].fechacambiosituacion;
         this.datosContribuyente.codtipopersona = this.resultadoAlta[0].codtipopersona;
-        console.log("ACA LA SET DEL DATOS CONTRI");
-        console.log(this.datosContribuyente);
     }
 
     //////////////////// DOMICILIO ///////////////////////////
@@ -587,7 +573,6 @@ export class AltaContribuyenteComponent implements OnInit {
         this.spinner.show();
         this.loadingDomicilios = true;
         let metodo = 'getDireccionesContribuyente';
-        console.log(this.endpoint + metodo + '?idPersona='+ this.idPersona);
         this.http.get(this.endpoint + metodo + '?idPersona='+ this.idPersona, this.httpOptions)
             .subscribe(
                 (res: any) => {
@@ -643,7 +628,7 @@ export class AltaContribuyenteComponent implements OnInit {
     }
 
     viewHistorial(i, domicilio): void {
-        console.log(i + " " + domicilio);
+        //console.log(i + " " + domicilio);
     }
 
     ///////////////////REPRESENTACIÓN//////////////////////////////
@@ -728,15 +713,12 @@ export class AltaContribuyenteComponent implements OnInit {
         this.spinner.show();
         this.loadingRepresentado = true;
         let queryRepdo = 'rep=Representado&idPersona=' + this.idPersona;
-        console.log(this.endpoint + 'getRepresentacionContribuyente?' + queryRepdo);
         this.http.get(this.endpoint + 'getRepresentacionContribuyente?' + queryRepdo, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.spinner.hide();
                     this.loadingRepresentado = false;
                     this.dataSource5 = res;
-                    console.log("ACA ENTRO EL REPRESENTADO");
-                    console.log(this.dataSource5);
                     this.total5 = this.dataSource5.length;
                     this.dataPaginate5 = this.paginate(this.dataSource5, 15, this.pagina5);
                 },
@@ -913,8 +895,6 @@ export class DialogDomicilioAlta {
                 this.spinner.hide();
                 this.loadingMunicipios = false;
                 this.municipios = res;
-                console.log('GETDELEG');
-                console.log(res);
             },
             (error) => {
                 this.spinner.hide();
@@ -953,8 +933,6 @@ export class DialogDomicilioAlta {
                 this.spinner.hide();
                 this.loadingMunicipios = false;
                 this.municipios = res;
-                console.log('GETDELEG');
-                console.log(res);
             },
             (error) => {
                 this.spinner.hide();
@@ -974,8 +952,6 @@ export class DialogDomicilioAlta {
                 this.spinner.hide();
                 this.loadingTiposAsentamiento = false;
                 this.tiposAsentamiento = res;
-                console.log('AQUI EL ASENTAMIENTO SELECT');
-                console.log(this.tiposAsentamiento);
             },
             (error) => {
                 this.spinner.hide();
@@ -995,9 +971,6 @@ export class DialogDomicilioAlta {
                 this.spinner.hide();
                 this.loadingTiposVia = false;
                 this.tiposVia = res;
-                console.log('AQUI EL TIPOS VIA SELECT');
-                console.log(this.tiposVia);
-                console.log(this.codtiposdireccion);
             },
             (error) => {
                 this.spinner.hide();
@@ -1017,8 +990,6 @@ export class DialogDomicilioAlta {
                 this.spinner.hide();
                 this.loadingTiposLocalidad = false;
                 this.tiposLocalidad = res;
-                console.log('AQUI EL TIPOS LOCALIDAD');
-                console.log(this.tiposLocalidad);
             },
             (error) => {
                 this.spinner.hide();
@@ -1106,13 +1077,10 @@ export class DialogDomicilioAlta {
         query = (this.dataDomicilio.adicional) ? query + '&indicacionesadicionales=' + this.dataDomicilio.adicional : query + '&indicacionesadicionales=';
         query = (this.dataDomicilio.ninterior) ? query + '&numerointerior=' + this.dataDomicilio.ninterior : query + '&numerointerior=';
         
-        console.log('EL SUPER QUERY!!!!!!');
-        console.log(query);
 
         this.http.post(this.endpointCatalogos + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
-                    console.log(res);
                     if(res.original){
                         Swal.fire({
                             title: 'ERROR',
@@ -1201,8 +1169,6 @@ export class DialogDomicilioAlta {
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
-                console.log("MUNICIPIOS!!!!!!!");
-                console.log(result);
                 this.domicilioFormGroup.controls['idmunicipio2'].setValue(result.codmunicipio);
                 this.domicilioFormGroup.controls['municipio'].setValue(result.municipio);
                 this.botonCiudad = false;
@@ -1232,8 +1198,6 @@ export class DialogDomicilioAlta {
         dialogRef.afterClosed().subscribe(result => {
             if(result){
                 this.botonAsentamiento = false;
-                console.log("CIUDAD!!!!!!!");
-                console.log(result);
                 this.domicilioFormGroup.controls['idciudad'].setValue(result.codciudad);
                 this.domicilioFormGroup.controls['ciudad'].setValue(result.ciudad);
             }
@@ -1264,8 +1228,6 @@ export class DialogDomicilioAlta {
         dialogRef.afterClosed().subscribe(result => {
             if(result){
                 this.botonVia = false;
-                console.log("ASENTAMIENTO!!!!!!!");
-                console.log(result);
                 this.domicilioFormGroup.controls['codasentamiento'].setValue(result.codasentamiento);
                 this.domicilioFormGroup.controls['asentamiento'].setValue(result.asentamiento);
                 this.domicilioFormGroup.controls['idtipoasentamiento'].setValue(result.codtiposasentamiento);
@@ -1287,8 +1249,6 @@ export class DialogDomicilioAlta {
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
-                console.log("VIA!!!!!!!");
-                console.log(result);
                 this.domicilioFormGroup.controls['codtiposvia'].setValue(result.codtiposvia);
                 this.domicilioFormGroup.controls['idtipovia'].setValue(result.idvia);
                 this.domicilioFormGroup.controls['via'].setValue(result.via);
@@ -1341,7 +1301,6 @@ export class DialogMunicipiosAlta {
             })
         };
         this.obtenerMunicipios();
-        console.log(data);
     }
 
     cleanMunicipio(){
@@ -1371,7 +1330,6 @@ export class DialogMunicipiosAlta {
             query = '';
         }
 
-        console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
         this.loadingBuscaMun = true;
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
@@ -1382,7 +1340,6 @@ export class DialogMunicipiosAlta {
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                     this.total = this.dataSource.length; 
                     this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
                 },
                 (error) => {
                     this.spinner.hide();
@@ -1415,7 +1372,6 @@ export class DialogMunicipiosAlta {
     * @param element despliega los municipios dependiendo el estado seleccionado
     */
     selectMunicipios(element){
-        console.log(element);
         this.dataMunicipios.codestado = element.CODESTADO;
         this.dataMunicipios.codmunicipio = element.CODMUNICIPIO;
         this.dataMunicipios.municipio = element.MUNICIPIO;
@@ -1429,7 +1385,6 @@ export class DialogMunicipiosAlta {
         this.loadingBuscaMun = true;
         let criterio = '';
         let query = '';
-        console.log(this.buscaMunicipios);
         if(this.data.codEstado != 9){
             criterio = criterio + 'getMunicipiosByNombre';
             query = query + 'codEstado=' + this.data.codEstado + '&municipio=' + this.buscaMunicipios;
@@ -1438,7 +1393,6 @@ export class DialogMunicipiosAlta {
             query = '';
         }
 
-        console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
         this.loadingBuscaMun = true;
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
@@ -1449,7 +1403,6 @@ export class DialogMunicipiosAlta {
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                     this.total = this.dataSource.length; 
                     this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
                 },
                 (error) => {
                     this.spinner.hide();
@@ -1502,7 +1455,6 @@ export class DialogCiudadAlta {
             })
         };
         this.obtenerCiudad();
-        console.log(data);
     }
 
     cleanCiudad(){
@@ -1536,7 +1488,6 @@ export class DialogCiudadAlta {
             query = query + '&nombre=' + this.buscaCiudad;
         }
 
-        console.log('CIUDAD!!!!!'+this.endpoint + '?' + query);
         this.loadingBuscaCiudad = true;
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
@@ -1547,7 +1498,6 @@ export class DialogCiudadAlta {
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                     this.total = this.dataSource.length; 
                     this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
                 },
                 (error) => {
                     this.spinner.hide();
@@ -1580,7 +1530,6 @@ export class DialogCiudadAlta {
     * @element despliega las ciudades segun el municpio seleccionado
     */
     selectCiudad(element){
-        console.log(element);
         this.dataCiudad.ciudad = element.CIUDAD;
         this.dataCiudad.codciudad = element.CODCIUDAD;
         this.dataCiudad.codestado = element.CODESTADO;
@@ -1632,7 +1581,6 @@ export class DialogAsentamientoAlta {
             })
         };
         this.obtenerAsentamiento();
-        console.log(data);
     }
 
     cleanAsentamiento(){
@@ -1663,7 +1611,6 @@ export class DialogAsentamientoAlta {
             query = (this.data.codCiudad) ? query + '&codCiudad=' + this.data.codCiudad : query + '&codCiudad=';
         }
 
-        console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
         this.loading = true;
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
@@ -1674,7 +1621,6 @@ export class DialogAsentamientoAlta {
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                     this.total = this.dataSource.length; 
                     this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
                 },
                 (error) => {
                     this.spinner.hide();
@@ -1707,7 +1653,6 @@ export class DialogAsentamientoAlta {
     * Obtiene las colonias segun el municipio seleccionado
     */
     selectAsentamiento(element){
-        console.log(element);
         if(element.IDDELEGACION){
             this.dataAsentamiento.codasentamiento = element.CODIGO;
             this.dataAsentamiento.asentamiento = element.DESCRIPCION;
@@ -1744,7 +1689,6 @@ export class DialogAsentamientoAlta {
             query = (this.data.codCiudad) ? query + '&codCiudad=' + this.data.codCiudad : query + '&codCiudad=';
         }
         
-        console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
         this.loading = true;
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
@@ -1755,7 +1699,6 @@ export class DialogAsentamientoAlta {
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                     this.total = this.dataSource.length; 
                     this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
                 },
                 (error) => {
                     this.spinner.hide();
@@ -1810,7 +1753,6 @@ export class DialogViaAlta {
             })
         };
         this.obtenerVia();
-        console.log(data);
     }
 
     cleanVia(){
@@ -1844,7 +1786,6 @@ export class DialogViaAlta {
             query = query + '&idColonia=' + this.data.codAsentamiento;
         }
 
-        console.log('VIA!!!!!'+this.endpoint + '?' + query);
         this.loadingBuscaVia = true;
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
@@ -1855,7 +1796,6 @@ export class DialogViaAlta {
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                     this.total = this.dataSource.length; 
                     this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
                 },
                 (error) => {
                     this.spinner.hide();
@@ -1888,7 +1828,6 @@ export class DialogViaAlta {
     * Obtiene las calles segun la colonia seleccionada
     */
     selectVia(element){
-        console.log(element);
         this.btnAceptar = false;
         this.dataVia.codtiposvia = element.codtiposvia;
         this.dataVia.idvia = element.idvia;
@@ -1912,7 +1851,6 @@ export class DialogViaAlta {
             query = '';
         }
 
-        console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
         this.loadingBuscaVia = true;
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
@@ -1923,7 +1861,6 @@ export class DialogViaAlta {
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                     this.total = this.dataSource.length; 
                     this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
                 },
                 (error) => {
                     this.spinner.hide();
@@ -1995,8 +1932,7 @@ export class DialogRepresentacionAltaC {
             texto: [null, []],
             fechaCaducidad: [null, []],
         });
-        console.log("ACA LA DATA DEL DIALOG REPRESENTACION");
-        console.log(data);
+
         if(data.dataRepresentante){
             this.setDataRepresentacion(data.dataRepresentante);
         }
@@ -2021,7 +1957,6 @@ export class DialogRepresentacionAltaC {
                 this.spinner.hide();
                 this.loadingDocumentos = false;
                 this.dataDocumentos = res.CatDocIdentificativos;
-                console.log(this.dataDocumentos);
             },
             (error) => {
                 this.spinner.hide();
@@ -2040,7 +1975,6 @@ export class DialogRepresentacionAltaC {
             this.isRequired = false;
         }​​​​​​​​
 
-        console.log(this.fisicaFormGroup.value.rfc);
         this.fisicaFormGroup.markAsTouched();
         this.fisicaFormGroup.updateValueAndValidity();
     }
@@ -2140,9 +2074,6 @@ export class DialogRepresentacionAltaC {
         }
         this.idPersonaRepresentacion = (this.idPersonaRepresentacion) ? this.idPersonaRepresentacion : null;
 
-        console.log('AQUIII EL JSON');
-        console.log(this.dataRepresentacion);
-        //console.log(JSON.stringify(this.dataRepresentacion));
         const payload = {
             "representacion": {
                 textorepresentacion: this.dataRepresentacion.texto,
@@ -2206,7 +2137,6 @@ export class DialogRepresentacionAltaC {
             }
         };
         
-        console.log(JSON.stringify(payload));
         this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
             (res: any) => {
                 this.spinner.hide();
@@ -2230,8 +2160,6 @@ export class DialogRepresentacionAltaC {
 
                 }
                 
-                console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTECIÓN");
-                console.log(res);
             },
             (error) => {
                 this.spinner.hide();
@@ -2372,7 +2300,6 @@ export class DialogRepresentadoAltaC {
                 this.spinner.hide();
                 this.loadingDocumentos = false;
                 this.dataDocumentos = res.CatDocIdentificativos;
-                console.log(this.dataDocumentos);
             },
             (error) => {
                 this.spinner.hide();
@@ -2391,7 +2318,6 @@ export class DialogRepresentadoAltaC {
             this.isRequired = false;
         }​​​​​​​​
 
-        console.log(this.fisicaFormGroup.value.rfc);
         this.fisicaFormGroup.markAsTouched();
         this.fisicaFormGroup.updateValueAndValidity();
     }
@@ -2491,9 +2417,6 @@ export class DialogRepresentadoAltaC {
         }
 
         this.idPersonaRepresentacion = (this.idPersonaRepresentacion) ? this.idPersonaRepresentacion : null;
-        console.log('AQUIII EL JSON');
-        console.log(this.dataRepresentacion);
-        //console.log(JSON.stringify(this.dataRepresentacion));
         const payload = {
             "representacion": {
                 textorepresentacion: this.dataRepresentacion.texto,
@@ -2556,7 +2479,7 @@ export class DialogRepresentadoAltaC {
                 documentos: this.dataRepresentacion.documentoRepresentacion.archivos
             }
         };
-        console.log(JSON.stringify(payload));
+
         if(this.insertOrUpdate == 2){
             this.updateRepresentacion(payload);            
         }else{
@@ -2569,8 +2492,7 @@ export class DialogRepresentadoAltaC {
                         icon: 'success',
                         confirmButtonText: 'Cerrar'
                     });
-                    console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTADO");
-                    console.log(res);
+
                     this.loading = false;
                     this.dialogRef.close(res);
                 },
@@ -2594,9 +2516,7 @@ export class DialogRepresentadoAltaC {
      */
     insertRepresentacion(payload){
         this.spinner.show();
-        console.log(payload);
-        console.log("INSERTA");
-        //return;
+
         this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
             (res: any) => {
                 this.spinner.hide();
@@ -2606,8 +2526,6 @@ export class DialogRepresentadoAltaC {
                     icon: 'success',
                     confirmButtonText: 'Cerrar'
                 });
-                console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTADO");
-                console.log(res);
             },
             (error) => {
                 this.spinner.hide();
@@ -2624,10 +2542,9 @@ export class DialogRepresentadoAltaC {
      * Actualiza la información de la representación seleccionada.
      */
     updateRepresentacion(payload){
-        console.log("ACTUALIZA");
+
         this.spinner.hide();
         return;
-        console.log(JSON.stringify(payload));
         this.http.post(this.endpoint + 'insertarRepresentacion' + payload, '', this.httpOptions).subscribe(
             (res: any) => {
                 Swal.fire({
@@ -2636,8 +2553,6 @@ export class DialogRepresentadoAltaC {
                     icon: 'success',
                     confirmButtonText: 'Cerrar'
                 });
-                console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTECIÓN");
-                console.log(res);
             },
             (error) => {
                 Swal.fire({
@@ -2654,8 +2569,6 @@ export class DialogRepresentadoAltaC {
      * @param dataRepresentacion Arreglo con los datos del registro seleccionado.
      */
     setDataRepresentacion(dataRepresentacion): void {
-        console.log("ACA ENTRO EL SLECCIONADO REPRESENTACION");
-        console.log(dataRepresentacion);
         this.tipoPersona = dataRepresentacion.CODTIPOPERSONA;
         if(this.tipoPersona == 'F'){
             this.fisicaFormGroup.controls['nombre'].setValue(dataRepresentacion.NOMBRE);
@@ -2764,12 +2677,10 @@ export class DialogDocumentoAltaC {
         }
             this.infoDocumentoFormGroup.updateValueAndValidity();
         });
-        console.log(this.tiposDocumentoFormGroup.controls.codtipodocumentojuridico);
+
         if(data.idDocumento){
             this.setDataDocumento(data.idDocumento);
         }
-        console.log("ACA EL DATA DEL DOCU DIALOG");
-        console.log(data);
     }
   
     getDataTiposDocumentoDigital(): void {
@@ -2910,10 +2821,7 @@ export class DialogDocumentoAltaC {
         this.http.post(this.endpoint + 'infoDocumentos?idDocumentoDigital=' + idDocumento, '', this.httpOptions).subscribe(
             (res: any) => {
                 this.spinner.hide();
-                console.log("AQUI ENTRO EL RESULTADO DEL DOCUMENTO");
                 this.dataDocumentoSet = res;
-                console.log(this.dataDocumentoSet.infoDocumento[0].iddocumentodigital);
-                console.log(res);
                 this.setDoc();
             },
             (error) => {
@@ -2933,9 +2841,6 @@ export class DialogDocumentoAltaC {
      * Se almacenan los datos relacionados con el documento cuando se ha seleccionado la opción de editar documento.
      */
     setDoc(){
-        console.log("LA FECHA NO SE DEJA");
-        console.log(this.fechaDocto);
-
         //this.tiposDocumentoFormGroup.controls['codtipodocumento'].setValue(1);
         this.tiposDocumentoFormGroup.controls['codtipodocumentojuridico'].setValue(this.dataDocumentoSet.infoDocumento[0].codtipodocumentojuridico);
         if(this.dataDocumentoSet.infoDocumento[0].codtipodocumentojuridico == 'PN'){
@@ -2950,7 +2855,6 @@ export class DialogDocumentoAltaC {
         this.infoDocumentoFormGroup.controls['descripcion'].setValue(this.dataDocumentoSet.infoDocumento[0].descripcion);
         this.infoDocumentoFormGroup.controls['lugar'].setValue(this.dataDocumentoSet.infoDocumento[0].lugar);
 
-        console.log(this.fechaDocto);    
         this.dataDoc = this.dataDocumentoSet.infoFicheros;
         if(this.dataDocumentoSet.infoFicheros){
             for(let archivo of this.dataDocumentoSet.infoFicheros){
@@ -3254,7 +3158,6 @@ export class DialogPersonaAltaC {
                 this.spinner.hide();
                 this.loadingDocumentos = false;
                 this.dataDocumentos = res.CatDocIdentificativos;
-                console.log(this.dataDocumentos);
             },
             (error) => {
                 this.spinner.hide();

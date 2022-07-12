@@ -67,7 +67,7 @@ export class MenuComponent implements OnInit {
 
     ngOnInit(): void {
         this.menus = this.authService.getMenu();
-        console.log(this.rol);
+        //console.log(this.rol);
         switch (this.rol) {
             case "SUPERVISOR RCON":
                 this.contribuyentes = this.contribuyentes.filter(item=>{return (item.nombre == 'Reporte' || item.nombre == 'Consulta de contribuyente')});
@@ -143,8 +143,6 @@ export class MenuComponent implements OnInit {
         //     this.step4 = null;
         //     this.step5 = ruta;
         // }
-        console.log("falg");
-        console.log(ruta);
     }
 
 }

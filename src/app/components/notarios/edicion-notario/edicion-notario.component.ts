@@ -133,7 +133,7 @@ export class EdicionNotarioComponent implements OnInit {
         this.spinner.hide();
         this.loadingEstados = false;
         this.estados = res;
-        // console.log(this.estados);
+
       },
       (error) => {
         this.spinner.hide();
@@ -153,8 +153,6 @@ export class EdicionNotarioComponent implements OnInit {
     this.selectPasaporte = false;
     this.selectLicencia = false;
     this.selectNSS = false;
-
-    console.log("LO QUE SE SELECCIONO "+this.filtros.otro_documento);
 
     if(this.filtros.otro_documento === '1'){
         this.selectCedula = true;
@@ -184,7 +182,7 @@ export class EdicionNotarioComponent implements OnInit {
         this.spinner.hide();
         this.loadingDocumentosIdentificativos = false;
         this.documentos = res.CatDocIdentificativos;
-        // console.log(this.documentos);
+
       },
       (error) => {
         this.spinner.hide();
@@ -289,7 +287,7 @@ export class EdicionNotarioComponent implements OnInit {
           query = query.substr(1);
 
           this.loading = true;
-          // console.log(this.endpoint + busquedaDatos + '?' + query);
+
           this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
             .subscribe(
               (res: any) => {

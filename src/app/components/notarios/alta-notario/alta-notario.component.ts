@@ -161,7 +161,6 @@ export class AltaNotarioComponent implements OnInit {
             this.spinner.hide();
             this.loadingEstados = false;
             this.estados = res;
-            // console.log(this.estados);
         },
         (error) => {
             this.spinner.hide();
@@ -211,7 +210,6 @@ export class AltaNotarioComponent implements OnInit {
             this.spinner.hide();
             this.loadingDocumentosIdentificativos = false;
             this.documentos = res.CatDocIdentificativos;
-            // console.log(this.documentos);
         },
         (error) => {
             this.spinner.hide();
@@ -274,15 +272,12 @@ export class AltaNotarioComponent implements OnInit {
 
         query = query + '&actividadPrincip=';
 
-        console.log(this.endpoint + busquedaDatos + '?' + query);
         this.loading = true;
         this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.spinner.hide();
                     this.loading = false;
-                    console.log(res);
-                    console.log("CON");
                     if(res.length > 0){
                         this.validaDialog(res);
                     }else{
@@ -317,7 +312,6 @@ export class AltaNotarioComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
-                console.log(result);
                 this.guardarNotario();
             }
         });
@@ -348,15 +342,12 @@ export class AltaNotarioComponent implements OnInit {
         query = (this.filtros.email) ? query + '&email=' + this.filtros.email.trim() : query + '&email=';
         query = (this.filtros.celular) ? query + '&celular=' + this.filtros.celular.trim() : query + '&celular=';
         query = query + '&codtiposPersona=F&persona';
-        console.log(query);
-        //return;
+
         this.http.post(this.endpoint + 'insertarNotario' + '?' + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.spinner.hide();
                     this.loading = false;
-                    // console.log("NOTARIO GUARDADO");
-                    // console.log(res);
                     if(res.original){
                         Swal.fire(
                             {
@@ -509,7 +500,6 @@ export class DialogBuscarNotarioAlta {
                 this.spinner.hide();
                 this.loadingDocumentosIdentificativos = false;
                 this.documentos = res.CatDocIdentificativos;
-                // console.log(this.documentos);
             },
             (error) => {
                 this.spinner.hide();
@@ -529,8 +519,6 @@ export class DialogBuscarNotarioAlta {
         this.selectPasaporte = false;
         this.selectLicencia = false;
         this.selectNSS = false;
-
-        console.log("LO QUE SE SELECCIONO "+this.otro_documento);
 
         if(this.otro_documento === '1'){
             this.selectCedula = true;
@@ -645,7 +633,6 @@ export class DialogBuscarNotarioAlta {
         query = query.substr(1);
 
         this.loading = true;
-            // console.log(this.endpoint + busquedaDatos + '?' + query);
             this.http.get(this.endpoint + busquedaDatos + '?' + query, this.httpOptions)
                 .subscribe(
                     (res: any) => {
@@ -655,7 +642,6 @@ export class DialogBuscarNotarioAlta {
                         this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                         this.total = this.dataSource.length; 
                         this.paginator.pageIndex = 0;
-                        console.log(this.dataSource);
                         if (res.length === 0) {
                             Swal.fire({
                                 title: 'SIN RESULTADO',
@@ -709,7 +695,6 @@ export class DialogBuscarNotarioAlta {
         this.dataNotarioSeleccionado.fecha_defuncion = element.FECHADEFUNCION;
         this.dataNotarioSeleccionado.celular = element.CELULAR;
         this.dataNotarioSeleccionado.email = element.EMAIL;
-        // console.log(this.dataNotarioSeleccionado.email);
     }
 
 }

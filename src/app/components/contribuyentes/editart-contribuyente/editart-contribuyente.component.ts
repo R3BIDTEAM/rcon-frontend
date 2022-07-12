@@ -281,7 +281,6 @@ export class EditartContribuyenteComponent implements OnInit {
 
     ngOnInit(): void {
         this.cuentaPredial = '';
-        console.log("VARIABLE CLEAN" + this.cuentaPredial);
         this.fisicaFormGroup = this._formBuilder.group({
             nombre: [null,  []],
             apepaterno: [null, [Validators.required, Validators.pattern("^\\S{1}.{1,248}\\S{1}$")]],
@@ -318,8 +317,6 @@ export class EditartContribuyenteComponent implements OnInit {
 
         this.idContribuyente = this.route.snapshot.paramMap.get('idcontribuyente');
         this.cuentaPredial = this.route.snapshot.paramMap.get('cuenta');
-        console.log("VARIABLE");
-        console.log(this.cuentaPredial);
 
         this.getTipoDerecho();
         this.getDataDocumentos();
@@ -333,7 +330,6 @@ export class EditartContribuyenteComponent implements OnInit {
      * @param event detecta cuando se presiona una tecla, esta funcion sólo permite que se tecleen valores alfanuméricos, los demás son bloqueados
      */
      keyPressAlphaNumeric(event) {
-        console.log(event);
         var inp = String.fromCharCode(event.keyCode);
         if (/[a-zA-Z0-9]/.test(inp)) {
             return true;
@@ -354,8 +350,6 @@ export class EditartContribuyenteComponent implements OnInit {
                 (res: any) => {
                     //this.loadingDerecho = false;
                     this.dataTipoDerecho = res;
-                    console.log("DERECHO");
-                    console.log(this.dataTipoDerecho);
                     if(this.getSimula){
                         this.getInfoPersonaInmuebleSimula();
                     }else{
@@ -390,8 +384,6 @@ export class EditartContribuyenteComponent implements OnInit {
                 (res: any) => {
                     this.loadingDerecho = false;
                     this.personaInmueble = res;
-                    console.log("DERECHO DATOS");
-                    console.log(this.personaInmueble);
                     this.spinner.hide();
                 },
                 (error) => {
@@ -423,8 +415,6 @@ export class EditartContribuyenteComponent implements OnInit {
                     this.spinner.hide();
                     this.loadingDerecho = false;
                     this.personaInmueble = res;
-                    console.log("DERECHO DATOS");
-                    console.log(this.personaInmueble);
                 },
                 (error) => {
                     this.spinner.hide();
@@ -446,16 +436,11 @@ export class EditartContribuyenteComponent implements OnInit {
      */
     actualizaPersonaInmueble(i,idpersonainmueble){
         this.spinner.show();
-        console.log("INMUEBLES INPUTS");
-        console.log(this.personaInmueble[i].porcentajeparticipacion);
-        console.log(this.personaInmueble[i].codtipoderecho);
         
         this.loadingDerecho = true;
-        console.log(this.personaInmueble);
         let varPorcentaje = (this.personaInmueble[i].porcentajeparticipacion) ? this.personaInmueble[i].porcentajeparticipacion : '';
         let queryP = 'idPersona=' + this.idContribuyente + '&codTipoDerecho=' + this.personaInmueble[i].codtipoderecho 
                     + '&porcentajeParticipacion=' + varPorcentaje + '&idPersonaInmueble=' + idpersonainmueble;
-        console.log(this.endpointSimulacion + 'updatePersonaInmueble?');
         this.http.post(this.endpointSimulacion + 'updatePersonaInmueble' + '?' + queryP, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
@@ -495,13 +480,9 @@ export class EditartContribuyenteComponent implements OnInit {
      */
     desasociarCuenta(idpersonainmueble){
         this.spinner.show();
-        console.log("BORRAR INMUEBLES INPUTS");
-        console.log(idpersonainmueble);
         
         this.loadingDerecho = true;
-        console.log(this.personaInmueble);
         let queryP = 'idpersonainmueble=' + idpersonainmueble;
-        console.log(this.endpointSimulacion + 'borrarAsociaCuentaContrib?');
         this.http.post(this.endpointSimulacion + 'borrarAsociaCuentaContrib' + '?' + queryP, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
@@ -547,7 +528,7 @@ export class EditartContribuyenteComponent implements OnInit {
             width: '800px'
         });
         dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
+            
             if(result != false){
                 this.asociarCuenta(result);
             }
@@ -557,12 +538,9 @@ export class EditartContribuyenteComponent implements OnInit {
     asociarCuenta(dataCuenta){
         this.spinner.show();
         this.loadingDerecho = true;
-        console.log("ACÁ EL QUERY DE LA CUENTA");
         let queryP = 'idPersona=' + this.idContribuyente + '&region=' + dataCuenta.region + '&manzana=' + dataCuenta.manzana 
                     + '&lote=' + dataCuenta.lote + '&unidadPrivativa=' + dataCuenta.unidad
                     + '&digitoVerificador=' + dataCuenta.digito + '&codtipoderecho=' + dataCuenta.codDerecho + '&porcenparticipacion=' + dataCuenta.porcentaje;
-        console.log(this.endpointSimulacion + 'insertAsociaCuentaContrib?');
-        console.log(queryP);
         this.http.post(this.endpointSimulacion + 'insertAsociaCuentaContrib' + '?' + queryP, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
@@ -589,9 +567,9 @@ export class EditartContribuyenteComponent implements OnInit {
      * @param event Variable que contiene el valor del tipo de persona actual.
      */
     actualizaPersona(event){
-        console.log(event)
+        
         this.actCambioPersona = (event == this.cambioPersona) ? true : false;
-        console.log(this.actCambioPersona);
+        
         const dialogRef = this.dialog.open(DialogsCambiaPersona, {
             width: '700px',
             data: this.actCambioPersona
@@ -601,8 +579,8 @@ export class EditartContribuyenteComponent implements OnInit {
                 this.confirmaCambiaPersona();
             }else{
                 this.contribuyente.tipoPersona = this.cambioPersona;
-                console.log("ACA EL ACT CAMBIO PERSONA")
-                console.log(this.contribuyente.tipoPersona);
+                
+                
             }
         });
         
@@ -619,8 +597,6 @@ export class EditartContribuyenteComponent implements OnInit {
         }
         this.contribuyente.rfc = null;
         this.cambioPersona = this.contribuyente.tipoPersona;
-        console.log("TIPO DE PERSONA CAMBIO");
-        console.log(this.contribuyente.tipoPersona);
     }
 
     /**
@@ -633,8 +609,6 @@ export class EditartContribuyenteComponent implements OnInit {
         this.selectPasaporte = false;
         this.selectLicencia = false;
         this.selectNSS = false;
-
-        console.log("LO QUE SE SELECCIONO "+this.contribuyente.identificacion);
 
         if(this.contribuyente.identificacion == 1){
             this.selectCedula = true;
@@ -666,7 +640,6 @@ export class EditartContribuyenteComponent implements OnInit {
             this.isRequired = false;
         }​​​​​​​​
 
-        console.log(this.fisicaFormGroup.value.rfc);
         this.fisicaFormGroup.markAsTouched();
         this.fisicaFormGroup.updateValueAndValidity();
     }
@@ -682,7 +655,6 @@ export class EditartContribuyenteComponent implements OnInit {
                 this.spinner.hide();
                 this.loadingDocumentos = false;
                 this.dataDocumentos = res.CatDocIdentificativos;
-                console.log(this.dataDocumentos);
             },
             (error) => {
                 this.spinner.hide();
@@ -698,9 +670,6 @@ export class EditartContribuyenteComponent implements OnInit {
         this.query = '&idPersona=' + this.idContribuyente + '&cuentaCatastral=' + this.cuentaPredial;
         this.spinner.show();
         this.loading = true;
-        console.log(this.endpoint);
-        console.log("GET INFO CONTRIBUYENTE");
-        console.log(this.query);
         this.http.get(this.endpoint + 'getInfoContribuyente?' + this.query, this.httpOptions)
             .subscribe(
                 (res: any) => {
@@ -708,8 +677,6 @@ export class EditartContribuyenteComponent implements OnInit {
                     this.tipoContribuyente = (res.P_N_S) ? res.P_N_S : '';
                     this.existetipoContribuyente = (res.P_N_S) ? true : false;
                     this.dataContribuyenteResultado = res.contribuyente;
-                    console.log("AQUI ENTRO EL RES");
-                    console.log(this.dataContribuyenteResultado);
                     this.datoDelContribuyente();
                 },
                 (error) => {
@@ -753,10 +720,7 @@ export class EditartContribuyenteComponent implements OnInit {
         this.contribuyente.fechaCambio = (this.dataContribuyenteResultado[0].FECHACAMBIOSITUACION) ? new Date(this.dataContribuyenteResultado[0].FECHACAMBIOSITUACION) : null;
         this.contribuyente.texto = this.dataContribuyenteResultado[0].OBSERVACION;
 
-        console.log(this.contribuyente.nombre_moral);
-
         this.minDate = (moment(this.contribuyente.fecha_naci).add(2, 'd').format('YYYY-MM-DD'));
-        // alert(moment(this.contribuyente.fecha_naci).format('YYYY-MM-DD'));
         this.changeRequired();
         this.spinner.hide();
     }
@@ -773,8 +737,6 @@ export class EditartContribuyenteComponent implements OnInit {
     * Actualiza los datos del contribuyente
     */
     actualizarContribuyente(){
-        //registro/actualizaContribuyente?codtipospersona=F&nombre=Jose Albert&activprincip&idtipomoral&idmotivosmoral&fechainicioactiv&fechacambiosituacion&rfc=RUFV891129R15&apellidopaterno=Hernandez&apellidomaterno=MESSIE&curp=PAGJ830626HMCLMN11&claveife=mmmmmm&iddocidentif=1&valdocidentif=888&fechanacimiento=02-02-1989&fechadefuncion=02-02-2020&celular=5555555&email=nuevo_mail@mail.com&idExpediente&idpersona=4485307
-        console.log('Preparando actualización...');
         let query = '';
         this.loading = true;
         this.actualizado = false;
@@ -811,8 +773,6 @@ export class EditartContribuyenteComponent implements OnInit {
             .subscribe(
                 (res: any) => {
                     this.loading = false;
-                    console.log("CONTRIBUYENTE ACTUALIZADO");
-                    console.log(res);
                     this.spinner.hide();
                         // this.dataActualizacion.after_CP = res.after_CP;
                         // this.dataActualizacion.after_Col = res.after_Col;
@@ -839,7 +799,6 @@ export class EditartContribuyenteComponent implements OnInit {
                         this.accionDomicilio = false;
                         this.accionDomicilioBoletas = false;
 
-                    console.log(this.dataActualizacion);
                     Swal.fire(
                         {
                           title: 'CORRECTO',
@@ -873,7 +832,6 @@ export class EditartContribuyenteComponent implements OnInit {
     */
     confirmaCambio(evento = null, element = null, tipo = null): void {
         this.mensajeConfirma = evento;
-        console.log(this.mensajeConfirma);
         const dialogRef = this.dialog.open(DialogConfirmacionComponent, {
             width: '700px',
             data: this.mensajeConfirma
@@ -907,7 +865,7 @@ export class EditartContribuyenteComponent implements OnInit {
      * Cambia el tipo de persona de Físca a Moral o viceversa.
      */
     cambiarTipoPersona(){
-        console.log("ACA ESTAMOS CAMBIANDO LA PERSONA");
+
         let query = 'idpersona=' + this.idContribuyente;
         this.loading = true;
         this.actualizado = false;
@@ -947,14 +905,7 @@ export class EditartContribuyenteComponent implements OnInit {
         .subscribe(
             (res: any) => {
                 this.loading = false;
-                console.log("Cambio de persona");
-                console.log(res);
                 if(res){
-                    // this.snackBar.open('Actualización correcta', 'Cerrar', {
-                    //     duration: 10000,
-                    //     horizontalPosition: 'end',
-                    //     verticalPosition: 'top'
-                    // });
                     this.routerL.navigate(['main/editar-contribuyente/' + res]);
 
                     this.actualizado = true;
@@ -1029,7 +980,7 @@ export class EditartContribuyenteComponent implements OnInit {
      */
     getDomicilioContribuyenteSimula(){
         this.spinner.show();
-        console.log("ACÁ SIMULACIÓN");
+        
         this.loadingDomicilios = true;
         this.loadingInmuebles = true;
         let metodo = 'getDireccionesContribuyente';
@@ -1089,18 +1040,11 @@ export class EditartContribuyenteComponent implements OnInit {
             .subscribe(
                 (res: any) => {
                     this.loadingInmuebles = false;
-                    console.log("AQUI ENTRO IDINMUEBLE!!!");
-                    console.log(res);
                     this.spinner.hide();
                     this.dataSource3 = res;
-                    console.log(res.length);
-                    console.log(this.dataSource3);
                     this.dataPaginate3 = this.paginate(this.dataSource3, 15, this.pagina3);
                     this.total3 = this.dataSource3.length; 
                     this.paginator.pageIndex = 0;
-                    console.log("AQUI ENTRO EL RES DEL INMUEBLE!");
-                    console.log(this.dataSource3);
-
                 },
                 (error) => {
                     this.loadingInmuebles = false;
@@ -1127,18 +1071,10 @@ export class EditartContribuyenteComponent implements OnInit {
                 (res: any) => {
                     this.spinner.hide();
                     this.loadingInmuebles = false;
-                    console.log("AQUI ENTRO IDINMUEBLE!!!");
-                    console.log(res);
-
                     this.dataSource3 = res;
-                    console.log(res.length);
-                    console.log(this.dataSource3);
                     this.dataPaginate3 = this.paginate(this.dataSource3, 15, this.pagina3);
                     this.total3 = this.dataSource3.length; 
                     this.paginator.pageIndex = 0;
-                    console.log("AQUI ENTRO EL RES DEL INMUEBLE!");
-                    console.log(this.dataSource3);
-
                 },
                 (error) => {
                     this.spinner.hide();
@@ -1166,8 +1102,6 @@ export class EditartContribuyenteComponent implements OnInit {
      * @param direccionID Variable con el valor del id de la dirección
      */
     setIdDireccion(direccionID){
-        console.log("ACÁ EL ID DE LA DIRECCIÓN");
-        console.log(direccionID);
         this.idDireccionI = direccionID;
         this.selectIdDireccion = false;
     }
@@ -1178,9 +1112,6 @@ export class EditartContribuyenteComponent implements OnInit {
      * @param domicilioFPId Variable con el valor de id del domicilio fiscal predial.
      */
     setIdInmueble(inmueblePersonaID,domicilioFPId){
-        console.log("ACÁ EL ID DEL INMUEBLE");
-        console.log(inmueblePersonaID);
-        console.log(domicilioFPId);
         this.idPersonaInmueble = inmueblePersonaID;
         this.idDomicilioFP = domicilioFPId;
         this.selectIdPersonaI = false;
@@ -1189,10 +1120,10 @@ export class EditartContribuyenteComponent implements OnInit {
     verificaDomicilioInmueble(){
         if(this.idDomicilioFP){
             this.actualizaDomicilioInmueble();
-            console.log("ACÁ SI EXISTE EL" + this.idDomicilioFP);
+            
         }else{
             this.insertaDomicilioInmueble();
-            console.log("ACÁ NO EXISTE EL" + this.idDomicilioFP);
+            
         }
     }
     
@@ -1204,8 +1135,6 @@ export class EditartContribuyenteComponent implements OnInit {
         this.loadingInmuebles = true;
         this.spinner.show();
         let queryDPI = 'idPersona=' + this.idContribuyente + '&idDireccion=' + this.idDireccionI + '&idPersonaInmueble=' + this.idPersonaInmueble;
-        console.log("INSERTAR LA DIRECCIÓN DEL INMUEBLE");
-        console.log(this.endpointSimulacion + 'InsertarInmuebleDomicilioFiscal' + '?' + queryDPI);
         this.http.post(this.endpointSimulacion + 'InsertarInmuebleDomicilioFiscal' + '?' + queryDPI, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
@@ -1227,7 +1156,6 @@ export class EditartContribuyenteComponent implements OnInit {
                     }
                     this.loadingDomicilios = false;
                     this.loadingInmuebles = false;
-                    console.log(res);
                 },
                 (error) => {
                     this.spinner.hide();
@@ -1269,13 +1197,10 @@ export class EditartContribuyenteComponent implements OnInit {
         this.http.get(this.endpointActualiza + metodo + '?idDireccion='+ iddireccion, this.httpOptions)
             .subscribe(
                 (res: any) => {
-                    // alert('entro');
                     this.spinner.hide();
                     this.loadingDireccionEspecifica = false;
                     this.dataDomicilioEspecifico = res;
                     this.editDomicilio(this.dataDomicilioEspecifico);
-                    console.log('domicilio único encontrado');
-                    console.log(this.dataDomicilioEspecifico);
                 },
                 (error) => {
                     this.spinner.hide();
@@ -1312,8 +1237,6 @@ export class EditartContribuyenteComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
-                console.log(result);
-
                 this.accionDomicilio = true;
                 this.accionDomicilioBoletas = false;
                 this.actualizado = false;
@@ -1337,8 +1260,6 @@ export class EditartContribuyenteComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
-                console.log(result);
-
                 this.accionDomicilio = false;
                 this.accionDomicilioBoletas = true;
                 this.actualizado = false;
@@ -1361,11 +1282,7 @@ export class EditartContribuyenteComponent implements OnInit {
             data: {dataDomicilioEspecifico:dataDomicilioEspecifico, idContribuyente: this.idContribuyente},
         });
         dialogRef.afterClosed().subscribe(result => {
-            console.log("ACA ESTAMOS!!!!!!!!!!!!!!!!");
-            console.log(result);
             if(result){
-                console.log(result);
-
                 this.dataActualizacion.after_CP = result.after_CP;
                 this.dataActualizacion.after_Col = result.after_Col;
                 this.dataActualizacion.after_Direccion = result.after_Direccion;
@@ -1384,9 +1301,6 @@ export class EditartContribuyenteComponent implements OnInit {
                 this.dataActualizacion.idpersona = result.idpersona;
                 this.dataActualizacion.usuario = result.usuario;
                 
-                console.log(this.dataActualizacion.after_CP);
-                console.log(this.dataActualizacion.after_Nombre);
-
                 this.accionDomicilio = true;
                 this.accionDomicilioBoletas = false;
                 this.actualizado = false;
@@ -1410,7 +1324,6 @@ export class EditartContribuyenteComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
-                console.log(result);
 
                 this.dataActualizacion.after_CP = result.after_CP;
                 this.dataActualizacion.after_Col = result.after_Col;
@@ -1430,9 +1343,6 @@ export class EditartContribuyenteComponent implements OnInit {
                 this.dataActualizacion.idpersona = result.idpersona;
                 this.dataActualizacion.usuario = result.usuario;
                 
-                console.log(this.dataActualizacion.after_CP);
-                console.log(this.dataActualizacion.after_Nombre);
-
                 this.accionDomicilio = false;
                 this.accionDomicilioBoletas = true;
                 this.actualizado = false;
@@ -1524,13 +1434,11 @@ export class EditartContribuyenteComponent implements OnInit {
         this.loadingRepresentado = true;
         this.spinner.show();
         let queryDelRep = 'idRepresentacion=' + element.IDREPRESENTACION + '&idPersona=' + this.idContribuyente;
-        console.log(element);
-        console.log(this.endpointSimulacion + 'deleteRepresentacion?' + queryDelRep);
+        
         this.http.post(this.endpointSimulacion + 'deleteRepresentacion?' + queryDelRep, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
-                    console.log("ELIMINADO");
-                    console.log(res);
+                    
                     if(res){
                         if(tipo == 1){
                             this.loadingRepresentado = false;
@@ -1649,14 +1557,11 @@ export class EditartContribuyenteComponent implements OnInit {
         this.loadingRepresentado = true;
         this.spinner.show();
         let queryRepdo = 'rep=Representado&idPersona=' + this.idContribuyente;
-        console.log(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRepdo);
         this.http.get(this.endpointActualiza + 'getRepresentacionContribuyente?' + queryRepdo, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.loadingRepresentado = false;
                     this.dataSource5 = res;
-                    console.log("ACA ENTRO EL REPRESENTADO");
-                    console.log(res);
                     this.total5 = this.dataSource5.length;
                     this.dataPaginate5 = this.paginate(this.dataSource5, 15, this.pagina5);
                     this.spinner.hide();
@@ -1683,15 +1588,13 @@ export class EditartContribuyenteComponent implements OnInit {
         this.loadingRepresentado = true;
         this.spinner.show();
         let queryRepdo = 'rep=Representado&idPersona=' + this.idContribuyente;
-        console.log(this.endpointSimulacion + 'getRepresentacionContribuyente?' + queryRepdo);
+        
         this.http.get(this.endpointSimulacion + 'getRepresentacionContribuyente?' + queryRepdo, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.spinner.hide();
                     this.loadingRepresentado = false;
                     this.dataSource5 = res;
-                    console.log("ACA ENTRO EL REPRESENTADO");
-                    console.log(res);
                     this.total5 = this.dataSource5.length;
                     this.dataPaginate5 = this.paginate(this.dataSource5, 15, this.pagina5);
                 },
@@ -1848,7 +1751,6 @@ export class DialogDomicilioContribuyenteT {
         public dialogRef: MatDialogRef<DialogDomicilioContribuyenteT>,
         public dialog: MatDialog,
         @Inject(MAT_DIALOG_DATA) public data: any) {
-            console.log(data);
             dialogRef.disableClose = true;
             this.httpOptions = {
                 headers: new HttpHeaders({
@@ -1913,7 +1815,6 @@ export class DialogDomicilioContribuyenteT {
     
 
             if(data.dataDomicilioEspecifico){
-                console.log("recibimos data seteado1"+data.dataDomicilioEspecifico);
                 this.loadingDireccionEspecifica = true;
                 this.idPersonaT = data.idContribuyente;
                 setTimeout(() => {
@@ -1934,8 +1835,6 @@ export class DialogDomicilioContribuyenteT {
                 (res: any) => {
                     this.loadingDireccionEspecifica = false;
                     this.dataDomicilioEspecifico = res;
-                    console.log('domicilio único encontrado');
-                    console.log(this.dataDomicilioEspecifico);
                     setTimeout(() => {
                         this.setDataDomicilio(this.dataDomicilioEspecifico);    
                     }, 500);
@@ -2005,8 +1904,6 @@ export class DialogDomicilioContribuyenteT {
                 this.spinner.hide();
                 this.loadingMunicipios = false;
                 this.municipios = res;
-                console.log('GETDELEG');
-                console.log(res);
             },
             (error) => {
                 this.spinner.hide();
@@ -2047,8 +1944,6 @@ export class DialogDomicilioContribuyenteT {
                 this.spinner.hide();
                 this.loadingMunicipios = false;
                 this.municipios = res;
-                console.log('GETDELEG');
-                console.log(res);
             },
             (error) => {
                 this.spinner.hide();
@@ -2068,8 +1963,6 @@ export class DialogDomicilioContribuyenteT {
                 this.spinner.hide();
                 this.loadingTiposAsentamiento = false;
                 this.tiposAsentamiento = res;
-                console.log('AQUI EL ASENTAMIENTO SELECT');
-                console.log(this.tiposAsentamiento);
             },
             (error) => {
                 this.spinner.hide();
@@ -2089,9 +1982,6 @@ export class DialogDomicilioContribuyenteT {
                 this.spinner.hide();
                 this.loadingTiposVia = false;
                 this.tiposVia = res;
-                console.log('AQUI EL TIPOS VIA SELECT');
-                console.log(this.tiposVia);
-                console.log(this.codtiposdireccion);
             },
             (error) => {
                 this.spinner.hide();
@@ -2111,8 +2001,6 @@ export class DialogDomicilioContribuyenteT {
                 this.spinner.hide();
                 this.loadingTiposLocalidad = false;
                 this.tiposLocalidad = res;
-                console.log('AQUI EL TIPOS LOCALIDAD');
-                console.log(this.tiposLocalidad);
             },
             (error) => {
                 this.spinner.hide();
@@ -2201,16 +2089,9 @@ export class DialogDomicilioContribuyenteT {
         query = (this.dataDomicilio.adicional) ? query + '&indicacionesadicionales=' + this.dataDomicilio.adicional.toLocaleUpperCase().trim() : query + '&indicacionesadicionales=';
         query = (this.dataDomicilio.ninterior) ? query + '&numerointerior=' + this.dataDomicilio.ninterior.trim() : query + '&numerointerior=';
       
-        console.log('EL SUPER QUERY!!!!!!');
-        console.log(query);
-        
         this.http.post(this.endpointSimulacion + query, '', this.httpOptions)
             .subscribe(
                 (res: any) => {
-                    console.log("Aquí se inserta una nueva Dirección");
-                    console.log(res);
-                    console.log(this.codtiposdireccion);
-
                     this.dialogRef.close(1);
                     this.loadingEstados = false;
                     Swal.fire(
@@ -2272,17 +2153,10 @@ export class DialogDomicilioContribuyenteT {
         query = (this.dataDomicilio.adicional) ? query + '&indicacionesadicionales=' + this.dataDomicilio.adicional.toLocaleUpperCase() : query + '&indicacionesadicionales=';
         query = (this.dataDomicilio.ninterior) ? query + '&numerointerior=' + this.dataDomicilio.ninterior.toLocaleUpperCase() : query + '&numerointerior=';
     
-        console.log('Actualizacion de Direcciones...');
-        console.log(query);
-    
         this.http.post(this.endpointSimulacion + query, '', this.httpOptions)
             .subscribe(
             
                 (res: any) => {
-                    console.log("AQUI ACTUALIZO");
-                    console.log(res);
-                    console.log(this.codtiposdireccion);
-
                     this.dataMovimientoDomicilio.after_CP = res.after_CP;
                     this.dataMovimientoDomicilio.after_Col = res.after_Col;
                     this.dataMovimientoDomicilio.after_Direccion = res.after_Direccion;
@@ -2300,8 +2174,6 @@ export class DialogDomicilioContribuyenteT {
                     this.dataMovimientoDomicilio.folio = res.folio;
                     this.dataMovimientoDomicilio.idpersona = res.idpersona;
                     this.dataMovimientoDomicilio.usuario = res.usuario;
-                    console.log("AQUI dataMovimientoDomicilio");
-                    console.log(this.dataMovimientoDomicilio);
 
                     Swal.fire(
                         {
@@ -2335,9 +2207,6 @@ export class DialogDomicilioContribuyenteT {
      * @param data Arreglo con los datos del registro seleccionado.
      */
     setDataDomicilio(data): void {
-        console.log("ACA EL COD DATA ESPE");
-        console.log(data);
-    
         this.domicilioFormGroup.controls['idestado'].setValue(data.CODESTADO);
         this.domicilioFormGroup.updateValueAndValidity();
         this.getDataMunicipios({value: this.domicilioFormGroup.value.idestado});
@@ -2397,8 +2266,6 @@ export class DialogDomicilioContribuyenteT {
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
-                console.log("MUNICIPIOS!!!!!!!");
-                console.log(result);
                 this.domicilioFormGroup.controls['idmunicipio2'].setValue(result.codmunicipio);
                 this.domicilioFormGroup.controls['municipio'].setValue(result.municipio);
                 this.botonCiudad = false;
@@ -2429,8 +2296,6 @@ export class DialogDomicilioContribuyenteT {
         dialogRef.afterClosed().subscribe(result => {
             if(result){
                 this.botonAsentamiento = false;
-                console.log("CIUDAD!!!!!!!");
-                console.log(result);
                 this.domicilioFormGroup.controls['idciudad'].setValue(result.codciudad);
                 this.domicilioFormGroup.controls['ciudad'].setValue(result.ciudad);
             }
@@ -2461,8 +2326,6 @@ export class DialogDomicilioContribuyenteT {
         dialogRef.afterClosed().subscribe(result => {
             if(result){
                 this.botonVia = false;
-                console.log("ASENTAMIENTO!!!!!!!");
-                console.log(result);
                 this.domicilioFormGroup.controls['codasentamiento'].setValue(result.codasentamiento);
                 this.domicilioFormGroup.controls['asentamiento'].setValue(result.asentamiento);
                 this.domicilioFormGroup.controls['idtipoasentamiento'].setValue(result.codtiposasentamiento);
@@ -2484,8 +2347,6 @@ export class DialogDomicilioContribuyenteT {
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
-                console.log("VIA!!!!!!!");
-                console.log(result);
                 this.domicilioFormGroup.controls['codtiposvia'].setValue(result.codtiposvia);
                 this.domicilioFormGroup.controls['idtipovia'].setValue(result.idvia);
                 this.domicilioFormGroup.controls['via'].setValue(result.via);
@@ -2537,7 +2398,6 @@ export interface DataMunicipios{
             })
         };
         this.obtenerMunicipios();
-        console.log(data);
     }
   
       /**
@@ -2569,7 +2429,6 @@ export interface DataMunicipios{
             query = '';
         }
   
-        console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
         this.loadingBuscaMun = true;
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
@@ -2580,7 +2439,6 @@ export interface DataMunicipios{
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                     this.total = this.dataSource.length; 
                     this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
                 },
                 (error) => {
                     this.spinner.hide();
@@ -2614,7 +2472,7 @@ export interface DataMunicipios{
      * @param element Arreglo de los datos del municipio seleccionado
      */
     selectMunicipios(element){
-        console.log(element);
+
         this.dataMunicipios.codestado = element.CODESTADO;
         this.dataMunicipios.codmunicipio = element.CODMUNICIPIO;
         this.dataMunicipios.municipio = element.MUNICIPIO;
@@ -2628,7 +2486,7 @@ export interface DataMunicipios{
         this.loadingBuscaMun = true;
         let criterio = '';
         let query = '';
-        console.log(this.buscaMunicipios);
+
         if(this.data.codEstado != 9){
             criterio = criterio + 'getMunicipiosByNombre';
             query = query + 'codEstado=' + this.data.codEstado + '&municipio=' + this.buscaMunicipios;
@@ -2637,7 +2495,7 @@ export interface DataMunicipios{
             query = '';
         }
 
-        console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
+        
         this.loadingBuscaMun = true;
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
@@ -2648,7 +2506,7 @@ export interface DataMunicipios{
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                     this.total = this.dataSource.length; 
                     this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
+                    
                 },
                 (error) => {
                     this.spinner.hide();
@@ -2701,7 +2559,7 @@ export interface DataCiudad{
             })
         };
         this.obtenerCiudad();
-        console.log(data);
+        
     }
   
       /**
@@ -2738,7 +2596,7 @@ export interface DataCiudad{
                 query = query + '&nombre=' + this.buscaCiudad;
             }
     
-            console.log('CIUDAD!!!!!'+this.endpoint + '?' + query);
+            
             this.loadingBuscaCiudad = true;
             this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
                 .subscribe(
@@ -2749,7 +2607,7 @@ export interface DataCiudad{
                         this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                         this.total = this.dataSource.length; 
                         this.paginator.pageIndex = 0;
-                        console.log(this.dataSource);
+                        
                     },
                     (error) => {
                         this.spinner.hide();
@@ -2783,7 +2641,6 @@ export interface DataCiudad{
        * @param element Arreglo de los datos del registro seleccionado
        */
       selectCiudad(element){
-          console.log(element);
           this.dataCiudad.ciudad = element.CIUDAD;
           this.dataCiudad.codciudad = element.CODCIUDAD;
           this.dataCiudad.codestado = element.CODESTADO;
@@ -2802,7 +2659,7 @@ export interface DataCiudad{
     //         query = '';
     //     }
   
-    //     console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
+
     //     this.loadingBuscaCiudad = true;
     //     this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
     //         .subscribe(
@@ -2812,7 +2669,7 @@ export interface DataCiudad{
     //                 this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
     //                 this.total = this.dataSource.length; 
     //                 this.paginator.pageIndex = 0;
-    //                 console.log(this.dataSource);
+
     //             },
     //             (error) => {
     //                 this.loadingBuscaCiudad = false;
@@ -2865,7 +2722,6 @@ export interface DataAsentamiento{
             })
         };
         this.obtenerAsentamiento();
-        console.log(data);
     }
   
       /**
@@ -2899,7 +2755,6 @@ export interface DataAsentamiento{
             query = (this.data.codCiudad) ? query + '&codCiudad=' + this.data.codCiudad : query + '&codCiudad=';
         }
 
-        console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
         this.loading = true;
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
@@ -2910,7 +2765,6 @@ export interface DataAsentamiento{
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                     this.total = this.dataSource.length; 
                     this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
                 },
                 (error) => {
                     this.spinner.hide();
@@ -2944,7 +2798,6 @@ export interface DataAsentamiento{
      * @param element Arreglo de los datos del asentamiento.
      */
     selectAsentamiento(element){
-        console.log(element);
         if(element.IDDELEGACION){
             this.dataAsentamiento.codasentamiento = element.CODIGO;
             this.dataAsentamiento.asentamiento = element.DESCRIPCION;
@@ -2980,7 +2833,6 @@ export interface DataAsentamiento{
             query = (this.data.codCiudad) ? query + '&codCiudad=' + this.data.codCiudad : query + '&codCiudad=';
         }
         
-        console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
         this.loading = true;
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
@@ -2991,7 +2843,6 @@ export interface DataAsentamiento{
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                     this.total = this.dataSource.length; 
                     this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
                 },
                 (error) => {
                     this.spinner.hide();
@@ -3044,7 +2895,6 @@ export interface dataVia{
             })
         };
         this.obtenerVia();
-        console.log(data);
     }
   
     /**
@@ -3081,7 +2931,7 @@ export interface dataVia{
             query = query + '&idColonia=' + this.data.codAsentamiento;
         }
 
-        console.log('VIA!!!!!'+this.endpoint + '?' + query);
+
         this.loadingBuscaVia = true;
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
@@ -3092,7 +2942,7 @@ export interface dataVia{
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                     this.total = this.dataSource.length; 
                     this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
+
                 },
                 (error) => {
                     this.spinner.hide();
@@ -3126,7 +2976,7 @@ export interface dataVia{
      * @param element Arreglo de los datos del registro seleccionado
      */
     selectVia(element){
-        console.log(element);
+        
         this.dataVia.codtiposvia = element.codtiposvia;
         this.dataVia.idvia = element.idvia;
         this.dataVia.via = element.via;
@@ -3148,7 +2998,7 @@ export interface dataVia{
             query = '';
         }
 
-        console.log('ASENTAMIENTOSSSS'+this.endpoint + '?' + query);
+        
         this.loadingBuscaVia = true;
         this.http.get(this.endpoint + criterio + '?' + query, this.httpOptions)
             .subscribe(
@@ -3159,7 +3009,7 @@ export interface dataVia{
                     this.dataPaginate = this.paginate(this.dataSource, this.pageSize, this.pagina);
                     this.total = this.dataSource.length; 
                     this.paginator.pageIndex = 0;
-                    console.log(this.dataSource);
+                    
                 },
                 (error) => {
                     this.spinner.hide();
@@ -3234,8 +3084,8 @@ export class DialogRepresentacionCT {
             texto: [null, []],
             fechaCaducidad: [null, []],
         });
-        console.log("ACA LA DATA DEL DIALOG REPRESENTACION");
-        console.log(data);
+        
+        
         if(data.dataRepresentante){
             this.setDataRepresentacion(data.dataRepresentante);
             this.idDocumento = data.dataRepresentante.IDDOCUMENTOREPRESENTACION;
@@ -3265,7 +3115,6 @@ export class DialogRepresentacionCT {
                 this.spinner.hide();
                 this.loadingDocumentos = false;
                 this.dataDocumentos = res.CatDocIdentificativos;
-                console.log(this.dataDocumentos);
             },
             (error) => {
                 this.spinner.hide();
@@ -3293,7 +3142,6 @@ export class DialogRepresentacionCT {
             this.isRequired = false;
         }​​​​​​​​
 
-        console.log(this.fisicaFormGroup.value.rfc);
         this.fisicaFormGroup.markAsTouched();
         this.fisicaFormGroup.updateValueAndValidity();
     }
@@ -3402,9 +3250,6 @@ export class DialogRepresentacionCT {
         }
         this.idPersonaRepresentacion = (this.idPersonaRepresentacion) ? this.idPersonaRepresentacion : null;
 
-        console.log('AQUIII EL JSON');
-        console.log(this.dataRepresentacion);
-        //console.log(JSON.stringify(this.dataRepresentacion));
         if(this.insertOrUpdate == 2){
             this.updateRepresentacion();            
         }else{
@@ -3471,7 +3316,6 @@ export class DialogRepresentacionCT {
                 }
             };
             
-            console.log(JSON.stringify(payload));
             this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
                 (res: any) => {
                     this.spinner.hide();
@@ -3483,8 +3327,6 @@ export class DialogRepresentacionCT {
                           confirmButtonText: 'Cerrar'
                         }
                     );
-                    console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTECIÓN");
-                    console.log(res);
                     this.loading = false;
                     this.dialogRef.close(res);
                 },
@@ -3509,7 +3351,6 @@ export class DialogRepresentacionCT {
      */
     updateRepresentacion(){
         this.spinner.show();
-        console.log("ACTUALIZA");
         let queryActRep = '';
 
         queryActRep = (this.dataRepresentacion.texto) ? queryActRep + 'textorepresentacion=' + this.dataRepresentacion.texto : queryActRep + 'textorepresentacion=';
@@ -3518,10 +3359,6 @@ export class DialogRepresentacionCT {
 
         queryActRep = queryActRep + '&idRepresentacion=' + this.idRepresentacion + '&idDocumentoDigital=' + this.idDocumento;
 
-        //actualizarRepresentaciontextorepresentacion=Texto Representacion Prueba 33&fechacaducidad=Fri Dec 31 2021 00:00:00 GMT-0600 (hora estándar central)&idRepresentacion=14&idDocumentoDigital=17646226
-        console.log("QUERY ACTUALIZA");
-        console.log(queryActRep);
-        //return;
         this.http.post(this.endpoint + 'actualizarRepresentacion?' + queryActRep, '', this.httpOptions).subscribe(
             (res: any) => {
                 this.spinner.hide();
@@ -3533,8 +3370,6 @@ export class DialogRepresentacionCT {
                       confirmButtonText: 'Cerrar'
                     }
                 );
-                console.log("AQUI ENTRO LAS RESPUESTA DEL POST ACT REPRESENTADO");
-                console.log(res);
                 let fin = true;
                 this.dialogRef.close(fin);
             },
@@ -3557,8 +3392,6 @@ export class DialogRepresentacionCT {
      * @param dataRepresentacion Arreglo con los datos del registro seleccionado.
      */
     setDataRepresentacion(dataRepresentacion): void {
-        console.log("ACA ENTRO EL SLECCIONADO REPRESENTACION");
-        console.log(dataRepresentacion);
         (dataRepresentacion.RFC) ? this.changeRequired('curp', 'rfc') : this.changeRequired('rfc', 'curp');
         
         this.tipoPersona = dataRepresentacion.CODTIPOPERSONA;
@@ -3597,8 +3430,6 @@ export class DialogRepresentacionCT {
         this.dataRepresentacion.documentoRepresentacion = dataRepresentacion.DOCUMENTOS;
         this.documentoRepresentacionTipo = dataRepresentacion.DOCUMENTOS;
         this.existedoctoRep = true;
-        console.log("ACÁ LA DATA REPRESENTACIÓN dataRepresentacion");
-        console.log(this.dataRepresentacion.documentoRepresentacion);
     }
 }
 
@@ -3700,7 +3531,6 @@ export class DialogRepresentadoCT {
                 this.spinner.hide();
                 this.loadingDocumentos = false;
                 this.dataDocumentos = res.CatDocIdentificativos;
-                console.log(this.dataDocumentos);
             },
             (error) => {
                 this.spinner.hide();
@@ -3726,7 +3556,6 @@ export class DialogRepresentadoCT {
             this.isRequired = false;
         }​​​​​​​​
 
-        console.log(this.fisicaFormGroup.value.rfc);
         this.fisicaFormGroup.markAsTouched();
         this.fisicaFormGroup.updateValueAndValidity();
     }
@@ -3826,7 +3655,6 @@ export class DialogRepresentadoCT {
         }
 
         this.idPersonaRepresentacion = (this.idPersonaRepresentacion) ? this.idPersonaRepresentacion : null;
-        console.log('AQUIII EL JSON DEL REPRESENTADO');
         
         if(this.insertOrUpdate == 2){
             this.updateRepresentacion();            
@@ -3894,7 +3722,6 @@ export class DialogRepresentadoCT {
                 }
             };
 
-            console.log(JSON.stringify(payload));
             this.http.post( this.endpoint + 'insertarRepresentacion', payload, this.httpOptions ). subscribe (
                 (res: any) => {
                     this.spinner.hide();
@@ -3906,8 +3733,6 @@ export class DialogRepresentadoCT {
                           confirmButtonText: 'Cerrar'
                         }
                     );
-                    console.log("AQUI ENTRO LAS RESPUESTA DEL PUT REPRESENTADO");
-                    console.log(res);
                     this.loading = false;
                     this.dialogRef.close(res);
                 },
@@ -3941,8 +3766,6 @@ export class DialogRepresentadoCT {
 
         queryActRep = queryActRep + '&idRepresentacion=' + this.idRepresentacion + '&idDocumentoDigital=' + this.idDocumento;
 
-        console.log("QUERY ACTUALIZA");
-        console.log(queryActRep);
         this.http.post(this.endpoint + 'actualizarRepresentacion?' + queryActRep, '', this.httpOptions).subscribe(
             (res: any) => {
                 this.spinner.hide();
@@ -3954,8 +3777,6 @@ export class DialogRepresentadoCT {
                       confirmButtonText: 'Cerrar'
                     }
                 );
-                console.log("AQUI ENTRO LAS RESPUESTA DEL POST ACT REPRESENTADO");
-                console.log(res);
                 let fin = true;
                 this.dialogRef.close(fin);
             },
@@ -3978,8 +3799,6 @@ export class DialogRepresentadoCT {
      * @param dataRepresentacion Arreglo con los datos del registro seleccionado.
      */
     setDataRepresentacion(dataRepresentacion): void {
-        console.log("ACA ENTRO EL SLECCIONADO REPRESENTACION");
-        console.log(dataRepresentacion);
         (dataRepresentacion.RFC) ? this.changeRequired('curp', 'rfc') : this.changeRequired('rfc', 'curp');
         
         this.tipoPersona = dataRepresentacion.CODTIPOPERSONA;
@@ -4100,15 +3919,12 @@ export class DialogDocumentoCT {
         }
             this.infoDocumentoFormGroup.updateValueAndValidity();
         });
-        console.log(this.tiposDocumentoFormGroup.controls.codtipodocumentojuridico);
         if(data.idDocumento){
             this.setDataDocumento(data.idDocumento);
             this.insertOrUpdate = data.insertOrUpdate;
             this.idDocumento = data.idDocumento;
             this.insUp = true;
         }
-        console.log("ACA EL DATA DEL DOCU DIALOG");
-        console.log(data);
     }
   
     /**
@@ -4262,10 +4078,7 @@ export class DialogDocumentoCT {
         this.http.post(this.endpoint + 'infoDocumentos?idDocumentoDigital=' + idDocumento2, '', this.httpOptions).subscribe(
             (res: any) => {
                 this.spinner.hide();
-                console.log("AQUI ENTRO EL RESULTADO DEL DOCUMENTO");
                 this.dataDocumentoSet = res;
-                console.log(this.dataDocumentoSet.infoDocumento[0].iddocumentodigital);
-                console.log(res);
                 this.setDoc();
             },
             (error) => {
@@ -4285,8 +4098,6 @@ export class DialogDocumentoCT {
      * Se almacenan los datos relacionados con el documento cuando se ha seleccionado la opción de editar documento.
      */
     setDoc(){
-        console.log("LA FECHA NO SE DEJA");
-        console.log(this.fechaDocto);
 
         //this.tiposDocumentoFormGroup.controls['codtipodocumento'].setValue(1);
         this.tiposDocumentoFormGroup.controls['codtipodocumentojuridico'].setValue(this.dataDocumentoSet.infoDocumento[0].codtipodocumentojuridico);
@@ -4302,7 +4113,6 @@ export class DialogDocumentoCT {
         this.infoDocumentoFormGroup.controls['descripcion'].setValue(this.dataDocumentoSet.infoDocumento[0].descripcion);
         this.infoDocumentoFormGroup.controls['lugar'].setValue(this.dataDocumentoSet.infoDocumento[0].lugar);
 
-        console.log(this.fechaDocto);    
         this.dataDoc = this.dataDocumentoSet.infoFicheros;
     }
 
@@ -4312,16 +4122,11 @@ export class DialogDocumentoCT {
      */
     descargarDoc(element){
         this.spinner.show();
-        console.log("ACA EL DESCARGAR FICHERO");
-        console.log(element);
 
         this.http.get( this.endpoint + 'getFichero?idFichero=' + element.idficherodocumento, this.httpOptions ). subscribe (
             (res: any) => {
                 this.spinner.hide();
                 this.descargaFichero = res;
-                console.log("EL RES DEL FICHERO");
-                console.log(this.descargaFichero);
-                console.log(this.descargaFichero[0].binariodatos);
                 this.convertirDoc();
             },
             (error) => {
@@ -4343,9 +4148,6 @@ export class DialogDocumentoCT {
     convertirDoc(){
         let dataFichero = this.descargaFichero[0].binariodatos;
         dataFichero = dataFichero.split("data:application/pdf;base64,");
-        console.log("split");
-        console.log(dataFichero);
-        //return;
         const blob = this.b64toBlob(dataFichero[1], 'application/pdf');
         FileSaver.saveAs(blob, this.descargaFichero[0].nombre);
     }
@@ -4379,8 +4181,6 @@ export class DialogDocumentoCT {
      * @param i Valor del index del registro seleccionado.
      */
     eliminarDoc(element, i){
-        console.log("ACA EL ELIMINAR FICHERO");
-        console.log(element);
         this.spinner.show();
         this.http.post( this.endpoint + 'borrarFichero?lista=' + element.idficherodocumento, '', this.httpOptions ). subscribe (
             (res: any) => {
@@ -4394,8 +4194,6 @@ export class DialogDocumentoCT {
                     }
                 );
                 this.dataDoc.splice(i,1);
-                console.log("AQUI ENTRO LAS RESPUESTA DEL BORRADO");
-                console.log(res);
             },
             (error) => {
                 this.spinner.hide();
@@ -4427,8 +4225,6 @@ export class DialogDocumentoCT {
             }
         };
         
-        
-        console.log(JSON.stringify(payload));
         this.http.post( this.endpoint + 'actualizarDocumentos', payload, this.httpOptions ). subscribe (
             (res: any) => {
                 this.spinner.hide();
@@ -4441,8 +4237,6 @@ export class DialogDocumentoCT {
                           confirmButtonText: 'Cerrar'
                         }
                     );
-                    console.log("RESPUESTA DE LA ACTUALIZACIÓN");
-                    console.log(res);
                 }else{
                     Swal.fire(
                         {
@@ -4760,7 +4554,7 @@ export class DialogPersonaCT{
                 this.spinner.hide();
                 this.loadingDocumentos = false;
                 this.dataDocumentos = res.CatDocIdentificativos;
-                console.log(this.dataDocumentos);
+
             },
             (error) => {
                 this.spinner.hide();
@@ -4969,7 +4763,6 @@ export interface DataHistorico{
                     this.spinner.hide();
                     this.loading = false;
                     this.dataSource = res;
-                    console.log(this.dataSource);
                     this.total = this.dataSource.length;
                     this.dataPaginate = this.paginate(this.dataSource, 10, this.pagina);
                 },
@@ -5102,8 +4895,6 @@ export interface DataHistorico{
 
             this.idChs = data.dataDomicilioEspecifico;
             this.idDireccion = data.idDireccion;
-            console.log(this.idChs);
-            console.log(this.idDireccion);
             this.codtiposdireccion = data.codtiposdireccion;
             this.dataDomicilio = {} as DataDomicilio;
             this.dataDomicilioEspecifico = {} as DataDomicilio;
@@ -5155,8 +4946,6 @@ export interface DataHistorico{
                 });
         
                     if(data){
-                        console.log(data.dataDomicilioEspecifico);
-                        console.log("recibimos data seteado1");
                         // this.domicilioFormGroup['cp'].disable();
                     }
                     this.getDataTiposAsentamiento();
@@ -5168,7 +4957,6 @@ export interface DataHistorico{
      * Obtiene el domicilio seleccionado.
      */  
     getDireccionEspecifica(){
-        console.log('entro');
         this.spinner.show();
         this.loadingDireccionEspecifica = true;
         let metodo = 'getHistoricosDireccionDetalle';
@@ -5179,13 +4967,10 @@ export interface DataHistorico{
                     this.loadingDireccionEspecifica = false;
                     this.dataDomicilioEspecifico = res;
                     this.setDataDomicilio(this.dataDomicilioEspecifico[0]);
-                    console.log('domicilio único encontrado');
-                    console.log(this.dataDomicilioEspecifico);
                 },
                 (error) => {
                     this.spinner.hide();
                     this.loadingDireccionEspecifica = false;
-                    console.log('no furula');
                     Swal.fire(
                         {
                           title: 'SIN RESULTADO',
@@ -5243,8 +5028,6 @@ export interface DataHistorico{
                 this.spinner.hide();
                 this.loadingMunicipios = false;
                 this.municipios = res;
-                console.log('GETDELEG');
-                console.log(res);
             },
             (error) => {
                 this.spinner.hide();
@@ -5264,8 +5047,6 @@ export interface DataHistorico{
                 this.spinner.hide();
                 this.loadingTiposAsentamiento = false;
                 this.tiposAsentamiento = res;
-                console.log('AQUI EL ASENTAMIENTO SELECT');
-                console.log(this.tiposAsentamiento);
             },
             (error) => {
                 this.spinner.hide();
@@ -5285,9 +5066,6 @@ export interface DataHistorico{
                 this.spinner.hide();
                 this.loadingTiposVia = false;
                 this.tiposVia = res;
-                console.log('AQUI EL TIPOS VIA SELECT');
-                console.log(this.tiposVia);
-                console.log(this.codtiposdireccion);
             },
             (error) => {
                 this.spinner.hide();
@@ -5307,8 +5085,6 @@ export interface DataHistorico{
                 this.spinner.hide();
                 this.loadingTiposLocalidad = false;
                 this.tiposLocalidad = res;
-                console.log('AQUI EL TIPOS LOCALIDAD');
-                console.log(this.tiposLocalidad);
             },
             (error) => {
                 this.spinner.hide();
@@ -5322,9 +5098,6 @@ export interface DataHistorico{
      * @param data Arreglo con los datos del registro seleccionado.
      */
     setDataDomicilio(data): void {
-        console.log("ACA EL COD DATA ESPE");
-        console.log(data);
-        // console.log("ACA EL COD ESTADO SETEADO"+data.dataDomicilioEspecifico.CODESTADO);
        
         this.domicilioFormGroup.controls['idestado'].setValue(data.CODESTADO);
         this.getDataMunicipios({value: this.domicilioFormGroup.value.idestado});
@@ -5372,8 +5145,6 @@ export interface DataHistorico{
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
-                console.log("MUNICIPIOS!!!!!!!");
-                console.log(result);
                 this.domicilioFormGroup.controls['idmunicipio2'].setValue(result.codmunicipio);
                 this.domicilioFormGroup.controls['municipio'].setValue(result.municipio);
                 this.botonCiudad = false;
@@ -5396,8 +5167,6 @@ export interface DataHistorico{
         dialogRef.afterClosed().subscribe(result => {
             if(result){
                 this.botonAsentamiento = false;
-                console.log("CIUDAD!!!!!!!");
-                console.log(result);
                 this.domicilioFormGroup.controls['idciudad'].setValue(result.codciudad);
                 this.domicilioFormGroup.controls['ciudad'].setValue(result.ciudad);
             }
@@ -5423,8 +5192,6 @@ export interface DataHistorico{
         dialogRef.afterClosed().subscribe(result => {
             if(result){
                 this.botonVia = false;
-                console.log("ASENTAMIENTO!!!!!!!");
-                console.log(result);
                 this.domicilioFormGroup.controls['codasentamiento'].setValue(result.codasentamiento);
                 this.domicilioFormGroup.controls['asentamiento'].setValue(result.asentamiento);
                 this.domicilioFormGroup.controls['idtipoasentamiento'].setValue(result.codtiposasentamiento);
@@ -5446,8 +5213,6 @@ export interface DataHistorico{
         });
         dialogRef.afterClosed().subscribe(result => {
             if(result){
-                console.log("VIA!!!!!!!");
-                console.log(result);
                 this.domicilioFormGroup.controls['codtiposvia'].setValue(result.codtiposvia);
                 this.domicilioFormGroup.controls['idtipovia'].setValue(result.idvia);
                 this.domicilioFormGroup.controls['via'].setValue(result.via);
@@ -5527,7 +5292,6 @@ export interface DataHistorico{
                     this.spinner.hide();
                     this.loading = false;
                     this.dataSource = res;
-                    console.log(this.dataSource);
                     this.total = this.dataSource.length;
                     this.dataPaginate = this.paginate(this.dataSource, 10, this.pagina);
                 },
@@ -5624,8 +5388,6 @@ export class DialogPersonalesHistoricoEspecificoContribuyenteT {
 
         this.idChs = data.dataPersonalesEspecifico;
         this.idPersona = data.idPersona;
-        console.log(this.idChs);
-        console.log(this.idPersona);
 
         this.fisicaFormGroup = this._formBuilder.group({
             nombre: [null, [Validators.required]],
@@ -5667,7 +5429,6 @@ export class DialogPersonalesHistoricoEspecificoContribuyenteT {
             this.spinner.hide();
             this.loadingDocumentos = false;
             this.dataDocumentos = res.CatDocIdentificativos;
-            console.log(this.dataDocumentos);
         },
         (error) => {
             this.spinner.hide();
@@ -5683,15 +5444,12 @@ export class DialogPersonalesHistoricoEspecificoContribuyenteT {
         this.spinner.show();
         this.query = '&idPersona=' + this.idPersona + '&idChs=' + this.idChs; 
         this.loading = true;
-        console.log(this.endpoint);
         this.http.get(this.endpoint + 'getHistoricosPersonaDetalle?' + this.query, this.httpOptions)
             .subscribe(
                 (res: any) => {
                     this.spinner.hide();
                     this.loading = false;
                     this.dataContribuyenteResultado = res;
-                    console.log("AQUI ENTRO EL RES");
-                    console.log(this.dataContribuyenteResultado);
                     this.datoDelContribuyente();
                 },
                 (error) => {
@@ -5733,8 +5491,6 @@ export class DialogPersonalesHistoricoEspecificoContribuyenteT {
         this.contribuyente.idMotivo = this.dataContribuyenteResultado[0].IDMOTIVOSMORAL;
         this.contribuyente.fechaCambio = (this.dataContribuyenteResultado[0].MD_FECHAHASTA) ? new Date(this.dataContribuyenteResultado[0].MD_FECHAHASTA) : null;
 
-        console.log(this.contribuyente.tipoPersona);
-        
     }
 
 }
@@ -5785,8 +5541,6 @@ export class DialogHistorialRepCT {
             })
         };
 
-        console.log("ACA EL EL HISTORIAL");
-        console.log(data);
         this.idPersona = data;
         this.getHistorialRepresentacion();
     }
@@ -5811,7 +5565,7 @@ export class DialogHistorialRepCT {
                     this.spinner.hide();
                     this.loadingH = false;
                     this.dataSource = res;
-                    console.log(this.dataSource);
+
                     this.total = this.dataSource.length;
                     this.dataPaginate = this.paginate(this.dataSource, 10, this.pagina);
                 },
@@ -5855,8 +5609,6 @@ export class DialogHistorialRepCT {
      * @param element Id de la representcación con la cual se realizará la búsqueda.
      */
     historicoDetalle(element){
-        console.log("ACA EL IDCSH");
-        console.log(element);
         this.idChs = element;
         const dialogRef = this.dialog.open(DialogHistorialRepDetalleCT, {
             width: '700px',
@@ -5950,8 +5702,6 @@ export class DialogHistorialRepDetalleCT {
             })
         };
 
-        console.log("ACA EL EL HISTORIAL");
-        console.log(data);
         this.idChs = data;
         this.getHistorialRepresentacionDetalle();
     }
@@ -5971,11 +5721,7 @@ export class DialogHistorialRepDetalleCT {
                 (res: any) => {
                     this.spinner.hide();
                     this.loadingH = false;
-                    console.log("RESULTADO DEL DETALLE REP");
-                    console.log(res);
                     this.dataRepresentacion = res;
-                    console.log(this.dataRepresentacion.infoRepresentante.CAUSA);
-                    console.log(this.dataRepresentacion.infoRepresentante[0].CAUSA);
                     this.setDetalle();
                 },
                 (error) => {
@@ -5997,8 +5743,6 @@ export class DialogHistorialRepDetalleCT {
      * Almacena los datos de la búsqueda realizada para mostrar en el formulario.
      */
     setDetalle(){
-            console.log("ACA ENTRO EL SLECCIONADO REPRESENTACION");
-            console.log(this.dataRepresentacion.infoDocumento.infoDocumento[0].codtipodocumentojuridico);
 
             ///////////////// DATOS DEL DOCUMENTO ////////////////////////
             if(this.dataRepresentacion.infoDocumento.infoDocumento[0].codtipodocumentojuridico == "CP"){
