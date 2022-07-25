@@ -11,7 +11,7 @@ export class GuardService implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot): boolean {
         this.rol = this.auth.getSession().userData.rol_nombre;
-        console.log(route);
+        //console.log(route);
         switch (this.rol) {
             case "SUPERVISOR RCON":
                 if(route.url[0].path === 'main' 
@@ -106,10 +106,19 @@ export class GuardService implements CanActivate {
                     || route.url[0].path === 'editar-contribuyente'
                     || route.url[0].path === 'editart-contribuyente'
                     || route.url[0].path === 'reporte'
-                    || route.url[0].path === 'consulta-contribuyente' 
-                    || route.url[0].path === 'consulta-notario' 
+                    || route.url[0].path === 'consulta-contribuyente'
+                    || route.url[0].path === 'consulta-notario'
+                    || route.url[0].path === 'alta-notario' 
+                    || route.url[0].path === 'edicion-notario' 
+                    || route.url[0].path === 'editar-notario'
                     || route.url[0].path === 'consulta-peritos'
+                    || route.url[0].path === 'alta-peritos' 
+                    || route.url[0].path === 'edicion-peritos'
+                    || route.url[0].path === 'editar-peritos'
                     || route.url[0].path === 'consulta-sociedad'
+                    || route.url[0].path === 'alta-sociedad'
+                    || route.url[0].path === 'edicion-sociedad'
+                    || route.url[0].path === 'editar-sociedad'
                     || route.url[0].path === 'ver-peritos' 
                     || route.url[0].path === 'ver-sociedad' 
                     || route.url[0].path === 'ver-notario'
