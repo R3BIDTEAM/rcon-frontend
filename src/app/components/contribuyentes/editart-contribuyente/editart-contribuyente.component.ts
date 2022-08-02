@@ -316,7 +316,7 @@ export class EditartContribuyenteComponent implements OnInit {
         });
 
         this.idContribuyente = this.route.snapshot.paramMap.get('idcontribuyente');
-        this.cuentaPredial = this.route.snapshot.paramMap.get('cuenta');
+        this.cuentaPredial = this.route.snapshot.paramMap.get('cuenta').toUpperCase();
 
         this.getTipoDerecho();
         this.getDataDocumentos();
