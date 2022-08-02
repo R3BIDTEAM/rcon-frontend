@@ -1033,7 +1033,7 @@ export class EditarContribuyenteComponent implements OnInit {
      * Genera el PDF de cambio de datos personales
      */
     async generatePDF() {
-
+        this.dataActualizacion.at = ((this.dataActualizacion.at) ? this.dataActualizacion.at : '');
         this.dataActualizacion.cuentaP = ((this.dataActualizacion.cuentaP) ? this.dataActualizacion.cuentaP : '');
         let docDefinition = {
           content: [
