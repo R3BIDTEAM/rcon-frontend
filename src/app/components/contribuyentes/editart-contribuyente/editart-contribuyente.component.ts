@@ -546,6 +546,14 @@ export class EditartContribuyenteComponent implements OnInit {
                 (res: any) => {
                     this.spinner.hide();
                     this.routerL.navigate(['main/editar-contribuyente/' + res]);
+                    Swal.fire(
+                        {
+                          title: 'CORRECTO',
+                          text: "Guardado correcto",
+                          icon: 'success',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 },
                 (error) => {
                     this.loadingDerecho = false;
@@ -912,6 +920,14 @@ export class EditartContribuyenteComponent implements OnInit {
                     this.accionDomicilio = false;
                     this.accionDomicilioBoletas = false;
                     this.actCambioPersona = true;
+                    Swal.fire(
+                        {
+                          title: 'CORRECTO',
+                          text: "Guardado correcto",
+                          icon: 'success',
+                          confirmButtonText: 'Cerrar'
+                        }
+                    );
                 }else{
                     Swal.fire(
                         {
