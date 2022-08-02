@@ -11,7 +11,7 @@ export class GuardService implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot): boolean {
         this.rol = this.auth.getSession().userData.rol_nombre;
-        //console.log(route);
+        //console.log(this.rol);
         switch (this.rol) {
             case "SUPERVISOR RCON":
                 if(route.url[0].path === 'main' 
@@ -133,7 +133,7 @@ export class GuardService implements CanActivate {
                 if (!this.auth.isAuthenticated()) {
                     this.router.navigate(['/']);
                 }
-                return this.auth.isAuthenticated();
+                //return this.auth.isAuthenticated();
             break;
         }
     }
